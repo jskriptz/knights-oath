@@ -2,6 +2,15 @@
 
 All notable changes to **Dragonlance: The Knight's Oath** are documented here.
 
+## v21.0.1 — 2026-03-22
+
+### Romance in Combat
+- Romanced companions show pink HP bars instead of blue in combat
+- Pink left border on companion action blocks during their turn
+- 27 unique narrative romance tooltips (9 companions × 3 levels: Spark, Flame, Oath)
+- Heart icon (♡) next to romanced companion names in combat and sidebar
+- Hover any romanced companion to see a character-specific romance line
+
 ## v21.0.0 — 2026-03-22
 
 ### Combat System Rework — D&D 5e 2024 Tabletop Rules

@@ -325,6 +325,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Crimso
 .combat-hp-fill{height:100%;border-radius:4px;transition:width .3s}
 .combat-hp-fill.player{background:linear-gradient(90deg,#c0392b,#27ae60)}
 .combat-hp-fill.companion{background:linear-gradient(90deg,#c0392b,#2980b9)}
+.combat-hp-fill.companion.romance{background:linear-gradient(90deg,#c0392b,#e91e63)}
 .combat-hp-fill.enemy{background:linear-gradient(90deg,#c0392b,#e74c3c)}
 .combat-hp-text{min-width:60px;text-align:right;color:var(--text-dim);font-size:11px}
 .combat-section-header{font-family:'Cinzel',serif;font-size:12px;color:var(--gold-dim);letter-spacing:2px;margin:12px 0 8px;text-transform:uppercase}
@@ -358,6 +359,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Crimso
 .combat-ability-btn.surge{border-color:#3498db;color:#3498db}
 .combat-surge-option{display:flex;gap:8px;margin-top:8px}
 .combat-companion-block{margin:8px 0;padding:8px;background:rgba(255,255,255,.02);border-radius:4px}
+.combat-companion-block.romance{border-left:2px solid #e91e63;background:rgba(233,30,99,.05)}
 .combat-companion-name{color:var(--text-bright);font-size:12px;font-family:'Cinzel',serif;letter-spacing:1px;margin-bottom:6px}
 .combat-companion-select{display:flex;flex-wrap:wrap;gap:4px}
 .combat-companion-btn{background:transparent;border:1px solid rgba(255,255,255,.15);color:var(--text-dim);padding:4px 8px;font-size:11px;cursor:pointer;border-radius:3px;transition:all .2s;text-align:left}
@@ -1009,7 +1011,7 @@ h2.red{color:var(--red)}
   <div id="loading-name">The Knight's Oath</div>
   <div id="loading-bar-container"><div id="loading-bar"></div></div>
   <div id="loading-status">Preparing...</div>
-  <div id="loading-sub">v21.0.0 • 217 Scenes • 9 Companions</div>
+  <div id="loading-sub">v21.0.1 • 217 Scenes • 9 Companions</div>
 </div>
 <script>
 // Loading progress tracker
@@ -1351,6 +1353,54 @@ const COMPANION_COMBAT_STATS={
   Tariel:{ac:14,maxHp:14,attack:{name:'Rapier',bonus:3,damage:'1d6+1',type:'melee',reach:5},zone:'close'},
   Caeron:{ac:18,maxHp:26,attack:{name:'Longsword',bonus:6,damage:'1d8+3',type:'melee',reach:5},zone:'close'}
 };
+const ROMANCE_TOOLTIPS={
+  Aldric:{
+    Spark:'You catch Aldric watching you when he thinks you are not looking. He looks away too fast.',
+    Flame:'Aldric's hand finds yours in the dark before a fight. He does not let go until he has to.',
+    Oath:'Aldric fights beside you like a man who has decided where he will stand and who he will stand with. Always.'
+  },
+  Thessaly:{
+    Spark:'Thessaly's questions have changed. She is no longer studying you. She is memorising you.',
+    Flame:'She reads to you by firelight. The book is an excuse. Her shoulder against yours is not.',
+    Oath:'Thessaly closes her notebook when you speak. She has never done that for anyone.'
+  },
+  Serath:{
+    Spark:'Serath's silences around you have a different quality now. Warmer. Almost careful.',
+    Flame:'He tells you something about his past he has never told anyone. His voice does not shake. His hands do.',
+    Oath:'Serath stands at your side with the quiet certainty of a man who has finally stopped running.'
+  },
+  Mira:{
+    Spark:'Mira's hands linger when she checks your bandages. Her touch is gentler than it needs to be.',
+    Flame:'She saved you the last of the good bread. It is such a small thing. It is not a small thing at all.',
+    Oath:'Mira looks at you the way she looks at the dawn — like something worth getting up for.'
+  },
+  Caeron:{
+    Spark:'Lord Caeron's composure slips around you. Just barely. Just enough.',
+    Flame:'He removes his gauntlet to touch your face. His hand is shaking. He has never been this vulnerable.',
+    Oath:'Caeron kneels to no one. But he would kneel for you. You both know it.'
+  },
+  Sera:{
+    Spark:'Sera's usual sharpness softens when she speaks to you. She notices, and it annoys her.',
+    Flame:'She shows you her favourite vantage point at dusk. The view is beautiful. She is not looking at it.',
+    Oath:'Sera trusts you at her back. From her, that is more than love. That is everything.'
+  },
+  Vael:{
+    Spark:'Vael challenges you to spar more often now. The excuses are getting thinner.',
+    Flame:'After the bout she does not step back. Her breathing is heavy and her eyes are steady on yours.',
+    Oath:'Vael fights like she has something to protect now. She does. It is you.'
+  },
+  Tariel:{
+    Spark:'Tariel asks you questions no one else thinks to ask. She remembers every answer.',
+    Flame:'She shares intelligence she should not. The trust implicit in that is staggering.',
+    Oath:'Tariel chose a side. Not a political one. Yours. She has never been more certain of anything.'
+  },
+  Lysander:{
+    Spark:'Lysander watches you train with the eye of a man recognising something he thought he had lost.',
+    Flame:'He tells you about the oath he broke. Not to explain. To trust you with the worst of him.',
+    Oath:'Lysander swore he would never take another oath. He lied. He would swear any oath you asked.'
+  }
+};
+
 
 
 
@@ -1452,7 +1502,10 @@ function CompanionInfo({name,romance,onClose}){
 
 function CompanionTag({name,romance,onView}){
   const e=React.createElement;
-  return e('span',{className:'companion-tag'+(romance?' romance':''),onClick:()=>{if(onView)onView(name,romance)},style:{cursor:'pointer'}},
+  const firstName=(name.match(/^(\w+)/)||[])[1];
+  const isRomance=romance&&!['Friend','Distant','Cold','Observer','Hostile'].includes(romance);
+  const romTip=isRomance&&firstName&&ROMANCE_TOOLTIPS[firstName]?ROMANCE_TOOLTIPS[firstName][romance]:'';
+  return e('span',{className:'companion-tag'+(romance?' romance':''),onClick:()=>{if(onView)onView(name,romance)},style:{cursor:'pointer'},title:romTip},
     name+(romance?' ♡':''),
     e('span',{className:'spell-tag-info'},'ⓘ'));
 }
@@ -2584,11 +2637,16 @@ function CombatBox({text,gs,derived,onStateUpdate}){
           e('div',{className:'combat-hp-fill player',style:{width:Math.max(0,(combat.playerHp/combat.playerMaxHp)*100)+'%'}})),
         e('div',{className:'combat-hp-text'},combat.playerHp+' / '+combat.playerMaxHp)),
       // Companion HP
-      combat.companions.map((cp,i)=>e('div',{key:i,className:'combat-hp-bar'+(cp.unconscious?' unconscious':'')},
-        e('div',{className:'combat-hp-label'},cp.name+(cp.unconscious?' (DOWN)':(!cp.alive?' (DEAD)':''))),
+      combat.companions.map((cp,i)=>{
+        const firstName=(cp.name.match(/^(\w+)/)||[])[1];
+        const rom=gs.romances?.[cp.name];
+        const isRomance=rom&&!['Friend','Distant','Cold','Observer','Hostile'].includes(rom);
+        const romTip=isRomance&&firstName&&ROMANCE_TOOLTIPS[firstName]?ROMANCE_TOOLTIPS[firstName][rom]:'';
+        return e('div',{key:i,className:'combat-hp-bar'+(cp.unconscious?' unconscious':''),title:romTip||''},
+        e('div',{className:'combat-hp-label'},cp.name+(cp.unconscious?' (DOWN)':(!cp.alive?' (DEAD)':''))+(isRomance?' ♡':'')),
         e('div',{className:'combat-hp-bar-bg'},
-          e('div',{className:'combat-hp-fill companion',style:{width:Math.max(0,(cp.hp/cp.maxHp)*100)+'%'}})),
-        e('div',{className:'combat-hp-text'},cp.hp+' / '+cp.maxHp))),
+          e('div',{className:'combat-hp-fill companion'+(isRomance?' romance':''),style:{width:Math.max(0,(cp.hp/cp.maxHp)*100)+'%'}})),
+        e('div',{className:'combat-hp-text'},cp.hp+' / '+cp.maxHp))}),
       // Enemy HP
       combat.enemies.map((en,i)=>e('div',{key:'e'+i,className:'combat-hp-bar'+(en.alive?'':' defeated')},
         e('div',{className:'combat-hp-label'},en.name+(en.alive?'':' \u2620'),
@@ -2693,8 +2751,12 @@ function CombatBox({text,gs,derived,onStateUpdate}){
       e('div',{className:'combat-section-header'},'COMPANION ACTIONS'),
       livingCompanions.map(cp=>{
         const actions=resolvedCompanions[cp.name]||resolvedCompanions[(cp.name.match(/^(\w+)/)||[])[1]]||[];
-        return e('div',{key:cp.name,className:'combat-companion-block'},
-          e('div',{className:'combat-companion-name'},cp.name+' ('+cp.hp+'/'+cp.maxHp+' HP)'),
+        const cpFirst=(cp.name.match(/^(\w+)/)||[])[1];
+        const cpRom=gs.romances?.[cp.name];
+        const cpIsRomance=cpRom&&!['Friend','Distant','Cold','Observer','Hostile'].includes(cpRom);
+        const cpRomTip=cpIsRomance&&cpFirst&&ROMANCE_TOOLTIPS[cpFirst]?ROMANCE_TOOLTIPS[cpFirst][cpRom]:'';
+        return e('div',{key:cp.name,className:'combat-companion-block'+(cpIsRomance?' romance':''),title:cpRomTip||''},
+          e('div',{className:'combat-companion-name'},cp.name+(cpIsRomance?' ♡':'')+' ('+cp.hp+'/'+cp.maxHp+' HP)'),
           e('div',{className:'combat-companion-select'},
             actions.map((action,j)=>e('button',{key:j,className:'combat-companion-btn'+(combat.companionActionsThisRound[cp.name]===action?' selected':''),onClick:()=>selectCompanionAction(cp.name,action)},action))));
       }),
@@ -3053,7 +3115,7 @@ function CoverScreen({onNew,onLoad}){
       e('p',{style:{margin:'0 0 4px'}},'\u2018Dragonlance,\u2019 \u2018Krynn,\u2019 \u2018Solamnic Knights,\u2019 and all related characters, locations, and lore are trademarks of Wizards of the Coast LLC. \u2018Dungeons & Dragons\u2019 and \u2018D&D\u2019 are registered trademarks of Wizards of the Coast LLC.'),
       e('p',{style:{margin:'0 0 4px'}},'This is unofficial fan content, not approved or endorsed by Wizards of the Coast. Made under the Fan Content Policy. No copyright or trademark infringement is intended.'),
       e('p',{style:{margin:0}},'Game mechanics reference the D&D 2024 System Reference Document (SRD 5.2), available under the Creative Commons Attribution 4.0 International License (CC BY 4.0).'),
-      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v21.0.0')));
+      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v21.0.1')));
 }
 
 // ── Character Creation ─────────────────────────────────
