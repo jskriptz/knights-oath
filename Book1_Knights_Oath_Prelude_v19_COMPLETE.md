@@ -860,6 +860,7 @@ The quartermaster is a broad woman named Hesta who has been supplying Solamnic g
 > **SHOP — BRIGHTHOLM QUARTERMASTER**
 > Browse the wares. Prices in steel pieces (stl). Check your character sheet for current gold.
 >
+> **SUPPLIES:**
 > | Item | Price | Notes |
 > |------|-------|-------|
 > | Bandage (1 use) | 1 stl | Stabilize at 1 HP |
@@ -871,14 +872,42 @@ The quartermaster is a broad woman named Hesta who has been supplying Solamnic g
 > | Rope (50 ft) | 1 stl | Climbing, binding |
 > | Torch (5) | 1 stl | Light source |
 >
+> **WEAPONS:**
+> | Item | Price | Notes |
+> |------|-------|-------|
+> | Longsword | 15 stl | 1d8+STR, versatile (1d10), Sap |
+> | Greatsword | 20 stl | 2d6+STR, heavy, two-handed, Graze |
+> | Battleaxe | 15 stl | 1d8+STR, versatile (1d10), Topple |
+> | Greataxe | 20 stl | 1d12+STR, heavy, two-handed, Cleave |
+> | Warhammer | 15 stl | 1d8+STR, versatile (1d10), Push |
+> | Morningstar | 15 stl | 1d8+STR, Sap |
+> | Flail | 15 stl | 1d8+STR, Sap |
+> | War Pick | 15 stl | 1d8+STR, versatile (1d10), Push |
+> | Rapier | 15 stl | 1d8+STR, finesse, Vex |
+> | Halberd | 20 stl | 1d10+STR, heavy, reach, two-handed, Cleave |
+> | Glaive | 20 stl | 1d10+STR, heavy, reach, two-handed, Graze |
+> | Shortsword | 10 stl | 1d6+STR, finesse, light, Vex |
+> | Handaxe | 5 stl | 1d6+STR, thrown (20/60), Vex |
+> | Dagger | 2 stl | 1d4+STR, finesse, light, thrown (20/60), Nick |
+> | Javelin (3) | 3 stl | 1d6+STR, thrown (30/120), Slow |
+>
+> **ARMOUR & SHIELDS:**
+> | Item | Price | Notes |
+> |------|-------|-------|
+> | Chain Mail | 25 stl | AC 16, STR 13 required, Stealth disadvantage |
+> | Scale Mail | 20 stl | AC 14+DEX (max 2), Stealth disadvantage |
+> | Studded Leather | 12 stl | AC 12+DEX |
+> | Leather Armor | 10 stl | AC 11+DEX |
+> | Shield | 10 stl | +2 AC |
+>
 > **RARE STOCK ROLL (once per visit):**
 > Roll 1d20 to see if Hesta has anything special today.
 > 1–15: Standard stock only.
 > 16–18: Uncommon — Greater Potion of Healing available (15 stl, 4d4+4 HP).
-> 19: Uncommon — Masterwork dagger available (+1 damage, not magical, 20 stl).
+> 19: Uncommon — Masterwork Longsword available (+1 damage, not magical, 20 stl). 'Solamnic make. Pre-Cataclysm.'
 > 20: RARE — +1 Shield available (50 stl). Dented, old, Solamnic make. Hesta found it in the deep stores.
 >
-> *Record purchases on your character sheet. Deduct steel spent.*
+> *If the rare stock roll reveals an item, you may buy it at the listed price. Record purchases on your character sheet. Deduct steel spent.*
 
 Hesta wraps your purchases in waxed cloth with garrison efficiency. 'Don't die,' she says. This is her version of good luck.
 
@@ -946,7 +975,7 @@ He looks at your current equipment, frowns the professional frown of a man who s
 > Roll 1d20 to see if Garrett has anything in the back.
 > 1–15: Standard stock only.
 > 16–18: Uncommon — Greater Potion of Healing available (15 stl, 4d4+4 HP). 'Left behind by a patrol.'
-> 19: Uncommon — Masterwork longsword available (+1 damage, not magical, 20 stl). 'My best work this year.'
+> 19: Uncommon — Masterwork Greatsword available (+1 damage, not magical, 20 stl). 'My best work this year.'
 > 20: RARE — +1 Longsword available (50 stl). Old Solamnic steel, faintly warm to the touch. Garrett does not know what it is. You do.
 >
 > *Record purchases on your character sheet. Deduct steel spent.*
