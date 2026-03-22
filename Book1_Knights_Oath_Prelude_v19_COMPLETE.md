@@ -6617,7 +6617,7 @@ Aldric pulls his horse alongside yours. He does not say anything. He looks ahead
 
 The rider is old. That is the first thing — the particular old of a man who has been old for a long time and has been fighting against it and is now, finally, not fighting against it anymore. He sits his warhorse with the posture of a man whose body remembers perfection even though perfection left it a decade ago. The horse is old too — a grey destrier, scarred across the flanks, its mane cropped short in the Solamnic military style that nobody has used in twenty years.
 
-His armour is Solamnic half-plate. Old. The rose insignia on the breastplate is worn to a ghost, the steel patched and repatched, the plates dented in places that speak of fights survived rather than fights won. A shield hangs from the saddle — heavy, steel, the Solamnic crest barely visible under decades of use. And at his hip: a longsword in a scabbard that does not match the rest of his equipment. The scabbard is new. The sword is not — it is very, very old, and even from this distance you can feel something about it. A hum. A weight. The particular quality of a weapon that is more than steel.
+His armour is Solamnic half-plate. Old. The rose insignia on the breastplate is worn to a ghost, the steel patched and repatched, the plates dented in places that speak of fights survived rather than fights won. And across his back: a greatsword in a harness that does not match the rest of his equipment. The harness is new. The sword is not — it is very, very old, and even from this distance you can feel something about it. A hum. A weight. The particular quality of a weapon that is more than steel.
 
 He blocks the road. Not aggressively — he simply stops his horse and waits.
 
@@ -6643,7 +6643,7 @@ He plants the blade point-down in the road.
 
 He meets your eyes.
 
-'I am asking for a duel,' he says. 'Not to the death. To the yield. One knight against one squire, by the old forms. If you win—' he touches the sword, the armour, the shield — 'everything I carry is yours. If I win, I ride south, and I keep riding until I find the Dragon Army, and I make them earn what they have already taken.'
+'I am asking for a duel,' he says. 'Not to the death. To the yield. One knight against one squire, by the old forms. If you win—' he touches the sword, the armour — 'everything I carry is yours. If I win, I ride south, and I keep riding until I find the Dragon Army, and I make them earn what they have already taken.'
 
 He pauses.
 
@@ -6672,8 +6672,8 @@ He pauses.
 >
 > **SER HADRIAN:**
 > HP 20 (old, fragile — the body has nothing left to give)
-> AC 17 (Solamnic half-plate 15 + Shield +2)
-> *Dawnstrike* +7, 1d8+5 slashing + 1d6 radiant (the sword's magic compensates for his failing strength)
+> AC 15 (Solamnic half-plate)
+> *Dawnstrike* +7, 2d6+5 slashing + 1d6 radiant (Hadrian burns both Radiant Strikes in this duel — the sword's magic compensates for his failing strength)
 > **Veteran's Instinct:** Once per duel, Hadrian can force you to reroll a successful attack. 'Not yet. Again.'
 > **Failing Body:** Each round after Round 1, Hadrian makes a CON save (DC 12, then 14, then 16). On failure, his AC drops by 1 as his stance weakens. His attacks do not weaken — the sword carries what the body cannot.
 > **Yield:** Hadrian yields at 0 HP. He does not die. This is a duel to the yield, not to the death.
@@ -6683,7 +6683,7 @@ He pauses.
 > *He comes at you with the first combination of the old Solamnic forms — the ones from the textbooks, the ones that haven't been taught in two decades because the masters who taught them are dead. The blade leads with a diagonal cut that turns into a thrust that turns into a bind that you have never seen executed at speed before. Dawnstrike leaves a trail of pale gold light in the air.*
 >
 > **YOUR ATTACK:**
-> **ROLL REQUIRED:** Attack roll (per sheet) | DC 17 (Hadrian's AC)
+> **ROLL REQUIRED:** Attack roll (per sheet) | DC 15 (Hadrian's AC)
 >
 > **HIT:** Your blade finds the gap between plates. Hadrian grunts — pain, real pain, and something else. Satisfaction. 'Good steel,' he says. 'Good arm.' Deal weapon damage.
 >
@@ -6694,10 +6694,10 @@ He pauses.
 >
 > **SUCCESS:** You catch Dawnstrike on your blade. The impact travels through your arms and into your shoulders and you understand what a magical weapon feels like when it is trying to get through your guard: it feels like being hit by something that wants to hit you.
 >
-> **FAILURE:** Dawnstrike connects. Take 1d8+5 slashing + 1d6 radiant damage. The radiant burns cold — not fire, light, the pure white light of a Paladine-blessed blade that does not distinguish between evil and merely in-the-way.
+> **FAILURE:** Dawnstrike connects. Take 2d6+5 slashing + 1d6 radiant damage. The radiant burns cold — not fire, light, the pure white light of a Paladine-blessed blade that does not distinguish between evil and merely in-the-way.
 >
 > **HADRIAN'S CON SAVE:** DC 12. (DM rolls or player rolls for Hadrian.)
-> **FAILURE:** His stance wavers. AC drops to 16. He grits his teeth. He does not comment.
+> **FAILURE:** His stance wavers. AC drops to 14. He grits his teeth. He does not comment.
 > **SUCCESS:** He holds. The old body has one more round of perfection.
 
 > **ROUND 2 — THE KNIGHT HE WAS**
@@ -6705,7 +6705,7 @@ He pauses.
 > *He is faster than he should be. The sword is carrying him — you can see it, the way Dawnstrike pulls his arm into positions his muscles can no longer hold on their own. The blade is fighting through him and he is letting it. Forty-three years of service distilled into a weapon that remembers every one of them.*
 >
 > **YOUR ATTACK:**
-> **ROLL REQUIRED:** Attack roll (per sheet) | DC 17 (or lower if AC has dropped)
+> **ROLL REQUIRED:** Attack roll (per sheet) | DC 15 (or lower if AC has dropped)
 >
 > **HIT:** Deal weapon damage. Hadrian staggers. His knee — the left one, the one that does not bend — buckles. He catches himself. He raises the blade. He is not done.
 >
@@ -6717,7 +6717,7 @@ He pauses.
 > **HADRIAN'S STRIKE:**
 > **ROLL REQUIRED:** Defense roll | DC 17
 >
-> **HIT:** Take 1d8+5 + 1d6 radiant. The radiant light flares. Your companions flinch.
+> **HIT:** Take 2d6+5 + 1d6 radiant. The radiant light flares. Your companions flinch.
 >
 > **MISS:** His swing goes wide. His arm shakes. The sword tries to correct. The body cannot.
 >
@@ -6769,7 +6769,7 @@ He pauses.
 
 > **IF YOU WIN — THE YIELD**
 >
-> Ser Hadrian kneels. The kneeling costs him — the left knee makes a sound that is not a sound a knee should make — and he places Dawnstrike flat on the ground before you. Then the shield. Then he begins, with slow and painful dignity, to unbuckle his half-plate.
+> Ser Hadrian kneels. The kneeling costs him — the left knee makes a sound that is not a sound a knee should make — and he places Dawnstrike flat on the ground before you. Then he begins, with slow and painful dignity, to unbuckle his half-plate.
 >
 > 'It is yours,' he says. 'All of it. By right of arms, by the old forms, by the Measure.'
 >
@@ -6780,9 +6780,9 @@ He pauses.
 > **ITEMS GAINED:**
 >
 > > **✦ MAGIC ITEM GAINED: DAWNSTRIKE**
-> > *Weapon (Longsword), Rare (Requires Attunement)*
-> > An ancient Solamnic longsword, the blade inscribed with prayers to Paladine in a script that predates the Cataclysm. The crossguard is shaped like outstretched wings. The steel hums faintly when held — not vibration, resonance. It knows when it is being carried by someone worthy.
-> > **Mechanics:** +1 Longsword. 1d8+1+STR slashing, versatile (1d10+1). On hit: +1d6 radiant damage. Once per long rest: *Dawn's Light* — as a bonus action, Dawnstrike emits bright light in a 20-foot radius for 1 minute. Undead and fiends within the light have disadvantage on attack rolls. Once per long rest: *Last Stand* — when reduced to 0 HP, you may instead drop to 1 HP. Dawnstrike's light flares and goes dark until the next dawn.
+> > *Weapon (Greatsword), Rare (Requires Attunement)*
+> > An ancient Solamnic greatsword, the blade inscribed with prayers to Paladine in a script that predates the Cataclysm. The crossguard is shaped like outstretched wings. The steel hums faintly when held — not vibration, resonance. It knows when it is being carried by someone worthy.
+> > **Mechanics:** +1 Greatsword. 2d6+1+STR slashing, two-handed. Weapon Mastery: Graze (on miss, deal STR mod damage). Radiant Strike: 2/day, on hit add +1d6 radiant damage (free action, declare before damage roll). The blade hums faintly when pointed toward fiends or undead within 60 feet. Once per long rest: *Dawn's Light* — as a bonus action, Dawnstrike emits bright light in a 20-foot radius for 1 minute. Undead and fiends within the light have disadvantage on attack rolls. Once per long rest: *Last Stand* — when reduced to 0 HP, you may instead drop to 1 HP. Dawnstrike's light flares and goes dark until the next dawn.
 > > **Lore:** Nine generations of the White Span lineage carried this blade. Ser Hadrian was the last. Now you are the first of whatever comes next.
 >
 > > **ARMOUR GAINED: SER HADRIAN'S HALF-PLATE**
@@ -6790,11 +6790,8 @@ He pauses.
 > > AC 15 + DEX (max 2). Solamnic make, old but functional. The rose insignia on the breastplate is worn nearly invisible. The dents tell stories. Stealth disadvantage.
 > > **Lore:** Forty-three years of service. Every dent has a name.
 >
-> > **SHIELD GAINED: SER HADRIAN'S SHIELD**
-> > *Shield, Mundane*
-> > +2 AC. Heavy steel, Solamnic crest. Battered, reliable.
 >
-> Ser Hadrian stands in his gambeson, unarmed, unshielded, and lighter than he has been in forty-three years. He salutes one final time. He walks — not rides, walks — to his horse, mounts with difficulty, and turns south.
+> Ser Hadrian stands in his gambeson, unarmed and lighter than he has been in forty-three years. He salutes one final time. He walks — not rides, walks — to his horse, mounts with difficulty, and turns south.
 >
 > 'I will find the Dragon Army,' he says. 'Without the sword, they will kill me quickly. That is a kindness I have been riding toward for six months.' He looks back. 'If the sword sings for you — and it will, I think — listen to it. It knows things the Measure forgot.'
 >
