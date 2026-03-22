@@ -1928,7 +1928,7 @@ function LootBox({text,gs,onStateUpdate}){
   return e('div',{className:'loot-wrapper'},
     !choice?e('div',null,
       e('div',{className:'box loot'},
-        text.split('\n').filter(l=>l.trim()&&!l.includes('A)'&&!l.includes('B)')&&!l.includes('1-5')&&!l.includes('6-10')).slice(0,3).map((l,i)=>e('p',{key:i,dangerouslySetInnerHTML:{__html:fmt(l)}}))),
+        text.split('\n').filter(l=>l.trim()&&!l.includes('A)')&&!l.includes('B)')&&!l.includes('1-5')&&!l.includes('6-10')).slice(0,3).map((l,i)=>e('p',{key:i,dangerouslySetInnerHTML:{__html:fmt(l)}}))),
       e('div',{className:'loot-choice'},
         e('button',{className:'loot-choice-btn search',onClick:doLoot},'\u2694 Search'+(parsed.moralCost?' ('+Object.entries(parsed.moralCost).map(([k,v])=>v+' '+k.toUpperCase()).join(', ')+')':'')),
         e('button',{className:'loot-choice-btn leave',onClick:doLeave},'\u21b6 Leave (+1 ROSE)'))
