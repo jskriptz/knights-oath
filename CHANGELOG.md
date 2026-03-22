@@ -2,7 +2,7 @@
 
 All notable changes to **Dragonlance: The Knight's Oath** are documented here.
 
-## v19.1.3 — 2026-03-22
+## v20.0.0 — 2026-03-22
 
 ### Scene 4A: Aldous's Parting Advice
 - New transition scene between Scene 4 and the morning hub
