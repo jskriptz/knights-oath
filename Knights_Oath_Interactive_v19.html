@@ -2057,7 +2057,7 @@ function CoverScreen({onNew,onLoad}){
       e('p',{style:{margin:'0 0 4px'}},'\u2018Dragonlance,\u2019 \u2018Krynn,\u2019 \u2018Solamnic Knights,\u2019 and all related characters, locations, and lore are trademarks of Wizards of the Coast LLC. \u2018Dungeons & Dragons\u2019 and \u2018D&D\u2019 are registered trademarks of Wizards of the Coast LLC.'),
       e('p',{style:{margin:'0 0 4px'}},'This is unofficial fan content, not approved or endorsed by Wizards of the Coast. Made under the Fan Content Policy. No copyright or trademark infringement is intended.'),
       e('p',{style:{margin:0}},'Game mechanics reference the D&D 2024 System Reference Document (SRD 5.2), available under the Creative Commons Attribution 4.0 International License (CC BY 4.0).'),
-      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v19.0.3')));
+      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v19.0.4')));
 }
 
 // ── Character Creation ─────────────────────────────────
@@ -3235,7 +3235,10 @@ function App(){
         ns.companionLog[comp].push(summary);
       }
     }
-    if(c.target&&SCENES[c.target])goScene(c.target,ns);else setGs(ns)};
+    // Class-conditional target overrides
+    let finalTarget=c.target;
+    if(sceneId==='8'&&finalTarget==='M1'&&ns.cls==='Paladin')finalTarget='9';
+    if(finalTarget&&SCENES[finalTarget])goScene(finalTarget,ns);else setGs(ns)};
   const handleSavePick=async(slot)=>{const toSave={...gs};delete toSave.derived;await saveGame(slot,toSave,sceneId);setShowSave(false);setSaveMsg('Saved!');setTimeout(()=>setSaveMsg(''),2500)};
   const resolveRelationship=(action,names,picked)=>{
     if(!gs)return;
