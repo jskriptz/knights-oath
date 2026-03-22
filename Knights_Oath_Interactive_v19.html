@@ -1492,7 +1492,7 @@ function CompanionInfo({name,romance,onClose}){
     e('div',{className:'spell-tooltip companion-tooltip',onClick:ev=>ev.stopPropagation()},
       e('div',{className:'st-header'},
         e('span',{className:'st-name'},name),
-        romance?e('span',{className:'st-level'},'♡ '+romance):e('span',{className:'st-level'},'Companion'),
+        romance&&!['Friend','Distant','Cold','Observer','Hostile'].includes(romance)?e('span',{className:'st-level'},'♡ '+romance):e('span',{className:'st-level'},romance==='Friend'?'Friend':'Companion'),
         e('button',{className:'st-close',onClick:onClose},'✕')),
       e('div',{className:'st-meta comp-meta'},
         e('div',null,e('strong',null,'Appearance: '),c.desc),
@@ -1505,8 +1505,8 @@ function CompanionTag({name,romance,onView}){
   const firstName=(name.match(/^(\w+)/)||[])[1];
   const isRomance=romance&&!['Friend','Distant','Cold','Observer','Hostile'].includes(romance);
   const romTip=isRomance&&firstName&&ROMANCE_TOOLTIPS[firstName]?ROMANCE_TOOLTIPS[firstName][romance]:'';
-  return e('span',{className:'companion-tag'+(romance?' romance':''),onClick:()=>{if(onView)onView(name,romance)},style:{cursor:'pointer'},title:romTip},
-    name+(romance?' ♡':''),
+  return e('span',{className:'companion-tag'+(isRomance?' romance':''),onClick:()=>{if(onView)onView(name,romance)},style:{cursor:'pointer'},title:romTip},
+    name+(isRomance?' ♡':''),
     e('span',{className:'spell-tag-info'},'ⓘ'));
 }
 
