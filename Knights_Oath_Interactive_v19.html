@@ -309,40 +309,98 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Crimso
 .box.loot{border-color:var(--gold-dim);background:rgba(139,115,50,.06)}
 
 /* Combat Box */
-.combat-wrapper{margin:14px 0}
-.combat-mode-toggle{display:flex;gap:8px;margin-bottom:12px}
-.combat-mode-btn{padding:8px 16px;border:1px solid var(--border);background:none;color:var(--text-dim);font-family:'Cinzel',serif;font-size:11px;letter-spacing:1px;border-radius:4px;cursor:pointer;transition:all .2s}
-.combat-mode-btn.active{background:rgba(141,78,26,.2);border-color:var(--orange);color:var(--orange)}
-.combat-enemy-stats{padding:12px;border:1px solid rgba(141,78,26,.3);border-radius:6px;background:rgba(141,78,26,.04);margin-bottom:12px;font-size:13px;line-height:1.6}
-.combat-enemy-stats strong{color:var(--orange)}
-.combat-hp-tracker{display:flex;gap:12px;margin:12px 0;align-items:center;flex-wrap:wrap}
-.combat-hp-bar{flex:1;min-width:100px}
-.combat-hp-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:1px;color:var(--text-dim);margin-bottom:4px}
-.combat-hp-fill{height:8px;border-radius:4px;transition:width .3s ease}
-.combat-hp-fill.player{background:var(--green)}
-.combat-hp-fill.enemy{background:var(--orange)}
-.combat-hp-text{font-family:'Cinzel',serif;font-size:11px;color:var(--text-bright);margin-top:2px}
-.combat-round{padding:14px;border:1px solid var(--border);border-radius:6px;margin-bottom:10px;background:rgba(255,255,255,.02);transition:all .3s}
-.combat-round.active{border-color:var(--orange);background:rgba(141,78,26,.06)}
-.combat-round.complete{opacity:.7;border-color:rgba(141,78,26,.2)}
-.combat-round.locked{opacity:.4;pointer-events:none}
-.combat-round-header{font-family:'Cinzel',serif;font-size:12px;letter-spacing:1px;color:var(--orange);margin-bottom:8px}
-.combat-situation{font-style:italic;color:var(--text);margin-bottom:10px;line-height:1.6}
-.combat-companion-select{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
-.combat-companion-btn{padding:6px 12px;border:1px solid var(--border);background:none;color:var(--text);font-family:'Crimson Text',serif;font-size:13px;border-radius:4px;cursor:pointer;transition:all .2s;text-align:left}
-.combat-companion-btn:hover{border-color:var(--green);color:var(--green)}
-.combat-companion-btn.selected{background:rgba(74,138,90,.15);border-color:var(--green);color:#8ac8a0}
-.combat-ability-panel{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
-.combat-ability-btn{padding:5px 10px;border:1px solid var(--border);background:none;color:var(--text-dim);font-family:'Crimson Text',serif;font-size:12px;border-radius:4px;cursor:pointer;transition:all .2s}
-.combat-ability-btn:hover:not(:disabled){border-color:var(--gold);color:var(--gold)}
-.combat-ability-btn:disabled{opacity:.4;cursor:not-allowed}
-.combat-ability-btn.used{border-color:rgba(139,58,58,.5);color:rgba(139,58,58,.7)}
-.combat-result{padding:8px 12px;border-radius:4px;margin:6px 0;font-size:14px}
-.combat-result.hit{background:rgba(46,125,50,.1);border-left:3px solid var(--green);color:#8ac8a0}
-.combat-result.miss{background:rgba(139,58,58,.08);border-left:3px solid #8b3a3a;color:#d4a0a0}
-.combat-result.damage{background:rgba(141,78,26,.08);border-left:3px solid var(--orange);color:var(--orange)}
-.combat-over{padding:14px;border:2px solid var(--gold);border-radius:6px;background:rgba(201,168,76,.05);margin-top:12px}
+.combat-wrapper{background:rgba(20,15,10,.95);border:1px solid var(--gold-dim);border-radius:8px;padding:16px;margin:12px 0}
+.combat-mode-toggle{display:flex;gap:6px;margin-bottom:12px}
+.combat-mode-btn{background:transparent;border:1px solid var(--gold-dim);color:var(--text-dim);padding:4px 12px;font-size:11px;cursor:pointer;font-family:'Cinzel',serif;letter-spacing:1px;border-radius:4px}
+.combat-mode-btn.active{background:var(--gold-dim);color:var(--bg-dark)}
+.combat-mode-btn:hover{border-color:var(--gold)}
+.combat-round-header{font-family:'Cinzel',serif;font-size:14px;color:var(--gold);letter-spacing:2px;text-align:center;padding:8px 0;border-bottom:1px solid rgba(255,215,0,.2);margin-bottom:10px}
+.combat-situation{font-style:italic;color:var(--text-dim);font-size:13px;line-height:1.6;margin:8px 0 12px;padding:8px;background:rgba(255,255,255,.03);border-radius:4px}
+.combat-hp-tracker{margin:10px 0;display:flex;flex-direction:column;gap:6px}
+.combat-hp-bar{display:flex;align-items:center;gap:8px;font-size:12px}
+.combat-hp-bar.defeated{opacity:.4;text-decoration:line-through}
+.combat-hp-bar.unconscious{opacity:.6}
+.combat-hp-label{min-width:120px;color:var(--text-bright);font-size:11px;font-family:'Cinzel',serif;letter-spacing:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.combat-hp-bar-bg{flex:1;height:8px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden}
+.combat-hp-fill{height:100%;border-radius:4px;transition:width .3s}
+.combat-hp-fill.player{background:linear-gradient(90deg,#c0392b,#27ae60)}
+.combat-hp-fill.companion{background:linear-gradient(90deg,#c0392b,#2980b9)}
+.combat-hp-fill.enemy{background:linear-gradient(90deg,#c0392b,#e74c3c)}
+.combat-hp-text{min-width:60px;text-align:right;color:var(--text-dim);font-size:11px}
+.combat-section-header{font-family:'Cinzel',serif;font-size:12px;color:var(--gold-dim);letter-spacing:2px;margin:12px 0 8px;text-transform:uppercase}
+.combat-turn-panel{margin:12px 0;padding:10px;background:rgba(255,255,255,.03);border-radius:6px;border-left:3px solid var(--gold-dim)}
+.combat-turn-panel.enemy-turn{border-left-color:#c0392b}
+.combat-turn-panel.unconscious{border-left-color:#95a5a6;opacity:.8}
+.combat-weapon-display{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;font-size:13px;color:var(--text-bright)}
+.mastery-badge{display:inline-block;background:var(--gold-dim);color:var(--bg-dark);font-size:10px;padding:1px 6px;border-radius:3px;font-weight:bold;letter-spacing:1px;text-transform:uppercase}
+.weapon-info{color:var(--text-dim);font-size:11px}
+.weapon-swap-select{background:var(--bg-dark);color:var(--text-dim);border:1px solid var(--gold-dim);padding:2px 6px;font-size:11px;border-radius:4px;cursor:pointer}
+.target-grid{display:flex;flex-direction:column;gap:4px;margin:8px 0}
+.target-btn{background:rgba(255,255,255,.05);border:1px solid var(--gold-dim);color:var(--text-bright);padding:8px 12px;cursor:pointer;text-align:left;border-radius:4px;font-size:12px;transition:all .2s}
+.target-btn:hover:not(:disabled){background:rgba(255,215,0,.1);border-color:var(--gold)}
+.target-btn.out-of-range{opacity:.4;cursor:not-allowed}
+.range-warning{color:#c0392b;font-size:10px}
+.combat-other-actions{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.combat-action-btn{background:transparent;border:1px solid rgba(255,255,255,.2);color:var(--text-dim);padding:4px 10px;font-size:11px;cursor:pointer;border-radius:4px;transition:all .2s}
+.combat-action-btn:hover{border-color:var(--gold-dim);color:var(--text-bright)}
+.combat-action-btn.skip{border-color:rgba(255,255,255,.1);color:var(--text-dim)}
+.combat-target-selected{color:var(--gold);font-size:12px;margin-bottom:6px}
+.combat-result{padding:8px;border-radius:4px;margin:8px 0;font-size:13px}
+.combat-result.hit{background:rgba(39,174,96,.15);border-left:3px solid #27ae60}
+.combat-result.miss{background:rgba(192,57,43,.15);border-left:3px solid #c0392b}
+.mastery-result{color:var(--gold);font-size:12px;margin-top:4px}
+.smite-result{color:#f39c12;font-size:12px;margin-top:4px}
+.combat-bonus-phase{margin-top:8px}
+.combat-ability-panel{display:flex;flex-wrap:wrap;gap:4px}
+.combat-ability-btn{background:rgba(255,215,0,.1);border:1px solid var(--gold-dim);color:var(--gold);padding:6px 10px;font-size:11px;cursor:pointer;border-radius:4px;transition:all .2s}
+.combat-ability-btn:hover{background:rgba(255,215,0,.2)}
+.combat-ability-btn.smite{border-color:#f39c12;color:#f39c12}
+.combat-ability-btn.surge{border-color:#3498db;color:#3498db}
+.combat-surge-option{display:flex;gap:8px;margin-top:8px}
+.combat-companion-block{margin:8px 0;padding:8px;background:rgba(255,255,255,.02);border-radius:4px}
+.combat-companion-name{color:var(--text-bright);font-size:12px;font-family:'Cinzel',serif;letter-spacing:1px;margin-bottom:6px}
+.combat-companion-select{display:flex;flex-wrap:wrap;gap:4px}
+.combat-companion-btn{background:transparent;border:1px solid rgba(255,255,255,.15);color:var(--text-dim);padding:4px 8px;font-size:11px;cursor:pointer;border-radius:3px;transition:all .2s;text-align:left}
+.combat-companion-btn:hover{border-color:var(--gold-dim)}
+.combat-companion-btn.selected{background:rgba(255,215,0,.15);border-color:var(--gold);color:var(--text-bright)}
+.combat-conditions-row{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+.condition-icon{display:inline-block;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);padding:2px 6px;border-radius:3px;font-size:10px;color:var(--text-dim);cursor:help}
+.condition-icon.bless{border-color:var(--gold-dim);color:var(--gold)}
+.condition-icon.conc{border-color:#3498db;color:#3498db}
+.condition-icon.unconscious{border-color:#c0392b;color:#c0392b}
+.condition-icon.enemy{font-size:9px;padding:1px 4px}
+.combat-over{text-align:center;padding:16px;border:1px solid var(--gold-dim);border-radius:6px;margin:12px 0}
 .combat-over h3{font-family:'Cinzel',serif;color:var(--gold);margin-bottom:8px}
+.game-over-panel{margin-top:12px;padding:12px;border:1px solid #c0392b;border-radius:4px}
+.combat-log-details{margin-top:10px;font-size:11px;color:var(--text-dim)}
+.combat-log-details summary{cursor:pointer;color:var(--text-dim);font-size:11px}
+.combat-log{max-height:200px;overflow-y:auto;padding:4px 0}
+.combat-log-entry{padding:2px 0;border-bottom:1px solid rgba(255,255,255,.03)}
+.combat-log-entry.attack{color:var(--text-bright)}
+.combat-log-entry.enemy{color:#e74c3c}
+.combat-log-entry.companion{color:#3498db}
+.combat-log-entry.heal{color:#27ae60}
+.combat-log-entry.smite{color:#f39c12}
+.combat-log-entry.spell{color:#9b59b6}
+.combat-log-entry.result{color:var(--gold);font-weight:bold}
+.stat-block{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:8px;margin:6px 0}
+.stat-block.companion-stat{border-color:rgba(41,128,185,.3)}
+.stat-block-header{font-family:'Cinzel',serif;font-size:13px;color:var(--gold);letter-spacing:1px;margin-bottom:4px}
+.stat-block-line{font-size:12px;color:var(--text-bright);margin:2px 0}
+.stat-block-special{font-size:11px;color:var(--text-dim);font-style:italic;margin:2px 0}
+.combat-outcomes{margin:12px 0}
+.combat-outcome-btn{display:block;width:100%;padding:10px;margin:6px 0;border-radius:4px;cursor:pointer;font-size:13px;font-family:'Cinzel',serif;letter-spacing:1px}
+.combat-outcome-btn.win{background:rgba(39,174,96,.15);border:1px solid #27ae60;color:#27ae60}
+.combat-outcome-btn.win:hover{background:rgba(39,174,96,.25)}
+.combat-outcome-btn.lose{background:rgba(192,57,43,.15);border:1px solid #c0392b;color:#c0392b}
+.combat-outcome-btn.lose:hover{background:rgba(192,57,43,.25)}
+.outcome-text{font-size:12px;color:var(--text-dim);padding:4px 8px;margin:4px 0}
+.combat-enemy-preview{margin:4px 0;font-size:12px;color:var(--text-bright)}
+.combat-stat-blocks{margin:12px 0}
+.enemy-btn{background:rgba(192,57,43,.15)!important;border-color:#c0392b!important}
+.enemy-btn:hover{background:rgba(192,57,43,.25)!important}
+@media(max-width:600px){.combat-hp-label{min-width:80px;font-size:10px}.target-btn{font-size:11px;padding:6px 8px}.combat-companion-btn{font-size:10px}}
+
 
 /* Shop Box */
 .shop-wrapper{margin:14px 0}
@@ -951,7 +1009,7 @@ h2.red{color:var(--red)}
   <div id="loading-name">The Knight's Oath</div>
   <div id="loading-bar-container"><div id="loading-bar"></div></div>
   <div id="loading-status">Preparing...</div>
-  <div id="loading-sub">v20.1.0 • 217 Scenes • 9 Companions</div>
+  <div id="loading-sub">v21.0.0 • 217 Scenes • 9 Companions</div>
 </div>
 <script>
 // Loading progress tracker
@@ -1282,6 +1340,19 @@ const STARTING_ARMOR=[
 {name:'Studded Leather',ac:'AC 12 + DEX',props:'No penalties',heavy:false}
 ];
 
+const COMPANION_COMBAT_STATS={
+  Aldric:{ac:16,maxHp:18,attack:{name:'Longsword',bonus:4,damage:'1d8+2',type:'melee',reach:5},zone:'close'},
+  Sera:{ac:14,maxHp:14,attack:{name:'Shortbow',bonus:5,damage:'1d6+3',type:'ranged',reach:80},zone:'far'},
+  Mira:{ac:12,maxHp:12,attack:null,zone:'mid'},
+  Serath:{ac:13,maxHp:10,attack:{name:'Dagger',bonus:4,damage:'1d4+2',type:'melee',reach:5},zone:'close'},
+  Thessaly:{ac:11,maxHp:10,attack:null,zone:'mid'},
+  Vael:{ac:14,maxHp:14,attack:{name:'Longbow',bonus:4,damage:'1d6+2',type:'ranged',reach:80},zone:'far'},
+  Lysander:{ac:17,maxHp:22,attack:{name:'Longsword',bonus:6,damage:'1d10+3',type:'melee',reach:5},zone:'close'},
+  Tariel:{ac:14,maxHp:14,attack:{name:'Rapier',bonus:3,damage:'1d6+1',type:'melee',reach:5},zone:'close'},
+  Caeron:{ac:18,maxHp:26,attack:{name:'Longsword',bonus:6,damage:'1d8+3',type:'melee',reach:5},zone:'close'}
+};
+
+
 
 const FIGHTER_SKILLS=['Acrobatics','Animal Handling','Athletics','History','Insight','Intimidation','Perception','Persuasion','Survival'];
 const PALADIN_SKILLS=['Athletics','Insight','Intimidation','Medicine','Persuasion','Religion'];
@@ -1452,17 +1523,25 @@ function SidebarSpellTag({name,type}){
     show?e(SpellInfo,{name:name,onClose:()=>setShow(false)}):null);
 }
 // ── Roll Box ───────────────────────────────────────────
-function RollBox({text,derived,gs,onBonus}){
-  const[result,setResult]=useState(null);
+function RollBox({text,derived,gs,onBonus,rollKey,onRollSave}){
+  // Check for persisted roll result
+  const saved=(gs&&gs.completedRolls&&rollKey)?gs.completedRolls[rollKey]:null;
+  const[result,setResult]=useState(saved?saved.result:null);
   const[rolling,setRolling]=useState(false);
   const[display,setDisplay]=useState(null);
   const[prayerAvail,setPrayerAvail]=useState(false);
-  const[prayerResult,setPrayerResult]=useState(null);
+  const[prayerResult,setPrayerResult]=useState(saved?saved.prayer:null);
   const[prayRolling,setPrayRolling]=useState(false);
   const parsed=parseRollBox(text);
   const bonus=getBonus(derived,parsed.skill);
   const e=React.createElement;
-  
+
+  // Persist a roll result to gs.completedRolls
+  const saveRoll=(res,prayer)=>{
+    if(!rollKey||!onRollSave)return;
+    onRollSave(g=>{const cr={...(g.completedRolls||{})};cr[rollKey]={result:res,prayer:prayer||null};return{...g,completedRolls:cr}});
+  };
+
   // Determine which god to pray to
   const getGod=()=>{
     if(!gs)return'Paladine';
@@ -1472,16 +1551,16 @@ function RollBox({text,derived,gs,onBonus}){
       for(const[g,v] of Object.entries(signs)){if(v>bestVal){bestVal=v;best=g}}
       return best;
     }
-    // Fighter: Takhisis if fallen, Paladine otherwise
     return gs.dgTrack==='FALLEN'?'Takhisis':'Paladine';
   };
-  
+
   const roll=()=>{setRolling(true);setResult(null);setPrayerAvail(false);let c=0;
     const iv=setInterval(()=>{setDisplay(Math.floor(Math.random()*20)+1);if(++c>=10){clearInterval(iv);
       const d20=Math.floor(Math.random()*20)+1;const total=d20+bonus;
       const ok=total>=parsed.dc;
-      setResult({d20,total,ok});setDisplay(d20);setRolling(false);
-      // Track bonuses from successful rolls
+      const res={d20,total,ok};
+      setResult(res);setDisplay(d20);setRolling(false);
+      saveRoll(res,null);
       if(ok&&onBonus&&parsed.success){
         const stxt=parsed.success.join(' ');
         const bonusPatterns=[
@@ -1494,22 +1573,23 @@ function RollBox({text,derived,gs,onBonus}){
           if(m)onBonus({name:m[0].substring(0,60).trim(),desc:m[0].substring(0,100).trim(),scene:gs?.history?.length?'~'+gs.history.length:'?',type:bp.type});
         });
       }
-      // 10% chance of divine prayer on failure
       if(!ok&&Math.random()<0.10)setPrayerAvail(true);
     }},60)};
-  
+
   const pray=()=>{setPrayRolling(true);let c=0;
     const iv=setInterval(()=>{setDisplay(Math.floor(Math.random()*20)+1);if(++c>=10){clearInterval(iv);
       const d20=Math.floor(Math.random()*20)+1;const total=d20+bonus;
       const ok=total>=parsed.dc;
-      setPrayerResult({d20,total,ok});setPrayRolling(false);setPrayerAvail(false);
+      const res={d20,total,ok};
+      setPrayerResult(res);setPrayRolling(false);setPrayerAvail(false);
+      saveRoll(result,res);
       if(ok&&onBonus&&parsed.success){
         const stxt=parsed.success.join(' ');
         const m=stxt.match(/\+1 to (?:any |all )?(.+?)(?:check|roll|interaction)/i);
         if(m)onBonus({name:m[0].substring(0,60).trim(),desc:m[0].substring(0,100).trim(),scene:'prayer',type:'roll_bonus'});
       }
     }},60)};
-  
+
   const isOptional=!parsed.isRequired;
   const finalResult=prayerResult||result;
   const showOutcome=finalResult&&!finalResult.skipped;
@@ -1568,34 +1648,129 @@ function rollDamage(expr){
 function parseCombatBox(text){
   const lines=text.split('\n');
   const enemies=[];const rounds=[];const companions={};
-  let statBlock='',afterFight='',situation='';
+  let statBlock='',afterFight='',winOutcome='',loseOutcome='';
   let section='top';let roundNum=0;let currentRound=null;
+
+  // Parse enemy attacks from stat line: "Scimitar +4 (1d6+2)" or "Longsword +4, 1d8+2 slashing"
+  function parseAttacks(line){
+    const attacks=[];
+    // Match patterns like: Name +N (NdN+N) or Name +N, NdN+N type
+    const atkRegex=/(\w[\w\s]*?)\s*\+(\d+)[\s,]*(?:\()?(\d+d\d+(?:\+\d+)?)(?:\s*(piercing|slashing|bludgeoning|radiant|poison|fire|thunder|lightning|acid|necrotic|force))?/gi;
+    let m;
+    while((m=atkRegex.exec(line))!==null){
+      const name=m[1].trim();
+      // Determine melee vs ranged
+      const isRanged=/range|bow|crossbow|javelin|thrown/i.test(line.substring(Math.max(0,m.index-30),m.index+m[0].length+50));
+      const reachM=line.match(/reach/i);
+      attacks.push({
+        name:name,bonus:parseInt(m[2]),damage:m[3],
+        type:isRanged?'ranged':'melee',
+        reach:isRanged?80:(reachM?10:5)
+      });
+    }
+    return attacks;
+  }
+
+  // Parse specials from enemy line
+  function parseSpecials(line){
+    const specials=[];
+    const specialPatterns=[
+      /Death Throes[:\s]*([^.]+\.)/i,
+      /Nimble Escape[:\s]*([^.]+\.)/i,
+      /Relentless[:\s]*([^.]+\.)/i,
+      /Charge[:\s]*([^.]+\.)/i,
+      /Redirect Attack[:\s]*([^.]+\.)/i,
+      /Multi-attack[:\s]*([^.]+\.)/i,
+      /Lick Blade[:\s]*([^.]+\.)/i,
+      /Formation[:\s]*([^.]+\.)/i,
+      /Pack Tactics[:\s]*([^.]+\.)/i,
+      /Observant[:\s]*([^.]+\.?)/i,
+      /Burning Hands[:\s]*([^.]+\.)/i,
+      /Lightning Bolt[:\s]*([^.]+\.)/i
+    ];
+    for(const pat of specialPatterns){
+      const sm=line.match(pat);
+      if(sm)specials.push(sm[0].trim());
+    }
+    return specials;
+  }
 
   for(const line of lines){
     const l=line.trim();if(!l)continue;
-    // Detect enemies from stat blocks
-    const enemyM=l.match(/\*\*(.+?)(?:\s*\((\d+)\))?:\*\*\s*AC\s*(\d+),\s*HP\s*(\d+)/);
+
+    // Detect enemies from new format: **Name (count):** AC N, HP N ...
+    const enemyM=l.match(/\*\*(.+?)(?:\s*\((\d+)\))?(?:\s*x(\d+))?:\*\*\s*AC\s*(\d+)(?:\s*\([^)]*\))?,\s*HP\s*(\d+)/);
     if(enemyM){
-      const count=parseInt(enemyM[2])||1;
+      const count=parseInt(enemyM[2]||enemyM[3])||1;
+      const attacks=parseAttacks(l);
+      const specials=parseSpecials(l);
       for(let i=0;i<count;i++){
-        enemies.push({name:enemyM[1]+(count>1?' '+(i+1):''),ac:parseInt(enemyM[3]),maxHp:parseInt(enemyM[4]),hp:parseInt(enemyM[4])});
+        enemies.push({
+          name:enemyM[1].trim()+(count>1?' '+(i+1):''),
+          ac:parseInt(enemyM[4]),maxHp:parseInt(enemyM[5]),hp:parseInt(enemyM[5]),
+          attacks:attacks.length?attacks:[{name:'Attack',bonus:3,damage:'1d6+2',type:'melee',reach:5}],
+          specials:specials,zone:'close'
+        });
       }
       statBlock+=l+'\n';continue;
     }
-    // Detect round headers
-    const roundM=l.match(/\*\*ROUND\s*(\d+)/i);
+
+    // Also detect "• Name xN:" or bullet-point enemy format
+    const bulletEnemy=l.match(/[•\-]\s*(.+?)\s*x(\d+):\s*AC\s*(\d+),\s*HP\s*(\d+)/);
+    if(bulletEnemy){
+      const count=parseInt(bulletEnemy[2]);
+      const attacks=parseAttacks(l);
+      const specials=parseSpecials(l);
+      for(let i=0;i<count;i++){
+        enemies.push({
+          name:bulletEnemy[1].trim()+(count>1?' '+(i+1):''),
+          ac:parseInt(bulletEnemy[3]),maxHp:parseInt(bulletEnemy[4]),hp:parseInt(bulletEnemy[4]),
+          attacks:attacks.length?attacks:[{name:'Attack',bonus:3,damage:'1d6+2',type:'melee',reach:5}],
+          specials:specials,zone:'close'
+        });
+      }
+      statBlock+=l+'\n';continue;
+    }
+
+    // Single enemy without count: "• Baaz Draconian: AC 13, HP 14"
+    const singleEnemy=l.match(/[•\-]\s*(.+?):\s*AC\s*(\d+),\s*HP\s*(\d+)/);
+    if(singleEnemy&&!l.match(/^\|/)&&section==='top'){
+      const attacks=parseAttacks(l);
+      const specials=parseSpecials(l);
+      enemies.push({
+        name:singleEnemy[1].trim(),
+        ac:parseInt(singleEnemy[2]),maxHp:parseInt(singleEnemy[3]),hp:parseInt(singleEnemy[3]),
+        attacks:attacks.length?attacks:[{name:'Attack',bonus:3,damage:'1d6+2',type:'melee',reach:5}],
+        specials:specials,zone:'close'
+      });
+      statBlock+=l+'\n';continue;
+    }
+
+    // Detect round headers: "ROUND N" or "NARRATIVE COMBAT — ROUND N"
+    const roundM=l.match(/(?:NARRATIVE COMBAT\s*[\u2014\-]+\s*)?ROUND\s*(\d+)/i);
     if(roundM){
       if(currentRound)rounds.push(currentRound);
       roundNum=parseInt(roundM[1]);
-      currentRound={num:roundNum,situation:'',attackDC:0,defenseDC:0,text:l};
+      currentRound={num:roundNum,situation:'',text:l};
       section='round';continue;
     }
-    // Detect attack DC
-    const atkM=l.match(/Attack roll.*?DC\s*(\d+)/i);
-    if(atkM&&currentRound){currentRound.attackDC=parseInt(atkM[1]);continue}
-    // Detect defense DC
-    const defM=l.match(/Defense roll.*?DC\s*(\d+)/i);
-    if(defM&&currentRound){currentRound.defenseDC=parseInt(defM[1]);continue}
+
+    // Detect win outcome
+    if(/^(?:\*\*)?(?:Victory|WIN|VICTORY)[:\s]/i.test(l)){
+      winOutcome+=l.replace(/^\*\*(?:Victory|WIN|VICTORY)[:\s]?\*\*\s*/i,'')+'\n';
+      section='win';continue;
+    }
+    if(section==='win'&&!l.startsWith('**')){winOutcome+=l+'\n';continue}
+    if(section==='win'&&l.startsWith('**')){section='top'}
+
+    // Detect lose outcome
+    if(/^(?:\*\*)?(?:Fallen|LOSE|DEFEAT|DEFEATED)[:\s(]/i.test(l)){
+      loseOutcome+=l.replace(/^\*\*(?:Fallen|LOSE|DEFEAT|DEFEATED)[\s:(]?\*\*\s*/i,'')+'\n';
+      section='lose';continue;
+    }
+    if(section==='lose'&&!l.startsWith('**')){loseOutcome+=l+'\n';continue}
+    if(section==='lose'&&l.startsWith('**')){section='top'}
+
     // Detect companion actions table
     const compM=l.match(/^\|\s*(\w[\w\s]*?)\s*\|\s*(.+?)\s*\|\s*(.+?)\s*\|\s*(.+?)\s*\|$/);
     if(compM&&compM[1]!=='Companion'&&compM[1]!=='---'){
@@ -1603,233 +1778,939 @@ function parseCombatBox(text){
       companions[name]=[compM[2].trim(),compM[3].trim(),compM[4].trim()].filter(a=>a&&a!=='\u2014');
       continue;
     }
+
+    // Detect companion actions in non-table format: **Name:** A) ... B) ... C) ...
+    const compBlock=l.match(/^\*\*(?:\(If\s+)?(\w+)\)?(?:\s*\(if present\))?:\*\*$/i);
+    if(compBlock){
+      // Next lines should have A) B) C) actions — but we handle inline
+      continue;
+    }
+    // Inline companion actions: **Aldric:** A) Flank (+1 attack) | B) Shield Wall (+1 AC)
+    const compInline=l.match(/^\*\*(?:\(If\s+)?(\w+)\)?(?:\s*\(if present\))?:\*\*\s*(?:A\))\s*(.+)/i);
+    if(compInline){
+      const cname=compInline[1].trim();
+      const actionText=compInline[2];
+      const acts=[];
+      const actParts=l.replace(/^\*\*[^*]+\*\*\s*/,'').split(/\s*\|\s*(?=[A-C]\))/);
+      for(const part of actParts){
+        const am=part.match(/^[A-C]\)\s*(.+)/);
+        if(am)acts.push(am[1].trim());
+      }
+      if(acts.length)companions[cname]=acts;
+      continue;
+    }
+
     // After the fight
     if(l.includes('AFTER THE FIGHT')){section='after';afterFight+=l+'\n';continue}
     if(section==='after'){afterFight+=l+'\n';continue}
-    // Situation prose in rounds (italic text)
-    if(section==='round'&&currentRound&&l.startsWith('*')&&!l.startsWith('**')){
-      currentRound.situation+=l.replace(/^\*|\*$/g,'')+' ';continue;
+
+    // Situation prose in rounds (italic text or plain prose paragraphs)
+    if(section==='round'&&currentRound){
+      if(l.startsWith('*')&&!l.startsWith('**')){
+        currentRound.situation+=l.replace(/^\*|\*$/g,'')+' ';continue;
+      }
+      // Also capture non-bold, non-header prose as situation
+      if(!l.startsWith('**')&&!l.startsWith('|')&&!l.startsWith('>')&&!l.match(/^[A-Z]\)/)){
+        currentRound.situation+=l+' ';continue;
+      }
     }
     if(section==='top')statBlock+=l+'\n';
   }
   if(currentRound)rounds.push(currentRound);
-  // Default: if no rounds parsed, create one generic round
+
+  // Default: if no rounds parsed, create one generic round per enemy pair
   if(rounds.length===0&&enemies.length>0){
-    rounds.push({num:1,situation:'The enemy is before you.',attackDC:enemies[0].ac,defenseDC:15,text:''});
+    const numRounds=Math.max(1,Math.ceil(enemies.reduce((s,e)=>s+e.maxHp,0)/15));
+    for(let i=0;i<Math.min(numRounds,5);i++){
+      rounds.push({num:i+1,situation:i===0?'The enemy is before you.':'The fight continues.',text:''});
+    }
   }
-  return{enemies,rounds,companions,statBlock,afterFight};
+
+  return{enemies,rounds,companions,statBlock,afterFight,winOutcome:winOutcome.trim(),loseOutcome:loseOutcome.trim()};
 }
 
+// ── Combat Box (5e 2024) ─────────────────────────────────
 function CombatBox({text,gs,derived,onStateUpdate}){
   const e=React.createElement;
   const parsed=React.useMemo(()=>parseCombatBox(text),[text]);
+
+  // Resolve companion names: filter by party membership
+  const resolvedCompanions=React.useMemo(()=>{
+    const comps=gs.companions||[];
+    const has=n=>comps.some(c=>c.toLowerCase().includes(n.toLowerCase()));
+    const resolved={};
+    for(const[name,actions]of Object.entries(parsed.companions)){
+      const ifPresent=name.match(/^(.+?)\s*\(if present\)/i);
+      if(ifPresent){
+        if(has(ifPresent[1].trim()))resolved[ifPresent[1].trim()]=actions;
+        continue;
+      }
+      if(/other squire|another squire|fellow squire/i.test(name)){
+        const listed=Object.keys(parsed.companions).map(n=>(n.match(/^(\w+)/)||[])[1]?.toLowerCase());
+        const available=comps.find(c=>!listed.includes(c.toLowerCase()));
+        resolved[available||name]=actions;
+        continue;
+      }
+      const firstName=(name.match(/^(\w+)/)||[])[1];
+      if(firstName&&has(firstName)){resolved[name]=actions}
+      else if(!comps.length||!firstName){resolved[name]=actions}
+    }
+    return resolved;
+  },[parsed.companions,gs.companions]);
+
+  // Get weapon data for player
+  const getWeaponData=(weaponName)=>{
+    const w=WEAPONS_WITH_MASTERY.find(x=>x.name===weaponName);
+    if(!w)return{name:weaponName||'Unarmed',mastery:null,dmg:'1d4',props:'',type:'melee',reach:5};
+    const isRanged=/bow|crossbow/i.test(w.name)||/thrown/i.test(w.props);
+    const hasReach=/reach/i.test(w.props);
+    return{...w,type:isRanged?'ranged':'melee',reach:isRanged?80:(hasReach?10:5)};
+  };
+
+  // Combat state machine
+  const initCombat=()=>{
+    const companionList=(gs.companions||[]).map(name=>{
+      const first=(name.match(/^(\w+)/)||[])[1];
+      const stats=COMPANION_COMBAT_STATS[first]||{ac:13,maxHp:12,attack:{name:'Attack',bonus:3,damage:'1d4+1',type:'melee',reach:5},zone:'close'};
+      const actions=resolvedCompanions[name]||resolvedCompanions[first]||[];
+      return{name,hp:stats.maxHp,maxHp:stats.maxHp,ac:stats.ac,attack:stats.attack,actions,conditions:[],alive:true,zone:stats.zone,deathSaves:{success:0,fail:0},unconscious:false};
+    });
+    const enemyList=parsed.enemies.map((en,i)=>({
+      ...en,currentHp:en.maxHp,conditions:[],alive:true,
+      id:'enemy_'+i
+    }));
+    // Simple initiative: player first, then companions, then enemies
+    const order=['player',...companionList.map(c=>c.name),...enemyList.map(e=>e.id)];
+    return{
+      phase:'playerTurn',round:1,
+      enemies:enemyList,companions:companionList,
+      initiativeOrder:order,currentTurnIndex:0,
+      turnPhase:'action',hasActed:false,hasBonused:false,hasSurged:false,
+      weaponSwappedThisTurn:false,
+      activeWeapon:getWeaponData(gs.weapon),
+      concentrating:null,conditions:[],
+      log:[],result:null,selectedTarget:null,
+      playerHp:gs.hp,playerMaxHp:derived.maxHp,playerAc:derived.ac,
+      deathSaves:{success:0,fail:0},unconscious:false,
+      companionActionsThisRound:{},
+      vexTarget:null,dodging:false,
+      localSpellSlots:gs.spellSlotsUsed||0,
+      localSW:gs.secondWindUsed||0,
+      localAS:gs.actionSurgeUsed||false,
+      localLoH:gs.layOnHandsPool||0,
+      localPotions:gs.potions||0,
+      localBandages:gs.bandages||0,
+      smiteUsedThisTurn:false,
+      blessActive:false,blessRoundsLeft:0
+    };
+  };
+
   const[mode,setMode]=useState('narrative');
-  const[round,setRound]=useState(0);
-  const[phase,setPhase]=useState('companion'); // companion -> attack -> defend -> next
-  const[enemyHp,setEnemyHp]=useState(()=>{const h={};parsed.enemies.forEach((en,i)=>h[i]=en.maxHp);return h});
-  const[playerHp,setPlayerHp]=useState(gs.hp);
-  const[companionChoice,setCompanionChoice]=useState(null);
-  const[atkResult,setAtkResult]=useState(null);
-  const[defResult,setDefResult]=useState(null);
-  const[atkRolling,setAtkRolling]=useState(false);
-  const[defRolling,setDefRolling]=useState(false);
-  const[atkDisplay,setAtkDisplay]=useState(null);
-  const[defDisplay,setDefDisplay]=useState(null);
-  const[roundLog,setRoundLog]=useState([]);
-  const[combatOver,setCombatOver]=useState(false);
-  const[smiteUsed,setSmiteUsed]=useState(false);
-  const[abilityMsg,setAbilityMsg]=useState(null);
-  // Track abilities locally
-  const[localSpellSlots,setLocalSpellSlots]=useState(gs.spellSlotsUsed||0);
-  const[localSW,setLocalSW]=useState(gs.secondWindUsed||0);
-  const[localAS,setLocalAS]=useState(gs.actionSurgeUsed||false);
-  const[localLoH,setLocalLoH]=useState(gs.layOnHandsPool||0);
-  const[localPotions,setLocalPotions]=useState(gs.potions||0);
-  const[localBandages,setLocalBandages]=useState(gs.bandages||0);
+  const[combat,setCombat]=useState(null);
+  const[rolling,setRolling]=useState(false);
+  const[rollDisplay,setRollDisplay]=useState(null);
+  const[lastRollResult,setLastRollResult]=useState(null);
 
-  const curRound=parsed.rounds[round];
-  const atkBonus=derived.attackBonus+(companionChoice==='Flank (+1 attack)'||companionChoice==='Mark Target (+2 attack)'?parseInt((companionChoice.match(/\+(\d)/)||[0,0])[1]):0);
-  const acBonus=companionChoice==='Shield Wall (+1 AC)'||companionChoice==='Cover Fire (+1 AC)'?1:0;
+  // Start combat
+  const startCombat=()=>setCombat(initCombat());
 
-  // Check if all enemies dead
-  const allEnemiesDead=Object.values(enemyHp).every(h=>h<=0);
-  const playerDead=playerHp<=0;
-
-  const doAttack=()=>{
-    setAtkRolling(true);let c=0;
-    const iv=setInterval(()=>{setAtkDisplay(rollDice(20));if(++c>=10){clearInterval(iv);
-      const d20=rollDice(20);const total=d20+atkBonus;
-      const dc=curRound?curRound.attackDC:parsed.enemies[0]?.ac||13;
-      const hit=total>=dc;
-      let dmg=0;
-      if(hit){
-        dmg=rollDamage(derived.damage);
-        // Apply damage to first living enemy
-        const newHp={...enemyHp};
-        const target=Object.keys(newHp).find(k=>newHp[k]>0);
-        if(target!==undefined){newHp[target]=Math.max(0,newHp[target]-dmg);setEnemyHp(newHp)}
-      }
-      setAtkResult({d20,total,hit,dmg});setAtkDisplay(d20);setAtkRolling(false);
-      setRoundLog(l=>[...l,{round:round+1,type:'attack',d20,total,hit,dmg}]);
-      setPhase('defend');setSmiteUsed(false);
-    }},60);
+  // Dice animation helper
+  const animateRoll=(callback)=>{
+    setRolling(true);let c=0;
+    const iv=setInterval(()=>{
+      setRollDisplay(rollDice(20));
+      if(++c>=10){clearInterval(iv);setRolling(false);callback()}
+    },60);
   };
 
-  const doDefend=()=>{
-    setDefRolling(true);let c=0;
-    const iv=setInterval(()=>{setDefDisplay(rollDice(20));if(++c>=10){clearInterval(iv);
-      const d20=rollDice(20);const dc=curRound?curRound.defenseDC:15;
-      const total=d20+derived.dexMod+acBonus;
-      const success=total>=dc;
-      let dmg=0;
-      if(!success){
-        // Enemy damage: use first living enemy's attack
-        const en=parsed.enemies.find((_,i)=>enemyHp[i]>0);
-        dmg=en?rollDamage('1d8+3'):rollDamage('1d6+2');
-        setPlayerHp(h=>Math.max(0,h-dmg));
+  // Roll dice expression and return total
+  const rollExpr=(expr)=>{
+    const m=expr.match(/(\d+)d(\d+)(?:\+(\d+))?/);
+    if(!m)return parseInt(expr)||0;
+    let total=0;for(let i=0;i<parseInt(m[1]);i++)total+=rollDice(parseInt(m[2]));
+    return total+(parseInt(m[3])||0);
+  };
+
+  // Apply weapon mastery effect
+  const applyMastery=(weapon,hit,target,damage,c)=>{
+    if(!weapon.mastery)return{msg:null,extraDmg:0,c};
+    const nc={...c};
+    const mastery=weapon.mastery;
+
+    if(mastery==='Graze'&&!hit){
+      const grazeDmg=derived.strMod>0?derived.strMod:1;
+      const tIdx=nc.enemies.findIndex(e=>e.id===target);
+      if(tIdx>=0){nc.enemies=[...nc.enemies];nc.enemies[tIdx]={...nc.enemies[tIdx],currentHp:Math.max(0,nc.enemies[tIdx].currentHp-grazeDmg)};if(nc.enemies[tIdx].currentHp<=0)nc.enemies[tIdx].alive=false}
+      return{msg:'GRAZE: '+grazeDmg+' damage (ability modifier)',extraDmg:0,c:nc};
+    }
+    if(!hit)return{msg:null,extraDmg:0,c:nc};
+
+    if(mastery==='Sap'){
+      const tIdx=nc.enemies.findIndex(e=>e.id===target);
+      if(tIdx>=0){nc.enemies=[...nc.enemies];nc.enemies[tIdx]={...nc.enemies[tIdx],conditions:[...nc.enemies[tIdx].conditions,{name:'Sapped',duration:1}]}}
+      return{msg:'SAP: Target has disadvantage on next attack',extraDmg:0,c:nc};
+    }
+    if(mastery==='Topple'){
+      const dc=8+derived.profBonus+derived.strMod;
+      const save=rollDice(20);
+      if(save<dc){
+        const tIdx=nc.enemies.findIndex(e=>e.id===target);
+        if(tIdx>=0){nc.enemies=[...nc.enemies];nc.enemies[tIdx]={...nc.enemies[tIdx],conditions:[...nc.enemies[tIdx].conditions,{name:'Prone',duration:99}]}}
+        return{msg:'TOPPLE: Enemy fails CON save ('+save+' vs DC '+dc+') \u2014 knocked prone!',extraDmg:0,c:nc};
       }
-      setDefResult({d20,total,success,dmg});setDefDisplay(d20);setDefRolling(false);
-      setRoundLog(l=>[...l,{round:round+1,type:'defend',d20,total,success,dmg}]);
-      // Check end conditions
-      const allDead=Object.values(enemyHp).every(h=>h<=0);
-      if(allDead||playerHp-dmg<=0||round>=parsed.rounds.length-1){
-        setCombatOver(true);
-        // Update parent state
-        if(onStateUpdate){
-          onStateUpdate(g=>({...g,hp:Math.max(0,playerHp-(success?0:dmg)),spellSlotsUsed:localSpellSlots,secondWindUsed:localSW,actionSurgeUsed:localAS,layOnHandsPool:localLoH,potions:localPotions,bandages:localBandages}));
+      return{msg:'TOPPLE: Enemy passes CON save ('+save+' vs DC '+dc+')',extraDmg:0,c:nc};
+    }
+    if(mastery==='Vex'){
+      nc.vexTarget=target;
+      return{msg:'VEX: Next attack vs this target has advantage',extraDmg:0,c:nc};
+    }
+    if(mastery==='Cleave'){
+      const tIdx=nc.enemies.findIndex(e=>e.id===target);
+      if(tIdx>=0&&nc.enemies[tIdx].currentHp<=0){
+        const nextTarget=nc.enemies.find(e=>e.alive&&e.id!==target&&e.zone==='close');
+        if(nextTarget){
+          const cleaveRoll=rollDice(20)+derived.attackBonus;
+          const cleaveHit=cleaveRoll>=nextTarget.ac;
+          if(cleaveHit){
+            const cleaveDmg=rollExpr(derived.damage);
+            const nIdx=nc.enemies.findIndex(e=>e.id===nextTarget.id);
+            nc.enemies=[...nc.enemies];nc.enemies[nIdx]={...nc.enemies[nIdx],currentHp:Math.max(0,nc.enemies[nIdx].currentHp-cleaveDmg)};
+            if(nc.enemies[nIdx].currentHp<=0)nc.enemies[nIdx].alive=false;
+            return{msg:'CLEAVE! Free attack on '+nextTarget.name+': '+cleaveRoll+' vs AC '+nextTarget.ac+' \u2714 '+cleaveDmg+' damage!',extraDmg:0,c:nc};
+          }
+          return{msg:'CLEAVE! Free attack on '+nextTarget.name+': '+cleaveRoll+' vs AC '+nextTarget.ac+' \u2718 miss',extraDmg:0,c:nc};
         }
-      }else{setPhase('next')}
-    }},60);
+      }
+      return{msg:null,extraDmg:0,c:nc};
+    }
+    if(mastery==='Nick'){
+      return{msg:'NICK: Free offhand attack (no bonus action needed)',extraDmg:0,c:nc,nick:true};
+    }
+    if(mastery==='Push'){
+      return{msg:'PUSH: Target pushed 10ft back',extraDmg:0,c:nc};
+    }
+    if(mastery==='Slow'){
+      const tIdx=nc.enemies.findIndex(e=>e.id===target);
+      if(tIdx>=0){nc.enemies=[...nc.enemies];nc.enemies[tIdx]={...nc.enemies[tIdx],conditions:[...nc.enemies[tIdx].conditions,{name:'Slowed',duration:1}]}}
+      return{msg:'SLOW: Target speed reduced by 10ft',extraDmg:0,c:nc};
+    }
+    return{msg:null,extraDmg:0,c:nc};
   };
 
-  const nextRound=()=>{
-    setRound(r=>r+1);setPhase('companion');setAtkResult(null);setDefResult(null);setCompanionChoice(null);setSmiteUsed(false);setAbilityMsg(null);
+  // Player attack action
+  const doPlayerAttack=(targetId)=>{
+    animateRoll(()=>{
+      setCombat(prev=>{
+        let c={...prev};
+        const target=c.enemies.find(e=>e.id===targetId);
+        if(!target||!target.alive)return prev;
+
+        // Roll attack
+        let d20=rollDice(20);let d20b=null;
+        const hasAdvantage=(c.vexTarget===targetId)||(target.conditions.some(cd=>cd.name==='Prone')&&c.activeWeapon.type==='melee');
+        const hasDisadvantage=target.conditions.some(cd=>cd.name==='Dodging');
+        if(hasAdvantage&&!hasDisadvantage){d20b=rollDice(20);d20=Math.max(d20,d20b)}
+        else if(hasDisadvantage&&!hasAdvantage){d20b=rollDice(20);d20=Math.min(d20,d20b)}
+
+        // Companion bonuses
+        let atkMod=0;
+        Object.values(c.companionActionsThisRound).forEach(a=>{
+          if(/\+1.*attack|flank/i.test(a))atkMod+=1;
+          if(/\+2.*attack|mark target|combat instruction|intel/i.test(a))atkMod+=2;
+        });
+
+        // Bless
+        let blessBonus=0;
+        if(c.blessActive){blessBonus=rollDice(4)}
+
+        const total=d20+derived.attackBonus+atkMod+blessBonus;
+        const isCrit=d20===20;
+        const isFumble=d20===1;
+        const hit=isCrit||(total>=target.ac&&!isFumble);
+
+        let dmg=0;let logMsg='';
+        const weapon=c.activeWeapon;
+
+        if(hit){
+          dmg=rollExpr(derived.damage);
+          if(isCrit)dmg+=rollExpr(weapon.dmg||derived.damage); // double dice on crit
+          // Apply damage
+          const tIdx=c.enemies.findIndex(e=>e.id===targetId);
+          c.enemies=[...c.enemies];c.enemies[tIdx]={...c.enemies[tIdx],currentHp:Math.max(0,c.enemies[tIdx].currentHp-dmg)};
+          if(c.enemies[tIdx].currentHp<=0)c.enemies[tIdx].alive=false;
+          logMsg='R'+c.round+' Attack: d20='+d20+(d20b!==null?' (adv/disadv: '+d20b+')':'')+' +'+derived.attackBonus+(atkMod?'+'+atkMod:'')+(blessBonus?'+'+blessBonus+' bless':'')+' = '+total+' vs AC '+target.ac+' \u2714 HIT'+(isCrit?' (CRITICAL!)':'')+' for '+dmg+' damage';
+        }else{
+          logMsg='R'+c.round+' Attack: d20='+d20+(d20b!==null?' (adv/disadv: '+d20b+')':'')+' +'+derived.attackBonus+(atkMod?'+'+atkMod:'')+(blessBonus?'+'+blessBonus+' bless':'')+' = '+total+' vs AC '+target.ac+' \u2718 MISS';
+        }
+
+        // Apply weapon mastery
+        const masteryResult=applyMastery(weapon,hit,targetId,dmg,c);
+        c=masteryResult.c;
+        if(masteryResult.msg)logMsg+='. '+masteryResult.msg;
+
+        // Clear vex if used
+        if(c.vexTarget===targetId)c.vexTarget=null;
+
+        c.log=[...c.log,{type:'attack',text:logMsg,round:c.round}];
+        c.hasActed=true;
+        c.turnPhase='bonus';
+        c.selectedTarget=null;
+
+        // Set last roll result for display
+        setLastRollResult({d20,total,hit,dmg,isCrit,targetName:target.name,mastery:masteryResult.msg});
+        setRollDisplay(d20);
+
+        return c;
+      });
+    });
   };
 
-  // Ability handlers
+  // Player dodge action
+  const doPlayerDodge=()=>{
+    setCombat(prev=>{
+      const c={...prev};
+      c.dodging=true;
+      c.hasActed=true;c.turnPhase='bonus';
+      c.log=[...c.log,{type:'action',text:'R'+c.round+' Dodge: Attacks against you have disadvantage until next turn',round:c.round}];
+      return c;
+    });
+  };
+
+  // Divine Smite (bonus action, after hit)
   const useSmite=()=>{
-    if(localSpellSlots>=(derived.spellSlotsMax||2))return;
-    const dmg=rollDamage('2d8');
-    const newHp={...enemyHp};
-    const target=Object.keys(newHp).find(k=>newHp[k]>0);
-    if(target!==undefined){newHp[target]=Math.max(0,newHp[target]-dmg);setEnemyHp(newHp)}
-    setLocalSpellSlots(s=>s+1);setSmiteUsed(true);
-    setAbilityMsg('Divine Smite! '+dmg+' radiant damage!');
-    setRoundLog(l=>[...l,{round:round+1,type:'smite',dmg}]);
+    setCombat(prev=>{
+      const c={...prev};
+      if(c.localSpellSlots>=(derived.spellSlotsMax||2))return prev;
+      const dmg=rollExpr('2d8');
+      // Find last attacked enemy that's still alive, or first alive
+      const target=c.enemies.find(e=>e.alive);
+      if(target){
+        const tIdx=c.enemies.findIndex(e=>e.id===target.id);
+        c.enemies=[...c.enemies];c.enemies[tIdx]={...c.enemies[tIdx],currentHp:Math.max(0,c.enemies[tIdx].currentHp-dmg)};
+        if(c.enemies[tIdx].currentHp<=0)c.enemies[tIdx].alive=false;
+      }
+      c.localSpellSlots+=1;c.smiteUsedThisTurn=true;c.hasBonused=true;
+      c.log=[...c.log,{type:'smite',text:'R'+c.round+' Divine Smite: '+dmg+' radiant damage!',round:c.round}];
+      setLastRollResult(r=>({...r,smiteDmg:dmg}));
+      return c;
+    });
   };
+
+  // Second Wind (bonus action)
   const useSecondWind=()=>{
-    if(localSW>=(derived.secondWindMax||2))return;
-    const heal=rollDamage('1d10')+gs.level;
-    setPlayerHp(h=>Math.min(derived.maxHp,h+heal));setLocalSW(s=>s+1);
-    setAbilityMsg('Second Wind! Healed '+heal+' HP.');
+    setCombat(prev=>{
+      const c={...prev};
+      if(c.localSW>=(derived.secondWindMax||2))return prev;
+      const heal=rollExpr('1d10')+gs.level;
+      c.playerHp=Math.min(c.playerMaxHp,c.playerHp+heal);c.localSW+=1;c.hasBonused=true;
+      c.log=[...c.log,{type:'heal',text:'R'+c.round+' Second Wind: healed '+heal+' HP',round:c.round}];
+      return c;
+    });
   };
+
+  // Lay on Hands (bonus action)
   const useLayOnHands=()=>{
-    if(localLoH<=0)return;
-    const amt=Math.min(5,localLoH);
-    setPlayerHp(h=>Math.min(derived.maxHp,h+amt));setLocalLoH(p=>p-amt);
-    setAbilityMsg('Lay on Hands: healed '+amt+' HP.');
+    setCombat(prev=>{
+      const c={...prev};
+      if(c.localLoH<=0)return prev;
+      const amt=Math.min(5,c.localLoH,c.playerMaxHp-c.playerHp);
+      c.playerHp=Math.min(c.playerMaxHp,c.playerHp+amt);c.localLoH-=amt;c.hasBonused=true;
+      c.log=[...c.log,{type:'heal',text:'R'+c.round+' Lay on Hands: healed '+amt+' HP ('+c.localLoH+' pool remaining)',round:c.round}];
+      return c;
+    });
   };
+
+  // Potion (bonus action)
   const usePotion=()=>{
-    if(localPotions<=0)return;
-    const heal=rollDamage('2d4')+2;
-    setPlayerHp(h=>Math.min(derived.maxHp,h+heal));setLocalPotions(p=>p-1);
-    setAbilityMsg('Potion of Healing: healed '+heal+' HP.');
+    setCombat(prev=>{
+      const c={...prev};
+      if(c.localPotions<=0)return prev;
+      const heal=rollExpr('2d4')+2;
+      c.playerHp=Math.min(c.playerMaxHp,c.playerHp+heal);c.localPotions-=1;c.hasBonused=true;
+      c.log=[...c.log,{type:'heal',text:'R'+c.round+' Potion of Healing: healed '+heal+' HP',round:c.round}];
+      return c;
+    });
   };
 
-  const compNames=Object.keys(parsed.companions);
-  const hasCompanions=compNames.length>0;
+  // Cast Bless (action, concentration)
+  const castBless=()=>{
+    setCombat(prev=>{
+      const c={...prev};
+      if(c.localSpellSlots>=(derived.spellSlotsMax||2))return prev;
+      c.localSpellSlots+=1;c.blessActive=true;c.blessRoundsLeft=10;
+      c.concentrating={spell:'Bless',roundsLeft:10};
+      c.hasActed=true;c.turnPhase='bonus';
+      c.log=[...c.log,{type:'spell',text:'R'+c.round+' Cast Bless: +1d4 to attacks and saves (concentration)',round:c.round}];
+      return c;
+    });
+  };
 
-  // Pen & paper mode: just show stat blocks
+  // Cast Cure Wounds (action, replaces attack)
+  const castCureWounds=(targetName)=>{
+    setCombat(prev=>{
+      const c={...prev};
+      if(c.localSpellSlots>=(derived.spellSlotsMax||2))return prev;
+      const heal=rollExpr('2d8')+(derived.chaMod||0);
+      c.localSpellSlots+=1;
+      if(targetName==='self'){
+        c.playerHp=Math.min(c.playerMaxHp,c.playerHp+heal);
+      }else{
+        const cIdx=c.companions.findIndex(cp=>cp.name.includes(targetName));
+        if(cIdx>=0){c.companions=[...c.companions];c.companions[cIdx]={...c.companions[cIdx],hp:Math.min(c.companions[cIdx].maxHp,c.companions[cIdx].hp+heal),unconscious:false,alive:true}}
+      }
+      c.hasActed=true;c.turnPhase='bonus';
+      c.log=[...c.log,{type:'heal',text:'R'+c.round+' Cure Wounds on '+(targetName==='self'?'self':targetName)+': healed '+heal+' HP',round:c.round}];
+      return c;
+    });
+  };
+
+  // Action Surge (extra action after bonus)
+  const useActionSurge=()=>{
+    setCombat(prev=>{
+      const c={...prev};
+      c.localAS=true;c.hasSurged=true;c.hasActed=false;c.turnPhase='action';
+      c.log=[...c.log,{type:'action',text:'R'+c.round+' Action Surge! Extra action this turn.',round:c.round}];
+      return c;
+    });
+  };
+
+  // Weapon swap
+  const swapWeapon=(weaponName)=>{
+    setCombat(prev=>{
+      const c={...prev};
+      c.activeWeapon=getWeaponData(weaponName);c.weaponSwappedThisTurn=true;
+      c.log=[...c.log,{type:'action',text:'R'+c.round+' Swapped to '+weaponName,round:c.round}];
+      return c;
+    });
+  };
+
+  // End player turn -> companion turn
+  const endPlayerTurn=()=>{
+    setCombat(prev=>{
+      const c={...prev};
+      c.turnPhase=null;
+      setLastRollResult(null);
+      // Move to companion turn if we have living companions with actions
+      const livingCompanions=c.companions.filter(cp=>cp.alive&&!cp.unconscious);
+      if(livingCompanions.length>0){
+        c.phase='companionTurn';
+        c.companionActionsThisRound={};
+      }else{
+        c.phase='enemyTurn';
+      }
+      return c;
+    });
+  };
+
+  // Companion action selection
+  const selectCompanionAction=(compName,action)=>{
+    setCombat(prev=>{
+      const c={...prev};
+      c.companionActionsThisRound={...c.companionActionsThisRound,[compName]:action};
+      return c;
+    });
+  };
+
+  // Resolve all companion actions and proceed to enemy turn
+  const resolveCompanionActions=()=>{
+    setCombat(prev=>{
+      let c={...prev};
+      const logEntries=[];
+
+      for(const comp of c.companions){
+        if(!comp.alive||comp.unconscious)continue;
+        const action=c.companionActionsThisRound[comp.name];
+        if(!action)continue;
+
+        // Attack actions
+        if(/strike|shot|dagger|frontline|veteran/i.test(action)){
+          const target=c.enemies.find(e=>e.alive);
+          if(target&&comp.attack){
+            const roll=rollDice(20);
+            const total=roll+comp.attack.bonus;
+            const hit=roll===20||(total>=target.ac&&roll!==1);
+            if(hit){
+              const dmg=rollExpr(comp.attack.damage);
+              const tIdx=c.enemies.findIndex(e=>e.id===target.id);
+              c.enemies=[...c.enemies];c.enemies[tIdx]={...c.enemies[tIdx],currentHp:Math.max(0,c.enemies[tIdx].currentHp-dmg)};
+              if(c.enemies[tIdx].currentHp<=0)c.enemies[tIdx].alive=false;
+              logEntries.push(comp.name+': '+action+' \u2192 d20='+roll+'+'+comp.attack.bonus+'='+total+' vs AC '+target.ac+' \u2714 '+dmg+' dmg');
+            }else{
+              logEntries.push(comp.name+': '+action+' \u2192 d20='+roll+'+'+comp.attack.bonus+'='+total+' vs AC '+target.ac+' \u2718 miss');
+            }
+          }
+        }
+        // Heal actions (Mira)
+        else if(/heal.*\d/i.test(action)){
+          // Heal player or lowest HP companion
+          const heal=rollExpr('1d6')+2;
+          if(c.playerHp<c.playerMaxHp){
+            c.playerHp=Math.min(c.playerMaxHp,c.playerHp+heal);
+            logEntries.push(comp.name+': Healed you for '+heal+' HP');
+          }else{
+            const injured=c.companions.filter(cp=>cp.alive&&cp.hp<cp.maxHp).sort((a,b)=>a.hp-b.hp)[0];
+            if(injured){
+              const idx=c.companions.findIndex(cp=>cp.name===injured.name);
+              c.companions=[...c.companions];c.companions[idx]={...c.companions[idx],hp:Math.min(c.companions[idx].maxHp,c.companions[idx].hp+heal)};
+              logEntries.push(comp.name+': Healed '+injured.name+' for '+heal+' HP');
+            }else{
+              logEntries.push(comp.name+': No one needs healing');
+            }
+          }
+        }
+        // Guard (Lysander takes next hit)
+        else if(/guard|takes.*next.*hit/i.test(action)){
+          logEntries.push(comp.name+': Guarding you (will take next hit aimed at you)');
+          // Flag handled in enemy turn
+          c.companionActionsThisRound[comp.name]='GUARD_ACTIVE';
+        }
+        // Buff actions (logged as narrative)
+        else{
+          logEntries.push(comp.name+': '+action);
+        }
+      }
+
+      // Companion death saves for unconscious companions
+      for(let i=0;i<c.companions.length;i++){
+        if(c.companions[i].unconscious&&c.companions[i].alive){
+          const save=rollDice(20);
+          c.companions=[...c.companions];
+          const cp={...c.companions[i],deathSaves:{...c.companions[i].deathSaves}};
+          if(save===20){cp.hp=1;cp.unconscious=false;logEntries.push(cp.name+' rolls nat 20 on death save \u2014 regains 1 HP!')}
+          else if(save>=10){cp.deathSaves.success+=1;logEntries.push(cp.name+' death save: '+save+' \u2714 ('+cp.deathSaves.success+'/3 successes)')}
+          else if(save===1){cp.deathSaves.fail+=2;logEntries.push(cp.name+' death save: nat 1 \u2718\u2718 ('+cp.deathSaves.fail+'/3 failures)')}
+          else{cp.deathSaves.fail+=1;logEntries.push(cp.name+' death save: '+save+' \u2718 ('+cp.deathSaves.fail+'/3 failures)')}
+          if(cp.deathSaves.success>=3){cp.unconscious=false;cp.hp=0;logEntries.push(cp.name+' stabilized!')}
+          if(cp.deathSaves.fail>=3){cp.alive=false;cp.unconscious=false;logEntries.push(cp.name+' has fallen. They do not rise.')}
+          c.companions[i]=cp;
+        }
+      }
+
+      c.log=[...c.log,...logEntries.map(t=>({type:'companion',text:'R'+c.round+' '+t,round:c.round}))];
+      c.phase='enemyTurn';
+      return c;
+    });
+  };
+
+  // Enemy turn: auto-resolve all enemy attacks
+  const resolveEnemyTurn=()=>{
+    animateRoll(()=>{
+      setCombat(prev=>{
+        let c={...prev};
+        const logEntries=[];
+        const livingEnemies=c.enemies.filter(e=>e.alive);
+
+        // Player death saves if unconscious
+        if(c.unconscious&&!c.result){
+          const save=rollDice(20);
+          const ds={...c.deathSaves};
+          if(save===20){c.playerHp=1;c.unconscious=false;ds.success=0;ds.fail=0;logEntries.push('You roll nat 20 on death save \u2014 you regain 1 HP and wake up!')}
+          else if(save>=10){ds.success+=1;logEntries.push('Death save: '+save+' \u2714 ('+ds.success+'/3 successes)')}
+          else if(save===1){ds.fail+=2;logEntries.push('Death save: nat 1 \u2718\u2718 ('+ds.fail+'/3 failures)')}
+          else{ds.fail+=1;logEntries.push('Death save: '+save+' \u2718 ('+ds.fail+'/3 failures)')}
+          if(ds.success>=3){c.unconscious=false;logEntries.push('You are stabilized.')}
+          if(ds.fail>=3){c.result='lose';logEntries.push('You have fallen.')}
+          c.deathSaves=ds;
+        }
+
+        for(const enemy of livingEnemies){
+          if(c.result)break;
+          const attack=enemy.attacks[0]||{name:'Attack',bonus:3,damage:'1d6+2',type:'melee',reach:5};
+
+          // Check sapped condition (disadvantage on attack)
+          const isSapped=enemy.conditions.some(cd=>cd.name==='Sapped');
+
+          // Target selection
+          let targetType='player';let targetAc=c.playerAc;let targetName='you';
+          const livingComps=c.companions.filter(cp=>cp.alive&&!cp.unconscious);
+
+          // Check for guard
+          const guardComp=Object.entries(c.companionActionsThisRound).find(([k,v])=>v==='GUARD_ACTIVE');
+          if(guardComp){
+            const gc=c.companions.find(cp=>cp.name===guardComp[0]&&cp.alive&&!cp.unconscious);
+            if(gc){targetType='companion';targetAc=gc.ac;targetName=gc.name}
+          }
+          // Check for frontline/aggro (Caeron)
+          else if(Object.values(c.companionActionsThisRound).some(a=>/frontline|draws aggro/i.test(a))){
+            const fc=c.companions.find(cp=>cp.name.includes('Caeron')&&cp.alive&&!cp.unconscious);
+            if(fc){targetType='companion';targetAc=fc.ac;targetName=fc.name}
+          }
+          // Random targeting: 60% player, 40% companion
+          else if(livingComps.length>0&&!c.unconscious&&Math.random()>0.6){
+            const rc=livingComps[Math.floor(Math.random()*livingComps.length)];
+            targetType='companion';targetAc=rc.ac;targetName=rc.name;
+          }
+
+          // If player is unconscious and no guard, target companions
+          if(c.unconscious&&targetType==='player'&&livingComps.length>0){
+            const rc=livingComps[Math.floor(Math.random()*livingComps.length)];
+            targetType='companion';targetAc=rc.ac;targetName=rc.name;
+          }
+
+          // AC bonuses from companions
+          let acMod=0;
+          Object.values(c.companionActionsThisRound).forEach(a=>{
+            if(targetType==='player'&&/\+1.*AC|shield wall|cover fire/i.test(a))acMod+=1;
+          });
+          targetAc+=acMod;
+
+          // Roll attack
+          let d20=rollDice(20);
+          const hasDisadv=(targetType==='player'&&c.dodging)||isSapped;
+          if(hasDisadv){const d20b=rollDice(20);d20=Math.min(d20,d20b)}
+
+          const total=d20+attack.bonus;
+          const hit=d20===20||(total>=targetAc&&d20!==1);
+
+          if(hit){
+            const dmg=rollExpr(attack.damage);
+            if(targetType==='player'&&!c.unconscious){
+              c.playerHp=Math.max(0,c.playerHp-dmg);
+              logEntries.push(enemy.name+' attacks '+targetName+': d20='+d20+'+'+attack.bonus+'='+total+' vs AC '+targetAc+' \u2714 '+dmg+' damage');
+              // Concentration check
+              if(c.concentrating){
+                const conDC=Math.max(10,Math.floor(dmg/2));
+                const conSave=rollDice(20)+derived.conMod;
+                if(conSave<conDC){c.concentrating=null;c.blessActive=false;logEntries.push('Concentration broken! (CON save '+conSave+' vs DC '+conDC+')')}
+                else{logEntries.push('Concentration held (CON save '+conSave+' vs DC '+conDC+')')}
+              }
+              // Check if player drops to 0
+              if(c.playerHp<=0){
+                c.playerHp=0;
+                if(livingComps.length>0){
+                  c.unconscious=true;c.deathSaves={success:0,fail:0};
+                  logEntries.push('You fall unconscious! Your companions fight on.');
+                }else{
+                  c.result='lose';
+                  logEntries.push('You fall. There is no one left to save you.');
+                }
+              }
+            }else if(targetType==='companion'){
+              const cIdx=c.companions.findIndex(cp=>cp.name===targetName);
+              if(cIdx>=0){
+                c.companions=[...c.companions];c.companions[cIdx]={...c.companions[cIdx],hp:Math.max(0,c.companions[cIdx].hp-dmg)};
+                logEntries.push(enemy.name+' attacks '+targetName+': d20='+d20+'+'+attack.bonus+'='+total+' vs AC '+targetAc+' \u2714 '+dmg+' damage');
+                if(c.companions[cIdx].hp<=0){
+                  c.companions[cIdx]={...c.companions[cIdx],hp:0,unconscious:true,deathSaves:{success:0,fail:0}};
+                  logEntries.push(targetName+' falls unconscious!');
+                }
+              }
+            }
+          }else{
+            logEntries.push(enemy.name+' attacks '+targetName+': d20='+d20+'+'+attack.bonus+'='+total+' vs AC '+targetAc+' \u2718 miss');
+          }
+        }
+
+        // Tick conditions on enemies
+        c.enemies=c.enemies.map(e=>({...e,conditions:e.conditions.filter(cd=>{
+          if(cd.duration<=1)return false;
+          cd.duration--;return true;
+        })}));
+
+        c.log=[...c.log,...logEntries.map(t=>({type:'enemy',text:'R'+c.round+' '+t,round:c.round}))];
+
+        // Check win condition
+        if(c.enemies.every(e=>!e.alive)){
+          c.result='win';
+          c.log=[...c.log,{type:'result',text:'VICTORY \u2014 All enemies defeated!',round:c.round}];
+        }
+
+        // Advance round
+        if(!c.result){
+          // Check if we've exceeded max rounds
+          if(c.round>=parsed.rounds.length&&parsed.rounds.length>0){
+            c.result='win';
+            c.log=[...c.log,{type:'result',text:'The fight ends. You stand.',round:c.round}];
+          }else{
+            c.round+=1;c.phase='playerTurn';c.turnPhase='action';
+            c.hasActed=false;c.hasBonused=false;c.hasSurged=false;
+            c.weaponSwappedThisTurn=false;c.smiteUsedThisTurn=false;
+            c.dodging=false;c.selectedTarget=null;
+            // Tick bless
+            if(c.blessActive){c.blessRoundsLeft-=1;if(c.blessRoundsLeft<=0){c.blessActive=false;c.concentrating=null}}
+          }
+        }
+
+        // If combat over, update parent state
+        if(c.result&&onStateUpdate){
+          onStateUpdate(g=>{
+            const ng={...g,hp:Math.max(c.result==='win'?1:0,c.playerHp),spellSlotsUsed:c.localSpellSlots,secondWindUsed:c.localSW,actionSurgeUsed:c.localAS,layOnHandsPool:c.localLoH,potions:c.localPotions,bandages:c.localBandages};
+            // Handle companion deaths
+            const dead=c.companions.filter(cp=>!cp.alive);
+            if(dead.length){
+              ng.companions=(g.companions||[]).filter(name=>!dead.some(d=>d.name===name));
+              ng.deadCompanions=[...(g.deadCompanions||[]),...dead.map(d=>({name:d.name,scene:g.history&&g.history.length?g.history[g.history.length-1]:'unknown',cause:'Fell in combat'}))];
+            }
+            return ng;
+          });
+        }
+
+        return c;
+      });
+    });
+  };
+
+  // ─── Pen & Paper Mode ───
   if(mode==='penandpaper'){
     return e('div',{className:'combat-wrapper'},
       e('div',{className:'combat-mode-toggle'},
         e('button',{className:'combat-mode-btn',onClick:()=>setMode('narrative')},'NARRATIVE'),
         e('button',{className:'combat-mode-btn active'},'PEN & PAPER')),
-      e('div',{className:'combat-enemy-stats'},
-        e('p',null,e('strong',null,'Use these stat blocks at your table. Skip to AFTER THE FIGHT when done.')),
-        parsed.statBlock.split('\n').filter(l=>l.trim()).map((l,i)=>e('p',{key:i,dangerouslySetInnerHTML:{__html:fmt(l)}}))),
-      parsed.afterFight?e('div',{className:'box combat'},parsed.afterFight.split('\n').filter(l=>l.trim()).map((l,i)=>e('p',{key:i,dangerouslySetInnerHTML:{__html:fmt(l)}}))):null);
+      // Stat blocks
+      e('div',{className:'combat-stat-blocks'},
+        parsed.enemies.length>0?e('div',{className:'combat-section-header'},'ENEMY STAT BLOCKS'):null,
+        parsed.enemies.filter((_,i)=>!parsed.enemies.slice(0,i).some(p=>p.name.replace(/ \d+$/,'')===_.name.replace(/ \d+$/,''))).map((en,i)=>{
+          const baseName=en.name.replace(/ \d+$/,'');
+          const count=parsed.enemies.filter(e2=>e2.name.replace(/ \d+$/,'')===baseName).length;
+          return e('div',{key:i,className:'stat-block'},
+            e('div',{className:'stat-block-header'},baseName+(count>1?' (\u00d7'+count+')':'')),
+            e('div',{className:'stat-block-line'},'AC '+en.ac+' | HP '+en.maxHp),
+            en.attacks.map((atk,j)=>e('div',{key:j,className:'stat-block-line'},atk.name+': +'+atk.bonus+' to hit, '+atk.damage+(atk.type==='ranged'?' (ranged)':''))),
+            en.specials.map((sp,j)=>e('div',{key:'s'+j,className:'stat-block-special'},sp))
+          );
+        })),
+      // Companion stat blocks
+      (gs.companions||[]).length>0?e('div',{className:'combat-stat-blocks'},
+        e('div',{className:'combat-section-header'},'COMPANION STAT BLOCKS'),
+        (gs.companions||[]).map((name,i)=>{
+          const first=(name.match(/^(\w+)/)||[])[1];
+          const stats=COMPANION_COMBAT_STATS[first];
+          if(!stats)return null;
+          return e('div',{key:i,className:'stat-block companion-stat'},
+            e('div',{className:'stat-block-header'},name),
+            e('div',{className:'stat-block-line'},'AC '+stats.ac+' | HP '+stats.maxHp),
+            stats.attack?e('div',{className:'stat-block-line'},stats.attack.name+': +'+stats.attack.bonus+', '+stats.attack.damage):e('div',{className:'stat-block-line'},'Non-combatant'));
+        })
+      ):null,
+      // Win/Lose outcome boxes
+      e('div',{className:'combat-outcomes'},
+        e('div',{className:'combat-section-header'},'OUTCOMES'),
+        e('button',{className:'combat-outcome-btn win',onClick:()=>{
+          if(onStateUpdate)onStateUpdate(g=>({...g}));
+          setCombat({result:'win',log:[{type:'result',text:'Victory (pen & paper)',round:0}],phase:'over'});
+        }},'\u2694 VICTORY \u2014 The party defeats the enemies'),
+        parsed.winOutcome?e('div',{className:'outcome-text'},parsed.winOutcome):null,
+        e('button',{className:'combat-outcome-btn lose',onClick:()=>{
+          setCombat({result:'lose',log:[{type:'result',text:'Defeat (pen & paper)',round:0}],phase:'over'});
+        }},'\u2620 DEFEAT \u2014 The party is defeated'),
+        parsed.loseOutcome?e('div',{className:'outcome-text'},parsed.loseOutcome):null),
+      // After fight
+      parsed.afterFight?e('div',{className:'box combat'},
+        parsed.afterFight.split('\n').filter(l=>l.trim()).map((l,i)=>e('p',{key:i,dangerouslySetInnerHTML:{__html:fmt(l)}}))):null);
   }
 
-  // Narrative mode
+  // ─── Narrative Mode ───
+
+  // Not started yet
+  if(!combat){
+    return e('div',{className:'combat-wrapper'},
+      e('div',{className:'combat-mode-toggle'},
+        e('button',{className:'combat-mode-btn active'},'NARRATIVE'),
+        e('button',{className:'combat-mode-btn',onClick:()=>setMode('penandpaper')},'PEN & PAPER')),
+      // Show stat blocks preview
+      e('div',{className:'combat-enemy-stats'},
+        parsed.enemies.filter((_,i)=>!parsed.enemies.slice(0,i).some(p=>p.name.replace(/ \d+$/,'')===_.name.replace(/ \d+$/,''))).map((en,i)=>{
+          const baseName=en.name.replace(/ \d+$/,'');
+          const count=parsed.enemies.filter(e2=>e2.name.replace(/ \d+$/,'')===baseName).length;
+          return e('div',{key:i,className:'combat-enemy-preview'},
+            e('strong',null,baseName+(count>1?' (\u00d7'+count+')':'')),
+            ' \u2014 AC '+en.ac+', HP '+en.maxHp);
+        })),
+      // Round 1 situation prose
+      parsed.rounds[0]&&parsed.rounds[0].situation?e('div',{className:'combat-situation'},e('em',null,parsed.rounds[0].situation)):null,
+      e('button',{className:'dice-btn',style:{marginTop:'12px',fontSize:'14px'},onClick:startCombat},'\u2694 Begin Combat'));
+  }
+
+  // Combat over
+  if(combat.result){
+    return e('div',{className:'combat-wrapper'},
+      e('div',{className:'combat-mode-toggle'},
+        e('button',{className:'combat-mode-btn active'},'NARRATIVE'),
+        e('button',{className:'combat-mode-btn',onClick:()=>setMode('penandpaper')},'PEN & PAPER')),
+      e('div',{className:'combat-over'},
+        e('h3',null,combat.result==='win'?'\u2694 VICTORY':'\u2620 DEFEATED'),
+        e('p',null,combat.result==='win'?(parsed.winOutcome||'All enemies have fallen.'):(parsed.loseOutcome||'You fall. Your companions rush to your side.')),
+        e('p',null,'HP: '+combat.playerHp+' / '+combat.playerMaxHp),
+        combat.companions.filter(cp=>!cp.alive).map(cp=>e('p',{key:cp.name,style:{color:'#c0392b'}},cp.name+' has fallen permanently.')),
+        combat.result==='lose'&&!combat.companions.some(cp=>cp.alive)?e('div',{className:'game-over-panel'},
+          e('p',{style:{color:'#c0392b',fontWeight:'bold'}},'Your journey ends here.'),
+          e('p',null,'Load a save to continue.')):null),
+      // After fight text
+      combat.result==='win'&&parsed.afterFight?e('div',{className:'box combat'},
+        parsed.afterFight.split('\n').filter(l=>l.trim()).map((l,i)=>e('p',{key:i,dangerouslySetInnerHTML:{__html:fmt(l)}}))):null,
+      // Combat log
+      combat.log.length>0?e('details',{className:'combat-log-details',open:true},
+        e('summary',null,'Combat Log'),
+        e('div',{className:'combat-log'},combat.log.map((l,i)=>e('div',{key:i,className:'combat-log-entry '+l.type},l.text)))):null);
+  }
+
+  // ─── Active Combat UI ───
+  const livingEnemies=combat.enemies.filter(e2=>e2.alive);
+  const livingCompanions=combat.companions.filter(cp=>cp.alive&&!cp.unconscious);
+  const curSituation=parsed.rounds[combat.round-1]?parsed.rounds[combat.round-1].situation:'';
+  const weapon=combat.activeWeapon;
+  const canTarget=(en)=>{
+    if(!en.alive)return false;
+    if(weapon.type==='ranged')return true;
+    if(weapon.reach>=10)return en.zone==='close'||en.zone==='mid';
+    return en.zone==='close';
+  };
+
   return e('div',{className:'combat-wrapper'},
     e('div',{className:'combat-mode-toggle'},
       e('button',{className:'combat-mode-btn active'},'NARRATIVE'),
       e('button',{className:'combat-mode-btn',onClick:()=>setMode('penandpaper')},'PEN & PAPER')),
-    // HP Tracker
+    // Round header
+    e('div',{className:'combat-round-header'},
+      'ROUND '+combat.round+(parsed.rounds.length>0?' / '+parsed.rounds.length:''),
+      combat.phase==='playerTurn'?' \u2014 Your Turn':
+      combat.phase==='companionTurn'?' \u2014 Companion Turn':
+      combat.phase==='enemyTurn'?' \u2014 Enemy Turn':''),
+    // Situation prose
+    curSituation?e('div',{className:'combat-situation'},e('em',null,curSituation)):null,
+    // Status conditions row
+    (combat.conditions.length>0||combat.concentrating||combat.blessActive||combat.dodging)?
+      e('div',{className:'combat-conditions-row'},
+        combat.dodging?e('span',{className:'condition-icon',title:'Dodging: attacks against you have disadvantage'},'\u25c7 Dodge'):null,
+        combat.blessActive?e('span',{className:'condition-icon bless',title:'Bless: +1d4 to attacks and saves ('+combat.blessRoundsLeft+' rounds)'},'\u2726 Bless'):null,
+        combat.concentrating?e('span',{className:'condition-icon conc',title:'Concentrating on '+combat.concentrating.spell},'\u25ce Conc'):null,
+        combat.unconscious?e('span',{className:'condition-icon unconscious',title:'Unconscious: making death saves'},'\u2715 KO'):null
+      ):null,
+    // HP Tracker — Player
     e('div',{className:'combat-hp-tracker'},
       e('div',{className:'combat-hp-bar'},
-        e('div',{className:'combat-hp-label'},'YOUR HP'),
-        e('div',{style:{height:'8px',background:'rgba(255,255,255,.1)',borderRadius:'4px',overflow:'hidden'}},
-          e('div',{className:'combat-hp-fill player',style:{width:Math.max(0,(playerHp/derived.maxHp)*100)+'%'}})),
-        e('div',{className:'combat-hp-text'},playerHp+' / '+derived.maxHp)),
-      parsed.enemies.map((en,i)=>enemyHp[i]>0?e('div',{key:i,className:'combat-hp-bar'},
-        e('div',{className:'combat-hp-label'},en.name),
-        e('div',{style:{height:'8px',background:'rgba(255,255,255,.1)',borderRadius:'4px',overflow:'hidden'}},
-          e('div',{className:'combat-hp-fill enemy',style:{width:Math.max(0,(enemyHp[i]/en.maxHp)*100)+'%'}})),
-        e('div',{className:'combat-hp-text'},enemyHp[i]+' / '+en.maxHp)):null)),
-    // Rounds
-    !combatOver&&curRound?e('div',{className:'combat-round active'},
-      e('div',{className:'combat-round-header'},'ROUND '+(round+1)),
-      curRound.situation?e('div',{className:'combat-situation'},curRound.situation):null,
-      // Companion select
-      hasCompanions&&phase==='companion'?e('div',null,
-        e('p',{style:{fontSize:'12px',color:'var(--text-dim)',fontFamily:"'Cinzel',serif",letterSpacing:'1px'}},'COMPANION ACTION'),
-        compNames.map(name=>e('div',{key:name},
-          e('p',{style:{fontSize:'13px',color:'var(--text-bright)',marginTop:'6px'}},e('strong',null,name)),
+        e('div',{className:'combat-hp-label'},'YOU'+(combat.unconscious?' (UNCONSCIOUS)':'')),
+        e('div',{className:'combat-hp-bar-bg'},
+          e('div',{className:'combat-hp-fill player',style:{width:Math.max(0,(combat.playerHp/combat.playerMaxHp)*100)+'%'}})),
+        e('div',{className:'combat-hp-text'},combat.playerHp+' / '+combat.playerMaxHp)),
+      // Companion HP
+      combat.companions.map((cp,i)=>e('div',{key:i,className:'combat-hp-bar'+(cp.unconscious?' unconscious':'')},
+        e('div',{className:'combat-hp-label'},cp.name+(cp.unconscious?' (DOWN)':(!cp.alive?' (DEAD)':''))),
+        e('div',{className:'combat-hp-bar-bg'},
+          e('div',{className:'combat-hp-fill companion',style:{width:Math.max(0,(cp.hp/cp.maxHp)*100)+'%'}})),
+        e('div',{className:'combat-hp-text'},cp.hp+' / '+cp.maxHp))),
+      // Enemy HP
+      combat.enemies.map((en,i)=>e('div',{key:'e'+i,className:'combat-hp-bar'+(en.alive?'':' defeated')},
+        e('div',{className:'combat-hp-label'},en.name+(en.alive?'':' \u2620'),
+          en.conditions.length>0?en.conditions.map((cd,j)=>e('span',{key:j,className:'condition-icon enemy',title:cd.name},
+            cd.name==='Prone'?'\u2b07':cd.name==='Sapped'?'\u25d0':cd.name==='Slowed'?'\u25d1':'\u2022')):null),
+        e('div',{className:'combat-hp-bar-bg'},
+          e('div',{className:'combat-hp-fill enemy',style:{width:Math.max(0,(en.currentHp/en.maxHp)*100)+'%'}})),
+        e('div',{className:'combat-hp-text'},en.currentHp+' / '+en.maxHp)))),
+
+    // ── Player Turn ──
+    combat.phase==='playerTurn'&&!combat.unconscious?e('div',{className:'combat-turn-panel'},
+      // Weapon display & swap
+      e('div',{className:'combat-weapon-display'},
+        e('span',null,'\u2694 '+weapon.name),
+        weapon.mastery?e('span',{className:'mastery-badge',title:weapon.mastery+' mastery'},weapon.mastery):null,
+        e('span',{className:'weapon-info'},' ('+weapon.dmg+', '+(weapon.type==='ranged'?'ranged':'reach '+weapon.reach+'ft')+')'),
+        !combat.weaponSwappedThisTurn&&gs.inventory?e('select',{className:'weapon-swap-select',value:'',onChange:(ev)=>{if(ev.target.value)swapWeapon(ev.target.value)}},
+          e('option',{value:''},'Swap weapon...'),
+          gs.inventory.filter(item=>WEAPONS_WITH_MASTERY.some(w=>w.name===item)&&item!==weapon.name).map(item=>e('option',{key:item,value:item},item))
+        ):null),
+
+      // Action phase
+      combat.turnPhase==='action'?e('div',{className:'combat-action-phase'},
+        e('div',{className:'combat-section-header'},'ACTION'+(combat.hasSurged?' (SURGE)':'')),
+        // Target selection for attack
+        !combat.selectedTarget?e('div',null,
+          e('div',{className:'target-grid'},
+            livingEnemies.map(en=>e('button',{key:en.id,className:'target-btn'+(canTarget(en)?'':' out-of-range'),disabled:!canTarget(en)||rolling,onClick:()=>setCombat(c=>({...c,selectedTarget:en.id}))},
+              en.name+' (AC '+en.ac+', '+en.currentHp+'/'+en.maxHp+' HP)',
+              !canTarget(en)?e('span',{className:'range-warning'},' \u2014 out of range'):null))),
+          // Other action options
+          e('div',{className:'combat-other-actions'},
+            e('button',{className:'combat-action-btn',onClick:doPlayerDodge},'\u25c7 Dodge'),
+            gs.cls==='Paladin'&&combat.localSpellSlots<(derived.spellSlotsMax||2)&&!combat.blessActive?
+              e('button',{className:'combat-action-btn',onClick:castBless},'\u2726 Cast Bless (conc.)'):null,
+            gs.cls==='Paladin'&&combat.localSpellSlots<(derived.spellSlotsMax||2)?
+              e('button',{className:'combat-action-btn',onClick:()=>castCureWounds('self')},'\u2764 Cure Wounds (self)'):null,
+            combat.localBandages>0?e('button',{className:'combat-action-btn',onClick:()=>{
+              setCombat(c=>{const nc={...c};nc.localBandages-=1;nc.hasActed=true;nc.turnPhase='bonus';
+                const injured=nc.companions.find(cp=>cp.unconscious&&cp.alive);
+                if(injured){const idx=nc.companions.findIndex(cp=>cp.name===injured.name);nc.companions=[...nc.companions];nc.companions[idx]={...nc.companions[idx],hp:1,unconscious:false,deathSaves:{success:0,fail:0}};
+                  nc.log=[...nc.log,{type:'heal',text:'R'+nc.round+' Bandage: stabilized '+injured.name+' at 1 HP',round:nc.round}]}
+                return nc;});
+            }},'\ud83e\ude79 Bandage (stabilize ally)'):null)
+        ):e('div',null,
+          // Selected target — roll attack
+          e('div',{className:'combat-target-selected'},'Target: '+combat.enemies.find(en=>en.id===combat.selectedTarget)?.name),
+          e('div',{className:'dice-area'},
+            e('div',{className:'dice-info'},'Attack \u2022 +'+derived.attackBonus+' vs AC '+(combat.enemies.find(en=>en.id===combat.selectedTarget)?.ac||'?')),
+            e('div',{className:'dice-placeholder'},rolling?rollDisplay:'?'),
+            e('button',{className:'dice-btn',onClick:()=>doPlayerAttack(combat.selectedTarget),disabled:rolling},rolling?'\u2684 Rolling...':'\u2684 Attack Roll')),
+          e('button',{className:'ghost-btn',style:{fontSize:'11px',marginTop:'4px'},onClick:()=>setCombat(c=>({...c,selectedTarget:null}))},'Change target'))
+      ):null,
+
+      // Show last attack result
+      lastRollResult&&combat.turnPhase==='bonus'?e('div',{className:'combat-result '+(lastRollResult.hit?'hit':'miss')},
+        '\u2684 d20='+lastRollResult.d20+' +'+derived.attackBonus+' = '+(lastRollResult.d20+derived.attackBonus)+
+        (lastRollResult.hit?' \u2714 HIT'+(lastRollResult.isCrit?' (CRITICAL!)':'')+' for '+lastRollResult.dmg+' damage':' \u2718 MISS'),
+        lastRollResult.mastery?e('div',{className:'mastery-result'},lastRollResult.mastery):null,
+        lastRollResult.smiteDmg?e('div',{className:'smite-result'},'\u2728 Divine Smite: +'+lastRollResult.smiteDmg+' radiant'):null
+      ):null,
+
+      // Bonus action phase
+      combat.turnPhase==='bonus'?e('div',{className:'combat-bonus-phase'},
+        e('div',{className:'combat-section-header'},'BONUS ACTION'),
+        e('div',{className:'combat-ability-panel'},
+          // Divine Smite (after hit)
+          lastRollResult&&lastRollResult.hit&&!combat.smiteUsedThisTurn&&gs.cls==='Paladin'&&combat.localSpellSlots<(derived.spellSlotsMax||2)?
+            e('button',{className:'combat-ability-btn smite',onClick:useSmite},'\u2728 Divine Smite (2d8 radiant)'):null,
+          // Second Wind
+          gs.cls==='Fighter'&&combat.localSW<(derived.secondWindMax||2)?
+            e('button',{className:'combat-ability-btn',onClick:useSecondWind},'\u2764 Second Wind (1d10+'+gs.level+')'):null,
+          // Lay on Hands
+          gs.cls==='Paladin'&&combat.localLoH>0?
+            e('button',{className:'combat-ability-btn',onClick:useLayOnHands},'\u2764 Lay on Hands ('+combat.localLoH+' pool)'):null,
+          // Potion
+          combat.localPotions>0?
+            e('button',{className:'combat-ability-btn',onClick:usePotion},'\ud83e\uddea Potion ('+combat.localPotions+')'):null,
+          e('button',{className:'combat-action-btn skip',onClick:()=>setCombat(c=>({...c,hasBonused:true,turnPhase:'done'}))},'Skip'))
+      ):null,
+
+      // Action Surge option (Fighter)
+      combat.turnPhase==='done'&&gs.cls==='Fighter'&&!combat.localAS&&gs.level>=2&&!combat.hasSurged?
+        e('div',{className:'combat-surge-option'},
+          e('button',{className:'combat-ability-btn surge',onClick:useActionSurge},'\u26a1 Action Surge (extra action)'),
+          e('button',{className:'combat-action-btn skip',onClick:endPlayerTurn},'End Turn')):null,
+
+      // End turn button
+      combat.turnPhase==='done'&&!(gs.cls==='Fighter'&&!combat.localAS&&gs.level>=2&&!combat.hasSurged)?
+        e('button',{className:'dice-btn',style:{marginTop:'8px'},onClick:endPlayerTurn},'End Turn \u2192'):null
+    ):null,
+
+    // ── Unconscious Player Turn ──
+    combat.phase==='playerTurn'&&combat.unconscious?e('div',{className:'combat-turn-panel unconscious'},
+      e('div',{className:'combat-section-header'},'YOU ARE UNCONSCIOUS'),
+      e('p',null,'Death Saves: '+combat.deathSaves.success+'/3 successes, '+combat.deathSaves.fail+'/3 failures'),
+      e('button',{className:'dice-btn',onClick:endPlayerTurn},'Continue (companions act) \u2192')
+    ):null,
+
+    // ── Companion Turn ──
+    combat.phase==='companionTurn'?e('div',{className:'combat-turn-panel'},
+      e('div',{className:'combat-section-header'},'COMPANION ACTIONS'),
+      livingCompanions.map(cp=>{
+        const actions=resolvedCompanions[cp.name]||resolvedCompanions[(cp.name.match(/^(\w+)/)||[])[1]]||[];
+        return e('div',{key:cp.name,className:'combat-companion-block'},
+          e('div',{className:'combat-companion-name'},cp.name+' ('+cp.hp+'/'+cp.maxHp+' HP)'),
           e('div',{className:'combat-companion-select'},
-            parsed.companions[name].map((action,j)=>e('button',{key:j,className:'combat-companion-btn'+(companionChoice===action?' selected':''),onClick:()=>setCompanionChoice(action)},action))))
-        ),
-        e('button',{className:'dice-btn',style:{marginTop:'8px'},onClick:()=>setPhase('attack'),disabled:false},companionChoice?'Continue to Attack':'Skip Companion Action')
-      ):null,
-      // Attack phase
-      phase==='attack'||phase==='defend'||phase==='next'?e('div',null,
-        companionChoice?e('div',{className:'combat-result hit'},'\u2694 Companion: '+companionChoice):null,
-        // Attack roll
-        !atkResult?e('div',{className:'dice-area'},
-          e('div',{className:'dice-info'},'Attack \u2022 DC '+(curRound.attackDC||'?')+' \u2022 Mod +'+(atkBonus)),
-          e('div',{className:'dice-placeholder'},atkRolling&&atkDisplay?atkDisplay:'?'),
-          e('button',{className:'dice-btn',onClick:doAttack,disabled:atkRolling},atkRolling?'\u2684 Rolling...'  :'\u2684 Attack Roll')
-        ):e('div',{className:'combat-result '+(atkResult.hit?'hit':'miss')},
-          '\u2684 Roll: '+atkResult.d20+' + '+atkBonus+' = '+atkResult.total+(atkResult.hit?' \u2714 HIT! '+atkResult.dmg+' damage':' \u2718 MISS')),
-        // Smite button (Paladin, after hit)
-        atkResult&&atkResult.hit&&!smiteUsed&&gs.cls==='Paladin'&&localSpellSlots<(derived.spellSlotsMax||2)?
-          e('button',{className:'combat-ability-btn',onClick:useSmite},'\u2728 Divine Smite (2d8 radiant, 1 spell slot)'):null,
-        abilityMsg?e('div',{className:'combat-result damage'},abilityMsg):null
-      ):null,
-      // Defend phase
-      phase==='defend'||phase==='next'?e('div',null,
-        !defResult?e('div',{className:'dice-area'},
-          e('div',{className:'dice-info'},'Defense \u2022 DC '+(curRound.defenseDC||15)+' \u2022 Mod +'+(derived.dexMod+acBonus)),
-          e('div',{className:'dice-placeholder'},defRolling&&defDisplay?defDisplay:'?'),
-          e('button',{className:'dice-btn',onClick:doDefend,disabled:defRolling},defRolling?'\u2684 Rolling...':'\u2684 Defense Roll')
-        ):e('div',{className:'combat-result '+(defResult.success?'hit':'miss')},
-          '\u2684 Roll: '+defResult.d20+' + '+(derived.dexMod+acBonus)+' = '+defResult.total+(defResult.success?' \u2714 BLOCKED':' \u2718 HIT! '+(defResult.dmg)+' damage taken'))
-      ):null,
-      // Ability panel
-      (phase==='attack'||phase==='defend')&&!combatOver?e('div',{className:'combat-ability-panel'},
-        gs.cls==='Fighter'&&localSW<(derived.secondWindMax||2)?e('button',{className:'combat-ability-btn',onClick:useSecondWind},'\u2764 Second Wind'):null,
-        gs.cls==='Fighter'&&!localAS&&gs.level>=2?e('button',{className:'combat-ability-btn',onClick:()=>{setLocalAS(true);setAbilityMsg('Action Surge! Take an extra attack.');}},'Action Surge'):null,
-        gs.cls==='Paladin'&&localLoH>0?e('button',{className:'combat-ability-btn',onClick:useLayOnHands},'\u2764 Lay on Hands ('+localLoH+' pool)'):null,
-        localPotions>0?e('button',{className:'combat-ability-btn',onClick:usePotion},'\ud83e\uddea Potion ('+localPotions+')'):null,
-        localBandages>0&&playerHp<=0?e('button',{className:'combat-ability-btn',onClick:()=>{setLocalBandages(b=>b-1);setPlayerHp(1);setAbilityMsg('Bandage: stabilized at 1 HP.');}},'\ud83e\ude79 Bandage'):null
-      ):null,
-      // Next round button
-      phase==='next'?e('button',{className:'dice-btn',style:{marginTop:'10px'},onClick:nextRound},'Continue to Round '+(round+2)):null
+            actions.map((action,j)=>e('button',{key:j,className:'combat-companion-btn'+(combat.companionActionsThisRound[cp.name]===action?' selected':''),onClick:()=>selectCompanionAction(cp.name,action)},action))));
+      }),
+      e('button',{className:'dice-btn',style:{marginTop:'10px'},onClick:resolveCompanionActions,disabled:rolling},'Resolve Actions \u2192')
     ):null,
-    // Combat over
-    combatOver?e('div',{className:'combat-over'},
-      e('h3',null,allEnemiesDead?'\u2694 VICTORY':playerDead?'\u2620 DEFEATED':'COMBAT RESOLVED'),
-      e('p',null,allEnemiesDead?'All enemies have fallen.':playerDead?'You fall. Your companions rush to your side.':'The fight ends.'),
-      e('p',null,'HP: '+playerHp+' / '+derived.maxHp),
-      parsed.afterFight?parsed.afterFight.split('\n').filter(l=>l.trim()).map((l,i)=>e('p',{key:i,dangerouslySetInnerHTML:{__html:fmt(l)}})):null
+
+    // ── Enemy Turn ──
+    combat.phase==='enemyTurn'?e('div',{className:'combat-turn-panel enemy-turn'},
+      e('div',{className:'combat-section-header'},'ENEMY TURN'),
+      e('button',{className:'dice-btn enemy-btn',onClick:resolveEnemyTurn,disabled:rolling},rolling?'\u2684 Rolling...':'\u2694 Resolve Enemy Attacks')
     ):null,
-    // Round log
-    roundLog.length>0?e('details',{style:{marginTop:'10px',fontSize:'12px',color:'var(--text-dim)'}},
-      e('summary',null,'Combat Log'),
-      roundLog.map((l,i)=>e('div',{key:i,style:{padding:'2px 0'}},
-        'R'+l.round+' '+l.type+': '+(l.hit!==undefined?(l.hit?'HIT '+l.dmg+'dmg':'MISS'):(l.success!==undefined?(l.success?'BLOCKED':'HIT '+l.dmg+'dmg'):l.dmg+'dmg'))))
-    ):null
+
+    // Combat log
+    combat.log.length>0?e('details',{className:'combat-log-details'},
+      e('summary',null,'Combat Log ('+combat.log.length+' entries)'),
+      e('div',{className:'combat-log'},combat.log.slice().reverse().map((l,i)=>e('div',{key:i,className:'combat-log-entry '+l.type},l.text)))):null
   );
 }
 
@@ -1898,7 +2779,12 @@ function ShopBox({text,gs,onStateUpdate}){
   };
 
   const sellItem=(itemName)=>{
-    const price=getSellPrice(itemName);
+    // Full refund for items bought this visit, half price for pre-owned
+    const boughtQty=bought[itemName]||0;
+    const soldQty=sold[itemName]||0;
+    const canReturn=boughtQty>soldQty;
+    const shopItem=canReturn?parsed.items.find(it=>it.name===itemName):null;
+    const price=canReturn&&shopItem?Math.floor(shopItem.price*discount):getSellPrice(itemName);
     setLocalGold(g=>g+price);
     setSold(s=>({...s,[itemName]:(s[itemName]||0)+1}));
     const idx=localInv.indexOf(itemName);
@@ -1916,12 +2802,21 @@ function ShopBox({text,gs,onStateUpdate}){
     }
   };
 
-  // Build sellable inventory (deduplicated with counts)
+  // Build sellable inventory (deduplicated with counts, show refund vs sell price)
   const sellableItems=React.useMemo(()=>{
     const counts={};
     localInv.forEach(it=>{if(!UNSELLABLE.test(it)){counts[it]=(counts[it]||0)+1}});
-    return Object.entries(counts).map(([name,qty])=>({name,qty,price:getSellPrice(name)}));
-  },[localInv]);
+    return Object.entries(counts).map(([name,qty])=>{
+      const boughtQty=bought[name]||0;
+      const soldQty=sold[name]||0;
+      const returnable=Math.max(0,boughtQty-soldQty);
+      const shopItem=parsed.items.find(it=>it.name===name);
+      const refundPrice=shopItem?Math.floor(shopItem.price*discount):getSellPrice(name);
+      const sellPrice=getSellPrice(name);
+      // Show refund price if any are returnable, otherwise sell price
+      return{name,qty,price:returnable>0?refundPrice:sellPrice,isReturn:returnable>0};
+    });
+  },[localInv,bought,sold]);
 
   // Parse rare tiers from markdown text for shop-specific rare items
   const rareTiers=React.useMemo(()=>{
@@ -1994,16 +2889,16 @@ function ShopBox({text,gs,onStateUpdate}){
         }))),
       // Sell section
       sellableItems.length>0?e('div',{className:'shop-sell-section'},
-        e('h4',{style:{color:'var(--gold)',margin:'16px 0 8px',borderTop:'1px solid var(--gold-dim)',paddingTop:12}},'SELL ITEMS'),
+        e('h4',{style:{color:'var(--gold)',margin:'16px 0 8px',borderTop:'1px solid var(--gold-dim)',paddingTop:12}},'SELL / RETURN ITEMS'),
         e('table',{className:'shop-table'},
           e('thead',null,e('tr',null,e('th',null,'ITEM'),e('th',null,'VALUE'),e('th',null,'QTY'),e('th',null,''))),
           e('tbody',null,sellableItems.map((si,i)=>
             e('tr',{key:'sell-'+i},
               e('td',null,si.name),
-              e('td',null,si.price+' stl'),
+              e('td',null,si.price+' stl'+(si.isReturn?' (full)':'')),
               e('td',{style:{textAlign:'center'}},si.qty),
               e('td',null,e('button',{className:'shop-sell-btn',onClick:()=>sellItem(si.name)},
-                (sold[si.name]||0)>0?'Sold ('+(sold[si.name]||0)+')':'Sell'))))))
+                si.isReturn?'Return':'Sell'))))))
       ):null,
       // Rare stock
       parsed.rareSection.length>0&&!rareRolled?e('button',{className:'shop-rare-btn',onClick:doRareRoll,disabled:rareRolling},rareRolling?'Rolling...':'RARE STOCK ROLL'):null,
@@ -2158,7 +3053,7 @@ function CoverScreen({onNew,onLoad}){
       e('p',{style:{margin:'0 0 4px'}},'\u2018Dragonlance,\u2019 \u2018Krynn,\u2019 \u2018Solamnic Knights,\u2019 and all related characters, locations, and lore are trademarks of Wizards of the Coast LLC. \u2018Dungeons & Dragons\u2019 and \u2018D&D\u2019 are registered trademarks of Wizards of the Coast LLC.'),
       e('p',{style:{margin:'0 0 4px'}},'This is unofficial fan content, not approved or endorsed by Wizards of the Coast. Made under the Fan Content Policy. No copyright or trademark infringement is intended.'),
       e('p',{style:{margin:0}},'Game mechanics reference the D&D 2024 System Reference Document (SRD 5.2), available under the Creative Commons Attribution 4.0 International License (CC BY 4.0).'),
-      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v20.1.0')));
+      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v21.0.0')));
 }
 
 // ── Character Creation ─────────────────────────────────
@@ -2501,7 +3396,12 @@ function filterChoices(choices, sceneId, gs) {
       // Strip the prefix for display
       c = {...c, text: txt.replace(/^\(If not yet visited(?:,\s*[^)]+)?\)\s*/i, '')};
     }
-    
+
+    // Auto-hide visited choices in time-of-day hub scenes (exempt: shops, time transitions)
+    const HUB_SCENES=['11_MORNING','11_AFTERNOON','11_EVENING'];
+    const EXEMPT_TARGETS=new Set(['11_MORNING','11_AFTERNOON','11_EVENING','11_NIGHT','11_ARMOURY','11_QM','53_HUB_MORN']);
+    if(HUB_SCENES.includes(sceneId)&&target&&!EXEMPT_TARGETS.has(target)&&visitedScenes.has(target))return null;
+
     // Scene 11 & 11B: swap companion-specific prep choices for discovery alternatives
     if (sceneId === '11' || sceneId === '11B') {
       // Thessaly: "Find Thessaly" → "A correspondent at the east gate is asking questions"
@@ -2625,7 +3525,7 @@ function SceneView({scene,onChoice,gs,isEnding,onViewSheet,onBonus,onStateUpdate
         const txt=filterBoxText(box.text,cls,comps);
         if(!txt||!txt.trim())return null;
         // Use RollBox for roll-type boxes
-        if(box.type==='roll')return e(RollBox,{key:scene.id+'_r'+i,text:txt,derived:gs.derived,gs:gs,onBonus:onBonus});
+        if(box.type==='roll')return e(RollBox,{key:scene.id+'_r'+i,rollKey:scene.id+'_r'+i,text:txt,derived:gs.derived,gs:gs,onBonus:onBonus,onRollSave:onStateUpdate});
         if(box.type==='combat')return e(CombatBox,{key:scene.id+'_c'+i,text:txt,gs:gs,derived:gs.derived,onStateUpdate:onStateUpdate});
         if(box.type==='shop')return e(ShopBox,{key:scene.id+'_s'+i,text:txt,gs:gs,onStateUpdate:onStateUpdate});
         if(box.type==='loot')return e(LootBox,{key:scene.id+'_l'+i,text:txt,gs:gs,onStateUpdate:onStateUpdate});
@@ -3268,7 +4168,7 @@ function App(){
     s.boxes.filter(b=>b.type==='companion').forEach(b=>{const m=b.text.match(/COMPANION JOINS:\s*(.+?)[\n(*]/);if(m){let nm=m[1].replace(/\*+/g,'').trim();nm=nm.split(/\s+/).map(w=>w.charAt(0).toUpperCase()+w.slice(1).toLowerCase()).join(' ');if(!ns.companions.includes(nm)){ns.companions=[...ns.companions,nm];if(!ns.companionLog)ns.companionLog={};if(!ns.companionLog[nm])ns.companionLog[nm]=[];ns.companionLog[nm].push('Joined in Scene '+sceneId+(s.title?' — '+s.title:''))}}});
     s.boxes.filter(b=>b.type==='levelup').forEach(b=>{if(b.text.includes('LEVEL 2')&&ns.level<2){ns.level=2;ns.derived=calcDerived(ns.stats,ns.cls,2,ns.armor,ns.hasShield,ns.feat);ns.hp=ns.derived.maxHp}if(b.text.includes('LEVEL 3')&&ns.level<3){ns.level=3;ns.derived=calcDerived(ns.stats,ns.cls,3,ns.armor,ns.hasShield,ns.feat);ns.hp=ns.derived.maxHp}});
     setScene(s);setSceneId(id);setGs(ns)};
-  const startGame=({cls,stats,style,feat,mastery,name,spells,equip,skilledPicks,classSkills,humanSkill})=>{const derived=calcDerived(stats,cls,1,equip.armor,equip.hasShield,feat);const state={cls,stats,style,feat,mastery,name:name||'Squire',spells:spells||{cantrips:[],level1:[],alwaysPrepared:[]},weapon:equip.weapon,armor:equip.armor,skilledPicks:skilledPicks||[],classSkills:classSkills||[],humanSkill:humanSkill||null,hasShield:equip.hasShield,level:1,hp:derived.maxHp,derived,rose:0,sword:0,crown:0,companions:[],romances:{},godSigns:{Paladine:0,'Kiri-Jolith':0,Mishakal:0,Habbakuk:0,Branchala:0},dgTrack:'NONE',inventory:[equip.weapon,equip.armor,equip.hasShield?'Shield':'','Dagger','Explorer\u2019s Pack','Solamnic Tabard'].filter(Boolean),history:[],awardedScenes:{},companionLog:{},romanceDeclined:{},flags:{},bonuses:[],magicItems:[],measureTrack:0,measureOrientation:null,gold:0,layOnHandsPool:cls==='Paladin'?derived.layOnHandsMax:0,spellSlotsUsed:0,secondWindUsed:0,actionSurgeUsed:false,bandages:2,potions:0,greaterPotions:0,miraHealedThisScene:false};setGs(state);goScene('1',state);setPhase('play')};
+  const startGame=({cls,stats,style,feat,mastery,name,spells,equip,skilledPicks,classSkills,humanSkill})=>{const derived=calcDerived(stats,cls,1,equip.armor,equip.hasShield,feat);const state={cls,stats,style,feat,mastery,name:name||'Squire',spells:spells||{cantrips:[],level1:[],alwaysPrepared:[]},weapon:equip.weapon,armor:equip.armor,skilledPicks:skilledPicks||[],classSkills:classSkills||[],humanSkill:humanSkill||null,hasShield:equip.hasShield,level:1,hp:derived.maxHp,derived,rose:0,sword:0,crown:0,companions:[],romances:{},godSigns:{Paladine:0,'Kiri-Jolith':0,Mishakal:0,Habbakuk:0,Branchala:0},dgTrack:'NONE',inventory:[equip.weapon,equip.armor,equip.hasShield?'Shield':'','Dagger','Explorer\u2019s Pack','Solamnic Tabard'].filter(Boolean),history:[],awardedScenes:{},companionLog:{},romanceDeclined:{},flags:{},bonuses:[],magicItems:[],measureTrack:0,measureOrientation:null,gold:0,layOnHandsPool:cls==='Paladin'?derived.layOnHandsMax:0,spellSlotsUsed:0,secondWindUsed:0,actionSurgeUsed:false,bandages:2,potions:0,greaterPotions:0,miraHealedThisScene:false,completedRolls:{},deadCompanions:[]};setGs(state);goScene('1',state);setPhase('play')};
   const loadSave=(saveData)=>{if(!saveData||!saveData.gs)return;const g=saveData.gs;g.derived=calcDerived(g.stats,g.cls,g.level,g.armor,g.hasShield,g.feat);setGs(g);const s=SCENES[saveData.sceneId];if(s){setScene(s);setSceneId(saveData.sceneId)}setPhase('play')};
   const handleChoice=(c)=>{setSideOpen(false);const ns={...gs,romances:{...gs.romances},awardedScenes:{...(gs.awardedScenes||{})}};
     // Only award points if this scene hasn't awarded yet (anti-cycle)

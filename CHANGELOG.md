@@ -2,6 +2,34 @@
 
 All notable changes to **Dragonlance: The Knight's Oath** are documented here.
 
+## v21.0.0 — 2026-03-22
+
+### Combat System Rework — D&D 5e 2024 Tabletop Rules
+- Complete CombatBox rewrite: true 5e turn-based combat (Action → Bonus Action → Action Surge)
+- Enemies roll d20 + attack bonus vs player AC (no more "defense rolls")
+- Target selection by zone: close (5ft), mid (10-30ft), far (60+ft) — filtered by weapon range
+- Weapon swap during combat (free object interaction, 1/turn)
+- All 8 weapon masteries implemented: Sap, Graze, Topple, Vex, Cleave, Nick, Push, Slow
+- Companion HP, AC, and attack stats — companions can take damage and fall
+- Companion death saves (d20 vs DC 10) — permanent death if not stabilized
+- Player death saves when unconscious; companions fight on if alive
+- Game over if player dies with no living companions
+- Status conditions with icons: Prone, Sapped, Slowed, Blessed, Concentrating, Dodging, Unconscious, Vexed
+- Concentration tracking with CON saves on damage
+- Bless spell: +1d4 to attacks and saves (concentration)
+- Cure Wounds: 2d8+CHA healing (replaces attack action)
+- Enemy targeting: 60% player / 40% companion, with Caeron aggro and Lysander guard overrides
+- Advantage/disadvantage on attacks (Vex, Prone, Dodge)
+- Critical hits (nat 20 = double damage dice)
+- Companion stat blocks: all 9 companions with AC, HP, attacks
+- Pen & Paper mode: stat blocks + Win/Lose outcome buttons
+
+### Bug Fixes
+- Hub choices no longer repeatable after visiting (visit-based hiding)
+- Roll boxes persist results via `completedRolls` — no re-rolling on revisit
+- Armoury buyback: full refund for items bought this visit, half price for pre-owned
+- Combat companion names resolved to actual party members
+
 ## v20.0.0 — 2026-03-22
 
 ### Scene 4A: Aldous's Parting Advice
