@@ -2,6 +2,13 @@
 
 All notable changes to **Dragonlance: The Knight's Oath** are documented here.
 
+## v19.1.2 — 2026-03-22
+
+### Cleanup
+- Removed 7 orphaned scenes with zero references: `DATE_WALK`, `DATE_SPAR`, `DATE_QUIET`, `REST_ROMANCE`, `REST_COMPATIBLE`, `REST_CONFRONT`, `REST_SWITCH`
+- REST scenes preserved in markdown as unimplemented design notes
+- Total scenes: 216 (down from 223)
+
 ## v19.1.1 — 2026-03-22
 
 ### Routing Completeness

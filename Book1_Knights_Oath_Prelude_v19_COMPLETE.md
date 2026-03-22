@@ -6020,6 +6020,8 @@ No one gets up.
 
 ## SCENE REST_ROMANCE — A QUIET MOMENT
 
+> **NOT YET WIRED** — This scene and its children (REST_COMPATIBLE, REST_CONFRONT, REST_SWITCH) are designed but not yet linked into the scene graph. To activate, add a choice from a camp/rest scene leading here.
+
 *Camp — Evening*
 
 The fire is low. Tomorrow the road continues. Tonight, for a few hours, the war is somewhere else and you are here with the people who matter to you.
