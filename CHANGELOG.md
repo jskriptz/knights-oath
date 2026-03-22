@@ -2,6 +2,42 @@
 
 All notable changes to **Dragonlance: The Knight's Oath** are documented here.
 
+## v22.0.0 — 2026-03-22
+
+### Combat System Fixes
+- Default companion actions generated from stats when scene text lacks them (5 COMBAT ENCOUNTER scenes)
+- Parser recognizes `Rewards:` lines — extracts XP, gold, and inventory items
+- Combat rewards (XP, gold, items) now applied to game state on victory
+- Loss consequences: HP set to 1, exhaustion counter incremented on defeat
+- Bonus action abilities (Second Wind, Lay on Hands, Potion, Smite) now auto-advance turn phase
+- Victory and Fallen narrative text added to all 15 combat scenes
+- Scene 26 rewards fixed: 60 XP total (was "15 XP per draconian"), sealed dispatch pouch added to inventory
+
+### Loot & Inventory
+- LootBox now adds items to inventory (Potions of Healing, named items, rations)
+- Rare item roll (nat 20) awards +1 Weapon or +1 Armor to magic items
+- Fixed `ADD TO INVENTORY` regex — items like Dragon Army Patrol Sketch and Mira's Travel Bundle now properly added
+- Combat reward items (Sealed orders, Sealed dispatch pouch) marked with `(inventory item)` tag
+
+### Romance System
+- Fixed case-sensitive companion name matching — was broken for all uppercase scene titles
+- Added explicit `romance_comp` field to 29 romance choices where title/text matching failed
+- All 51 romance-tagged choices now correctly resolve to their companion (was 0/51 before)
+
+### Forge (Scene 35)
+- Three new response scenes: 35A (The Insignia, +1 ROSE), 35B (Blade Work, +1 SWORD), 35C (Respect, +1 CROWN)
+- Forge choices no longer dump back to hub with no payoff
+
+### Ending / Journey Summary
+- Epilogue scenes (72–80) rerouted through Scene 71 hub instead of linear chain
+- Epilogues now only shown for companions in your party
+- Already-visited epilogues hidden from Scene 71
+- Scene 71 prose filtered by player's Solamnic Order (Rose/Sword/Crown)
+- Scene 80 dead end fixed (was routing to nonexistent "END" scene)
+
+### Scenes
+- Total scenes: 220 (up from 217)
+
 ## v21.0.1 — 2026-03-22
 
 ### Romance in Combat
