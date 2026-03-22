@@ -2,7 +2,7 @@
 
 All notable changes to **Dragonlance: The Knight's Oath** are documented here.
 
-## v19.0.7 — 2026-03-22
+## v19.1.0 — 2026-03-22
 
 ### Routing Overhaul
 - Fixed 140+ scene choice target mismatches between markdown and HTML
