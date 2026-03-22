@@ -524,7 +524,7 @@ The chapel library is cold and smells of old parchment and tallow and three cent
 >
 > *No dice? Flip a coin: Heads = pass | Tails = fail*
 
-> **A) 'What do you do when the law asks you to be cruel?'** (+2 ROSE, gains Aldous as mentor) --> Scene 5
+> **A) 'What do you do when the law asks you to be cruel?'** (+2 ROSE, gains Aldous as mentor) --> Scene 1_HUB
 >
 > **B) 'Is the Measure still true if the world it was written for is gone?'** (+2 CROWN, gains Aldous as critic) --> Scene 8
 >
