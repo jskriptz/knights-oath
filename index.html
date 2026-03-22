@@ -1620,7 +1620,7 @@ function parseCombatBox(text){
 
 function CombatBox({text,gs,derived,onStateUpdate}){
   const e=React.createElement;
-  const parsed=useMemo(()=>parseCombatBox(text),[text]);
+  const parsed=React.useMemo(()=>parseCombatBox(text),[text]);
   const[mode,setMode]=useState('narrative');
   const[round,setRound]=useState(0);
   const[phase,setPhase]=useState('companion'); // companion -> attack -> defend -> next
@@ -1853,7 +1853,7 @@ function parseShopBox(text){
 
 function ShopBox({text,gs,onStateUpdate}){
   const e=React.createElement;
-  const parsed=useMemo(()=>parseShopBox(text),[text]);
+  const parsed=React.useMemo(()=>parseShopBox(text),[text]);
   const[bought,setBought]=useState({});
   const[rareRolled,setRareRolled]=useState(false);
   const[rareResult,setRareResult]=useState(null);
@@ -1943,7 +1943,7 @@ function parseLootBox(text){
 
 function LootBox({text,gs,onStateUpdate}){
   const e=React.createElement;
-  const parsed=useMemo(()=>parseLootBox(text),[text]);
+  const parsed=React.useMemo(()=>parseLootBox(text),[text]);
   const[choice,setChoice]=useState(null);
   const[lootRoll,setLootRoll]=useState(null);
   const[rolling,setRolling]=useState(false);
