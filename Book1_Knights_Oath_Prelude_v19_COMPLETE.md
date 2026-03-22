@@ -602,6 +602,8 @@ You are both waiting outside the assessment hall for your individual results. Th
 
 *Castle Brightholm — East Gate*
 
+You cross the courtyard at a walk that is not quite a walk — the morning air is sharp and the castle is stirring around you. The east gate is quieter than the yard, the kind of place where people pass through rather than linger. Someone is lingering.
+
 Thessaly Brightwater arrived three days ago with a press credential, a better map than the garrison has, and the easy confidence of someone who has been in considerably more dangerous places than this and made her peace with that some time ago. In three days she has interviewed the senior knights, both stable hands, the armourer, and apparently Zinnia Quickfingers, who gave excellent copy. She catches you at the east gate with her notebook open and her pen uncapped and the particular quality of attention that does not permit comfortable evasion. 'Tell me something true,' she says, 'about why you are here.' Not what you believe. Not what you want. Something true.
 
 Thessaly Brightwater is half-elven, which shows mostly in the pointed ears and the quality of attention she gives things. Dark hair cut short and practical, ink on her fingers, a coat with too many pockets, all in use. She looks like someone for whom the road has become the natural state.
@@ -682,6 +684,8 @@ Ser Aldous is seventy or near it, with white hair, a weathered face, and the unh
 ## SCENE 9 — THE HEALER'S TENT
 
 *Castle Brightholm — Infirmary*
+
+The corridor from the east wing is long enough for the conversation to settle into something you carry rather than something you are still having. By the time you reach the infirmary door, the morning has moved on.
 
 The infirmary smells of yarrow and clean linen and underneath both, the copper-salt note of pain being handled by someone who knows exactly what they are doing. Mira of the Oaks has not slept — you can see it in the particular stillness that develops past tiredness, when the body stops negotiating and runs on purpose. She does not look up when you come in. 'Sit with him.' She nods at the old man in the corner who is holding his own hands and staring at nothing with the look of someone who has been frightened long enough to have forgotten what unfrightened felt like. 'Hold his hand. Talk to him. He is frightened and I cannot be in two places at the same time.'
 
