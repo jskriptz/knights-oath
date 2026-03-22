@@ -534,6 +534,22 @@ The chapel library is cold and smells of old parchment and tallow and three cent
 
 ---
 
+## SCENE 4A — THE MEASURE AND THE MORNING
+
+*Castle Brightholm — Chapel Library*
+
+Aldous closes the book slowly — not because he is finished, but because some conversations end by settling rather than stopping. He places one hand flat on the cover, a gesture so habitual it has worn the leather smooth.
+
+'You ask the right questions,' he says. 'That is rarer than you think. Half the people in this garrison have never asked a single one.' He looks at you with the particular quality of attention he reserves for moments he considers important. 'The Trials will test whether you have memorised the Measure. They will not test whether you understand it. Those are different examinations, and only one of them matters.'
+
+He stands, joints protesting in the way of a man who has spent too many years in cold stone rooms. 'Go. The morning is yours. Spend it on something that matters — not because I told you to, but because you chose to.' He pauses at the door. 'That is the Measure, by the way. Choosing well, when no one is watching to see whether you do.'
+
+The library is quiet after he leaves. The book is still on the table. The morning light through the narrow window has shifted from grey to gold.
+
+> **A) Step into the corridor. The morning is waiting.** --> Scene 1_HUB
+
+---
+
 
 ## SCENE 5 — THE FIRST EVALUATION
 

@@ -2,6 +2,20 @@
 
 All notable changes to **Dragonlance: The Knight's Oath** are documented here.
 
+## v19.1.3 — 2026-03-22
+
+### Scene 4A: Aldous's Parting Advice
+- New transition scene between Scene 4 and the morning hub
+- Aldous gives parting wisdom about the Measure before sending you into the morning
+
+### Hub Display
+- Hub scene headers no longer show numeric prefixes (e.g., "Scene HUB" instead of "Scene 1_HUB")
+
+### Visit-Based Choice Hiding
+- Hub choices for already-visited scenes are now hidden instead of showing "(If not yet visited)"
+- Applies to 1_HUB and 53_HUB hub scenes
+- "(If not yet visited)" prefix stripped from remaining visible choices
+
 ## v19.1.2 — 2026-03-22
 
 ### Cleanup
