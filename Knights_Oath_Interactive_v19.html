@@ -1011,7 +1011,7 @@ h2.red{color:var(--red)}
   <div id="loading-name">The Knight's Oath</div>
   <div id="loading-bar-container"><div id="loading-bar"></div></div>
   <div id="loading-status">Preparing...</div>
-  <div id="loading-sub">v22.0.0 • 220 Scenes • 9 Companions</div>
+  <div id="loading-sub">v22.0.1 • 220 Scenes • 9 Companions</div>
 </div>
 <script>
 // Loading progress tracker
@@ -1890,6 +1890,11 @@ function parseCombatBox(text){
     }
   }
 
+  // Extract XP from afterFight if not already in rewards
+  if(rewards.xp===0&&afterFight){
+    const xpLines=afterFight.match(/(\d+)\s*XP/gi);
+    if(xpLines){let total=0;xpLines.forEach(m=>{const n=parseInt(m);if(n&&n<=200)total+=n});if(total>0)rewards.xp=Math.min(total,200)}
+  }
   return{enemies,rounds,companions,statBlock,afterFight,winOutcome:winOutcome.trim(),loseOutcome:loseOutcome.trim(),rewards};
 }
 
@@ -2090,11 +2095,7 @@ function CombatBox({text,gs,derived,onStateUpdate}){
         else if(hasDisadvantage&&!hasAdvantage){d20b=rollDice(20);d20=Math.min(d20,d20b)}
 
         // Companion bonuses
-        let atkMod=0;
-        Object.values(c.companionActionsThisRound).forEach(a=>{
-          if(/\+1.*attack|flank/i.test(a))atkMod+=1;
-          if(/\+2.*attack|mark target|combat instruction|intel/i.test(a))atkMod+=2;
-        });
+        let atkMod=c.attackBuff||0;c.attackBuff=0;
 
         // Bless
         let blessBonus=0;
@@ -2341,7 +2342,55 @@ function CombatBox({text,gs,derived,onStateUpdate}){
           // Flag handled in enemy turn
           c.companionActionsThisRound[comp.name]='GUARD_ACTIVE';
         }
-        // Buff actions (logged as narrative)
+        // Flee / rescue civilian — remove companion from combat, grant bonus
+        else if(/flee|civilian|safety|rescue|wounded squire/i.test(action)){
+          const idx=c.companions.findIndex(cp=>cp.name===comp.name);
+          if(idx>=0){c.companions=[...c.companions];c.companions[idx]={...c.companions[idx],alive:false,rescued:true}}
+          logEntries.push(comp.name+': Gets the civilians to safety! (Left combat — bonus reward)');
+          c.civilianRescued=true;
+        }
+        // Flank / Mark / Intel — buff player's next attack
+        else if(/flank|mark target|\+\d+.*(?:attack|your next)|intel/i.test(action)){
+          const buffM=action.match(/\+(\d+)/);
+          const amt=buffM?parseInt(buffM[1]):1;
+          c.attackBuff=(c.attackBuff||0)+amt;
+          logEntries.push(comp.name+': '+action+' \u2192 You get +'+amt+' to your next attack');
+        }
+        // Shield Wall — buff player AC this round
+        else if(/shield wall|\+\d+.*AC/i.test(action)){
+          const buffM=action.match(/\+(\d+)/);
+          const amt=buffM?parseInt(buffM[1]):1;
+          c.acBuff=(c.acBuff||0)+amt;
+          logEntries.push(comp.name+': '+action+' \u2192 Your AC is temporarily +'+ amt);
+        }
+        // Distraction — debuff enemy
+        else if(/distraction|enemy.*-\d/i.test(action)){
+          c.enemyDebuff=(c.enemyDebuff||0)+1;
+          logEntries.push(comp.name+': '+action+' \u2192 Enemies get -1 to next attack');
+        }
+        // Encourage / Command / Rally — buff all
+        else if(/encourage|command|rally|tactical advice/i.test(action)){
+          c.attackBuff=(c.attackBuff||0)+1;
+          c.acBuff=(c.acBuff||0)+1;
+          logEntries.push(comp.name+': '+action+' \u2192 +1 to attack and AC this round');
+        }
+        // Bandage / stabilize
+        else if(/bandage|stabilize|stabilise/i.test(action)){
+          const down=c.companions.find(cp=>cp.unconscious&&cp.alive);
+          if(down){
+            const idx=c.companions.findIndex(cp=>cp.name===down.name);
+            c.companions=[...c.companions];c.companions[idx]={...c.companions[idx],hp:1,unconscious:false,deathSaves:{success:0,fail:0}};
+            logEntries.push(comp.name+': Stabilized '+down.name+'!');
+          }else{
+            logEntries.push(comp.name+': '+action+' (no one to stabilize)');
+          }
+        }
+        // Honest Assessment / reveal HP
+        else if(/honest assessment|reveal.*HP/i.test(action)){
+          c.revealEnemyHp=true;
+          logEntries.push(comp.name+': '+action+' \u2192 Enemy HP revealed');
+        }
+        // Default — logged as narrative
         else{
           logEntries.push(comp.name+': '+action);
         }
@@ -2424,19 +2473,15 @@ function CombatBox({text,gs,derived,onStateUpdate}){
             targetType='companion';targetAc=rc.ac;targetName=rc.name;
           }
 
-          // AC bonuses from companions
-          let acMod=0;
-          Object.values(c.companionActionsThisRound).forEach(a=>{
-            if(targetType==='player'&&/\+1.*AC|shield wall|cover fire/i.test(a))acMod+=1;
-          });
-          targetAc+=acMod;
+          // AC bonuses from companion buffs
+          if(targetType==='player'){targetAc+=(c.acBuff||0)}
 
-          // Roll attack
+          // Roll attack (apply enemy debuff)
           let d20=rollDice(20);
           const hasDisadv=(targetType==='player'&&c.dodging)||isSapped;
           if(hasDisadv){const d20b=rollDice(20);d20=Math.min(d20,d20b)}
 
-          const total=d20+attack.bonus;
+          const total=d20+attack.bonus-(c.enemyDebuff||0);
           const hit=d20===20||(total>=targetAc&&d20!==1);
 
           if(hit){
@@ -2494,24 +2539,19 @@ function CombatBox({text,gs,derived,onStateUpdate}){
 
         // Advance round
         if(!c.result){
-          // Check if we've exceeded max rounds
-          if(c.round>=parsed.rounds.length&&parsed.rounds.length>0){
-            c.result='win';
-            c.log=[...c.log,{type:'result',text:'The fight ends. You stand.',round:c.round}];
-          }else{
-            c.round+=1;c.phase='playerTurn';c.turnPhase='action';
-            c.hasActed=false;c.hasBonused=false;c.hasSurged=false;
-            c.weaponSwappedThisTurn=false;c.smiteUsedThisTurn=false;
-            c.dodging=false;c.selectedTarget=null;
-            // Tick bless
-            if(c.blessActive){c.blessRoundsLeft-=1;if(c.blessRoundsLeft<=0){c.blessActive=false;c.concentrating=null}}
-          }
+          c.round+=1;c.phase='playerTurn';c.turnPhase='action';
+          c.hasActed=false;c.hasBonused=false;c.hasSurged=false;
+          c.weaponSwappedThisTurn=false;c.smiteUsedThisTurn=false;
+          c.dodging=false;c.selectedTarget=null;
+          c.acBuff=0;c.enemyDebuff=0;c.attackBuff=0;
+          // Tick bless
+          if(c.blessActive){c.blessRoundsLeft-=1;if(c.blessRoundsLeft<=0){c.blessActive=false;c.concentrating=null}}
         }
 
         // If combat over, update parent state
         if(c.result&&onStateUpdate){
           onStateUpdate(g=>{
-            const ng={...g,hp:Math.max(c.result==='win'?1:0,c.playerHp),spellSlotsUsed:c.localSpellSlots,secondWindUsed:c.localSW,actionSurgeUsed:c.localAS,layOnHandsPool:c.localLoH,potions:c.localPotions,bandages:c.localBandages};
+            const ng={...g,hp:Math.max(c.result==='win'?1:0,c.playerHp),spellSlotsUsed:c.localSpellSlots,secondWindUsed:c.localSW,actionSurgeUsed:c.localAS,layOnHandsPool:c.localLoH,potions:c.localPotions,bandages:c.localBandages,combatResolved:true};
             // Apply rewards on victory
             if(c.result==='win'&&parsed.rewards){
               const sceneKey=gs.history&&gs.history.length?gs.history[gs.history.length-1]:'';
@@ -2531,11 +2571,16 @@ function CombatBox({text,gs,derived,onStateUpdate}){
               ng.hp=1;
               ng.flags={...(ng.flags||{}),exhaustion:((ng.flags||{}).exhaustion||0)+1};
             }
-            // Handle companion deaths
-            const dead=c.companions.filter(cp=>!cp.alive);
+            // Handle companion deaths (rescued companions rejoin party, not dead)
+            const dead=c.companions.filter(cp=>!cp.alive&&!cp.rescued);
             if(dead.length){
               ng.companions=(g.companions||[]).filter(name=>!dead.some(d=>d.name===name));
               ng.deadCompanions=[...(g.deadCompanions||[]),...dead.map(d=>({name:d.name,scene:g.history&&g.history.length?g.history[g.history.length-1]:'unknown',cause:'Fell in combat'}))];
+            }
+            // Bonus reward for civilian rescue
+            if(c.civilianRescued&&c.result==='win'){
+              ng.xp=(ng.xp||0)+10;
+              ng.flags={...(ng.flags||{}),civilianRescued:true};
             }
             return ng;
           });
@@ -2582,11 +2627,25 @@ function CombatBox({text,gs,derived,onStateUpdate}){
       e('div',{className:'combat-outcomes'},
         e('div',{className:'combat-section-header'},'OUTCOMES'),
         e('button',{className:'combat-outcome-btn win',onClick:()=>{
-          if(onStateUpdate)onStateUpdate(g=>({...g}));
+          if(onStateUpdate)onStateUpdate(g=>{
+            const ng={...g,combatResolved:true};
+            const sceneKey=g.history&&g.history.length?g.history[g.history.length-1]:'';
+            if(parsed.rewards){
+              if(!ng.awardedScenes)ng.awardedScenes={};
+              if(!ng.awardedScenes[sceneKey]){
+                ng.awardedScenes[sceneKey]=true;
+                if(parsed.rewards.xp)ng.xp=(ng.xp||0)+parsed.rewards.xp;
+                if(parsed.rewards.gold)ng.gold=(ng.gold||0)+parsed.rewards.gold;
+                if(parsed.rewards.items&&parsed.rewards.items.length){ng.inventory=[...(ng.inventory||[])];parsed.rewards.items.forEach(item=>{if(!ng.inventory.includes(item))ng.inventory.push(item)})}
+              }
+            }
+            return ng;
+          });
           setCombat({result:'win',log:[{type:'result',text:'Victory (pen & paper)',round:0}],phase:'over'});
         }},'\u2694 VICTORY \u2014 The party defeats the enemies'),
         parsed.winOutcome?e('div',{className:'outcome-text'},parsed.winOutcome):null,
         e('button',{className:'combat-outcome-btn lose',onClick:()=>{
+          if(onStateUpdate)onStateUpdate(g=>({...g,hp:1,combatResolved:true,flags:{...(g.flags||{}),exhaustion:((g.flags||{}).exhaustion||0)+1}}));
           setCombat({result:'lose',log:[{type:'result',text:'Defeat (pen & paper)',round:0}],phase:'over'});
         }},'\u2620 DEFEAT \u2014 The party is defeated'),
         parsed.loseOutcome?e('div',{className:'outcome-text'},parsed.loseOutcome):null),
@@ -2627,13 +2686,14 @@ function CombatBox({text,gs,derived,onStateUpdate}){
         e('h3',null,combat.result==='win'?'\u2694 VICTORY':'\u2620 DEFEATED'),
         e('p',null,combat.result==='win'?(parsed.winOutcome||'All enemies have fallen.'):(parsed.loseOutcome||'You fall. Your companions rush to your side.')),
         e('p',null,'HP: '+combat.playerHp+' / '+combat.playerMaxHp),
-        combat.companions.filter(cp=>!cp.alive).map(cp=>e('p',{key:cp.name,style:{color:'#c0392b'}},cp.name+' has fallen permanently.')),
+        combat.companions.filter(cp=>!cp.alive&&!cp.rescued).map(cp=>e('p',{key:cp.name,style:{color:'#c0392b'}},cp.name+' has fallen permanently.')),
+        combat.companions.filter(cp=>cp.rescued).map(cp=>e('p',{key:cp.name,style:{color:'#27ae60'}},cp.name+' got the civilians to safety and rejoins you.')),
         combat.result==='lose'&&!combat.companions.some(cp=>cp.alive)?e('div',{className:'game-over-panel'},
           e('p',{style:{color:'#c0392b',fontWeight:'bold'}},'Your journey ends here.'),
           e('p',null,'Load a save to continue.')):null),
-      // After fight text
+      // After fight text (narrative only — filter out pen & paper bookkeeping)
       combat.result==='win'&&parsed.afterFight?e('div',{className:'box combat'},
-        parsed.afterFight.split('\n').filter(l=>l.trim()).map((l,i)=>e('p',{key:i,dangerouslySetInnerHTML:{__html:fmt(l)}}))):null,
+        parsed.afterFight.split('\n').filter(l=>{const t=l.trim();if(!t)return false;if(/UPDATE YOUR SHEET|Record current HP|Mark any used|Short rest available|Long rest|Recover Second Wind|Recover Action Surge|XP:|^\*\*XP/i.test(t))return false;return true}).map((l,i)=>e('p',{key:i,dangerouslySetInnerHTML:{__html:fmt(l)}}))):null,
       // Combat log
       combat.log.length>0?e('details',{className:'combat-log-details',open:true},
         e('summary',null,'Combat Log'),
@@ -2658,7 +2718,7 @@ function CombatBox({text,gs,derived,onStateUpdate}){
       e('button',{className:'combat-mode-btn',onClick:()=>setMode('penandpaper')},'PEN & PAPER')),
     // Round header
     e('div',{className:'combat-round-header'},
-      'ROUND '+combat.round+(parsed.rounds.length>0?' / '+parsed.rounds.length:''),
+      'ROUND '+combat.round,
       combat.phase==='playerTurn'?' \u2014 Your Turn':
       combat.phase==='companionTurn'?' \u2014 Companion Turn':
       combat.phase==='enemyTurn'?' \u2014 Enemy Turn':''),
@@ -2697,7 +2757,7 @@ function CombatBox({text,gs,derived,onStateUpdate}){
             cd.name==='Prone'?'\u2b07':cd.name==='Sapped'?'\u25d0':cd.name==='Slowed'?'\u25d1':'\u2022')):null),
         e('div',{className:'combat-hp-bar-bg'},
           e('div',{className:'combat-hp-fill enemy',style:{width:Math.max(0,(en.currentHp/en.maxHp)*100)+'%'}})),
-        e('div',{className:'combat-hp-text'},en.currentHp+' / '+en.maxHp)))),
+        combat.revealEnemyHp?e('div',{className:'combat-hp-text'},en.currentHp+' / '+en.maxHp):null))),
 
     // ── Player Turn ──
     combat.phase==='playerTurn'&&!combat.unconscious?e('div',{className:'combat-turn-panel'},
@@ -2718,7 +2778,7 @@ function CombatBox({text,gs,derived,onStateUpdate}){
         !combat.selectedTarget?e('div',null,
           e('div',{className:'target-grid'},
             livingEnemies.map(en=>e('button',{key:en.id,className:'target-btn'+(canTarget(en)?'':' out-of-range'),disabled:!canTarget(en)||rolling,onClick:()=>setCombat(c=>({...c,selectedTarget:en.id}))},
-              en.name+' (AC '+en.ac+', '+en.currentHp+'/'+en.maxHp+' HP)',
+              en.name+' (AC '+en.ac+(combat.revealEnemyHp?', '+en.currentHp+'/'+en.maxHp+' HP':'')+')',
               !canTarget(en)?e('span',{className:'range-warning'},' \u2014 out of range'):null))),
           // Other action options
           e('div',{className:'combat-other-actions'},
@@ -3202,7 +3262,7 @@ function CoverScreen({onNew,onLoad}){
       e('p',{style:{margin:'0 0 4px'}},'\u2018Dragonlance,\u2019 \u2018Krynn,\u2019 \u2018Solamnic Knights,\u2019 and all related characters, locations, and lore are trademarks of Wizards of the Coast LLC. \u2018Dungeons & Dragons\u2019 and \u2018D&D\u2019 are registered trademarks of Wizards of the Coast LLC.'),
       e('p',{style:{margin:'0 0 4px'}},'This is unofficial fan content, not approved or endorsed by Wizards of the Coast. Made under the Fan Content Policy. No copyright or trademark infringement is intended.'),
       e('p',{style:{margin:0}},'Game mechanics reference the D&D 2024 System Reference Document (SRD 5.2), available under the Creative Commons Attribution 4.0 International License (CC BY 4.0).'),
-      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v22.0.0')));
+      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v22.0.1')));
 }
 
 // ── Character Creation ─────────────────────────────────
@@ -3683,7 +3743,7 @@ function SceneView({scene,onChoice,gs,isEnding,onViewSheet,onBonus,onStateUpdate
         if(box.type==='loot')return e(LootBox,{key:scene.id+'_l'+i,text:txt,gs:gs,onStateUpdate:onStateUpdate});
         return e('div',{key:'b'+i,className:'box '+box.type},txt.split('\n').filter(l=>l.trim()).map((l,j)=>e('p',{key:j,dangerouslySetInnerHTML:{__html:fmt(l)}})));
       }).filter(Boolean),
-      (()=>{const detours=getMandatoryDetours(scene.id,gs);const hasDetour=detours.some(d=>d.mandatory);
+      (()=>{const hasCombatBox=scene.boxes&&scene.boxes.some(b=>b.type==='combat');const combatPending=hasCombatBox&&!gs.combatResolved;const detours=getMandatoryDetours(scene.id,gs);const hasDetour=detours.some(d=>d.mandatory)||combatPending;
       return e(React.Fragment,null,
         detours.length?e('div',{className:'mandatory-detours'},
           e('p',{className:'detour-label'},'Before you choose:'),
@@ -4258,7 +4318,7 @@ function App(){
       setNpcNotify({...notif,sceneAfter:id});
       return;
     }const s=SCENES[id];if(!s){console.warn('Scene not loaded yet:',id);setTimeout(()=>goScene(id,state),200);return}const ns={...state,history:[...state.history,s.id+': '+s.title]};
-    ns.miraHealedThisScene=false;
+    ns.miraHealedThisScene=false;ns.combatResolved=false;
     // Process rest boxes and wage boxes
     const allBoxText=s.boxes.map(b=>b.text||'').join('\n');
     if(allBoxText.includes('Short rest available')){ns.actionSurgeUsed=false;if(ns.secondWindUsed>0)ns.secondWindUsed=Math.max(0,ns.secondWindUsed-1)}

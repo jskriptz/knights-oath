@@ -2,6 +2,20 @@
 
 All notable changes to **Dragonlance: The Knight's Oath** are documented here.
 
+## v22.0.1 — 2026-03-22
+
+### Combat Companion Action Overhaul
+- Companion buff actions now mechanically affect combat: Shield Wall (+AC), Flank/Mark (+attack), Distraction (enemy -1), Encourage (+1 all)
+- Enemy attacks factor in `acBuff` and `enemyDebuff` from companion actions
+- Buffs reset each round (no permanent stacking)
+- "Get civilians to safety" removes companion from combat but they rejoin party after (+10 XP bonus)
+- Vael's "Honest Assessment" reveals enemy HP values (hidden by default)
+- Guard action (Lysander) redirects enemy attacks to guardian
+- Bandage/stabilize actions restore unconscious companions
+- Round header no longer shows max rounds (combat is unlimited)
+- Pen & Paper mode Victory/Defeat buttons now apply rewards, loss consequences, and combat-resolved flag
+- Rescued companions shown in green on combat end, not listed as dead
+
 ## v22.0.0 — 2026-03-22
 
 ### Combat System Fixes
