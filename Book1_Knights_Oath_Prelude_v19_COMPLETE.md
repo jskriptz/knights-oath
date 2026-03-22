@@ -4708,7 +4708,7 @@ Aldous looks at you steadily. 'The Rose Knights have always said that. Most of t
 
 > **MEASURE TRACK: ROSE orientation.**
 
-> **A) March at dawn.** --> Scene 62
+> **A) March at dawn.** --> Scene M4
 
 ---
 
@@ -4721,7 +4721,7 @@ Aldous considers this. 'The Sword Knights have always said that too. And they ar
 
 > **MEASURE TRACK: SWORD orientation.**
 
-> **A) March at dawn.** --> Scene 62
+> **A) March at dawn.** --> Scene M4
 
 ---
 
@@ -4734,7 +4734,7 @@ Aldous considers this. 'The Sword Knights have always said that too. And they ar
 
 > **MEASURE TRACK: CROWN orientation.**
 
-> **A) March at dawn.** --> Scene 62
+> **A) March at dawn.** --> Scene M4
 
 ---
 
@@ -4747,7 +4747,7 @@ Aldous is quiet for a long time. Then: 'That is the answer the Measure itself gi
 
 > **MEASURE TRACK: BALANCE orientation.**
 
-> **A) March at dawn.** --> Scene 62
+> **A) March at dawn.** --> Scene M4
 
 ## SCENE 61 — THE OATH OF SQUIREHOOD
 
@@ -6429,7 +6429,7 @@ He nods once. He puts his hand on your head for a moment — briefly, the way a 
 > **Mechanics:** Once per long rest: when you use Lay on Hands, you may also remove one condition: frightened, charmed, or poisoned. Advantage on saving throws against being charmed or possessed by fiends or undead.
 > **Lore:** Carried by one who fell and chose to return.
 
-> **A) Proceed to Scene 70.** --> Scene 70
+> **A) Proceed to Scene 70.** --> Scene 62
 
 ---
 
@@ -6452,7 +6452,7 @@ He does not argue with the honesty. 'That is a better answer than certainty,' he
 > **QUEST: THE RETURNING FLAME**
 > Complete in Shadow of the Dragon Queen: Find the Shrine of Mishakal (or any good-aligned god shrine). Spend a full night in honest prayer. In the same session, perform one act of genuine self-sacrifice for a stranger. When both conditions are met: faulty spell mechanic ends permanently. The Shard upgrades: bonus action also grants 2d6 temp HP. Once per long rest: cast Protection from Evil and Good without a slot.
 
-> **A) Proceed to Scene 70.** --> Scene 70
+> **A) Proceed to Scene 70.** --> Scene 62
 
 ---
 
@@ -6471,7 +6471,7 @@ Your Lay on Hands pool is restored to half normal (rounded up). Your divine abil
 > **Mechanics:** Lay on Hands pool is half normal maximum (rounded up). Once per long rest: spend 10 minutes in honest prayer to cast Guidance on yourself without a slot. Each time you act in direct service of an innocent without personal benefit, mark one tally. At 5 tallies, the ember becomes The Vow Restored. Tallies reset if you knowingly act against innocents.
 > **Lore:** Given to a paladin who wanted the way back and didn't have it yet. The gods of good do not require certainty — they require the wanting.
 
-> **A) Proceed to Scene 70.** --> Scene 70
+> **A) Proceed to Scene 70.** --> Scene 62
 
 ---
 
@@ -6506,7 +6506,7 @@ He looks at you for a long moment. 'You believe it,' he says. 'That is real.' He
 > **QUEST: THE PLEDGE OF THE FIVE HEADS**
 > In Shadow of the Dragon Queen: Takhisis will reach for you at moments of violence, desperation, or victory. When ready, seek a Dragon Army officer of Black Wing Command who carries her symbol. The pledge is private, brief, and irreversible. Upon pledging: Oathbreaker subclass. Channel Divinity becomes Animate Dead and Aura of Hate. Lay on Hands can harm enemies. The redemption arc remains available. Elistan said the door is always open.
 
-> **A) Proceed to Scene 70.** --> Scene 70
+> **A) Proceed to Scene 70.** --> Scene 62
 
 ## SCENE M4 — THE VOGLER QUESTION
 
@@ -6538,7 +6538,7 @@ He nods slowly. Not just at the answer — at the person saying it. 'That is wha
 > **Mechanics:** While attuned: advantage on History checks related to law, justice, or the Knights of Solamnia. Once per long rest: you may consult the book to automatically know the Measure's position on any legal or ethical question (the DM will provide the answer). Additionally, Insight checks against NPCs who are acting under false pretence of law are made with advantage.
 > **Lore:** Ser Aldous of Brightholm carried this book through forty years of knighthood and gave it to the squire who understood it fastest. In the main campaign, senior Solamnic Knights will recognise it and understand what it means that you are carrying it.
 
-> **A) Return to Scene 69.** --> Scene 69
+> **A) Return to Scene 69.** --> Scene 62
 
 ---
 
@@ -6555,7 +6555,7 @@ He is quiet for a moment. Then: 'That is honest. That is the honest answer and i
 > **Mechanics:** While attuned: once per long rest you may invoke the Measure's authority — any Intimidation or Persuasion check made to enforce law or protect innocents is made with advantage. Additionally, documents bearing this seal are treated as legally binding by any Solamnic NPC of Knight rank or below.
 > **Lore:** A working seal, not ceremonial. Aldous of Brightholm's seal carries forty years of genuine decisions. In the main campaign, NPCs who recognise it will understand that its bearer earned it.
 
-> **A) Return to Scene 69.** --> Scene 69
+> **A) Return to Scene 69.** --> Scene 62
 
 ---
 
@@ -6572,7 +6572,7 @@ He is quiet for a moment. Then: 'That is honest. That is the honest answer and i
 > **Mechanics:** While attuned: advantage on History checks about Solamnic law. After each completed adventure in which you faced a Measure dilemma, add a note to one blank page. When all blank pages are filled (DM discretion, usually 3-5 adventures), the book becomes Aldous's Measure (Uncommon, see Keeper's gift). The item grows with you.
 > **Lore:** A book given to someone at the beginning of understanding, not the end. The best version of this gift is earned later. In the main campaign, any Solamnic Knight who examines it will read Aldous's marginal note on the front page: 'For the squire who had the sense to know what they did not know yet.'
 
-> **A) Return to Scene 69.** --> Scene 69
+> **A) Return to Scene 69.** --> Scene 62
 
 ## SCENE 69 — MIRA AT THE CROSSROADS
 

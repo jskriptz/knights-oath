@@ -2,6 +2,16 @@
 
 All notable changes to **Dragonlance: The Knight's Oath** are documented here.
 
+## v19.1.1 — 2026-03-22
+
+### Routing Completeness
+- Added 6 missing romance choices to Scene 66B (Sera, Vael, Caeron, Tariel, Lysander, Poly)
+- Added 5 Paladin divine question choices to Scene 60 (P3a-P3e)
+- Added 5 class-conditional choices to Scene 61 (Fighter/Paladin/Measure/DG paths)
+- Added 6 Paladin god selection choices to Scene 68C (P4_Paladine through P4_Unnamed)
+- Updated markdown routing for DG4 (→62), M3 (→M4), M4 (→62) to match HTML restructuring
+- Zero routing mismatches remain between markdown and HTML
+
 ## v19.1.0 — 2026-03-22
 
 ### Routing Overhaul
