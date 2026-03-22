@@ -438,7 +438,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Crimso
   .mobile-bar{display:flex!important;align-items:center;justify-content:space-between;padding:10px 16px;
     background:var(--panel);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50}
   .mobile-bar .bar-name{font-family:'Cinzel',serif;color:var(--gold);font-size:14px;font-weight:600}
-  .mobile-bar .bar-stats{font-size:11px;color:var(--text-dim);display:flex;gap:8px}
+  .mobile-bar .bar-stats{font-size:11px;color:var(--text-dim);display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
   .mobile-bar .bar-stats span{display:inline-block}
   .hamburger{background:none;border:1px solid var(--border);color:var(--gold);width:40px;height:40px;
     font-size:20px;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center}
@@ -859,7 +859,7 @@ h2.red{color:var(--red)}
 .cs-ride{font-family:'Cinzel',serif;color:var(--gold);font-style:normal;font-size:18px;margin-top:12px!important}
 
 .cs-actions{display:flex;justify-content:center;gap:12px;margin-top:24px;padding:20px 0}
-.cs-action-btn{flex:1;max-width:240px}
+.cs-action-btn{flex:1;max-width:360px;padding:12px 24px}
 .sheet-btn{font-size:18px!important;padding:16px 48px!important}
 
 .ending-block{text-align:center;margin-top:32px;padding-top:24px}
@@ -2057,7 +2057,7 @@ function CoverScreen({onNew,onLoad}){
       e('p',{style:{margin:'0 0 4px'}},'\u2018Dragonlance,\u2019 \u2018Krynn,\u2019 \u2018Solamnic Knights,\u2019 and all related characters, locations, and lore are trademarks of Wizards of the Coast LLC. \u2018Dungeons & Dragons\u2019 and \u2018D&D\u2019 are registered trademarks of Wizards of the Coast LLC.'),
       e('p',{style:{margin:'0 0 4px'}},'This is unofficial fan content, not approved or endorsed by Wizards of the Coast. Made under the Fan Content Policy. No copyright or trademark infringement is intended.'),
       e('p',{style:{margin:0}},'Game mechanics reference the D&D 2024 System Reference Document (SRD 5.2), available under the Creative Commons Attribution 4.0 International License (CC BY 4.0).'),
-      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v19.0.2')));
+      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v19.0.3')));
 }
 
 // ── Character Creation ─────────────────────────────────
@@ -2882,7 +2882,7 @@ function CharSheet({gs,isEnding,onBack}){
     csComp?e(CompanionInfo,{name:csComp,romance:gs.romances?.[csComp],onClose:()=>setCSComp(null)}):null,
     e('div',{className:'cs-actions no-print'},
       e('button',{className:'gold-btn cs-action-btn',onClick:()=>window.print()},'Print Character Sheet'),
-      e('button',{className:'gold-btn cs-action-btn',onClick:onBack},'\u2190 Back'))
+      e('button',{className:'ghost-btn cs-action-btn',onClick:onBack},'\u2190 Back'))
   );
 }
 
