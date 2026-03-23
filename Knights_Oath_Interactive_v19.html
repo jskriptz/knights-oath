@@ -267,7 +267,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Crimso
 .companion-tag:hover{filter:brightness(1.2);border-color:rgba(74,138,90,.5)}
 .companion-tag .spell-tag-info{font-size:9px;opacity:.5}
 .companion-tag:hover .spell-tag-info{opacity:1}
-.companion-tag.romance{background:rgba(139,74,106,.15);color:#d8a0c0;border-color:rgba(139,74,106,.25)}
+.companion-tag.romance{background:rgba(199,74,126,.2);color:#f0a0c8;border-color:rgba(199,74,126,.4)}
 
 /* Companion tooltip */
 .companion-tooltip .comp-meta{grid-template-columns:1fr;gap:8px}
@@ -327,13 +327,15 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Crimso
 .combat-hp-fill.companion{background:linear-gradient(90deg,#c0392b,#2980b9)}
 .combat-hp-fill.companion.romance{background:linear-gradient(90deg,#c0392b,#e91e63)}
 .combat-hp-fill.enemy{background:linear-gradient(90deg,#c0392b,#e74c3c)}
-.combat-hp-text{min-width:60px;text-align:right;color:var(--text-dim);font-size:11px}
+.combat-hp-text{width:60px;text-align:center;color:var(--text-dim);font-size:11px}
 .combat-section-header{font-family:'Cinzel',serif;font-size:12px;color:var(--gold-dim);letter-spacing:2px;margin:12px 0 8px;text-transform:uppercase}
 .combat-turn-panel{margin:12px 0;padding:10px;background:rgba(255,255,255,.03);border-radius:6px;border-left:3px solid var(--gold-dim);text-align:center}
 .combat-turn-panel.enemy-turn{border-left-color:#c0392b}
 .combat-turn-panel.unconscious{border-left-color:#95a5a6;opacity:.8}
 .combat-weapon-display{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;font-size:13px;color:var(--text-bright)}
-.mastery-badge{display:inline-block;background:var(--gold-dim);color:var(--bg-dark);font-size:10px;padding:1px 6px;border-radius:3px;font-weight:bold;letter-spacing:1px;text-transform:uppercase}
+.mastery-badge{display:inline-block;background:var(--gold-dim);color:var(--bg-dark);font-size:10px;padding:1px 6px;border-radius:3px;font-weight:bold;letter-spacing:1px;text-transform:uppercase;position:relative;cursor:help}
+.mastery-badge .mastery-tip{display:none;position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--bg-dark);color:var(--text-bright);border:1px solid var(--gold-dim);border-radius:6px;padding:6px 10px;font-size:12px;font-weight:normal;text-transform:none;letter-spacing:0;white-space:normal;width:220px;z-index:100;text-align:left;box-shadow:0 4px 12px rgba(0,0,0,.5);line-height:1.4}
+.mastery-badge:hover .mastery-tip,.mastery-badge:focus .mastery-tip{display:block}
 .weapon-info{color:var(--text-dim);font-size:11px}
 .weapon-swap-select{background:var(--bg-dark);color:var(--text-dim);border:1px solid var(--gold-dim);padding:2px 6px;font-size:11px;border-radius:4px;cursor:pointer}
 .target-grid{display:flex;flex-direction:column;gap:4px;margin:8px 0}
@@ -469,7 +471,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Crimso
 
 .dice-area{margin:14px 0;padding:20px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:8px;text-align:center}
 .dice-info{color:var(--text-dim);font-size:13px;margin-bottom:12px;font-family:'Cinzel',serif;letter-spacing:1px}
-.dice-placeholder{font-family:'Cinzel',serif;font-size:48px;color:var(--border);margin:12px 0}
+.dice-placeholder{font-family:'Cinzel',serif;font-size:48px;color:var(--gold);margin:12px 0;text-shadow:0 0 8px rgba(201,168,76,.3)}
 .dice-result{margin:12px 0}
 .dice-num{font-family:'Cinzel',serif;font-size:48px;font-weight:700}
 .dice-bonus{font-family:'Cinzel',serif;font-size:24px;color:var(--text-dim)}
@@ -1013,7 +1015,7 @@ h2.red{color:var(--red)}
   <div id="loading-name">The Knight's Oath</div>
   <div id="loading-bar-container"><div id="loading-bar"></div></div>
   <div id="loading-status">Preparing...</div>
-  <div id="loading-sub">v22.1.0 • 220 Scenes • 9 Companions</div>
+  <div id="loading-sub">v22.1.1 • 220 Scenes • 9 Companions</div>
 </div>
 <script>
 // Loading progress tracker
@@ -1345,15 +1347,24 @@ const STARTING_ARMOR=[
 ];
 
 const COMPANION_COMBAT_STATS={
-  Aldric:{ac:16,maxHp:18,attack:{name:'Longsword',bonus:4,damage:'1d8+2',type:'melee',reach:5},zone:'close'},
-  Sera:{ac:14,maxHp:14,attack:{name:'Shortbow',bonus:5,damage:'1d6+3',type:'ranged',reach:80},zone:'far'},
-  Mira:{ac:12,maxHp:12,attack:null,zone:'mid'},
-  Serath:{ac:13,maxHp:10,attack:{name:'Dagger',bonus:4,damage:'1d4+2',type:'melee',reach:5},zone:'close'},
-  Thessaly:{ac:11,maxHp:10,attack:null,zone:'mid'},
-  Vael:{ac:14,maxHp:14,attack:{name:'Longbow',bonus:4,damage:'1d6+2',type:'ranged',reach:80},zone:'far'},
-  Lysander:{ac:17,maxHp:22,attack:{name:'Longsword',bonus:6,damage:'1d10+3',type:'melee',reach:5},zone:'close'},
-  Tariel:{ac:14,maxHp:14,attack:{name:'Rapier',bonus:3,damage:'1d6+1',type:'melee',reach:5},zone:'close'},
-  Caeron:{ac:18,maxHp:26,attack:{name:'Longsword',bonus:6,damage:'1d8+3',type:'melee',reach:5},zone:'close'}
+  Aldric:{ac:16,maxHp:18,attack:{name:'Longsword',bonus:4,damage:'1d8+2',type:'melee',reach:5},zone:'close',
+    defaultActions:['Longsword Strike (+4, 1d8+2)','Shield Wall (+1 AC to you)','Dodge (enemies have disadvantage)']},
+  Sera:{ac:14,maxHp:14,attack:{name:'Shortbow',bonus:5,damage:'1d6+3',type:'ranged',reach:80},zone:'far',
+    defaultActions:['Shortbow Shot (+5, 1d6+3)','Mark Target (+2 your next attack)','Dodge (enemies have disadvantage)']},
+  Mira:{ac:12,maxHp:12,attack:{name:'Quarterstaff',bonus:2,damage:'1d6',type:'melee',reach:5},zone:'mid',
+    defaultActions:['Heal (1d6+2 HP)','Bandage (stabilize ally)','Quarterstaff Strike (+2, 1d6)','Dodge (enemies have disadvantage)']},
+  Serath:{ac:13,maxHp:10,attack:{name:'Dagger',bonus:4,damage:'1d4+2',type:'melee',reach:5},zone:'close',
+    defaultActions:['Dagger Strike (+4, 1d4+2)','Intel (+2 one attack)','Dodge (enemies have disadvantage)']},
+  Thessaly:{ac:13,maxHp:10,attack:{name:'Shortsword',bonus:3,damage:'1d6+1',type:'melee',reach:5},zone:'mid',
+    defaultActions:['Shortsword Strike (+3, 1d6+1)','Encourage (+1 next roll)','Distraction (enemy -1 next attack)','Dodge (enemies have disadvantage)']},
+  Vael:{ac:14,maxHp:14,attack:{name:'Longbow',bonus:4,damage:'1d6+2',type:'ranged',reach:80},zone:'far',
+    defaultActions:['Longbow Shot (+4, 1d6+2)','Honest Assessment (reveal enemy HP)','Dodge (enemies have disadvantage)']},
+  Lysander:{ac:17,maxHp:22,attack:{name:'Longsword',bonus:6,damage:'1d10+3',type:'melee',reach:5},zone:'close',
+    defaultActions:['Longsword Strike (+6, 1d10+3)','Guard (takes next hit for you)','Dodge (enemies have disadvantage)']},
+  Tariel:{ac:14,maxHp:14,attack:{name:'Rapier',bonus:3,damage:'1d6+1',type:'melee',reach:5},zone:'close',
+    defaultActions:['Rapier Strike (+3, 1d6+1)','Tactical Advice (+1 atk or AC)','Dodge (enemies have disadvantage)']},
+  Caeron:{ac:18,maxHp:26,attack:{name:'Longsword',bonus:6,damage:'1d8+3',type:'melee',reach:5},zone:'close',
+    defaultActions:['Longsword Strike (+6, 1d8+3)','Command (all +1 this round)','Dodge (enemies have disadvantage)']}
 };
 const ROMANCE_TOOLTIPS={
   Aldric:{
@@ -1490,25 +1501,28 @@ function CompanionInfo({name,romance,onClose}){
   const e=React.createElement;
   const c=findCompanion(name);
   if(!c)return null;
+  const firstName=(name.match(/^(\w+)/)||[])[1];
+  const isRomance=romance&&!['Friend','Distant','Cold','Observer','Hostile'].includes(romance);
+  const romNarr=isRomance&&firstName&&ROMANCE_TOOLTIPS[firstName]?ROMANCE_TOOLTIPS[firstName][romance]:'';
   return e('div',{className:'spell-tooltip-overlay',onClick:onClose},
     e('div',{className:'spell-tooltip companion-tooltip',onClick:ev=>ev.stopPropagation()},
       e('div',{className:'st-header'},
         e('span',{className:'st-name'},name),
-        romance&&!['Friend','Distant','Cold','Observer','Hostile'].includes(romance)?e('span',{className:'st-level'},'♡ '+romance):e('span',{className:'st-level'},romance==='Friend'?'Friend':'Companion'),
+        isRomance?e('span',{className:'st-level'},'♡ '+romance):e('span',{className:'st-level'},romance==='Friend'?'Friend':'Companion'),
         e('button',{className:'st-close',onClick:onClose},'✕')),
       e('div',{className:'st-meta comp-meta'},
         e('div',null,e('strong',null,'Appearance: '),c.desc),
         e('div',null,e('strong',null,'Personality: '),c.personality)),
-      null));
+      romNarr?e('div',{className:'comp-romance-info'},'♥  ',e('em',null,romNarr)):null));
 }
 
 function CompanionTag({name,romance,onView}){
   const e=React.createElement;
   const firstName=(name.match(/^(\w+)/)||[])[1];
   const isRomance=romance&&!['Friend','Distant','Cold','Observer','Hostile'].includes(romance);
-  const romTip=isRomance&&firstName&&ROMANCE_TOOLTIPS[firstName]?ROMANCE_TOOLTIPS[firstName][romance]:'';
-  return e('span',{className:'companion-tag'+(isRomance?' romance':''),onClick:()=>{if(onView)onView(name,romance)},style:{cursor:'pointer'},title:romTip},
-    name+(isRomance?' ♡':''),
+  return e('span',{className:'companion-tag'+(isRomance?' romance':''),onClick:()=>{if(onView)onView(name,romance)},style:{cursor:'pointer'}},
+    name,
+    isRomance?e('span',{style:{color:'#ff6b9d',marginLeft:'2px'}},'♥'):null,
     e('span',{className:'spell-tag-info'},'ⓘ'));
 }
 
@@ -1588,7 +1602,8 @@ function RollBox({text,derived,gs,onBonus,rollKey,onRollSave}){
   const[prayerResult,setPrayerResult]=useState(saved?saved.prayer:null);
   const[prayRolling,setPrayRolling]=useState(false);
   const parsed=parseRollBox(text);
-  const bonus=getBonus(derived,parsed.skill);
+  let bonus=getBonus(derived,parsed.skill);
+  if(parsed.skill==='Intimidation'&&gs&&gs.flags&&gs.flags.pigSkewer)bonus+=1;
   const e=React.createElement;
 
   // Persist a roll result to gs.completedRolls
@@ -2078,8 +2093,26 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
     return resolved;
   },[parsed.companions,gs.companions]);
 
+  // Get the correct ability modifier for a weapon (STR for melee, DEX for ranged, best of both for Finesse)
+  const getWeaponAbilMod=(w)=>{
+    const isFinesse=/finesse/i.test(w.props||'');
+    const isRanged=w.type==='ranged';
+    return isRanged?derived.dexMod:(isFinesse?Math.max(derived.strMod,derived.dexMod):derived.strMod);
+  };
+  const getWeaponAttackBonus=(w)=>getWeaponAbilMod(w)+derived.profBonus;
+  const getWeaponDamageExpr=(w)=>{const m=getWeaponAbilMod(w);const baseDie=w.dmg?w.dmg.replace(/\s*(slash|pierce|bludg).*/i,'').trim():'1d8';return baseDie+'+'+ m};
+
   // Get weapon data for player
   const getWeaponData=(weaponName)=>{
+    // Pig Skewer: inherits stats from base weapon + flavor
+    if(weaponName==='Pig Skewer'&&gs.flags&&gs.flags.pigSkewerBase){
+      const base=WEAPONS_WITH_MASTERY.find(x=>x.name===gs.flags.pigSkewerBase);
+      if(base){
+        const isRanged=/bow|crossbow/i.test(base.name)||/thrown/i.test(base.props);
+        const hasReach=/reach/i.test(base.props);
+        return{...base,name:'Pig Skewer',pigSkewer:true,type:isRanged?'ranged':'melee',reach:isRanged?80:(hasReach?10:5)};
+      }
+    }
     const w=WEAPONS_WITH_MASTERY.find(x=>x.name===weaponName);
     if(!w)return{name:weaponName||'Unarmed',mastery:null,dmg:'1d4',props:'',type:'melee',reach:5};
     const isRanged=/bow|crossbow/i.test(w.name)||/thrown/i.test(w.props);
@@ -2094,17 +2127,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
       const stats=COMPANION_COMBAT_STATS[first]||{ac:13,maxHp:12,attack:{name:'Attack',bonus:3,damage:'1d4+1',type:'melee',reach:5},zone:'close'};
       let actions=resolvedCompanions[name]||resolvedCompanions[first]||[];
       if(actions.length===0){
-        actions=[];
-        if(stats.attack)actions.push(stats.attack.name+' Strike (+'+stats.attack.bonus+', '+stats.attack.damage+')');
-        if(first==='Aldric')actions.push('Shield Wall (+1 AC to you)');
-        else if(first==='Sera')actions.push('Mark Target (+2 your next attack)');
-        else if(first==='Mira'){actions=['Heal (1d6+2 HP)','Bandage (stabilize ally)'];}
-        else if(first==='Serath')actions.push('Intel (+2 one attack)');
-        else if(first==='Thessaly'){actions=['Encourage (+1 next roll)','Distraction (enemy -1 next attack)'];}
-        else if(first==='Vael')actions.push('Honest Assessment (reveal enemy HP)');
-        else if(first==='Lysander')actions.push('Guard (takes next hit for you)');
-        else if(first==='Tariel')actions.push('Tactical Advice (+1 atk or AC)');
-        else if(first==='Caeron')actions.push('Command (all +1 this round)');
+        actions=stats.defaultActions||['Attack (+3, 1d4+1)','Dodge (enemies have disadvantage)'];
       }
       return{name,hp:stats.maxHp,maxHp:stats.maxHp,ac:stats.ac,attack:stats.attack,actions,conditions:[],alive:true,zone:stats.zone,deathSaves:{success:0,fail:0},unconscious:false};
     });
@@ -2135,6 +2158,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
       localBandages:gs.bandages||0,
       smiteUsedThisTurn:false,
       blessActive:false,blessRoundsLeft:0,
+      shieldOfFaithActive:false,
       revealEnemyHp:false
     };
   };
@@ -2144,11 +2168,27 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
   const[rolling,setRolling]=useState(false);
   const[rollDisplay,setRollDisplay]=useState(null);
   const[lastRollResult,setLastRollResult]=useState(null);
+  const[healMode,setHealMode]=useState(null); // 'cureWounds' or 'layOnHands'
+
+  // Sync combat resource usage to sidebar in real-time
+  React.useEffect(()=>{
+    if(!combat||!onStateUpdate)return;
+    onStateUpdate(g=>({...g,spellSlotsUsed:combat.localSpellSlots,layOnHandsPool:combat.localLoH,secondWindUsed:combat.localSW,actionSurgeUsed:combat.localAS,potions:combat.localPotions,bandages:combat.localBandages}));
+  },[combat?.localSpellSlots,combat?.localLoH,combat?.localSW,combat?.localAS,combat?.localPotions,combat?.localBandages]);
 
   // Start combat
   const startCombat=()=>{setCombat(initCombat());updateNarrator({roundStart:1})};
 
   // Dice animation helper
+  // Check if all enemies are dead — if so, trigger immediate victory
+  const checkVictory=(c)=>{
+    if(c.enemies.every(e=>!e.alive)&&!c.result){
+      c.result='win';
+      c.log=[...c.log,{type:'result',text:'VICTORY \u2014 All enemies defeated!',round:c.round}];
+    }
+    return c;
+  };
+
   const animateRoll=(callback)=>{
     setRolling(true);let c=0;
     const iv=setInterval(()=>{
@@ -2203,10 +2243,10 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
       if(tIdx>=0&&nc.enemies[tIdx].currentHp<=0){
         const nextTarget=nc.enemies.find(e=>e.alive&&e.id!==target&&e.zone==='close');
         if(nextTarget){
-          const cleaveRoll=rollDice(20)+derived.attackBonus;
+          const cleaveRoll=rollDice(20)+getWeaponAttackBonus(weapon);
           const cleaveHit=cleaveRoll>=nextTarget.ac;
           if(cleaveHit){
-            const cleaveDmg=rollExpr(derived.damage);
+            const cleaveDmg=rollExpr(getWeaponDamageExpr(weapon));
             const nIdx=nc.enemies.findIndex(e=>e.id===nextTarget.id);
             nc.enemies=[...nc.enemies];nc.enemies[nIdx]={...nc.enemies[nIdx],currentHp:Math.max(0,nc.enemies[nIdx].currentHp-cleaveDmg)};
             if(nc.enemies[nIdx].currentHp<=0)nc.enemies[nIdx].alive=false;
@@ -2248,29 +2288,31 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
 
         // Companion bonuses
         let atkMod=c.attackBuff||0;c.attackBuff=0;
+        const weapon=c.activeWeapon;
+        const weapAtk=getWeaponAttackBonus(weapon);
+        const weapDmg=getWeaponDamageExpr(weapon);
 
         // Bless
         let blessBonus=0;
         if(c.blessActive){blessBonus=rollDice(4)}
 
-        const total=d20+derived.attackBonus+atkMod+blessBonus;
+        const total=d20+weapAtk+atkMod+blessBonus;
         const isCrit=d20===20;
         const isFumble=d20===1;
         const hit=isCrit||(total>=target.ac&&!isFumble);
 
         let dmg=0;let logMsg='';
-        const weapon=c.activeWeapon;
 
         if(hit){
-          dmg=rollExpr(derived.damage);
-          if(isCrit)dmg+=rollExpr(weapon.dmg||derived.damage); // double dice on crit
+          dmg=rollExpr(weapDmg);
+          if(isCrit)dmg+=rollExpr(weapDmg.replace(/\+.*$/,'')); // double dice on crit (no mod)
           // Apply damage
           const tIdx=c.enemies.findIndex(e=>e.id===targetId);
           c.enemies=[...c.enemies];c.enemies[tIdx]={...c.enemies[tIdx],currentHp:Math.max(0,c.enemies[tIdx].currentHp-dmg)};
           if(c.enemies[tIdx].currentHp<=0)c.enemies[tIdx].alive=false;
-          logMsg='R'+c.round+' Attack: d20='+d20+(d20b!==null?' (adv/disadv: '+d20b+')':'')+' +'+derived.attackBonus+(atkMod?'+'+atkMod:'')+(blessBonus?'+'+blessBonus+' bless':'')+' = '+total+' vs AC '+target.ac+' \u2714 HIT'+(isCrit?' (CRITICAL!)':'')+' for '+dmg+' damage';
+          logMsg='R'+c.round+' Attack: d20='+d20+(d20b!==null?' (adv/disadv: '+d20b+')':'')+' +'+weapAtk+(atkMod?'+'+atkMod:'')+(blessBonus?'+'+blessBonus+' bless':'')+' = '+total+' vs AC '+target.ac+' \u2714 HIT'+(isCrit?' (CRITICAL!)':'')+' for '+dmg+' damage';
         }else{
-          logMsg='R'+c.round+' Attack: d20='+d20+(d20b!==null?' (adv/disadv: '+d20b+')':'')+' +'+derived.attackBonus+(atkMod?'+'+atkMod:'')+(blessBonus?'+'+blessBonus+' bless':'')+' = '+total+' vs AC '+target.ac+' \u2718 MISS';
+          logMsg='R'+c.round+' Attack: d20='+d20+(d20b!==null?' (adv/disadv: '+d20b+')':'')+' +'+weapAtk+(atkMod?'+'+atkMod:'')+(blessBonus?'+'+blessBonus+' bless':'')+' = '+total+' vs AC '+target.ac+' \u2718 MISS';
         }
 
         // Apply weapon mastery
@@ -2282,12 +2324,13 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
         if(c.vexTarget===targetId)c.vexTarget=null;
 
         c.log=[...c.log,{type:'attack',text:logMsg,round:c.round}];
+        checkVictory(c);
         c.hasActed=true;
-        c.turnPhase='bonus';
+        c.turnPhase=c.result?'done':'bonus';
         c.selectedTarget=null;
 
         // Set last roll result for display
-        setLastRollResult({d20,total,hit,dmg,isCrit,targetName:target.name,mastery:masteryResult.msg});
+        setLastRollResult({d20,total,hit,dmg,isCrit,targetId:targetId,targetName:target.name,mastery:masteryResult.msg});
         setRollDisplay(d20);
 
         // Narrator update
@@ -2322,22 +2365,32 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
 
   // Divine Smite (bonus action, after hit)
   const useSmite=()=>{
-    setCombat(prev=>{
-      const c={...prev};
-      if(c.localSpellSlots>=(derived.spellSlotsMax||2))return prev;
-      const dmg=rollExpr('2d8');
-      // Find last attacked enemy that's still alive, or first alive
-      const target=c.enemies.find(e=>e.alive);
-      if(target){
-        const tIdx=c.enemies.findIndex(e=>e.id===target.id);
-        c.enemies=[...c.enemies];c.enemies[tIdx]={...c.enemies[tIdx],currentHp:Math.max(0,c.enemies[tIdx].currentHp-dmg)};
-        if(c.enemies[tIdx].currentHp<=0)c.enemies[tIdx].alive=false;
+    const smiteTargetId=lastRollResult?.targetId;
+    setRolling(true);let c=0;
+    const iv=setInterval(()=>{
+      setRollDisplay(rollDice(8)+' + '+rollDice(8));
+      if(++c>=10){
+        clearInterval(iv);setRolling(false);
+        const dice=rollDice(8);const dice2=rollDice(8);const dmg=dice+dice2;
+        setRollDisplay(dice+' + '+dice2+' = '+dmg);
+        setCombat(prev=>{
+          const nc={...prev};
+          if(nc.localSpellSlots>=(derived.spellSlotsMax||2))return prev;
+          // Target the enemy we just hit, fallback to first alive
+          const target=smiteTargetId?nc.enemies.find(e=>e.id===smiteTargetId&&e.alive):nc.enemies.find(e=>e.alive);
+          if(target){
+            const tIdx=nc.enemies.findIndex(e=>e.id===target.id);
+            nc.enemies=[...nc.enemies];nc.enemies[tIdx]={...nc.enemies[tIdx],currentHp:Math.max(0,nc.enemies[tIdx].currentHp-dmg)};
+            if(nc.enemies[tIdx].currentHp<=0)nc.enemies[tIdx].alive=false;
+          }
+          nc.localSpellSlots+=1;nc.smiteUsedThisTurn=true;nc.hasBonused=true;nc.turnPhase='done';
+          nc.log=[...nc.log,{type:'smite',text:'R'+nc.round+' Divine Smite on '+(target?target.name:'enemy')+': '+dice+'+'+dice2+' = '+dmg+' radiant damage!',round:nc.round}];
+          checkVictory(nc);
+          setLastRollResult(r=>({...r,smiteDmg:dmg,smiteDice:[dice,dice2],smiteTarget:target?target.name:'enemy'}));
+          return nc;
+        });
       }
-      c.localSpellSlots+=1;c.smiteUsedThisTurn=true;c.hasBonused=true;c.turnPhase='done';
-      c.log=[...c.log,{type:'smite',text:'R'+c.round+' Divine Smite: '+dmg+' radiant damage!',round:c.round}];
-      setLastRollResult(r=>({...r,smiteDmg:dmg}));
-      return c;
-    });
+    },60);
   };
 
   // Second Wind (bonus action)
@@ -2352,14 +2405,25 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
     });
   };
 
-  // Lay on Hands (bonus action)
-  const useLayOnHands=()=>{
+  // Lay on Hands (bonus action) — self or companion
+  const useLayOnHands=(targetName)=>{
     setCombat(prev=>{
       const c={...prev};
       if(c.localLoH<=0)return prev;
-      const amt=Math.min(5,c.localLoH,c.playerMaxHp-c.playerHp);
-      c.playerHp=Math.min(c.playerMaxHp,c.playerHp+amt);c.localLoH-=amt;c.hasBonused=true;c.turnPhase='done';
-      c.log=[...c.log,{type:'heal',text:'R'+c.round+' Lay on Hands: healed '+amt+' HP ('+c.localLoH+' pool remaining)',round:c.round}];
+      if(!targetName||targetName==='self'){
+        const amt=Math.min(5,c.localLoH,c.playerMaxHp-c.playerHp);
+        c.playerHp=Math.min(c.playerMaxHp,c.playerHp+amt);c.localLoH-=amt;c.hasBonused=true;c.turnPhase='done';
+        c.log=[...c.log,{type:'heal',text:'R'+c.round+' Lay on Hands on self: healed '+amt+' HP ('+c.localLoH+' pool remaining)',round:c.round}];
+      }else{
+        const cIdx=c.companions.findIndex(cp=>cp.name.includes(targetName));
+        if(cIdx>=0){
+          const cp=c.companions[cIdx];
+          const amt=Math.min(5,c.localLoH,cp.maxHp-cp.hp);
+          c.companions=[...c.companions];c.companions[cIdx]={...cp,hp:Math.min(cp.maxHp,cp.hp+amt),unconscious:false,alive:true};
+          c.localLoH-=amt;c.hasBonused=true;c.turnPhase='done';
+          c.log=[...c.log,{type:'heal',text:'R'+c.round+' Lay on Hands on '+targetName+': healed '+amt+' HP ('+c.localLoH+' pool remaining)',round:c.round}];
+        }
+      }
       return c;
     });
   };
@@ -2376,15 +2440,40 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
     });
   };
 
+  // Drop any active concentration spell cleanly
+  const dropConcentration=(c)=>{
+    if(!c.concentrating)return;
+    if(c.blessActive){c.blessActive=false;c.blessRoundsLeft=0}
+    if(c.shieldOfFaithActive){c.acBuff=Math.max(0,(c.acBuff||0)-2);c.shieldOfFaithActive=false}
+    c.concentrating=null;
+  };
+
   // Cast Bless (action, concentration)
   const castBless=()=>{
     setCombat(prev=>{
       const c={...prev};
       if(c.localSpellSlots>=(derived.spellSlotsMax||2))return prev;
+      if(c.concentrating)dropConcentration(c); // new conc spell drops old one
       c.localSpellSlots+=1;c.blessActive=true;c.blessRoundsLeft=10;
       c.concentrating={spell:'Bless',roundsLeft:10};
       c.hasActed=true;c.turnPhase='bonus';
       c.log=[...c.log,{type:'spell',text:'R'+c.round+' Cast Bless: +1d4 to attacks and saves (concentration)',round:c.round}];
+      return c;
+    });
+  };
+
+  // Cast Shield of Faith (bonus action, concentration, +2 AC)
+  const castShieldOfFaith=()=>{
+    setCombat(prev=>{
+      const c={...prev};
+      if(c.localSpellSlots>=(derived.spellSlotsMax||2))return prev;
+      if(c.concentrating)dropConcentration(c); // new conc spell drops old one
+      c.localSpellSlots+=1;
+      c.acBuff=(c.acBuff||0)+2;
+      c.shieldOfFaithActive=true;
+      c.concentrating={spell:'Shield of Faith',roundsLeft:100};
+      c.hasBonused=true;c.turnPhase='done';
+      c.log=[...c.log,{type:'spell',text:'R'+c.round+' Shield of Faith: +2 AC (concentration)',round:c.round}];
       return c;
     });
   };
@@ -2432,6 +2521,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
   const endPlayerTurn=()=>{
     setCombat(prev=>{
       const c={...prev};
+      if(c.result)return c; // combat already over
       c.turnPhase=null;
       setLastRollResult(null);
       // Move to companion turn if we have living companions with actions
@@ -2471,16 +2561,17 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
           const target=c.enemies.find(e=>e.alive);
           if(target&&comp.attack){
             const roll=rollDice(20);
-            const total=roll+comp.attack.bonus;
+            const blessB=c.blessActive?rollDice(4):0;
+            const total=roll+comp.attack.bonus+blessB;
             const hit=roll===20||(total>=target.ac&&roll!==1);
             if(hit){
               const dmg=rollExpr(comp.attack.damage);
               const tIdx=c.enemies.findIndex(e=>e.id===target.id);
               c.enemies=[...c.enemies];c.enemies[tIdx]={...c.enemies[tIdx],currentHp:Math.max(0,c.enemies[tIdx].currentHp-dmg)};
               if(c.enemies[tIdx].currentHp<=0)c.enemies[tIdx].alive=false;
-              logEntries.push(comp.name+': '+action+' \u2192 d20='+roll+'+'+comp.attack.bonus+'='+total+' vs AC '+target.ac+' \u2714 '+dmg+' dmg');
+              logEntries.push(comp.name+': '+action+' \u2192 d20='+roll+'+'+comp.attack.bonus+(blessB?'+'+blessB+' bless':'')+'='+total+' vs AC '+target.ac+' \u2714 '+dmg+' dmg');
             }else{
-              logEntries.push(comp.name+': '+action+' \u2192 d20='+roll+'+'+comp.attack.bonus+'='+total+' vs AC '+target.ac+' \u2718 miss');
+              logEntries.push(comp.name+': '+action+' \u2192 d20='+roll+'+'+comp.attack.bonus+(blessB?'+'+blessB+' bless':'')+'='+total+' vs AC '+target.ac+' \u2718 miss');
             }
           }
         }
@@ -2556,6 +2647,12 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
           c.revealEnemyHp=true;
           logEntries.push(comp.name+': '+action+' \u2192 Enemy HP revealed');
         }
+        // Dodge — companion dodges, attacks against them have disadvantage
+        else if(/dodge/i.test(action)){
+          const idx=c.companions.findIndex(cp=>cp.name===comp.name);
+          if(idx>=0){c.companions=[...c.companions];c.companions[idx]={...c.companions[idx],dodging:true}}
+          logEntries.push(comp.name+': Dodging \u2014 attacks against them have disadvantage');
+        }
         // Default — logged as narrative
         else{
           logEntries.push(comp.name+': '+action);
@@ -2579,32 +2676,62 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
       }
 
       c.log=[...c.log,...logEntries.map(t=>({type:'companion',text:'R'+c.round+' '+t,round:c.round}))];
-      c.phase='enemyTurn';
+      checkVictory(c);
+      c.phase=c.result?c.phase:'enemyTurn';
 
-      // Narrator update for companion actions
-      if(narr&&narr.companionActs){
-        const compEvents=[];
-        for(const comp of c.companions){
-          if(!comp.alive||comp.unconscious)continue;
-          const action=c.companionActionsThisRound[comp.name];
-          if(!action||action==='GUARD_ACTIVE')continue;
-          const first=(comp.name.match(/^(\w+)/)||[])[1];
-          // Try specific key first, then generic category
-          if(/flank/i.test(action))compEvents.push(first+'_flank');
-          else if(/shield wall/i.test(action))compEvents.push(first+'_shield');
-          else if(/aggressive/i.test(action))compEvents.push(first+'_aggressive');
-          else if(/heal|rush|bandage/i.test(action))compEvents.push(first+'_heal');
-          else if(/shot|scout shot/i.test(action))compEvents.push(first+'_shot');
-          else if(/mark target/i.test(action))compEvents.push(first+'_mark');
-          else if(/distraction/i.test(action))compEvents.push('generic_distraction');
-          else if(/flee|civilian|rescue/i.test(action))compEvents.push('generic_flee');
-          // Check if companion attacked and hit/missed (from log)
-          const compLog=logEntries.find(l=>l.startsWith(comp.name));
-          if(compLog&&/✔/.test(compLog))compEvents.push(first+'_hit');
-          else if(compLog&&/✘/.test(compLog))compEvents.push(first+'_miss');
+      // Narrator update for companion actions — build narrative summary
+      const compNarrParts=[];
+      for(const comp of c.companions){
+        if(!comp.alive||comp.unconscious)continue;
+        const action=c.companionActionsThisRound[comp.name];
+        if(!action||action==='GUARD_ACTIVE')continue;
+        const first=(comp.name.match(/^(\w+)/)||[])[1];
+        const compLog=logEntries.find(l=>l.startsWith(comp.name));
+
+        // Try scene-specific narration first
+        if(narr&&narr.companionActs){
+          let narrKey=null;
+          if(/flank/i.test(action))narrKey=first+'_flank';
+          else if(/shield wall/i.test(action))narrKey=first+'_shield';
+          else if(/aggressive/i.test(action))narrKey=first+'_aggressive';
+          else if(/heal|rush|bandage/i.test(action))narrKey=first+'_heal';
+          else if(/shot/i.test(action))narrKey=first+'_shot';
+          else if(/mark target/i.test(action))narrKey=first+'_mark';
+          else if(/distraction/i.test(action))narrKey='generic_distraction';
+          else if(/flee|civilian|rescue/i.test(action))narrKey='generic_flee';
+          if(compLog&&/\u2714/.test(compLog)&&narr.companionActs[first+'_hit']){compNarrParts.push(narr.companionActs[first+'_hit']);continue}
+          if(compLog&&/\u2718/.test(compLog)&&narr.companionActs[first+'_miss']){compNarrParts.push(narr.companionActs[first+'_miss']);continue}
+          if(narrKey&&narr.companionActs[narrKey]){compNarrParts.push(narr.companionActs[narrKey]);continue}
         }
-        if(compEvents.length)updateNarrator({companionActs:compEvents});
+
+        // Generic fallback narration
+        if(/strike|shot|dagger/i.test(action)){
+          if(compLog&&/\u2714/.test(compLog)){const dmgM=compLog.match(/(\d+)\s*dmg/);compNarrParts.push(first+' strikes true'+(dmgM?', dealing '+dmgM[1]+' damage.':'.'));}
+          else if(compLog&&/\u2718/.test(compLog)){compNarrParts.push(first+'\'s attack goes wide, missing the mark.');}
+          else{compNarrParts.push(first+' attacks.');}
+        }
+        else if(/heal/i.test(action)){
+          if(compLog&&/Healed you/i.test(compLog)){const hM=compLog.match(/(\d+)\s*HP/);compNarrParts.push(first+' tends to your wounds'+(hM?', restoring '+hM[1]+' HP.':'.'));}
+          else if(compLog&&/Healed/i.test(compLog)){const tgt=compLog.match(/Healed\s+(\w+)/);const hM=compLog.match(/(\d+)\s*HP/);compNarrParts.push(first+' tends to '+(tgt?tgt[1]+'\'s':'an ally\'s')+' wounds'+(hM?', restoring '+hM[1]+' HP.':'.'));}
+          else{compNarrParts.push(first+' prepares a healing salve.');}
+        }
+        else if(/bandage|stabilize/i.test(action)){
+          if(compLog&&/Stabilized/i.test(compLog)){const tgt=compLog.match(/Stabilized\s+(\w+)/);compNarrParts.push(first+' rushes to '+(tgt?tgt[1]:'a fallen ally')+' and binds their wounds.');}
+          else{compNarrParts.push(first+' readies bandages.');}
+        }
+        else if(/shield wall/i.test(action)){compNarrParts.push(first+' raises their shield beside you, bracing for the next blow.');}
+        else if(/guard/i.test(action)){compNarrParts.push(first+' steps in front of you, ready to take the next hit.');}
+        else if(/mark target/i.test(action)){compNarrParts.push(first+' calls out the enemy\'s weak point \u2014 you see an opening.');}
+        else if(/intel/i.test(action)){compNarrParts.push(first+' reads the enemy\'s stance and signals you where to strike.');}
+        else if(/encourage|command|rally/i.test(action)){compNarrParts.push(first+' rallies the party with a sharp command.');}
+        else if(/distraction/i.test(action)){compNarrParts.push(first+' feints, drawing the enemy\'s attention away.');}
+        else if(/tactical advice/i.test(action)){compNarrParts.push(first+' quietly advises your next move.');}
+        else if(/honest assessment|reveal/i.test(action)){compNarrParts.push(first+' studies the enemy carefully, gauging their strength.');}
+        else if(/dodge/i.test(action)){compNarrParts.push(first+' keeps light on their feet, ready to evade.');}
+        else if(/flee|civilian|rescue/i.test(action)){compNarrParts.push(first+' breaks from the fight to get the civilians to safety.');}
+        else{compNarrParts.push(first+': '+action);}
       }
+      if(compNarrParts.length)setNarratorText(compNarrParts.join('\n'));
 
       return c;
     });
@@ -2649,8 +2776,9 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
             c.hasActed=false;c.hasBonused=false;c.hasSurged=false;
             c.weaponSwappedThisTurn=false;c.smiteUsedThisTurn=false;
             c.dodging=false;c.selectedTarget=null;
+            c.companions=c.companions.map(cp=>cp.dodging?{...cp,dodging:false}:cp);
             c.acBuff=0;c.enemyDebuff=0;c.attackBuff=0;
-            if(c.blessActive){c.blessRoundsLeft-=1;if(c.blessRoundsLeft<=0){c.blessActive=false;c.concentrating=null}}
+            if(c.blessActive){c.blessRoundsLeft-=1;if(c.blessRoundsLeft<=0)dropConcentration(c)}
             narrEvents.roundStart=c.round;
           }
           pendingNarrRef.current=narrEvents;
@@ -2693,7 +2821,8 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
         if(targetType==='player'){targetAc+=(c.acBuff||0)}
 
         let d20=rollDice(20);
-        const hasDisadv=(targetType==='player'&&c.dodging)||isSapped;
+        const targetComp=targetType==='companion'?c.companions.find(cp=>cp.name===targetName):null;
+        const hasDisadv=(targetType==='player'&&c.dodging)||(targetComp&&targetComp.dodging)||isSapped;
         if(hasDisadv){const d20b=rollDice(20);d20=Math.min(d20,d20b)}
         const total=d20+attack.bonus-(c.enemyDebuff||0);
         const hit=d20===20||(total>=targetAc&&d20!==1);
@@ -2710,7 +2839,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
             else if(c.playerHp/c.playerMaxHp<=0.3)narrEvents.playerHurtBad=true;
             else narrEvents.playerHurt=true;
             narrEvents.enemyHitPlayer=true;
-            if(c.concentrating){const conDC=Math.max(10,Math.floor(dmg/2));const conSave=rollDice(20)+derived.conMod;if(conSave<conDC){c.concentrating=null;c.blessActive=false;logEntries.push('Concentration broken! (CON save '+conSave+' vs DC '+conDC+')')}else{logEntries.push('Concentration held (CON save '+conSave+' vs DC '+conDC+')')}}
+            if(c.concentrating){const conDC=Math.max(10,Math.floor(dmg/2));const conSave=rollDice(20)+derived.conMod+(c.blessActive?rollDice(4):0);if(conSave<conDC){dropConcentration(c);logEntries.push('Concentration broken! (CON save '+conSave+' vs DC '+conDC+')')}else{logEntries.push('Concentration held (CON save '+conSave+' vs DC '+conDC+')')}}
             if(c.playerHp<=0){c.playerHp=0;if(livingComps.length>0){c.unconscious=true;c.deathSaves={success:0,fail:0};logEntries.push('You fall unconscious! Your companions fight on.')}else{c.result='lose';logEntries.push('You fall. There is no one left to save you.')}}
           }else if(targetType==='companion'){
             const cIdx=c.companions.findIndex(cp=>cp.name===targetName);
@@ -2841,6 +2970,10 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
 
   // Combat over
   if(combat.result){
+    const afterLines=parsed.afterFight?parsed.afterFight.split('\n').filter(l=>{const t=l.trim();if(!t)return false;if(/UPDATE YOUR SHEET|Record current HP|Mark any used|Short rest available|Long rest|Recover Second Wind|Recover Action Surge|XP:|^\*\*XP|Pen & Paper|Pen and Paper|Use stat blocks|Run at your table|Skip to AFTER|Narrative Mode|Follow rounds|Roll when prompted|YOUR STATS|COMPANION ACTIONS|choose 1 per|Action A|Action B|Action C|^\|/i.test(t))return false;return true}):[];
+    // Boar fight loot choices (scene 11_YARD)
+    const isBoarFight=sceneId==='11_YARD'||sceneId==='11';
+    const boarLootChosen=combat.boarLootChosen;
     return e('div',{className:'combat-wrapper'},
       e('div',{className:'combat-mode-toggle'},
         e('button',{className:'combat-mode-btn active'},'NARRATIVE'),
@@ -2849,14 +2982,35 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
         e('h3',null,combat.result==='win'?'\u2694 VICTORY':'\u2620 DEFEATED'),
         e('p',null,combat.result==='win'?(parsed.winOutcome||'All enemies have fallen.'):(parsed.loseOutcome||'You fall. Your companions rush to your side.')),
         e('p',null,'HP: '+combat.playerHp+' / '+combat.playerMaxHp),
-        combat.companions.filter(cp=>!cp.alive&&!cp.rescued).map(cp=>e('p',{key:cp.name,style:{color:'#c0392b'}},cp.name+' has fallen permanently.')),
+        // Only show fallen companions on defeat
+        combat.result==='lose'?combat.companions.filter(cp=>!cp.alive&&!cp.rescued).map(cp=>e('p',{key:cp.name,style:{color:'#c0392b'}},cp.name+' has fallen.')):null,
         combat.companions.filter(cp=>cp.rescued).map(cp=>e('p',{key:cp.name,style:{color:'#27ae60'}},cp.name+' got the civilians to safety and rejoins you.')),
         combat.result==='lose'&&!combat.companions.some(cp=>cp.alive)?e('div',{className:'game-over-panel'},
           e('p',{style:{color:'#c0392b',fontWeight:'bold'}},'Your journey ends here.'),
           e('p',null,'Load a save to continue.')):null),
-      // After fight text (narrative only — filter out pen & paper bookkeeping)
-      combat.result==='win'&&parsed.afterFight?e('div',{className:'box combat'},
-        parsed.afterFight.split('\n').filter(l=>{const t=l.trim();if(!t)return false;if(/UPDATE YOUR SHEET|Record current HP|Mark any used|Short rest available|Long rest|Recover Second Wind|Recover Action Surge|XP:|^\*\*XP/i.test(t))return false;return true}).map((l,i)=>e('p',{key:i,dangerouslySetInnerHTML:{__html:fmt(l)}}))):null,
+      // After fight text
+      combat.result==='win'&&afterLines.length?e('div',{className:'box combat'},
+        afterLines.map((l,i)=>e('p',{key:i,dangerouslySetInnerHTML:{__html:fmt(l)}}))):null,
+      // Boar fight loot choices
+      combat.result==='win'&&isBoarFight&&!boarLootChosen?e('div',{className:'box combat',style:{marginTop:'12px'}},
+        e('p',{style:{fontStyle:'italic',color:'var(--text-dim)'}},'The boar\'s tusks are massive \u2014 each one as long as your forearm and sharp enough to gouge stone. Ser Aldous glances at them. "Trophies or trash, Squire. Your call."'),
+        e('div',{style:{display:'flex',flexDirection:'column',gap:'8px',marginTop:'12px'}},
+          e('button',{className:'choice-btn',onClick:()=>{
+            setCombat(c=>({...c,boarLootChosen:'tusks'}));
+            if(onStateUpdate)onStateUpdate(g=>{
+              const ng={...g,inventory:[...(g.inventory||[])]};
+              ng.inventory.push('Boar Tusks');
+              return ng;
+            });
+          }},e('strong',null,'A) Take the Tusks'),' \u2014 Massive curved tusks, sharp enough to gouge stone. A merchant could fashion these into something useful\u2026 or buy them outright.'),
+          e('button',{className:'choice-btn',onClick:()=>{
+            setCombat(c=>({...c,boarLootChosen:'leave'}));
+            if(onStateUpdate)onStateUpdate(g=>({...g,rose:(g.rose||0)+3}));
+          }},e('strong',null,'B) Leave Them'),' \u2014 The garrison groundskeeper will deal with it. Pell thanks you for saving him, not for salvaging the thing that gored him. (+3 ROSE)'))):null,
+      // Show chosen result
+      combat.result==='win'&&isBoarFight&&boarLootChosen?e('div',{className:'box combat',style:{marginTop:'12px'}},
+        boarLootChosen==='tusks'?e('p',{style:{fontStyle:'italic',color:'var(--gold)'}},'\u2694 You work the largest tusk free and wrap it in cloth. Heavy, curved, and wickedly sharp. A merchant might know what to do with it.'):
+        e('p',{style:{fontStyle:'italic',color:'var(--gold)'}},'\ud83c\udf39 You leave the tusks where they are. Pell, still pale, catches your eye across the yard and mouths "thank you." That is enough. (+3 ROSE)')):null,
       // Combat log
       combat.log.length>0?e('details',{className:'combat-log-details',open:true},
         e('summary',null,'Combat Log'),
@@ -2886,12 +3040,13 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
       combat.phase==='companionTurn'?' \u2014 Companion Turn':
       combat.phase==='enemyTurn'?' \u2014 Enemy Turn':''),
     // Situation prose — dynamic narrator if available, fallback to static
-    (narratorText||curSituation)?e('div',{className:'combat-situation'},e('em',null,narratorText||curSituation)):null,
+    (narratorText||curSituation)?e('div',{className:'combat-situation'},e('em',null,...(narratorText||curSituation).split('\n').flatMap((line,i)=>i>0?[e('br',{key:'br'+i}),line]:[line]))):null,
     // Status conditions row
-    (combat.conditions.length>0||combat.concentrating||combat.blessActive||combat.dodging)?
+    (combat.conditions.length>0||combat.concentrating||combat.blessActive||combat.shieldOfFaithActive||combat.dodging)?
       e('div',{className:'combat-conditions-row'},
         combat.dodging?e('span',{className:'condition-icon',title:'Dodging: attacks against you have disadvantage'},'\u25c7 Dodge'):null,
         combat.blessActive?e('span',{className:'condition-icon bless',title:'Bless: +1d4 to attacks and saves ('+combat.blessRoundsLeft+' rounds)'},'\u2726 Bless'):null,
+        combat.shieldOfFaithActive?e('span',{className:'condition-icon bless',title:'Shield of Faith: +2 AC (concentration)'},'\ud83d\udee1 +2 AC'):null,
         combat.concentrating?e('span',{className:'condition-icon conc',title:'Concentrating on '+combat.concentrating.spell},'\u25ce Conc'):null,
         combat.unconscious?e('span',{className:'condition-icon unconscious',title:'Unconscious: making death saves'},'\u2715 KO'):null
       ):null,
@@ -2908,8 +3063,8 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
         const rom=gs.romances?.[cp.name];
         const isRomance=rom&&!['Friend','Distant','Cold','Observer','Hostile'].includes(rom);
         const romTip=isRomance&&firstName&&ROMANCE_TOOLTIPS[firstName]?ROMANCE_TOOLTIPS[firstName][rom]:'';
-        return e('div',{key:i,className:'combat-hp-bar'+(cp.unconscious?' unconscious':''),title:romTip||''},
-        e('div',{className:'combat-hp-label'},cp.name+(cp.unconscious?' (DOWN)':(!cp.alive?' (DEAD)':''))+(isRomance?' ♡':'')),
+        return e('div',{key:i,className:'combat-hp-bar'+(cp.unconscious?' unconscious':'')+(cp.rescued?' rescued':''),style:cp.rescued?{opacity:.5}:{},title:romTip||''},
+        e('div',{className:'combat-hp-label'},cp.name+(cp.unconscious?' (DOWN)':(!cp.alive?(cp.rescued?' (LEFT COMBAT)':' (DEAD)'):''))+(isRomance?' ♡':'')),
         e('div',{className:'combat-hp-bar-bg'},
           e('div',{className:'combat-hp-fill companion'+(isRomance?' romance':''),style:{width:Math.max(0,(cp.hp/cp.maxHp)*100)+'%'}})),
         e('div',{className:'combat-hp-text'},cp.hp+' / '+cp.maxHp))}),
@@ -2920,15 +3075,22 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
             cd.name==='Prone'?'\u2b07':cd.name==='Sapped'?'\u25d0':cd.name==='Slowed'?'\u25d1':'\u2022')):null),
         e('div',{className:'combat-hp-bar-bg'},
           e('div',{className:'combat-hp-fill enemy',style:{width:Math.max(0,(en.currentHp/en.maxHp)*100)+'%'}})),
-        e('div',{className:'combat-hp-text',style:combat.revealEnemyHp?{}:{color:'#aaa',fontStyle:'italic',fontSize:'12px'}},combat.revealEnemyHp?(en.currentHp+' / '+en.maxHp):'??? ')))),
+        e('div',{className:'combat-hp-text'},combat.revealEnemyHp?(en.currentHp+' / '+en.maxHp):'???')))),
 
     // ── Player Turn ──
     combat.phase==='playerTurn'&&!combat.unconscious?e('div',{className:'combat-turn-panel'},
       // Weapon display & swap
       e('div',{className:'combat-weapon-display'},
         e('span',null,'\u2694 '+weapon.name),
-        weapon.mastery?e('span',{className:'mastery-badge',title:weapon.mastery+' mastery'},weapon.mastery):null,
-        e('span',{className:'weapon-info'},' ('+weapon.dmg+', '+(weapon.type==='ranged'?'ranged':'reach '+weapon.reach+'ft')+')'),
+        weapon.mastery?e('span',{className:'mastery-badge',tabIndex:0},weapon.mastery,e('span',{className:'mastery-tip'},({Cleave:'If you kill a target, make a free attack against another nearby enemy.',Graze:'On a miss, still deal damage equal to your ability modifier.',Nick:'Make a free offhand attack without using your bonus action.',Push:'On hit, push the target 10 ft away from you.',Sap:'On hit, the target has disadvantage on its next attack roll.',Slow:'On hit, the target\u2019s speed is reduced by 10 ft until your next turn.',Topple:'On hit, the target must pass a CON save or be knocked prone.',Vex:'On hit, your next attack against this target has advantage.'})[weapon.mastery]||weapon.mastery)):null,
+        e('span',{className:'weapon-info'},' ('+weapon.dmg+
+          (function(){
+            const isFinesse=/finesse/i.test(weapon.props||'');
+            const isRanged=weapon.type==='ranged';
+            const abilMod=isRanged?derived.dexMod:(isFinesse?Math.max(derived.strMod,derived.dexMod):derived.strMod);
+            const abilLabel=isRanged?'DEX':(isFinesse?(derived.dexMod>=derived.strMod?'DEX':'STR'):'STR');
+            return(abilMod>=0?' + ':' - ')+Math.abs(abilMod)+' '+abilLabel+' + '+derived.profBonus;
+          })()+', '+(weapon.type==='ranged'?'ranged':'reach '+weapon.reach+'ft')+')'),
         !combat.weaponSwappedThisTurn&&gs.inventory?e('select',{className:'weapon-swap-select',value:'',onChange:(ev)=>{if(ev.target.value)swapWeapon(ev.target.value)}},
           e('option',{value:''},'Swap weapon...'),
           gs.inventory.filter(item=>WEAPONS_WITH_MASTERY.some(w=>w.name===item)&&item!==weapon.name).map(item=>e('option',{key:item,value:item},item))
@@ -2941,27 +3103,42 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
         !combat.selectedTarget?e('div',null,
           e('div',{className:'target-grid'},
             livingEnemies.map(en=>e('button',{key:en.id,className:'target-btn'+(canTarget(en)?'':' out-of-range'),disabled:!canTarget(en)||rolling,onClick:()=>setCombat(c=>({...c,selectedTarget:en.id}))},
-              en.name+' (AC '+en.ac+(combat.revealEnemyHp?', '+en.currentHp+'/'+en.maxHp+' HP':'')+')',
+              '\u2694\u2002'+en.name+' (AC '+en.ac+(combat.revealEnemyHp?', '+en.currentHp+'/'+en.maxHp+' HP':'')+')',
               !canTarget(en)?e('span',{className:'range-warning'},' \u2014 out of range'):null))),
           // Other action options
           e('div',{className:'combat-other-actions'},
             e('button',{className:'combat-action-btn',onClick:doPlayerDodge},'\u25c7 Dodge'),
             gs.cls==='Paladin'&&combat.localSpellSlots<(derived.spellSlotsMax||2)&&!combat.blessActive?
               e('button',{className:'combat-action-btn',onClick:castBless},'\u2726 Cast Bless (conc.)'):null,
-            gs.cls==='Paladin'&&combat.localSpellSlots<(derived.spellSlotsMax||2)?
-              e('button',{className:'combat-action-btn',onClick:()=>castCureWounds('self')},'\u2764 Cure Wounds (self)'):null,
+            gs.cls==='Paladin'&&combat.localSpellSlots<(derived.spellSlotsMax||2)&&!healMode?
+              e('button',{className:'combat-action-btn',onClick:()=>setHealMode('cureWounds')},'\u2764 Cure Wounds'):null,
             combat.localBandages>0?e('button',{className:'combat-action-btn',onClick:()=>{
               setCombat(c=>{const nc={...c};nc.localBandages-=1;nc.hasActed=true;nc.turnPhase='bonus';
                 const injured=nc.companions.find(cp=>cp.unconscious&&cp.alive);
                 if(injured){const idx=nc.companions.findIndex(cp=>cp.name===injured.name);nc.companions=[...nc.companions];nc.companions[idx]={...nc.companions[idx],hp:1,unconscious:false,deathSaves:{success:0,fail:0}};
                   nc.log=[...nc.log,{type:'heal',text:'R'+nc.round+' Bandage: stabilized '+injured.name+' at 1 HP',round:nc.round}]}
                 return nc;});
-            }},'\ud83e\ude79 Bandage (stabilize ally)'):null)
+            }},'\ud83e\ude79 Bandage (stabilize ally)'):null,
+          // Heal target selection
+          healMode&&combat.turnPhase==='action'?e('div',{className:'combat-heal-targets',style:{marginTop:'10px'}},
+            e('div',{className:'combat-section-header'},healMode==='cureWounds'?'CURE WOUNDS \u2014 Choose Target':'LAY ON HANDS \u2014 Choose Target'),
+            combat.playerHp<combat.playerMaxHp?e('button',{className:'combat-action-btn',onClick:()=>{
+              if(healMode==='cureWounds'){castCureWounds('self')}else{useLayOnHands('self')}
+              setHealMode(null);
+            }},'You ('+combat.playerHp+'/'+combat.playerMaxHp+')'):null,
+            combat.companions.filter(cp=>cp.alive&&(cp.hp<cp.maxHp||cp.unconscious)).map(cp=>
+              e('button',{key:'ht_'+cp.name,className:'combat-action-btn',onClick:()=>{
+                const first=(cp.name.match(/^(\w+)/)||[])[1];
+                if(healMode==='cureWounds'){castCureWounds(first)}else{useLayOnHands(first)}
+                setHealMode(null);
+              }},cp.name+(cp.unconscious?' (DOWN)':' ('+cp.hp+'/'+cp.maxHp+')'))),
+            e('button',{className:'ghost-btn',style:{fontSize:'11px',marginTop:'4px'},onClick:()=>setHealMode(null)},'Cancel')
+          ):null)
         ):e('div',null,
           // Selected target — roll attack
           e('div',{className:'combat-target-selected'},'Target: '+combat.enemies.find(en=>en.id===combat.selectedTarget)?.name),
           e('div',{className:'dice-area'},
-            e('div',{className:'dice-info'},'Attack \u2022 +'+derived.attackBonus+' vs AC '+(combat.enemies.find(en=>en.id===combat.selectedTarget)?.ac||'?')),
+            e('div',{className:'dice-info'},'Attack \u2022 +'+getWeaponAttackBonus(weapon)+' vs AC '+(combat.enemies.find(en=>en.id===combat.selectedTarget)?.ac||'?')),
             e('div',{className:'dice-placeholder'},rolling?rollDisplay:'?'),
             e('button',{className:'dice-btn',onClick:()=>doPlayerAttack(combat.selectedTarget),disabled:rolling},rolling?'\u2684 Rolling...':'\u2684 Attack Roll')),
           e('button',{className:'ghost-btn',style:{fontSize:'11px',marginTop:'4px'},onClick:()=>setCombat(c=>({...c,selectedTarget:null}))},'Change target'))
@@ -2969,10 +3146,10 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
 
       // Show last attack result
       lastRollResult&&combat.turnPhase==='bonus'?e('div',{className:'combat-result '+(lastRollResult.hit?'hit':'miss')},
-        '\u2684 d20='+lastRollResult.d20+' +'+derived.attackBonus+' = '+(lastRollResult.d20+derived.attackBonus)+
+        '\u2684 d20='+lastRollResult.d20+' +'+getWeaponAttackBonus(weapon)+' = '+(lastRollResult.d20+getWeaponAttackBonus(weapon))+
         (lastRollResult.hit?' \u2714 HIT'+(lastRollResult.isCrit?' (CRITICAL!)':'')+' for '+lastRollResult.dmg+' damage':' \u2718 MISS'),
         lastRollResult.mastery?e('div',{className:'mastery-result'},lastRollResult.mastery):null,
-        lastRollResult.smiteDmg?e('div',{className:'smite-result'},'\u2728 Divine Smite: +'+lastRollResult.smiteDmg+' radiant'):null
+        lastRollResult.smiteDmg?e('div',{className:'smite-result'},'\u2728 Divine Smite: '+(lastRollResult.smiteDice?lastRollResult.smiteDice.join('+')+' = ':'')+lastRollResult.smiteDmg+' radiant'+(lastRollResult.smiteTarget?' on '+lastRollResult.smiteTarget:'')):null
       ):null,
 
       // Bonus action phase
@@ -2985,13 +3162,31 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
           // Second Wind
           gs.cls==='Fighter'&&combat.localSW<(derived.secondWindMax||2)?
             e('button',{className:'combat-ability-btn',onClick:useSecondWind},'\u2764 Second Wind (1d10+'+gs.level+')'):null,
+          // Shield of Faith (bonus action, concentration, +2 AC)
+          gs.cls==='Paladin'&&!combat.shieldOfFaithActive&&combat.localSpellSlots<(derived.spellSlotsMax||2)&&gs.spells&&gs.spells.level1&&gs.spells.level1.includes('Shield of Faith')?
+            e('button',{className:'combat-ability-btn',onClick:castShieldOfFaith},'\ud83d\udee1 Shield of Faith (+2 AC)'+(combat.concentrating?' \u2014 drops '+combat.concentrating.spell:'')):null,
           // Lay on Hands
-          gs.cls==='Paladin'&&combat.localLoH>0?
-            e('button',{className:'combat-ability-btn',onClick:useLayOnHands},'\u2764 Lay on Hands ('+combat.localLoH+' pool)'):null,
+          gs.cls==='Paladin'&&combat.localLoH>0&&!healMode?
+            e('button',{className:'combat-ability-btn',onClick:()=>setHealMode('layOnHands')},'\u2764 Lay on Hands ('+combat.localLoH+' pool)'):null,
           // Potion
           combat.localPotions>0?
             e('button',{className:'combat-ability-btn',onClick:usePotion},'\ud83e\uddea Potion ('+combat.localPotions+')'):null,
-          e('button',{className:'combat-action-btn skip',onClick:()=>setCombat(c=>({...c,hasBonused:true,turnPhase:'done'}))},'Skip'))
+          e('button',{className:'combat-action-btn skip',onClick:()=>setCombat(c=>({...c,hasBonused:true,turnPhase:'done'}))},'Skip')),
+        // Heal target selection in bonus phase
+        healMode&&combat.turnPhase==='bonus'?e('div',{className:'combat-heal-targets',style:{marginTop:'10px'}},
+          e('div',{className:'combat-section-header'},healMode==='layOnHands'?'LAY ON HANDS \u2014 Choose Target':'CURE WOUNDS \u2014 Choose Target'),
+          combat.playerHp<combat.playerMaxHp?e('button',{className:'combat-ability-btn',onClick:()=>{
+            if(healMode==='cureWounds'){castCureWounds('self')}else{useLayOnHands('self')}
+            setHealMode(null);
+          }},'You ('+combat.playerHp+'/'+combat.playerMaxHp+')'):null,
+          combat.companions.filter(cp=>cp.alive&&(cp.hp<cp.maxHp||cp.unconscious)).map(cp=>
+            e('button',{key:'htb_'+cp.name,className:'combat-ability-btn',onClick:()=>{
+              const first=(cp.name.match(/^(\w+)/)||[])[1];
+              if(healMode==='cureWounds'){castCureWounds(first)}else{useLayOnHands(first)}
+              setHealMode(null);
+            }},cp.name+(cp.unconscious?' (DOWN)':' ('+cp.hp+'/'+cp.maxHp+')'))),
+          e('button',{className:'ghost-btn',style:{fontSize:'11px',marginTop:'4px'},onClick:()=>setHealMode(null)},'Cancel')
+        ):null
       ):null,
 
       // Action Surge option (Fighter)
@@ -3016,7 +3211,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
     combat.phase==='companionTurn'?e('div',{className:'combat-turn-panel'},
       e('div',{className:'combat-section-header'},'COMPANION ACTIONS'),
       livingCompanions.map(cp=>{
-        const actions=resolvedCompanions[cp.name]||resolvedCompanions[(cp.name.match(/^(\w+)/)||[])[1]]||[];
+        const actions=cp.actions||resolvedCompanions[cp.name]||resolvedCompanions[(cp.name.match(/^(\w+)/)||[])[1]]||[];
         const cpFirst=(cp.name.match(/^(\w+)/)||[])[1];
         const cpRom=gs.romances?.[cp.name];
         const cpIsRomance=cpRom&&!['Friend','Distant','Cold','Observer','Hostile'].includes(cpRom);
@@ -3026,7 +3221,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
           e('div',{className:'combat-companion-select'},
             actions.map((action,j)=>e('button',{key:j,className:'combat-companion-btn'+(combat.companionActionsThisRound[cp.name]===action?' selected':''),onClick:()=>selectCompanionAction(cp.name,action)},action))));
       }),
-      e('button',{className:'dice-btn',style:{marginTop:'10px'},onClick:resolveCompanionActions,disabled:rolling},'Resolve Actions \u2192')
+      (function(){const allSelected=livingCompanions.every(cp=>combat.companionActionsThisRound[cp.name]);return e('button',{className:'dice-btn',style:{marginTop:'10px'},onClick:resolveCompanionActions,disabled:rolling||!allSelected},allSelected?'Resolve Actions \u2192':'Select action for each companion')})()
     ):null,
 
     // ── Enemy Turn ──
@@ -3078,7 +3273,7 @@ function parseShopBox(text){
 // Sell price lookup (half of buy price, rounded down)
 const SELL_PRICES={'Longsword':7,'Greatsword':10,'Battleaxe':7,'Greataxe':10,'Warhammer':7,'Morningstar':7,'Flail':7,'War Pick':7,'Rapier':7,'Halberd':10,'Glaive':10,'Shortsword':5,'Handaxe':2,'Dagger':1,'Javelin':1,'Chain Mail':12,'Scale Mail':10,'Studded Leather':6,'Leather Armor':5,'Shield':5,'Bandage':0,'Potion of Healing':2,'Greater Potion of Healing':7,'Rations':0,'Antitoxin':1,'Whetstone':0,'Caltrops':1,'Rope':0,'Torch':0,'Explorer\u2019s Pack':2};
 // Items that cannot be sold — companion gifts, quest items, key gear
-const UNSELLABLE=/tabard|aldric.s dagger|sera.s|mira.s|serath.s|thessaly.s|vael.s|lysander.s|tariel.s|caeron.s|rose commentary|garrison watch token|patrol sketch|family ring|carved wooden token|kapak venom|dawnstrike|Explorer\u2019s Pack/i;
+const UNSELLABLE=/tabard|aldric.s dagger|sera.s|mira.s|serath.s|thessaly.s|vael.s|lysander.s|tariel.s|caeron.s|rose commentary|garrison watch token|patrol sketch|family ring|carved wooden token|kapak venom|dawnstrike|Explorer\u2019s Pack|boar tusks/i;
 
 function getSellPrice(itemName){
   for(const[k,v]of Object.entries(SELL_PRICES)){if(itemName.toLowerCase().includes(k.toLowerCase()))return v}
@@ -3099,6 +3294,40 @@ function ShopBox({text,gs,onStateUpdate}){
   const[rareDisplay,setRareDisplay]=useState(null);
   const[localGold,setLocalGold]=useState(gs.gold||0);
   const[localInv,setLocalInv]=useState(gs.inventory||[]);
+  const[tuskChoice,setTuskChoice]=useState(null); // 'sold' or 'crafted'
+
+  const hasTusks=localInv.includes('Boar Tusks')&&!gs.flags?.pigSkewer;
+
+  const sellTusks=()=>{
+    setTuskChoice('sold');setLocalGold(g=>g+5);
+    setLocalInv(inv=>{const a=[...inv];a.splice(a.indexOf('Boar Tusks'),1);return a});
+    if(onStateUpdate)onStateUpdate(g=>{
+      const ng={...g,gold:(g.gold||0)+5,inventory:[...g.inventory]};
+      const idx=ng.inventory.indexOf('Boar Tusks');if(idx>=0)ng.inventory.splice(idx,1);
+      return ng;
+    });
+  };
+
+  const craftPigSkewer=()=>{
+    if(localGold<3)return;
+    setTuskChoice('crafted');setLocalGold(g=>g-3);
+    const weapName=localInv.find(it=>WEAPONS_WITH_MASTERY.some(w=>w.name===it))||gs.weapon||'Longsword';
+    setLocalInv(inv=>{
+      const a=[...inv];
+      const ti=a.indexOf('Boar Tusks');if(ti>=0)a.splice(ti,1);
+      const wi=a.indexOf(weapName);if(wi>=0)a[wi]='Pig Skewer';
+      return a;
+    });
+    if(onStateUpdate)onStateUpdate(g=>{
+      const ng={...g,gold:(g.gold||0)-3,inventory:[...g.inventory],flags:{...(g.flags||{})}};
+      const ti=ng.inventory.indexOf('Boar Tusks');if(ti>=0)ng.inventory.splice(ti,1);
+      const weapN=ng.inventory.find(it=>WEAPONS_WITH_MASTERY.some(w=>w.name===it))||ng.weapon||'Longsword';
+      ng.flags.pigSkewer=true;ng.flags.pigSkewerBase=weapN;
+      const wi=ng.inventory.indexOf(weapN);if(wi>=0)ng.inventory[wi]='Pig Skewer';
+      if(ng.weapon===weapN)ng.weapon='Pig Skewer';
+      return ng;
+    });
+  };
 
   const discount=parsed.hasDiscount&&gs.flags&&gs.flags.dorren_saved?0.9:1;
 
@@ -3243,6 +3472,15 @@ function ShopBox({text,gs,onStateUpdate}){
               e('td',null,e('button',{className:'shop-sell-btn',onClick:()=>sellItem(si.name)},
                 si.isReturn?'Return':'Sell'))))))
       ):null,
+      // Boar Tusks crafting
+      hasTusks&&!tuskChoice?e('div',{style:{margin:'16px 0',padding:'12px',border:'1px solid var(--gold-dim)',borderRadius:'6px',background:'rgba(255,215,0,0.05)'}},
+        e('h4',{style:{color:'var(--gold)',margin:'0 0 8px'}},'\u2694 BOAR TUSKS'),
+        e('p',{style:{fontSize:'13px',color:'var(--text-dim)',marginBottom:'10px'}},'The merchant eyes the curved tusk you unwrap. "That\u2019s a fine one. I can give you five steel for it outright\u2026 or for three steel I\u2019ll fashion a grip from it. Bind it to your weapon. Ugly, but effective."'),
+        e('div',{style:{display:'flex',gap:'8px'}},
+          e('button',{className:'shop-sell-btn',onClick:sellTusks,style:{flex:1}},'Sell Tusks (+ 5 stl)'),
+          e('button',{className:'shop-buy-btn',onClick:craftPigSkewer,disabled:localGold<3,style:{flex:1}},'Fashion Pig Skewer (3 stl)'))):null,
+      tuskChoice==='sold'?e('p',{style:{fontStyle:'italic',color:'var(--gold)',margin:'12px 0'}},'\ud83d\udcb0 The merchant weighs the tusk and nods. Five steel, fair and done. (+5 stl)'):null,
+      tuskChoice==='crafted'?e('p',{style:{fontStyle:'italic',color:'var(--gold)',margin:'12px 0'}},'\u2694 The merchant works the tusk into a grip, binding it to your weapon with leather cord. The "Pig Skewer" is born. It is not beautiful. It does not need to be. (+1 Intimidation)'):null,
       // Rare stock
       parsed.rareSection.length>0&&!rareRolled?e('button',{className:'shop-rare-btn',onClick:doRareRoll,disabled:rareRolling},rareRolling?'Rolling...':'RARE STOCK ROLL'):null,
       rareRolling?e('div',{className:'dice-placeholder',style:{textAlign:'center',margin:'10px 0'}},rareDisplay):null,
@@ -3438,7 +3676,7 @@ function CoverScreen({onNew,onLoad}){
       e('p',{style:{margin:'0 0 4px'}},'\u2018Dragonlance,\u2019 \u2018Krynn,\u2019 \u2018Solamnic Knights,\u2019 and all related characters, locations, and lore are trademarks of Wizards of the Coast LLC. \u2018Dungeons & Dragons\u2019 and \u2018D&D\u2019 are registered trademarks of Wizards of the Coast LLC.'),
       e('p',{style:{margin:'0 0 4px'}},'This is unofficial fan content, not approved or endorsed by Wizards of the Coast. Made under the Fan Content Policy. No copyright or trademark infringement is intended.'),
       e('p',{style:{margin:0}},'Game mechanics reference the D&D 2024 System Reference Document (SRD 5.2), available under the Creative Commons Attribution 4.0 International License (CC BY 4.0).'),
-      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v22.1.0')));
+      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v22.1.1')));
 }
 
 // ── Character Creation ─────────────────────────────────
@@ -4260,6 +4498,8 @@ function CharSheet({gs,isEnding,onBack}){
           const cd=findCompanion(c);
           const rom=gs.romances?.[c];
           const events=(gs.companionLog||{})[c]||[];
+          const csFirst=(c.match(/^(\w+)/)||[])[1];
+          const csRomNarr=rom&&csFirst&&ROMANCE_TOOLTIPS[csFirst]&&ROMANCE_TOOLTIPS[csFirst][rom]?ROMANCE_TOOLTIPS[csFirst][rom]:'';
           return e('div',{key:c,className:'cs-companion-card'+(rom?' has-romance':'')},
             e('div',{className:'cs-comp-header'},
               e('span',{className:'cs-comp-name'},c),
@@ -4269,6 +4509,7 @@ function CharSheet({gs,isEnding,onBack}){
               e('p',null,e('strong',null,'Personality: '),cd.personality),
               null
             ):null,
+            csRomNarr?e('p',{style:{fontStyle:'italic',color:'#d8a0c0',fontSize:'13px',margin:'4px 0 8px',padding:'0 18px'}},'♥  ',csRomNarr):null,
             events.length?e('div',{className:'cs-comp-log'},
               e('strong',null,'Journey So Far:'),
               e('ul',null,events.map((ev,i)=>e('li',{key:i},ev)))
@@ -4486,6 +4727,20 @@ function ConfirmModal({msg,onYes,onNo}){
 function App(){
   const[phase,setPhase]=useState('cover');const[gs,setGs]=useState(null);const[scene,setScene]=useState(null);const[sceneId,setSceneId]=useState(null);
   const[showSave,setShowSave]=useState(false);const[saveMsg,setSaveMsg]=useState('');const[showSheet,setShowSheet]=useState(false);const[sideOpen,setSideOpen]=useState(false);const[confirmModal,setConfirmModal]=useState(null);const[compPopup,setCompPopup]=useState(null);const[romancePrompt,setRomancePrompt]=useState(null);const[romanceManage,setRomanceManage]=useState(false);const[breakupTarget,setBreakupTarget]=useState(null);const[npcNotify,setNpcNotify]=useState(null);const[romanceCheck,setRomanceCheck]=useState(null);const[spellPrepModal,setSpellPrepModal]=useState(false);
+  // Migrate companion name casing on any active gs
+  React.useEffect(()=>{
+    if(!gs||!gs.companions)return;
+    const needsFix=gs.companions.some(c=>{const canon=COMPANIONS_ALL.find(x=>x.toLowerCase()===c.toLowerCase());return canon&&canon!==c});
+    const romKeys=Object.keys(gs.romances||{});const needsRomFix=romKeys.some(k=>{const canon=COMPANIONS_ALL.find(x=>x.toLowerCase()===k.toLowerCase());return canon&&canon!==k});
+    if(needsFix||needsRomFix){
+      const ng={...gs};
+      ng.companions=ng.companions.map(c=>{const canon=COMPANIONS_ALL.find(x=>x.toLowerCase()===c.toLowerCase());return canon||c});
+      const fixKeys=(obj)=>{if(!obj)return obj;const fixed={};for(const[k,v]of Object.entries(obj)){const canon=COMPANIONS_ALL.find(x=>x.toLowerCase()===k.toLowerCase());fixed[canon||k]=v}return fixed};
+      ng.romances=fixKeys(ng.romances);ng.companionLog=fixKeys(ng.companionLog||{});ng.romanceDeclined=fixKeys(ng.romanceDeclined||{});
+      setGs(ng);
+    }
+  },[gs?.companions?.length]);
+
   const goScene=(id,state)=>{
     // Check for pending NPC notifications
     const g=state||gs;
@@ -4556,11 +4811,16 @@ function App(){
         else if(t.includes('HELD'))ns.dgTrack='HELD';
       }
     });
-    s.boxes.filter(b=>b.type==='companion').forEach(b=>{const m=b.text.match(/COMPANION JOINS:\s*(.+?)[\n(*]/);if(m){let nm=m[1].replace(/\*+/g,'').trim();nm=nm.split(/\s+/).map(w=>w.charAt(0).toUpperCase()+w.slice(1).toLowerCase()).join(' ');if(!ns.companions.includes(nm)){ns.companions=[...ns.companions,nm];if(!ns.companionLog)ns.companionLog={};if(!ns.companionLog[nm])ns.companionLog[nm]=[];ns.companionLog[nm].push('Joined in Scene '+sceneId+(s.title?' — '+s.title:''))}}});
+    s.boxes.filter(b=>b.type==='companion').forEach(b=>{const m=b.text.match(/COMPANION JOINS:\s*(.+?)[\n(*]/);if(m){let nm=m[1].replace(/\*+/g,'').trim();nm=nm.split(/\s+/).map(w=>w.charAt(0).toUpperCase()+w.slice(1).toLowerCase()).join(' ');const canonical=COMPANIONS_ALL.find(c=>c.toLowerCase()===nm.toLowerCase());if(canonical)nm=canonical;if(!ns.companions.includes(nm)){ns.companions=[...ns.companions,nm];if(!ns.companionLog)ns.companionLog={};if(!ns.companionLog[nm])ns.companionLog[nm]=[];ns.companionLog[nm].push('Joined in Scene '+sceneId+(s.title?' — '+s.title:''))}}});
     s.boxes.filter(b=>b.type==='levelup').forEach(b=>{if(b.text.includes('LEVEL 2')&&ns.level<2){ns.level=2;ns.derived=calcDerived(ns.stats,ns.cls,2,ns.armor,ns.hasShield,ns.feat);ns.hp=ns.derived.maxHp}if(b.text.includes('LEVEL 3')&&ns.level<3){ns.level=3;ns.derived=calcDerived(ns.stats,ns.cls,3,ns.armor,ns.hasShield,ns.feat);ns.hp=ns.derived.maxHp}});
     setScene(s);setSceneId(id);setGs(ns)};
   const startGame=({cls,stats,style,feat,mastery,name,spells,equip,skilledPicks,classSkills,humanSkill})=>{const derived=calcDerived(stats,cls,1,equip.armor,equip.hasShield,feat);const state={cls,stats,style,feat,mastery,name:name||'Squire',spells:spells||{cantrips:[],level1:[],alwaysPrepared:[]},weapon:equip.weapon,armor:equip.armor,skilledPicks:skilledPicks||[],classSkills:classSkills||[],humanSkill:humanSkill||null,hasShield:equip.hasShield,level:1,hp:derived.maxHp,derived,rose:0,sword:0,crown:0,companions:[],romances:{},godSigns:{Paladine:0,'Kiri-Jolith':0,Mishakal:0,Habbakuk:0,Branchala:0},dgTrack:'NONE',inventory:[equip.weapon,equip.armor,equip.hasShield?'Shield':'','Dagger','Explorer\u2019s Pack','Solamnic Tabard'].filter(Boolean),history:[],awardedScenes:{},companionLog:{},romanceDeclined:{},flags:{},bonuses:[],magicItems:[],measureTrack:0,measureOrientation:null,gold:0,layOnHandsPool:cls==='Paladin'?derived.layOnHandsMax:0,spellSlotsUsed:0,secondWindUsed:0,actionSurgeUsed:false,bandages:2,potions:0,greaterPotions:0,miraHealedThisScene:false,completedRolls:{},deadCompanions:[]};setGs(state);goScene('1',state);setPhase('play')};
-  const loadSave=(saveData)=>{if(!saveData||!saveData.gs)return;const g=saveData.gs;if(!g.inventory)g.inventory=[];if(!g.deadCompanions)g.deadCompanions=[];if(!g.completedRolls)g.completedRolls={};if(!g.awardedScenes)g.awardedScenes={};if(!g.romances)g.romances={};if(!g.flags)g.flags={};if(!g.bonuses)g.bonuses=[];if(!g.magicItems)g.magicItems=[];g.derived=calcDerived(g.stats,g.cls,g.level,g.armor,g.hasShield,g.feat);setGs(g);const s=SCENES[saveData.sceneId];if(s){setScene(s);setSceneId(saveData.sceneId)}setPhase('play')};
+  const loadSave=(saveData)=>{if(!saveData||!saveData.gs)return;const g=saveData.gs;if(!g.inventory)g.inventory=[];if(!g.deadCompanions)g.deadCompanions=[];if(!g.completedRolls)g.completedRolls={};if(!g.awardedScenes)g.awardedScenes={};if(!g.romances)g.romances={};if(!g.flags)g.flags={};if(!g.bonuses)g.bonuses=[];if(!g.magicItems)g.magicItems=[];
+    // Migrate companion names to canonical casing
+    g.companions=(g.companions||[]).map(c=>{const canon=COMPANIONS_ALL.find(x=>x.toLowerCase()===c.toLowerCase());return canon||c});
+    const fixKeys=(obj)=>{if(!obj)return obj;const fixed={};for(const[k,v]of Object.entries(obj)){const canon=COMPANIONS_ALL.find(x=>x.toLowerCase()===k.toLowerCase());fixed[canon||k]=v}return fixed};
+    g.romances=fixKeys(g.romances);g.companionLog=fixKeys(g.companionLog||{});g.romanceDeclined=fixKeys(g.romanceDeclined||{});
+    g.derived=calcDerived(g.stats,g.cls,g.level,g.armor,g.hasShield,g.feat);setGs(g);const s=SCENES[saveData.sceneId];if(s){setScene(s);setSceneId(saveData.sceneId)}setPhase('play')};
   const handleChoice=(c)=>{setSideOpen(false);const ns={...gs,romances:{...gs.romances},awardedScenes:{...(gs.awardedScenes||{})}};
     // Only award points if this scene hasn't awarded yet (anti-cycle)
     const scKey=sceneId;
