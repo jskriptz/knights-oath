@@ -394,7 +394,11 @@ You are a squire at Castle Brightholm. The Dragon Armies are a rumour. You have 
 
 *Castle Brightholm — Dawn*
 
-The bell has not rung yet. You wake before it — always have, which is one of the small unglamorous disciplines that separate squires who want to be knights from squires who want to have been knights. The barracks smells of oiled leather and cold ash and the particular warmth of ten people sleeping in the same room in autumn. Aldric Voss sleeps across from you with his arms folded on his chest like a man who has already decided to be composed even in unconsciousness. Eight months here. Seven days until the Trials. Outside the window the sky is the purple-grey of pre-dawn that looks almost exactly like the moment before something begins.
+The bell has not rung yet. You wake before it — always have, which is one of the small unglamorous disciplines that separate squires who want to be knights from squires who want to have been knights. The barracks smells of oiled leather and cold ash and the particular warmth of ten people sleeping in the same room in autumn. Aldric Voss sleeps across from you with his arms folded on his chest like a man who has already decided to be composed even in unconsciousness. Three bunks down, the squire who always trains alone — Vael Ashmore — has already made her bed with the tight corners of someone who left nothing undone, ever, and is gone. Eight months here. Seven days until the Trials. Outside the window the sky is the purple-grey of pre-dawn that looks almost exactly like the moment before something begins.
+
+On your way past the narrow window you catch something: a figure on the armoury roof, just a silhouette against the last stars, sitting perfectly still with the patience of someone who has been there for hours. You do not know who it is. You file it away and keep moving.
+
+The corridor notice board has a new posting, half-covered by the duty roster: *Press credential — Thessaly Brightwater, war correspondent, arrived three days prior. All personnel: cooperate within operational limits.* Someone has written underneath it in pencil: *She asked me what I was afraid of. I told her. Why did I tell her?*
 
 | ORDER OF THE ROSE | ORDER OF THE SWORD | ORDER OF THE CROWN |
 |---|---|---|
@@ -476,7 +480,7 @@ The yard smells of wet stone and the specific iron tang of weapons that have bee
 > **D) Tell him honestly you could not sleep. Ask if he is nervous.** (+1 ROSE, ROMANCE SPARK) --> Scene 7
 
 > **OPTIONAL SCENE — SERA NIGHTHOLLOW**
-> Before the spar: there is someone on the armoury roof. If you want to meet her, turn to Scene 3B (The Armoury Roof) now. Scene 3B is her first appearance — no prior relationship needed. 3B leads directly to Scene 12 (the spar).
+> Before the spar: there is someone on the armoury roof — the same figure you noticed from the barracks window in the dark. She has not moved. She has been watching. If you want to find out who she is, turn to Scene 3B (The Armoury Roof) now. 3B leads directly to Scene 12 (the spar).
 
 ---
 
@@ -556,7 +560,7 @@ The library is quiet after he leaves. The book is still on the table. The mornin
 *Castle Brightholm — Assessment Hall*
 
 > **OPTIONAL SCENE — VAEL ASHMORE**
-> You are not the only squire waiting for Caeron's results. If you want to meet Vael Ashmore, turn to Scene 5B (The Same Dent) now. Scene 5B is her first appearance — she is in this same corridor. Read 5B instead of this scene. 5B leads to Scene 11.
+> You are not the only squire waiting for Caeron's results. The one who always trains alone — the empty bunk from the barracks, tight corners, already gone before dawn — is leaning against the corridor wall three paces away, holding a sword with an identical pommel dent. If you want to meet Vael Ashmore, turn to Scene 5B (The Same Dent) now. 5B leads to Scene 11.
 
 Lord Caeron Ashvale conducts the morning evaluation with the economy of a man who has done this a hundred times and sees no reason to approach it differently on the hundred-and-first. He works through the squire line without warmth or hurry, marking his clipboard in the small precise hand you can identify from across a courtyard. When he reaches you, he takes your sword. He examines the blade — clean, sharp, well-maintained — and then he finds the pommel dent. He holds it at eye level and examines the dent with the expression of a man not looking at the dent but at the choice that left it there. His verdict: 'Satisfactory.' The word lands like a door being closed by someone very good at closing doors quietly.
 
@@ -618,9 +622,13 @@ You are both waiting outside the assessment hall for your individual results. Th
 
 *Castle Brightholm — East Gate*
 
-You cross the courtyard at a walk that is not quite a walk — the morning air is sharp and the castle is stirring around you. The east gate is quieter than the yard, the kind of place where people pass through rather than linger. Someone is lingering.
+You cross the courtyard at a walk that is not quite a walk — the morning air is sharp and the castle is stirring around you. On the way, one of the older squires — Darric, the one who never gossips but always somehow knows things — catches your arm. 'That correspondent,' he says, low. 'Brightwater. She asked me yesterday what I would die for. I told her. I have no idea why I told her.' He lets go. 'Watch yourself at the east gate.' He says it like advice, not warning.
 
-Thessaly Brightwater arrived three days ago with a press credential, a better map than the garrison has, and the easy confidence of someone who has been in considerably more dangerous places than this and made her peace with that some time ago. In three days she has interviewed the senior knights, both stable hands, the armourer, and apparently Zinnia Quickfingers, who gave excellent copy. She catches you at the east gate with her notebook open and her pen uncapped and the particular quality of attention that does not permit comfortable evasion. 'Tell me something true,' she says, 'about why you are here.' Not what you believe. Not what you want. Something true.
+The east gate is quieter than the yard, the kind of place where people pass through rather than linger. Someone is lingering.
+
+You have seen her around the garrison for three days now — ink-stained fingers, a coat with too many pockets, the steady pace of someone working through a list of people she intends to understand. She interviewed the senior knights on the first day, both stable hands on the second, and apparently got Zinnia Quickfingers talking for an hour, which is either a miracle or an interrogation technique. The notice board posting said *war correspondent*. The pencilled note underneath said something less official.
+
+Thessaly Brightwater catches you at the east gate with her notebook open and her pen uncapped and the particular quality of attention that does not permit comfortable evasion. 'Tell me something true,' she says, 'about why you are here.' Not what you believe. Not what you want. Something true.
 
 Thessaly Brightwater is half-elven, which shows mostly in the pointed ears and the quality of attention she gives things. Dark hair cut short and practical, ink on her fingers, a coat with too many pockets, all in use. She looks like someone for whom the road has become the natural state.
 
@@ -923,6 +931,8 @@ Hesta wraps your purchases in waxed cloth with garrison efficiency. 'Don't die,'
 The sun is overhead and the garrison shifts into its afternoon rhythm. The morning's edge — training, study, the formality of formation — gives way to something looser. Squires move between tasks with less supervision. The mess hall fills. The forge fires are banked high. Somewhere in the east wing, Thessaly is interviewing someone. Somewhere else, Mira is tending whoever needs tending. The garrison is a small world and you are learning its geography.
 
 Tomorrow you march south. The field exercise. 'Reported bandits.' Whatever that means, it means something different than it did three weeks ago. The south road has been in the briefings every morning and every morning the language has been slightly more careful, which is how you know the situation is slightly worse.
+
+At the mess table, between mouthfuls, a garrison rider mentions something offhand: dead draconians found at waypoints along the south road — killed cleanly, by someone who knew what they were doing. No patrol has claimed credit. 'Someone is out there hunting them alone,' he says, and shakes his head like that is either very brave or very stupid and he has not decided which. Across the table, another soldier mutters about a barn south of the ridge that refugees have been avoiding — says there is someone sheltering there, civilian clothes, moves like military. 'Could be a deserter. Could be worse.' Nobody follows up. The south road has too many stories and not enough patrols to check them all.
 
 > **AFTERNOON — Choose how to spend the afternoon. You may return here after each activity.**
 >
@@ -1801,7 +1811,9 @@ She found you near the east wall, which is not a coincidence. Thessaly Brightwat
 
 *South Road — Night*
 
-The barn was supposed to be empty. Night patrol sweep, routine, you have done a hundred of these. Your lantern finds them behind the hay bales: dark clothes, a wound managed for at least a day without proper materials, eyes that come up to meet yours with the calm of someone who has set fear aside for later as a matter of function. The clothes are civilian. The cuts where insignia were removed are still visible in the fabric.
+The barn south of the ridge — the one the mess-hall rider mentioned, the one the refugees have been avoiding. You remember his words: *someone sheltering there, civilian clothes, moves like military.* You almost walked past it. You did not.
+
+Your lantern finds them behind the hay bales: dark clothes, a wound managed for at least a day without proper materials, eyes that come up to meet yours with the calm of someone who has set fear aside for later as a matter of function. The clothes are civilian. The cuts where insignia were removed are still visible in the fabric.
 
 > **COMPANION JOINS: COMMANDER SERATH (CONDITIONAL)**
 > Dragon Army defector, possible love interest. Joins ONLY if you hide them.
@@ -2233,7 +2245,9 @@ Four Baaz, stone now. The dispatch pouch from the patrol leader bears a Black Wi
 
 *South Road — Night After the Ambush*
 
-You find him at the waypoint mile-marker, which the garrison uses for overnight stops on extended patrols. A fire, built well — the economical kind that throws heat in one direction and minimal light in every other, the fire of someone who knows what sees fire in the dark. A man sitting against the marker stone, cleaning a blade. He looks up when you approach without alarm, which means he heard you a hundred yards ago and decided you were not a threat.
+The dead draconians at the waypoints. The garrison rider's story at the mess table: *someone is out there hunting them alone.* You find out who at the mile-marker.
+
+A fire, built well — the economical kind that throws heat in one direction and minimal light in every other, the fire of someone who knows what sees fire in the dark. A man sitting against the marker stone, cleaning a blade. He looks up when you approach without alarm, which means he heard you a hundred yards ago and decided you were not a threat.
 
 The blade is not regulation. Solamnic steel, yes — you recognise the fuller line — but the grip has been rewrapped in dark leather, and the crossguard has been modified. The armour, too: Solamnic issue, Knight of the Sword markings half-filed and then left, as if the filing was an impulse he reconsidered or an argument he abandoned.
 
@@ -2465,7 +2479,7 @@ What you piece together: the armour he wears is paid for out of his own salary, 
 > **DRAGONLANCE CAMEO — LORD GUNTHAR UTH WISTAN**
 > The High Justice who arrives with the decree is Lord Gunthar uth Wistan, Grand Master of the Knights of Solamnia. He is a man of genuine honour caught between the law he serves and the world that law was written for, and they are no longer the same world.
 
-He rides in with six escort soldiers and the expression of a man carrying something heavy that he did not choose to carry. The decree is formal — sealed, High Justice mark, legally binding and structurally unambiguous. He reads it out in the field camp: The refugee group is to be turned back south. Roads must remain clear for military movement. Crown law overrides field commander discretion. Thirty people. Families. Two wounded from yesterday. The Dragon Army, on a map, is approximately one day south of where they will be sent.
+He rides in with six escort soldiers and the expression of a man carrying something heavy that he did not choose to carry. Behind the escort, riding alone on a civilian horse with no insignia, there is a woman who is clearly not part of the party but has arrived with it — watching the camp with the unhurried assessment of someone cataloguing everything she sees. You file that away. The decree is formal — sealed, High Justice mark, legally binding and structurally unambiguous. He reads it out in the field camp: The refugee group is to be turned back south. Roads must remain clear for military movement. Crown law overrides field commander discretion. Thirty people. Families. Two wounded from yesterday. The Dragon Army, on a map, is approximately one day south of where they will be sent.
 
 > **ROLL REQUIRED:** Persuasion (+0) | CHA | DC 15
 >
