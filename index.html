@@ -1015,7 +1015,7 @@ h2.red{color:var(--red)}
   <div id="loading-name">The Knight's Oath</div>
   <div id="loading-bar-container"><div id="loading-bar"></div></div>
   <div id="loading-status">Preparing...</div>
-  <div id="loading-sub">v22.1.2 • 220 Scenes • 9 Companions</div>
+  <div id="loading-sub">v22.1.3 • 220 Scenes • 9 Companions</div>
 </div>
 <script>
 // Loading progress tracker
@@ -1601,6 +1601,8 @@ function RollBox({text,derived,gs,onBonus,rollKey,onRollSave}){
   const[prayerAvail,setPrayerAvail]=useState(false);
   const[prayerResult,setPrayerResult]=useState(saved?saved.prayer:null);
   const[prayRolling,setPrayRolling]=useState(false);
+  const[tmResult,setTmResult]=useState(saved?saved.tacticalMind:null);
+  const[tmRolling,setTmRolling]=useState(false);
   const parsed=parseRollBox(text);
   let bonus=getBonus(derived,parsed.skill);
   if(parsed.skill==='Intimidation'&&gs&&gs.flags&&gs.flags.pigSkewer)bonus+=1;
@@ -1646,6 +1648,27 @@ function RollBox({text,derived,gs,onBonus,rollKey,onRollSave}){
       if(!ok&&Math.random()<0.10)setPrayerAvail(true);
     }},60)};
 
+  // Tactical Mind (Fighter Lv2+): add 1d10 to failed ability check, uses Second Wind charge
+  const canTacticalMind=gs&&gs.cls==='Fighter'&&gs.level>=2&&result&&!result.ok&&!result.skipped&&!tmResult&&!prayerResult&&((derived.secondWindMax||2)-(gs.secondWindUsed||0))>0;
+  const useTacticalMind=()=>{setTmRolling(true);let c=0;
+    const iv=setInterval(()=>{setDisplay(Math.floor(Math.random()*10)+1);if(++c>=8){clearInterval(iv);
+      const d10=Math.floor(Math.random()*10)+1;const newTotal=result.total+d10;
+      const ok=newTotal>=parsed.dc;
+      const tmRes={d10,newTotal,ok};
+      setTmResult(tmRes);setTmRolling(false);
+      // Save to completedRolls
+      if(rollKey&&onRollSave)onRollSave(g=>{const cr={...(g.completedRolls||{})};cr[rollKey]={result:result,prayer:null,tacticalMind:tmRes};return{...g,completedRolls:cr,secondWindUsed:ok?(g.secondWindUsed||0)+1:(g.secondWindUsed||0)}});
+      if(ok&&onBonus&&parsed.success){
+        const stxt=parsed.success.join(' ');
+        const bonusPatterns=[
+          {re:/\+1 to (?:any |all )?(.+?)(?:check|roll|interaction|track)/i, type:'roll_bonus'},
+          {re:/(?:Advantage|advantage) (?:on |in )?(.+?)(?:\.|,|$)/i, type:'advantage'},
+          {re:/\+1 (.+?) romance/i, type:'romance_bonus'},
+        ];
+        bonusPatterns.forEach(bp=>{const m=stxt.match(bp.re);if(m)onBonus({name:m[0].substring(0,60).trim(),desc:m[0].substring(0,100).trim(),scene:'tactical_mind',type:bp.type})});
+      }
+    }},60)};
+
   const pray=()=>{setPrayRolling(true);let c=0;
     const iv=setInterval(()=>{setDisplay(Math.floor(Math.random()*20)+1);if(++c>=10){clearInterval(iv);
       const d20=Math.floor(Math.random()*20)+1;const total=d20+bonus;
@@ -1661,7 +1684,7 @@ function RollBox({text,derived,gs,onBonus,rollKey,onRollSave}){
     }},60)};
 
   const isOptional=!parsed.isRequired;
-  const finalResult=prayerResult||result;
+  const finalResult=tmResult?{d20:result.d20,total:tmResult.newTotal,ok:tmResult.ok}:prayerResult||result;
   const showOutcome=finalResult&&!finalResult.skipped;
   
   return e('div',{className:'roll-box-wrapper'},
@@ -1691,6 +1714,19 @@ function RollBox({text,derived,gs,onBonus,rollKey,onRollSave}){
           e('span',{className:'dice-num'},prayerResult.d20),
           bonus!==0?e('span',{className:'dice-bonus'},' '+(bonus>=0?'+':'\u2212')+' '+Math.abs(bonus)+' = '+prayerResult.total):null,
           e('div',{className:'dice-verdict'},prayerResult.ok?'\u2714 DIVINE SUCCESS':'\u2718 UNANSWERED'))
+      ):null,
+      // Tactical Mind (Fighter Lv2+)
+      canTacticalMind?e('div',{className:'prayer-block'},
+        e('p',{className:'prayer-text'},'Your tactical instincts sharpen. You can push through this. (Expends a Second Wind use)'),
+        e('button',{className:'prayer-btn',style:{background:'#2a4a6b'},onClick:useTacticalMind,disabled:tmRolling},tmRolling?'Focusing...':'\u2694 Tactical Mind (+1d10)')
+      ):null,
+      // Tactical Mind result
+      tmResult?e('div',{className:'prayer-result'},
+        e('p',{className:'prayer-flavor'},tmResult.ok?'Your training kicks in. You see it clearly now.':(result.total+' + '+tmResult.d10+' = '+tmResult.newTotal+' — not enough. But the instinct was not wasted.')),
+        e('div',{className:'dice-result '+(tmResult.ok?'success':'fail')},
+          e('span',{className:'dice-num'},tmResult.d10),
+          e('span',{className:'dice-bonus'},' + '+result.total+' = '+tmResult.newTotal),
+          e('div',{className:'dice-verdict'},tmResult.ok?'\u2714 TACTICAL SUCCESS':'\u2718 NOT ENOUGH (Second Wind use refunded)'))
       ):null
     ):null,
     // Outcome text - use prayer result if it exists, otherwise original result
@@ -3676,7 +3712,7 @@ function CoverScreen({onNew,onLoad}){
       e('p',{style:{margin:'0 0 4px'}},'\u2018Dragonlance,\u2019 \u2018Krynn,\u2019 \u2018Solamnic Knights,\u2019 and all related characters, locations, and lore are trademarks of Wizards of the Coast LLC. \u2018Dungeons & Dragons\u2019 and \u2018D&D\u2019 are registered trademarks of Wizards of the Coast LLC.'),
       e('p',{style:{margin:'0 0 4px'}},'This is unofficial fan content, not approved or endorsed by Wizards of the Coast. Made under the Fan Content Policy. No copyright or trademark infringement is intended.'),
       e('p',{style:{margin:0}},'Game mechanics reference the D&D 2024 System Reference Document (SRD 5.2), available under the Creative Commons Attribution 4.0 International License (CC BY 4.0).'),
-      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v22.1.2')));
+      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v22.1.3')));
 }
 
 // ── Character Creation ─────────────────────────────────
@@ -4213,10 +4249,10 @@ function CharSheet({gs,isEnding,onBack}){
   // Class features
   const features=[];
   if(gs.cls==='Fighter'){
-    features.push({name:'Second Wind',desc:'Bonus Action: Regain 1d10+'+gs.level+' HP. '+d.secondWindUses+'x per Long Rest.'});
+    features.push({name:'Second Wind',desc:'Bonus Action: Regain 1d10+'+gs.level+' HP. '+d.secondWindUses+'x per Long Rest (regain 1 on Short Rest).'});
     features.push({name:'Weapon Mastery',desc:'Mastered: '+(gs.mastery||[]).map(w=>{const wd=WEAPONS_WITH_MASTERY.find(x=>x.name===w);return w+(wd?' ('+wd.mastery+')':'')}).join(', ')});
-    if(gs.level>=2)features.push({name:'Action Surge',desc:'Take one additional Action. 1/Short Rest.'});
-    if(gs.level>=2)features.push({name:'Tactical Mind',desc:'Add 1d10 to a failed ability check (uses Action Surge).'});
+    if(gs.level>=2)features.push({name:'Action Surge',desc:'Take one additional Action. 1/Short or Long Rest.'});
+    if(gs.level>=2)features.push({name:'Tactical Mind',desc:'Add 1d10 to a failed ability check (expends a Second Wind use; if still fails, use is not expended).'});
   }
   if(gs.cls==='Paladin'){
     features.push({name:'Lay on Hands',desc:'Pool of '+d.layOnHands+' HP. Bonus Action to heal. Spend 5 to remove Poisoned.'});
