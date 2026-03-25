@@ -1015,7 +1015,7 @@ h2.red{color:var(--red)}
   <div id="loading-name">The Knight's Oath</div>
   <div id="loading-bar-container"><div id="loading-bar"></div></div>
   <div id="loading-status">Preparing...</div>
-  <div id="loading-sub">v22.1.3 • 220 Scenes • 9 Companions</div>
+  <div id="loading-sub">v22.2.0 • 220 Scenes • 9 Companions</div>
 </div>
 <script>
 // Loading progress tracker
@@ -2835,7 +2835,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
               if(c.result==='lose'){ng.hp=1;ng.flags={...(ng.flags||{}),exhaustion:((ng.flags||{}).exhaustion||0)+1}}
               const dead=c.companions.filter(cp=>!cp.alive&&!cp.rescued);
               if(dead.length){ng.companions=(g.companions||[]).filter(name=>!dead.some(d=>d.name===name));ng.deadCompanions=[...(g.deadCompanions||[]),...dead.map(d=>({name:d.name,scene:g.history&&g.history.length?g.history[g.history.length-1]:'unknown',cause:'Fell in combat'}))]}
-              if(c.civilianRescued&&c.result==='win'){ng.xp=(ng.xp||0)+10;ng.flags={...(ng.flags||{}),civilianRescued:true}}
+              if(c.civilianRescued&&c.result==='win'){ng.xp=(ng.xp||0)+10;ng.rose=(ng.rose||0)+2;ng.flags={...(ng.flags||{}),civilianRescued:true}}
               return ng;
             });
           }
@@ -2920,10 +2920,11 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
   };
 
   // ─── Pen & Paper Mode ───
+  const combatLocked=!!combat||gs.combatResolved;
   if(mode==='penandpaper'){
     return e('div',{className:'combat-wrapper'},
       e('div',{className:'combat-mode-toggle'},
-        e('button',{className:'combat-mode-btn',onClick:()=>setMode('narrative')},'NARRATIVE'),
+        e('button',{className:'combat-mode-btn'+(combatLocked?' locked':''),onClick:()=>{if(!combatLocked)setMode('narrative')},disabled:combatLocked},'NARRATIVE'),
         e('button',{className:'combat-mode-btn active'},'PEN & PAPER')),
       // Stat blocks
       e('div',{className:'combat-stat-blocks'},
@@ -2989,7 +2990,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
     return e('div',{className:'combat-wrapper'},
       e('div',{className:'combat-mode-toggle'},
         e('button',{className:'combat-mode-btn active'},'NARRATIVE'),
-        e('button',{className:'combat-mode-btn',onClick:()=>setMode('penandpaper')},'PEN & PAPER')),
+        e('button',{className:'combat-mode-btn',onClick:()=>{if(!gs.combatResolved)setMode('penandpaper')},disabled:gs.combatResolved},'PEN & PAPER')),
       // Show stat blocks preview
       e('div',{className:'combat-enemy-stats'},
         parsed.enemies.filter((_,i)=>!parsed.enemies.slice(0,i).some(p=>p.name.replace(/ \d+$/,'')===_.name.replace(/ \d+$/,''))).map((en,i)=>{
@@ -3006,21 +3007,36 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
 
   // Combat over
   if(combat.result){
-    const afterLines=parsed.afterFight?parsed.afterFight.split('\n').filter(l=>{const t=l.trim();if(!t)return false;if(/UPDATE YOUR SHEET|Record current HP|Mark any used|Short rest available|Long rest|Recover Second Wind|Recover Action Surge|XP:|^\*\*XP|Pen & Paper|Pen and Paper|Use stat blocks|Run at your table|Skip to AFTER|Narrative Mode|Follow rounds|Roll when prompted|YOUR STATS|COMPANION ACTIONS|choose 1 per|Action A|Action B|Action C|^\|/i.test(t))return false;return true}):[];
+    const afterLines=parsed.afterFight?parsed.afterFight.split('\n').filter(l=>{const t=l.trim();if(!t)return false;if(/UPDATE YOUR SHEET|Record current HP|Mark any used|Short rest available|Long rest|Recover Second Wind|Recover Action Surge|XP:|^\*\*XP|Pen & Paper|Pen and Paper|Use stat blocks|Run at your table|Skip to AFTER|Narrative Mode|Follow rounds|Roll when prompted|YOUR STATS|COMPANION ACTIONS|choose 1 per|Action A|Action B|Action C|^\|/i.test(t))return false;if(combat.result==='win'&&/^FAILURE:|IF THIS DROPS YOU TO 0 HP|IF MIRA HAS ARRIVED.*stabilize|IF MIRA IS NOT PRESENT|you wake up|garrison watch finishes/i.test(t))return false;if(combat.result==='lose'&&/^VICTORY|^SUCCESS/i.test(t))return false;return true}):[];
     // Boar fight loot choices (scene 11_YARD)
     const isBoarFight=sceneId==='11_YARD'||sceneId==='11';
     const boarLootChosen=combat.boarLootChosen;
     return e('div',{className:'combat-wrapper'},
       e('div',{className:'combat-mode-toggle'},
         e('button',{className:'combat-mode-btn active'},'NARRATIVE'),
-        e('button',{className:'combat-mode-btn',onClick:()=>setMode('penandpaper')},'PEN & PAPER')),
+        e('button',{className:'combat-mode-btn locked',disabled:true},'PEN & PAPER')),
       e('div',{className:'combat-over'},
         e('h3',null,combat.result==='win'?'\u2694 VICTORY':'\u2620 DEFEATED'),
-        e('p',null,combat.result==='win'?(parsed.winOutcome||'All enemies have fallen.'):(parsed.loseOutcome||'You fall. Your companions rush to your side.')),
+        (()=>{
+          if(combat.result==='win'){
+            const hpRatio=combat.playerHp/combat.playerMaxHp;
+            if(hpRatio>=0.75)return e('p',{className:'combat-outcome-prose'},'The boar crashes to the flagstones and does not rise. The yard goes quiet. You stand over it, breathing hard, your blade still raised. Pell is alive. The squires are safe. Somewhere above you, a garrison crossbowman lowers his weapon \u2014 he was ready, but he did not need to be.');
+            if(hpRatio>=0.5)return e('p',{className:'combat-outcome-prose'},'The beast falls. Four hundred pounds of muscle and fury, laid low by steel and nerve in a Solamnic training yard on an ordinary afternoon. Blood pools on the flagstones. The watching squires have stopped breathing. Then someone starts clapping \u2014 slow, then building \u2014 and you realize that what just happened was not ordinary at all.');
+            return e('p',{className:'combat-outcome-prose'},'It is over. The boar lies still. The yard smells of blood and sweat and the particular silence that follows violence. You lower your blade. Your hands are shaking. That is normal. That is what hands do after they have done something difficult and correct.');
+          } else {
+            const comps=(combat.companions||[]).filter(cp=>cp.alive||cp.rescued);
+            const compNames=comps.map(cp=>cp.name.split(' ')[0].toLowerCase());
+            const hasMira=compNames.includes('mira');
+            const hasAldric=compNames.includes('aldric');
+            if(hasMira)return e('p',{className:'combat-outcome-prose'},'The last thing you see clearly is the boar\u2019s flat dark eye, inches from your face. Then pain, and then hands \u2014 pulling you clear, pressing cloth to the wound, a voice saying your name with the specific urgency of someone who is not sure you can hear them. You can. You just cannot answer yet.');
+            if(hasAldric&&!hasMira)return e('p',{className:'combat-outcome-prose'},'You go down. The boar stands over you for a heartbeat that lasts a year, then the garrison watch puts three bolts into its flank and it staggers away from you. Someone is dragging you by the collar. The sky is very blue. You will remember that \u2014 the colour of the sky when you learned what losing feels like.');
+            return e('p',{className:'combat-outcome-prose'},'The tusks find you and the world tilts sideways. The flagstones are cold against your face. You can hear shouting \u2014 Aldric, the garrison watch, crossbow bolts thudding into something massive. The boar falls, but not to your blade. You are carried to the infirmary. The ceiling is wooden beams and lantern-light and the garrison surgeon\u2019s steady hands.');
+          }
+        })(),
         e('p',null,'HP: '+combat.playerHp+' / '+combat.playerMaxHp),
         // Only show fallen companions on defeat
         combat.result==='lose'?combat.companions.filter(cp=>!cp.alive&&!cp.rescued).map(cp=>e('p',{key:cp.name,style:{color:'#c0392b'}},cp.name+' has fallen.')):null,
-        combat.companions.filter(cp=>cp.rescued).map(cp=>e('p',{key:cp.name,style:{color:'#27ae60'}},cp.name+' got the civilians to safety and rejoins you.')),
+        combat.companions.filter(cp=>cp.rescued).map(cp=>e('p',{key:cp.name,style:{color:'#27ae60'}},cp.name+' got the civilians to safety and rejoins you. The wounded squire catches your eye across the yard \u2014 a look you will not forget. (+2 ROSE, +10 XP)')),
         combat.result==='lose'&&!combat.companions.some(cp=>cp.alive)?e('div',{className:'game-over-panel'},
           e('p',{style:{color:'#c0392b',fontWeight:'bold'}},'Your journey ends here.'),
           e('p',null,'Load a save to continue.')):null),
@@ -3034,14 +3050,14 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
           e('button',{className:'choice-btn',onClick:()=>{
             setCombat(c=>({...c,boarLootChosen:'tusks'}));
             if(onStateUpdate)onStateUpdate(g=>{
-              const ng={...g,inventory:[...(g.inventory||[])]};
+              const ng={...g,inventory:[...(g.inventory||[])],combatResolved:true};
               ng.inventory.push('Boar Tusks');
               return ng;
             });
           }},e('strong',null,'A) Take the Tusks'),' \u2014 Massive curved tusks, sharp enough to gouge stone. A merchant could fashion these into something useful\u2026 or buy them outright.'),
           e('button',{className:'choice-btn',onClick:()=>{
             setCombat(c=>({...c,boarLootChosen:'leave'}));
-            if(onStateUpdate)onStateUpdate(g=>({...g,rose:(g.rose||0)+3}));
+            if(onStateUpdate)onStateUpdate(g=>({...g,rose:(g.rose||0)+3,combatResolved:true}));
           }},e('strong',null,'B) Leave Them'),' \u2014 The garrison groundskeeper will deal with it. Pell thanks you for saving him, not for salvaging the thing that gored him. (+3 ROSE)'))):null,
       // Show chosen result
       combat.result==='win'&&isBoarFight&&boarLootChosen?e('div',{className:'box combat',style:{marginTop:'12px'}},
@@ -3068,7 +3084,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
   return e('div',{className:'combat-wrapper'},
     e('div',{className:'combat-mode-toggle'},
       e('button',{className:'combat-mode-btn active'},'NARRATIVE'),
-      e('button',{className:'combat-mode-btn',onClick:()=>setMode('penandpaper')},'PEN & PAPER')),
+      e('button',{className:'combat-mode-btn locked',disabled:true},'PEN & PAPER')),
     // Round header
     e('div',{className:'combat-round-header'},
       'ROUND '+combat.round,
@@ -3712,7 +3728,7 @@ function CoverScreen({onNew,onLoad}){
       e('p',{style:{margin:'0 0 4px'}},'\u2018Dragonlance,\u2019 \u2018Krynn,\u2019 \u2018Solamnic Knights,\u2019 and all related characters, locations, and lore are trademarks of Wizards of the Coast LLC. \u2018Dungeons & Dragons\u2019 and \u2018D&D\u2019 are registered trademarks of Wizards of the Coast LLC.'),
       e('p',{style:{margin:'0 0 4px'}},'This is unofficial fan content, not approved or endorsed by Wizards of the Coast. Made under the Fan Content Policy. No copyright or trademark infringement is intended.'),
       e('p',{style:{margin:0}},'Game mechanics reference the D&D 2024 System Reference Document (SRD 5.2), available under the Creative Commons Attribution 4.0 International License (CC BY 4.0).'),
-      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v22.1.3')));
+      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v22.2.0')));
 }
 
 // ── Character Creation ─────────────────────────────────
