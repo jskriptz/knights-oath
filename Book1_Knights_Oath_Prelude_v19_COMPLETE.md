@@ -727,8 +727,7 @@ Mira of the Oaks is small and precise, with the steady hands of a healer and the
 >
 > *No dice? Flip a coin: Heads = pass | Tails = fail*
 
-> **Paladin Note:**
-> If you are a Paladin: you may use Lay on Hands (touch, costs 1 HP from your pool) to ease the old man's pain. This is the first time your power has worked so clearly. Mark 1 tally under MISHAKAL on your God Sign tracker.
+> You kneel beside the old man and lay your hands on his arm. Warmth flows through your palms — not heat, not magic as you imagined it, but something quieter. A steadying. The old man's breathing eases. His grip on the cot rail loosens. This is the first time your power has worked so clearly. Something in you recognises Mishakal's touch. Mark 1 tally under MISHAKAL.
 
 > **A) Sit with the old man until Mira can take over.** (+1 ROSE, ROMANCE SPARK Mira) --> Scene 21
 >
@@ -1103,7 +1102,7 @@ Two squires are pressed against the far wall. One of them is bleeding — a gash
 >
 > **AFTER THE FIGHT — UPDATE YOUR SHEET**
 > Record current HP. Mark any used: Second Wind, Action Surge, spell slots, Lay on Hands pool.
-> **Short rest available:** Recover Second Wind, Action Surge.
+> **Short rest available:** Recover Action Surge, regain 1 Second Wind use. HP: spend Hit Dice.
 > Record: XP earned: 15 XP.
 
 > **A) Return to the afternoon.** --> Scene 11_AFTERNOON
@@ -1349,7 +1348,7 @@ On the goblin boss: a crude map of the garrison perimeter. Marked in charcoal: t
 > Update gold if loot was found. Record any items gained.
 > **Short rest available:** Recover Action Surge, regain 1 Second Wind use. HP: spend Hit Dice if desired.
 
-> **XP:** 10 XP per goblin killed. 15 XP for the boss. Bonus 10 XP if Corwin was saved. Bonus 5 XP if the 4th goblin was spotted.
+> **XP:** 75 XP (goblins cleared, boss killed, Corwin saved, 4th goblin spotted).
 
 > **A) Return to the evening. The wall is secure. For now.** --> Scene 11_EVENING
 
@@ -1827,8 +1826,7 @@ Your lantern finds them behind the hay bales: dark clothes, a wound managed for 
 >
 > *No dice? Flip a coin: Heads = pass | Tails = fail*
 
-> **Paladin Note:**
-> If you are a Paladin: something stirs in you — not a class feature, not yet, but an instinct that will become Divine Sense at Level 3. You feel no fiendish presence, no undead taint. This is a person in genuine distress. The reading is clean. This is a human who is afraid. Mark 1 tally under MISHAKAL (the god of mercy toward the wounded).
+> Something stirs in you — an instinct you cannot yet name. You feel no fiendish presence, no undead taint. This is a person in genuine distress. The reading is clean. This is a human who is afraid. Mishakal, the god of mercy toward the wounded, acknowledges the moment. Mark 1 tally under MISHAKAL.
 
 > **A) Hide them. Treat the wound. Sort the implications later.** (+1 ROSE, ROMANCE SPARK Serath, joins) --> Scene 36
 >
@@ -2059,8 +2057,7 @@ You are alone for the first hour. Then you are not.
 >
 > *No dice? Flip a coin: Heads = pass | Tails = fail*
 
-> **Paladin Note:**
-> If you are a Paladin: at the quietest part of the watch — the hour between two and three when even the wind stops — something happens. Not a vision. Not a voice. A feeling, behind your sternum, of being accompanied. Of someone standing watch with you who is not visible and not intrusive and simply: present. It lasts ten minutes. When it ends the cold feels less cold and you are certain, without evidence, that whatever is on the south road will not arrive tonight. Mark 1 tally under whichever god feels right. This is a small sign. Small signs count.
+> At the quietest part of the watch — the hour between two and three when even the wind stops — something happens. Not a vision. Not a voice. A feeling, behind your sternum, of being accompanied. Someone standing watch with you who is not visible and not intrusive and simply: present. It lasts ten minutes. When it ends the cold feels less cold and you are certain, without evidence, that whatever is on the south road will not arrive tonight. A small sign. Small signs count. Mark 1 tally under whichever god feels right.
 
 > **A) Report the light (if seen) to Caeron at dawn. Your watch ends. The relief arrives. You descend the wall into the torchlit courtyard, the evening's quiet still in your ears.** (+1 CROWN, +1 ROSE) --> Scene 11_EVENING
 >
@@ -2169,8 +2166,7 @@ The guard's reason: he was told the order means no exceptions and he does not wa
 
 The south road is pine-scented and cold and then the treeline erupts. Three miles from Brightholm — close enough that you could still, if you strained, hear the morning bell — four Baaz Draconians come out of the trees with the businesslike certainty of a unit that has done this before and expects it to work. They cut off the road. They advance. No parley. Aldric's hand is on his sword hilt. So is yours, you notice, before you consciously decided.
 
-> **Paladin Note: Before the Fight**
-> If you are a Paladin: in the half-second before the draconians move, you hear something — a voice, barely there, like a command shouted across a great distance. It is one word. You cannot quite catch it. But your hand is already on your sword and you feel no fear. Mark 1 tally under KIRI-JOLITH (the god who steadies soldiers before battle).
+> In the half-second before the draconians move, you hear something — a voice, barely there, like a command shouted across a great distance. It is one word. You cannot quite catch it. But your hand is already on your sword and you feel no fear. Kiri-Jolith, the god who steadies soldiers before battle, has spoken. Mark 1 tally under KIRI-JOLITH.
 
 > **COMBAT ENCOUNTER — DRAGON ARMY SCOUT PATROL**
 >
@@ -2187,7 +2183,7 @@ The south road is pine-scented and cold and then the treeline erupts. Three mile
 >
 > Fleeing: Disengage + Dash action. DC 12 Athletics or one free attack as you run.
 >
-> Rewards: 15 XP per draconian. Satchel on patrol leader: sealed dispatch pouch.
+> Rewards: 30 XP. Satchel on patrol leader: sealed dispatch pouch.
 >
 > Victory: Road clear. Aldric claps your shoulder. 'I did not expect that.' Proceed to Scene 27.
 >
@@ -2945,8 +2941,7 @@ There is a ruin on the ridge that the garrison maps mark as 'Solamnic watchtower
 
 Inside: grass growing through flagstones. A fire pit long cold. And carved into the inner wall at about knee height, a child's handprint in mud, dried hard. Someone sheltered here on the way north. Someone very young left their mark because that is what very young people do when they are in a place they will not come back to.
 
-> **Paladin Note:**
-> The Est Sularus oth Mithas carved in the keystone warms when you pass under the archway. Not the stone — the words themselves. Mark 1 tally under PALADINE or KIRI-JOLITH.
+> The Est Sularus oth Mithas carved in the keystone warms when you pass under the archway. Not the stone — the words themselves. The oath lives here, in cut stone and old intent. Mark 1 tally under PALADINE or KIRI-JOLITH.
 
 > **OPTIONAL ROLL:** History (INT) (+0) | INT | DC 13
 >
@@ -3168,7 +3163,7 @@ Linna is shaking. She is eight years old and she has been tied to a beam in a ce
 > Note if Linna was healed (affects Scene 70B recognition).
 > **Short rest available:** Recover Action Surge, regain 1 Second Wind use. HP: spend Hit Dice.
 
-> **XP:** 15 XP per soldier. 25 XP for the Kapak. Bonus 15 XP if Linna healed. Bonus 10 XP if stealth approach succeeded.
+> **XP:** 80 XP (soldiers defeated, Kapak slain, Linna healed, stealth approach).
 
 > **A) Carry Linna back to camp. She weighs almost nothing.** (+1 ROSE) --> Scene 44_REPORT
 
@@ -3460,7 +3455,7 @@ Dorren, if he is alive, is staring at you with the expression of a man who has j
 > Note if Dorren was saved (affects Scene 70C_SHOP).
 > **Short rest available:** Recover Action Surge, regain 1 Second Wind use. HP: spend Hit Dice.
 
-> **XP:** 15 XP per draconian. 10 XP for the deserter (killed or captured). Bonus 15 XP if Dorren saved. Bonus 5 XP if deserter surrendered peacefully.
+> **XP:** 75 XP (draconians defeated, deserter dealt with, Dorren saved).
 
 > **A) Return to camp. Report what you found.** --> Scene 44_REPORT
 
@@ -4351,7 +4346,7 @@ If Aldous is unconscious, the infirmary team takes him. Mira goes with them, if 
 > Note if Aldous was healed (affects Scene 60 Trials).
 > **Short rest available:** Recover Action Surge, regain 1 Second Wind use. HP: spend Hit Dice.
 
-> **XP:** 15 XP per Baaz (60 total if all 4 killed). Bonus 20 XP if Aldous healed. Bonus 10 XP if breach was narrowed. Bonus 10 XP if Intimidation succeeded.
+> **XP:** 100 XP (Baaz defeated, Aldous healed, breach narrowed, Intimidation succeeded).
 
 > **A) The breach is held. Return to the corridors. The night is not over yet.** --> Scene 53_HUB
 
@@ -4488,8 +4483,8 @@ You put your hand on the door. It is warm. Not hot yet. The fire is young. Whate
 >
 > **AFTER THE FIGHT — UPDATE YOUR SHEET**
 > Record current HP. Mark any used: Second Wind, Action Surge, spell slots, Lay on Hands pool, bandages, potions consumed.
-> **Short rest available:** Recover Second Wind, Action Surge.
-> **XP:** 10 XP per saboteur (20 total), 20 XP for infiltrator. Bonus 15 XP if grain store saved. Bonus 10 XP if infiltrator captured.
+> **Short rest available:** Recover Action Surge, regain 1 Second Wind use. HP: spend Hit Dice.
+> **XP:** 65 XP
 
 > **A) The grain store is secure. Return to the corridors. The night is not over yet.** --> Scene 53_HUB
 
@@ -5021,7 +5016,7 @@ You are not alone on the watch. Someone has joined you without asking, which is 
 
 Thessaly, if present, writes in her notebook by moonlight. Tariel, if present, watches the moons the way she watches everything — cataloguing. Lysander, if present, looks south.
 
-> **Paladin Note:** The three moons remind you of the divine presence. Mark 1 tally under whichever god feels right tonight.
+> The three moons hang above the camp, silver and distant. You feel the divine presence — faint, patient, unsurprised by any of this. Mark 1 tally under whichever god feels right.
 
 > **A) 'Do you believe in the gods?'** (+1 ROSE) --> Scene BOND_RETURN
 >
@@ -5217,8 +5212,8 @@ The fire is low — banked coals, not flame. The darkness beyond the fire's reac
 >
 > **AFTER THE FIGHT — UPDATE YOUR SHEET**
 > Record current HP. Mark any used: Second Wind, Action Surge, spell slots, Lay on Hands pool, bandages, potions consumed.
-> **Short rest available** after breaking camp: Recover Second Wind, Action Surge.
-> **XP:** 10 XP per wolf, 20 XP for alpha. Max 70 XP if all killed.
+> **Short rest available** after breaking camp: Recover Action Surge, regain 1 Second Wind use. HP: spend Hit Dice.
+> **XP:** 70 XP
 
 > **A) Break camp. The road continues. The wolves were just the prelude.** --> Scene 64C
 
@@ -5479,7 +5474,7 @@ Hanna is burned badly. Her arms, her chest. She was shielding Darric and the fir
 > Note if Hanna and/or Darric were saved (affects Vogler).
 > **Short rest available:** Recover Action Surge, regain 1 Second Wind use. HP: spend Hit Dice.
 
-> **XP:** 15 XP per soldier (45 total). 30 XP for the Bozak. Bonus 15 XP if Hanna healed. Bonus 10 XP if Darric healed. Bonus 10 XP if barn door broken Round 2.
+> **XP:** 110 XP
 
 > **A) The farmstead is ashes. The family is alive. You ride on toward camp. The smoke on the horizon is not theoretical anymore.** --> Scene 64D
 
@@ -6869,8 +6864,8 @@ He pauses.
 > **AFTER THE FIGHT — UPDATE YOUR SHEET**
 > Record current HP. Record items gained or lost (BROKEN weapon, SHATTERED armour if defeated). Mark any used: Second Wind, Action Surge, spell slots, Lay on Hands pool.
 > Equip new items if gained. Update AC accordingly.
-> **Short rest available:** Recover Second Wind, Action Surge.
-> **XP:** 50 XP (the duel itself). Bonus 25 XP if you won.
+> **Short rest available:** Recover Action Surge, regain 1 Second Wind use. HP: spend Hit Dice.
+> **XP:** 75 XP
 
 > **A) The road continues. Whatever just happened, Vogler is still ahead.** --> Scene 70A
 
@@ -7075,7 +7070,7 @@ The observation post is neutralized. The lean-to is wreckage. The fire pit is sc
 > Note if the dog was taken (flavour in Vogler).
 > **Short rest available:** Recover Action Surge, regain 1 Second Wind use. HP: spend Hit Dice.
 
-> **XP:** 15 XP per soldier. 20 XP for the scout. 10 XP for the dog (if calmed, not killed — +5 bonus). Bonus 15 XP if horn was prevented. Bonus 10 XP if stealth succeeded.
+> **XP:** 105 XP
 
 > **A) The post is silent. The bridge is ahead. Ride.** --> Scene 69B
 
@@ -7176,7 +7171,7 @@ Then you look up. On the far side, at the edge of the village, people are standi
 > **AFTER THE FIGHT — UPDATE YOUR SHEET**
 > Record current HP. Mark any used: Second Wind, Action Surge, spell slots,
 > Lay on Hands pool, bandages, potions consumed.
-> **Short rest available:** Recover Action Surge, regain 1 Second Wind use.
+> **Short rest available:** Recover Action Surge, regain 1 Second Wind use. HP: spend Hit Dice.
 
 > **A) Sheathe your sword. Walk across the bridge. They are waiting.** (+1 ROSE) --> Scene 70B
 >
@@ -7423,8 +7418,8 @@ She draws her bow. 'I take the scout. You take the soldiers. Or—' She looks at
 >
 > **AFTER THE FIGHT — UPDATE YOUR SHEET**
 > Record current HP. Mark any used: Second Wind, Action Surge, spell slots, Lay on Hands pool, bandages, potions consumed.
-> **Short rest available:** Walk back to Vogler. Recover Second Wind, Action Surge.
-> **XP:** 15 XP per soldier, 20 XP for scout. Bonus 20 XP if signal prevented. Bonus 15 XP if prisoners taken.
+> **Short rest available:** Walk back to Vogler. Recover Action Surge, regain 1 Second Wind use. HP: spend Hit Dice.
+> **XP:** 100 XP
 
 > **A) Return to Vogler. The scouts are dealt with. The bridge will be cleaner for it.** --> Scene 70C
 
