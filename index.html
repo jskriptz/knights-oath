@@ -1015,7 +1015,7 @@ h2.red{color:var(--red)}
   <div id="loading-name">The Knight's Oath</div>
   <div id="loading-bar-container"><div id="loading-bar"></div></div>
   <div id="loading-status">Preparing...</div>
-  <div id="loading-sub">v22.2.0 • 220 Scenes • 9 Companions</div>
+  <div id="loading-sub">v22.2.1 • 220 Scenes • 9 Companions</div>
 </div>
 <script>
 // Loading progress tracker
@@ -3728,7 +3728,7 @@ function CoverScreen({onNew,onLoad}){
       e('p',{style:{margin:'0 0 4px'}},'\u2018Dragonlance,\u2019 \u2018Krynn,\u2019 \u2018Solamnic Knights,\u2019 and all related characters, locations, and lore are trademarks of Wizards of the Coast LLC. \u2018Dungeons & Dragons\u2019 and \u2018D&D\u2019 are registered trademarks of Wizards of the Coast LLC.'),
       e('p',{style:{margin:'0 0 4px'}},'This is unofficial fan content, not approved or endorsed by Wizards of the Coast. Made under the Fan Content Policy. No copyright or trademark infringement is intended.'),
       e('p',{style:{margin:0}},'Game mechanics reference the D&D 2024 System Reference Document (SRD 5.2), available under the Creative Commons Attribution 4.0 International License (CC BY 4.0).'),
-      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v22.2.0')));
+      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v22.2.1')));
 }
 
 // ── Character Creation ─────────────────────────────────
@@ -4077,10 +4077,10 @@ function filterChoices(choices, sceneId, gs) {
     const EXEMPT_TARGETS=new Set(['11_MORNING','11_AFTERNOON','11_EVENING','11_NIGHT','11_ARMOURY','11_QM','53_HUB_MORN']);
     if(HUB_SCENES.includes(sceneId)&&target&&!EXEMPT_TARGETS.has(target)&&visitedScenes.has(target))return null;
 
-    // Scene 11 & 11B: swap companion-specific prep choices for discovery alternatives
-    if (sceneId === '11' || sceneId === '11B') {
+    // Hub scenes: swap companion-specific choices for discovery alternatives if not yet met
+    if (sceneId === '11' || sceneId === '11B' || sceneId === '11_AFTERNOON' || sceneId === '11_MORNING' || sceneId === '11_EVENING' || HUB_SCENES.includes(sceneId)) {
       // Thessaly: "Find Thessaly" → "A correspondent at the east gate is asking questions"
-      if ((txt.includes('Thessaly') || txt.includes('Find Thessaly')) && target === '23') {
+      if ((txt.includes('Thessaly') || txt.includes('Find Thessaly')) && (target === '23' || target === '56')) {
         if (!has('Thessaly')) return {...c, text: 'A correspondent at the east gate is asking sharp questions.', target: '6', _swapped: true};
       }
       // Mira: "Check on Mira" → "Check the infirmary"
