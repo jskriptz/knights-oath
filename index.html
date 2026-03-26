@@ -1106,7 +1106,7 @@ h2.red{color:var(--red)}
   <div id="loading-name">The Knight's Oath</div>
   <div id="loading-bar-container"><div id="loading-bar"></div></div>
   <div id="loading-status">Preparing...</div>
-  <div id="loading-sub">v22.5.6 • 220 Scenes • 9 Companions</div>
+  <div id="loading-sub">v22.5.7 • 220 Scenes • 9 Companions</div>
 </div>
 <script>
 // Loading progress tracker
@@ -1181,8 +1181,8 @@ const{useState,useEffect,useRef}=React;
 function mod(s){return Math.floor((s-10)/2)}
 function modStr(s){const m=mod(s);return m>=0?'+'+m:''+m}
 function calcAC(armor,hasShield,dexMod){
-  const acs={'Chain Mail':16,'Scale Mail':Math.min(14+dexMod,16),'Leather Armor':11+dexMod,'Studded Leather':12+dexMod,'Half-Plate':Math.min(15+dexMod,17)};
-  return(acs[armor]||16)+(hasShield?2:0);
+  const acs={'None':10+dexMod,'Chain Mail':16,'Scale Mail':Math.min(14+dexMod,16),'Leather Armor':11+dexMod,'Studded Leather':12+dexMod,'Half-Plate':Math.min(15+dexMod,17)};
+  return(acs[armor]!=null?acs[armor]:16)+(hasShield?2:0);
 }
 function calcDerived(stats,cls,lvl,armor,hasShield,feat,wounds){
   const ws=wounds||[];const woundPenalty=(stat)=>ws.filter(w=>w.stat===stat&&w.combatsLeft>0).length;
@@ -1492,8 +1492,8 @@ function buildEquipment(weapon,armor,hasShield){
 function syncEquipToState(gs){
   // Sync equipment slots → gs.weapon, gs.armor, gs.hasShield
   if(!gs.equipment)return;
-  gs.weapon=gs.equipment.mainHand||gs.weapon||'Longsword';
-  gs.armor=gs.equipment.armor||gs.armor||'Chain Mail';
+  gs.weapon=gs.equipment.mainHand||'Unarmed';
+  gs.armor=gs.equipment.armor||'None';
   gs.hasShield=gs.equipment.offHand==='Shield';
 }
 function equipItem(gs,itemName,slotOverride){
@@ -5433,7 +5433,7 @@ function CoverScreen({onNew,onLoad}){
       e('p',{style:{margin:'0 0 4px'}},'\u2018Dragonlance,\u2019 \u2018Krynn,\u2019 \u2018Solamnic Knights,\u2019 and all related characters, locations, and lore are trademarks of Wizards of the Coast LLC. \u2018Dungeons & Dragons\u2019 and \u2018D&D\u2019 are registered trademarks of Wizards of the Coast LLC.'),
       e('p',{style:{margin:'0 0 4px'}},'This is unofficial fan content, not approved or endorsed by Wizards of the Coast. Made under the Fan Content Policy. No copyright or trademark infringement is intended.'),
       e('p',{style:{margin:0}},'Game mechanics reference the D&D 2024 System Reference Document (SRD 5.2), available under the Creative Commons Attribution 4.0 International License (CC BY 4.0).'),
-      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v22.5.6')));
+      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v22.5.7')));
 }
 
 // ── World Introduction ────────────────────────────────
@@ -6216,7 +6216,7 @@ function CharSheet({gs,isEnding,onBack,onEquipChange}){
           e('div',{className:'cs-combat-box hp'},e('div',{className:'cs-combat-label'},'Hit Points'),e('div',{className:'cs-combat-val'},gs.hp+' / '+d.maxHp)),
           e('div',{className:'cs-combat-box'},e('div',{className:'cs-combat-label'},'Hit Dice'),e('div',{className:'cs-combat-val'},gs.level+'d10'))
         ),
-        row('Armor',gs.armor+(gs.hasShield?' + Shield':'')),
+        row('Armor',(gs.armor==='None'?'Unarmored':gs.armor)+(gs.hasShield?' + Shield':'')),
         row('Death Saves','O O O  /  X X X')
       ]),
 
