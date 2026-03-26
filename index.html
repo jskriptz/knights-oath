@@ -1106,7 +1106,7 @@ h2.red{color:var(--red)}
   <div id="loading-name">The Knight's Oath</div>
   <div id="loading-bar-container"><div id="loading-bar"></div></div>
   <div id="loading-status">Preparing...</div>
-  <div id="loading-sub">v22.5.5 • 220 Scenes • 9 Companions</div>
+  <div id="loading-sub">v22.5.6 • 220 Scenes • 9 Companions</div>
 </div>
 <script>
 // Loading progress tracker
@@ -5433,7 +5433,7 @@ function CoverScreen({onNew,onLoad}){
       e('p',{style:{margin:'0 0 4px'}},'\u2018Dragonlance,\u2019 \u2018Krynn,\u2019 \u2018Solamnic Knights,\u2019 and all related characters, locations, and lore are trademarks of Wizards of the Coast LLC. \u2018Dungeons & Dragons\u2019 and \u2018D&D\u2019 are registered trademarks of Wizards of the Coast LLC.'),
       e('p',{style:{margin:'0 0 4px'}},'This is unofficial fan content, not approved or endorsed by Wizards of the Coast. Made under the Fan Content Policy. No copyright or trademark infringement is intended.'),
       e('p',{style:{margin:0}},'Game mechanics reference the D&D 2024 System Reference Document (SRD 5.2), available under the Creative Commons Attribution 4.0 International License (CC BY 4.0).'),
-      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v22.5.5')));
+      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v22.5.6')));
 }
 
 // ── World Introduction ────────────────────────────────
@@ -6303,11 +6303,8 @@ function CharSheet({gs,isEnding,onBack,onEquipChange}){
       })()),
 
       // ── Order Points & Honour ──
-      section('ORDER & HONOUR',[
-        e('div',{key:'op',className:'cs-combat-grid'},
-          e('div',{className:'cs-combat-box'},e('div',{className:'cs-combat-label'},'Rose'),e('div',{className:'cs-combat-val'},gs.rose)),
-          e('div',{className:'cs-combat-box'},e('div',{className:'cs-combat-label'},'Sword'),e('div',{className:'cs-combat-val'},gs.sword)),
-          e('div',{className:'cs-combat-box'},e('div',{className:'cs-combat-label'},'Crown'),e('div',{className:'cs-combat-val'},gs.crown)),
+      section('HONOUR',[
+        e('div',{key:'hon',className:'cs-combat-grid'},
           e('div',{className:'cs-combat-box'},e('div',{className:'cs-combat-label'},'Honour'),e('div',{className:'cs-combat-val'},gs.honour||0))
         )
       ]),
@@ -6350,11 +6347,11 @@ function CharSheet({gs,isEnding,onBack,onEquipChange}){
         gs.dgTrack==='HELD FIRM'?e('p',{className:'cs-dg-pure'},'Divine connection strengthened.'):null
       )):null,
 
-      section('ORDER POINTS (HOMEBREW)',e('div',{className:'cs-order-grid'},
+      section('ORDER POINTS',e('div',{className:'cs-order-grid'},
         e('div',{className:'cs-order rose'},e('div',{className:'cs-order-num'},gs.rose),e('div',null,'Rose')),
         e('div',{className:'cs-order sword'},e('div',{className:'cs-order-num'},gs.sword),e('div',null,'Sword')),
         e('div',{className:'cs-order crown'},e('div',{className:'cs-order-num'},gs.crown),e('div',null,'Crown')),
-        e('div',{className:'cs-order-result'},'Order: '+order)
+        e('div',{className:'cs-order-result'},'Order: '+(gs.rose===0&&gs.sword===0&&gs.crown===0?'Unknown':order))
       )),
 
       // ── Companions ──
