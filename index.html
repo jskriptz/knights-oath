@@ -61,10 +61,11 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Crimso
 .intro-page{max-width:560px;text-align:center;transition:opacity .4s}
 .intro-page.fade-in{opacity:1}.intro-page.fade-out{opacity:0}
 .intro-text{color:var(--text);line-height:1.8;margin-bottom:12px;font-size:15px;max-width:560px}
-.intro-nav{display:flex;align-items:center;gap:24px;margin-top:32px}
-.intro-btn{padding:10px 24px;font-size:14px}
+.intro-nav{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:24px}
+.intro-btn{padding:6px 18px;font-size:12px;letter-spacing:.5px}
 .intro-count{color:var(--text-dim);font-size:12px;letter-spacing:2px;min-width:40px;text-align:center}
-.begin-btn{background:var(--gold);box-shadow:0 0 16px rgba(201,168,76,.3)}
+.intro-skip{display:flex;justify-content:center;margin-top:12px}
+.begin-btn{background:var(--gold);box-shadow:0 0 16px rgba(201,168,76,.3);padding:8px 22px;font-size:13px}
 
 .gold-btn{background:var(--gold-dim);color:var(--bg);border:none;padding:14px 40px;font-family:'Cinzel',serif;font-size:16px;font-weight:700;border-radius:6px;cursor:pointer;transition:all .2s;letter-spacing:1px}
 .gold-btn:hover{background:var(--gold);transform:translateY(-2px);box-shadow:0 4px 20px rgba(201,168,76,.3)}
@@ -574,7 +575,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Crimso
   .world-intro{padding-top:32px}
   .intro-text{font-size:14px;line-height:1.7}
   .intro-nav{gap:12px}
-  .intro-btn{padding:10px 16px;font-size:13px}
+  .intro-btn{padding:6px 14px;font-size:11px}
   .divider{width:120px;margin:10px auto}
   .gold-btn{padding:12px 28px;font-size:14px;width:100%;max-width:300px}
   .ghost-btn{padding:10px 20px;font-size:12px}
@@ -1104,7 +1105,7 @@ h2.red{color:var(--red)}
   <div id="loading-name">The Knight's Oath</div>
   <div id="loading-bar-container"><div id="loading-bar"></div></div>
   <div id="loading-status">Preparing...</div>
-  <div id="loading-sub">v22.5.2 • 220 Scenes • 9 Companions</div>
+  <div id="loading-sub">v22.5.3 • 220 Scenes • 9 Companions</div>
 </div>
 <script>
 // Loading progress tracker
@@ -5431,7 +5432,7 @@ function CoverScreen({onNew,onLoad}){
       e('p',{style:{margin:'0 0 4px'}},'\u2018Dragonlance,\u2019 \u2018Krynn,\u2019 \u2018Solamnic Knights,\u2019 and all related characters, locations, and lore are trademarks of Wizards of the Coast LLC. \u2018Dungeons & Dragons\u2019 and \u2018D&D\u2019 are registered trademarks of Wizards of the Coast LLC.'),
       e('p',{style:{margin:'0 0 4px'}},'This is unofficial fan content, not approved or endorsed by Wizards of the Coast. Made under the Fan Content Policy. No copyright or trademark infringement is intended.'),
       e('p',{style:{margin:0}},'Game mechanics reference the D&D 2024 System Reference Document (SRD 5.2), available under the Creative Commons Attribution 4.0 International License (CC BY 4.0).'),
-      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v22.5.2')));
+      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v22.5.3')));
 }
 
 // ── World Introduction ────────────────────────────────
@@ -5486,7 +5487,7 @@ function WorldIntro({onDone,onSkip,onBack}){
       e('span',{className:'intro-count'},(page+1)+' / '+PAGES.length),
       page<PAGES.length-1?e('button',{className:'gold-btn intro-btn',onClick:()=>turn(1)},'Continue \u2192'):e('button',{className:'gold-btn intro-btn begin-btn',onClick:onDone},'Create Your Character \u2192')
     ),
-    page<PAGES.length-1?e('button',{className:'ghost-btn',onClick:onSkip,style:{marginTop:16,fontSize:12}},'SKIP INTRO'):null);
+    page<PAGES.length-1?e('div',{className:'intro-skip'},e('button',{className:'ghost-btn',onClick:onSkip,style:{fontSize:11}},'SKIP INTRO')):null);
 
 }
 
