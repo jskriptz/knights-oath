@@ -576,6 +576,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Crimso
   .intro-text{font-size:14px;line-height:1.7}
   .intro-nav{gap:12px}
   .intro-btn{padding:6px 14px;font-size:11px}
+  .arrow-hide{display:none}
   .divider{width:120px;margin:10px auto}
   .gold-btn{padding:12px 28px;font-size:14px;width:100%;max-width:300px}
   .ghost-btn{padding:10px 20px;font-size:12px}
@@ -1105,7 +1106,7 @@ h2.red{color:var(--red)}
   <div id="loading-name">The Knight's Oath</div>
   <div id="loading-bar-container"><div id="loading-bar"></div></div>
   <div id="loading-status">Preparing...</div>
-  <div id="loading-sub">v22.5.4 • 220 Scenes • 9 Companions</div>
+  <div id="loading-sub">v22.5.5 • 220 Scenes • 9 Companions</div>
 </div>
 <script>
 // Loading progress tracker
@@ -5432,7 +5433,7 @@ function CoverScreen({onNew,onLoad}){
       e('p',{style:{margin:'0 0 4px'}},'\u2018Dragonlance,\u2019 \u2018Krynn,\u2019 \u2018Solamnic Knights,\u2019 and all related characters, locations, and lore are trademarks of Wizards of the Coast LLC. \u2018Dungeons & Dragons\u2019 and \u2018D&D\u2019 are registered trademarks of Wizards of the Coast LLC.'),
       e('p',{style:{margin:'0 0 4px'}},'This is unofficial fan content, not approved or endorsed by Wizards of the Coast. Made under the Fan Content Policy. No copyright or trademark infringement is intended.'),
       e('p',{style:{margin:0}},'Game mechanics reference the D&D 2024 System Reference Document (SRD 5.2), available under the Creative Commons Attribution 4.0 International License (CC BY 4.0).'),
-      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v22.5.4')));
+      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v22.5.5')));
 }
 
 // ── World Introduction ────────────────────────────────
@@ -5483,9 +5484,9 @@ function WorldIntro({onDone,onSkip,onBack}){
       pg.body.map((p,i)=>e('p',{key:i,className:'intro-text'},p))
     ),
     e('div',{className:'intro-nav'},
-      page>0?e('button',{className:'gold-btn intro-btn',onClick:()=>turn(-1)},'Back'):e('button',{className:'gold-btn intro-btn',onClick:onBack},'Menu'),
+      page>0?e('button',{className:'gold-btn intro-btn',onClick:()=>turn(-1)},e('span',{className:'arrow-hide'},'\u2190 '),'Back'):e('button',{className:'gold-btn intro-btn',onClick:onBack},e('span',{className:'arrow-hide'},'\u2190 '),'Menu'),
       e('span',{className:'intro-count'},(page+1)+' / '+PAGES.length),
-      page<PAGES.length-1?e('button',{className:'gold-btn intro-btn',onClick:()=>turn(1)},'Continue'):e('button',{className:'gold-btn intro-btn begin-btn',onClick:onDone},'Create Character')
+      page<PAGES.length-1?e('button',{className:'gold-btn intro-btn',onClick:()=>turn(1)},'Continue',e('span',{className:'arrow-hide'},' \u2192')):e('button',{className:'gold-btn intro-btn begin-btn',onClick:onDone},'Create Character',e('span',{className:'arrow-hide'},' \u2192'))
     ),
     page<PAGES.length-1?e('div',{className:'intro-skip'},e('button',{className:'ghost-btn',onClick:onSkip,style:{fontSize:11}},'SKIP INTRO')):null);
 
