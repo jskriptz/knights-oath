@@ -53,6 +53,19 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Crimso
 .cover .stats{color:var(--gold-dim);font-size:13px;margin:16px 0}
 .divider{width:180px;height:1px;background:var(--gold-dim);margin:16px auto}
 
+.world-intro{justify-content:flex-start;padding-top:60px}
+.intro-progress{display:flex;gap:8px;margin-bottom:32px}
+.intro-dot{width:10px;height:10px;border-radius:50%;background:var(--border);transition:all .3s}
+.intro-dot.active{background:var(--gold);box-shadow:0 0 8px rgba(201,168,76,.5)}
+.intro-dot.done{background:var(--gold-dim)}
+.intro-page{max-width:560px;text-align:center;transition:opacity .4s}
+.intro-page.fade-in{opacity:1}.intro-page.fade-out{opacity:0}
+.intro-text{color:var(--text);line-height:1.8;margin-bottom:12px;font-size:15px;max-width:560px}
+.intro-nav{display:flex;align-items:center;gap:24px;margin-top:32px}
+.intro-btn{padding:10px 24px;font-size:14px}
+.intro-count{color:var(--text-dim);font-size:12px;letter-spacing:2px;min-width:40px;text-align:center}
+.begin-btn{background:var(--gold);box-shadow:0 0 16px rgba(201,168,76,.3)}
+
 .gold-btn{background:var(--gold-dim);color:var(--bg);border:none;padding:14px 40px;font-family:'Cinzel',serif;font-size:16px;font-weight:700;border-radius:6px;cursor:pointer;transition:all .2s;letter-spacing:1px}
 .gold-btn:hover{background:var(--gold);transform:translateY(-2px);box-shadow:0 4px 20px rgba(201,168,76,.3)}
 .gold-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
@@ -541,6 +554,10 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Crimso
   .cover h2{font-size:clamp(16px,5vw,20px)}
   .cover p{font-size:14px}
   .cover .stats{font-size:11px}
+  .world-intro{padding-top:32px}
+  .intro-text{font-size:14px;line-height:1.7}
+  .intro-nav{gap:12px}
+  .intro-btn{padding:10px 16px;font-size:13px}
   .divider{width:120px;margin:10px auto}
   .gold-btn{padding:12px 28px;font-size:14px;width:100%;max-width:300px}
   .ghost-btn{padding:10px 20px;font-size:12px}
@@ -1057,7 +1074,7 @@ h2.red{color:var(--red)}
   <div id="loading-name">The Knight's Oath</div>
   <div id="loading-bar-container"><div id="loading-bar"></div></div>
   <div id="loading-status">Preparing...</div>
-  <div id="loading-sub">v22.3.4 • 220 Scenes • 9 Companions</div>
+  <div id="loading-sub">v22.3.5 • 220 Scenes • 9 Companions</div>
 </div>
 <script>
 // Loading progress tracker
@@ -3816,7 +3833,61 @@ function CoverScreen({onNew,onLoad}){
       e('p',{style:{margin:'0 0 4px'}},'\u2018Dragonlance,\u2019 \u2018Krynn,\u2019 \u2018Solamnic Knights,\u2019 and all related characters, locations, and lore are trademarks of Wizards of the Coast LLC. \u2018Dungeons & Dragons\u2019 and \u2018D&D\u2019 are registered trademarks of Wizards of the Coast LLC.'),
       e('p',{style:{margin:'0 0 4px'}},'This is unofficial fan content, not approved or endorsed by Wizards of the Coast. Made under the Fan Content Policy. No copyright or trademark infringement is intended.'),
       e('p',{style:{margin:0}},'Game mechanics reference the D&D 2024 System Reference Document (SRD 5.2), available under the Creative Commons Attribution 4.0 International License (CC BY 4.0).'),
-      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v22.3.4')));
+      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v22.3.5')));
+}
+
+// ── World Introduction ────────────────────────────────
+function WorldIntro({onDone,onBack}){
+  const[page,setPage]=useState(0);const[fade,setFade]=useState(true);const e=React.createElement;
+  const turn=(dir)=>{setFade(false);setTimeout(()=>{setPage(p=>p+dir);setFade(true)},400)};
+  const PAGES=[
+    {title:'THE WORLD OF KRYNN',body:[
+      'Krynn is a world of high towers and deep shadows, of gods who once walked among mortals and a sky scarred by divine wrath.',
+      'The continent of Ansalon stretches from the frozen wastes of Icereach to the ancient forests of Silvanesti. Great cities once rose along its coasts and rivers — Istar the Mighty, Xak Tsaroth the Beautiful, Tarsis the Shining.',
+      'Once, this was a world of wonders.',
+      'That was before the Cataclysm.'
+    ]},
+    {title:'THE CATACLYSM',body:[
+      'Three hundred years ago, the Kingpriest of Istar grew so proud that he demanded godhood itself. In answer, the gods hurled a fiery mountain upon the city. Istar sank beneath the Blood Sea. Coastlines shattered. Nations drowned.',
+      'Then the gods fell silent.',
+      'No cleric could heal. No prayer was answered. The constellations of the gods vanished from the night sky. For three centuries, the people of Ansalon have lived without divine magic — and many have concluded the gods were never real at all.',
+      'The Knights of Solamnia, once the greatest force of good on Krynn, were blamed for failing to prevent the Cataclysm. They retreated to their strongholds, diminished and despised.'
+    ]},
+    {title:'THE SOLAMNIC ORDERS',body:[
+      'Yet the Knights endure. Three orders bound by the Oath and the Measure:',
+      'The Order of the Crown — honour, obedience, loyalty. Every squire begins here.',
+      'The Order of the Sword — courage, heroism, faith. The martial heart of the knighthood.',
+      'The Order of the Rose — wisdom, justice, sacrifice. The highest calling.',
+      '"Est Sularus oth Mithas" — My honour is my life.',
+      'You are a squire of the Crown, stationed in the frontier village of Vogler. Your training is nearly complete. Your trials have not yet begun.'
+    ]},
+    {title:'THE DRAGON ARMIES',body:[
+      'Rumours have reached Vogler from the east. Entire nations have fallen to a horde that marches under banners of five colours — red, blue, green, black, and white.',
+      'They call themselves the Dragon Armies. The refugees say they are led by Dragon Highlords, warlords of terrible power who ride upon dragons thought extinct since the Age of Dreams.',
+      'The Solamnic command dismisses most of this as peasant hysteria. Vogler is far from the front. The harvest festival approaches. There is a bridge to defend, oaths to uphold, and a village that trusts its knights.',
+      'But the smoke on the horizon is not a rumour.'
+    ]},
+    {title:'YOUR STORY BEGINS',body:[
+      'You are young. You have trained with sword and shield since childhood. You have memorised the Measure, recited the Oath, and sworn to protect those who cannot protect themselves.',
+      'Today, you must choose your path.',
+      'As a Fighter, you will master the art of war — tactical brilliance, unmatched endurance, and the discipline of a soldier born.',
+      'As a Paladin, you will reach for something the world has forgotten — divine magic. If the gods are truly returning, you may be among the first to hear their call in three hundred years.',
+      'Either way, the Dragon Armies are coming. And Vogler will need its knight.'
+    ]}
+  ];
+  const pg=PAGES[page];
+  return e('div',{className:'cover world-intro'},
+    e('div',{className:'intro-progress'},PAGES.map((_,i)=>e('div',{key:i,className:'intro-dot'+(i===page?' active':i<page?' done':'')}))),
+    e('div',{className:'intro-page'+(fade?' fade-in':' fade-out')},
+      e('h2',{className:'gold'},pg.title),
+      e('div',{className:'divider'}),
+      pg.body.map((p,i)=>e('p',{key:i,className:'intro-text'},p))
+    ),
+    e('div',{className:'intro-nav'},
+      page>0?e('button',{className:'gold-btn intro-btn',onClick:()=>turn(-1)},'\u2190 Back'):e('button',{className:'gold-btn intro-btn',onClick:onBack},'\u2190 Menu'),
+      e('span',{className:'intro-count'},(page+1)+' / '+PAGES.length),
+      page<PAGES.length-1?e('button',{className:'gold-btn intro-btn',onClick:()=>turn(1)},'Continue \u2192'):e('button',{className:'gold-btn intro-btn begin-btn',onClick:onDone},'Create Your Character \u2192')
+    ));
 }
 
 // ── Character Creation ─────────────────────────────────
@@ -5300,8 +5371,9 @@ function App(){
   const handleStateUpdate=(updater)=>{if(!gs)return;const ns=typeof updater==='function'?updater(gs):{...gs,...updater};ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds);setGs(ns)};
   const handleMenu=()=>{setConfirmModal({msg:'Return to main menu? Unsaved progress will be lost.',onYes:()=>{setPhase('cover');setGs(null);setScene(null);setShowSheet(false);setSideOpen(false);setConfirmModal(null)},onNo:()=>setConfirmModal(null)})};
   const e=React.createElement;
-  if(phase==='cover')return e(CoverScreen,{onNew:()=>setPhase('create'),onLoad:loadSave});
-  if(phase==='create')return e(CharCreate,{onDone:startGame,onBack:()=>setPhase('cover')});
+  if(phase==='cover')return e(CoverScreen,{onNew:()=>setPhase('intro'),onLoad:loadSave});
+  if(phase==='intro')return e(WorldIntro,{onDone:()=>setPhase('create'),onBack:()=>setPhase('cover')});
+  if(phase==='create')return e(CharCreate,{onDone:startGame,onBack:()=>setPhase('intro')});
   if(!gs||!scene)return null;
   if(showSheet)return e(CharSheet,{gs,isEnding:ENDING_SCENES.includes(sceneId),onBack:()=>setShowSheet(false)});
   const d=gs.derived;
