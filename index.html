@@ -311,6 +311,9 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Crimso
 .equip-slot-btn{background:none;border:none;color:var(--text-dim);font-size:10px;cursor:pointer;padding:1px 4px;opacity:.6;transition:opacity .2s}
 .equip-slot-btn:hover{opacity:1;color:#c0392b}
 .equip-slot select{background:var(--panel);border:1px solid var(--border);color:var(--text);font-family:'Crimson Text',serif;font-size:11px;padding:1px 4px;border-radius:3px;max-width:120px}
+.equip-slot-item.clickable,.equip-slot-empty.clickable{cursor:pointer;transition:color .2s}
+.equip-slot-item.clickable:hover{color:var(--gold)}
+.equip-slot-empty.clickable:hover{color:var(--gold-dim)}
 .equip-slot.disabled .equip-slot-btn,.equip-slot.disabled select{pointer-events:none;opacity:.3}
 .history-list{font-size:11px;color:#555;max-height:120px;overflow-y:auto}
 .hist-item{padding:1px 0}
@@ -988,6 +991,19 @@ h2.red{color:var(--red)}
 
 .cs-inv-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:4px}
 .cs-inv-item{padding:4px 10px;font-size:14px;color:var(--text);background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:3px}
+/* Character sheet equipment slots */
+.cs-equip-slots{display:flex;flex-direction:column;gap:3px;margin-bottom:12px}
+.cs-equip-row{display:flex;align-items:center;gap:8px;padding:4px 8px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:4px;font-size:13px}
+.cs-equip-label{width:76px;flex-shrink:0;font-family:'Cinzel',serif;font-size:10px;color:var(--gold-dim);text-transform:uppercase;letter-spacing:.5px}
+.cs-equip-val{flex:1;color:var(--text);cursor:pointer;transition:color .2s}
+.cs-equip-val:hover{color:var(--gold)}
+.cs-equip-val.empty{color:var(--text-dim);font-style:italic}
+.cs-equip-row select{background:var(--panel);border:1px solid var(--border);color:var(--text);font-family:'Crimson Text',serif;font-size:13px;padding:2px 6px;border-radius:3px;flex:1}
+/* Backpack categories */
+.cs-bp-cat{margin-top:8px}
+.cs-bp-cat-label{font-family:'Cinzel',serif;font-size:11px;color:var(--gold-dim);letter-spacing:.5px;text-transform:uppercase;margin-bottom:4px;border-bottom:1px solid rgba(201,168,76,.15);padding-bottom:2px}
+.cs-bp-items{display:grid;grid-template-columns:repeat(2,1fr);gap:3px}
+.cs-bp-item{padding:3px 8px;font-size:13px;color:var(--text);background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:3px}
 
 .cs-decisions{display:flex;flex-direction:column;gap:4px}
 .cs-decision-item{font-size:14px;padding:3px 0;color:var(--text)}
@@ -1088,7 +1104,7 @@ h2.red{color:var(--red)}
   <div id="loading-name">The Knight's Oath</div>
   <div id="loading-bar-container"><div id="loading-bar"></div></div>
   <div id="loading-status">Preparing...</div>
-  <div id="loading-sub">v22.5.0 • 220 Scenes • 9 Companions</div>
+  <div id="loading-sub">v22.5.1 • 220 Scenes • 9 Companions</div>
 </div>
 <script>
 // Loading progress tracker
@@ -1503,6 +1519,34 @@ function unequipItem(gs,slotId){
   syncEquipToState(ns);
   ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds);
   return ns;
+}
+function getSlotOptions(gs,slotId){
+  // Returns all inventory items that can go in this slot (including currently equipped)
+  if(!gs||!gs.inventory)return[];
+  const current=gs.equipment?gs.equipment[slotId]:null;
+  const eqVals=gs.equipment?Object.values(gs.equipment).filter(Boolean):[];
+  const opts=[];const seen=new Set();
+  if(current&&!seen.has(current)){seen.add(current);opts.push(current)}
+  gs.inventory.forEach(it=>{
+    if(seen.has(it))return;
+    if(eqVals.includes(it)&&it!==current)return;// equipped elsewhere
+    const s=getItemSlot(it);
+    if(slotId==='ring2'&&s==='ring1'){seen.add(it);opts.push(it)}
+    else if(s===slotId){seen.add(it);opts.push(it)}
+  });
+  return opts;
+}
+// Item categorization for backpack display
+const CONSUMABLE_ITEMS=/^(Potion|Greater Potion|Bandage|Dried Yarrow|Pine Salve|Clean Bandage|Antitoxin|Ration)/i;
+const QUEST_ITEMS=/tabard|token|patrol sketch|family ring|carved wooden|dispatch|signet|sealed orders|journal|battle plans|whistle|rose commentary|boar tusks|kapak venom|pig skewer/i;
+function categorizeItem(name){
+  if(WEAPONS_WITH_MASTERY.some(w=>w.name===name)||/dawnstrike|pig skewer/i.test(name))return'Weapons';
+  if(ARMOR_NAMES.includes(name)||/shield/i.test(name))return'Armor & Shields';
+  if(/helm|glove|gauntlet|boot|greave|cape|cloak|ring|amulet|pendant|necklace|medallion|bracer|sabaton|coif/i.test(name))return'Gear';
+  if(CONSUMABLE_ITEMS.test(name))return'Consumables';
+  if(QUEST_ITEMS.test(name))return'Quest Items';
+  if(/pack|rope|torch|whetstone|caltrop/i.test(name))return'Supplies';
+  return'Miscellaneous';
 }
 
 const COMPANION_COMBAT_STATS={
@@ -5382,7 +5426,7 @@ function CoverScreen({onNew,onLoad}){
       e('p',{style:{margin:'0 0 4px'}},'\u2018Dragonlance,\u2019 \u2018Krynn,\u2019 \u2018Solamnic Knights,\u2019 and all related characters, locations, and lore are trademarks of Wizards of the Coast LLC. \u2018Dungeons & Dragons\u2019 and \u2018D&D\u2019 are registered trademarks of Wizards of the Coast LLC.'),
       e('p',{style:{margin:'0 0 4px'}},'This is unofficial fan content, not approved or endorsed by Wizards of the Coast. Made under the Fan Content Policy. No copyright or trademark infringement is intended.'),
       e('p',{style:{margin:0}},'Game mechanics reference the D&D 2024 System Reference Document (SRD 5.2), available under the Creative Commons Attribution 4.0 International License (CC BY 4.0).'),
-      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v22.5.0')));
+      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v22.5.1')));
 }
 
 // ── World Introduction ────────────────────────────────
@@ -5934,8 +5978,8 @@ function SceneView({scene,onChoice,gs,isEnding,onViewSheet,onBonus,onStateUpdate
 }
 
 // ── Character Sheet ────────────────────────────────────
-function CharSheet({gs,isEnding,onBack}){
-  const[csComp,setCSComp]=useState(null);
+function CharSheet({gs,isEnding,onBack,onEquipChange}){
+  const[csComp,setCSComp]=useState(null);const[csEditSlot,setCsEditSlot]=useState(null);
   const e=React.createElement;const d=gs.derived;
   const order=getOrder(gs.rose,gs.sword,gs.crown);const bg=suggestBackground(gs);const sp=gs.spells||{};
   const hasSpells=(sp.cantrips&&sp.cantrips.length)||(sp.level1&&sp.level1.length);
@@ -6214,14 +6258,42 @@ function CharSheet({gs,isEnding,onBack}){
         row('Skill Proficiencies',profSkills.join(', ')||'None')
       ]),
 
-      // ── Equipment ──
+      // ── Equipment (clickable slots) ──
       section('EQUIPMENT',
-        gs.equipment?e('div',{className:'cs-inv-grid'},
-          EQUIPMENT_SLOTS.map(slot=>{const item=gs.equipment[slot.id];return item?e('div',{key:slot.id,className:'cs-inv-item'},e('span',{style:{color:'var(--gold-dim)',fontSize:11,fontFamily:"'Cinzel',serif"}},slot.label+': '),item):null}).filter(Boolean),
-          e('div',{key:'divider',style:{gridColumn:'1/-1',borderTop:'1px solid var(--border)',margin:'4px 0'}}),
-          gs.inventory.filter(it=>!Object.values(gs.equipment).includes(it)).map((it,i)=>e('div',{key:'inv'+i,className:'cs-inv-item'},it))
-        ):gs.inventory.length?e('div',{className:'cs-inv-grid'},gs.inventory.map(it=>e('div',{key:it,className:'cs-inv-item'},it))):e('p',{className:'cs-empty'},'Empty')
+        gs.equipment?e('div',{className:'cs-equip-slots'},
+          EQUIPMENT_SLOTS.map(slot=>{
+            const item=gs.equipment[slot.id];
+            const opts=getSlotOptions(gs,slot.id);
+            const isEd=csEditSlot===slot.id;
+            return e('div',{key:slot.id,className:'cs-equip-row'},
+              e('span',{className:'cs-equip-label'},slot.label),
+              isEd&&onEquipChange?e('select',{autoFocus:true,value:item||'',onChange:ev=>{
+                const v=ev.target.value;setCsEditSlot(null);
+                if(v==='__none__')onEquipChange(unequipItem(gs,slot.id));
+                else if(v&&v!==item)onEquipChange(equipItem(gs,v,slot.id));
+              },onBlur:()=>setCsEditSlot(null)},
+                e('option',{value:'__none__'},'None'),
+                opts.map(it=>e('option',{key:it,value:it},it+(it===item?' (equipped)':'')))
+              ):e('span',{className:'cs-equip-val'+(item?'':' empty'),onClick:()=>{if(onEquipChange&&opts.length>0)setCsEditSlot(slot.id)}},
+                item||(opts.length?'click to equip':'\u2014'))
+            )})
+        ):e('p',{className:'cs-empty'},'No equipment data')
       ),
+
+      // ── Backpack ──
+      section('BACKPACK',(()=>{
+        const eqVals=gs.equipment?Object.values(gs.equipment).filter(Boolean):[];
+        const remaining=[];const used={};
+        (gs.inventory||[]).forEach(it=>{if(eqVals.includes(it)&&!used[it]){used[it]=true}else{remaining.push(it)}});
+        if(!remaining.length)return e('p',{className:'cs-empty'},'Empty');
+        const cats={};remaining.forEach(it=>{const c=categorizeItem(it);if(!cats[c])cats[c]=[];cats[c].push(it)});
+        const catOrder=['Weapons','Armor & Shields','Gear','Consumables','Supplies','Quest Items','Miscellaneous'];
+        return e('div',null,catOrder.filter(c=>cats[c]).map(c=>
+          e('div',{key:c,className:'cs-bp-cat'},
+            e('div',{className:'cs-bp-cat-label'},c),
+            e('div',{className:'cs-bp-items'},cats[c].map((it,i)=>e('div',{key:it+i,className:'cs-bp-item'},it)))
+          )));
+      })()),
 
       // ── Order Points & Honour ──
       section('ORDER & HONOUR',[
@@ -6674,7 +6746,7 @@ function ConfirmModal({msg,onYes,onNo}){
 
 function App(){
   const[phase,setPhase]=useState('cover');const[gs,setGs]=useState(null);const[scene,setScene]=useState(null);const[sceneId,setSceneId]=useState(null);
-  const[showSave,setShowSave]=useState(false);const[saveMsg,setSaveMsg]=useState('');const[showSheet,setShowSheet]=useState(false);const[sideOpen,setSideOpen]=useState(false);const[confirmModal,setConfirmModal]=useState(null);const[compPopup,setCompPopup]=useState(null);const[romancePrompt,setRomancePrompt]=useState(null);const[romanceManage,setRomanceManage]=useState(false);const[breakupTarget,setBreakupTarget]=useState(null);const[npcNotify,setNpcNotify]=useState(null);const[romanceCheck,setRomanceCheck]=useState(null);const[spellPrepModal,setSpellPrepModal]=useState(false);const[shortRestModal,setShortRestModal]=useState(false);const[healingPanel,setHealingPanel]=useState(false);const[defeatRecovery,setDefeatRecovery]=useState(null);const[godSignPicker,setGodSignPicker]=useState(null);
+  const[showSave,setShowSave]=useState(false);const[saveMsg,setSaveMsg]=useState('');const[showSheet,setShowSheet]=useState(false);const[sideOpen,setSideOpen]=useState(false);const[confirmModal,setConfirmModal]=useState(null);const[compPopup,setCompPopup]=useState(null);const[romancePrompt,setRomancePrompt]=useState(null);const[romanceManage,setRomanceManage]=useState(false);const[breakupTarget,setBreakupTarget]=useState(null);const[npcNotify,setNpcNotify]=useState(null);const[romanceCheck,setRomanceCheck]=useState(null);const[spellPrepModal,setSpellPrepModal]=useState(false);const[shortRestModal,setShortRestModal]=useState(false);const[healingPanel,setHealingPanel]=useState(false);const[defeatRecovery,setDefeatRecovery]=useState(null);const[godSignPicker,setGodSignPicker]=useState(null);const[editSlot,setEditSlot]=useState(null);
   // Migrate companion name casing on any active gs
   React.useEffect(()=>{
     if(!gs||!gs.companions)return;
@@ -6725,7 +6797,15 @@ function App(){
       // Track inventory items from ADD TO INVENTORY boxes
       if(t.includes('ADD TO INVENTORY')||t.includes('ITEM GIVEN')){
         const m=t.match(/(?:ADD TO INVENTORY|ITEM GIVEN)\s*[—–-]\s*(.+?)(?:\*\*|\n)/);
-        if(m){const item=m[1].replace(/\*+/g,'').trim();if(!ns.inventory.includes(item))ns.inventory=[...ns.inventory,item]}
+        if(m){const item=m[1].replace(/\*+/g,'').trim();
+          // Expand bundles into their actual contents
+          if(/MIRA.*TRAVEL BUNDLE/i.test(item)){
+            const bundleItems=['Dried Yarrow','Clean Bandages','Clean Bandages','Pine Salve'];
+            bundleItems.forEach(bi=>{ns.inventory=[...ns.inventory,bi]});
+            ns.bandages=(ns.bandages||0)+2;
+            if(!ns.history)ns.history=[];ns.history.push('Mira\u2019s bundle: dried yarrow, 2 clean bandages, pine salve.');
+          }else{if(!ns.inventory.includes(item))ns.inventory=[...ns.inventory,item]}
+        }
       }
       // Track permanent bonuses from ADD TO KNOWLEDGE or success-granted bonuses  
       if(t.includes('ADD TO KNOWLEDGE')){
@@ -6958,7 +7038,7 @@ function App(){
   if(phase==='intro')return e(WorldIntro,{onDone:()=>setPhase('create'),onSkip:()=>setPhase('create'),onBack:()=>setPhase('cover')});
   if(phase==='create')return e(CharCreate,{onDone:startGame,onBack:()=>setPhase('intro')});
   if(!gs||!scene)return null;
-  if(showSheet)return e(CharSheet,{gs,isEnding:ENDING_SCENES.includes(sceneId),onBack:()=>setShowSheet(false)});
+  if(showSheet)return e(CharSheet,{gs,isEnding:ENDING_SCENES.includes(sceneId),onBack:()=>setShowSheet(false),onEquipChange:(newGs)=>setGs(newGs)});
   const d=gs.derived;
   return e('div',{id:'game-container'},
     e('div',{className:'mobile-bar'},e('button',{className:'hamburger',onClick:()=>setSideOpen(!sideOpen)},sideOpen?'\u2715':'\u2630'),e('div',{style:{flex:1,textAlign:'center'}},e('div',{className:'bar-name'},gs.name),e('div',{className:'bar-stats'},e('span',null,'Lv'+gs.level),e('span',null,'HP '+gs.hp+'/'+d.maxHp),e('span',{style:{color:'#e8a0a0'}},'R:'+gs.rose),e('span',{style:{color:'#a0c0e8'}},'S:'+gs.sword),e('span',{style:{color:'#e8d8a0'}},'C:'+gs.crown),e('span',{style:{color:'#c9a84c'}},'\u2694'+(gs.gold||0)))),e('button',{className:'hamburger',onClick:()=>setShowSave(true)},'\u2716')),
@@ -7004,22 +7084,21 @@ function App(){
         (()=>{const inCombat=!gs.combatResolved&&scene?.boxes?.some(b=>b.type==='combat');
         return e('div',{className:'equip-slots'},EQUIPMENT_SLOTS.map(slot=>{
           const item=gs.equipment[slot.id];
-          const eqVals=Object.values(gs.equipment).filter(Boolean);
-          const canEquip=gs.inventory.filter(it=>{
-            if(eqVals.includes(it))return false;// already equipped somewhere
-            const s=getItemSlot(it);
-            if(slot.id==='ring2')return s==='ring1';
-            return s===slot.id;
-          });
+          const opts=getSlotOptions(gs,slot.id);
+          const isEditing=editSlot===slot.id;
           return e('div',{key:slot.id,className:'equip-slot'+(inCombat?' disabled':'')},
             e('span',{className:'equip-slot-label'},slot.label),
-            item?e(React.Fragment,null,
-              e('span',{className:'equip-slot-item'},item+(slot.id==='offHand'&&item==='Shield'?' (AC +2)':'')),
-              !inCombat?e('button',{className:'equip-slot-btn',title:'Unequip',onClick:()=>setGs(unequipItem(gs,slot.id))},'x'):null
-            ):canEquip.length&&!inCombat?e('select',{value:'',onChange:ev=>{if(ev.target.value)setGs(equipItem(gs,ev.target.value,slot.id))}},
-              e('option',{value:''},'\u2014 empty \u2014'),
-              canEquip.map(it=>e('option',{key:it,value:it},it))
-            ):e('span',{className:'equip-slot-empty'},'\u2014')
+            isEditing&&!inCombat?e('select',{autoFocus:true,value:item||'',onChange:ev=>{
+              const v=ev.target.value;setEditSlot(null);
+              if(v==='__none__')setGs(unequipItem(gs,slot.id));
+              else if(v&&v!==item)setGs(equipItem(gs,v,slot.id));
+            },onBlur:()=>setEditSlot(null)},
+              e('option',{value:'__none__'},'None'),
+              opts.map(it=>e('option',{key:it,value:it},it+(it===item?' (equipped)':'')))
+            ):item?e('span',{className:'equip-slot-item'+(inCombat?'':' clickable'),onClick:()=>{if(!inCombat&&opts.length>0)setEditSlot(slot.id)}},
+              item+(slot.id==='offHand'&&item==='Shield'?' +2AC':'')
+            ):e('span',{className:'equip-slot-empty'+(inCombat?'':opts.length?' clickable':''),onClick:()=>{if(!inCombat&&opts.length>0)setEditSlot(slot.id)}},
+              opts.length&&!inCombat?'click to equip':'\u2014')
           )}))})()
       ):null,
       // ── Inventory (non-equipped items) ──
