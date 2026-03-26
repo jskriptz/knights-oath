@@ -301,6 +301,17 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Crimso
 .inv-list{font-size:12px;color:var(--text-dim)}
 .inv-item{padding:1px 0}
 .inv-item::before{content:'\2022 ';color:var(--gold-dim)}
+/* Equipment slots */
+.equip-slots{display:flex;flex-direction:column;gap:2px;margin-bottom:8px}
+.equip-slot{display:flex;align-items:center;gap:6px;font-size:12px;padding:2px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.equip-slot:last-child{border-bottom:none}
+.equip-slot-label{width:68px;flex-shrink:0;font-family:'Cinzel',serif;font-size:10px;color:var(--gold-dim);text-transform:uppercase;letter-spacing:.5px}
+.equip-slot-item{flex:1;color:var(--text);font-size:12px;cursor:default}
+.equip-slot-empty{flex:1;color:var(--text-dim);font-style:italic;font-size:11px}
+.equip-slot-btn{background:none;border:none;color:var(--text-dim);font-size:10px;cursor:pointer;padding:1px 4px;opacity:.6;transition:opacity .2s}
+.equip-slot-btn:hover{opacity:1;color:#c0392b}
+.equip-slot select{background:var(--panel);border:1px solid var(--border);color:var(--text);font-family:'Crimson Text',serif;font-size:11px;padding:1px 4px;border-radius:3px;max-width:120px}
+.equip-slot.disabled .equip-slot-btn,.equip-slot.disabled select{pointer-events:none;opacity:.3}
 .history-list{font-size:11px;color:#555;max-height:120px;overflow-y:auto}
 .hist-item{padding:1px 0}
 
@@ -1077,7 +1088,7 @@ h2.red{color:var(--red)}
   <div id="loading-name">The Knight's Oath</div>
   <div id="loading-bar-container"><div id="loading-bar"></div></div>
   <div id="loading-status">Preparing...</div>
-  <div id="loading-sub">v22.4.1 • 220 Scenes • 9 Companions</div>
+  <div id="loading-sub">v22.5.0 • 220 Scenes • 9 Companions</div>
 </div>
 <script>
 // Loading progress tracker
@@ -1152,7 +1163,7 @@ const{useState,useEffect,useRef}=React;
 function mod(s){return Math.floor((s-10)/2)}
 function modStr(s){const m=mod(s);return m>=0?'+'+m:''+m}
 function calcAC(armor,hasShield,dexMod){
-  const acs={'Chain Mail':16,'Scale Mail':Math.min(14+dexMod,16),'Leather Armor':11+dexMod,'Studded Leather':12+dexMod};
+  const acs={'Chain Mail':16,'Scale Mail':Math.min(14+dexMod,16),'Leather Armor':11+dexMod,'Studded Leather':12+dexMod,'Half-Plate':Math.min(15+dexMod,17)};
   return(acs[armor]||16)+(hasShield?2:0);
 }
 function calcDerived(stats,cls,lvl,armor,hasShield,feat,wounds){
@@ -1426,6 +1437,73 @@ const STARTING_ARMOR=[
 {name:'Leather Armor',ac:'AC 11 + DEX',props:'No penalties',heavy:false},
 {name:'Studded Leather',ac:'AC 12 + DEX',props:'No penalties',heavy:false}
 ];
+
+// ── Equipment Slot System ──
+const EQUIPMENT_SLOTS=[
+  {id:'head',label:'Head'},
+  {id:'cape',label:'Cape'},
+  {id:'tabard',label:'Tabard'},
+  {id:'armor',label:'Armor'},
+  {id:'mainHand',label:'Main Hand'},
+  {id:'offHand',label:'Off Hand'},
+  {id:'hands',label:'Hands'},
+  {id:'boots',label:'Boots'},
+  {id:'ring1',label:'Ring'},
+  {id:'ring2',label:'Ring'},
+  {id:'amulet',label:'Amulet'}
+];
+const ARMOR_NAMES=['Chain Mail','Scale Mail','Leather Armor','Studded Leather','Half-Plate'];
+function getItemSlot(name){
+  if(!name)return null;
+  const n=name.toLowerCase();
+  if(WEAPONS_WITH_MASTERY.some(w=>w.name===name)||n==='pig skewer'||n==='dawnstrike')return'mainHand';
+  if(n==='shield')return'offHand';
+  if(ARMOR_NAMES.includes(name))return'armor';
+  if(n.includes('helm')||n.includes('hat')||n.includes('circlet')||n.includes('crown')||n.includes('coif'))return'head';
+  if(n.includes('cape')||n.includes('cloak')||n.includes('mantle'))return'cape';
+  if(n.includes('tabard')||n.includes('surcoat')||n.includes('vest'))return'tabard';
+  if(n.includes('glove')||n.includes('gauntlet')||n.includes('bracer'))return'hands';
+  if(n.includes('boot')||n.includes('greave')||n.includes('sabaton'))return'boots';
+  if(n.includes('ring'))return'ring1';
+  if(n.includes('amulet')||n.includes('necklace')||n.includes('pendant')||n.includes('medallion'))return'amulet';
+  return null;
+}
+function buildEquipment(weapon,armor,hasShield){
+  return{head:'Leather Helm',cape:null,tabard:'Solamnic Tabard',armor:armor||'Chain Mail',mainHand:weapon||'Longsword',offHand:hasShield?'Shield':null,hands:'Leather Gloves',boots:'Leather Boots',ring1:null,ring2:null,amulet:null};
+}
+function syncEquipToState(gs){
+  // Sync equipment slots → gs.weapon, gs.armor, gs.hasShield
+  if(!gs.equipment)return;
+  gs.weapon=gs.equipment.mainHand||gs.weapon||'Longsword';
+  gs.armor=gs.equipment.armor||gs.armor||'Chain Mail';
+  gs.hasShield=gs.equipment.offHand==='Shield';
+}
+function equipItem(gs,itemName,slotOverride){
+  const eq={...(gs.equipment||{})};
+  let slot=slotOverride||getItemSlot(itemName);
+  if(!slot)return gs;
+  // Ring: if ring1 is taken, try ring2
+  if(slot==='ring1'&&eq.ring1&&!slotOverride)slot='ring2';
+  // Two-handed weapon: clear off hand
+  const wpn=WEAPONS_WITH_MASTERY.find(w=>w.name===itemName);
+  if(wpn&&/Two-Handed/i.test(wpn.props)){eq.offHand=null}
+  // If equipping to offHand and main hand is two-handed, block it
+  if(slot==='offHand'){const mw=WEAPONS_WITH_MASTERY.find(w=>w.name===eq.mainHand);if(mw&&/Two-Handed/i.test(mw.props))return gs}
+  eq[slot]=itemName;
+  const ns={...gs,equipment:eq};
+  syncEquipToState(ns);
+  ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds);
+  return ns;
+}
+function unequipItem(gs,slotId){
+  const eq={...(gs.equipment||{})};
+  if(!eq[slotId])return gs;
+  eq[slotId]=null;
+  const ns={...gs,equipment:eq};
+  syncEquipToState(ns);
+  ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds);
+  return ns;
+}
 
 const COMPANION_COMBAT_STATS={
   Aldric:{ac:16,maxHp:18,attack:{name:'Longsword',bonus:4,damage:'1d8+2',type:'melee',reach:5},zone:'close',
@@ -4584,6 +4662,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
                 ng.inventory=ng.inventory.filter(i=>i!==g.weapon&&i!==g.armor);
                 ng.inventory.push('Dawnstrike','Half-Plate');
                 ng.flags={...(ng.flags||{}),dawnstrike:true};
+                if(ng.equipment)ng.equipment={...ng.equipment,mainHand:'Dawnstrike',armor:'Half-Plate',offHand:null};
                 ng.derived=calcDerived(ng.stats,ng.cls,ng.level,'Half-Plate',false,ng.feat,ng.wounds);
                 return ng;
               });
@@ -4894,7 +4973,7 @@ function parseShopBox(text){
 }
 
 // Sell price lookup (half of buy price, rounded down)
-const SELL_PRICES={'Longsword':7,'Greatsword':10,'Battleaxe':7,'Greataxe':10,'Warhammer':7,'Morningstar':7,'Flail':7,'War Pick':7,'Rapier':7,'Halberd':10,'Glaive':10,'Shortsword':5,'Handaxe':2,'Dagger':1,'Javelin':1,'Chain Mail':12,'Scale Mail':10,'Studded Leather':6,'Leather Armor':5,'Shield':5,'Bandage':0,'Potion of Healing':2,'Greater Potion of Healing':7,'Rations':0,'Antitoxin':1,'Whetstone':0,'Caltrops':1,'Rope':0,'Torch':0,'Explorer\u2019s Pack':2};
+const SELL_PRICES={'Longsword':7,'Greatsword':10,'Battleaxe':7,'Greataxe':10,'Warhammer':7,'Morningstar':7,'Flail':7,'War Pick':7,'Rapier':7,'Halberd':10,'Glaive':10,'Shortsword':5,'Handaxe':2,'Dagger':1,'Javelin':1,'Chain Mail':12,'Scale Mail':10,'Half-Plate':15,'Studded Leather':6,'Leather Armor':5,'Shield':5,'Leather Helm':1,'Leather Gloves':1,'Leather Boots':1,'Bandage':0,'Potion of Healing':2,'Greater Potion of Healing':7,'Rations':0,'Antitoxin':1,'Whetstone':0,'Caltrops':1,'Rope':0,'Torch':0,'Explorer\u2019s Pack':2};
 // Items that cannot be sold — companion gifts, quest items, key gear
 const UNSELLABLE=/tabard|aldric.s dagger|sera.s|mira.s|serath.s|thessaly.s|vael.s|lysander.s|tariel.s|caeron.s|rose commentary|garrison watch token|patrol sketch|family ring|carved wooden token|kapak venom|dawnstrike|Explorer\u2019s Pack|boar tusks/i;
 
@@ -4966,7 +5045,7 @@ function ShopBox({text,gs,onStateUpdate}){
         if(item.name.includes('Bandage'))ng.bandages=(ng.bandages||0)+1;
         if(item.name.includes('Potion of Healing')&&!item.name.includes('Greater'))ng.potions=(ng.potions||0)+1;
         if(item.name.includes('Greater Potion'))ng.greaterPotions=(ng.greaterPotions||0)+1;
-        if(item.name==='Shield'&&!ng.hasShield){ng.hasShield=true;ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,true,ng.feat,ng.wounds)}
+        if(item.name==='Shield'&&!ng.hasShield){ng.hasShield=true;if(ng.equipment)ng.equipment={...ng.equipment,offHand:'Shield'};ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,true,ng.feat,ng.wounds)}
         return ng;
       });
     }
@@ -4992,7 +5071,9 @@ function ShopBox({text,gs,onStateUpdate}){
         if(itemName.includes('Bandage'))ng.bandages=Math.max(0,(ng.bandages||0)-1);
         if(itemName.includes('Potion of Healing')&&!itemName.includes('Greater'))ng.potions=Math.max(0,(ng.potions||0)-1);
         if(itemName.includes('Greater Potion'))ng.greaterPotions=Math.max(0,(ng.greaterPotions||0)-1);
-        if(itemName==='Shield'&&ng.hasShield&&!ng.inventory.includes('Shield')){ng.hasShield=false;ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,false,ng.feat,ng.wounds)}
+        // Unequip from equipment slots if selling an equipped item
+        if(ng.equipment){const eq={...ng.equipment};let changed=false;for(const[k,v]of Object.entries(eq)){if(v===itemName&&!ng.inventory.includes(itemName)){eq[k]=null;changed=true;break}}if(changed){ng.equipment=eq;syncEquipToState(ng);ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds)}}
+        if(itemName==='Shield'&&ng.hasShield&&!ng.inventory.includes('Shield')){ng.hasShield=false;if(ng.equipment)ng.equipment={...ng.equipment,offHand:null};ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,false,ng.feat,ng.wounds)}
         return ng;
       });
     }
@@ -5301,7 +5382,7 @@ function CoverScreen({onNew,onLoad}){
       e('p',{style:{margin:'0 0 4px'}},'\u2018Dragonlance,\u2019 \u2018Krynn,\u2019 \u2018Solamnic Knights,\u2019 and all related characters, locations, and lore are trademarks of Wizards of the Coast LLC. \u2018Dungeons & Dragons\u2019 and \u2018D&D\u2019 are registered trademarks of Wizards of the Coast LLC.'),
       e('p',{style:{margin:'0 0 4px'}},'This is unofficial fan content, not approved or endorsed by Wizards of the Coast. Made under the Fan Content Policy. No copyright or trademark infringement is intended.'),
       e('p',{style:{margin:0}},'Game mechanics reference the D&D 2024 System Reference Document (SRD 5.2), available under the Creative Commons Attribution 4.0 International License (CC BY 4.0).'),
-      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v22.4.1')));
+      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v22.5.0')));
 }
 
 // ── World Introduction ────────────────────────────────
@@ -6135,7 +6216,11 @@ function CharSheet({gs,isEnding,onBack}){
 
       // ── Equipment ──
       section('EQUIPMENT',
-        gs.inventory.length?e('div',{className:'cs-inv-grid'},gs.inventory.map(it=>e('div',{key:it,className:'cs-inv-item'},it))):e('p',{className:'cs-empty'},'Empty')
+        gs.equipment?e('div',{className:'cs-inv-grid'},
+          EQUIPMENT_SLOTS.map(slot=>{const item=gs.equipment[slot.id];return item?e('div',{key:slot.id,className:'cs-inv-item'},e('span',{style:{color:'var(--gold-dim)',fontSize:11,fontFamily:"'Cinzel',serif"}},slot.label+': '),item):null}).filter(Boolean),
+          e('div',{key:'divider',style:{gridColumn:'1/-1',borderTop:'1px solid var(--border)',margin:'4px 0'}}),
+          gs.inventory.filter(it=>!Object.values(gs.equipment).includes(it)).map((it,i)=>e('div',{key:'inv'+i,className:'cs-inv-item'},it))
+        ):gs.inventory.length?e('div',{className:'cs-inv-grid'},gs.inventory.map(it=>e('div',{key:it,className:'cs-inv-item'},it))):e('p',{className:'cs-empty'},'Empty')
       ),
 
       // ── Order Points & Honour ──
@@ -6696,8 +6781,9 @@ function App(){
     s.boxes.filter(b=>b.type==='companion').forEach(b=>{const m=b.text.match(/COMPANION JOINS:\s*(.+?)[\n(*]/);if(m){let nm=m[1].replace(/\*+/g,'').trim();nm=nm.split(/\s+/).map(w=>w.charAt(0).toUpperCase()+w.slice(1).toLowerCase()).join(' ');const canonical=COMPANIONS_ALL.find(c=>c.toLowerCase()===nm.toLowerCase());if(canonical)nm=canonical;if(!ns.companions.includes(nm)){ns.companions=[...ns.companions,nm];if(!ns.companionLog)ns.companionLog={};if(!ns.companionLog[nm])ns.companionLog[nm]=[];ns.companionLog[nm].push('Joined in Scene '+sceneId+(s.title?' — '+s.title:''))}}});
     s.boxes.filter(b=>b.type==='levelup').forEach(b=>{if(b.text.includes('LEVEL 2')&&ns.level<2){ns.level=2;ns.derived=calcDerived(ns.stats,ns.cls,2,ns.armor,ns.hasShield,ns.feat,ns.wounds);ns.hp=ns.derived.maxHp}if(b.text.includes('LEVEL 3')&&ns.level<3){ns.level=3;ns.derived=calcDerived(ns.stats,ns.cls,3,ns.armor,ns.hasShield,ns.feat,ns.wounds);ns.hp=ns.derived.maxHp}});
     setScene(s);setSceneId(id);setGs(ns)};
-  const startGame=({cls,stats,style,feat,mastery,name,spells,equip,skilledPicks,classSkills,humanSkill})=>{const derived=calcDerived(stats,cls,1,equip.armor,equip.hasShield,feat);const state={cls,stats,style,feat,mastery,name:name||'Squire',spells:spells||{cantrips:[],level1:[],alwaysPrepared:[]},weapon:equip.weapon,armor:equip.armor,skilledPicks:skilledPicks||[],classSkills:classSkills||[],humanSkill:humanSkill||null,hasShield:equip.hasShield,level:1,hp:derived.maxHp,derived,xp:0,honour:5,rose:0,sword:0,crown:0,companions:[],romances:{},godSigns:{Paladine:0,'Kiri-Jolith':0,Mishakal:0,Habbakuk:0,Branchala:0},dgTrack:'NONE',inventory:[equip.weapon,equip.armor,equip.hasShield?'Shield':'','Dagger','Explorer\u2019s Pack','Solamnic Tabard'].filter(Boolean),history:[],awardedScenes:{},companionLog:{},romanceDeclined:{},flags:{},bonuses:[],magicItems:[],measureTrack:0,measureOrientation:null,gold:0,layOnHandsPool:cls==='Paladin'?derived.layOnHandsMax:0,spellSlotsUsed:0,secondWindUsed:0,actionSurgeUsed:false,bandages:2,potions:0,greaterPotions:0,miraHealedThisScene:false,completedRolls:{},deadCompanions:[],hitDiceUsed:0,wounds:[],scars:[],combatCount:0,orderMax:{rose:0,sword:0,crown:0}};setGs(state);goScene('1',state);setPhase('play')};
+  const startGame=({cls,stats,style,feat,mastery,name,spells,equip,skilledPicks,classSkills,humanSkill})=>{const derived=calcDerived(stats,cls,1,equip.armor,equip.hasShield,feat);const state={cls,stats,style,feat,mastery,name:name||'Squire',spells:spells||{cantrips:[],level1:[],alwaysPrepared:[]},weapon:equip.weapon,armor:equip.armor,skilledPicks:skilledPicks||[],classSkills:classSkills||[],humanSkill:humanSkill||null,hasShield:equip.hasShield,level:1,hp:derived.maxHp,derived,xp:0,honour:5,rose:0,sword:0,crown:0,companions:[],romances:{},godSigns:{Paladine:0,'Kiri-Jolith':0,Mishakal:0,Habbakuk:0,Branchala:0},dgTrack:'NONE',equipment:buildEquipment(equip.weapon,equip.armor,equip.hasShield),inventory:[equip.weapon,equip.armor,equip.hasShield?'Shield':'','Dagger','Explorer\u2019s Pack','Solamnic Tabard','Leather Helm','Leather Gloves','Leather Boots'].filter(Boolean),history:[],awardedScenes:{},companionLog:{},romanceDeclined:{},flags:{},bonuses:[],magicItems:[],measureTrack:0,measureOrientation:null,gold:0,layOnHandsPool:cls==='Paladin'?derived.layOnHandsMax:0,spellSlotsUsed:0,secondWindUsed:0,actionSurgeUsed:false,bandages:2,potions:0,greaterPotions:0,miraHealedThisScene:false,completedRolls:{},deadCompanions:[],hitDiceUsed:0,wounds:[],scars:[],combatCount:0,orderMax:{rose:0,sword:0,crown:0}};setGs(state);goScene('1',state);setPhase('play')};
   const loadSave=(saveData)=>{if(!saveData||!saveData.gs)return;const g=saveData.gs;if(!g.inventory)g.inventory=[];if(!g.deadCompanions)g.deadCompanions=[];if(!g.completedRolls)g.completedRolls={};if(!g.awardedScenes)g.awardedScenes={};if(!g.romances)g.romances={};if(!g.flags)g.flags={};if(!g.bonuses)g.bonuses=[];if(!g.magicItems)g.magicItems=[];if(g.hitDiceUsed===undefined)g.hitDiceUsed=0;if(!g.wounds)g.wounds=[];if(!g.scars)g.scars=[];if(g.combatCount===undefined)g.combatCount=0;if(g.xp===undefined)g.xp=0;if(g.honour===undefined)g.honour=5;if(!g.orderMax)g.orderMax={rose:Math.max(0,g.rose||0),sword:Math.max(0,g.sword||0),crown:Math.max(0,g.crown||0)};
+    if(!g.equipment){g.equipment=buildEquipment(g.weapon,g.armor,g.hasShield);if(!g.inventory.includes('Leather Helm')){g.inventory.push('Leather Helm','Leather Gloves','Leather Boots')}}
     // Migrate companion names to canonical casing
     g.companions=(g.companions||[]).map(c=>{const canon=COMPANIONS_ALL.find(x=>x.toLowerCase()===c.toLowerCase());return canon||c});
     const fixKeys=(obj)=>{if(!obj)return obj;const fixed={};for(const[k,v]of Object.entries(obj)){const canon=COMPANIONS_ALL.find(x=>x.toLowerCase()===k.toLowerCase());fixed[canon||k]=v}return fixed};
@@ -6913,14 +6999,35 @@ function App(){
         gs.spells.cantrips?.length?e('div',{className:'spell-cat'},e('span',{className:'spell-cat-label'},'Cantrips:'),gs.spells.cantrips.map(s=>e(SidebarSpellTag,{key:s,name:s,type:'cantrip'}))):null,
         gs.spells.level1?.length?e('div',{className:'spell-cat'},e('span',{className:'spell-cat-label'},'1st:'),gs.spells.level1.map(s=>e(SidebarSpellTag,{key:s,name:s,type:'l1'}))):null)):null,
       gs.companions.length?e(React.Fragment,null,e('h3',null,'Companions'),e('div',{className:'companion-list'},gs.companions.map(c=>e(CompanionTag,{key:c,name:c,romance:gs.romances?.[c],onView:(n,r)=>{setSideOpen(false);setCompPopup({name:n,romance:r})}})))):null,
-      gs.inventory.length?e(React.Fragment,null,e('h3',null,'Inventory'),
-        gs.inventory.includes('Shield')?e('div',{className:'shield-toggle'},
-          e('label',null,e('input',{type:'checkbox',checked:!!gs.hasShield,disabled:!gs.combatResolved&&scene?.boxes?.some(b=>b.type==='combat'),onChange:()=>{
-            const ns={...gs,hasShield:!gs.hasShield};
-            ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds);
-            setGs(ns);
-          }}),' Shield equipped',gs.hasShield?' (AC +2)':'')):null,
-        e('div',{className:'inv-list'},gs.inventory.filter(it=>it!=='Shield').map(it=>e('div',{key:it,className:'inv-item'},it)))):null,
+      // ── Equipment Slots ──
+      gs.equipment?e(React.Fragment,null,e('h3',null,'Equipment'),
+        (()=>{const inCombat=!gs.combatResolved&&scene?.boxes?.some(b=>b.type==='combat');
+        return e('div',{className:'equip-slots'},EQUIPMENT_SLOTS.map(slot=>{
+          const item=gs.equipment[slot.id];
+          const eqVals=Object.values(gs.equipment).filter(Boolean);
+          const canEquip=gs.inventory.filter(it=>{
+            if(eqVals.includes(it))return false;// already equipped somewhere
+            const s=getItemSlot(it);
+            if(slot.id==='ring2')return s==='ring1';
+            return s===slot.id;
+          });
+          return e('div',{key:slot.id,className:'equip-slot'+(inCombat?' disabled':'')},
+            e('span',{className:'equip-slot-label'},slot.label),
+            item?e(React.Fragment,null,
+              e('span',{className:'equip-slot-item'},item+(slot.id==='offHand'&&item==='Shield'?' (AC +2)':'')),
+              !inCombat?e('button',{className:'equip-slot-btn',title:'Unequip',onClick:()=>setGs(unequipItem(gs,slot.id))},'x'):null
+            ):canEquip.length&&!inCombat?e('select',{value:'',onChange:ev=>{if(ev.target.value)setGs(equipItem(gs,ev.target.value,slot.id))}},
+              e('option',{value:''},'\u2014 empty \u2014'),
+              canEquip.map(it=>e('option',{key:it,value:it},it))
+            ):e('span',{className:'equip-slot-empty'},'\u2014')
+          )}))})()
+      ):null,
+      // ── Inventory (non-equipped items) ──
+      (()=>{const eqSet=gs.equipment?Object.values(gs.equipment).filter(Boolean):[];
+        const remaining=[];const used={};
+        (gs.inventory||[]).forEach(it=>{const uKey=it;if(eqSet.includes(it)&&!used[uKey]){used[uKey]=true}else{remaining.push(it)}});
+        return remaining.length?e(React.Fragment,null,e('h3',null,'Inventory'),
+          e('div',{className:'inv-list'},remaining.map((it,i)=>e('div',{key:it+i,className:'inv-item'},it)))):null})(),
       e('h3',null,'Log'),e('div',{className:'history-list'},gs.history.slice(-10).reverse().map((h,i)=>e('div',{key:i,className:'hist-item'},h))),
       e('div',{className:'sidebar-actions'},e('button',{className:'sheet-sidebar-btn',onClick:()=>{setShowSheet(true);setSideOpen(false)}},'Character Sheet'),
         Object.values(gs.romances||{}).filter(v=>v&&v!=='Friend').length>0?e('button',{className:'romance-manage-btn',onClick:()=>{setRomanceManage(true);setSideOpen(false)}},'Manage Romances'):null,e('button',{className:'save-btn',onClick:()=>{setShowSave(true);setSideOpen(false)}},'\u2716 Save'),saveMsg?e('span',{className:'save-msg'},saveMsg):null,e('button',{className:'menu-btn',onClick:handleMenu},'Menu'))),
