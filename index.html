@@ -1104,7 +1104,7 @@ h2.red{color:var(--red)}
   <div id="loading-name">The Knight's Oath</div>
   <div id="loading-bar-container"><div id="loading-bar"></div></div>
   <div id="loading-status">Preparing...</div>
-  <div id="loading-sub">v22.5.1 • 220 Scenes • 9 Companions</div>
+  <div id="loading-sub">v22.5.2 • 220 Scenes • 9 Companions</div>
 </div>
 <script>
 // Loading progress tracker
@@ -1809,6 +1809,11 @@ function RollBox({text,derived,gs,onBonus,rollKey,onRollSave}){
   const parsed=parseRollBox(text);
   let bonus=getBonus(derived,parsed.skill);
   if(parsed.skill==='Intimidation'&&gs&&gs.flags&&gs.flags.pigSkewer)bonus+=1;
+  // Aldous mentor: +1 to ROSE-related checks (Persuasion, Medicine, Insight) in Act One
+  const roseSkills=['Persuasion','Medicine','Insight','Performance'];
+  if(gs&&gs.flags&&gs.flags.aldous_mentor&&roseSkills.includes(parsed.skill))bonus+=1;
+  // Apply accumulated roll bonuses from gs.bonuses
+  if(gs&&gs.bonuses){gs.bonuses.forEach(b=>{if(b.type==='roll_bonus'&&b.name){const sk=parsed.skill.toLowerCase();const bn=b.name.toLowerCase();if(bn.includes(sk)||bn.includes('any')||bn.includes('all'))bonus+=1}})}
   const e=React.createElement;
 
   // Persist a roll result to gs.completedRolls
@@ -5426,7 +5431,7 @@ function CoverScreen({onNew,onLoad}){
       e('p',{style:{margin:'0 0 4px'}},'\u2018Dragonlance,\u2019 \u2018Krynn,\u2019 \u2018Solamnic Knights,\u2019 and all related characters, locations, and lore are trademarks of Wizards of the Coast LLC. \u2018Dungeons & Dragons\u2019 and \u2018D&D\u2019 are registered trademarks of Wizards of the Coast LLC.'),
       e('p',{style:{margin:'0 0 4px'}},'This is unofficial fan content, not approved or endorsed by Wizards of the Coast. Made under the Fan Content Policy. No copyright or trademark infringement is intended.'),
       e('p',{style:{margin:0}},'Game mechanics reference the D&D 2024 System Reference Document (SRD 5.2), available under the Creative Commons Attribution 4.0 International License (CC BY 4.0).'),
-      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v22.5.1')));
+      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},'v22.5.2')));
 }
 
 // ── World Introduction ────────────────────────────────
@@ -6925,8 +6930,10 @@ function App(){
     if(!ns.flags)ns.flags={};
     if(sceneId==='27'&&(c.letter==='B'||c.letter==='C'))ns.flags.dispatch_kept=true;
     if(sceneId==='20')ns.flags.aldous_trust=true;
-    if(sceneId==='8'&&c.letter==='A')ns.flags.aldous_mentor=true;
-    if(sceneId==='8'&&c.letter==='B'){ns.flags.aldous_mentor=true;ns.flags.aldous_backstory=true;}
+    if(sceneId==='8'&&c.letter==='A'){ns.flags.aldous_mentor=true;if(!ns.inventory.includes('Rose Commentary'))ns.inventory=[...ns.inventory,'Rose Commentary']}
+    if(sceneId==='8'&&c.letter==='B'){ns.flags.aldous_mentor=true;ns.flags.aldous_backstory=true;if(!ns.inventory.includes('Rose Commentary'))ns.inventory=[...ns.inventory,'Rose Commentary']}
+    if(sceneId==='8'&&c.letter==='C'){if(!ns.inventory.includes('Rose Commentary'))ns.inventory=[...ns.inventory,'Rose Commentary']}
+    if(sceneId==='8'&&c.letter==='D'){if(!ns.inventory.includes('Rose Commentary'))ns.inventory=[...ns.inventory,'Rose Commentary']}
     // Check NPC_BREAKUPS for this specific choice
     const breakupKey=sceneId+'_'+c.letter;
     const npcBU=NPC_BREAKUPS[breakupKey];
@@ -7030,7 +7037,19 @@ function App(){
   const acceptRomance=(p)=>{if(!p||!gs)return;const ns={...gs,romances:{...gs.romances},companionLog:{...(gs.companionLog||{})}};ns.romances[p.comp]=p.stage;if(!ns.companionLog[p.comp])ns.companionLog[p.comp]=[];ns.companionLog[p.comp].push('Romance '+p.stage+' \u2014 Scene '+p.sceneId);setGs(ns);setRomancePrompt(null)};
   const friendRomance=(p)=>{if(!p||!gs)return;const ns={...gs,romances:{...gs.romances},companionLog:{...(gs.companionLog||{})},romanceDeclined:{...(gs.romanceDeclined||{})}};const wasFriend=gs.romances[p.comp]==='Friend';ns.romances[p.comp]='Friend';if(wasFriend)ns.romanceDeclined[p.comp]=true;if(!ns.companionLog[p.comp])ns.companionLog[p.comp]=[];ns.companionLog[p.comp].push(wasFriend?'Confirmed friendship (final) \u2014 Scene '+p.sceneId:'Chose friendship \u2014 Scene '+p.sceneId);setGs(ns);setRomancePrompt(null)};
   const declineRomance=(p)=>{if(!p||!gs)return;const ns={...gs,romanceDeclined:{...(gs.romanceDeclined||{})}};ns.romanceDeclined[p.comp]=true;setGs(ns);setRomancePrompt(null)};
-  const handleBonus=(bonus)=>{if(!gs||!bonus)return;const ns={...gs,bonuses:[...(gs.bonuses||[])]};if(!ns.bonuses.some(b=>b.name===bonus.name)){ns.bonuses.push(bonus);setGs(ns)}};
+  const handleBonus=(bonus)=>{if(!gs||!bonus)return;const ns={...gs,bonuses:[...(gs.bonuses||[])]};
+    if(!ns.bonuses.some(b=>b.name===bonus.name)){ns.bonuses.push(bonus)}
+    // Romance bonus: actually advance romance track for the named companion
+    if(bonus.type==='romance_bonus'&&bonus.name){
+      const compMatch=bonus.name.match(/\+1 (.+?) romance/i);
+      if(compMatch){const firstName=compMatch[1].trim();
+        const fullName=(ns.companions||[]).find(c=>c.toLowerCase().startsWith(firstName.toLowerCase()));
+        if(fullName){const cur=ns.romances[fullName];const rank={Spark:1,Flame:2,Oath:3};
+          if(!cur||rank[cur]<1){ns.romances={...ns.romances,[fullName]:'Spark'};ns.history=[...(ns.history||[]),'A quiet warmth between you and '+firstName+'.']}
+        }
+      }
+    }
+    setGs(ns)};
   const handleStateUpdate=(updater)=>{if(!gs)return;const ns=typeof updater==='function'?updater(gs):{...gs,...updater};ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds);setGs(ns)};
   const handleMenu=()=>{setConfirmModal({msg:'Return to main menu? Unsaved progress will be lost.',onYes:()=>{setPhase('cover');setGs(null);setScene(null);setShowSheet(false);setSideOpen(false);setConfirmModal(null)},onNo:()=>setConfirmModal(null)})};
   const e=React.createElement;
