@@ -1,0 +1,12 @@
+{
+  "campaigns": [
+    {
+      "id": "knights-oath",
+      "title": "The Knight's Oath",
+      "subtitle": "A Choose Your Own Adventure Prelude",
+      "type": "origin",
+      "levelRange": [1, 3],
+      "setting": "Dragonlance"
+    }
+  ]
+}

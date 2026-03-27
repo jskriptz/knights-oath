@@ -1,0 +1,370 @@
+{
+  "12": {
+    "victory": [
+      {
+        "minHpRatio": 0.75,
+        "text": "Aldric’s practice blade clatters on the stones. He looks at you — surprised, then grinning. \"When did you get fast?\" He offers his hand. The watching squires are quiet, recalibrating."
+      },
+      {
+        "minHpRatio": 0.5,
+        "text": "You land the final blow and Aldric staggers back, guard broken. His eyes are bright. \"That’s new.\" He salutes with his practice blade. The bout is yours, and both of you know it cost you."
+      },
+      {
+        "minHpRatio": 0,
+        "text": "You win, barely. Both of you are breathing hard, sweat-soaked, bruised in places that will ache for days. Aldric nods. \"Close one.\" It was."
+      }
+    ],
+    "defeat": {
+      "aldric": "Aldric’s blade catches you across the ribs and you stagger. The practice sword is blunted but the impact is real. \"Better than last time,\" he says, and means it.",
+      "default": "The practice sword finds your guard and breaks it. You hit the yard stones hard. Aldric extends a hand without hesitation. Training is training."
+    }
+  },
+  "26": {
+    "victory": [
+      {
+        "minHpRatio": 0.75,
+        "text": "Four draconians. Four stone statues. The south road is quiet again, save for the sound of your own breathing and the distant cawing of crows who know what a battlefield smells like."
+      },
+      {
+        "minHpRatio": 0.5,
+        "text": "The last draconian petrifies mid-lunge, its face locked in a snarl that will outlast empires. You step back from the stone corpse. Your first real fight. It felt nothing like training."
+      },
+      {
+        "minHpRatio": 0,
+        "text": "You killed them, but it cost you. Blood runs from half a dozen cuts. The draconians turned to stone around you like a garden of nightmares. This is what war actually looks like."
+      }
+    ],
+    "defeat": {
+      "aldric": "Aldric hauls you clear as the draconian turns to stone where you were standing. You owe him your life. Again.",
+      "default": "The draconians are too many, too fast. The garrison patrol finds you in the road, alive, barely."
+    }
+  },
+  "43": {
+    "victory": [
+      {
+        "minHpRatio": 0.75,
+        "text": "The wounded draconian collapses. It fought hard for something already half-dead. You search it quickly — the intelligence it carried matters more than the fight."
+      },
+      {
+        "minHpRatio": 0.5,
+        "text": "The draconian stops moving. Even wounded, it nearly took you with it. These things do not surrender. They barely even slow down."
+      },
+      {
+        "minHpRatio": 0,
+        "text": "You put it down, but barely. A wounded draconian is still a draconian. You lean on your sword and catch your breath."
+      }
+    ],
+    "defeat": {
+      "aldric": "Aldric finishes the draconian while you clutch the wound it gave you. \"They’re faster than they look,\" he says, which is unhelpfully true.",
+      "default": "The draconian escapes. Your wound is the price of its freedom."
+    }
+  },
+  "51": {
+    "victory": [
+      {
+        "minHpRatio": 0.75,
+        "text": "Three rounds. That’s all it took. The draconians withdraw and the recall horn sounds. Behind you, the refugees are safe. The column moves on."
+      },
+      {
+        "minHpRatio": 0.5,
+        "text": "The horn sounds. The draconians fall back. You held. The column is safe. You are less certain about yourself."
+      },
+      {
+        "minHpRatio": 0,
+        "text": "The recall horn is the most beautiful sound you have ever heard. You held the line, barely, bleeding, furious. The refugees are safe. That is what the Measure asks. It does not ask that it be easy."
+      }
+    ],
+    "defeat": {
+      "aldric": "You fall. Aldric and the garrison hold until the horn sounds. The column is safe, but not because of you.",
+      "default": "The draconians overwhelm your position. Others hold the line while you are dragged to safety."
+    }
+  },
+  "65": {
+    "victory": [
+      {
+        "minHpRatio": 0.75,
+        "text": "The Sivak officer dies and its body ripples, shifting, becoming something else — becoming you. A perfect copy stares up with dead eyes. Then it fades. The soldiers are finished. But the sealed orders the Sivak carried are more frightening than the fight itself."
+      },
+      {
+        "minHpRatio": 0.5,
+        "text": "The Sivak falls. You wish it hadn’t worn your face as it died. The soldiers are scattered. The intelligence you recovered changes everything."
+      },
+      {
+        "minHpRatio": 0,
+        "text": "You killed a thing that could wear faces and command soldiers. Your own face stared back at you as it died. You will not sleep well tonight."
+      }
+    ],
+    "defeat": {
+      "aldric": "Aldric finishes the Sivak while you lie in the road. Its body shifts to mirror him before fading. Unsettling doesn’t begin to cover it.",
+      "default": "The Sivak nearly kills you. The patrol arrives in time. The sealed orders are recovered from the carnage."
+    }
+  },
+  "69": {
+    "victory": [
+      {
+        "minHpRatio": 0.75,
+        "text": "Ser Hadrian’s knee gives out and he sinks, Dawnstrike resting across his thighs. His eyes are bright. \"Well fought, Squire. That was the finest hour I have had in years.\" He means it. You can tell because his hands are steady."
+      },
+      {
+        "minHpRatio": 0.5,
+        "text": "The old knight yields. His body is failing but his spirit never wavered. \"You are better than I was at your age,\" he says. \"That is not flattery. That is measurement.\""
+      },
+      {
+        "minHpRatio": 0,
+        "text": "You both stand at the edge of collapse. Hadrian lowers Dawnstrike first. \"Enough. It is yours. All of it — the blade, the armour, and the knowledge that you earned them.\" His voice breaks, just slightly, on the last word."
+      }
+    ],
+    "defeat": {
+      "default": "Hadrian’s blade finds the gap in your guard and you go down hard. He stands over you, breathing harder than you are. \"Good. Not good enough. But good.\" He helps you up. The duel is his. The lesson is yours."
+    }
+  },
+  "70": {
+    "victory": [
+      {
+        "minHpRatio": 0.75,
+        "text": "The bridge is yours. The last soldier falls from the barricade and the sergeant surrenders. Vogler lies across the water, smoke rising from a dozen chimneys, ordinary and beautiful and alive because of what you just did."
+      },
+      {
+        "minHpRatio": 0.5,
+        "text": "The barricade breaks. The sergeant is the last to fall, fighting to the end with the grim competence of a professional soldier who knows he is losing. The bridge is yours. Vogler is ahead."
+      },
+      {
+        "minHpRatio": 0,
+        "text": "It is over. The bridge is painted red. You can barely stand, let alone walk across it. But you will, because Vogler is on the other side and that is where your oath leads."
+      }
+    ],
+    "defeat": {
+      "aldric": "The bridge holds against you. Aldric pulls you back from the barricade. Another approach must be found.",
+      "mira": "Mira drags you from the killing ground while the soldiers hold the bridge. The direct approach has failed.",
+      "default": "The bridge garrison is too strong. You are carried from the fight. Another way must be found."
+    }
+  },
+  "11_YARD": {
+    "victory": [
+      {
+        "minHpRatio": 0.75,
+        "text": "The boar crashes to the flagstones and does not rise. The yard goes quiet. You stand over it, breathing hard, your blade still raised. Pell is alive. The squires are safe. Somewhere above you, a garrison crossbowman lowers his weapon — he was ready, but he did not need to be."
+      },
+      {
+        "minHpRatio": 0.5,
+        "text": "The beast falls. Four hundred pounds of muscle and fury, laid low by steel and nerve in a Solamnic training yard on an ordinary afternoon. Blood pools on the flagstones. The watching squires have stopped breathing. Then someone starts clapping — slow, then building — and you realize that what just happened was not ordinary at all."
+      },
+      {
+        "minHpRatio": 0,
+        "text": "It is over. The boar lies still. The yard smells of blood and sweat and the particular silence that follows violence. You lower your blade. Your hands are shaking. That is normal. That is what hands do after they have done something difficult and correct."
+      }
+    ],
+    "defeat": {
+      "mira": "The last thing you see clearly is the boar’s flat dark eye, inches from your face. Then pain, and then hands — pulling you clear, pressing cloth to the wound, a voice saying your name with the specific urgency of someone who is not sure you can hear them. You can. You just cannot answer yet.",
+      "aldric": "You go down. The boar stands over you for a heartbeat that lasts a year, then the garrison watch puts three bolts into its flank and it staggers away from you. Someone is dragging you by the collar. The sky is very blue. You will remember that — the colour of the sky when you learned what losing feels like.",
+      "default": "The tusks find you and the world tilts sideways. The flagstones are cold against your face. You can hear shouting — Aldric, the garrison watch, crossbow bolts thudding into something massive. The boar falls, but not to your blade. You are carried to the infirmary."
+    }
+  },
+  "11_PATROL": {
+    "victory": [
+      {
+        "minHpRatio": 0.75,
+        "text": "The last goblin falls and the south wall goes quiet. The skirmish was brief, brutal, and over before the garrison horn could sound twice. You wipe your blade on the grass."
+      },
+      {
+        "minHpRatio": 0.5,
+        "text": "The goblins scatter and die. It was not elegant — goblin fights never are — but it was effective. The perimeter is secure. Corwin is alive. That is what matters."
+      },
+      {
+        "minHpRatio": 0,
+        "text": "You stand among the fallen goblins, gasping. Every part of you hurts. But the wall held, and the scouts will report nothing back to whoever sent them."
+      }
+    ],
+    "defeat": {
+      "mira": "A goblin blade catches you wrong and the world dims. Hands find you — Mira, steady and sure, pulling you behind the wall.",
+      "aldric": "You go down. Aldric steps over you, shield up, and finishes what you started.",
+      "default": "The goblins overwhelm you. The garrison watch drives them off, but not before the damage is done."
+    }
+  },
+  "44C": {
+    "victory": [
+      {
+        "minHpRatio": 0.75,
+        "text": "The cellar goes quiet. The Kapak dissolves in a pool of its own acid, hissing. The soldiers lie still. And in the corner, a child is alive because you came."
+      },
+      {
+        "minHpRatio": 0.5,
+        "text": "The last enemy falls. The Kapak’s acid eats through the stone floor where it died. Linna is shaking but alive. That’s enough. That’s everything."
+      },
+      {
+        "minHpRatio": 0,
+        "text": "You can barely stand, but the child is safe. The cellar reeks of acid and blood and fear. Linna looks at you with eyes too old for her face."
+      }
+    ],
+    "defeat": {
+      "mira": "Mira drags you free of the Kapak’s acid as it dissolves. The burn will scar. The child is saved by others while you fight to stay conscious.",
+      "aldric": "Aldric shields you from the Kapak’s death throes. The acid spatters his shield. The child is crying but alive.",
+      "default": "You fall. The garrison reinforcements arrive in time — barely — but the child is saved."
+    }
+  },
+  "28_CARAVAN": {
+    "victory": [
+      {
+        "minHpRatio": 0.75,
+        "text": "The ambushers are dead or fled. The merchant groans under his cart. The road is yours again, if \"yours\" means stained with blood and littered with the dead."
+      },
+      {
+        "minHpRatio": 0.5,
+        "text": "The deserter runs. The draconians turn to stone. The merchant is alive. You did the right thing. It cost what the right thing always costs."
+      },
+      {
+        "minHpRatio": 0,
+        "text": "You can barely lift your sword, but the ambush is broken. The merchant whispers his thanks from under the cart. He will live. So will you. Probably."
+      }
+    ],
+    "defeat": {
+      "mira": "The draconians hit too hard, too fast. Mira’s healing is the only reason you’re still breathing.",
+      "aldric": "Aldric pulls you clear. The merchant’s fate depends on who arrives next.",
+      "default": "You go down in the road. The garrison patrol finds you. The merchant was not as lucky."
+    }
+  },
+  "53_BREACH": {
+    "victory": [
+      {
+        "minHpRatio": 0.75,
+        "text": "The breach holds. Four draconians turned to stone in the gap — a barricade of their own making. Ser Aldous is alive. The wall stands. Tonight, that is enough."
+      },
+      {
+        "minHpRatio": 0.5,
+        "text": "The last draconian petrifies and the wall is quiet. Ser Aldous slumps against the battlement, bleeding but breathing. You held the breach. The cost is written on your body."
+      },
+      {
+        "minHpRatio": 0,
+        "text": "You cannot remember the last three minutes clearly. The breach held. Aldous is alive. You are alive. The stone statues of dead draconians will guard this section of wall until someone breaks them apart."
+      }
+    ],
+    "defeat": {
+      "mira": "Mira finds you in the rubble. Aldous is being carried to the infirmary. The breach held — others finished what you started.",
+      "aldric": "Aldric drags you from the breach while the garrison fills the gap. Aldous is wounded but alive.",
+      "default": "The wall holds, but not by your hand. You wake in the infirmary to the sound of hammers repairing what the draconians broke."
+    }
+  },
+  "53_SABOTAGE": {
+    "victory": [
+      {
+        "minHpRatio": 0.75,
+        "text": "The fire is out. The infiltrator is down. The grain store smells of smoke and blood but the supplies are intact. The garrison will eat this week because of what you did tonight."
+      },
+      {
+        "minHpRatio": 0.5,
+        "text": "You stamp out the last embers. The saboteurs are dead. The infiltrator lies in a spreading pool of oil and blood. The supplies survived. Barely."
+      },
+      {
+        "minHpRatio": 0,
+        "text": "The fire nearly took everything — the grain, the store, you. But it didn’t. You sit on a barrel and cough smoke and try to remember how to breathe."
+      }
+    ],
+    "defeat": {
+      "mira": "The fire spreads while you bleed. Mira pulls you clear. Others fight the flames.",
+      "aldric": "Aldric takes over while you clutch the wound the infiltrator gave you. The fire is contained. Eventually.",
+      "default": "The sabotage partially succeeds. You wake to the smell of charred grain and the knowledge that it could have been worse."
+    }
+  },
+  "64B_WOLVES": {
+    "victory": [
+      {
+        "minHpRatio": 0.75,
+        "text": "The alpha falls and the pack breaks. The surviving wolves vanish into the dark, leaving their dead behind. The camp is yours again. Dawn is close."
+      },
+      {
+        "minHpRatio": 0.5,
+        "text": "The pack retreats. The alpha lies in the firelight, enormous even in death. You are bleeding from a dozen places where teeth found gaps in your guard."
+      },
+      {
+        "minHpRatio": 0,
+        "text": "Silence. The wolves are dead or gone. You sit by the fire, shaking, and listen to the night sounds return. War drove them here. War will drive worse things south before this is over."
+      }
+    ],
+    "defeat": {
+      "mira": "The wolves are too many. Mira’s fire drives the last ones off while she tends to you.",
+      "aldric": "Aldric fights the alpha while you bleed. The pack breaks when their leader falls.",
+      "default": "The wolves overwhelm your camp. Dawn saves you. The pack withdraws with the light."
+    }
+  },
+  "64E": {
+    "victory": [
+      {
+        "minHpRatio": 0.75,
+        "text": "The farmyard goes quiet. The Bozak’s bones lie scattered where it fell, still smoking. The soldiers are dead. Hanna and Darric are alive. The barn is burning but the people are safe."
+      },
+      {
+        "minHpRatio": 0.5,
+        "text": "The last soldier falls. The Bozak’s death explosion singed your eyebrows off. The farm is lost but the family survived. That is the arithmetic of war."
+      },
+      {
+        "minHpRatio": 0,
+        "text": "You can barely stand. The farmstead burns around you. But the family is alive and the Dragon Army patrol is destroyed. You will carry this farmstead in your memory forever."
+      }
+    ],
+    "defeat": {
+      "mira": "The Bozak’s lightning drops you. Mira’s hands pull you from the fire. The family’s fate rests with others now.",
+      "aldric": "Aldric shields you from the Bozak’s death explosion. The farm is lost. The family is carried to safety by the patrol.",
+      "default": "The Dragon Army is too strong. You fall. Others carry the family to safety while the farm burns."
+    }
+  },
+  "70A": {
+    "victory": [
+      {
+        "minHpRatio": 0.75,
+        "text": "The observation post falls without a sound. The horn never blew. The bridge approach is clear and the Dragon Army does not know you are coming."
+      },
+      {
+        "minHpRatio": 0.5,
+        "text": "The post is taken. The scout died reaching for the horn. One inch closer and every soldier on the bridge would have known you were coming."
+      },
+      {
+        "minHpRatio": 0,
+        "text": "You secured the post, barely. Blood drips from wounds you cannot afford to tend yet. The bridge is ahead. The hard part is still coming."
+      }
+    ],
+    "defeat": {
+      "aldric": "Aldric takes the horn from the dying scout’s hand while you bleed. The post is secured, but you paid for it.",
+      "default": "The horn sounds before you can stop it. The bridge garrison knows you are coming. This just got harder."
+    }
+  },
+  "70C_SCOUTS": {
+    "victory": [
+      {
+        "minHpRatio": 0.75,
+        "text": "The scout camp is yours. The signal was never sent. Vogler’s defenders will have the advantage of surprise, and that may be enough."
+      },
+      {
+        "minHpRatio": 0.5,
+        "text": "The scouts are dealt with. The signal fire lies unlit. You did what needed doing. The bridge will be cleaner for it."
+      },
+      {
+        "minHpRatio": 0,
+        "text": "The scouts fought harder than you expected. Every one of them. But they are down and the signal never went out. Vogler has a chance."
+      }
+    ],
+    "defeat": {
+      "aldric": "Aldric finishes the scout while you clutch the wound. The signal was stopped. The cost was high.",
+      "default": "The scouts signal before you can stop them. Vogler’s defenders lose the element of surprise."
+    }
+  },
+  "F1_TAVERN_SWORD": {
+    "victory": [
+      "Bren steps back, raises a hand. 'All right. All right.' He's breathing hard but grinning. 'Your forms aren't useless after all. Buy you a drink?'",
+      "The sellsword sits on an upturned barrel and laughs. 'Haven't had a proper fight in weeks. You're good, knight. Different good from what I'm used to, but good.'"
+    ],
+    "defeat": [
+      "Bren's blade stops an inch from your throat. 'Dead,' he says cheerfully. 'But you lasted longer than the last knight who tried. I'll buy the drinks.'",
+      "You're on your back in the dirt. Bren offers a hand up. 'Don't feel bad. I've been doing this a lot longer than you've been following that code of yours.'"
+    ]
+  },
+  "ROAD_OA2_FIGHT": {
+    "victory": [
+      "Drask falls. The village square is silent except for the sound of someone crying behind a shuttered window. You've won. The old woman from the back of the crowd steps forward: 'You'll leave. He would have stayed.' The words follow you down the road.",
+      "The warlord's men scatter. Drask is done — dead or broken, it doesn't matter. The village is free. Free and frightened. They look at you the way they looked at Drask: with the wary hope of people who know that armed men are armed men, whatever tabard they wear."
+    ],
+    "defeat": [
+      "Drask's axe catches you wrong. Your company pulls back, bloodied. 'Leave,' Drask says. 'And tell your Order that the frontier takes care of itself.' The village watches you go. They do not look relieved.",
+      "The fight goes badly. Drask's men know this ground. Your company retreats to the road, nursing wounds. The village remains under Drask's control. You carry the failure south."
+    ]
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "cssVars": {
+    "--bg": "#0e0e18",
+    "--panel": "#16162a",
+    "--border": "#252540",
+    "--gold": "#c9a84c",
+    "--gold-dim": "#8b7332",
+    "--gold-bright": "#e8c860",
+    "--text": "#d4cfc4",
+    "--text-dim": "#7a7568",
+    "--text-bright": "#f0ebe0",
+    "--blue": "#4a7ab5",
+    "--green": "#4a8a5a",
+    "--red": "#8b3a3a",
+    "--purple": "#6a4a8a",
+    "--orange": "#9a6a3a",
+    "--pink": "#8b4a6a"
+  },
+  "fonts": {
+    "heading": "Cinzel",
+    "body": "Crimson Text",
+    "googleFontsUrl": "https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+  },
+  "loadingScreen": {
+    "title": "DRAGONLANCE",
+    "subtitle": "THE KNIGHT'S OATH",
+    "version": "v24.1.0",
+    "stats": "309 Scenes \u2022 9 Companions"
+  }
+}

@@ -1,0 +1,1945 @@
+{
+  "startScene": "1",
+  "endingScenes": [
+    "71",
+    "72",
+    "73",
+    "74",
+    "75",
+    "76",
+    "77",
+    "78",
+    "79",
+    "80",
+    "DISGRACE"
+  ],
+  "epilogueVisitGating": [
+    "71"
+  ],
+  "hubScenes": [
+    "11_MORNING",
+    "11_AFTERNOON",
+    "11_EVENING"
+  ],
+  "exemptTargets": [
+    "11_MORNING",
+    "11_AFTERNOON",
+    "11_EVENING",
+    "11_NIGHT",
+    "11_ARMOURY",
+    "11_QM",
+    "53_HUB_MORN",
+    "OA4",
+    "EV1",
+    "EV2",
+    "EV3",
+    "REST_1",
+    "REST_2",
+    "REST_3",
+    "HUB_OA1",
+    "HUB_OA2",
+    "BOND_HUB",
+    "ARC_ALDRIC_1",
+    "ARC_ALDRIC_2",
+    "ARC_ALDRIC_3",
+    "ARC_ALDRIC_4",
+    "ARC_THESS_1",
+    "ARC_THESS_2",
+    "ARC_THESS_3",
+    "ARC_THESS_4",
+    "ARC_SERATH_1",
+    "ARC_SERATH_2",
+    "ARC_SERATH_3",
+    "ARC_SERATH_4",
+    "ARC_MIRA_1",
+    "ARC_MIRA_2",
+    "ARC_MIRA_3",
+    "ARC_MIRA_4",
+    "ARC_CAERON_1",
+    "ARC_CAERON_2",
+    "ARC_CAERON_3",
+    "ARC_CAERON_4",
+    "ARC_SERA_1",
+    "ARC_SERA_2",
+    "ARC_SERA_3",
+    "ARC_SERA_4",
+    "ARC_VAEL_1",
+    "ARC_VAEL_2",
+    "ARC_VAEL_3",
+    "ARC_VAEL_4",
+    "ARC_TARIEL_1",
+    "ARC_TARIEL_2",
+    "ARC_TARIEL_3",
+    "ARC_TARIEL_4",
+    "ARC_LYSANDER_1",
+    "ARC_LYSANDER_2",
+    "ARC_LYSANDER_3",
+    "ARC_LYSANDER_4",
+    "CONFRONT_ALDRIC",
+    "CONFRONT_THESS",
+    "CONFRONT_SERATH",
+    "CONFRONT_MIRA",
+    "CONFRONT_CAERON",
+    "CONFRONT_SERA",
+    "CONFRONT_VAEL",
+    "CONFRONT_TARIEL",
+    "CONFRONT_LYSANDER",
+    "GIFT_ALDRIC",
+    "GIFT_THESS",
+    "GIFT_SERATH",
+    "GIFT_MIRA",
+    "GIFT_CAERON",
+    "GIFT_SERA",
+    "GIFT_VAEL",
+    "GIFT_TARIEL",
+    "GIFT_LYSANDER"
+  ],
+  "noLootScenes": [
+    "11_YARD",
+    "11",
+    "12",
+    "64B_WOLVES",
+    "F1_TAVERN_SWORD",
+    "ROAD_OA2_FIGHT",
+    "ARC_ALDRIC_1",
+    "ARC_ALDRIC_2",
+    "ARC_ALDRIC_3",
+    "ARC_ALDRIC_4",
+    "ARC_THESS_1",
+    "ARC_THESS_2",
+    "ARC_THESS_3",
+    "ARC_THESS_4",
+    "ARC_SERATH_1",
+    "ARC_SERATH_2",
+    "ARC_SERATH_3",
+    "ARC_SERATH_4",
+    "ARC_MIRA_1",
+    "ARC_MIRA_2",
+    "ARC_MIRA_3",
+    "ARC_MIRA_4",
+    "ARC_CAERON_1",
+    "ARC_CAERON_2",
+    "ARC_CAERON_3",
+    "ARC_CAERON_4",
+    "ARC_SERA_1",
+    "ARC_SERA_2",
+    "ARC_SERA_3",
+    "ARC_SERA_4",
+    "ARC_VAEL_1",
+    "ARC_VAEL_2",
+    "ARC_VAEL_3",
+    "ARC_VAEL_4",
+    "ARC_TARIEL_1",
+    "ARC_TARIEL_2",
+    "ARC_TARIEL_3",
+    "ARC_TARIEL_4",
+    "ARC_LYSANDER_1",
+    "ARC_LYSANDER_2",
+    "ARC_LYSANDER_3",
+    "ARC_LYSANDER_4",
+    "CONFRONT_ALDRIC",
+    "CONFRONT_THESS",
+    "CONFRONT_SERATH",
+    "CONFRONT_MIRA",
+    "CONFRONT_CAERON",
+    "CONFRONT_SERA",
+    "CONFRONT_VAEL",
+    "CONFRONT_TARIEL",
+    "CONFRONT_LYSANDER",
+    "GIFT_ALDRIC",
+    "GIFT_THESS",
+    "GIFT_SERATH",
+    "GIFT_MIRA",
+    "GIFT_CAERON",
+    "GIFT_SERA",
+    "GIFT_VAEL",
+    "GIFT_TARIEL",
+    "GIFT_LYSANDER"
+  ],
+  "animalScenes": [
+    "64B_WOLVES"
+  ],
+  "relationshipCheckScenes": [
+    "53",
+    "61",
+    "68"
+  ],
+  "gods": [
+    "Paladine",
+    "Kiri-Jolith",
+    "Mishakal",
+    "Habbakuk",
+    "Branchala"
+  ],
+  "godFlavour": {
+    "Paladine": "Law, protection, justice — the high god who watches over all who serve the light.",
+    "Kiri-Jolith": "Battle, courage, honour — the god who steadies soldiers before the fight.",
+    "Mishakal": "Healing, mercy, compassion — the god who mends what is broken.",
+    "Habbakuk": "Nature, perseverance, the living world — the god who guards what grows.",
+    "Branchala": "Music, joy, inspiration — the god who believes the world can be beautiful."
+  },
+  "presets": {
+    "Fighter": {
+      "cls": "Fighter",
+      "stats": {
+        "str": 16,
+        "dex": 14,
+        "con": 15,
+        "int": 8,
+        "wis": 12,
+        "cha": 10
+      },
+      "style": "Great Weapon Fighting",
+      "feat": "Savage Attacker",
+      "mastery": [
+        "Greatsword",
+        "Handaxe",
+        "Longbow"
+      ],
+      "classSkills": [
+        "Athletics",
+        "Perception"
+      ],
+      "humanSkill": "Intimidation",
+      "skilledPicks": [],
+      "spells": {
+        "cantrips": [],
+        "level1": [],
+        "alwaysPrepared": []
+      },
+      "equip": {
+        "weapon": "Greatsword",
+        "armor": "Chain Mail",
+        "hasShield": false
+      }
+    },
+    "Paladin": {
+      "cls": "Paladin",
+      "stats": {
+        "str": 16,
+        "dex": 10,
+        "con": 14,
+        "int": 8,
+        "wis": 12,
+        "cha": 15
+      },
+      "style": "Defense",
+      "feat": "Tough",
+      "mastery": [
+        "Longsword",
+        "Javelin"
+      ],
+      "classSkills": [
+        "Athletics",
+        "Persuasion"
+      ],
+      "humanSkill": "Insight",
+      "skilledPicks": [],
+      "spells": {
+        "cantrips": [],
+        "level1": [
+          "Bless",
+          "Cure Wounds",
+          "Shield of Faith"
+        ],
+        "alwaysPrepared": [
+          "Paladin’s Smite"
+        ]
+      },
+      "equip": {
+        "weapon": "Longsword",
+        "armor": "Chain Mail",
+        "hasShield": true
+      }
+    }
+  },
+  "choiceFlags": [
+    {
+      "scene": "27",
+      "letters": [
+        "B",
+        "C"
+      ],
+      "setFlags": {
+        "dispatch_kept": true
+      }
+    },
+    {
+      "scene": "20",
+      "letters": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "setFlags": {
+        "aldous_trust": true
+      }
+    },
+    {
+      "scene": "8",
+      "letter": "A",
+      "setFlags": {
+        "aldous_mentor": true
+      },
+      "addItems": [
+        "Rose Commentary"
+      ]
+    },
+    {
+      "scene": "8",
+      "letter": "B",
+      "setFlags": {
+        "aldous_mentor": true,
+        "aldous_backstory": true
+      },
+      "addItems": [
+        "Rose Commentary"
+      ]
+    },
+    {
+      "scene": "8",
+      "letter": "C",
+      "addItems": [
+        "Rose Commentary"
+      ]
+    },
+    {
+      "scene": "8",
+      "letter": "D",
+      "addItems": [
+        "Rose Commentary"
+      ]
+    },
+    {
+      "scene": "F4_VILLAGE_ELDER",
+      "letter": "A",
+      "setFlags": {
+        "measureOrientation": "KEEPER"
+      },
+      "comment": "Fighter choosing: orthodox keeper of the Measure"
+    },
+    {
+      "scene": "F4_VILLAGE_ELDER",
+      "letter": "B",
+      "setFlags": {
+        "measureOrientation": "PRACTITIONER"
+      },
+      "comment": "Fighter choosing: pragmatic practitioner"
+    },
+    {
+      "scene": "F4_VILLAGE_ELDER",
+      "letter": "C",
+      "setFlags": {
+        "measureOrientation": "REFORMER"
+      },
+      "comment": "Fighter choosing: reformer of the Measure"
+    },
+    {
+      "scene": "F4_VILLAGE_ELDER",
+      "letter": "D",
+      "setFlags": {
+        "measureOrientation": "SEEKER"
+      },
+      "comment": "Fighter choosing: seeker, undecided"
+    },
+    {
+      "scene": "70_REFORM",
+      "letter": "A",
+      "setFlags": {
+        "reformer_letter": true
+      },
+      "comment": "Fighter reformer sends letter to High Council"
+    },
+    {
+      "scene": "BV3",
+      "comment": "Stayed to help the burning village survivors",
+      "letter": "A",
+      "setFlags": {
+        "stayed_burning_village": true
+      }
+    },
+    {
+      "scene": "ARC_ALDRIC_1",
+      "letters": [
+        "A",
+        "B",
+        "C"
+      ],
+      "setFlags": {
+        "arc_aldric_started": true
+      }
+    },
+    {
+      "scene": "ARC_THESS_1",
+      "letters": [
+        "A",
+        "B"
+      ],
+      "setFlags": {
+        "arc_thess_started": true
+      }
+    },
+    {
+      "scene": "ARC_SERATH_1",
+      "letters": [
+        "A",
+        "B"
+      ],
+      "setFlags": {
+        "arc_serath_started": true
+      }
+    },
+    {
+      "scene": "ARC_MIRA_1",
+      "letters": [
+        "A",
+        "B"
+      ],
+      "setFlags": {
+        "arc_mira_started": true
+      }
+    },
+    {
+      "scene": "ARC_CAERON_1",
+      "letters": [
+        "A",
+        "B"
+      ],
+      "setFlags": {
+        "arc_caeron_started": true
+      }
+    },
+    {
+      "scene": "ARC_SERA_1",
+      "letters": [
+        "A",
+        "B"
+      ],
+      "setFlags": {
+        "arc_sera_started": true
+      }
+    },
+    {
+      "scene": "ARC_VAEL_1",
+      "letters": [
+        "A",
+        "B"
+      ],
+      "setFlags": {
+        "arc_vael_started": true
+      }
+    },
+    {
+      "scene": "ARC_TARIEL_1",
+      "letters": [
+        "A",
+        "B"
+      ],
+      "setFlags": {
+        "arc_tariel_started": true
+      }
+    },
+    {
+      "scene": "ARC_LYSANDER_1",
+      "letters": [
+        "A",
+        "B"
+      ],
+      "setFlags": {
+        "arc_lysander_started": true
+      }
+    }
+  ],
+  "targetOverrides": [
+    {
+      "scene": "8",
+      "target": "M1",
+      "ifClass": "Paladin",
+      "redirectTo": "9"
+    }
+  ],
+  "choiceFilters": [
+    {
+      "scene": "8",
+      "letters": [
+        "C",
+        "D"
+      ],
+      "hideIfClass": "Fighter",
+      "comment": "Scene 8: class-split — Fighters cannot pick C or D"
+    },
+    {
+      "scene": "31",
+      "letter": "D",
+      "requireFlag": "dispatch_kept",
+      "comment": "Dispatch pouch leverage requires having kept it"
+    },
+    {
+      "scene": "53",
+      "target": "53B",
+      "requireFlag": "dispatch_kept",
+      "disabledText": " (requires dispatch pouch)",
+      "comment": "Dispatch pouch reference check — disabled but visible if missing"
+    },
+    {
+      "scene": "57",
+      "target": "58B",
+      "requireAwardedAny": [
+        "53B_B",
+        "53B_C"
+      ],
+      "comment": "Requires Scene 53B choice B or C"
+    },
+    {
+      "scene": "22",
+      "textContains": "Sera",
+      "requireCompanion": "Sera",
+      "comment": "Sera intel check"
+    },
+    {
+      "scene": "32B",
+      "target": "36B",
+      "requireCompanion": "Lysander",
+      "comment": "Lysander philosophy"
+    },
+    {
+      "scene": "40B",
+      "textContains": "Lysander",
+      "requireCompanion": "Lysander",
+      "comment": "Lysander at fire"
+    },
+    {
+      "scene": "34",
+      "textContains": "Sera",
+      "requireCompanion": "Sera",
+      "comment": "Sera night watch share"
+    },
+    {
+      "scene": "66",
+      "textContains": "Serath",
+      "requireCompanion": "Serath",
+      "comment": "Serath in danger"
+    },
+    {
+      "scene": "44",
+      "target": "34B",
+      "requireCompanion": "Sera",
+      "comment": "Night scene with Sera"
+    },
+    {
+      "scene": "68",
+      "target": "68B",
+      "requireCompanion": "Sera",
+      "comment": "Romance flame scene — Sera"
+    },
+    {
+      "scene": "68",
+      "target": "68C",
+      "requireCompanion": "Vael",
+      "comment": "Romance flame scene — Vael"
+    }
+  ],
+  "companionChoiceGates": [
+    {
+      "scene": "66B",
+      "target": "66B_Thessaly",
+      "requireCompanion": "Thessaly"
+    },
+    {
+      "scene": "66B",
+      "target": "66B_Mira",
+      "requireCompanion": "Mira"
+    },
+    {
+      "scene": "66B",
+      "target": "66B_Serath",
+      "requireCompanion": "Serath"
+    },
+    {
+      "scene": "66B",
+      "target": "66B_Tariel",
+      "requireCompanion": "Tariel"
+    },
+    {
+      "scene": "66B",
+      "target": "66B_Lysander",
+      "requireCompanion": "Lysander"
+    },
+    {
+      "scene": "71",
+      "target": "72",
+      "requireCompanion": "Aldric",
+      "hideIfVisited": true
+    },
+    {
+      "scene": "71",
+      "target": "73",
+      "requireCompanion": "Thessaly",
+      "hideIfVisited": true
+    },
+    {
+      "scene": "71",
+      "target": "74",
+      "requireCompanion": "Serath",
+      "hideIfVisited": true
+    },
+    {
+      "scene": "71",
+      "target": "75",
+      "requireCompanion": "Mira",
+      "hideIfVisited": true
+    },
+    {
+      "scene": "71",
+      "target": "76",
+      "requireCompanion": "Caeron",
+      "hideIfVisited": true
+    },
+    {
+      "scene": "71",
+      "target": "77",
+      "requireCompanion": "Sera",
+      "hideIfVisited": true
+    },
+    {
+      "scene": "71",
+      "target": "78",
+      "requireCompanion": "Vael",
+      "hideIfVisited": true
+    },
+    {
+      "scene": "71",
+      "target": "79",
+      "requireCompanion": "Tariel",
+      "hideIfVisited": true
+    },
+    {
+      "scene": "71",
+      "target": "80",
+      "requireCompanion": "Lysander",
+      "hideIfVisited": true
+    },
+    {
+      "scene": "53",
+      "target": "56",
+      "textContains": "Thessaly",
+      "requireCompanion": "Thessaly"
+    },
+    {
+      "scene": "53",
+      "target": "54B",
+      "textContains": "Mira",
+      "requireCompanion": "Mira"
+    }
+  ],
+  "hubCompanionSwaps": [
+    {
+      "scenes": [
+        "11",
+        "11B",
+        "11_AFTERNOON",
+        "11_MORNING",
+        "11_EVENING"
+      ],
+      "textContains": [
+        "Thessaly",
+        "Find Thessaly"
+      ],
+      "targets": [
+        "23",
+        "56"
+      ],
+      "ifMissing": "Thessaly",
+      "swapText": "A correspondent at the east gate is asking sharp questions.",
+      "swapTarget": "6"
+    },
+    {
+      "scenes": [
+        "11",
+        "11B",
+        "11_AFTERNOON",
+        "11_MORNING",
+        "11_EVENING"
+      ],
+      "textContains": [
+        "Mira",
+        "Check on Mira"
+      ],
+      "targets": [
+        "25"
+      ],
+      "ifMissing": "Mira",
+      "swapText": "Visit the infirmary. There are refugees who need help.",
+      "swapTarget": "9"
+    }
+  ],
+  "mandatoryDetours": [
+    {
+      "scene": "27",
+      "ifClass": "Paladin",
+      "requireNotVisited": "P1_visited",
+      "target": "P1",
+      "label": "The First Sign (Paladin)",
+      "mandatory": true
+    },
+    {
+      "scene": "31",
+      "ifClass": "Paladin",
+      "requireDgTrack": [
+        "LISTENING",
+        "COMPROMISED",
+        "FALLEN",
+        "DEEPLY FALLEN"
+      ],
+      "requireNotVisited": "DG2_visited",
+      "target": "DG2",
+      "label": "The Dark Queen speaks (Paladin)",
+      "mandatory": true
+    },
+    {
+      "scene": "46",
+      "ifClass": "Fighter",
+      "requireNotVisited": "M2_visited",
+      "target": "M2",
+      "label": "The Wrong Order (Fighter)",
+      "mandatory": true
+    },
+    {
+      "scene": "60",
+      "ifClass": "Paladin",
+      "requireDgTrack": [
+        "LISTENING",
+        "COMPROMISED",
+        "FALLEN",
+        "DEEPLY FALLEN"
+      ],
+      "requireNotVisited": "DG3_visited",
+      "target": "DG3",
+      "label": "The Crown — Takhisis speaks (Paladin)",
+      "mandatory": true
+    },
+    {
+      "scene": "60",
+      "ifClass": "Fighter",
+      "requireNotVisited": "M3_visited",
+      "target": "M3",
+      "label": "Two Oaths (Fighter)",
+      "mandatory": true
+    },
+    {
+      "scene": "68",
+      "ifClass": "Paladin",
+      "requireNotVisited": "P4_visited",
+      "target": "P4",
+      "label": "The Choosing — your god speaks (Paladin)",
+      "mandatory": true
+    },
+    {
+      "scene": "68",
+      "ifClass": "Paladin",
+      "requireDgTrack": [
+        "FALLEN",
+        "DEEPLY FALLEN"
+      ],
+      "requireNotVisited": "DG4_visited",
+      "target": "DG4",
+      "label": "The Reckoning (Paladin)",
+      "mandatory": true
+    },
+    {
+      "scene": "68",
+      "ifClass": "Fighter",
+      "requireNotVisited": "M3_visited",
+      "requireAlsoNotVisited": "M4_visited",
+      "target": "M3",
+      "label": "The Measure — Two Oaths (Fighter)",
+      "mandatory": true
+    },
+    {
+      "scene": "8",
+      "ifClass": "Fighter",
+      "requireNotVisited": "M1_visited",
+      "target": "M1",
+      "label": "The Letter and the Spirit (Fighter)",
+      "mandatory": false
+    },
+    {
+      "scene": "27",
+      "ifClass": "Fighter",
+      "requireNotVisited": "F1_visited",
+      "target": "F1_TAVERN_SWORD",
+      "label": "The Tavern Sword (Fighter)",
+      "mandatory": true
+    },
+    {
+      "scene": "46",
+      "ifClass": "Fighter",
+      "requireNotVisited": "F2_visited",
+      "target": "F2_FARMERS_FENCE",
+      "label": "The Farmer's Fence (Fighter)",
+      "mandatory": true
+    },
+    {
+      "scene": "60",
+      "ifClass": "Fighter",
+      "requireNotVisited": "F3_visited",
+      "target": "F3_MERCENARY_CAMP",
+      "label": "The Mercenary Camp (Fighter)",
+      "mandatory": true
+    },
+    {
+      "scene": "68",
+      "ifClass": "Fighter",
+      "requireNotVisited": "F4_visited",
+      "target": "F4_VILLAGE_ELDER",
+      "label": "The Village Elder (Fighter)",
+      "mandatory": true
+    },
+    {
+      "scene": "35",
+      "target": "ARC_ALDRIC_1",
+      "label": "Aldric wants to talk.",
+      "requireCompanion": "Aldric Voss",
+      "requireFlag": "!arc_aldric_started"
+    },
+    {
+      "scene": "46",
+      "target": "ARC_THESS_1",
+      "label": "Thessaly has discovered something.",
+      "requireCompanion": "Thessaly Brightwater",
+      "requireFlag": "!arc_thess_started"
+    },
+    {
+      "scene": "44",
+      "target": "ARC_SERATH_1",
+      "label": "Serath brings urgent news.",
+      "requireCompanion": "Commander Serath",
+      "requireFlag": "!arc_serath_started"
+    },
+    {
+      "scene": "53",
+      "target": "ARC_MIRA_1",
+      "label": "A traveller needs help.",
+      "requireCompanion": "Mira of the Oaks",
+      "requireFlag": "!arc_mira_started"
+    },
+    {
+      "scene": "60",
+      "target": "ARC_CAERON_1",
+      "label": "Caeron has received a letter.",
+      "requireCompanion": "Lord Caeron Ashvale",
+      "requireFlag": "!arc_caeron_started"
+    },
+    {
+      "scene": "62",
+      "target": "ARC_SERA_1",
+      "label": "Sera recognises this place.",
+      "requireCompanion": "Sera Nighthollow",
+      "requireFlag": "!arc_sera_started"
+    },
+    {
+      "scene": "68",
+      "target": "ARC_VAEL_1",
+      "label": "Vael has news about their mission.",
+      "requireCompanion": "Vael Ashmore",
+      "requireFlag": "!arc_vael_started"
+    },
+    {
+      "scene": "REST_2",
+      "target": "ARC_TARIEL_1",
+      "label": "Tariel has found something extraordinary.",
+      "requireCompanion": "Tariel Duskmantle",
+      "requireFlag": "!arc_tariel_started"
+    },
+    {
+      "scene": "REST_3",
+      "target": "ARC_LYSANDER_1",
+      "label": "Lysander stops at the bridge.",
+      "requireCompanion": "Lysander Graves",
+      "requireFlag": "!arc_lysander_started"
+    }
+  ],
+  "classTargetGates": [
+    {
+      "targets": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "DG1",
+        "DG2",
+        "DG3",
+        "DG4"
+      ],
+      "requireClass": "Paladin"
+    },
+    {
+      "targets": [
+        "M1",
+        "M2",
+        "M3",
+        "M4"
+      ],
+      "requireClass": "Fighter"
+    },
+    {
+      "targetPrefixes": "M1_",
+      "requireClass": "Fighter"
+    },
+    {
+      "targetPrefixes": "M2_",
+      "requireClass": "Fighter"
+    },
+    {
+      "targetPrefixes": "M3_",
+      "requireClass": "Fighter"
+    },
+    {
+      "targetPrefixes": "M4_",
+      "requireClass": "Fighter"
+    },
+    {
+      "targets": [
+        "F1_TAVERN_SWORD",
+        "F2_FARMERS_FENCE",
+        "F3_MERCENARY_CAMP",
+        "F4_VILLAGE_ELDER"
+      ],
+      "requireClass": "Fighter"
+    }
+  ],
+  "dgTrackGates": [
+    {
+      "target": "DG2",
+      "requireClass": "Paladin",
+      "requireDgTrackNotIn": [
+        "NONE",
+        null
+      ]
+    },
+    {
+      "target": "DG3",
+      "requireClass": "Paladin",
+      "requireDgTrack": [
+        "LISTENING",
+        "COMPROMISED",
+        "FALLEN",
+        "DEEPLY FALLEN"
+      ]
+    },
+    {
+      "target": "DG4",
+      "requireClass": "Paladin",
+      "requireDgTrack": [
+        "FALLEN",
+        "DEEPLY FALLEN"
+      ]
+    }
+  ],
+  "romanceTargetGates": [
+    {
+      "targets": [
+        "DATE_WALK",
+        "DATE_SPAR",
+        "DATE_QUIET"
+      ],
+      "requireActiveRomance": true,
+      "excludeStatuses": [
+        "Friend",
+        "Distant",
+        "Cold",
+        "Observer",
+        "Hostile"
+      ]
+    },
+    {
+      "targets": [
+        "DATE_POLY",
+        "DATE_POLY_MORN"
+      ],
+      "requireMultipleRomances": true,
+      "minActiveRomances": 2,
+      "excludeStatuses": [
+        "Friend",
+        "Distant",
+        "Cold",
+        "Observer",
+        "Hostile"
+      ]
+    }
+  ],
+  "genericIfPresentFilter": {
+    "textMatch": "if present",
+    "caseInsensitive": true,
+    "companionList": [
+      "Aldric Voss",
+      "Thessaly Brightwater",
+      "Commander Serath",
+      "Mira of the Oaks",
+      "Lord Caeron Ashvale",
+      "Sera Nighthollow",
+      "Vael Ashmore",
+      "Tariel Duskmantle",
+      "Lysander Graves"
+    ]
+  },
+  "hubVisitGating": {
+    "textMatch": "If not yet visited",
+    "hideIfVisited": true,
+    "stripPrefixRegex": "^\\(If not yet visited(?:,\\s*[^)]+)?\\)\\s*"
+  },
+  "specialCombat": {
+    "boarFight": [
+      "11_YARD",
+      "11"
+    ],
+    "duel": [
+      "69"
+    ],
+    "wolfSkinning": [
+      "64B_WOLVES"
+    ],
+    "spar": [
+      "F1_TAVERN_SWORD"
+    ],
+    "villageRaid": [
+      "ROAD_OA2_FIGHT"
+    ]
+  },
+  "bodyLootTables": {
+    "26": [
+      {
+        "min": 1,
+        "max": 8,
+        "text": "The draconians carry nothing of value. Their gear crumbles with their bodies.",
+        "gold": 0
+      },
+      {
+        "min": 9,
+        "max": 14,
+        "text": "A few steel pieces in a belt pouch.",
+        "gold": 4
+      },
+      {
+        "min": 15,
+        "max": 19,
+        "text": "Steel pieces and a sealed dispatch pouch.",
+        "gold": 6,
+        "item": "Sealed Dispatch"
+      },
+      {
+        "min": 20,
+        "max": 20,
+        "text": "The patrol leader carries a masterwork shortsword.",
+        "gold": 8,
+        "item": "Masterwork Shortsword"
+      }
+    ],
+    "43": [
+      {
+        "min": 1,
+        "max": 10,
+        "text": "The wounded draconian carries nothing but a broken blade.",
+        "gold": 0
+      },
+      {
+        "min": 11,
+        "max": 17,
+        "text": "A patrol sketch tucked into its belt.",
+        "gold": 0,
+        "item": "Dragon Army Patrol Sketch"
+      },
+      {
+        "min": 18,
+        "max": 20,
+        "text": "The sketch and a small purse of coins.",
+        "gold": 5,
+        "item": "Dragon Army Patrol Sketch"
+      }
+    ],
+    "51": [
+      {
+        "min": 1,
+        "max": 10,
+        "text": "Standard military gear. Nothing personal.",
+        "gold": 0
+      },
+      {
+        "min": 11,
+        "max": 16,
+        "text": "A few coins and crossbow bolts.",
+        "gold": 4
+      },
+      {
+        "min": 17,
+        "max": 20,
+        "text": "The corporal's purse and a signal whistle.",
+        "gold": 8,
+        "item": "Signal Whistle"
+      }
+    ],
+    "65": [
+      {
+        "min": 1,
+        "max": 8,
+        "text": "The Sivak's body shifts and changes. Unsettling.",
+        "gold": 0
+      },
+      {
+        "min": 9,
+        "max": 14,
+        "text": "Coins scattered from the soldiers.",
+        "gold": 6
+      },
+      {
+        "min": 15,
+        "max": 18,
+        "text": "Sealed orders naming you specifically — chilling.",
+        "gold": 8,
+        "item": "Sealed Orders"
+      },
+      {
+        "min": 19,
+        "max": 20,
+        "text": "The Sivak officer carried a fine blade and sealed orders.",
+        "gold": 12,
+        "item": "Sivak Officer's Blade"
+      }
+    ],
+    "70": [
+      {
+        "min": 1,
+        "max": 8,
+        "text": "Bridge garrison supplies. Mundane.",
+        "gold": 0
+      },
+      {
+        "min": 9,
+        "max": 14,
+        "text": "The sergeant's coin purse.",
+        "gold": 6
+      },
+      {
+        "min": 15,
+        "max": 18,
+        "text": "Coins and a well-made signal whistle.",
+        "gold": 8,
+        "item": "Sergeant's Whistle"
+      },
+      {
+        "min": 19,
+        "max": 20,
+        "text": "The sergeant carried a finely balanced blade.",
+        "gold": 12,
+        "item": "Masterwork Longsword"
+      }
+    ],
+    "11_PATROL": [
+      {
+        "min": 1,
+        "max": 5,
+        "text": "Nothing useful — broken arrows, spoiled rations.",
+        "gold": 0
+      },
+      {
+        "min": 6,
+        "max": 10,
+        "text": "A handful of steel pieces.",
+        "gold": 3
+      },
+      {
+        "min": 11,
+        "max": 14,
+        "text": "Steel pieces and a crude poison vial.",
+        "gold": 5,
+        "item": "Goblin Poison Vial"
+      },
+      {
+        "min": 15,
+        "max": 17,
+        "text": "A stash of coins and a well-made dagger.",
+        "gold": 8,
+        "item": "Goblin-Crafted Dagger"
+      },
+      {
+        "min": 18,
+        "max": 19,
+        "text": "Coins, a dagger, and a crude map of the garrison perimeter.",
+        "gold": 10,
+        "item": "Garrison Map"
+      },
+      {
+        "min": 20,
+        "max": 20,
+        "text": "A finely balanced dagger with a serrated edge — not goblin work.",
+        "gold": 12,
+        "item": "+1 Dagger"
+      }
+    ],
+    "44C": [
+      {
+        "min": 1,
+        "max": 5,
+        "text": "Rations and broken equipment. Nothing useful.",
+        "gold": 0
+      },
+      {
+        "min": 6,
+        "max": 10,
+        "text": "A few coins from the soldiers.",
+        "gold": 5
+      },
+      {
+        "min": 11,
+        "max": 14,
+        "text": "Coins and a Kapak venom vial — handle with care.",
+        "gold": 7,
+        "item": "Kapak Venom Vial"
+      },
+      {
+        "min": 15,
+        "max": 17,
+        "text": "The supply cache yields coins, bandages, and a potion.",
+        "gold": 10,
+        "item": "Potion of Healing"
+      },
+      {
+        "min": 18,
+        "max": 19,
+        "text": "A significant stash — coins, potions, and a finely crafted crossbow.",
+        "gold": 14,
+        "item": "Masterwork Light Crossbow"
+      },
+      {
+        "min": 20,
+        "max": 20,
+        "text": "Among the supplies: a vial of antitoxin and a gleaming shortsword.",
+        "gold": 16,
+        "item": "+1 Shortsword"
+      }
+    ],
+    "28_CARAVAN": [
+      {
+        "min": 1,
+        "max": 7,
+        "text": "Nothing worth taking.",
+        "gold": 0
+      },
+      {
+        "min": 8,
+        "max": 13,
+        "text": "A few steel pieces.",
+        "gold": 4
+      },
+      {
+        "min": 14,
+        "max": 17,
+        "text": "Coins and a potion tucked in a belt.",
+        "gold": 6,
+        "item": "Potion of Healing"
+      },
+      {
+        "min": 18,
+        "max": 20,
+        "text": "The deserter carried considerable coin and a fine blade.",
+        "gold": 12,
+        "item": "Masterwork Longsword"
+      }
+    ],
+    "53_BREACH": [
+      {
+        "min": 1,
+        "max": 12,
+        "text": "The draconians turned to stone. There is nothing to search.",
+        "gold": 0
+      },
+      {
+        "min": 13,
+        "max": 18,
+        "text": "One draconian's belt pouch survived the transformation.",
+        "gold": 5
+      },
+      {
+        "min": 19,
+        "max": 20,
+        "text": "A pouch with coins and a crude Dragon Army officer's signet.",
+        "gold": 8,
+        "item": "Dragon Army Signet"
+      }
+    ],
+    "53_SABOTAGE": [
+      {
+        "min": 1,
+        "max": 7,
+        "text": "Oil-soaked rags and fire-starting tools. Nothing useful.",
+        "gold": 0
+      },
+      {
+        "min": 8,
+        "max": 13,
+        "text": "The infiltrator's purse.",
+        "gold": 6
+      },
+      {
+        "min": 14,
+        "max": 17,
+        "text": "Coins and a Dragon Army signet ring — intelligence value.",
+        "gold": 8,
+        "item": "Dragon Army Signet"
+      },
+      {
+        "min": 18,
+        "max": 20,
+        "text": "A significant coin purse and coded orders.",
+        "gold": 12,
+        "item": "Coded Orders"
+      }
+    ],
+    "64E": [
+      {
+        "min": 1,
+        "max": 6,
+        "text": "Standard soldier equipment, burned at the edges.",
+        "gold": 0
+      },
+      {
+        "min": 7,
+        "max": 12,
+        "text": "A few coins from the soldiers.",
+        "gold": 5
+      },
+      {
+        "min": 13,
+        "max": 16,
+        "text": "The Bozak carried spell components and coin.",
+        "gold": 10,
+        "item": "Arcane Components"
+      },
+      {
+        "min": 17,
+        "max": 19,
+        "text": "An officer's satchel with patrol routes and supply maps.",
+        "gold": 12,
+        "item": "Officer's Satchel"
+      },
+      {
+        "min": 20,
+        "max": 20,
+        "text": "Among the Bozak's belongings: a wand that hums with residual energy.",
+        "gold": 14,
+        "item": "Wand of Burning Hands (3 charges)"
+      }
+    ],
+    "70A": [
+      {
+        "min": 1,
+        "max": 6,
+        "text": "Standard frontier gear.",
+        "gold": 0
+      },
+      {
+        "min": 7,
+        "max": 12,
+        "text": "Coins and dried rations.",
+        "gold": 5
+      },
+      {
+        "min": 13,
+        "max": 16,
+        "text": "The scout's journal — attack timing and troop positions.",
+        "gold": 6,
+        "item": "Scout's Journal"
+      },
+      {
+        "min": 17,
+        "max": 19,
+        "text": "Coins, the journal, and a Dragon Army attack route map.",
+        "gold": 10,
+        "item": "Attack Route Map"
+      },
+      {
+        "min": 20,
+        "max": 20,
+        "text": "Everything above, plus the scout's enchanted spyglass.",
+        "gold": 12,
+        "item": "Spyglass of Far Seeing"
+      }
+    ],
+    "70C_SCOUTS": [
+      {
+        "min": 1,
+        "max": 7,
+        "text": "Light travel gear. Nothing notable.",
+        "gold": 0
+      },
+      {
+        "min": 8,
+        "max": 13,
+        "text": "A handful of coins.",
+        "gold": 4
+      },
+      {
+        "min": 14,
+        "max": 17,
+        "text": "Coins and a partial battle plan for Vogler.",
+        "gold": 8,
+        "item": "Battle Plan Fragment"
+      },
+      {
+        "min": 18,
+        "max": 20,
+        "text": "The full battle plan — troop movements, assault timing, everything.",
+        "gold": 10,
+        "item": "Vogler Battle Plan"
+      }
+    ],
+    "_default": [
+      {
+        "min": 1,
+        "max": 10,
+        "text": "Nothing of value.",
+        "gold": 0
+      },
+      {
+        "min": 11,
+        "max": 17,
+        "text": "A few steel pieces.",
+        "gold": 4
+      },
+      {
+        "min": 18,
+        "max": 20,
+        "text": "Coins and a useful item.",
+        "gold": 8,
+        "item": "Potion of Healing"
+      }
+    ],
+    "ROAD_OA2_FIGHT": [
+      {
+        "min": 1,
+        "max": 8,
+        "text": "Drask's men carried little of value. Rough weapons, rougher coin.",
+        "gold": 0
+      },
+      {
+        "min": 9,
+        "max": 14,
+        "text": "A handful of steel pieces from the thugs' pockets.",
+        "gold": 5
+      },
+      {
+        "min": 15,
+        "max": 18,
+        "text": "Drask's heavy axe is well-maintained. Worth something.",
+        "gold": 8,
+        "item": "Greataxe"
+      },
+      {
+        "min": 19,
+        "max": 20,
+        "text": "Drask's personal stash — hidden under the tavern floor.",
+        "gold": 15,
+        "item": "Potion of Healing"
+      }
+    ]
+  },
+  "duelRewards": {
+    "69": {
+      "npc": "Ser Hadrian",
+      "acceptItems": [
+        "Dawnstrike",
+        "Half-Plate"
+      ],
+      "acceptFlags": {
+        "dawnstrike": true
+      },
+      "acceptEquipment": {
+        "mainHand": "Dawnstrike",
+        "armor": "Half-Plate",
+        "offHand": null
+      },
+      "declineBonus": {
+        "honour": 1
+      }
+    }
+  },
+  "wolfSkinningReward": {
+    "64B_WOLVES": {
+      "survivalDC": 12,
+      "peltsRange": [
+        1,
+        4
+      ],
+      "peltValue": 2,
+      "alphaThreshold": 16,
+      "alphaItem": "Alpha Wolf Cloak",
+      "alphaBonus": 5
+    }
+  },
+  "bundleExpansions": {
+    "MIRA.*TRAVEL BUNDLE": {
+      "regex": true,
+      "expandTo": [
+        "Dried Yarrow",
+        "Clean Bandages",
+        "Clean Bandages",
+        "Pine Salve"
+      ],
+      "bonusBandages": 2,
+      "historyNote": "Mira’s bundle: dried yarrow, 2 clean bandages, pine salve."
+    }
+  },
+  "approvalDeltas": [
+    {
+      "scene": "4",
+      "letter": "A",
+      "deltas": {
+        "Mira": 2,
+        "Serath": 1,
+        "Caeron": 1
+      }
+    },
+    {
+      "scene": "4",
+      "letter": "B",
+      "deltas": {
+        "Vael": 1,
+        "Lysander": -1
+      }
+    },
+    {
+      "scene": "4",
+      "letter": "D",
+      "deltas": {
+        "Aldric": 1,
+        "Sera": 1
+      }
+    },
+    {
+      "scene": "5",
+      "letter": "A",
+      "deltas": {
+        "Caeron": 1,
+        "Vael": 1
+      }
+    },
+    {
+      "scene": "5",
+      "letter": "D",
+      "deltas": {
+        "Mira": 1,
+        "Sera": 1
+      }
+    },
+    {
+      "scene": "6",
+      "letter": "A",
+      "deltas": {
+        "Mira": 1,
+        "Tariel": 1
+      }
+    },
+    {
+      "scene": "6",
+      "letter": "B",
+      "deltas": {
+        "Caeron": 1,
+        "Vael": 1
+      }
+    },
+    {
+      "scene": "9",
+      "letter": "C",
+      "deltas": {
+        "Aldric": -1,
+        "Mira": -1,
+        "Caeron": -1
+      }
+    },
+    {
+      "scene": "10",
+      "letter": "A",
+      "deltas": {
+        "Aldric": 1,
+        "Vael": 1
+      }
+    },
+    {
+      "scene": "10",
+      "letter": "B",
+      "deltas": {
+        "Mira": 1,
+        "Thessaly": 1
+      }
+    },
+    {
+      "scene": "14",
+      "letter": "A",
+      "deltas": {
+        "Caeron": 1,
+        "Vael": 1
+      }
+    },
+    {
+      "scene": "14",
+      "letter": "B",
+      "deltas": {
+        "Aldric": 1,
+        "Sera": 1
+      }
+    },
+    {
+      "scene": "17",
+      "letter": "A",
+      "deltas": {
+        "Mira": 2,
+        "Thessaly": 1,
+        "Lysander": 1
+      }
+    },
+    {
+      "scene": "17",
+      "letter": "B",
+      "deltas": {
+        "Serath": 1,
+        "Vael": 1
+      }
+    },
+    {
+      "scene": "18",
+      "letter": "D",
+      "deltas": {
+        "Serath": -2,
+        "Thessaly": -1
+      }
+    },
+    {
+      "scene": "22",
+      "letter": "C",
+      "deltas": {
+        "Mira": 2,
+        "Lysander": 1
+      }
+    },
+    {
+      "scene": "22",
+      "letter": "D",
+      "deltas": {
+        "Aldric": 1,
+        "Sera": 1
+      }
+    },
+    {
+      "scene": "25",
+      "letter": "A",
+      "deltas": {
+        "Mira": 2,
+        "Lysander": 1,
+        "Thessaly": 1
+      }
+    },
+    {
+      "scene": "25",
+      "letter": "C",
+      "deltas": {
+        "Vael": 1,
+        "Serath": 1
+      }
+    },
+    {
+      "scene": "27",
+      "letter": "B",
+      "deltas": {
+        "Caeron": 1,
+        "Thessaly": -1
+      }
+    },
+    {
+      "scene": "27",
+      "letter": "C",
+      "deltas": {
+        "Thessaly": 1,
+        "Serath": 1
+      }
+    },
+    {
+      "scene": "27",
+      "letter": "D",
+      "deltas": {
+        "Mira": 1
+      }
+    },
+    {
+      "scene": "31",
+      "letter": "A",
+      "deltas": {
+        "Caeron": 2,
+        "Vael": 1
+      }
+    },
+    {
+      "scene": "31",
+      "letter": "B",
+      "deltas": {
+        "Mira": 1,
+        "Aldric": 1
+      }
+    },
+    {
+      "scene": "31",
+      "letter": "C",
+      "deltas": {
+        "Mira": 2,
+        "Thessaly": 1,
+        "Lysander": 1
+      }
+    },
+    {
+      "scene": "31",
+      "letter": "D",
+      "deltas": {
+        "Serath": 1,
+        "Sera": 1
+      }
+    },
+    {
+      "scene": "36",
+      "letter": "A",
+      "deltas": {
+        "Mira": 1,
+        "Aldric": 1
+      }
+    },
+    {
+      "scene": "36",
+      "letter": "C",
+      "deltas": {
+        "Sera": 1,
+        "Vael": 1
+      }
+    },
+    {
+      "scene": "38",
+      "letter": "A",
+      "deltas": {
+        "Serath": 1,
+        "Mira": 1
+      }
+    },
+    {
+      "scene": "38",
+      "letter": "B",
+      "deltas": {
+        "Serath": -2,
+        "Aldric": 1
+      }
+    },
+    {
+      "scene": "39",
+      "letter": "A",
+      "deltas": {
+        "Caeron": 1
+      }
+    },
+    {
+      "scene": "39",
+      "letter": "B",
+      "deltas": {
+        "Mira": 1,
+        "Sera": 1
+      }
+    },
+    {
+      "scene": "44",
+      "letter": "A",
+      "deltas": {
+        "Caeron": 1
+      }
+    },
+    {
+      "scene": "44",
+      "letter": "B",
+      "deltas": {
+        "Aldric": 1,
+        "Mira": 1
+      }
+    },
+    {
+      "scene": "44",
+      "letter": "C",
+      "deltas": {
+        "Vael": 1,
+        "Sera": 1
+      }
+    },
+    {
+      "scene": "44",
+      "letter": "D",
+      "deltas": {
+        "Thessaly": 1,
+        "Lysander": 1
+      }
+    },
+    {
+      "scene": "46",
+      "letter": "A",
+      "deltas": {
+        "Mira": -2,
+        "Caeron": 1
+      }
+    },
+    {
+      "scene": "46",
+      "letter": "B",
+      "deltas": {
+        "Mira": 2,
+        "Sera": 1,
+        "Caeron": -1
+      }
+    },
+    {
+      "scene": "53",
+      "letter": "A",
+      "deltas": {
+        "Aldric": 1
+      }
+    },
+    {
+      "scene": "53",
+      "letter": "B",
+      "deltas": {
+        "Thessaly": 1
+      }
+    },
+    {
+      "scene": "62",
+      "letter": "A",
+      "deltas": {
+        "Lysander": 1,
+        "Mira": 1
+      }
+    },
+    {
+      "scene": "62",
+      "letter": "B",
+      "deltas": {
+        "Vael": 1,
+        "Aldric": 1
+      }
+    },
+    {
+      "scene": "68",
+      "letter": "A",
+      "deltas": {
+        "Aldric": 1,
+        "Vael": 1
+      }
+    },
+    {
+      "scene": "68",
+      "letter": "B",
+      "deltas": {
+        "Mira": 1,
+        "Thessaly": 1
+      }
+    },
+    {
+      "scene": "69",
+      "letter": "A",
+      "deltas": {
+        "Aldric": 1,
+        "Vael": 2
+      }
+    },
+    {
+      "scene": "69",
+      "letter": "B",
+      "deltas": {
+        "Sera": 1,
+        "Serath": 1
+      }
+    },
+    {
+      "scene": "BV2",
+      "letter": "A",
+      "deltas": {
+        "Mira": 2,
+        "Lysander": 1
+      }
+    },
+    {
+      "scene": "BV2",
+      "letter": "B",
+      "deltas": {
+        "Vael": 1,
+        "Serath": 1
+      }
+    },
+    {
+      "scene": "BV3",
+      "letter": "A",
+      "deltas": {
+        "Mira": 2,
+        "Lysander": 2,
+        "Thessaly": 1
+      }
+    },
+    {
+      "scene": "F1_TAVERN_SWORD",
+      "letter": "A",
+      "deltas": {
+        "Aldric": 1,
+        "Vael": 1
+      }
+    },
+    {
+      "scene": "F2_FARMERS_FENCE",
+      "letter": "A",
+      "deltas": {
+        "Mira": 1,
+        "Lysander": 1
+      }
+    },
+    {
+      "scene": "F3_MERCENARY_CAMP",
+      "letter": "A",
+      "deltas": {
+        "Sera": 1,
+        "Serath": 1
+      }
+    },
+    {
+      "scene": "F4_VILLAGE_ELDER",
+      "letter": "A",
+      "deltas": {
+        "Caeron": 1,
+        "Thessaly": 1
+      }
+    },
+    {
+      "scene": "F4_VILLAGE_ELDER",
+      "letter": "B",
+      "deltas": {
+        "Sera": 1,
+        "Vael": 1
+      }
+    },
+    {
+      "scene": "F4_VILLAGE_ELDER",
+      "letter": "C",
+      "deltas": {
+        "Mira": 1,
+        "Aldric": 1
+      }
+    },
+    {
+      "scene": "F4_VILLAGE_ELDER",
+      "letter": "D",
+      "deltas": {
+        "Tariel": 1,
+        "Serath": 1
+      }
+    }
+  ]
+}

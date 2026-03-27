@@ -1,0 +1,334 @@
+{
+  "title": "DM Summary — The Knight's Oath",
+  "subtitle": "Campaign Chronicle & Continuation Hooks",
+  "endings": {
+    "71": {
+      "title": "The First Sight of Vogler",
+      "summary": "Stood alone at the bridge, watching the horizon. No companion at their side for the final moment."
+    },
+    "72": {
+      "title": "Aldric Voss",
+      "summary": "Faced the end alongside Aldric Voss, fellow squire and trusted sword-brother."
+    },
+    "73": {
+      "title": "Thessaly Brightwater",
+      "summary": "Faced the end alongside Thessaly Brightwater, chronicler and truth-seeker."
+    },
+    "74": {
+      "title": "Commander Serath",
+      "summary": "Faced the end alongside Commander Serath, Dragon Army defector turned ally."
+    },
+    "75": {
+      "title": "Mira of the Oaks",
+      "summary": "Faced the end alongside Mira of the Oaks, herbalist and healer of Vogler."
+    },
+    "76": {
+      "title": "Lord Caeron Ashvale",
+      "summary": "Faced the end alongside Lord Caeron Ashvale, disgraced noble seeking redemption."
+    },
+    "77": {
+      "title": "Sera Nighthollow",
+      "summary": "Faced the end alongside Sera Nighthollow, the ranger who walks alone."
+    },
+    "78": {
+      "title": "Vael Ashmore",
+      "summary": "Faced the end alongside Vael Ashmore, rival squire and reluctant friend."
+    },
+    "79": {
+      "title": "Tariel Duskmantle",
+      "summary": "Faced the end alongside Tariel Duskmantle, scholar of forgotten lore."
+    },
+    "80": {
+      "title": "Lysander Graves",
+      "summary": "Faced the end alongside Lysander Graves, the quiet soldier with a heavy past."
+    },
+    "DISGRACE": {
+      "title": "Removed from the Order",
+      "summary": "Was stripped of rank by the Solamnic Orders for conduct unbecoming. Left Castle Brightholm in disgrace."
+    }
+  },
+  "chronicle": [
+    {
+      "ifFlag": "aldous_mentor",
+      "text": "Accepted Ser Aldous Brightblade as a personal mentor. Gained insight into the Measure and the Rose."
+    },
+    {
+      "ifFlag": "aldous_backstory",
+      "text": "Learned Ser Aldous's personal history and the burdens he carries."
+    },
+    {
+      "ifFlag": "aldous_trust",
+      "text": "Earned the deep trust of Ser Aldous through honourable conduct."
+    },
+    {
+      "ifFlag": "dispatch_kept",
+      "text": "Chose to withhold the patrol dispatch rather than share it. The information stayed close."
+    },
+    {
+      "ifFlag": "dispatch_kept",
+      "negate": true,
+      "text": "Shared the patrol dispatch openly. Vogler's defenders had the intelligence they needed."
+    },
+    {
+      "ifClass": "Paladin",
+      "ifDgTrack": "NONE",
+      "text": "Walked the path of a Paladin without hearing the whispers of any dark power."
+    },
+    {
+      "ifClass": "Paladin",
+      "ifDgTrack": "LISTENING",
+      "text": "Heard the whisper of Takhisis but did not yield. The dark voice was acknowledged but refused."
+    },
+    {
+      "ifClass": "Paladin",
+      "ifDgTrack": "COMPROMISED",
+      "text": "Was tempted by Takhisis and made a compromise. The dark queen's influence lingers."
+    },
+    {
+      "ifClass": "Paladin",
+      "ifDgTrack": "FALLEN",
+      "text": "Fell to the whispers of Takhisis. Faith was shaken to its foundations."
+    },
+    {
+      "ifClass": "Paladin",
+      "ifDgTrack": "DEEPLY FALLEN",
+      "text": "Embraced the dark god's power fully. The corruption runs deep."
+    },
+    {
+      "ifClass": "Paladin",
+      "ifGodSignsMin": 3,
+      "text": "Received multiple signs from the returning gods. Divine favour is strong."
+    },
+    {
+      "ifClass": "Paladin",
+      "ifGodSignsMin": 1,
+      "ifGodSignsMax": 2,
+      "text": "Received a faint sign from the returning gods. The divine connection is nascent."
+    },
+    {
+      "ifOrderMax": "rose",
+      "text": "Distinguished themselves in the Order of the Rose — compassion, mercy, and sacrifice defined their path."
+    },
+    {
+      "ifOrderMax": "sword",
+      "text": "Distinguished themselves in the Order of the Sword — courage and martial resolve defined their path."
+    },
+    {
+      "ifOrderMax": "crown",
+      "text": "Distinguished themselves in the Order of the Crown — discipline, loyalty, and duty defined their path."
+    },
+    {
+      "ifHonourAbove": 7,
+      "text": "Left the campaign with exceptional honour. Their reputation among the Knights is sterling."
+    },
+    {
+      "ifHonourBelow": 3,
+      "text": "Left the campaign with tarnished honour. Whispers follow them in Solamnic halls."
+    },
+    {
+      "ifCompanionCount": 0,
+      "text": "Walked the road alone. No companions survived or chose to follow."
+    },
+    {
+      "ifCompanionCountMin": 4,
+      "text": "Gathered a significant fellowship — four or more companions joined the cause."
+    },
+    {
+      "ifAnyRomance": true,
+      "text": "Found love on the road, even as war approached."
+    },
+    {
+      "ifNoRomance": true,
+      "text": "Kept their focus on duty. No romantic attachments formed."
+    },
+    {
+      "ifCombatCountMin": 10,
+      "text": "Saw heavy combat throughout the campaign — a battle-tested veteran."
+    },
+    {
+      "ifScarsMin": 1,
+      "text": "Bears physical scars from the campaign's hardships."
+    },
+    {
+      "ifClass": "Fighter",
+      "ifFlag": "measureOrientation",
+      "ifFlagValue": "KEEPER",
+      "text": "Chose to be a Keeper of the Measure — orthodox, disciplined, holding the law as written."
+    },
+    {
+      "ifClass": "Fighter",
+      "ifFlag": "measureOrientation",
+      "ifFlagValue": "PRACTITIONER",
+      "text": "Chose to be a Practitioner — pragmatic, using the Measure as a tool that serves people."
+    },
+    {
+      "ifClass": "Fighter",
+      "ifFlag": "measureOrientation",
+      "ifFlagValue": "REFORMER",
+      "text": "Chose to be a Reformer — believing the Measure must change for a new age."
+    },
+    {
+      "ifClass": "Fighter",
+      "ifFlag": "measureOrientation",
+      "ifFlagValue": "SEEKER",
+      "text": "Has not yet decided their relationship with the Measure. The answer is still forming."
+    },
+    {
+      "ifFlag": "reformer_letter",
+      "text": "Sent a letter to the High Council proposing reform of the Measure. The political consequences have not yet arrived."
+    },
+    {
+      "ifFlag": "stayed_burning_village",
+      "text": "Stayed two days at the burned village to help survivors rebuild. Arrived at Vogler later than planned, but with purpose reinforced."
+    }
+  ],
+  "companionChronicle": {
+    "Aldric Voss": {
+      "joined": "Aldric Voss, fellow squire and sparring partner, fought alongside them.",
+      "dead": "Aldric Voss fell in battle during the campaign.",
+      "romance": "Developed a romantic bond with Aldric Voss.",
+      "hook": "Aldric is a loyal but headstrong ally. His family connections in Solamnia may open doors — or draw attention."
+    },
+    "Thessaly Brightwater": {
+      "joined": "Thessaly Brightwater, chronicler and truth-seeker, documented their journey.",
+      "dead": "Thessaly Brightwater was lost during the campaign. Her unfinished chronicle remains.",
+      "romance": "Developed a romantic bond with Thessaly Brightwater.",
+      "hook": "Thessaly's chronicles record everything. Her writings could be valuable intelligence — or dangerous evidence."
+    },
+    "Commander Serath": {
+      "joined": "Commander Serath, a Dragon Army defector, provided intelligence and fought alongside them.",
+      "dead": "Commander Serath fell in battle. Their intelligence about the Dragon Armies died with them.",
+      "romance": "Developed a romantic bond with Commander Serath.",
+      "hook": "Serath is a defector. The Dragon Armies want them dead. Solamnic command doesn't fully trust them. Both are problems going forward."
+    },
+    "Mira of the Oaks": {
+      "joined": "Mira of the Oaks, village herbalist, provided healing and wisdom on the road.",
+      "dead": "Mira of the Oaks was lost during the campaign. Vogler mourns its healer.",
+      "romance": "Developed a romantic bond with Mira of the Oaks.",
+      "hook": "Mira knows the land and its remedies. In a war without clerics, a skilled herbalist is worth more than gold."
+    },
+    "Lord Caeron Ashvale": {
+      "joined": "Lord Caeron Ashvale, a noble seeking to restore his family's name, joined the company.",
+      "dead": "Lord Caeron Ashvale fell without reclaiming his family's honour.",
+      "romance": "Developed a romantic bond with Lord Caeron Ashvale.",
+      "hook": "Caeron's family was disgraced. If he survived, restoring the Ashvale name could become a subplot — or a political liability."
+    },
+    "Sera Nighthollow": {
+      "joined": "Sera Nighthollow, a solitary ranger, lent her blade and sharp eyes to the company.",
+      "dead": "Sera Nighthollow fell in battle. The wilds lost a guardian.",
+      "romance": "Developed a romantic bond with Sera Nighthollow.",
+      "hook": "Sera knows the frontier better than anyone. Her knowledge of Dragon Army patrol routes is invaluable for the march south."
+    },
+    "Vael Ashmore": {
+      "joined": "Vael Ashmore, rival squire, set aside competition to fight alongside them.",
+      "dead": "Vael Ashmore fell in battle. A rival, but one who deserved better.",
+      "romance": "Developed a romantic bond with Vael Ashmore.",
+      "hook": "Vael is ambitious and politically savvy. They may seek their own command, which could create friction — or a useful ally in Solamnic politics."
+    },
+    "Tariel Duskmantle": {
+      "joined": "Tariel Duskmantle, scholar of forgotten lore, brought knowledge of the old world.",
+      "dead": "Tariel Duskmantle was lost. Their research into pre-Cataclysm history is incomplete.",
+      "romance": "Developed a romantic bond with Tariel Duskmantle.",
+      "hook": "Tariel's research may hold clues to artifacts, lost magic, or the truth about the returning gods. A scholar is rare in wartime."
+    },
+    "Lysander Graves": {
+      "joined": "Lysander Graves, the quiet soldier, watched their back through every fight.",
+      "dead": "Lysander Graves fell in battle. He spoke little, but his absence is felt deeply.",
+      "romance": "Developed a romantic bond with Lysander Graves.",
+      "hook": "Lysander carries guilt from a past campaign. If he survived, that past may catch up with him — and whoever stands beside him."
+    }
+  },
+  "dmHooks": [
+    {
+      "ifFlag": "dispatch_kept",
+      "title": "The Withheld Dispatch",
+      "hint": "The Dragon Army patrol schedule was never shared with Vogler's full garrison. Gaps in the defence may have consequences when the army arrives. Someone may eventually learn the truth."
+    },
+    {
+      "ifFlag": "aldous_mentor",
+      "title": "Aldous's Protege",
+      "hint": "Ser Aldous invested personal time in this squire. He will expect them to uphold the Rose's ideals. His recommendation carries weight — but so does his disappointment."
+    },
+    {
+      "ifCompanionAlive": "Commander Serath",
+      "title": "The Dragon Army Defector",
+      "hint": "Serath carries detailed intelligence about Dragon Army command structure, troop movements, and Highlord tactics. They are also the most wanted deserter in the eastern front. Both sides have reasons to find them."
+    },
+    {
+      "ifDgTrack": "LISTENING",
+      "title": "The Whisper Heard",
+      "hint": "Takhisis spoke and the Paladin listened, even if they ultimately refused. The dark queen does not forget those who heard her voice. Under extreme stress, the whisper may return."
+    },
+    {
+      "ifDgTrack": "COMPROMISED",
+      "title": "A Compromised Faith",
+      "hint": "The Paladin bargained with Takhisis. The compromise was small, but the precedent is set. Other dark agents may sense this vulnerability. Divine powers on both sides are watching."
+    },
+    {
+      "ifDgTrack": "FALLEN",
+      "title": "Fallen from Grace",
+      "hint": "The Paladin's faith has been deeply shaken by Takhisis's influence. Their divine magic may flicker. Moments of doubt will be more frequent. Redemption is possible but will require a significant act of faith."
+    },
+    {
+      "ifDgTrack": "DEEPLY FALLEN",
+      "title": "The Dark Queen's Servant",
+      "hint": "This Paladin has fully embraced Takhisis's power. They may still serve the party, but their divine patron is now the enemy. This is a ticking clock — eventually, they will have to choose."
+    },
+    {
+      "ifHonourBelow": 3,
+      "title": "A Tarnished Reputation",
+      "hint": "The character's honour score is dangerously low. Other Solamnic Knights may refuse to work with them. Promotions are unlikely. They will need to rebuild trust through deeds, not words."
+    },
+    {
+      "ifEnding": "DISGRACE",
+      "title": "Disgraced Knight",
+      "hint": "The character was formally removed from the Solamnic Orders. They carry no rank, no tabard, and no authority. Redemption is the central arc — earning back what was lost will define their journey through Shadow of the Dragon Queen."
+    },
+    {
+      "ifAnyCompanionDead": true,
+      "title": "The Fallen",
+      "hint": "One or more companions died during the campaign. Grief, guilt, and the desire for vengeance are powerful motivators. The Dragon Armies took someone from them."
+    },
+    {
+      "ifClass": "Paladin",
+      "ifGodSignsMin": 3,
+      "title": "Chosen by the Gods",
+      "hint": "Multiple gods have marked this Paladin. In a world where divine magic has been absent for 300 years, this character may be among the first true clerics since the Cataclysm. NPCs will react — with awe, fear, or desperate hope."
+    },
+    {
+      "ifOrderMax": "rose",
+      "ifOrderMin": 5,
+      "title": "Rose Knight in Spirit",
+      "hint": "Though still a squire by rank, this character embodies the Rose's ideals. Senior Rose Knights may take notice. A fast-track to the Order of the Rose could be offered — but the trials will be harsh."
+    },
+    {
+      "ifCompanionCountMin": 5,
+      "title": "A Company Assembled",
+      "hint": "This character has gathered a significant fellowship. Managing this many allies brings logistical and interpersonal challenges. Loyalty may be tested when resources are scarce."
+    },
+    {
+      "ifRomanceCount": 2,
+      "title": "Divided Heart",
+      "hint": "The character has active romances with multiple companions. This tension will surface under pressure. Jealousy, ultimatums, or unexpected alliances may follow."
+    },
+    {
+      "ifClass": "Fighter",
+      "ifFlag": "measureOrientation",
+      "ifFlagValue": "REFORMER",
+      "title": "The Reformer's Path",
+      "hint": "This Fighter wants to change the Measure itself. The Order of the Rose will see this as dangerous. The Order of the Crown will see it as heresy. But common folk may rally behind a knight who speaks their language. Political subplot potential is high."
+    },
+    {
+      "ifFlag": "stayed_burning_village",
+      "title": "The Village Remembered",
+      "hint": "The character stayed to help burned village survivors. Bessa and her grandchildren may appear later as refugees in Vogler, creating a personal connection to the civilian cost of war."
+    },
+    {
+      "ifClass": "Fighter",
+      "ifFlag": "measureOrientation",
+      "ifFlagValue": "KEEPER",
+      "title": "Orthodox Knight",
+      "hint": "This Fighter holds the Measure as sacred law. They will clash with anyone who bends the rules — including allies. Their discipline is an asset in wartime, but their rigidity may be tested when the Measure has no answer."
+    }
+  ]
+}

@@ -1,0 +1,495 @@
+{
+  "all": [
+    "Aldric Voss",
+    "Thessaly Brightwater",
+    "Commander Serath",
+    "Mira of the Oaks",
+    "Lord Caeron Ashvale",
+    "Sera Nighthollow",
+    "Vael Ashmore",
+    "Tariel Duskmantle",
+    "Lysander Graves"
+  ],
+  "data": {
+    "Aldric Voss": {
+      "desc": "Tall, sandy-haired, jaw like a cliff. Battered helmet. A scar through his left eyebrow he claims came from a bar fight. It did not.",
+      "personality": "Competitive, honourable, hides feelings behind banter. Deeply loyal.",
+      "romance": "Slow burn. Spark Scene 5 or 14. Flame Scene 48. Oath Scene 75."
+    },
+    "Thessaly Brightwater": {
+      "desc": "Sharp eyes, copper hair, ink-stained fingers. Silver locket she never opens.",
+      "personality": "Witty, curious, emotionally guarded. Tests everyone.",
+      "romance": "Intellectual sparring first. Spark Scene 5 or 14. Flame Scene 48. Oath Scene 75."
+    },
+    "Commander Serath": {
+      "desc": "Military posture in civilian clothes. Quiet eyes that miss nothing.",
+      "personality": "Careful, precise, carrying enormous guilt. Dry humour that surprises.",
+      "romance": "Trust earned through action. Spark Scene 18. Flame Scene 44. Oath Scene 75."
+    },
+    "Mira of the Oaks": {
+      "desc": "Brown skin, warm dark eyes, flour on her sleeves in a war zone.",
+      "personality": "Gentle but not soft. Will tell you when you are wrong, kindly but firmly.",
+      "romance": "Warmth and honesty. Spark Scene 21. Flame Scene 44. Oath Scene 75."
+    },
+    "Lord Caeron Ashvale": {
+      "desc": "Patrician features, dark hair silver at the temples. Immaculate armour always.",
+      "personality": "Arrogant surface, deeply insecure underneath.",
+      "romance": "Complicated slow burn. Spark Scene 5 or 14. Flame Scene 48. Oath Scene 75."
+    },
+    "Sera Nighthollow": {
+      "desc": "Lean, dark-skinned, silver-streaked black hair cut blunt at the jaw. Scar across her collarbone. Moves like someone who learned early that being noticed is dangerous.",
+      "personality": "Dry, precise, deeply competent. Laughs rarely but when she does it is sudden and unguarded.",
+      "romance": "Slow then fast. Spark Scene 3B. Flame Scene 34B. Oath Scene 68B."
+    },
+    "Vael Ashmore": {
+      "desc": "Brown skin, sharp jaw, close-cropped dark hair. Always in training gear. Callused hands. Solamnic signet ring on a cord around her neck.",
+      "personality": "Competitive, concealing deep respect. Holds herself to an impossible standard. Self-deprecating humour.",
+      "romance": "Built on mutual recognition. Spark Scene 5B. Flame Scene 32B. Oath Scene 68C."
+    },
+    "Tariel Duskmantle": {
+      "desc": "Dark hair in eastern military braid, olive skin, green eyes that catalogue. Dresses well but not ostentatiously. Good boots, single silver ring.",
+      "personality": "Intellectually precise, genuinely curious, disarming. Asks questions that reveal contradictions.",
+      "romance": "Intellectual first, then personal. Spark Scene 31B. Flame Scene 53D. Oath Scene 66B."
+    },
+    "Lysander Graves": {
+      "desc": "Broad-shouldered, weathered, sun-darkened skin. A face that has been hit more than once and a bearing that suggests he did not start those fights. Carries a battered longsword with no ornament.",
+      "personality": "Physical and philosophical. Speaks about honour from experience of losing it. Direct.",
+      "romance": "Physical and philosophical. Spark Scene 27B. Flame Scene 36B or 53E. Oath Scene 66B."
+    }
+  },
+  "combatStats": {
+    "Aldric": {
+      "ac": 16,
+      "maxHp": 18,
+      "attack": {
+        "name": "Longsword",
+        "bonus": 4,
+        "damage": "1d8+2",
+        "type": "melee",
+        "reach": 5
+      },
+      "zone": "close",
+      "defaultActions": [
+        "Longsword Strike (+4, 1d8+2)",
+        "Shield Wall (+1 AC to you)",
+        "Dodge (enemies have disadvantage)"
+      ]
+    },
+    "Sera": {
+      "ac": 14,
+      "maxHp": 14,
+      "attack": {
+        "name": "Shortbow",
+        "bonus": 5,
+        "damage": "1d6+3",
+        "type": "ranged",
+        "reach": 80
+      },
+      "zone": "far",
+      "defaultActions": [
+        "Shortbow Shot (+5, 1d6+3)",
+        "Mark Target (+2 your next attack)",
+        "Dodge (enemies have disadvantage)"
+      ]
+    },
+    "Mira": {
+      "ac": 12,
+      "maxHp": 12,
+      "attack": {
+        "name": "Quarterstaff",
+        "bonus": 2,
+        "damage": "1d6",
+        "type": "melee",
+        "reach": 5
+      },
+      "zone": "mid",
+      "defaultActions": [
+        "Heal (1d6+2 HP)",
+        "Bandage (stabilize ally)",
+        "Quarterstaff Strike (+2, 1d6)",
+        "Dodge (enemies have disadvantage)"
+      ]
+    },
+    "Serath": {
+      "ac": 13,
+      "maxHp": 10,
+      "attack": {
+        "name": "Dagger",
+        "bonus": 4,
+        "damage": "1d4+2",
+        "type": "melee",
+        "reach": 5
+      },
+      "zone": "close",
+      "defaultActions": [
+        "Dagger Strike (+4, 1d4+2)",
+        "Intel (+2 one attack)",
+        "Dodge (enemies have disadvantage)"
+      ]
+    },
+    "Thessaly": {
+      "ac": 13,
+      "maxHp": 10,
+      "attack": {
+        "name": "Shortsword",
+        "bonus": 3,
+        "damage": "1d6+1",
+        "type": "melee",
+        "reach": 5
+      },
+      "zone": "mid",
+      "defaultActions": [
+        "Shortsword Strike (+3, 1d6+1)",
+        "Encourage (+1 next roll)",
+        "Distraction (enemy -1 next attack)",
+        "Dodge (enemies have disadvantage)"
+      ]
+    },
+    "Vael": {
+      "ac": 14,
+      "maxHp": 14,
+      "attack": {
+        "name": "Longbow",
+        "bonus": 4,
+        "damage": "1d6+2",
+        "type": "ranged",
+        "reach": 80
+      },
+      "zone": "far",
+      "defaultActions": [
+        "Longbow Shot (+4, 1d6+2)",
+        "Honest Assessment (reveal enemy HP)",
+        "Dodge (enemies have disadvantage)"
+      ]
+    },
+    "Lysander": {
+      "ac": 17,
+      "maxHp": 22,
+      "attack": {
+        "name": "Longsword",
+        "bonus": 6,
+        "damage": "1d10+3",
+        "type": "melee",
+        "reach": 5
+      },
+      "zone": "close",
+      "defaultActions": [
+        "Longsword Strike (+6, 1d10+3)",
+        "Guard (takes next hit for you)",
+        "Dodge (enemies have disadvantage)"
+      ]
+    },
+    "Tariel": {
+      "ac": 14,
+      "maxHp": 14,
+      "attack": {
+        "name": "Rapier",
+        "bonus": 3,
+        "damage": "1d6+1",
+        "type": "melee",
+        "reach": 5
+      },
+      "zone": "close",
+      "defaultActions": [
+        "Rapier Strike (+3, 1d6+1)",
+        "Tactical Advice (+1 atk or AC)",
+        "Dodge (enemies have disadvantage)"
+      ]
+    },
+    "Caeron": {
+      "ac": 18,
+      "maxHp": 26,
+      "attack": {
+        "name": "Longsword",
+        "bonus": 6,
+        "damage": "1d8+3",
+        "type": "melee",
+        "reach": 5
+      },
+      "zone": "close",
+      "defaultActions": [
+        "Longsword Strike (+6, 1d8+3)",
+        "Command (all +1 this round)",
+        "Dodge (enemies have disadvantage)"
+      ]
+    }
+  },
+  "romanceCompat": {
+    "compatible": [
+      [
+        "Aldric Voss",
+        "Vael Ashmore",
+        "Both competitive squires. Mutual respect through rivalry."
+      ],
+      [
+        "Sera Nighthollow",
+        "Commander Serath",
+        "Both military, both independent. Mutual respect."
+      ],
+      [
+        "Thessaly Brightwater",
+        "Tariel Duskmantle",
+        "Both intellectuals. Complementary curiosity."
+      ],
+      [
+        "Mira of the Oaks",
+        "Thessaly Brightwater",
+        "Mira heals; Thessaly documents truth. Both care deeply."
+      ],
+      [
+        "Sera Nighthollow",
+        "Vael Ashmore",
+        "Both women-at-arms. Professional respect becomes personal."
+      ]
+    ],
+    "incompatible": [
+      [
+        "Aldric Voss",
+        "Lord Caeron Ashvale",
+        "Subordinate and superior. Caeron sees it as failure of duty."
+      ],
+      [
+        "Aldric Voss",
+        "Lysander Graves",
+        "Institutional loyalty vs rogue independence."
+      ],
+      [
+        "Lord Caeron Ashvale",
+        "Lysander Graves",
+        "Law vs conscience. Fundamental clash."
+      ],
+      [
+        "Vael Ashmore",
+        "Lord Caeron Ashvale",
+        "Student and evaluator. Power imbalance."
+      ],
+      [
+        "Tariel Duskmantle",
+        "Lord Caeron Ashvale",
+        "She critiques the institution he embodies."
+      ],
+      [
+        "Lysander Graves",
+        "Tariel Duskmantle",
+        "Both destabilizing but incompatible methods."
+      ],
+      [
+        "Aldric Voss",
+        "Commander Serath",
+        "Aldric does not trust defectors."
+      ],
+      [
+        "Mira of the Oaks",
+        "Lysander Graves",
+        "Mira heals; Lysander carries damage he refuses help with."
+      ],
+      [
+        "Lord Caeron Ashvale",
+        "Commander Serath",
+        "Officer and enemy defector. Impossible."
+      ]
+    ]
+  },
+  "romanceTooltips": {
+    "Aldric": {
+      "Spark": "You catch Aldric watching you when he thinks you are not looking. He looks away too fast.",
+      "Flame": "Aldric's hand finds yours in the dark before a fight. He does not let go until he has to.",
+      "Oath": "Aldric fights beside you like a man who has decided where he will stand and who he will stand with. Always."
+    },
+    "Thessaly": {
+      "Spark": "Thessaly's questions have changed. She is no longer studying you. She is memorising you.",
+      "Flame": "She reads to you by firelight. The book is an excuse. Her shoulder against yours is not.",
+      "Oath": "Thessaly closes her notebook when you speak. She has never done that for anyone."
+    },
+    "Serath": {
+      "Spark": "Serath's silences around you have a different quality now. Warmer. Almost careful.",
+      "Flame": "He tells you something about his past he has never told anyone. His voice does not shake. His hands do.",
+      "Oath": "Serath stands at your side with the quiet certainty of a man who has finally stopped running."
+    },
+    "Mira": {
+      "Spark": "Mira's hands linger when she checks your bandages. Her touch is gentler than it needs to be.",
+      "Flame": "She saved you the last of the good bread. It is such a small thing. It is not a small thing at all.",
+      "Oath": "Mira looks at you the way she looks at the dawn — like something worth getting up for."
+    },
+    "Caeron": {
+      "Spark": "Lord Caeron's composure slips around you. Just barely. Just enough.",
+      "Flame": "He removes his gauntlet to touch your face. His hand is shaking. He has never been this vulnerable.",
+      "Oath": "Caeron kneels to no one. But he would kneel for you. You both know it."
+    },
+    "Sera": {
+      "Spark": "Sera's usual sharpness softens when she speaks to you. She notices, and it annoys her.",
+      "Flame": "She shows you her favourite vantage point at dusk. The view is beautiful. She is not looking at it.",
+      "Oath": "Sera trusts you at her back. From her, that is more than love. That is everything."
+    },
+    "Vael": {
+      "Spark": "Vael challenges you to spar more often now. The excuses are getting thinner.",
+      "Flame": "After the bout she does not step back. Her breathing is heavy and her eyes are steady on yours.",
+      "Oath": "Vael fights like she has something to protect now. She does. It is you."
+    },
+    "Tariel": {
+      "Spark": "Tariel asks you questions no one else thinks to ask. She remembers every answer.",
+      "Flame": "She shares intelligence she should not. The trust implicit in that is staggering.",
+      "Oath": "Tariel chose a side. Not a political one. Yours. She has never been more certain of anything."
+    },
+    "Lysander": {
+      "Spark": "Lysander watches you train with the eye of a man recognising something he thought he had lost.",
+      "Flame": "He tells you about the oath he broke. Not to explain. To trust you with the worst of him.",
+      "Oath": "Lysander swore he would never take another oath. He lied. He would swear any oath you asked."
+    }
+  },
+  "breakupData": {
+    "Aldric Voss": {
+      "gentle": {
+        "stays": true,
+        "status": "Friend",
+        "text": "He nods once. Does not look away. \"I understand.\" He means it. The competition between you shifts — still present, but stripped of the thing beneath it. He will be at your side at Vogler."
+      },
+      "harsh": {
+        "stays": true,
+        "status": "Distant",
+        "text": "He goes very still. The jaw tightens. \"Right.\" One word, carrying eight months of everything he did not say. He does not leave — but the easy silence between you is gone."
+      },
+      "betrayal": {
+        "stays": false,
+        "returns": "Scene 70",
+        "text": "He packs his kit in the dark. You hear him leave. Three days later, at the bridge to Vogler, he is there. Not beside you. On the other side of the line."
+      }
+    },
+    "Thessaly Brightwater": {
+      "gentle": {
+        "stays": true,
+        "status": "Friend",
+        "text": "She closes her notebook. Opens it again. \"I expected this, which is either perceptive or self-protective. Both.\" The professional distance returns — but warmer now, because you were honest."
+      },
+      "harsh": {
+        "stays": true,
+        "status": "Distant",
+        "text": "\"I see.\" The notebook stays closed. She will still share intelligence — that is professional — but the warmth behind the questions is gone."
+      },
+      "betrayal": {
+        "stays": false,
+        "returns": "As ally only",
+        "text": "She tears out the page she was writing about you. Folds it. \"That is my story now, not ours.\" Her reports continue, addressed to Lord Caeron instead of to you."
+      }
+    },
+    "Commander Serath": {
+      "gentle": {
+        "stays": true,
+        "status": "Friend",
+        "text": "\"I have been left before. This is different. Better.\" They mean: you did not disappear. You told them. \"I will be here. That has not changed.\""
+      },
+      "harsh": {
+        "stays": true,
+        "status": "Distant",
+        "text": "The carefully managed stillness returns. \"Understood.\" They retreat into the competence that kept them alive in the Dragon Army."
+      },
+      "betrayal": {
+        "stays": false,
+        "returns": "Scene 70",
+        "text": "They leave before dawn. No note. At the bridge checkpoint at Vogler, there is a figure in dark clothes fighting Dragon Army soldiers alone."
+      }
+    },
+    "Mira of the Oaks": {
+      "gentle": {
+        "stays": true,
+        "status": "Friend",
+        "text": "\"Thank you for telling me before I told you more.\" She folds the yarrow carefully. \"I will still be in the infirmary if anyone needs me. That includes you.\""
+      },
+      "harsh": {
+        "stays": false,
+        "returns": "Main campaign",
+        "text": "She does not cry in front of you. In the morning she is gone. A note: \"The refugees on the north road need a healer more than your column does.\""
+      },
+      "betrayal": {
+        "stays": false,
+        "returns": "Never",
+        "text": "\"I gave you the bundle because I thought you were kind. I was not wrong. But I was not entirely right either.\" She walks north. The infirmary is empty by morning."
+      }
+    },
+    "Lord Caeron Ashvale": {
+      "gentle": {
+        "stays": true,
+        "status": "Friend",
+        "text": "\"I appreciate the candour.\" The most formal thing he has said to you in weeks. But he will not let this change the mission. The evaluations are, if anything, slightly more generous."
+      },
+      "harsh": {
+        "stays": true,
+        "status": "Cold",
+        "text": "Something closes behind his eyes. The mask settles back into place. \"Noted.\" The evaluations are scrupulously fair. They are also completely devoid of the human being you briefly saw."
+      },
+      "betrayal": {
+        "stays": true,
+        "status": "Hostile",
+        "text": "He does not raise his voice. \"You are still under my command. What will not continue is —\" He stops. \"Dismissed.\" The word is a door closing."
+      }
+    },
+    "Sera Nighthollow": {
+      "gentle": {
+        "stays": true,
+        "status": "Friend",
+        "text": "\"I do not attach easily. This was already further than I usually go.\" She picks up the knife. \"I will still watch the road. That was never about you.\" It was, partly."
+      },
+      "harsh": {
+        "stays": false,
+        "returns": "Scene 65",
+        "text": "She is gone by the second watch. During the road ambush, arrows come from the treeline — not at you. At the Sivak. Precise. Professional. She is gone again before you can look."
+      },
+      "betrayal": {
+        "stays": false,
+        "returns": "Never",
+        "text": "She looks at you the way she looks at bad terrain. She takes the knife and her pack and does not look back."
+      }
+    },
+    "Vael Ashmore": {
+      "gentle": {
+        "stays": true,
+        "status": "Friend",
+        "text": "\"I set impossible standards. This is me applying them to you, which is not fair.\" She straightens. \"We are still in this together.\" She will try very hard not to make it strange."
+      },
+      "harsh": {
+        "stays": true,
+        "status": "Distant",
+        "text": "\"Right.\" The competitive mask snaps back harder. She throws herself into training with the intensity of someone converting one feeling into another."
+      },
+      "betrayal": {
+        "stays": false,
+        "returns": "Vogler",
+        "text": "She files a transfer request with Caeron. At Vogler she is in a different unit. She does not look at you."
+      }
+    },
+    "Tariel Duskmantle": {
+      "gentle": {
+        "stays": true,
+        "status": "Friend",
+        "text": "\"I have been observing this coming for approximately three days.\" She will continue her observation. Perhaps with slightly less personal investment in one particular squire."
+      },
+      "harsh": {
+        "stays": true,
+        "status": "Observer",
+        "text": "\"Fascinating.\" The word is a scalpel. She returns to diplomatic distance. Her reports will be scrupulously accurate."
+      },
+      "betrayal": {
+        "stays": false,
+        "returns": "Main campaign",
+        "text": "\"The Order fails people. I told you this. I did not expect to become the evidence.\" She rides east the next morning."
+      }
+    },
+    "Lysander Graves": {
+      "gentle": {
+        "stays": true,
+        "status": "Friend",
+        "text": "\"I have left things before. I know what it looks like from the other side.\" He will fight at Vogler. He was always going to fight at Vogler."
+      },
+      "harsh": {
+        "stays": false,
+        "returns": "Scene 70",
+        "text": "\"The last person who told me the institution mattered more than the person was the Knight who court-martialled me.\" He walks into the dark."
+      },
+      "betrayal": {
+        "stays": false,
+        "returns": "Never",
+        "text": "\"I let you in.\" Three words. He takes his sword and walks south into the dark. Alone. Again."
+      }
+    }
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "title": "EPILOGUE",
+  "intro": "The road to Vogler stretches ahead. But first — a look back at those who walked beside you.",
+
+  "companions": {
+    "Aldric Voss": {
+      "alive": {
+        "default": "Aldric rides beside you toward Vogler, shield freshly painted, jaw set. He has stopped trying to prove himself to the other squires. He no longer needs to. Whatever comes next, he intends to face it standing — and he intends to face it with you.",
+        "romance": "Aldric rides beside you, closer than formation requires. His hand finds yours briefly at the crest of the last hill before Vogler. He does not say anything. He does not need to. You both know what this is. Whatever the Dragon Armies bring, they will have to go through both of you.",
+        "romanceFriend": "Aldric rides beside you as a brother-in-arms. Whatever passed between you has settled into something steady and unshakeable. He grins at you across the road — the old competitive grin, but warmer now. He has your back. That is enough."
+      },
+      "dead": "There is an empty saddle in the column where Aldric Voss should be. His shield was recovered, his name added to the rolls of the fallen. He died as he lived — charging forward, never looking back. You carry his dagger. Someone should."
+    },
+    "Thessaly Brightwater": {
+      "alive": {
+        "default": "Thessaly walks at the rear of the column, writing as she goes. Her chronicle of the prelude is nearly complete — every scene observed, every conversation recorded in that careful hand. She will be the one who remembers what actually happened, after everyone else has shaped the story to suit themselves.",
+        "romance": "Thessaly walks beside you, her chronicle tucked under one arm. She has started a new section. She will not let you read it yet. 'It's about what comes next,' she says, and there is a softness in her voice that wasn't there at the beginning. The truth she is documenting now is not just the war's.",
+        "romanceFriend": "Thessaly keeps pace with you, her chronicle nearly complete. She reads you a passage about your first meeting — factual, precise, and somehow kind. 'I'll need your help with the next volume,' she says. You suspect that is the closest she comes to saying she needs you at all."
+      },
+      "dead": "Thessaly's chronicle ends mid-sentence. The last entry describes the light that morning — how it fell across the camp, how it made the dew look like scattered coins. She was still writing when she died. Someone will have to finish the story. It will not be the same."
+    },
+    "Commander Serath": {
+      "alive": {
+        "default": "Serath rides at the edge of the column, scanning the horizon with the practised vigilance of someone who has been hunted. The Dragon Army tabard is gone, burned weeks ago. What remains is a soldier without a flag — but not without purpose. They chose to defect. They chose to stay. Those choices will cost them, and they know it.",
+        "romance": "Serath finds you at every rest stop, standing close enough to touch but rarely doing so where others can see. Old habits. 'I have not earned trust yet,' they say quietly. 'But I have earned yours. That is where it starts.' Their hand brushes your shoulder. It is the steadiest thing in the world.",
+        "romanceFriend": "Serath nods to you across the camp — a soldier's acknowledgment, brief and complete. Whatever was between you has resolved into mutual respect. They trust your judgement. You trust their intelligence. In wartime, that is worth more than most people understand."
+      },
+      "dead": "Commander Serath's intelligence about the Dragon Armies died with them. The patrol schedules, the command structure, the Highlord's habits — all gone. They defected to save lives. In the end, they could not save their own. The information gap they leave behind will cost someone, somewhere, something."
+    },
+    "Mira of the Oaks": {
+      "alive": {
+        "default": "Mira walks among the company, checking wounds, adjusting bandages, pressing dried yarrow into grateful hands. She does not carry a weapon. She has never needed one. In a world without clerics, a healer who knows the land is more valuable than any sword — and Mira knows it, though she would never say so.",
+        "romance": "Mira walks beside you, and the silence between you is the comfortable kind — the kind that does not need filling. She picks a sprig of something as she walks and tucks it into your collar. 'For luck,' she says. She has been saying that since the beginning. You have started to believe her.",
+        "romanceFriend": "Mira checks your wounds one last time before the final march. Her hands are steady, her manner professional, her smile genuine. 'You'll need a better healer than me where you're going,' she says. You both know that isn't true."
+      },
+      "dead": "Mira's herb pouch was recovered from where she fell. Dried yarrow, feverfew, willow bark — carefully labelled in her handwriting. Vogler's healer is gone. The village that depended on her will feel the absence long before the Dragon Armies arrive. Someone inherits her garden. No one inherits her knowledge."
+    },
+    "Lord Caeron Ashvale": {
+      "alive": {
+        "default": "Caeron rides with his chin up and his coat brushed, though both are worse for wear. He has not restored his family's name — not yet. But he has stopped apologising for bearing it. The Ashvale crest is still turned inward on his signet ring. He is not ready to show it. But he has stopped hiding it.",
+        "romance": "Caeron finds you at the edge of camp, where the firelight doesn't quite reach. 'My family lost everything,' he says. 'I thought that was my story. Turns out it was just the beginning.' He takes your hand. His grip is firm. He is done being careful about this.",
+        "romanceFriend": "Caeron clasps your arm before the final march — the formal Solamnic grip, forearm to forearm. 'You gave me a reason to stop running from the name,' he says. The gratitude is genuine. So is the ambition beneath it. Lord Caeron Ashvale is not finished yet."
+      },
+      "dead": "Lord Caeron Ashvale fell without reclaiming his family's name. The Ashvale line, already disgraced, may now be forgotten entirely. His signet ring was found on the battlefield, the crest still turned inward. He never did get to show it. The restoration he dreamed of dies with him."
+    },
+    "Sera Nighthollow": {
+      "alive": {
+        "default": "Sera appears and disappears from the column like smoke. She ranges ahead, doubles back, checks the flanks — never still, never quite where you expect her. She has not said goodbye because she has not decided if she is leaving. The frontier is her home. But the frontier is about to become a battlefield, and Sera does not walk away from fights.",
+        "romance": "Sera finds you outside the firelight, where she is most herself. 'I don't stay,' she says. 'That's what I do. I don't stay.' A long silence. 'But I keep coming back. That's new.' Her shoulder presses against yours. The night is cold and the road is long and she is still here.",
+        "romanceFriend": "Sera catches your eye across the camp and gives you a nod — brief, certain, the kind of acknowledgment that means more from her than speeches from anyone else. She does not say goodbye. She says 'See you out there.' From Sera, that is a promise."
+      },
+      "dead": "Sera Nighthollow's trail ends here. The ranger who walked alone died fighting alongside others — which may have been exactly what she feared. The frontier paths she knew, the hidden routes and safe camps — that knowledge is gone. The wilds will close over her memory like water."
+    },
+    "Vael Ashmore": {
+      "alive": {
+        "default": "Vael rides near the front of the column, back straight, expression carefully neutral. The rivalry between you has quieted into something more complex. Respect, perhaps. Or the understanding that competition is a luxury the coming war cannot afford. Vael still wants to be the best. But they have stopped pretending that means being better than you.",
+        "romance": "Vael pulls alongside you on the road, matching your pace. 'I spent months trying to beat you,' they say. 'Turns out that was the wrong contest entirely.' A rare, unguarded smile. Vael Ashmore does not show vulnerability easily. This is what it looks like when they do.",
+        "romanceFriend": "Vael gives you a sharp salute — half-mocking, half-genuine, entirely Vael. 'Still think I'd have beaten you in the final trial,' they say. The grin says otherwise. The competition has transformed into something better. An alliance between equals."
+      },
+      "dead": "Vael Ashmore's sword was recovered, polished, and returned to their family. They died trying to prove something — maybe to you, maybe to themselves. The rivalry ended the worst way it could. No winner. No rematch. Just an empty bunk and a name on the memorial wall."
+    },
+    "Tariel Duskmantle": {
+      "alive": {
+        "default": "Tariel has three books open across their saddle and appears to be reading all of them simultaneously. Their research into pre-Cataclysm history has taken a new direction — something about the returning gods, the old temples, patterns in the destruction that don't match the accepted narrative. They will be invaluable in the campaign ahead, if anyone listens.",
+        "romance": "Tariel reads to you from their notes at every rest stop. Most of it is incomprehensible scholarship. Some of it is beautiful. 'I found a passage about what the old priests called it,' they say, 'when someone changes the direction of your research forever.' A pause. 'They called it grace.' They look at you. The scholarship was not the point.",
+        "romanceFriend": "Tariel shares their latest theory with you over the campfire — something about architectural patterns in the ruined temples. You understand about a third of it. They know this and explain anyway, because explaining helps them think, and because you are the only one who stays awake for the full lecture. That counts for something."
+      },
+      "dead": "Tariel Duskmantle's research notes were recovered — pages of cramped handwriting, diagrams, cross-references to texts no one else has read. The work is incomplete. The patterns they were tracking in the pre-Cataclysm records will go unfinished. Someone else may pick up the thread. It will take them years to reach where Tariel left off."
+    },
+    "Lysander Graves": {
+      "alive": {
+        "default": "Lysander walks at the back of the column, quiet as always. He carries more than his share of the supplies without being asked. He has not spoken about his past, and you have learned not to ask. What you know: he fights like someone who has done this before. He watches the rear guard like someone who has been ambushed before. He carries guilt like a second pack.",
+        "romance": "Lysander finds you when the camp is quiet. He does not have words for what he feels — he has said this, more than once, as if apologising for the limitation. But his hand on your shoulder says everything. He has spent a long time carrying weight alone. He is learning, slowly, that he does not have to.",
+        "romanceFriend": "Lysander hands you a water skin without being asked. He does this every march — small, practical kindnesses delivered without comment. He has never been good with words. He is exceptional with deeds. In the campaign ahead, that will matter more."
+      },
+      "dead": "Lysander Graves is buried where he fell. No one knew where to send word — he never spoke of family. His pack contained rations, a whetstone, and a letter he never sent. The letter was not read. Some silences should be kept. He fought well. He died quiet. That is all there is to say."
+    }
+  },
+
+  "closing": {
+    "default": "The road to Vogler is short now. The smoke on the horizon is closer than it was yesterday. The Dragon Armies are coming, and a squire of Solamnia rides to meet them.",
+    "disgraced": "The road stretches south, long and uncertain. Somewhere ahead, the Dragon Armies march. Somewhere ahead, there may be a chance to earn back what was lost. The road does not care about rank or disgrace. It only asks that you keep walking.",
+    "paladin": "The gods are returning. You feel it in the light at dawn, in the warmth of your hands when you heal, in the whisper that is no longer quite so faint. The Dragon Armies bring darkness. You carry something older. The road to Vogler is short now, and the road beyond it is long, and neither one frightens you.",
+    "fighter": "Your sword is sharp, your training complete, your resolve unbroken. The Dragon Armies are coming with fire and scale and numbers beyond counting. You have a bridge to defend, a village to protect, and an oath to keep. That has always been enough.",
+    "fighter_keeper": "The Measure is clear. The Oath is absolute. You carry both like a shield that has never been dented — not because you have avoided blows, but because you have taken every one and held. The Dragon Armies bring chaos. You bring order. That is enough. It has always been enough.",
+    "fighter_reformer": "The Measure needs rewriting. You intend to be the one holding the pen. The old knights built something great and then let it calcify into dogma. You will not make that mistake. The Dragon Armies are coming, and the knighthood that meets them will be different from the one that retreated after the Cataclysm. You will make sure of that.",
+    "fighter_practitioner": "The Measure is a tool. A good one. You have learned to wield it the way you wield a sword — with precision, with judgement, with the understanding that a weapon serves the hand, not the other way around. The Dragon Armies are coming. You have what you need.",
+    "paladin_fallen": "The warmth in your hands flickers. Something cold has taken root where faith once lived. The road to Vogler is short now, and the shadow walks beside you. Takhisis whispers that she can help. You are no longer certain she is wrong.",
+    "dispatch_shadow": "The dispatch pouch sits heavy in your pack. The intelligence inside could have saved lives — or cost them. You made a choice. Someone knows. The road to Vogler carries more weight than it should."
+  }
+}

@@ -1,0 +1,635 @@
+[
+  {
+    "scene": "1A",
+    "requireCompanion": ["Aldric", "Vael"],
+    "lines": [
+      {"speaker": "Aldric", "text": "I was up before dawn. Ran the wall twice."},
+      {"speaker": "Vael", "text": "I ran it three times. But who's counting?"},
+      {"speaker": "Aldric", "text": "You are. You're always counting."}
+    ]
+  },
+  {
+    "scene": "1A",
+    "requireCompanion": ["Thessaly"],
+    "lines": [
+      {"speaker": "Thessaly", "text": "I've been watching the squires stumble through morning drills for three days now. I have enough material for a comedy."},
+      {"speaker": "Aldric", "text": "You're writing about us?"},
+      {"speaker": "Thessaly", "text": "Someone has to document the decline of knighthood."}
+    ]
+  },
+  {
+    "scene": "1A",
+    "requireCompanion": ["Mira"],
+    "lines": [
+      {"speaker": "Mira", "text": "You slept poorly. I can see it in your eyes."},
+      {"speaker": "Aldric", "text": "Is it that obvious?"},
+      {"speaker": "Mira", "text": "Like a willow after frost. Here — chew this root. It'll steady you."}
+    ]
+  },
+  {
+    "scene": "1B",
+    "requireCompanion": ["Aldric", "Thessaly"],
+    "lines": [
+      {"speaker": "Aldric", "text": "Is this porridge or mortar?"},
+      {"speaker": "Thessaly", "text": "In my chronicles, I'll record that the Knights of Solamnia were felled not by dragons, but by breakfast."},
+      {"speaker": "Lysander", "text": "Eat it. You'll miss it on the road."}
+    ]
+  },
+  {
+    "scene": "1B",
+    "requireCompanion": ["Caeron"],
+    "lines": [
+      {"speaker": "Caeron", "text": "In my family's hall, breakfast was served on silver. Four courses, minimum."},
+      {"speaker": "Sera", "text": "And how'd that work out for your family?"},
+      {"speaker": "Caeron", "text": "...I'll have the porridge, thank you."}
+    ]
+  },
+  {
+    "scene": "TR1",
+    "requireCompanion": ["Aldric", "Vael"],
+    "lines": [
+      {"speaker": "Vael", "text": "Your footwork is sloppy. You're telegraphing every swing."},
+      {"speaker": "Aldric", "text": "At least I'm swinging. You spend more time posing than fighting."},
+      {"speaker": "Vael", "text": "It's called form. You should try it sometime."}
+    ]
+  },
+  {
+    "scene": "TR1",
+    "requireCompanion": ["Sera"],
+    "lines": [
+      {"speaker": "Sera", "text": "They've been at it for an hour."},
+      {"speaker": "Thessaly", "text": "Riveting, isn't it?"},
+      {"speaker": "Sera", "text": "I give them both a week before they're crying in the stables."}
+    ]
+  },
+  {
+    "scene": "TR1",
+    "requireCompanion": ["Lysander"],
+    "lines": [
+      {"speaker": "Lysander", "text": "Don't lock your elbow. You'll break it."},
+      {"speaker": "Aldric", "text": "How do you know all this?"},
+      {"speaker": "Lysander", "text": "Broke mine once. Learned the rest from watching others break theirs."}
+    ]
+  },
+  {
+    "scene": "TR2",
+    "requireCompanion": ["Aldric", "Vael"],
+    "lines": [
+      {"speaker": "Aldric", "text": "Did you see that disarm? I actually got him!"},
+      {"speaker": "Vael", "text": "He let you. I saw his wrist turn."},
+      {"speaker": "Aldric", "text": "Can't you just let me have one thing?"}
+    ]
+  },
+  {
+    "scene": "TR2",
+    "requireCompanion": ["Serath"],
+    "lines": [
+      {"speaker": "Serath", "text": "Your drills are clean. Orderly. The Dragon Army trained the same way."},
+      {"speaker": "Aldric", "text": "That's... not reassuring."},
+      {"speaker": "Serath", "text": "It wasn't meant to be. Drill doesn't save you when the line breaks."}
+    ]
+  },
+  {
+    "scene": "OA1",
+    "requireCompanion": ["Aldric"],
+    "lines": [
+      {"speaker": "Aldric", "text": "Est Sularus oth Mithas. My honor is my life. Do you ever wonder what that really means?"},
+      {"speaker": "Thessaly", "text": "It means you'll die for a phrase you barely understand. Which is very Solamnic of you."}
+    ]
+  },
+  {
+    "scene": "OA2",
+    "requireCompanion": ["Caeron"],
+    "lines": [
+      {"speaker": "Caeron", "text": "The Oath of the Sword. My grandfather took it in this very hall."},
+      {"speaker": "Sera", "text": "And?"},
+      {"speaker": "Caeron", "text": "He said afterwards he felt nothing. Just the weight of it settling in."}
+    ]
+  },
+  {
+    "scene": "OA3",
+    "requireCompanion": ["Lysander"],
+    "lines": [
+      {"speaker": "Lysander", "text": "The Measure says a lot about duty. Not much about what happens after."},
+      {"speaker": "Mira", "text": "That's because duty never ends, dear. Like weeding a garden."}
+    ]
+  },
+  {
+    "scene": "OA4",
+    "requireCompanion": ["Tariel"],
+    "lines": [
+      {"speaker": "Tariel", "text": "Historically, the Oath has been revised fourteen times. The current version omits a fascinating clause about poultry theft."},
+      {"speaker": "Aldric", "text": "...poultry theft?"},
+      {"speaker": "Tariel", "text": "The Third Age was a complicated time."}
+    ]
+  },
+  {
+    "scene": "EV1",
+    "requireCompanion": ["Aldric", "Thessaly"],
+    "lines": [
+      {"speaker": "Aldric", "text": "Tell us a story, Thessaly. Something from the old wars."},
+      {"speaker": "Thessaly", "text": "Every story I know ends badly. That's what makes them worth telling."},
+      {"speaker": "Mira", "text": "Tell one that ends with everyone warm and fed. We could use it."}
+    ]
+  },
+  {
+    "scene": "EV2",
+    "requireCompanion": ["Serath"],
+    "lines": [
+      {"speaker": "Serath", "text": "You want to know what the Dragon Army campfires were like? Quieter than this. Nobody trusted anyone enough to talk."},
+      {"speaker": "Aldric", "text": "That sounds awful."},
+      {"speaker": "Serath", "text": "It was efficient. I don't miss it."}
+    ]
+  },
+  {
+    "scene": "EV3",
+    "requireCompanion": ["Sera", "Mira"],
+    "lines": [
+      {"speaker": "Mira", "text": "Sera, you've been staring at the treeline for an hour."},
+      {"speaker": "Sera", "text": "Something moved out there."},
+      {"speaker": "Mira", "text": "It's a rabbit. I saw it too. You can relax."},
+      {"speaker": "Sera", "text": "I don't relax. I wait."}
+    ]
+  },
+  {
+    "scene": "1_HUB",
+    "requireCompanion": ["Aldric"],
+    "lines": [
+      {"speaker": "Aldric", "text": "I keep thinking about what comes next. After the training, after the Oath."},
+      {"speaker": "Lysander", "text": "More training. Then more after that. Get used to it."}
+    ]
+  },
+  {
+    "scene": "1_HUB",
+    "requireCompanion": ["Tariel"],
+    "lines": [
+      {"speaker": "Tariel", "text": "This castle has fascinating stonework. Pre-Cataclysm, I'd wager. See the jointing?"},
+      {"speaker": "Sera", "text": "No."},
+      {"speaker": "Tariel", "text": "Your loss. It's magnificent."}
+    ]
+  },
+  {
+    "scene": "11_MORNING",
+    "requireCompanion": ["Aldric", "Vael"],
+    "lines": [
+      {"speaker": "Vael", "text": "You look terrible."},
+      {"speaker": "Aldric", "text": "Thanks. You look like you slept in your armor again."},
+      {"speaker": "Vael", "text": "I did. It's called commitment."}
+    ]
+  },
+  {
+    "scene": "11_MORNING",
+    "requireCompanion": ["Mira"],
+    "lines": [
+      {"speaker": "Mira", "text": "The dew was heavy this morning. Rain's coming. I can taste it."},
+      {"speaker": "Thessaly", "text": "You can taste rain?"},
+      {"speaker": "Mira", "text": "The earth speaks to those who listen. Also, my knee aches."}
+    ]
+  },
+  {
+    "scene": "11_MORNING",
+    "requireCompanion": ["Serath"],
+    "lines": [
+      {"speaker": "Serath", "text": "Guard rotation is two minutes late. Sloppy."},
+      {"speaker": "Caeron", "text": "Perhaps they're just... enjoying the morning?"},
+      {"speaker": "Serath", "text": "In the Dragon Army, two minutes late meant two fewer fingers."},
+      {"speaker": "Caeron", "text": "...I'll go check on them."}
+    ]
+  },
+  {
+    "scene": "11_AFTERNOON",
+    "requireCompanion": ["Thessaly"],
+    "lines": [
+      {"speaker": "Thessaly", "text": "I've been reviewing the castle records. The last Knight Commander here died of a bee sting."},
+      {"speaker": "Aldric", "text": "You're making that up."},
+      {"speaker": "Thessaly", "text": "I never make things up. Reality is absurd enough."}
+    ]
+  },
+  {
+    "scene": "11_AFTERNOON",
+    "requireCompanion": ["Tariel", "Lysander"],
+    "lines": [
+      {"speaker": "Tariel", "text": "Lysander, do you ever wonder about the metaphysical implications of the Oath?"},
+      {"speaker": "Lysander", "text": "No."},
+      {"speaker": "Tariel", "text": "Fascinating. A man entirely unburdened by philosophy."}
+    ]
+  },
+  {
+    "scene": "11_AFTERNOON",
+    "requireCompanion": ["Sera"],
+    "lines": [
+      {"speaker": "Sera", "text": "I scouted the south ridge. Tracks. Boar, mostly. One set I couldn't identify."},
+      {"speaker": "Mira", "text": "Could be a displaced bear. They wander when the streams shift."},
+      {"speaker": "Sera", "text": "Could be. I set snares just in case."}
+    ]
+  },
+  {
+    "scene": "11_EVENING",
+    "requireCompanion": ["Aldric", "Thessaly"],
+    "lines": [
+      {"speaker": "Aldric", "text": "Thessaly, what are you writing?"},
+      {"speaker": "Thessaly", "text": "Notes on your terrible posture during drills. Future scholars will find it illuminating."},
+      {"speaker": "Aldric", "text": "My posture is fine!"},
+      {"speaker": "Thessaly", "text": "The notes disagree."}
+    ]
+  },
+  {
+    "scene": "11_EVENING",
+    "requireCompanion": ["Caeron", "Mira"],
+    "lines": [
+      {"speaker": "Caeron", "text": "In the old days, evenings at court involved music, wine, proper conversation—"},
+      {"speaker": "Mira", "text": "And people starving outside the walls while you danced."},
+      {"speaker": "Caeron", "text": "...That's fair. That's entirely fair."}
+    ]
+  },
+  {
+    "scene": "11_EVENING",
+    "requireCompanion": ["Serath", "Lysander"],
+    "lines": [
+      {"speaker": "Lysander", "text": "Quiet night."},
+      {"speaker": "Serath", "text": "Quiet nights are the worst. Means something's waiting."},
+      {"speaker": "Lysander", "text": "Or it means it's just quiet."},
+      {"speaker": "Serath", "text": "You're an optimist. That's going to get you killed."}
+    ]
+  },
+  {
+    "scene": "14",
+    "requireCompanion": ["Aldric"],
+    "lines": [
+      {"speaker": "Aldric", "text": "Last look at the castle. Strange — I couldn't wait to leave, and now..."},
+      {"speaker": "Thessaly", "text": "Nostalgia. It's a disease. You'll recover."}
+    ]
+  },
+  {
+    "scene": "14",
+    "requireCompanion": ["Sera"],
+    "lines": [
+      {"speaker": "Sera", "text": "Finally. Open road. Real air."},
+      {"speaker": "Caeron", "text": "The castle had perfectly adequate air."},
+      {"speaker": "Sera", "text": "Castle air tastes like dust and regret."}
+    ]
+  },
+  {
+    "scene": "20",
+    "requireCompanion": ["Serath"],
+    "lines": [
+      {"speaker": "Serath", "text": "This road was a Dragon Army supply line. Two years ago, I marched it going the other direction."},
+      {"speaker": "Aldric", "text": "Does that bother you?"},
+      {"speaker": "Serath", "text": "Everything bothers me. I find it motivating."}
+    ]
+  },
+  {
+    "scene": "20",
+    "requireCompanion": ["Tariel"],
+    "lines": [
+      {"speaker": "Tariel", "text": "These mile markers are Pre-Cataclysm. Remarkable preservation."},
+      {"speaker": "Sera", "text": "They're rocks."},
+      {"speaker": "Tariel", "text": "They're history carved in stone. Which is literally what rocks are for."}
+    ]
+  },
+  {
+    "scene": "27",
+    "requireCompanion": ["Lysander"],
+    "lines": [
+      {"speaker": "Lysander", "text": "We should decide quickly. Standing at crossroads gets people killed."},
+      {"speaker": "Thessaly", "text": "Metaphorically or literally?"},
+      {"speaker": "Lysander", "text": "Both, in my experience."}
+    ]
+  },
+  {
+    "scene": "27",
+    "requireCompanion": ["Mira"],
+    "lines": [
+      {"speaker": "Mira", "text": "The wind is pushing south. When nature points, I listen."},
+      {"speaker": "Vael", "text": "We're making tactical decisions based on wind now?"},
+      {"speaker": "Mira", "text": "The wind has outlived every general who ignored it."}
+    ]
+  },
+  {
+    "scene": "35",
+    "requireCompanion": ["Aldric", "Vael"],
+    "lines": [
+      {"speaker": "Vael", "text": "Admit it — you'd be lost without me."},
+      {"speaker": "Aldric", "text": "I'd be quieter without you. That's not the same thing."},
+      {"speaker": "Vael", "text": "Close enough."}
+    ]
+  },
+  {
+    "scene": "35",
+    "requireCompanion": ["Caeron"],
+    "lines": [
+      {"speaker": "Caeron", "text": "I've been meaning to say — I know my name carries... complications. But I'm here to earn my place, not inherit one."},
+      {"speaker": "Lysander", "text": "Then earn it. Words are free."}
+    ]
+  },
+  {
+    "scene": "44",
+    "requireCompanion": ["Serath", "Thessaly"],
+    "lines": [
+      {"speaker": "Thessaly", "text": "Commander, you've been scanning the horizon all day."},
+      {"speaker": "Serath", "text": "Old habit. The Dragon Army taught me what comes over horizons."},
+      {"speaker": "Thessaly", "text": "And what's that?"},
+      {"speaker": "Serath", "text": "Nothing good. But at least you see it coming."}
+    ]
+  },
+  {
+    "scene": "44",
+    "requireCompanion": ["Mira"],
+    "lines": [
+      {"speaker": "Mira", "text": "The trees here are sick. See how the bark peels? Something poisoned the water upstream."},
+      {"speaker": "Aldric", "text": "Dragon Army?"},
+      {"speaker": "Mira", "text": "War. War poisons everything it touches. The earth remembers longer than we do."}
+    ]
+  },
+  {
+    "scene": "46",
+    "requireCompanion": ["Mira"],
+    "lines": [
+      {"speaker": "Mira", "text": "These charges are absurd. I healed people. Since when is that a crime?"},
+      {"speaker": "Thessaly", "text": "Since someone powerful needed a scapegoat. The law serves those who write it."},
+      {"speaker": "Mira", "text": "Then the law needs better authors."}
+    ]
+  },
+  {
+    "scene": "46",
+    "requireCompanion": ["Caeron"],
+    "lines": [
+      {"speaker": "Caeron", "text": "I know how these tribunals work. My family used them often — usually against people like Mira."},
+      {"speaker": "Sera", "text": "And you're telling us this because...?"},
+      {"speaker": "Caeron", "text": "Because I know where the levers are. Let me help."}
+    ]
+  },
+  {
+    "scene": "53",
+    "requireCompanion": ["Aldric"],
+    "lines": [
+      {"speaker": "Aldric", "text": "We've come a long way from the training yard. I used to worry about holding a sword right. Now I worry about everything else."},
+      {"speaker": "Lysander", "text": "That's called growing up. It only gets worse."}
+    ]
+  },
+  {
+    "scene": "53",
+    "requireCompanion": ["Thessaly", "Sera"],
+    "lines": [
+      {"speaker": "Thessaly", "text": "Sera, I notice you've been less... prickly lately."},
+      {"speaker": "Sera", "text": "I've been exactly the same."},
+      {"speaker": "Thessaly", "text": "You shared your rations yesterday. Without being asked."},
+      {"speaker": "Sera", "text": "I wasn't hungry. Don't read into it."}
+    ]
+  },
+  {
+    "scene": "53",
+    "requireCompanion": ["Serath"],
+    "lines": [
+      {"speaker": "Serath", "text": "You've held this group together longer than most commanders I served under. Don't let that go to your head."},
+      {"speaker": "Tariel", "text": "A compliment from Commander Serath. I should note the date — for historical purposes."},
+      {"speaker": "Serath", "text": "It wasn't a compliment. It was a threat with context."}
+    ]
+  },
+  {
+    "scene": "53",
+    "requireRomance": ["Aldric Voss", "Thessaly Brightwater", "Sera Nighthollow", "Mira of the Oaks", "Vael Ashmore"],
+    "requireCompanion": ["Aldric"],
+    "lines": [
+      {"speaker": "Thessaly", "text": "You two have been walking closer together lately. I'm not judging — just observing."},
+      {"speaker": "Aldric", "text": "Thessaly observes everything. It's her worst quality."},
+      {"speaker": "Thessaly", "text": "My worst quality is my honesty. This is my second worst."}
+    ]
+  },
+  {
+    "scene": "REST_1",
+    "requireCompanion": ["Aldric", "Vael"],
+    "lines": [
+      {"speaker": "Aldric", "text": "First watch or second?"},
+      {"speaker": "Vael", "text": "First. I don't trust you to stay awake."},
+      {"speaker": "Aldric", "text": "I stayed awake last time!"},
+      {"speaker": "Vael", "text": "You were sleep-talking about cheese. That doesn't count."}
+    ]
+  },
+  {
+    "scene": "REST_1",
+    "requireCompanion": ["Tariel"],
+    "lines": [
+      {"speaker": "Tariel", "text": "Did you know that campfire smoke repels certain spirits? Or attracts them. The sources disagree."},
+      {"speaker": "Sera", "text": "Comforting."},
+      {"speaker": "Tariel", "text": "Knowledge is always comforting. Even the terrifying kind."}
+    ]
+  },
+  {
+    "scene": "REST_1",
+    "requireCompanion": ["Mira"],
+    "lines": [
+      {"speaker": "Mira", "text": "Let me see those blisters. All of you. Don't think I haven't noticed the limping."},
+      {"speaker": "Aldric", "text": "It's nothing—"},
+      {"speaker": "Mira", "text": "Sit. Now. An untreated blister becomes an infection, and an infection becomes a grave. Sit."}
+    ]
+  },
+  {
+    "scene": "REST_2",
+    "requireCompanion": ["Serath", "Lysander"],
+    "lines": [
+      {"speaker": "Serath", "text": "You served at Kalaman, didn't you?"},
+      {"speaker": "Lysander", "text": "South wall. Three months."},
+      {"speaker": "Serath", "text": "I was on the other side. North approach."},
+      {"speaker": "Lysander", "text": "Small world."},
+      {"speaker": "Serath", "text": "Getting smaller every day."}
+    ]
+  },
+  {
+    "scene": "REST_2",
+    "requireCompanion": ["Thessaly"],
+    "lines": [
+      {"speaker": "Thessaly", "text": "I've been keeping a tally. Aldric and Vael have argued forty-three times since we left the castle."},
+      {"speaker": "Mira", "text": "Only forty-three?"},
+      {"speaker": "Thessaly", "text": "I may have missed a few while sleeping. Though they argue in their sleep too, so it's hard to say."}
+    ]
+  },
+  {
+    "scene": "REST_2",
+    "requireCompanion": ["Caeron"],
+    "lines": [
+      {"speaker": "Caeron", "text": "I used to have servants set up my camp. Lay out my bedroll. Warm my wine."},
+      {"speaker": "Sera", "text": "And now?"},
+      {"speaker": "Caeron", "text": "Now I'm sleeping on roots and I've never been more awake. Funny how that works."}
+    ]
+  },
+  {
+    "scene": "REST_2",
+    "requireRomance": ["Aldric Voss", "Thessaly Brightwater", "Sera Nighthollow", "Mira of the Oaks", "Vael Ashmore"],
+    "requireCompanion": ["Mira"],
+    "lines": [
+      {"speaker": "Mira", "text": "Love on the road is a fragile thing. Like a seedling in a storm. But sometimes that's when roots grow deepest."},
+      {"speaker": "Sera", "text": "Are you giving romantic advice through plant metaphors again?"},
+      {"speaker": "Mira", "text": "Always."}
+    ]
+  },
+  {
+    "scene": "REST_3",
+    "requireCompanion": ["Aldric"],
+    "lines": [
+      {"speaker": "Aldric", "text": "Do you think we're ready? For whatever's coming?"},
+      {"speaker": "Lysander", "text": "Nobody's ever ready. You just show up and do what needs doing."},
+      {"speaker": "Aldric", "text": "That's either very wise or very depressing."},
+      {"speaker": "Lysander", "text": "It's both. Welcome to soldiering."}
+    ]
+  },
+  {
+    "scene": "REST_3",
+    "requireCompanion": ["Tariel", "Thessaly"],
+    "lines": [
+      {"speaker": "Tariel", "text": "Thessaly, you've read the Ergothian Campaign Journals, yes?"},
+      {"speaker": "Thessaly", "text": "Cover to cover. Twice."},
+      {"speaker": "Tariel", "text": "Then you know we're approaching the exact terrain where Garibald's Third made their stand."},
+      {"speaker": "Thessaly", "text": "They lost."},
+      {"speaker": "Tariel", "text": "Heroically, though. That counts for something."},
+      {"speaker": "Thessaly", "text": "It does not."}
+    ]
+  },
+  {
+    "scene": "60",
+    "requireCompanion": ["Serath"],
+    "lines": [
+      {"speaker": "Serath", "text": "From here, there's no turning back. You all understand that."},
+      {"speaker": "Aldric", "text": "We understood that when we took the Oath."},
+      {"speaker": "Serath", "text": "Good. Just wanted to hear someone say it out loud."}
+    ]
+  },
+  {
+    "scene": "60",
+    "requireCompanion": ["Mira", "Sera"],
+    "lines": [
+      {"speaker": "Mira", "text": "The land ahead feels... wrong. Like the earth is holding its breath."},
+      {"speaker": "Sera", "text": "I feel it too. Wind's died. Birds stopped singing a mile back."},
+      {"speaker": "Mira", "text": "Stay close, all of you."}
+    ]
+  },
+  {
+    "scene": "62",
+    "requireCompanion": ["Thessaly"],
+    "lines": [
+      {"speaker": "Thessaly", "text": "If I don't make it through this — my journals are in the oilskin pouch. Left saddlebag. Promise me they'll reach the Library."},
+      {"speaker": "Aldric", "text": "You'll deliver them yourself."},
+      {"speaker": "Thessaly", "text": "Humor me. Chroniclers plan for the worst. It's professional."}
+    ]
+  },
+  {
+    "scene": "62",
+    "requireCompanion": ["Vael"],
+    "lines": [
+      {"speaker": "Vael", "text": "Aldric. If things go badly in there — I want you to know you're not the worst squire I've trained with."},
+      {"speaker": "Aldric", "text": "That's the nicest thing you've ever said to me."},
+      {"speaker": "Vael", "text": "Don't get used to it."}
+    ]
+  },
+  {
+    "scene": "64B_WOLVES",
+    "requireCompanion": ["Sera"],
+    "lines": [
+      {"speaker": "Sera", "text": "Wolves don't attack groups this size. Not unless something's driving them."},
+      {"speaker": "Serath", "text": "Agreed. Something worse is out there, and we just met its dinner."}
+    ]
+  },
+  {
+    "scene": "64B_WOLVES",
+    "requireCompanion": ["Mira"],
+    "lines": [
+      {"speaker": "Mira", "text": "Those wolves were starving. Ribs showing through the fur. Whatever's poisoning this land is killing everything."},
+      {"speaker": "Tariel", "text": "A corruption this deep suggests magical origin. Dark magic, sustained over months."},
+      {"speaker": "Mira", "text": "Then we find the source and end it. The land deserves that much."}
+    ]
+  },
+  {
+    "scene": "68",
+    "requireCompanion": ["Aldric", "Lysander"],
+    "lines": [
+      {"speaker": "Aldric", "text": "My hands are shaking. Is that normal?"},
+      {"speaker": "Lysander", "text": "Means you're still alive. When they stop shaking is when you worry."},
+      {"speaker": "Aldric", "text": "How are yours?"},
+      {"speaker": "Lysander", "text": "Steady. But I've had more practice being terrified."}
+    ]
+  },
+  {
+    "scene": "68",
+    "requireCompanion": ["Caeron"],
+    "lines": [
+      {"speaker": "Caeron", "text": "This is it, then. The moment where we find out what we're actually made of."},
+      {"speaker": "Sera", "text": "Bones and bad decisions, mostly."},
+      {"speaker": "Caeron", "text": "...I was going for inspirational."},
+      {"speaker": "Sera", "text": "I know. It was a good effort."}
+    ]
+  },
+  {
+    "scene": "69",
+    "requireCompanion": ["Vael"],
+    "lines": [
+      {"speaker": "Vael", "text": "A duel. Proper, formal, by the Measure. This is how it should be decided."},
+      {"speaker": "Thessaly", "text": "You sound almost excited."},
+      {"speaker": "Vael", "text": "I respect the form. Even when the stakes are terrible, the form matters."}
+    ]
+  },
+  {
+    "scene": "69",
+    "requireCompanion": ["Serath"],
+    "lines": [
+      {"speaker": "Serath", "text": "In the Dragon Army, disputes were settled by the commander's word. No appeal. No ceremony."},
+      {"speaker": "Aldric", "text": "And here?"},
+      {"speaker": "Serath", "text": "Here you get to bleed for the privilege of being heard. I suppose that's progress."}
+    ]
+  },
+  {
+    "scene": "BV1",
+    "requireCompanion": ["Mira"],
+    "lines": [
+      {"speaker": "Mira", "text": "The smoke — I can smell it from here. That's not just wood burning. That's homes. Lives."},
+      {"speaker": "Aldric", "text": "Then we move faster."},
+      {"speaker": "Mira", "text": "Yes. We do."}
+    ]
+  },
+  {
+    "scene": "BV2",
+    "requireCompanion": ["Serath"],
+    "lines": [
+      {"speaker": "Serath", "text": "I've seen villages burn before. From the other side. I told myself it was necessary."},
+      {"speaker": "Lysander", "text": "And now?"},
+      {"speaker": "Serath", "text": "Now I know better. That's the punishment — knowing."}
+    ]
+  },
+  {
+    "scene": "BV3",
+    "requireCompanion": ["Thessaly", "Aldric"],
+    "lines": [
+      {"speaker": "Thessaly", "text": "I'll record every name. Every face I can remember. They deserve that."},
+      {"speaker": "Aldric", "text": "They deserve more than words on a page."},
+      {"speaker": "Thessaly", "text": "They do. But words are what I have. And words outlast everything — even this."}
+    ]
+  },
+  {
+    "scene": "F1_TAVERN_SWORD",
+    "requireCompanion": ["Aldric"],
+    "requireClass": "Fighter",
+    "lines": [
+      {"speaker": "Aldric", "text": "A tavern fight? Really? I thought Fighters had more dignity than this."},
+      {"speaker": "Sera", "text": "Dignity is for people who haven't been in enough taverns."}
+    ]
+  },
+  {
+    "scene": "F1_TAVERN_SWORD",
+    "requireCompanion": ["Vael"],
+    "requireClass": "Fighter",
+    "lines": [
+      {"speaker": "Vael", "text": "Your grip's wrong for a bar fight. Choke up on the handle — less reach, more control in tight spaces."},
+      {"speaker": "Aldric", "text": "Since when are you an expert on tavern brawling?"},
+      {"speaker": "Vael", "text": "Everyone has hobbies."}
+    ]
+  },
+  {
+    "scene": "F3_MERCENARY_CAMP",
+    "requireCompanion": ["Serath"],
+    "requireClass": "Fighter",
+    "lines": [
+      {"speaker": "Serath", "text": "Mercenaries. I know how they think — loyalty to coin, not cause. Watch for the ones who won't meet your eyes. They're the dangerous ones."},
+      {"speaker": "Lysander", "text": "Speaks from experience?"},
+      {"speaker": "Serath", "text": "I was the one who wouldn't meet anyone's eyes. Draw your own conclusions."}
+    ]
+  }
+]

@@ -1,0 +1,1296 @@
+{
+  "12": {
+    "roundStart": [
+      "Aldric settles into his guard — feet wide, practice blade high, the stance Ser Aldous drilled into both of you a hundred times. His eyes are calm. He has been waiting for this.",
+      "You circle each other on the yard stones. The watching squires are silent. This is not entertainment. This is two people finding out who they are.",
+      "Aldric shifts his weight. You know that tell — the left shoulder drops a fraction before his high combination. Months of sparring have taught you to read him. The question is whether he has learned to read you."
+    ],
+    "playerHit": [
+      "Your practice blade catches Aldric across the ribs. He grunts — surprised. That one landed clean.",
+      "A quick strike to his guard arm. The impact is solid even through the padding. Aldric adjusts his stance, respecting the reach.",
+      "You find the gap between his guard and his shoulder. The blade connects and Aldric nods, once — acknowledging the skill without conceding the bout."
+    ],
+    "playerMiss": [
+      "Aldric reads your swing before you finish it. His blade is already where yours was going, turning it aside with a textbook parry.",
+      "Too telegraphed. Aldric steps inside the arc of your swing and you hit nothing but air.",
+      "He is faster than he looks. Your strike passes where he was standing a heartbeat ago."
+    ],
+    "playerCrit": [
+      "The practice blade comes down perfectly — timing, angle, force, all of it. Aldric staggers back two steps. The watching squires hold their breath.",
+      "You catch him mid-transition, between one guard and the next. The impact rattles his practice blade loose and he barely recovers it."
+    ],
+    "enemyBloodied": [
+      "Aldric is breathing hard now. A bruise is already darkening along his jaw. But his guard has not dropped. If anything, it has gotten tighter.",
+      "You have pushed him to the back foot. His eyes have changed — the calm replaced by something sharper. He is taking this seriously now."
+    ],
+    "enemyNearDeath": [
+      "Aldric is struggling. His guard arm is slow, his footwork heavy. One more clean hit will end this. He knows it too — you can see the decision forming: commit everything to one last combination.",
+      "The bout is yours if you can finish it. Aldric's practice blade wavers. But cornered fighters are the most dangerous kind."
+    ],
+    "enemyDeath": [
+      "Aldric's practice blade clatters to the stones. He stands there for a moment, breathing hard, then grins. \"When did you get fast?\"",
+      "The final strike breaks his guard cleanly. Aldric staggers, catches himself, and raises his hand. The bout is yours."
+    ],
+    "playerHit_scar": [
+      "The practice blade catches you across the face. Even blunted, the impact splits the skin above your eyebrow. That will leave a thin line.",
+      "Aldric's overhead combination drives through your guard and catches your forearm. The bruise will fade. The lesson will not."
+    ],
+    "playerHurt": [
+      "His riposte catches your shoulder. The padding absorbs most of it but the force is real — Aldric does not pull his strikes.",
+      "The practice blade finds your ribs. You feel the impact through the padding. That will ache tomorrow.",
+      "Aldric's counter catches you on the hip. Fast, precise, exactly where Ser Aldous taught him to aim."
+    ],
+    "playerHurtBad": [
+      "You take a combination you did not see coming. Shoulder, ribs, thigh — three hits in the time it takes to raise your guard.",
+      "Aldric puts everything into an overhead strike. Your guard buckles. Stars behind your eyes."
+    ],
+    "playerDowned": [
+      "Aldric's blade catches you square and your legs simply give out. The practice stones are cool against your back. He stands over you, blade raised, then lowers it and extends his hand. \"Better than last time.\""
+    ],
+    "companionActs": {},
+    "enemyHitPlayer": "Aldric steps in with a sharp, short combination. The practice blade finds its mark.",
+    "enemyMissPlayer": "Aldric lunges and you turn it aside — the parry Ser Aldous taught you in your first week. Muscle memory.",
+    "enemyHitCompanion": {},
+    "enemyMissCompanion": {}
+  },
+  "26": {
+    "roundStart": [
+      "Four shapes on the south road ahead — taller than men, scaled, moving with the loose discipline of soldiers who know they outnumber you. Baaz draconians. Your first Dragon Army contact. The scales catch the light like tarnished bronze.",
+      "The draconians fan out across the road with practiced efficiency. Two forward with shortswords, two hanging back with javelins. They have done this before — to merchant caravans, to refugees, to anyone caught alone on this road.",
+      "Draconian steel rings as they advance. The sound is different from human blades — a lower pitch, something in the alloy. Behind you, Aldric sets his feet. Ahead, four pairs of reptilian eyes track your every movement.",
+      "The remaining draconians press forward, stepping over the stone forms of their fallen. No grief, no hesitation. The Dragon Army does not mourn — it advances."
+    ],
+    "playerHit": [
+      "Your blade catches the draconian across the chest. Bronze scales part under Solamnic steel. The creature hisses — a sound like a serpent drowning.",
+      "The longsword bites deep. Dark blood wells through the gap in its scales. The draconian snarls and lashes back with its off-hand claws.",
+      "A solid strike to the draconian's sword arm. It drops its weapon, recovers it with inhuman speed, but the damage shows.",
+      "You find the joint between shoulder and neck where the scales thin. The blade goes in and the draconian screams — not like a man, not like a beast, something between."
+    ],
+    "playerMiss": [
+      "The draconian's scales deflect your blade. The edge skids across bronze plating and you are suddenly off-balance, exposed.",
+      "It is faster than it looks. Your sword passes where the draconian was standing and meets only air.",
+      "The draconian twists aside with reptilian speed. Your blade sparks against the road stones.",
+      "You swing and the draconian drops under it — a movement no human soldier would attempt. It reads different. Everything about fighting draconians reads different."
+    ],
+    "playerCrit": [
+      "The blade comes down between the scales with devastating precision. The draconian staggers, dark blood spraying, its legs buckling.",
+      "You catch it mid-lunge. The longsword drives through the chest scales and the draconian's eyes go wide — shocked, almost offended."
+    ],
+    "enemyBloodied": [
+      "The draconian is wounded and furious. Blood slicks its bronze scales dark. It drops into a crouch — lower, faster, more desperate.",
+      "Dark blood trails behind it on the road stones. The draconian bares fangs that were not designed for a creature that walks upright."
+    ],
+    "enemyNearDeath": [
+      "The draconian can barely stand but it will not retreat. Dragon Army soldiers do not retreat. Its scales have gone dull — the lustre fading as the life beneath them fails.",
+      "One more strike. The draconian is swaying, its sword arm trembling. You can already see it happening — the stone transformation gathering at its extremities."
+    ],
+    "enemyDeath": [
+      "The draconian falls. Before it hits the ground, the flesh begins to harden. Bronze scales turn grey, then white. In seconds, a stone statue lies on the south road — weapon still raised, snarl frozen forever.",
+      "It dies mid-step and the petrification takes it instantly. Your sword lodges in what is now solid stone. You wrench it free with a crack that echoes off the roadside trees."
+    ],
+    "playerHit_scar": [
+      "A draconian claw rakes across your face. Three parallel lines, deep enough to reach bone. The blood is immediate and blinding.",
+      "The javelin catches your side below the armour line. It punches through cloth and flesh both. The draconian who threw it is already reaching for another.",
+      "Claws and shortsword together — the draconian fights with both. One catches your arm and opens it from elbow to wrist. That mark will stay."
+    ],
+    "playerHurt": [
+      "A javelin clips your shoulder. The impact spins you half-around. Draconian javelins are heavier than human ones.",
+      "The shortsword catches your guard and drives through. Not deep, but the edge is sharp and the cut stings.",
+      "Draconian claws rake your shield arm. The chainmail holds but the force bruises bone.",
+      "A glancing blow from the draconian's tail. You did not know they fought with their tails. Now you do."
+    ],
+    "playerHurtBad": [
+      "Two draconians catch you between them. Shortsword from the left, claws from the right. Your vision narrows and the south road tilts.",
+      "The draconian's shortsword finds a gap in your armour. Cold steel, then heat — the kind of heat that means the wound is serious."
+    ],
+    "playerDowned": [
+      "A draconian blade catches you wrong and the road comes up fast. Stone and dirt against your face. You can hear Aldric shouting your name, the clash of steel, a draconian's hissing death cry. The sky above is grey and indifferent."
+    ],
+    "companionActs": {
+      "Aldric_flank": "Aldric moves to your right, forcing the draconians to split their attention. His shield catches a javelin meant for your back.",
+      "Aldric_shield": "Aldric locks his shield into the gap, creating a wall of steel and stubbornness. The draconians cannot flank you while he holds.",
+      "Aldric_aggressive": "Aldric charges the nearest draconian with a roar. It is not subtle. It does not need to be.",
+      "Aldric_hit": "Aldric's blade crunches into draconian scales. The creature stumbles.",
+      "Aldric_miss": "Aldric's sword skids across bronze scales. The draconian barely notices.",
+      "generic_distraction": "Your companion draws the draconians' attention — just long enough.",
+      "generic_hit": "Your companion lands a solid blow on the nearest draconian.",
+      "generic_miss": "Your companion's strike deflects off draconian scales."
+    },
+    "enemyHitPlayer": "The draconian lunges — shortsword low, claws high. A combination designed for things with four weapons.",
+    "enemyMissPlayer": "The draconian strikes and you turn it aside. Its blade screams against yours and you feel the inhuman strength behind it.",
+    "enemyHitCompanion": {
+      "Aldric": "The draconian gets past Aldric's shield. Claws rake his arm and he grits his teeth.",
+      "generic": "The draconian turns on your companion. Claws and blade together."
+    },
+    "enemyMissCompanion": {
+      "Aldric": "Aldric catches the draconian's lunge on his shield and turns it. Textbook.",
+      "generic": "The draconian swings at your companion and misses. Barely."
+    }
+  },
+  "43": {
+    "roundStart": [
+      "The wounded Baaz is cornered against the ridge face, one wing dragging. It bares its teeth — all of them, more than any mouth should hold. Wounded does not mean harmless. Wounded means desperate.",
+      "The draconian circles, looking for an opening to run. Not to fight — to escape. Every second you hold it here is a second it cannot signal its patrol.",
+      "It is alone and hurt and far from its unit. The scales along its left side are dark with blood. But the shortsword in its right hand is steady. Wounded soldiers are still soldiers."
+    ],
+    "playerHit": [
+      "Your blade catches the draconian's injured side. It screams — a sound that carries farther than you would like.",
+      "The longsword opens a new wound across its shoulder. Dark blood on bronze scales.",
+      "A solid strike. The draconian reels, its good wing flaring for balance."
+    ],
+    "playerMiss": [
+      "The draconian is faster than you expected — wounded or not, it moves with reptilian speed.",
+      "Your sword catches the ridge face instead. Sparks on stone. The draconian is already somewhere else.",
+      "It dodges sideways, favouring its wounded side but still quick enough to evade."
+    ],
+    "playerCrit": [
+      "You catch it perfectly. The blade drives through weakened scales and the draconian drops to its knees, snarling.",
+      "The strike finds the wound that was already there and makes it final. The draconian's eyes go wide."
+    ],
+    "enemyBloodied": [
+      "The draconian is bleeding from half a dozen wounds now. Its movements are jerky, desperate. It keeps glancing behind it — toward where its patrol would be.",
+      "Blood trails it across the ridge stones. The draconian is running out of options and it knows it."
+    ],
+    "enemyNearDeath": [
+      "The draconian can barely stand. It leans against the ridge face, sword arm shaking. One more hit. But it makes one last attempt to bolt.",
+      "It is done. The draconian's scales have gone dull and grey at the edges. The petrification is already beginning, anticipating what is coming."
+    ],
+    "enemyDeath": [
+      "The Baaz falls and turns to stone against the ridge face — a grotesque statue frozen in its last attempt to flee.",
+      "It petrifies mid-step. The stone form topples and shatters against the rocks below."
+    ],
+    "playerHit_scar": [
+      "The draconian lashes out in desperation — claws rake your forearm before you can pull back. Deep. Ragged. The scar will look like claw marks because that is exactly what they are.",
+      "Its tail catches your face. A thin line opens from temple to jaw. You will carry that."
+    ],
+    "playerHurt": [
+      "The draconian's shortsword catches your guard. Not deep, but the desperation behind it adds force.",
+      "Claws scrape across your armour. One finds a gap and draws blood.",
+      "It lashes its tail at your legs. The impact staggers you."
+    ],
+    "playerHurtBad": [
+      "The wounded draconian fights like a cornered animal — all claws and teeth and fury. You take hits you should have blocked.",
+      "A desperate lunge drives the shortsword through your guard. You feel cold steel."
+    ],
+    "playerDowned": [
+      "The draconian catches you with a wild slash and you go down against the ridge. The sky swims. Somewhere below, Aldric is already running toward you."
+    ],
+    "companionActs": {
+      "Aldric_flank": "Aldric arrives from below the ridge, breathing hard. \"I've got its flank. Finish it.\"",
+      "Aldric_hit": "Aldric's blade catches the draconian from behind. It stumbles.",
+      "Aldric_miss": "Aldric's swing goes wide — the terrain is treacherous.",
+      "generic_hit": "Your companion lands a blow that makes the draconian stagger.",
+      "generic_miss": "Your companion's strike catches stone instead of scales."
+    },
+    "enemyHitPlayer": "The wounded draconian lunges — desperate, sloppy, but still strong enough to hurt.",
+    "enemyMissPlayer": "It swings wildly and you step aside. Desperation makes for poor aim.",
+    "enemyHitCompanion": {
+      "Aldric": "The draconian turns on Aldric as he arrives. Claws catch his shoulder before he can raise his shield.",
+      "generic": "The draconian lashes at your companion. A claw finds flesh."
+    },
+    "enemyMissCompanion": {
+      "Aldric": "The draconian swings at Aldric. He blocks it easily — it is too wounded to be precise.",
+      "generic": "The draconian tries for your companion and misses. It is fading."
+    }
+  },
+  "51": {
+    "roundStart": [
+      "Three Baaz and their corporal come up behind the refugee column like wolves scenting blood. The corporal hangs back with a crossbow, clicking orders. You and Aldric form the rearguard. Hold them for three rounds. That is all the refugees need.",
+      "The draconians fan out across the road. They are testing your line, probing for weakness. The corporal barks an order and one draconian surges forward. Hold.",
+      "Round two. The refugees are moving but not fast enough. Behind you, draconians press the advantage. Aldric's breathing is steady beside you. Hold the line.",
+      "The recall horn will sound soon. You can feel it — the fight shifting, the draconians growing wary. One more round. Just one more."
+    ],
+    "playerHit": [
+      "Your blade catches the draconian and throws it back. Not a killing blow, but it buys time — and time is all you need.",
+      "The longsword opens a line across the Baaz's chest. It hisses and falls back a step.",
+      "You catch the corporal's crossbow with a thrown javelin. The stock shatters. Now he has to come close.",
+      "A solid hit. The draconian staggers and the line holds for another breath."
+    ],
+    "playerMiss": [
+      "The draconian ducks your swing and presses forward. You give a step. Giving steps is not losing — not when you are buying time.",
+      "Your blade catches scales and glances. The draconian barely slows.",
+      "The corporal dodges the blow meant for him. He is a better soldier than the draconians he commands."
+    ],
+    "playerCrit": [
+      "The strike is perfect — timing, angle, weight. The draconian goes down and turns to stone in the middle of the road, creating a barrier the others have to navigate.",
+      "You catch the draconian at full extension. The blade goes through bronze scales like they were parchment."
+    ],
+    "enemyBloodied": [
+      "The draconian is wounded but the corporal's command keeps it pressing forward. Discipline over pain.",
+      "Dark blood on the road stones. The draconian is fading but the corporal has not yet called retreat."
+    ],
+    "enemyNearDeath": [
+      "The draconian is barely standing. Behind it, the corporal is weighing the cost. The recall horn must come soon.",
+      "One more hit. The stone transformation is already gathering in the draconian's extremities."
+    ],
+    "enemyDeath": [
+      "The Baaz petrifies on the road. Another stone obstacle for the patrol to navigate. You are making this road expensive.",
+      "It falls and turns to stone. The corporal looks at the statue, looks at you, and his hand drifts toward his signal horn."
+    ],
+    "playerHit_scar": [
+      "A draconian blade catches your face in the press. Blood and adrenaline — the scar will sit along your jawline.",
+      "The corporal's crossbow bolt grazes your temple. An inch closer and this fight would be over."
+    ],
+    "playerHurt": [
+      "A draconian blade gets through your guard. Not deep, but it stings and your grip slips.",
+      "The crossbow bolt clips your shoulder. The corporal is a decent shot.",
+      "Claws rake your shield arm. Bruising through the chain.",
+      "A draconian shoulder-checks you in the press. You stumble but keep your feet."
+    ],
+    "playerHurtBad": [
+      "Two draconians catch you between them while the corporal fires from range. You are being bracketed. The rearguard is buckling.",
+      "The draconian's blade finds a real gap. Cold steel, then heat. Your left side goes numb."
+    ],
+    "playerDowned": [
+      "A Baaz breaks through your guard and the road tilts. Aldric roars something — a name, yours — and steps over you. The refugees are still moving. That is what matters."
+    ],
+    "companionActs": {
+      "Aldric_flank": "Aldric holds the left flank. Nothing passes him. His shield is a wall and his sword is a promise.",
+      "Aldric_shield": "Aldric locks shields with you. The draconians hit a wall of Solamnic steel.",
+      "Aldric_aggressive": "Aldric surges forward with a battle cry. The nearest draconian flinches.",
+      "Aldric_hit": "Aldric's blade catches a draconian mid-charge. It crumples.",
+      "Aldric_miss": "Aldric overextends and his blade finds air. The draconian presses the gap.",
+      "generic_hit": "Your companion's weapon finds the enemy. One more hit in the ledger.",
+      "generic_miss": "Your companion's strike goes wide. The draconian presses forward."
+    },
+    "enemyHitPlayer": "The draconian presses forward — blade, claws, bulk. It wants through you, not around you.",
+    "enemyMissPlayer": "The draconian lunges and you turn it. Your feet hold. The line holds.",
+    "enemyHitCompanion": {
+      "Aldric": "A draconian gets past Aldric's shield. He takes the hit without breaking formation.",
+      "generic": "The draconian catches your companion. Chain absorbs most of it."
+    },
+    "enemyMissCompanion": {
+      "Aldric": "The draconian strikes at Aldric. His shield sends it spinning.",
+      "generic": "The draconian misses your companion in the press."
+    }
+  },
+  "65": {
+    "roundStart": [
+      "Arrows from the treeline — the first warning is the sound of crossbow bolts hitting the road stones. Three soldiers emerge from the forest edge. Behind them, something larger moves between the trees — tall, winged, radiating command. A Sivak draconian. This is not a patrol. This is an assassination squad.",
+      "The Sivak officer circles overhead, its wings catching the light. It carries a greatsword that should be too large for aerial combat and wields it like it weighs nothing. The soldiers press forward, drawing courage from the aura of their commander.",
+      "The soldiers fight with renewed ferocity — the Sivak's command aura turning adequate fighters into dangerous ones. The Sivak itself drops from above without warning, strikes, and climbs again.",
+      "The Sivak lands. It is done circling. Forty-eight hit points of armoured draconian with a greatsword, standing between you and the road ahead. Its eyes are intelligent, calculating. It has your description. It knows your name."
+    ],
+    "playerHit": [
+      "Your blade catches a soldier through his guard. The formation staggers.",
+      "You time the Sivak's descent and catch it with an upward strike. It banks away, trailing dark blood.",
+      "A clean strike. The soldier drops to one knee.",
+      "The longsword bites into the Sivak's scales. Darker than Baaz, harder than Kapak — but Solamnic steel finds a way."
+    ],
+    "playerMiss": [
+      "The Sivak launches skyward and your blade catches nothing but air. Fighting a flying enemy on the ground is a new kind of frustrating.",
+      "The soldiers' formation absorbs your strike. The Commander's Aura makes them fight like men with nothing to lose.",
+      "You swing at the Sivak as it dives. It adjusts mid-flight — no human could do that.",
+      "The soldier catches your blade on his shield. Under the Sivak's command, his parry is crisp and professional."
+    ],
+    "playerCrit": [
+      "You catch the Sivak mid-landing. The greatsword drives through its guard and the draconian actually staggers — genuine surprise on a face designed for menace.",
+      "The strike shatters a soldier's shield and the man behind it. The Sivak hisses — losing resources."
+    ],
+    "enemyBloodied": [
+      "The Sivak is wounded. It stays airborne longer now, circling, conserving. Wounded Sivaks are more dangerous, not less — they fight smarter when hurt.",
+      "Soldiers down, formation broken. The Sivak lands and fights alone now. Its aura flickers — command presence wavering with its blood."
+    ],
+    "enemyNearDeath": [
+      "The Sivak is dying. REMEMBER: do not kill it with a melee blow. Shape Steal will copy your form. Ranged. Force it to flee. Anything but a blade.",
+      "The Sivak staggers. Its shape is already flickering — the transformation ability activating involuntarily. End it at range or not at all."
+    ],
+    "enemyDeath": [
+      "The Sivak falls — and as it dies, its form shimmers and shifts. For one horrible moment, your own face stares back at you from the road stones. Then the illusion fades and it is just a dead draconian.",
+      "The last soldier throws down his weapon. The Sivak lies still on the forest road. Sealed orders spill from its belt pouch — written in Draconic, stamped with a black wing seal. Your name is on them."
+    ],
+    "playerHit_scar": [
+      "The Sivak's greatsword catches you from above — a diving strike with forty feet of momentum behind it. The wound is deep and wide.",
+      "A crossbow bolt from the soldiers finds your thigh. Punches through chain and lodges. That extraction will leave a mark.",
+      "The Sivak's claws rake your back in a flyby. Four parallel lines that will never fully fade."
+    ],
+    "playerHurt": [
+      "The Sivak dives and its greatsword clips your shoulder. The force of a forty-foot dive behind it.",
+      "A crossbow bolt from the treeline catches your arm. The soldiers are using range while the Sivak pins you.",
+      "The Sivak's wing buffets you as it climbs. The wind knocks you off balance.",
+      "A soldier catches you from behind while you track the Sivak overhead. Divided attention is deadly."
+    ],
+    "playerHurtBad": [
+      "The Sivak drops from directly above. Greatsword, claws, and the full weight of a draconian — the impact drives you to your knees.",
+      "Soldiers and Sivak coordinate — ground and air simultaneously. The Dragon Army's combined arms doctrine, executed against you personally."
+    ],
+    "playerDowned": [
+      "The Sivak's greatsword drives you into the road. The sealed orders scatter in the wind. Through dimming vision, you see your companions engaging — but the Sivak is already climbing, already circling for another pass."
+    ],
+    "companionActs": {
+      "Aldric_flank": "Aldric locks the soldiers in melee, freeing you to deal with the Sivak. \"I've got the ground — you've got the sky.\"",
+      "Aldric_shield": "Aldric raises his shield as the Sivak dives. The greatsword strikes oak and Aldric's arm goes numb, but the attack is deflected.",
+      "Aldric_hit": "Aldric's blade catches a soldier cleanly. One less bodyguard for the Sivak.",
+      "Aldric_miss": "Aldric swings at the Sivak as it passes. It is already thirty feet up.",
+      "Sera_shot": "Sera tracks the Sivak and fires. The arrow catches its wing membrane. \"You want it down, I'll bring it down.\"",
+      "Sera_mark": "Sera calls: \"It's diving from the left — wait for the stall, then strike.\"",
+      "generic_distraction": "Your companion draws the soldiers' attention. The Sivak circles, reassessing.",
+      "generic_hit": "Your companion lands a hit on the Sivak as it swoops low.",
+      "generic_miss": "Your companion's weapon passes under the Sivak as it climbs."
+    },
+    "enemyHitPlayer": "The Sivak dives — forty feet of acceleration behind a greatsword aimed at your head.",
+    "enemyMissPlayer": "The Sivak swoops and you throw yourself flat. The greatsword shears air where your neck was.",
+    "enemyHitCompanion": {
+      "Aldric": "The Sivak drops on Aldric from above. His shield catches the blade but the impact drives him to one knee.",
+      "Sera": "The Sivak spots Sera taking aim and dives. She rolls but takes a claw across her back.",
+      "generic": "The Sivak turns on your companion. Aerial assault — there is no blocking something that comes from directly above."
+    },
+    "enemyMissCompanion": {
+      "Aldric": "The Sivak dives at Aldric. He reads it — drops, rolls, comes up with his sword ready. The Sivak climbs empty-handed.",
+      "Sera": "The Sivak swoops at Sera. She does not flinch — she fires at point-blank range as it passes.",
+      "generic": "The Sivak misses your companion. Even draconians cannot control a forty-foot dive perfectly."
+    }
+  },
+  "69": {
+    "roundStart": [
+      "Ser Hadrian settles into his guard — old forms, textbook Solamnic, the stance they taught forty years ago. Dawnstrike catches the afternoon light and bends it. The blade hums. The column has formed a circle in the old way. There is no sound except the wind and the creak of an old knight's armour.",
+      "Hadrian's footwork is perfect and ancient. He fights the way Vinas Solamnus fought — the forms from the founding, unchanged in three centuries. You have learned the modern variants. The question is whether new defeats old.",
+      "The old knight's breathing is laboured now. His body is failing him — fifty-six years old, forty-three of them in armour. But Dawnstrike does not tire. The blade moves with a will that outlasts the arm that holds it."
+    ],
+    "playerHit": [
+      "Your blade finds Hadrian's guard and breaks it. He recovers — years of muscle memory — but you saw the opening. It was there.",
+      "The strike lands clean. Hadrian rocks back on his heels. \"Good,\" he says. Just that.",
+      "You catch him between forms — the transition point his generation was taught to trust. Trust misplaced.",
+      "A solid hit. Hadrian's half-plate rings like a bell. He grins. This is what he came for."
+    ],
+    "playerMiss": [
+      "Hadrian turns your blade with Dawnstrike. The parry is effortless — forty years of practice compressed into a single motion.",
+      "You are faster. He is wiser. Your speed finds nothing because he was never where you aimed.",
+      "Hadrian reads your swing and sidesteps. His footwork is failing but his eyes are perfect.",
+      "Dawnstrike deflects your blade and the radiant energy pulses once — a warning. The sword is protecting its wielder."
+    ],
+    "playerCrit": [
+      "The strike drives through Hadrian's guard with everything you have. The old knight staggers — genuinely hurt. For the first time, his eyes show something like doubt. Not in you. In himself.",
+      "You catch Dawnstrike's hilt and force the blade wide. Your pommel strike catches Hadrian's chin. He drops to one knee. The column holds its breath."
+    ],
+    "enemyBloodied": [
+      "Hadrian is hurt. Blood on his lip, favouring his right side. But his guard has not dropped. \"Do not stop now,\" he says. \"I did not ride six months for a careful fight.\"",
+      "Dawnstrike's light flickers. Hadrian's stance wavers, then steadies. The old forms hold him up when his body cannot."
+    ],
+    "enemyNearDeath": [
+      "Hadrian can barely lift Dawnstrike. His arms shake. His stance is collapsing — the old forms finally failing the old knight. One more blow. He is waiting for it. He wants it to be clean.",
+      "The duel is ending. Hadrian's guard is open, his breathing ragged, his eyes bright with something that might be tears or might be the afternoon sun. Dawnstrike's hum has gone quiet — as if the blade knows."
+    ],
+    "enemyDeath": [
+      "Hadrian's knees buckle. Dawnstrike drops point-first into the road — standing upright, humming, casting light on the old knight's face as he kneels. He looks up at you. \"There it is.\" He yields.",
+      "The final strike takes Hadrian's feet from under him. He falls in full armour, a sound like a building coming down, and lies on the road with Dawnstrike still in his hand. He is smiling."
+    ],
+    "playerHit_scar": [
+      "Dawnstrike's radiant strike catches your arm. The wound burns with holy light — a scar that glows faintly in the dark for weeks afterward.",
+      "Hadrian's overhead combination breaks through your guard and opens your shoulder. The cut is surgical — a master's strike, placed exactly where he intended it."
+    ],
+    "playerHurt": [
+      "Dawnstrike catches your guard. The impact is staggering — not just steel but radiant energy, flowing up your arms like an electric current.",
+      "Hadrian's riposte is faster than you expected from a man his age. The blade tags your ribs and you feel the warmth of radiant damage.",
+      "The old knight's counter finds your hip. Even weakening, his strikes land with precision.",
+      "Dawnstrike hums as it connects with your shoulder plate. The holy energy makes your teeth ache."
+    ],
+    "playerHurtBad": [
+      "Hadrian burns a Radiant Strike. Dawnstrike blazes white-gold and the impact drives you three steps back. Your armour smokes. That was not a practice hit.",
+      "The old knight musters everything he has left. Dawnstrike comes down like a falling star. The radiant energy washes through you and the world goes white at the edges."
+    ],
+    "playerDowned": [
+      "Dawnstrike catches you perfectly. The radiant energy is warm — not cruel, not angry, just overwhelming. You hit the road and the sky is very blue above you. Hadrian stands over you, breathing hard, blade lowered. \"You fought well,\" he says. He means it."
+    ],
+    "companionActs": {},
+    "enemyHitPlayer": "Hadrian steps forward and Dawnstrike sings. The blade moves in the old forms — elegant, deadly, refined by four decades of practice.",
+    "enemyMissPlayer": "Hadrian strikes and you turn Dawnstrike aside. The radiant energy crackles where it touches your blade.",
+    "enemyHitCompanion": {},
+    "enemyMissCompanion": {}
+  },
+  "70": {
+    "roundStart": [
+      "The bridge stretches sixty feet across the river — old Solamnic stonework, built to last a thousand years. At the far end, four soldiers are setting up a checkpoint with a wooden barricade and a Dragon Army standard. One of them stands differently — the sergeant. His posture is load-bearing, like Caeron's. He sees you coming.",
+      "The barricade is crude but effective — half cover, ten-foot bridge, no flanking possible. The soldiers form up behind it with trained discipline. The sergeant watches your approach with the expression of a man who has done this before and expects to do it again.",
+      "Steel on stone. The bridge amplifies every sound — boots, blades, shields. The sergeant's rally cry echoes off the water twenty feet below. His soldiers fight harder for it.",
+      "The barricade is yours if you can take it. The soldiers know it too — their defence is tightening. The sergeant has not committed to the fight yet. He is holding himself in reserve, studying you, looking for the moment his Rally or Last Stand will matter most.",
+      "The river rushes below. The bridge shakes with the impact of steel on wood and steel on steel. The Dragon Army standard snaps in the wind behind the barricade. It will be coming down today."
+    ],
+    "playerHit": [
+      "Your blade finds a gap in the barricade. The soldier behind it grunts and falls back.",
+      "You vault the barrier and catch the nearest soldier before he can reset his guard.",
+      "A precise thrust through the barricade gap. The soldier's formation breaks.",
+      "The longsword catches the sergeant's shoulder. He is tougher than his soldiers but he is not invincible."
+    ],
+    "playerMiss": [
+      "The barricade catches your swing. Wood splinters but the blade does not get through.",
+      "The soldiers are tight behind their cover. Your strike finds shield and nothing else.",
+      "The sergeant dodges on the narrow bridge. Even at this width, his footwork is precise.",
+      "You swing and a soldier catches it on his shield. Behind the barricade, they fight at advantage."
+    ],
+    "playerCrit": [
+      "The strike shatters a section of the barricade and the soldier behind it. Wood and steel scatter across the bridge. The gap is open.",
+      "You catch the sergeant mid-rally. The blow drives him back and his soldiers lose their nerve for one crucial moment."
+    ],
+    "enemyBloodied": [
+      "The sergeant is wounded. His Rally falters — the words come out strained, and for the first time, his soldiers exchange uncertain glances.",
+      "Soldiers falling, barricade breaking. The Dragon Army standard starts to lean as the defenders thin."
+    ],
+    "enemyNearDeath": [
+      "The sergeant is the last one standing. Half his barricade is shattered. He sets his feet on the bridge stones and raises his sword one more time. Last Stand. His eyes go bright and dangerous.",
+      "One soldier left, wounded, pressed against the Dragon Army standard. He could surrender. His eyes say he will not."
+    ],
+    "enemyDeath": [
+      "The sergeant falls. His sword clatters on the Solamnic bridge stones — a Dragon Army blade on Solamnic architecture. The standard behind him dips, catches the wind, and tears free from its mounting.",
+      "The last soldier drops his weapon. The bridge is yours. The river continues below, indifferent. On the far side, a woman hanging laundry has stopped. A child is pointing. An old man has his hand over his mouth. They watched the whole fight. Hope requires witnesses."
+    ],
+    "playerHit_scar": [
+      "The sergeant's longsword finds your face. A clean cut, precisely placed — this man knows exactly where to put a blade. The scar will cross your nose.",
+      "A javelin from behind the barricade catches your arm. On the narrow bridge, there is nowhere to dodge."
+    ],
+    "playerHurt": [
+      "A sword from behind the barricade nicks your arm. The half cover is working for them.",
+      "The sergeant rallies and his soldiers surge. A shield bash drives you back three feet on the bridge.",
+      "A javelin clips your shoulder from behind the barrier.",
+      "The narrow bridge offers no room to dodge. A soldier's thrust catches your side."
+    ],
+    "playerHurtBad": [
+      "The sergeant activates Last Stand. His attacks come with desperate precision and he catches you twice before you can reset your guard.",
+      "Three soldiers press you against the bridge rail simultaneously. Twenty feet of water below. Steel ahead. No room."
+    ],
+    "playerDowned": [
+      "The sergeant's blade catches you and the bridge stones come up hard. You are on your back, looking at the sky over Vogler. Your companions charge past you toward the barricade. The bridge shakes with their footsteps. You fought to get them here. They will finish it."
+    ],
+    "companionActs": {
+      "Aldric_flank": "Aldric moves to the bridge rail and tries to reach past the barricade. \"I'll draw them left — take the gap.\"",
+      "Aldric_shield": "Aldric plants his shield against the barricade. \"Stack behind me. We push through.\"",
+      "Aldric_aggressive": "Aldric charges the barricade. It is not subtle. The wood cracks under the impact of his shield.",
+      "Aldric_hit": "Aldric's blade reaches over the barricade and finds a soldier. Formation disrupted.",
+      "Aldric_miss": "Aldric's swing catches the barricade. Wood splinters but the defenders hold.",
+      "Sera_shot": "Sera fires from fifty yards back. The arrow drops in from above, over the barricade. No cover protects from that angle.",
+      "Sera_mark": "Sera calls: \"Sergeant is hanging back — he's waiting for you to commit. Make him come to you.\"",
+      "Mira_heal": "Mira stays back, ready. On this bridge, her work comes after.",
+      "Mira_boost": "Mira hands you a poultice between clashes. \"One more push.\"",
+      "Vael_warn": "Vael: \"The sergeant has Last Stand — he will fight harder wounded. Do not give him time.\"",
+      "generic_distraction": "Your companion creates an opening at the barricade.",
+      "generic_hit": "Your companion's weapon reaches past the barrier.",
+      "generic_miss": "Your companion's strike catches wood, not flesh.",
+      "generic_flee": "Your companion pulls a wounded fighter clear of the bridge."
+    },
+    "relentless": "The sergeant should yield. He does not. Below half his hit points, his eyes go cold and focused. Last Stand. His attacks come faster, harder, and for thirty seconds he fights like a man ten years younger.",
+    "enemyHitPlayer": "A longsword from behind the barricade — thrust, not swing. On the narrow bridge, thrusts are king.",
+    "enemyMissPlayer": "The soldier thrusts through the barricade gap and you turn it aside. His reach is limited by the wood between you.",
+    "enemyHitCompanion": {
+      "Aldric": "A soldier catches Aldric as he tries to flank the barricade. The bridge rail leaves nowhere to dodge.",
+      "Sera": "A javelin from behind the barricade flies true. Sera takes it in the shoulder — fifty yards away, it still had force.",
+      "generic": "A soldier reaches past the barricade and catches your companion."
+    },
+    "enemyMissCompanion": {
+      "Aldric": "A thrust from behind the barricade. Aldric's shield finds it. On the bridge, his defence is a wall.",
+      "Sera": "The soldier throws a javelin at Sera. At fifty yards, it drops short.",
+      "generic": "The soldier swings at your companion from behind the barricade. The wood blocks his own follow-through."
+    }
+  },
+  "11_YARD": {
+    "roundStart": [
+      "The boar lowers its head. The tusks catch the afternoon light — each one as long as your forearm and yellowed at the tips. Four hundred pounds of muscle and fury, and it has decided that this training yard belongs to it now.",
+      "The boar is wounded and circling, head low, blood on its tusks — yours or the squire's or both. The training yard walls make it worse. A cornered dire boar is the second most dangerous thing in the Solamnic lowlands.",
+      "It is dying and it knows it and it does not care. The eyes are flat, animal, the eyes of a thing that has been running from something it cannot fight and has decided to stop running here, against you. There is something terrible and honest in it.",
+      "The beast will not fall. Blood mats its bristled hide and its breathing comes in ragged, wet gasps, but it turns to face you again. Stubborn. Like everything else in this country.",
+      "The yard stinks of blood and boar musk. The beast is staggering now, each step a decision. It lowers its head one more time."
+    ],
+    "playerHit": [
+      "Your blade bites into the boar's flank. It screams — a sound you did not know boars could make. Blood on the flagstones.",
+      "The longsword catches it across the shoulder. Muscle parts. The boar stumbles sideways, recovers, shakes its massive head.",
+      "A clean strike. The blade sinks in and you feel the resistance of hide and muscle give way. The boar lurches.",
+      "You find the gap between shoulder and neck. The blade goes deep. The boar's scream echoes off the courtyard walls."
+    ],
+    "playerMiss": [
+      "It twists aside — faster than four hundred pounds of animal should be able to move. The tusks scrape stone where you were standing.",
+      "Your blade catches nothing but air. The boar is already somewhere else, circling, watching you with those flat dark eyes.",
+      "Too slow. The boar reads your swing before you finish it and drops its head. Your edge skids across the bony ridge of its skull.",
+      "You swing and the boar simply is not there. It moves like water when it wants to."
+    ],
+    "playerCrit": [
+      "The blade comes down with everything you have. The boar's front leg buckles and it crashes to its knees, squealing. That will leave a mark on both of you.",
+      "You find the seam between skull and spine. The boar's eyes go wide. It drops, slides, scrambles — but the damage is catastrophic."
+    ],
+    "enemyBloodied": [
+      "The boar is bleeding freely now. Its movements are slower, more deliberate — not weaker, but different. A wounded animal calculating its last charges.",
+      "Half the yard is smeared red. The boar's breathing is ragged and wet. It shakes its head and blood sprays in an arc across the flagstones."
+    ],
+    "enemyNearDeath": [
+      "The boar can barely stand. Its legs shake. Its tusks drag on the ground. But it will not stop. It turns to face you one more time with the dumb, magnificent stubbornness of a thing that does not understand surrender.",
+      "One more hit will end this. The boar knows it — you can see it in the way it gathers itself, all the strength it has left compressed into one final act."
+    ],
+    "enemyDeath": [
+      "The blade goes in clean. The boar falls. The yard is suddenly, completely quiet except for the sound of two squires breathing and the distant clatter of the garrison responding to an alarm that is already over.",
+      "It crashes to the flagstones and does not rise. The silence afterward is louder than the fight. Steam rises from the carcass in the cold afternoon air."
+    ],
+    "playerHit_scar": [
+      "The tusks rake across your ribs — deep, through padding and skin both. That will scar. You can feel it already, the wound that will still be there when everything else about today has faded.",
+      "A tusk catches your forearm and opens it to the bone. The pain is white and absolute. You will carry that line for the rest of your life.",
+      "The boar's charge drives a tusk into your thigh. The wound is bad — the kind that leaves a mark other soldiers will ask about years from now."
+    ],
+    "playerHurt": [
+      "The tusks catch your side. The padding absorbs most of it but you feel the bruise blooming already — deep, the kind that goes black.",
+      "It clips you. The impact rattles your teeth and you taste copper. A cut opens along your jaw — shallow, bleeding freely, stinging.",
+      "You take the charge on your shield arm. Something wrenches. Not broken, but you will feel that tomorrow. And the day after.",
+      "A glancing blow across your shoulder. The chainmail holds but the force drives you back. You will have a bruise the shape of a tusk by evening."
+    ],
+    "playerHurtBad": [
+      "Blood — yours — is on the flagstones. Your vision narrows. The boar is a shape in the red haze, still coming, always coming.",
+      "You can feel your heartbeat in the wound. Too fast. The yard tilts. Aldric is shouting something but the words are very far away."
+    ],
+    "playerDowned": [
+      "The boar gores you and the world goes sideways. The flagstones are cold against your cheek. You can hear your companions shouting, very far away, as if from underwater. The last thing you see is the boar turning away from you, toward the wounded squire."
+    ],
+    "companionActs": {
+      "Aldric_flank": "Aldric circles right, drawing the boar's attention. It turns its head to track him — and exposes its flank to you.",
+      "Aldric_shield": "Aldric plants himself between the boar and the wounded squire, shield braced. The boar snorts. It will have to go through him now.",
+      "Aldric_aggressive": "Aldric steps in with a sharp overhead cut. The boar screams and turns on him — he takes a hit but doesn't give ground.",
+      "Aldric_hit": "Aldric's blade finds its mark. The boar staggers under the blow.",
+      "Aldric_miss": "Aldric swings and the boar ducks under it. Even he looks surprised.",
+      "Mira_heal": "Mira drops beside the wounded squire. Her hands move with the practiced calm of someone who has been waiting for exactly this moment.",
+      "Mira_boost": "Mira presses a poultice into your hand. 'For the pain. It won't help much.' It helps more than she thinks.",
+      "Sera_shot": "Sera's arrow takes the boar in the haunch. It turns, snarling, trying to find the source of this new pain.",
+      "Sera_mark": "Sera calls out from her perch: 'Left side, below the shoulder — the hide is thinnest there.' You adjust your grip.",
+      "generic_distraction": "Your companion shouts, waves, throws something. The boar's head swivels — one second of confusion.",
+      "generic_hit": "Your companion's strike connects. The boar bellows.",
+      "generic_miss": "Your companion's attack goes wide. The boar barely notices.",
+      "generic_flee": "Your companion grabs the wounded squire and drags them clear of the yard. One less thing to protect."
+    },
+    "relentless": "The boar should be dead. It is not. It drops to its knees, shudders — and then stands back up. One eye is ruined and its breathing sounds like tearing cloth, but it stands. Relentless. The trait is well named.",
+    "enemyHitPlayer": "The boar charges. The impact is like being hit by a horse — if the horse had knives on its face.",
+    "enemyMissPlayer": "The boar lunges and you sidestep. Tusks spark against the courtyard wall where your legs were.",
+    "enemyHitCompanion": {
+      "Aldric": "The boar turns on Aldric. He catches it on his shield but the force drives him back three steps, boots scraping on stone.",
+      "Sera": "The boar charges Sera's position. She rolls aside but not quite fast enough — a tusk catches her shoulder.",
+      "Mira": "The boar wheels toward Mira. She throws herself flat. The tusks pass over her but the hooves do not miss entirely.",
+      "generic": "The boar turns on your companion. The impact sends them stumbling."
+    },
+    "enemyMissCompanion": {
+      "Aldric": "The boar goes for Aldric. He sets his feet, catches the charge on his shield, and turns it aside. Textbook.",
+      "generic": "The boar lunges at your companion and misses. It crashes into the wall instead."
+    }
+  },
+  "11_PATROL": {
+    "roundStart": [
+      "Moonlight catches the goblin blades — crude iron, serrated, designed to wound rather than kill. Four of them in the tall grass below the south wall, and they have already put an arrow in Corwin.",
+      "The goblins scatter and regroup with unsettling coordination. The boss hangs back, clicking orders in its guttural tongue. These are not scavengers — they are scouts, and they fight like it.",
+      "Grass whispers. Steel glints. The goblins circle, looking for openings, looking for the weak point in your line. They are patient predators, not the mindless creatures of tavern stories.",
+      "The goblin boss barks an order and two scouts dart forward simultaneously — a pincer, crude but effective in the dark."
+    ],
+    "playerHit": [
+      "Your blade catches the goblin across its ribs. It shrieks — a sound like a hinge rusting in real time — and stumbles back into the grass.",
+      "The longsword finds goblin flesh. The creature is already trying to disengage, but you press the opening.",
+      "A clean downward strike. The goblin's crude iron buckles under proper Solamnic steel.",
+      "You catch one mid-dodge. The blade opens its shoulder and it drops its weapon, snarling."
+    ],
+    "playerMiss": [
+      "The goblin ducks — impossibly fast, impossibly low. Nimble Escape is not a nickname. It is a survival trait honed by generations of being prey.",
+      "Your sword passes through empty air. The goblin is already gone, melted into the tall grass like water into soil.",
+      "It twists aside at the last instant. The blade shaves a tuft of wiry hair and nothing else.",
+      "The goblin reads your swing and drops flat. Your blade passes over it harmlessly."
+    ],
+    "playerCrit": [
+      "The strike lands with authority — the kind of hit that ends arguments. The goblin crumples without a sound.",
+      "You catch the goblin between its crude armour plates. The blow drives it to its knees."
+    ],
+    "enemyBloodied": [
+      "The goblin is wounded and wary now, favouring its left side. Its eyes dart between you and the grass — calculating escape routes.",
+      "Blood — dark, almost black in the moonlight — soaks through the goblin's leather. It bares its teeth but does not advance."
+    ],
+    "enemyNearDeath": [
+      "The goblin can barely stand. It sways, blade hanging loose, but its eyes are still sharp. Cornered and dying, it is considering one last rush.",
+      "One more hit will finish this. The goblin knows it. You can see the calculation — fight or flee — playing out behind those yellow eyes."
+    ],
+    "enemyDeath": [
+      "The goblin falls and does not rise. The grass swallows it like the earth reclaiming what was always hers.",
+      "It drops. The moonlit field goes quiet for one breath before the next goblin fills the gap."
+    ],
+    "playerHit_scar": [
+      "A serrated goblin blade catches your forearm and tears. The wound is ragged — designed to be. That will scar badly.",
+      "The goblin boss redirects a strike meant for itself straight into your face. The crude iron opens a line across your cheek that will heal white.",
+      "A goblin arrow grazes your neck. An inch to the left and it would have found the artery. The scar will sit just below your jaw."
+    ],
+    "playerHurt": [
+      "A goblin blade nicks your arm. Shallow, but it burns — the edge is serrated and the wound will take longer to close than it should.",
+      "The scimitar catches your thigh through a gap in your armour. Not deep, but the sting is immediate.",
+      "A goblin arrow clips your shoulder. The force spins you half-around before you recover.",
+      "Crude iron finds a gap in your defence. The cut is messy — goblin weapons always are."
+    ],
+    "playerHurtBad": [
+      "Two goblins hit you simultaneously — scimitar and arrow, flank and shoulder. Your vision swims. Corwin's blood and yours are mixing on the wall stones.",
+      "The goblin boss's redirect catches you full in the chest. You stumble, gasping, and the world narrows to a tunnel of moonlight and pain."
+    ],
+    "playerDowned": [
+      "A goblin blade finds something vital and the south wall tilts sideways. The last thing you see is moonlit grass and the silhouette of a companion stepping over you, blade raised, finishing what you started."
+    ],
+    "companionActs": {
+      "Aldric_flank": "Aldric shields your left side, creating a wall the goblins cannot pass without paying for it.",
+      "Aldric_shield": "Aldric plants himself between the goblins and Corwin. Shield up, jaw set. Nothing is getting past him.",
+      "Aldric_aggressive": "Aldric charges the nearest goblin with a sharp overhead cut. It scrambles aside but not fast enough.",
+      "Aldric_hit": "Aldric's sword connects. The goblin goes down hard.",
+      "Aldric_miss": "Aldric swings at shadow and moonlight. The goblin was already gone.",
+      "Mira_heal": "Mira drops beside Corwin, hands already moving. The arrow comes out clean. She knows exactly what she is doing.",
+      "Mira_boost": "Mira tosses you a field bandage. \"Press hard, keep fighting.\"",
+      "Sera_shot": "Sera's arrow takes a goblin through the neck from forty yards. In moonlight. While it was moving.",
+      "Sera_mark": "Sera calls from the wall: \"Boss is behind the two on the left — take the scouts first.\"",
+      "generic_distraction": "Your companion throws a torch into the tall grass. The goblins flinch from the sudden light.",
+      "generic_hit": "Your companion's weapon finds a goblin. It shrieks and falls.",
+      "generic_miss": "Your companion strikes at darkness. The goblins are hard to pin down at night.",
+      "generic_flee": "Your companion pulls Corwin clear of the fighting. One less person to protect."
+    },
+    "enemyHitPlayer": "A goblin darts in from the grass — scimitar low, aimed at your legs.",
+    "enemyMissPlayer": "The goblin lunges and you sidestep. Its blade sparks against the wall stones.",
+    "enemyHitCompanion": {
+      "Aldric": "A goblin gets past Aldric's shield. The scimitar catches his arm and he hisses through his teeth but holds his ground.",
+      "Sera": "A goblin arrow whistles past Sera's ear. She does not flinch, but the next shot comes closer.",
+      "Mira": "A goblin rushes Mira while she tends Corwin. She takes a cut across the hand — shallow, but her focus never breaks.",
+      "generic": "The goblin's scimitar catches your companion. A flash of crude iron and a grunt of pain."
+    },
+    "enemyMissCompanion": {
+      "Aldric": "The goblin swings at Aldric. His shield catches it. The goblin's arm goes numb from the impact.",
+      "Sera": "A goblin arrow passes a foot to Sera's left. She does not even look at it.",
+      "generic": "The goblin lunges at your companion and misses. Goblin coordination is not what the stories claim."
+    }
+  },
+  "44C": {
+    "roundStart": [
+      "The cellar is cramped and stinking of lamp oil and fear. Two soldiers flanking a Kapak draconian. The Kapak runs its tongue along its blade with deliberate care — coating it in venom that gleams in the firelight. Behind them, a child is tied to a support beam.",
+      "Steel in a confined space. The soldiers stay tight, shields overlapping — trained formation, even here, even underground. The Kapak hangs back, letting them work, watching you with intelligent reptilian eyes.",
+      "The Kapak hisses an order and the soldiers press forward in lockstep. The cellar walls amplify every sound — the scrape of boots, the clink of chain, the wet click of the Kapak licking its blade again.",
+      "Smoke from the single fire turns the cellar into a landscape of shadows. The soldiers are shapes in the haze. The Kapak is worse — it moves between them, poison blade weaving, looking for the gap in your guard."
+    ],
+    "playerHit": [
+      "Your blade finds the gap between shield and chain shirt. The soldier grunts and his formation breaks for one critical second.",
+      "The longsword crunches into the Kapak's scales. It hisses — a sound like acid on stone — and the venom on its blade sizzles in response.",
+      "A clean strike through the soldier's guard. The impact drives him back into the cellar wall.",
+      "You catch the Kapak mid-lick. The blade opens its shoulder and it drops its weapon. It picks it up with the other hand without breaking eye contact."
+    ],
+    "playerMiss": [
+      "The soldiers' overlapping shields catch your blade. Formation fighting — one covers while the other strikes. You learned this in training. Now you are on the receiving end.",
+      "The Kapak slithers aside in the cramped space, moving between the soldiers like water through fingers.",
+      "Your blade rings off a shield. The impact jars your arm. In the confined space, there is nowhere to swing properly."
+    ],
+    "playerCrit": [
+      "The blade drives through the formation gap with perfect timing. Shield, chain, flesh. The soldier crumples and the Kapak is suddenly exposed.",
+      "You catch the Kapak cleanly between its scales. It screams — the venom on its blade sprays in an arc as its arm spasms."
+    ],
+    "enemyBloodied": [
+      "The Kapak is bleeding freely now. Its movements have changed — less calculated, more feral. The venom drips from its blade in thick, smoking drops.",
+      "One soldier is down and the remaining one has tightened his guard. The Kapak circles behind him, using the soldier as cover."
+    ],
+    "enemyNearDeath": [
+      "The Kapak is dying and it knows what comes next. The acid dissolution has already begun at its extremities — a faint smoking that promises a much worse end. It rushes you with everything it has left.",
+      "The last enemy is staggering. One more blow. But in this cellar, with Linna tied to the beam behind them, you cannot afford to be reckless."
+    ],
+    "enemyDeath": [
+      "The Kapak falls and immediately begins to dissolve. Acid pools on the cellar floor — bubbling, smoking, eating into the stone. You pull back, shielding Linna from the spray.",
+      "The soldier drops his sword. The Kapak is already dissolving behind him. The cellar fills with the acrid stench of draconian death."
+    ],
+    "playerHit_scar": [
+      "The Kapak's poisoned blade catches your arm. The wound burns — not just the cut but the venom seeping in. A dark line that will stay long after the poison fades.",
+      "A soldier's longsword opens your side below the armour. In the tight cellar, there was nowhere to dodge.",
+      "The Kapak's claws rake your face. The venom makes the cuts burn like fire. Those marks will be distinctive."
+    ],
+    "playerHurt": [
+      "The poisoned blade nicks your hand. Your fingers go numb for a heartbeat — the venom working fast, then fading. A warning.",
+      "A soldier's shield bash drives you into the cellar wall. The impact rattles your teeth.",
+      "The Kapak's tail sweeps your legs in the tight space. You stumble against a support beam.",
+      "A longsword catches your shoulder. The chain absorbs most of it but the force bruises deep."
+    ],
+    "playerHurtBad": [
+      "The Kapak's poison blade finds you full-on. The wound is ice and fire simultaneously. Your vision swims and the cellar tilts.",
+      "Two soldiers press you against the wall. Shields, blades, no room to move. The Kapak circles behind them, blade dripping."
+    ],
+    "playerDowned": [
+      "The poisoned blade catches you and the world goes sideways. The cellar floor is cold and wet. Through dimming vision you can see Linna's face — a child watching another person fall trying to save her."
+    ],
+    "companionActs": {
+      "Aldric_flank": "Aldric forces his way into the cellar behind you, shield first. The soldiers' formation breaks as they turn to face the new threat.",
+      "Aldric_shield": "Aldric plants himself in front of the support beam where Linna is tied. \"They go through me first.\"",
+      "Aldric_aggressive": "Aldric charges the nearest soldier. In the confined space, the impact is devastating.",
+      "Aldric_hit": "Aldric's blade connects with the soldier. Chain links scatter.",
+      "Aldric_miss": "Aldric's swing catches the low ceiling. Stone dust rains down.",
+      "Mira_heal": "Mira is already working on Linna. Hands steady, voice low, pulling the child back from the edge.",
+      "Mira_boost": "Mira presses an antidote into your hand. \"Kapak venom. Chew this.\" It tastes like bark and copper.",
+      "Sera_shot": "Sera's arrow takes the Kapak in the shoulder from the cellar entrance. In the confined space, the shot was threading a needle.",
+      "Sera_mark": "Sera calls from the stairs: \"Kapak's left side is unguarded when it licks the blade.\"",
+      "Vael_warn": "Vael's voice from behind: \"Do NOT let the Kapak die near the child. The acid will burn everything within five feet.\"",
+      "generic_distraction": "Your companion creates an opening. The Kapak's attention shifts for one crucial second.",
+      "generic_hit": "Your companion's weapon finds the enemy. Impact and a grunt.",
+      "generic_miss": "Your companion's strike goes wide in the cramped cellar.",
+      "generic_flee": "Your companion cuts Linna free and carries her toward the stairs. One objective secured."
+    },
+    "enemyHitPlayer": "The Kapak darts in — poisoned blade low, aimed where the armour gaps. Calculated.",
+    "enemyMissPlayer": "The poisoned blade whistles past your face. You can smell the venom — sweet, chemical, wrong.",
+    "enemyHitCompanion": {
+      "Aldric": "The Kapak's blade catches Aldric's shield arm. He staggers but holds. \"Poison,\" he says through his teeth.",
+      "Mira": "A soldier breaks toward Mira. She does not flinch — her hands stay on Linna — but the blade draws blood.",
+      "Sera": "The Kapak hurls a dagger at Sera in the doorway. It catches her arm.",
+      "generic": "The enemy turns on your companion. In the tight space, there is nowhere to dodge."
+    },
+    "enemyMissCompanion": {
+      "Aldric": "The Kapak strikes at Aldric. His shield turns it — barely. Venom sprays across the stone.",
+      "generic": "The soldier lunges at your companion. The confined space works both ways — the strike goes wide."
+    }
+  },
+  "28_CARAVAN": {
+    "roundStart": [
+      "The overturned cart blocks half the road. Moonlight catches draconian scales — two Baaz crouched over the wreckage, and behind them a human with a crossbow and the look of a man who has been running for a long time. The merchant is bleeding under the cart.",
+      "The draconians advance with casual menace. They are not afraid. Why would they be? Two draconians and a crossbowman against whoever was foolish enough to come down this road at night.",
+      "The deserter's hands are shaking on the crossbow. The draconians are not shaking at all. There is a lesson in that about what the Dragon Army makes of the men who serve it."
+    ],
+    "playerHit": [
+      "Your blade catches the draconian mid-stride. Bronze scales part and dark blood flows.",
+      "The longsword crunches into the Baaz's guard. It staggers, hissing.",
+      "A clean strike to the deserter's crossbow arm. He drops it and scrambles backward.",
+      "You catch the draconian between claw swipes. The opening was small — you made it count."
+    ],
+    "playerMiss": [
+      "The draconian turns your blade with its scales. The impact jars your wrist but draws no blood.",
+      "The deserter fires and you dodge — but the dodge takes you out of position. The draconians press the gap.",
+      "Your sword meets a draconian claw. The clash rings across the road. Neither of you gives ground."
+    ],
+    "playerCrit": [
+      "The longsword drives through bronze scales with devastating force. The draconian drops, already beginning to turn to stone.",
+      "A perfect strike to the draconian's neck where the scales are thinnest. It falls without a sound."
+    ],
+    "enemyBloodied": [
+      "The Baaz is bleeding and angry — a bad combination in a creature with claws and nothing to lose. It drops into a crouch, tail lashing.",
+      "The deserter takes a hit and his nerve breaks. He is backing toward the tree line, crossbow forgotten."
+    ],
+    "enemyNearDeath": [
+      "The last draconian is fading. Stone is already creeping up its legs. One final lunge is all it has left.",
+      "The deserter throws down his crossbow. \"I yield! I yield!\" His voice cracks on the second word."
+    ],
+    "enemyDeath": [
+      "The draconian petrifies mid-stride. A stone monument to ambush, frozen on a dark road.",
+      "It falls and the stone takes it before it hits the ground. The road is suddenly quiet except for the merchant's laboured breathing."
+    ],
+    "playerHit_scar": [
+      "A draconian claw opens your cheek. Deep, three parallel lines. The mark of Baaz claws — other soldiers will recognise it.",
+      "The crossbow bolt catches your shoulder where the armour gaps. It punches through and the shaft snaps off inside. That wound will leave its mark."
+    ],
+    "playerHurt": [
+      "A crossbow bolt clips your side. The armour catches most of it but the impact drives the breath from you.",
+      "Draconian claws scrape across your guard. One finds a gap and draws a line of fire across your ribs.",
+      "The Baaz's tail sweeps your legs. You stumble against the overturned cart.",
+      "A javelin thrown from too close. The shaft glances off your armour but the force bruises."
+    ],
+    "playerHurtBad": [
+      "A draconian and the deserter catch you from both sides. Crossbow bolt and claw. Your vision narrows to a point.",
+      "The Baaz drives you against the overturned cart. Claws rake your chest and the world tilts."
+    ],
+    "playerDowned": [
+      "You go down on the dark road, next to the merchant you came to save. The cart wheel creaks above you. Companions rush forward, steel ringing, as the moonlight dims."
+    ],
+    "companionActs": {
+      "Aldric_flank": "Aldric circles right, drawing the draconians' attention. \"Eyes on me, you bastards.\"",
+      "Aldric_shield": "Aldric plants his shield between you and the crossbow. Bolts thud into oak.",
+      "Aldric_hit": "Aldric's blade finds draconian flesh. The creature shrieks.",
+      "Aldric_miss": "Aldric's strike glances off bronze scales. He adjusts his angle.",
+      "Mira_heal": "Mira slides under the cart to reach the merchant. Her hands find the wound. \"Keep them off me.\"",
+      "Mira_boost": "Mira throws you a bandage. \"Your side is bleeding — bind it.\"",
+      "Sera_shot": "Sera puts an arrow through the deserter's crossbow stock. He stares at the ruined weapon and decides to reconsider his life choices.",
+      "Sera_mark": "Sera calls the formation: \"Deserter's nerve will break if you drop one draconian.\"",
+      "generic_distraction": "Your companion creates an opening. The draconians hesitate.",
+      "generic_hit": "Your companion lands a solid blow.",
+      "generic_miss": "Your companion's strike goes wide in the dark.",
+      "generic_flee": "Your companion pulls the merchant clear of the fighting."
+    },
+    "enemyHitPlayer": "The draconian charges — claws and blade together, using the cart wreckage as cover.",
+    "enemyMissPlayer": "The crossbow bolt hisses past your ear. The deserter's hands are shaking too badly for accuracy.",
+    "enemyHitCompanion": {
+      "Aldric": "A draconian gets past Aldric's guard. Claws find his ribs.",
+      "Mira": "The deserter spots Mira under the cart and fires. The bolt catches her arm.",
+      "generic": "The draconian turns on your companion. Claws rake chain."
+    },
+    "enemyMissCompanion": {
+      "Aldric": "The draconian lunges at Aldric. Shield meets claw. The draconian bounces.",
+      "generic": "The deserter fires at your companion. The bolt buries itself in the cart instead."
+    }
+  },
+  "53_BREACH": {
+    "roundStart": [
+      "The breach in the south wall is eight feet wide and full of dust and dying torchlight. Ser Aldous is on the ground, blood soaking through his tabard. Two Baaz are already through, their scales catching the firelight like hammered bronze. This is where the castle stands or falls.",
+      "More scraping on the wall. Stone dust sifts down. The first wave is still pressing and the second is coming. You fight in a corridor of broken stone, shoulder to shoulder, with nowhere to retreat.",
+      "Round three. Rubble shifts and two more draconians claw through the breach. Fresh, unhurt, eager. Behind you, Ser Aldous is not making a sound — which is either discipline or unconsciousness.",
+      "The breach is a grinding hell of steel, claws, and stone dust. You cannot see more than ten feet in any direction. The draconians come out of the murk like nightmares given scales.",
+      "Torchlight flickers through the dust. The draconians are pressing hard — they know this is their chance. If they hold the breach, the wall falls. If the wall falls, Brightholm falls."
+    ],
+    "playerHit": [
+      "Your blade catches the draconian in the confined space. It has nowhere to dodge — the breach walls pin it. The strike is devastating.",
+      "You find the gap between scales and the longsword goes in. Dark blood sprays across the broken stones.",
+      "A solid strike in the press. The draconian staggers back through the breach and the next one has to climb over it.",
+      "The blade crunches through bronze scales. In this space, reach is everything — and your longsword has it."
+    ],
+    "playerMiss": [
+      "Stone dust blinds you for a heartbeat and your swing goes wide. The draconian presses the opening.",
+      "The confined space works against you — not enough room to swing properly. Your blade sparks off the wall.",
+      "The draconian drops flat in the rubble. Your sword passes overhead. In the open, you would have had it."
+    ],
+    "playerCrit": [
+      "The strike is brutal and perfect. In the confined breach, the draconian has nowhere to go. It crumples and begins to petrify — becoming part of the wall it tried to breach.",
+      "You catch it mid-climb through the breach. The blade drives through from above. The draconian turns to stone wedged in the gap, narrowing the breach even further."
+    ],
+    "enemyBloodied": [
+      "The draconian is bleeding heavily in the tight space. Its blood mixes with Aldous's on the stone floor.",
+      "Wounded and pressed against the breach walls, the draconian fights with the desperate fury of a thing that cannot retreat."
+    ],
+    "enemyNearDeath": [
+      "The draconian is dying on its feet. Stone creeps up its legs. One more hit and it will seal part of the breach itself.",
+      "Almost done. The draconian sways, its sword arm drooping. Behind it, you can see moonlight through the dust — and the shapes of more enemies gathering."
+    ],
+    "enemyDeath": [
+      "The Baaz petrifies in the breach. Its stone form becomes a barricade — the enemy's own soldiers blocking their path. There is a grim poetry in it.",
+      "It falls and turns to stone among the rubble. One less. But the scraping on the wall has not stopped."
+    ],
+    "playerHit_scar": [
+      "A draconian claw catches your face in the press. Blood fills your left eye. The scar will run from brow to cheekbone.",
+      "In the tight space, a blade finds the gap at your collar. The cut is deep and close to the throat. Close enough to remember every time you swallow.",
+      "A chunk of falling stone opens your forehead. Not the enemy, but the wall itself fighting both sides."
+    ],
+    "playerHurt": [
+      "Draconian claws scrape your armour in the tight space. One finds chain and one finds flesh.",
+      "A tail whips across your legs in the rubble. You stumble against the breach wall.",
+      "The draconian's shoulder drives you back. In the confined space, mass matters as much as skill.",
+      "Stone shrapnel from a near miss peppers your face. The dust stings and blinds."
+    ],
+    "playerHurtBad": [
+      "Two draconians press you against the breach wall simultaneously. Claws and blades from both sides. You feel your footing going.",
+      "A Baaz catches you from the rubble pile — it was climbing, and you did not see it. Claws rake your back."
+    ],
+    "playerDowned": [
+      "The draconian drives you down into the rubble. Broken stone digs into your back. Through the dust and the ringing in your ears, you can hear Aldric — steady, furious, stepping into the gap you left. \"HOLD THE BREACH.\""
+    ],
+    "companionActs": {
+      "Aldric_flank": "Aldric fills the breach beside you. Two shields, two swords. The draconians hit a wall.",
+      "Aldric_shield": "Aldric locks his shield into the breach gap. \"They come through me or they don't come through.\"",
+      "Aldric_aggressive": "Aldric surges through the dust with a roar that shakes loose stone from the breach walls.",
+      "Aldric_hit": "Aldric's blade finds the draconian in the dust. The crunch of steel on scales echoes through the breach.",
+      "Aldric_miss": "Aldric's swing catches the wall instead. Sparks in the dust.",
+      "Mira_heal": "Mira drops beside Aldous. Her hands move with desperate precision. \"Keep them off us.\"",
+      "Mira_boost": "Mira throws a bandage through the dust. \"Your side — you're bleeding.\"",
+      "Sera_shot": "Sera fires through the breach from behind cover. In the confined space, the arrow is almost impossible to dodge.",
+      "Sera_mark": "Sera shouts through the dust: \"Two more climbing — they'll be through in ten seconds.\"",
+      "generic_distraction": "Your companion hurls a loose stone at the draconian. It flinches — one second of opening.",
+      "generic_hit": "Your companion's weapon finds the enemy in the dust and chaos.",
+      "generic_miss": "Your companion's strike finds nothing in the murk.",
+      "generic_flee": "Your companion drags Aldous clear of the breach. The old knight does not make a sound."
+    },
+    "enemyHitPlayer": "The draconian lunges through the dust — claws first, blade second. In the breach, everything is close quarters.",
+    "enemyMissPlayer": "The draconian strikes and you catch it on your blade. In the tight space, there is only one line of attack — and you are standing on it.",
+    "enemyHitCompanion": {
+      "Aldric": "A draconian gets through Aldric's guard in the press. He grunts but does not yield the gap.",
+      "Mira": "A draconian spots Mira working on Aldous and breaks toward her. It gets one swipe before Aldric drives it back.",
+      "Sera": "A draconian hurls rubble at Sera's position. Stone fragments catch her arm.",
+      "generic": "The draconian catches your companion in the chaotic press of the breach."
+    },
+    "enemyMissCompanion": {
+      "Aldric": "The draconian strikes at Aldric in the tight space. His shield fills the gap. Nothing gets through.",
+      "generic": "The draconian swings wild in the dust. Your companion is not where it expected."
+    }
+  },
+  "53_SABOTAGE": {
+    "roundStart": [
+      "The grain store is filling with smoke. Orange light crawls up the sacks — lamp oil as accelerant, professional work. Two figures in civilian clothes move with measured steps, feeding the blaze. A third stands back in a cloak that hangs wrong — chain mail underneath. Dragon Army infiltrator.",
+      "The fire is spreading. Round two and the smoke is thickening, turning the grain store into a haze of orange and grey. The saboteurs are fighting, but the infiltrator — the infiltrator is assessing. Deciding whether to finish you or finish the mission.",
+      "Smoke stings your eyes. The fire has reached the second row of grain sacks. Three rounds until the store is lost. The infiltrator fights with the calm precision of someone who has been trained to kill quietly.",
+      "The fire roars. Heat presses against your face. The saboteurs are desperate now — trapped between you and the blaze they started. The infiltrator is already looking for an exit."
+    ],
+    "playerHit": [
+      "Your blade catches the saboteur across the ribs. He drops the oil flask he was reaching for.",
+      "The longsword finds the infiltrator's hidden chain shirt. The impact drives him back but the mail holds. His eyes narrow.",
+      "A clean strike. The saboteur crumples against the grain sacks. One less arsonist.",
+      "You catch the infiltrator between attacks. He is good — but not good enough."
+    ],
+    "playerMiss": [
+      "The infiltrator is fast. Your blade cuts smoke and nothing else.",
+      "A saboteur throws an oil flask and you dodge — losing your swing in the process.",
+      "Smoke blinds you at the wrong moment. Your sword finds a grain sack instead of flesh.",
+      "The infiltrator uses the smoke like a weapon, disappearing and reappearing where you do not expect."
+    ],
+    "playerCrit": [
+      "The blade drives through the infiltrator's chain shirt. His eyes go wide with genuine surprise — he did not think you were that good.",
+      "You catch a saboteur mid-throw. The oil flask drops from his hands and shatters at his feet."
+    ],
+    "enemyBloodied": [
+      "The infiltrator is bleeding through his cloak. His movements have changed — less assessment, more survival. He keeps glancing at the door.",
+      "The saboteurs are panicking. Their mission is burning around them and so is their confidence."
+    ],
+    "enemyNearDeath": [
+      "The infiltrator is done. Both saboteurs are down and the chain shirt is red with blood. He reaches for something — a pouch, a signal, a last weapon. One more hit.",
+      "The last enemy is staggering in the smoke. The grain store roars behind them. This ends now."
+    ],
+    "enemyDeath": [
+      "The infiltrator falls. His cloak spreads on the grain store floor — chain mail glinting in the firelight. Professional to the last.",
+      "The saboteur collapses face-down. Oil from his shattered flask pools around him. The fire does not discriminate."
+    ],
+    "playerHit_scar": [
+      "The infiltrator's shortsword finds your arm below the shoulder plate. Deep, precise — a scar left by someone who knew exactly where to put a blade.",
+      "A burning grain sack falls from the stack and catches your shoulder. Oil-fire leaves a different kind of scar — mottled, permanent.",
+      "The infiltrator's hand crossbow bolt grazes your neck. A line of fire that will heal white."
+    ],
+    "playerHurt": [
+      "Smoke sears your lungs. You cough and the infiltrator uses the moment to land a cut.",
+      "A thrown oil flask bursts near your feet. The fire licks at your boots before you stamp it out.",
+      "The infiltrator's shortsword catches your guard. Quick, precise, gone before you can counter.",
+      "Heat from the growing fire singes your face. The grain store is becoming an oven."
+    ],
+    "playerHurtBad": [
+      "The infiltrator's multi-attack catches you — shortsword, shortsword, two precise strikes that find gaps in your armour.",
+      "A saboteur's oil flask catches your arm. The fire clings. You lose a second putting it out — a second the infiltrator uses."
+    ],
+    "playerDowned": [
+      "The smoke and the blade find you at the same time. Your knees buckle. The grain store roars above you, orange and furious. Through the haze, you see your companion rushing forward."
+    ],
+    "companionActs": {
+      "Serath_reveal": "Serath studies the infiltrator's stance. \"Dragon Army — second cohort, Sanction-trained. He will try to spread the fire, not fight you.\"",
+      "Mira_heal": "Mira is already moving toward the water barrels. \"Fight them — I'll handle the fire.\"",
+      "Sera_shot": "Sera puts an arrow through the infiltrator's sword hand. His grip fails.",
+      "Sera_mark": "Sera points: \"Infiltrator is the only real fighter. Saboteurs will break.\"",
+      "generic_distraction": "Your companion hurls a grain sack at the nearest saboteur. It bowls him over.",
+      "generic_hit": "Your companion's weapon connects in the smoke.",
+      "generic_miss": "Your companion swings at shadow. The smoke is everyone's enemy.",
+      "generic_flee": "Your companion grabs the water pails and starts on the fire. \"Go! I've got this!\""
+    },
+    "enemyHitPlayer": "The infiltrator strikes from the smoke — two quick blows, professional and cold.",
+    "enemyMissPlayer": "The infiltrator lunges and you sidestep. His blade buries itself in a grain sack — flour explodes in a cloud.",
+    "enemyHitCompanion": {
+      "Mira": "A saboteur spots Mira at the water barrels and throws an oil flask. It shatters near her feet.",
+      "Sera": "The infiltrator snaps a hand crossbow bolt at Sera. It catches her arm.",
+      "Serath": "A saboteur recognises Serath. The dagger finds his arm — but the shock on the saboteur's face says it was personal.",
+      "generic": "The infiltrator turns on your companion. Two quick, precise strikes."
+    },
+    "enemyMissCompanion": {
+      "Sera": "The infiltrator fires at Sera. The bolt buries itself in a support beam by her head.",
+      "generic": "The saboteur's dagger misses your companion. Panic makes for poor aim."
+    }
+  },
+  "64B_WOLVES": {
+    "roundStart": [
+      "Six pairs of amber eyes at the fire's edge. The horses scream first — they always know. Dire wolves, massive and gaunt, ribs showing through matted fur. They were not always this desperate. The Dragon Army advance pushed them north, away from their hunting grounds, and now they hunt whatever they can find.",
+      "The wolves circle the dying fire. Two more have moved to the edge of the light. The alpha hangs back — massive, grey-black, watching you with an intelligence that wolves should not possess.",
+      "The pack is closing. They move in silence now — the growling was for intimidation. The hunting is silent. The fire is too low and the darkness beyond it is absolute.",
+      "The alpha enters the ring of firelight. It is enormous — shoulder height at your waist, scars crossing its muzzle like a map of every fight it has won. It has not lost one yet.",
+      "Dawn is coming but the wolves are not waiting. They are gaunt and desperate and you are between them and the horses. That equation has only one solution."
+    ],
+    "playerHit": [
+      "Your blade opens the wolf's shoulder. It yelps — a sound that is briefly, terribly, like a dog's — and falls back.",
+      "The longsword catches the dire wolf across the ribs. It staggers, snarls, circles wider.",
+      "A solid hit. The wolf's attack breaks and it retreats three steps, shaking blood from its muzzle.",
+      "Steel meets fur and flesh. The wolf goes down on one knee — one massive, lupine knee — and then forces itself back up."
+    ],
+    "playerMiss": [
+      "The wolf is faster than its size suggests. It dodges under your swing and snaps at your legs.",
+      "You swing at the wolf and it simply is not there. It reads your body like a sentence it has already finished.",
+      "The blade passes through empty air. The wolf moves like smoke — there and then not there.",
+      "Too slow. The wolf lunges under your guard and you slash where its head was a heartbeat ago."
+    ],
+    "playerCrit": [
+      "The blade comes down with everything behind it. The dire wolf crumples — two hundred pounds of predator, brought low.",
+      "You catch the wolf mid-leap. The timing is instinct, not thought. The impact drives it to the ground."
+    ],
+    "enemyBloodied": [
+      "The wolf is bleeding from its flank. Its movements have changed — still circling, but wider now. It is reassessing you as a threat. Good.",
+      "Blood darkens the wolf's grey fur. It is limping but its eyes have not changed. Wolves do not feel sorry for themselves."
+    ],
+    "enemyNearDeath": [
+      "The wolf can barely stand. Its back legs shake. But it bares its teeth one more time — not attack, not surrender. Defiance.",
+      "One more hit. The wolf knows it. It gathers itself for a final lunge, all remaining strength in one leap."
+    ],
+    "enemyDeath": [
+      "The wolf falls and is still. The pack feels it — a ripple of uncertainty passes through the amber eyes at the fire's edge.",
+      "It goes down without a sound. Wolves die quietly. It is a mercy the world does not extend to men."
+    ],
+    "playerHit_scar": [
+      "The wolf's jaws close on your arm. The bite is crushing — dire wolf jaws exert more force than a bear's. When it lets go, the arm is marked. Permanently.",
+      "Claws rake your chest through the armour. Three lines, deep, trailing blood. Wolf marks. Other knights will know what made them.",
+      "The alpha catches your shoulder in its jaws and shakes. The tearing is horrific. That arm will never look the same."
+    ],
+    "playerHurt": [
+      "A wolf snaps at your legs. The teeth catch your boot and nearly pull you off your feet.",
+      "The dire wolf's body slams into you mid-dodge. Two hundred pounds of muscle and desperation.",
+      "Claws scrape your armour. The wolf cannot get through the steel but the impact bruises.",
+      "A wolf circles behind you and snaps at your calf. Not deep, but the surprise nearly unbalances you."
+    ],
+    "playerHurtBad": [
+      "Two wolves hit you simultaneously — the pack tactic in its purest form. One goes low, one goes high. Your guard cannot cover both.",
+      "The alpha's jaws close on your shield arm. The pressure is immense. Your grip weakens and the shield drops."
+    ],
+    "playerDowned": [
+      "The alpha knocks you flat. Its weight pins you — two hundred pounds of starving predator, jaws inches from your throat. Through the fur and the hot, rank breath, you can see the fire dying and your companions rushing forward."
+    ],
+    "companionActs": {
+      "Aldric_flank": "Aldric moves to guard the horses, sword drawn. \"I've got the flank. Focus on the alpha.\"",
+      "Aldric_shield": "Aldric shields you as two wolves lunge simultaneously. His blade catches one; his shield catches the other.",
+      "Aldric_hit": "Aldric's sword opens a wolf's side. It yelps and falls back toward the darkness.",
+      "Aldric_miss": "Aldric swings at the wolf. It ducks under the blade — too fast, too low.",
+      "Sera_shot": "Sera's arrow takes a wolf through the ribs from twenty yards. One clean shot in the firelight.",
+      "Sera_mark": "Sera calls out: \"Alpha's hanging back — kill three and it will break.\" She nocks another arrow.",
+      "Mira_heal": "Mira pulls a wounded companion clear of the fighting. Her hands are steady even with wolves circling.",
+      "Mira_boost": "Mira throws a burning brand from the fire into the pack. The wolves scatter, momentarily blinded.",
+      "generic_distraction": "Your companion grabs a burning log and swings it. The wolves flinch from the fire.",
+      "generic_hit": "Your companion's weapon catches a wolf mid-lunge.",
+      "generic_miss": "Your companion swings at a wolf and catches nothing but cold air.",
+      "generic_flee": "Your companion drags someone clear of the pack. Wolves circle the gap."
+    },
+    "relentless": "The alpha should have fled. It does not. It stands over a fallen pack member, fur bristling, and turns to face you. This is its pack. This is its ground. It will not leave.",
+    "enemyHitPlayer": "The wolf lunges — jaws wide, going for your sword arm. Pack instinct: disarm first, kill second.",
+    "enemyMissPlayer": "The wolf snaps and you jerk back. Its teeth close on empty air, inches from your face.",
+    "enemyHitCompanion": {
+      "Aldric": "A wolf gets past Aldric's guard and catches his leg. He kicks it free but the blood is immediate.",
+      "Sera": "A wolf breaks for Sera's position. She puts an arrow in it but not before it reaches her.",
+      "Mira": "A wolf spots Mira and lunges. She throws a burning brand in its face but takes a claw across her arm.",
+      "generic": "The wolf turns on your companion. Jaws find a limb and close."
+    },
+    "enemyMissCompanion": {
+      "Aldric": "The wolf lunges at Aldric. He catches it on his shield and throws it sideways.",
+      "Sera": "A wolf leaps at Sera. She rolls aside and puts an arrow in it before her back hits the ground.",
+      "generic": "The wolf snaps at your companion and gets a mouthful of cloak instead of flesh."
+    }
+  },
+  "64E": {
+    "roundStart": [
+      "The farmstead is burning. The barn is fully ablaze — screaming from inside, the kind of sound you will hear in your sleep. Three soldiers stand in formation before the house while a Bozak draconian watches the fire with the detached attention of someone checking a task off a list.",
+      "The Bozak turns to face you. It is taller than the Baaz, more intelligent, and it carries a greatsword in one hand like it weighs nothing. Its free hand crackles — spell energy gathering at its claws. Behind it, the soldiers tighten formation.",
+      "Smoke from the burning barn turns the afternoon into dusk. The soldiers advance through it in lockstep. The Bozak hangs back, preparing another spell. Do not cluster.",
+      "The farmhouse roof is catching now. The Bozak stands outlined against the flames — a silhouette of scales and sorcery. The soldiers press forward to pin you while their officer prepares the killing blow."
+    ],
+    "playerHit": [
+      "Your blade finds the gap in the soldier's formation. Chain links part. He staggers.",
+      "The longsword crunches into the Bozak's scales. Harder than Baaz — thicker, darker bronze. But the blade still finds flesh.",
+      "A clean strike through the soldier's guard. The formation breaks for one critical moment.",
+      "You catch the Bozak between spells. It snarls — more annoyed than hurt — but the concentration breaks."
+    ],
+    "playerMiss": [
+      "The soldiers' formation absorbs your strike. Shield catches blade, blade catches shield. They are well-drilled.",
+      "The Bozak steps back from your swing with contemptuous ease. It has been fighting longer than you have been alive.",
+      "Smoke from the burning barn blinds you at the critical moment. Your blade finds nothing."
+    ],
+    "playerCrit": [
+      "The blade drives through the Bozak's guard. Dark blood sprays — thicker than human blood, steaming in the heat. The draconian actually looks surprised.",
+      "You split the formation with a strike that sends one soldier sprawling and opens a line to the Bozak behind him."
+    ],
+    "enemyBloodied": [
+      "The Bozak is wounded and angry. Lightning crackles along its claws — uncontrolled, spitting sparks. A wounded spellcaster is a dangerous thing.",
+      "The formation is breaking. One soldier down, the others spreading to cover the gap. The Bozak's eyes burn with cold intelligence as it recalculates."
+    ],
+    "enemyNearDeath": [
+      "The Bozak is dying on its feet. Its bones are already beginning to crack — the death throes building. When it falls, it will explode. Clear the area.",
+      "The last soldier throws down his sword. The Bozak stands alone, bleeding, crackling with failing spell energy. One more blow — but be ready for the explosion."
+    ],
+    "enemyDeath": [
+      "The Bozak falls — and its bones explode outward in a burst of thunder and shrapnel. You throw yourself flat as bone fragments pepper the burning farmstead like shrapnel.",
+      "The soldier drops. The Bozak is next, its death throes detonating with a crack that shakes loose tiles from the burning farmhouse."
+    ],
+    "playerHit_scar": [
+      "The Bozak's burning hands catches your shield arm. The spell-fire leaves a burn that goes deeper than skin — a mottled, waxy scar that will never fully heal.",
+      "A soldier's javelin catches your cheek. The wound is clean but deep. You will carry that line.",
+      "Lightning from the Bozak arcs across your armour. The burn pattern branches like a tree — a Lichtenberg scar, the mark of spell-fire."
+    ],
+    "playerHurt": [
+      "The Bozak's burning hands spell washes over you. The heat is intense — your armour conducts it. You grit your teeth and push through.",
+      "A soldier's javelin clips your leg. The throw was precise — formation troops drill until throwing becomes reflex.",
+      "Lightning crackles from the Bozak's claw. The bolt catches your sword and the shock runs up your arm.",
+      "The soldiers press forward. A shield bash drives you back toward the burning barn."
+    ],
+    "playerHurtBad": [
+      "The Bozak's lightning bolt catches you full-on. The world goes white. When your vision returns, you are on your knees and your armour is smoking.",
+      "Three soldiers and a Bozak focus you simultaneously. Formation and sorcery together — the Dragon Army's doctrine, executed perfectly."
+    ],
+    "playerDowned": [
+      "The Bozak's spell catches you and the world disappears into white light and heat. When you open your eyes, the farmstead ceiling is above you — someone dragged you clear. The burning continues."
+    ],
+    "companionActs": {
+      "Aldric_flank": "Aldric hits the formation from the side. His shield drives a wedge between two soldiers.",
+      "Aldric_shield": "Aldric plants himself between you and the Bozak. \"I'll hold it. Get the soldiers.\"",
+      "Aldric_hit": "Aldric's blade catches a soldier cleanly. Formation discipline wavers.",
+      "Aldric_miss": "Aldric's swing catches a raised shield. The formation holds.",
+      "Mira_heal": "Mira is already running toward the barn. Farmer Hanna needs help more than you need another sword.",
+      "Mira_boost": "Mira throws a burn salve. \"The Bozak's spells — this will help with the burns.\"",
+      "Sera_shot": "Sera puts an arrow in the Bozak's shoulder. It turns — and Sera is already firing the second.",
+      "Sera_mark": "Sera calls: \"Bozak is casting with its left. Take the arm.\"",
+      "Vael_warn": "Vael shouts: \"Burning Hands and Lightning Bolt — do NOT cluster. Spread out!\"",
+      "generic_distraction": "Your companion creates an opening in the formation.",
+      "generic_hit": "Your companion's weapon finds flesh through the formation.",
+      "generic_miss": "Your companion's strike is caught by a raised shield.",
+      "generic_flee": "Your companion breaks for the barn — someone has to save the people inside."
+    },
+    "enemyHitPlayer": "The Bozak's greatsword comes down with spell-enhanced force. The ground shakes where it strikes.",
+    "enemyMissPlayer": "Lightning crackles toward you and you roll. The bolt scorches the earth where you were standing.",
+    "enemyHitCompanion": {
+      "Aldric": "The Bozak turns its burning hands on Aldric. His shield glows cherry-red but he holds.",
+      "Mira": "A soldier breaks for Mira at the barn. She takes a hit before Aldric can intervene.",
+      "Sera": "Lightning arcs toward Sera's position. She dives but the edge of the bolt catches her.",
+      "generic": "The Bozak's spell catches your companion. Thunder and fire."
+    },
+    "enemyMissCompanion": {
+      "Aldric": "The Bozak's lightning arcs toward Aldric. He drops behind his shield and the bolt passes overhead.",
+      "Sera": "The Bozak fires lightning at Sera. She was already moving.",
+      "generic": "The soldier lunges at your companion. The attack goes wide."
+    }
+  },
+  "70A": {
+    "roundStart": [
+      "The observation post is lean-to and cold fire — professional fieldcraft, invisible from the road. Two soldiers, one scout on the high rock with a longbow, and a war dog curled at his feet. The dog lifts its head. It has smelled you.",
+      "The scout reaches for his signal horn. Three seconds — that is how long you have before the bridge garrison knows you are here. The soldiers draw swords. The dog rises, hackles up, silent.",
+      "The observation post erupts. The scout fires from the rock shelf, longbow arrows arcing down. The soldiers advance in formation. The dog circles, looking for an opening to knock someone down.",
+      "The post is chaos. Rock shelf above, soldiers below, a dog that fights with pack tactics and a scout who has not missed a shot yet."
+    ],
+    "playerHit": [
+      "Your blade catches the soldier mid-guard. His formation partner is too far — the tight terrain has broken their line.",
+      "The longsword finds the scout's bow arm. The longbow drops. No more arrows from above.",
+      "You catch the dog's handler. The soldier crumples and the dog hesitates — trained loyalty warring with instinct.",
+      "A solid hit on the soldier. He falls back toward the rock shelf."
+    ],
+    "playerMiss": [
+      "The scout fires and you dodge — losing your swing. The longbow arrow buries itself in the ground at your feet.",
+      "The soldier catches your blade on his shield. These are not militia — they are Dragon Army regulars.",
+      "The war dog lunges and you pull back. Your strike goes wide.",
+      "Terrain. A loose rock shifts under your foot and your timing goes wrong."
+    ],
+    "playerCrit": [
+      "The strike drives through the soldier's guard and drops him instantly. The scout on the rock shelf reaches for his horn — but the horn is in the hand you just rendered useless.",
+      "You catch the scout mid-draw. The longbow shatters. No signal, no arrows. The tactical situation has shifted decisively."
+    ],
+    "enemyBloodied": [
+      "The scout is wounded and reaching for his signal horn with increasing desperation. Every second he cannot signal is a second bought for the bridge assault.",
+      "The soldiers are hurt but trained. They fall back toward the rock shelf, tightening their defence around the scout. Protect the signal — that is their doctrine."
+    ],
+    "enemyNearDeath": [
+      "The last enemy is staggering. The signal horn lies on the rock, unused. You have held the silence.",
+      "One more hit. The scout reaches for the horn one final time. Your blade is already moving."
+    ],
+    "enemyDeath": [
+      "The scout falls from the rock shelf. The signal horn tumbles from his hand and lands in the dirt, silent. The bridge garrison hears nothing. You have bought surprise.",
+      "The last soldier drops his sword. The observation post is yours. The bridge lies ahead, unsuspecting."
+    ],
+    "playerHit_scar": [
+      "A longbow arrow from the rock shelf catches your arm. At this range, it goes deep. The scar will be round and puckered — a broadhead's signature.",
+      "The war dog's jaws close on your hand before you can pull away. Dog bites scar distinctively — ragged, asymmetric."
+    ],
+    "playerHurt": [
+      "A longbow arrow clips your shoulder. Fired from above — the scout has the height advantage.",
+      "The war dog bowls you over. Its weight drives you into the rocks.",
+      "A soldier's javelin from the low ground. It catches your leg.",
+      "The scout fires again. Another near miss — the arrow parts your hair."
+    ],
+    "playerHurtBad": [
+      "The scout puts an arrow in your side while you engage the soldiers. From the rock shelf, he has a clear shot at everything.",
+      "The dog and a soldier catch you simultaneously. Jaws and steel."
+    ],
+    "playerDowned": [
+      "An arrow from above and a blade from below catch you at the same moment. You go down on the rocks. Through fading vision, you see Sera drawing on the scout — one shot to save the mission and your life."
+    ],
+    "companionActs": {
+      "Sera_shot": "Sera's arrow takes the scout through the bow arm. The longbow drops. No more fire from above.",
+      "Sera_mark": "Sera whispers: \"Scout first. He has the horn. Kill the signal and we own this fight.\"",
+      "Aldric_flank": "Aldric moves right, drawing the soldiers away from the rock shelf.",
+      "Aldric_shield": "Aldric blocks the path between the soldiers and you as you climb the rock shelf.",
+      "Aldric_hit": "Aldric's blade catches a soldier. Clean, efficient.",
+      "Aldric_miss": "Aldric's swing goes wide — the terrain is treacherous.",
+      "Serath_reveal": "Serath: \"Standard Dragon Army observation protocol. The scout will signal at the first sign of losing.\"",
+      "generic_distraction": "Your companion creates an opening. The dog turns to face the new threat.",
+      "generic_hit": "Your companion's weapon connects.",
+      "generic_miss": "Your companion's strike goes wide on the uneven ground."
+    },
+    "enemyHitPlayer": "The scout fires from the high rock — longbow, downhill, nearly point-blank.",
+    "enemyMissPlayer": "The arrow from above hisses past your ear. The scout nocks another — fast, professional.",
+    "enemyHitCompanion": {
+      "Sera": "A soldier spots Sera drawing on the scout and throws his javelin. It catches her ribs.",
+      "Aldric": "The war dog goes for Aldric's legs. He stumbles on the rocks.",
+      "generic": "The scout puts an arrow in your companion from the elevated position."
+    },
+    "enemyMissCompanion": {
+      "Sera": "The scout fires at Sera. She is already behind cover.",
+      "Aldric": "The dog lunges at Aldric. He sidesteps and it tumbles past.",
+      "generic": "The arrow from above misses your companion. The scout curses."
+    }
+  },
+  "70C_SCOUTS": {
+    "roundStart": [
+      "Fifty yards downslope, firelight through the trees. Sera is silent beside you, her mouth at your ear: \"Three. Two soldiers, one scout with a longbow. The scout is the problem — she is good.\" The signal fire crackles between them. If that fire sends its signal, the bridge fight gets harder.",
+      "The trees are thick here and the darkness absolute beyond the firelight. The scout moves with confidence — she knows these woods. The soldiers are camped around the signal fire, alert but not alarmed. Not yet.",
+      "Combat in the forest at night. The fire throws jumping shadows that make every tree trunk look like an enemy. The scout uses the darkness like a weapon — firing from shadow, relocating, firing again."
+    ],
+    "playerHit": [
+      "Your blade catches a soldier in the firelight. He stumbles back toward the signal fire.",
+      "You find the scout between arrows. The longsword opens her side and she falls back into the trees.",
+      "A clean strike in the shifting light. The soldier's guard breaks.",
+      "Steel meets flesh in the orange glow. The soldier goes down."
+    ],
+    "playerMiss": [
+      "The scout fires and you dodge — your swing catches a tree trunk instead. Bark sprays.",
+      "The darkness plays tricks. You strike at a shadow that turns out to be exactly that.",
+      "The soldier uses the signal fire's half cover. Your blade rings off the stone windbreak."
+    ],
+    "playerCrit": [
+      "You catch the scout mid-draw. The strike disarms her and the longbow clatters into the underbrush. No more arrows.",
+      "The blade drives through the soldier's guard in the firelight. He drops and the signal fire is undefended."
+    ],
+    "enemyBloodied": [
+      "The scout is wounded and retreating deeper into the trees. If she reaches the ridge, she can signal by other means.",
+      "A soldier goes down near the fire. The remaining enemies are reconsidering their position."
+    ],
+    "enemyNearDeath": [
+      "The scout is cornered. No arrows, no escape route, no signal sent. She is reaching for her shortsword with her off hand.",
+      "The last enemy stands between you and the signal fire. One more blow."
+    ],
+    "enemyDeath": [
+      "The scout falls in the underbrush. The signal fire crackles on, unattended — but unsent. The bridge does not know.",
+      "The last soldier drops beside the signal fire. The forest goes quiet except for the crackle of flames that will tell no one anything."
+    ],
+    "playerHit_scar": [
+      "The scout's arrow catches your face in the darkness. A line opens from temple to jaw — she is very, very good.",
+      "A soldier's desperate swing catches your forearm. In the firelight, you can see the bone."
+    ],
+    "playerHurt": [
+      "An arrow from the darkness. The scout fires and relocates before you can track the source.",
+      "A soldier catches you with a shield bash by the fire. You stumble over the stone windbreak.",
+      "The scout's arrow clips your shoulder. Fired from shadow — you never saw it coming.",
+      "A branch catches your foot as you pursue and a soldier capitalises. His blade finds a gap."
+    ],
+    "playerHurtBad": [
+      "The scout puts an arrow in your side from the darkness. You did not see the shot. You just felt it arrive.",
+      "Two soldiers corner you against the stone windbreak. Shield and blade, firelight and blood."
+    ],
+    "playerDowned": [
+      "An arrow from the dark woods — the scout's final shot. You go down near the signal fire, its heat on your face. Sera's voice, sharp and close: \"I have the scout. Stay down.\""
+    ],
+    "companionActs": {
+      "Sera_shot": "Sera fires from the tree line. Her arrow takes the scout's bow from her hands. \"She's mine.\"",
+      "Sera_mark": "Sera: \"I'll take the scout. You deal with the soldiers. Quick and quiet.\"",
+      "Sera_hit": "Sera's arrow finds a soldier by the fire. He drops without a sound.",
+      "Sera_miss": "Sera's arrow buries itself in a tree trunk. \"Wind,\" she mutters, already nocking.",
+      "generic_distraction": "Your companion throws a rock into the underbrush. The scout turns toward the sound.",
+      "generic_hit": "Your companion's weapon finds its mark in the firelight.",
+      "generic_miss": "Your companion's strike misses in the darkness."
+    },
+    "enemyHitPlayer": "The scout fires from shadow — no warning, no sound, just the arrow arriving.",
+    "enemyMissPlayer": "An arrow hisses past from the trees. The scout is repositioning already.",
+    "enemyHitCompanion": {
+      "Sera": "The scout spots Sera and fires. Two archers duelling in the dark. Sera takes an arrow in the shoulder.",
+      "generic": "A soldier catches your companion in the shifting firelight."
+    },
+    "enemyMissCompanion": {
+      "Sera": "The scout fires at Sera. The arrow passes through the space Sera was in a moment ago. She is better at this game.",
+      "generic": "The soldier's swing misses your companion in the dark."
+    }
+  },
+  "F1_TAVERN_SWORD": {
+    "setting": "The yard behind the tavern. Packed earth, a broken fence, lantern light from the doorway. Bren rolls his shoulders and grins.",
+    "stakes": "A sparring match — non-lethal, but Bren fights like it's real. He has nothing to prove to you. You have everything to learn from him.",
+    "rounds": {
+      "1": "Bren opens with a feint you've never seen in any Solamnic manual. Dirt at your eyes, a quick step left, the blade coming from underneath.",
+      "2": "He's fast. Faster than his build suggests. Every move is efficient — no flourish, no wasted motion. This is how people fight when losing means dying.",
+      "3": "You're adapting. The forms still work — Bren can't get past Resolve — but he's making you work for every parry.",
+      "4": "Bren is breathing hard now. So are you. The next exchange will decide it.",
+      "5": "The crowd from the tavern has gathered. Someone is taking bets. Bren winks at you between strikes."
+    }
+  },
+  "ROAD_OA2_FIGHT": {
+    "setting": "The village square. Drask draws a heavy axe from behind the bar. Six of his twelve men step forward — the rest melt into the alleys. The villagers scatter.",
+    "stakes": "Drask rules this village by force. You are about to remove him by the same method. The question is what comes after.",
+    "rounds": {
+      "1": "Drask is disciplined — not a thug's wild swing but a soldier's measured strike. He was trained somewhere. His men fan out to flank.",
+      "2": "Two of the thugs go down fast. The rest hesitate. Drask does not. He presses forward with the axe, using reach and weight.",
+      "3": "The fight shifts. Drask's remaining men are falling back. He's alone in the centre, still swinging, still dangerous.",
+      "4": "Drask takes a knee. Blood on his face. He looks at you — not with hatred but with the weary assessment of a man who always knew this day would come.",
+      "5": "The last thug drops his weapon and runs. Drask stands alone. The village is watching."
+    }
+  }
+}

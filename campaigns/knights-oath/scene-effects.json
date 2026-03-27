@@ -1,0 +1,64 @@
+{
+  "sceneEffects": {
+    "39": {
+      "always": [
+        {
+          "comp": "Commander Serath",
+          "action": "remove",
+          "reason": "Detained by the garrison. You reported them."
+        }
+      ]
+    },
+    "46": {
+      "always": [
+        {
+          "comp": "Mira Of The Oaks",
+          "action": "remove",
+          "reason": "She leaves quietly that evening. The decree was too much."
+        },
+        {
+          "comp": "Mira of the Oaks",
+          "action": "remove",
+          "reason": "She leaves quietly that evening. The decree was too much."
+        }
+      ]
+    }
+  },
+  "npcBreakups": {
+    "18_D": {
+      "comp": "Commander Serath",
+      "reason": "You reported them to the garrison. Trust destroyed."
+    },
+    "37_B": {
+      "comp": "Commander Serath",
+      "reason": "You used their intelligence then turned them in."
+    },
+    "38_B": {
+      "comp": "Commander Serath",
+      "reason": "You told Aldric to report them."
+    },
+    "46_A": {
+      "comp": "Mira Of The Oaks",
+      "reason": "You obeyed the law that sent refugees to their deaths. She cannot forgive that."
+    },
+    "46_A_alt": {
+      "comp": "Mira of the Oaks",
+      "reason": "You obeyed the law that sent refugees to their deaths. She cannot forgive that."
+    },
+    "3B_B": {
+      "comp": "Sera Nighthollow",
+      "romanceBlock": true,
+      "reason": "You ignored her advice. She noted this."
+    },
+    "36B_D": {
+      "comp": "Lysander Graves",
+      "romanceCool": true,
+      "reason": "\"The Oath exists because individual judgment is not enough.\" He walks away. Romance cools."
+    },
+    "48_B": {
+      "comp": "Lord Caeron Ashvale",
+      "romanceCool": true,
+      "reason": "You told him you would do it again. His authority is undermined."
+    }
+  }
+}

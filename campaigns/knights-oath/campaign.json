@@ -1,0 +1,110 @@
+{
+  "id": "knights-oath",
+  "title": "The Knight's Oath",
+  "subtitle": "A Choose Your Own Adventure Prelude",
+  "type": "origin",
+  "levelRange": [1, 3],
+  "setting": "Dragonlance",
+  "classes": ["Fighter", "Paladin"],
+  "species": "Human (Solamnic)",
+  "languages": "Common, Solamnic",
+  "version": "24.1.0",
+  "startScene": "1",
+  "startingInventory": ["Dagger", "Explorer's Pack", "Solamnic Tabard"],
+  "startingEquipment": {
+    "head": "Leather Helm",
+    "hands": "Leather Gloves",
+    "boots": "Leather Boots",
+    "tabard": "Solamnic Tabard"
+  },
+  "startingResources": {
+    "bandages": 2,
+    "potions": 0,
+    "greaterPotions": 0,
+    "gold": 0,
+    "honour": 5
+  },
+  "orders": {
+    "rose": {
+      "name": "Rose",
+      "positive": ["Your compassion is noted.", "A merciful act.", "The Rose watches."],
+      "negative": ["A stain on your honour.", "The Order would not approve.", "Est Sularus oth Mithas \u2014 remember your oath."]
+    },
+    "sword": {
+      "name": "Sword",
+      "positive": ["Courage in action.", "A blade's resolve.", "The Sword approves."]
+    },
+    "crown": {
+      "name": "Crown",
+      "positive": ["A display of discipline.", "Order maintained.", "The Crown is satisfied."]
+    }
+  },
+  "intro": {
+    "pages": [
+      {
+        "title": "THE WORLD OF KRYNN",
+        "body": [
+          "Krynn is a world of high towers and deep shadows, of gods who once walked among mortals and a sky scarred by divine wrath.",
+          "The continent of Ansalon stretches from the frozen wastes of Icereach to the ancient forests of Silvanesti. Great cities once rose along its coasts and rivers \u2014 Istar the Mighty, Xak Tsaroth the Beautiful, Tarsis the Shining.",
+          "Once, this was a world of wonders.",
+          "That was before the Cataclysm."
+        ]
+      },
+      {
+        "title": "THE CATACLYSM",
+        "body": [
+          "Three hundred years ago, the Kingpriest of Istar grew so proud that he demanded godhood itself. In answer, the gods hurled a fiery mountain upon the city. Istar sank beneath the Blood Sea. Coastlines shattered. Nations drowned.",
+          "Then the gods fell silent.",
+          "No cleric could heal. No prayer was answered. The constellations of the gods vanished from the night sky. For three centuries, the people of Ansalon have lived without divine magic \u2014 and many have concluded the gods were never real at all.",
+          "The Knights of Solamnia, once the greatest force of good on Krynn, were blamed for failing to prevent the Cataclysm. They retreated to their strongholds, diminished and despised."
+        ]
+      },
+      {
+        "title": "THE SOLAMNIC ORDERS",
+        "body": [
+          "Yet the Knights endure. Three orders bound by the Oath and the Measure:",
+          "The Order of the Crown \u2014 honour, obedience, loyalty. Every squire begins here.",
+          "The Order of the Sword \u2014 courage, heroism, faith. The martial heart of the knighthood.",
+          "The Order of the Rose \u2014 wisdom, justice, sacrifice. The highest calling.",
+          "\u201cEst Sularus oth Mithas\u201d \u2014 My honour is my life.",
+          "You are a squire of the Crown, stationed in the frontier village of Vogler. Your training is nearly complete. Your trials have not yet begun."
+        ]
+      },
+      {
+        "title": "THE DRAGON ARMIES",
+        "body": [
+          "Rumours have reached Vogler from the east. Entire nations have fallen to a horde that marches under banners of five colours \u2014 red, blue, green, black, and white.",
+          "They call themselves the Dragon Armies. The refugees say they are led by Dragon Highlords, warlords of terrible power who ride upon dragons thought extinct since the Age of Dreams.",
+          "The Solamnic command dismisses most of this as peasant hysteria. Vogler is far from the front. The harvest festival approaches. There is a bridge to defend, oaths to uphold, and a village that trusts its knights.",
+          "But the smoke on the horizon is not a rumour."
+        ]
+      },
+      {
+        "title": "YOUR STORY BEGINS",
+        "body": [
+          "You are young. You have trained with sword and shield since childhood. You have memorised the Measure, recited the Oath, and sworn to protect those who cannot protect themselves.",
+          "Today, you must choose your path.",
+          "As a Fighter, you will master the art of war \u2014 tactical brilliance, unmatched endurance, and the discipline of a soldier born.",
+          "As a Paladin, you will reach for something the world has forgotten \u2014 divine magic. If the gods are truly returning, you may be among the first to hear their call in three hundred years.",
+          "Either way, the Dragon Armies are coming. And Vogler will need its knight."
+        ]
+      }
+    ]
+  },
+  "importRequires": null,
+  "files": {
+    "scenes": "scenes.json",
+    "scenesDeferred": "scenes-deferred.json",
+    "combatNarration": "combat-narration.json",
+    "combatOutcomes": "combat-outcomes.json",
+    "companions": "companions.json",
+    "sceneEffects": "scene-effects.json",
+    "shopData": "shop-data.json",
+    "rules": "rules.json",
+    "theme": "theme.json",
+    "dmSummary": "dm-summary.json",
+    "epilogues": "epilogues.json",
+    "partyBanter": "party-banter.json",
+    "companionGifts": "companion-gifts.json"
+  }
+}

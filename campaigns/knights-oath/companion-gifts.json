@@ -1,0 +1,47 @@
+{
+  "Aldric Voss": {
+    "skill": "Athletics",
+    "description": "Aldric teaches you a grappling technique he learned from the Solamnic wrestling pits. The hold is simple but devastating.",
+    "dialogue": "Here. Lock the elbow like this. My brother showed me before he — well. Before. It works. Trust me."
+  },
+  "Thessaly Brightwater": {
+    "skill": "History",
+    "description": "Thessaly shares her method for cross-referencing sources and spotting contradictions in historical records.",
+    "dialogue": "Three sources minimum. If two agree and one contradicts, the contradiction is usually the truth. People lie in the same direction. Truth is the outlier."
+  },
+  "Commander Serath": {
+    "skill": "Insight",
+    "description": "Serath teaches you to read micro-expressions and verbal patterns — the interrogation techniques of a Dragon Army officer.",
+    "dialogue": "Watch the hands, not the face. The face lies first. The hands forget to. And when someone touches their neck while speaking — they are deciding how much to tell you."
+  },
+  "Mira of the Oaks": {
+    "skill": "Medicine",
+    "description": "Mira shows you which herbs to use for wound care and how to set a bone in the field without tools.",
+    "dialogue": "Yarrow stops bleeding. Willow bark dulls pain. Comfrey knits bone. That is everything you need to know to save someone's life on the road. Everything else is refinement."
+  },
+  "Lord Caeron Ashvale": {
+    "skill": "Persuasion",
+    "description": "Caeron teaches you the art of noble rhetoric — when to pause, when to lower your voice, when to let silence do the work.",
+    "dialogue": "Never raise your voice. The moment you shout, you have lost the room. Speak quieter. Make them lean in. The one who controls the silence controls the conversation."
+  },
+  "Sera Nighthollow": {
+    "skill": "Survival",
+    "description": "Sera shows you how to read animal tracks, find water from vegetation patterns, and build a shelter from forest debris.",
+    "dialogue": "Moss grows on the wet side, not the north side. Birds fly toward water at dawn. And if you can hear a stream, you are already too close to the bank — floods come fast."
+  },
+  "Vael Ashmore": {
+    "skill": "Intimidation",
+    "description": "Vael teaches you the command presence they have been perfecting — how to fill a doorway and make people think twice.",
+    "dialogue": "Stand still. Do not fidget. Look at the bridge of their nose, not their eyes — it unsettles them without them knowing why. And never threaten. Threats are for people who are not sure they will follow through."
+  },
+  "Tariel Duskmantle": {
+    "skill": "Arcana",
+    "description": "Tariel shares their method for identifying magical residue and recognising pre-Cataclysm enchantments by their harmonic patterns.",
+    "dialogue": "Magic leaves a resonance. Like a bell that was struck and stopped — the sound is gone but the vibration remains in the metal. Learn to feel it in old stone. It will tell you what was here before."
+  },
+  "Lysander Graves": {
+    "skill": "Stealth",
+    "description": "Lysander teaches you to move without sound — how to place your feet, how to breathe, how to become part of the darkness.",
+    "dialogue": "Heel first, then roll to the toe. Match your breathing to the wind. And never look directly at someone you are hiding from — they feel it. I do not know why. They just do."
+  }
+}
