@@ -2060,6 +2060,14 @@
         "points": {
           "ROSE": 1
         }
+      },
+      {
+        "letter": "D",
+        "text": "Explore the old ruins before returning.",
+        "target": "44C",
+        "points": {
+          "SWORD": 1
+        }
       }
     ]
   },
@@ -3984,6 +3992,12 @@
         "text": "Sleep comes. Dawn follows. The field exercise begins",
         "target": "26_PREP",
         "points": {}
+      },
+      {
+        "letter": "B",
+        "text": "Dawn comes. Time to leave Castle Brightholm.",
+        "target": "11_DEPARTURE",
+        "points": {}
       }
     ]
   },
@@ -4149,7 +4163,13 @@
         "points": {}
       },
       {
-        "letter": "H",
+        "letter": "I",
+        "text": "(If not yet visited) The evaluation hall. Ser Aldous has posted the first assessment.",
+        "target": "5",
+        "points": {}
+      },
+      {
+        "letter": "J",
         "text": "(If 2+ activities completed) The bell rings. The morning you have been living in is over. Formation assembles",
         "target": "11",
         "points": {}
@@ -4368,6 +4388,12 @@
         "points": {
           "sword": 1
         }
+      },
+      {
+        "letter": "G",
+        "text": "Find Thessaly. She was taking notes near the old ruins.",
+        "target": "45",
+        "points": {}
       }
     ]
   },
@@ -4539,6 +4565,12 @@
         "letter": "A",
         "text": "Go to the Great Hall. Face the Trials",
         "target": "60",
+        "points": {}
+      },
+      {
+        "letter": "B",
+        "text": "Make camp at the crossroads first. There is time before the bell.",
+        "target": "REST_2",
         "points": {}
       }
     ]
@@ -4916,6 +4948,14 @@
         "target": "70A",
         "points": {
           "crown": 1
+        }
+      },
+      {
+        "letter": "D",
+        "text": "Wait. There is a rider on the bridge. An old knight, alone.",
+        "target": "69_KNIGHT",
+        "points": {
+          "ROSE": 1
         }
       }
     ]
@@ -6373,6 +6413,12 @@
         "letter": "D",
         "text": "A shadow walks beside you. It has since the whisper.",
         "target": "70_SHADOW",
+        "points": {}
+      },
+      {
+        "letter": "E",
+        "text": "The Reformer's road. You have something to say to the Council.",
+        "target": "70_REFORM",
         "points": {}
       }
     ]

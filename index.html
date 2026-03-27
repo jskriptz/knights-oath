@@ -4416,9 +4416,13 @@ function filterChoices(choices, sceneId, gs) {
       const matchTarget = f.target && target === f.target;
       if (!matchLetter && !matchTarget) continue;
       if (f.hideIfClass && gs.cls === f.hideIfClass) return null;
-      if (f.requireFlag && !flags[f.requireFlag]) {
-        if (f.disabledText) return {...c, text: c.text + f.disabledText, _disabled: true};
-        return null;
+      if (f.requireFlag) {
+        const val = flags[f.requireFlag];
+        const ok = f.requireFlagValue ? val === f.requireFlagValue : !!val;
+        if (!ok) {
+          if (f.disabledText) return {...c, text: c.text + f.disabledText, _disabled: true};
+          return null;
+        }
       }
       if (f.requireAwardedAny) {
         const awarded = gs.awardedScenes || {};

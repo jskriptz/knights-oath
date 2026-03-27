@@ -1595,6 +1595,14 @@
         "text": "Refugees on the road heading north (Scene 64C)",
         "target": "64C",
         "points": {}
+      },
+      {
+        "letter": "D",
+        "text": "Take the forest path. Faster, but the wolves are active at night.",
+        "target": "64B_WOLVES",
+        "points": {
+          "SWORD": 1
+        }
       }
     ]
   },

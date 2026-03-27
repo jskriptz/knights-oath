@@ -538,6 +538,12 @@
       "target": "68C",
       "requireCompanion": "Vael",
       "comment": "Romance flame scene — Vael"
+    },
+    {
+      "scene": "70_GATE",
+      "letter": "E",
+      "requireFlag": "measureOrientation",
+      "requireFlagValue": "REFORMER"
     }
   ],
   "companionChoiceGates": [
