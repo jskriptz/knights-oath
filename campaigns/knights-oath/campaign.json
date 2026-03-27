@@ -8,7 +8,7 @@
   "classes": ["Fighter", "Paladin"],
   "species": "Human (Solamnic)",
   "languages": "Common, Solamnic",
-  "version": "24.1.0",
+  "version": "24.1.1",
   "startScene": "1",
   "startingInventory": ["Dagger", "Explorer's Pack", "Solamnic Tabard"],
   "startingEquipment": {
