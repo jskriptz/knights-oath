@@ -5867,7 +5867,8 @@ function App(){
     // Set story flags from campaign rules
     if(!ns.flags)ns.flags={};
     for(const rule of (CAMPAIGN_RULES?.choiceFlags||[])){
-      if(rule.scene===sceneId&&(rule.letters.includes(c.letter)||rule.letters.includes('*'))){
+      const rLetters=rule.letters||( rule.letter?[rule.letter]:[]);
+      if(rule.scene===sceneId&&(rLetters.includes(c.letter)||rLetters.includes('*'))){
         if(rule.setFlags)Object.assign(ns.flags,rule.setFlags);
         if(rule.addItems){for(const item of rule.addItems){if(!ns.inventory.includes(item))ns.inventory=[...ns.inventory,item]}}
         if(rule.addBonuses){if(!ns.bonuses)ns.bonuses=[];ns.bonuses.push(...rule.addBonuses)}

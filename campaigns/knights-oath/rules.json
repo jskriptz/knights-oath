@@ -278,86 +278,106 @@
     },
     {
       "scene": "8",
-      "letter": "A",
       "setFlags": {
         "aldous_mentor": true
       },
       "addItems": [
         "Rose Commentary"
+      ],
+      "letters": [
+        "A"
       ]
     },
     {
       "scene": "8",
-      "letter": "B",
       "setFlags": {
         "aldous_mentor": true,
         "aldous_backstory": true
       },
       "addItems": [
         "Rose Commentary"
+      ],
+      "letters": [
+        "B"
       ]
     },
     {
       "scene": "8",
-      "letter": "C",
       "addItems": [
         "Rose Commentary"
+      ],
+      "letters": [
+        "C"
       ]
     },
     {
       "scene": "8",
-      "letter": "D",
       "addItems": [
         "Rose Commentary"
+      ],
+      "letters": [
+        "D"
       ]
     },
     {
       "scene": "F4_VILLAGE_ELDER",
-      "letter": "A",
       "setFlags": {
         "measureOrientation": "KEEPER"
       },
-      "comment": "Fighter choosing: orthodox keeper of the Measure"
+      "comment": "Fighter choosing: orthodox keeper of the Measure",
+      "letters": [
+        "A"
+      ]
     },
     {
       "scene": "F4_VILLAGE_ELDER",
-      "letter": "B",
       "setFlags": {
         "measureOrientation": "PRACTITIONER"
       },
-      "comment": "Fighter choosing: pragmatic practitioner"
+      "comment": "Fighter choosing: pragmatic practitioner",
+      "letters": [
+        "B"
+      ]
     },
     {
       "scene": "F4_VILLAGE_ELDER",
-      "letter": "C",
       "setFlags": {
         "measureOrientation": "REFORMER"
       },
-      "comment": "Fighter choosing: reformer of the Measure"
+      "comment": "Fighter choosing: reformer of the Measure",
+      "letters": [
+        "C"
+      ]
     },
     {
       "scene": "F4_VILLAGE_ELDER",
-      "letter": "D",
       "setFlags": {
         "measureOrientation": "SEEKER"
       },
-      "comment": "Fighter choosing: seeker, undecided"
+      "comment": "Fighter choosing: seeker, undecided",
+      "letters": [
+        "D"
+      ]
     },
     {
       "scene": "70_REFORM",
-      "letter": "A",
       "setFlags": {
         "reformer_letter": true
       },
-      "comment": "Fighter reformer sends letter to High Council"
+      "comment": "Fighter reformer sends letter to High Council",
+      "letters": [
+        "A"
+      ]
     },
     {
       "scene": "BV3",
       "comment": "Stayed to help the burning village survivors",
-      "letter": "A",
       "setFlags": {
         "stayed_burning_village": true
-      }
+      },
+      "letters": [
+        "A"
+      ]
     },
     {
       "scene": "ARC_ALDRIC_1",
