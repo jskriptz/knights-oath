@@ -4444,7 +4444,8 @@ function filterChoices(choices, sceneId, gs) {
     for (const gate of (rules.classTargetGates || [])) {
       if (gate.targets && gate.targets.includes(target) && gs.cls !== gate.requireClass) return null;
       if (gate.targetPrefixes) {
-        for (const pfx of gate.targetPrefixes) {
+        const prefixes = Array.isArray(gate.targetPrefixes) ? gate.targetPrefixes : [gate.targetPrefixes];
+        for (const pfx of prefixes) {
           if (target && target.startsWith(pfx) && gs.cls !== gate.requireClass) return null;
         }
       }

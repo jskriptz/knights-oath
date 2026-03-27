@@ -890,19 +890,27 @@
       "requireClass": "Fighter"
     },
     {
-      "targetPrefixes": "M1_",
+      "targetPrefixes": [
+        "M1_"
+      ],
       "requireClass": "Fighter"
     },
     {
-      "targetPrefixes": "M2_",
+      "targetPrefixes": [
+        "M2_"
+      ],
       "requireClass": "Fighter"
     },
     {
-      "targetPrefixes": "M3_",
+      "targetPrefixes": [
+        "M3_"
+      ],
       "requireClass": "Fighter"
     },
     {
-      "targetPrefixes": "M4_",
+      "targetPrefixes": [
+        "M4_"
+      ],
       "requireClass": "Fighter"
     },
     {
