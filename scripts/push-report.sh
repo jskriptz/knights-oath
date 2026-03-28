@@ -1,6 +1,6 @@
 #!/bin/bash
 COMMIT=$(git log -1 --oneline 2>/dev/null || echo "unknown")
-VERSION=$(grep -o 'v[0-9]*\.[0-9]*\.[0-9]*' index.html | head -1 || echo "unknown")
+VERSION=$(grep -o '"version": "[0-9]*\.[0-9]*\.[0-9]*"' campaigns/knights-oath/campaign.json | grep -o '[0-9]*\.[0-9]*\.[0-9]*' | head -1 || echo "unknown")
 DATE=$(date '+%Y-%m-%d %H:%M:%S')
 
 echo ""

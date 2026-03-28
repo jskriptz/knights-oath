@@ -30,3 +30,7 @@ npm-debug.log*
 *.pem
 *.key
 credentials.json
+
+# PDFs and large binary files
+*.pdf
+*.PDF
