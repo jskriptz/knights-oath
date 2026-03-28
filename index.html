@@ -1624,11 +1624,14 @@ function buildEquipment(weapon,armor,hasShield){
   return{head:'Leather Helm',cape:null,tabard:'Solamnic Tabard',armor:armor||'Chain Mail',mainHand:weapon||'Longsword',offHand:hasShield?'Shield':null,hands:'Leather Gloves',boots:'Leather Boots',ring1:null,ring2:null,amulet:null};
 }
 function syncEquipToState(gs){
-  // Sync equipment slots → gs.weapon, gs.armor, gs.hasShield
+  // Sync equipment slots → gs.weapon, gs.armor, gs.hasShield, gs.offHandWeapon
   if(!gs.equipment)return;
   gs.weapon=gs.equipment.mainHand||'Unarmed';
   gs.armor=gs.equipment.armor||'None';
   gs.hasShield=gs.equipment.offHand==='Shield';
+  // Track off-hand weapon for dual wielding
+  const ohw=gs.equipment.offHand;
+  gs.offHandWeapon=(ohw&&ohw!=='Shield'&&WEAPONS_WITH_MASTERY.some(w=>w.name===ohw))?ohw:null;
 }
 function equipItem(gs,itemName,slotOverride){
   const eq={...(gs.equipment||{})};
@@ -1641,6 +1644,8 @@ function equipItem(gs,itemName,slotOverride){
   if(wpn&&/Two-Handed/i.test(wpn.props)){eq.offHand=null}
   // If equipping to offHand and main hand is two-handed, block it
   if(slot==='offHand'){const mw=WEAPONS_WITH_MASTERY.find(w=>w.name===eq.mainHand);if(mw&&/Two-Handed/i.test(mw.props))return gs}
+  // Light weapon in offHand: verify it's actually light
+  if(slot==='offHand'&&wpn&&!isLightWeapon(itemName))return gs;
   eq[slot]=itemName;
   const ns={...gs,equipment:eq};
   syncEquipToState(ns);
@@ -1656,17 +1661,25 @@ function unequipItem(gs,slotId){
   ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds);
   return ns;
 }
+function isLightWeapon(name){const w=WEAPONS_WITH_MASTERY.find(x=>x.name===name);return w&&/Light/i.test(w.props)}
 function getSlotOptions(gs,slotId){
   // Returns all inventory items that can go in this slot (including currently equipped)
   if(!gs||!gs.inventory)return[];
   const current=gs.equipment?gs.equipment[slotId]:null;
   const eqVals=gs.equipment?Object.values(gs.equipment).filter(Boolean):[];
+  // If main hand is two-handed, offHand can only be empty
+  const mainWpn=gs.equipment?WEAPONS_WITH_MASTERY.find(w=>w.name===gs.equipment.mainHand):null;
+  const mainIsTwoHanded=mainWpn&&/Two-Handed/i.test(mainWpn.props);
+  if(slotId==='offHand'&&mainIsTwoHanded)return current?[current]:[];
   const opts=[];const seen=new Set();
   if(current&&!seen.has(current)){seen.add(current);opts.push(current)}
   gs.inventory.forEach(it=>{
     if(seen.has(it))return;
     if(eqVals.includes(it)&&it!==current)return;// equipped elsewhere
     const s=getItemSlot(it);
+    // Light weapons can go in offHand (dual wielding)
+    if(slotId==='offHand'&&s==='mainHand'&&isLightWeapon(it)){seen.add(it);opts.push(it);return}
+    // Shield always valid for offHand
     if(slotId==='ring2'&&s==='ring1'){seen.add(it);opts.push(it)}
     else if(s===slotId){seen.add(it);opts.push(it)}
   });
@@ -1831,9 +1844,9 @@ function SettingsPanel({onClose}){
       e('div',{className:'settings-row'},
         e('div',null,e('div',{className:'settings-label'},'Compact UI'),e('div',{className:'settings-sublabel'},'Reduce spacing for smaller screens')),
         e('button',{className:'settings-toggle'+(settings.compactUI?' on':''),onClick:()=>update('compactUI',!settings.compactUI)})),
-      e('div',{style:{marginTop:16,textAlign:'center'}},
-        e('button',{className:'settings-btn',onClick:()=>{update('textScale',1);update('combatSpeed','normal');update('autoSave',true);update('screenShake',true);update('compactUI',false)}},'Reset Defaults'),
-        e('button',{className:'ghost-btn',onClick:onClose,style:{marginLeft:12}},'Done'))))}
+      e('div',{style:{marginTop:16,display:'flex',justifyContent:'center',gap:12}},
+        e('button',{className:'ghost-btn',onClick:()=>{update('textScale',1);update('combatSpeed','normal');update('autoSave',true);update('screenShake',true);update('compactUI',false)}},'Reset Defaults'),
+        e('button',{className:'gold-btn',onClick:onClose},'Done'))))}
 
 function CompanionInfo({name,romance,onClose}){
   const e=React.createElement;
@@ -5228,7 +5241,7 @@ function CharSheet({gs,isEnding,onBack,onEquipChange}){
   return e('div',{className:'char-sheet-page'},
     e('div',{className:'cs-header'},e('div',{className:'cs-title-block'},
       e('h1',null,'CHARACTER SHEET'),
-      e('h2',null,'The Knight\u2019s Oath v19 \u2022 D&D 2024'),
+      e('h2',null,(CAMPAIGN?.title||'The Knight\u2019s Oath')+' '+(CAMPAIGN?.version?'v'+CAMPAIGN.version:'')+' \u2022 D&D 2024'),
       e('div',{className:'cs-divider'}))),
 
     // ── Journey Summary (ending only) ──
