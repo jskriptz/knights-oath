@@ -33,7 +33,24 @@
     "Caltrops": 1,
     "Rope": 0,
     "Torch": 0,
-    "Explorer’s Pack": 2
+    "Explorer’s Pack": 2,
+    "+1 Weapon": 50,
+    "+1 Longsword": 50,
+    "+1 Armor": 75,
+    "+1 Shield": 50,
+    "+2 Weapon": 200,
+    "+2 Armor": 250,
+    "+3 Weapon": 500,
+    "+3 Armor": 600,
+    "Flame Tongue": 300,
+    "Frost Brand": 300,
+    "Sun Blade": 350,
+    "Dragon Slayer": 200,
+    "Giant Slayer": 200,
+    "Mithral": 100,
+    "Adamantine": 150,
+    "Elven Chain": 200,
+    "Masterwork": 15
   },
   "unsellablePattern": "tabard|aldric.s dagger|sera.s|mira.s|serath.s|thessaly.s|vael.s|lysander.s|tariel.s|caeron.s|rose commentary|garrison watch token|patrol sketch|family ring|carved wooden token|kapak venom|dawnstrike|Explorer\\u2019s Pack|boar tusks"
 }

@@ -3803,11 +3803,35 @@ let SELL_PRICES={};
 // Items that cannot be sold — companion gifts, quest items, key gear
 let UNSELLABLE=/^$/;
 
+// Magic item lookup from EQUIPMENT_DATA
+function getMagicItemInfo(itemName){
+  if(!EQUIPMENT_DATA)return null;
+  const nm=itemName.toLowerCase();
+  // Check magic weapons
+  for(const mw of (EQUIPMENT_DATA.magicWeapons||[])){
+    if(nm.includes(mw.name.toLowerCase()))return{...mw,category:'weapon'};
+  }
+  // Check magic armor
+  for(const ma of (EQUIPMENT_DATA.magicArmor||[])){
+    if(nm.includes(ma.name.toLowerCase()))return{...ma,category:'armor'};
+  }
+  return null;
+}
+
 function getSellPrice(itemName){
   for(const[k,v]of Object.entries(SELL_PRICES)){if(itemName.toLowerCase().includes(k.toLowerCase()))return v}
-  // Magic/masterwork items
-  if(/\+1/.test(itemName))return 25;
-  if(/masterwork/i.test(itemName))return 10;
+  // Check magic item data for rarity-based pricing
+  const mi=getMagicItemInfo(itemName);
+  if(mi){
+    if(mi.rarity==='very rare')return 400;
+    if(mi.rarity==='rare')return 150;
+    if(mi.rarity==='uncommon')return 40;
+  }
+  // Fallback patterns
+  if(/\+3/.test(itemName))return 400;
+  if(/\+2/.test(itemName))return 150;
+  if(/\+1/.test(itemName))return 40;
+  if(/masterwork/i.test(itemName))return 15;
   return 1; // default fallback for unknown sellable items
 }
 
