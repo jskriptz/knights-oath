@@ -10,7 +10,7 @@
   "availableSpecies": ["human"],
   "speciesLocked": true,
   "languages": "Common, Solamnic",
-  "version": "24.3.4",
+  "version": "24.3.5",
   "startScene": "1",
   "startingInventory": ["Dagger", "Explorer's Pack", "Solamnic Tabard"],
   "startingEquipment": {
