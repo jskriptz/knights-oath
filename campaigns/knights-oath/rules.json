@@ -16,6 +16,10 @@
   "epilogueVisitGating": [
     "71"
   ],
+  "unrevisitableScenes": [
+    "1", "1A", "2", "3", "3B", "5", "5B", "7",
+    "11", "11B", "12"
+  ],
   "hubScenes": [
     "11_MORNING",
     "11_AFTERNOON",

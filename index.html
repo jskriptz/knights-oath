@@ -4782,6 +4782,7 @@ function filterChoices(choices, sceneId, gs) {
   const flags = gs.flags || {};
   const HUB_SCENES = rules.hubScenes || [];
   const EXEMPT = new Set(rules.exemptTargets || []);
+  const UNREVISITABLE = new Set(rules.unrevisitableScenes || []);
 
   return choices.map(c => {
     const txt = c.text || '';
@@ -4792,6 +4793,7 @@ function filterChoices(choices, sceneId, gs) {
       if (target && visitedScenes.has(target)) return null;
       c = {...c, text: txt.replace(/^\(If not yet visited(?:,\s*[^)]+)?\)\s*/i, '')};
     }
+    if (target && UNREVISITABLE.has(target) && visitedScenes.has(target)) return null;
 
     // Hub visit gating
     if (HUB_SCENES.includes(sceneId) && target && !EXEMPT.has(target) && visitedScenes.has(target)) return null;
