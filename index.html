@@ -38,17 +38,22 @@
   border-radius:2px;transition:width .3s ease;
 }
 #loading-status{
-  font-family:Georgia,serif;color:#7a7568;font-size:12px;letter-spacing:1px;
+  font-family:Georgia,serif;color:#a09a8e;font-size:12px;letter-spacing:1px;
 }
 #loading-sub{
-  font-family:Georgia,serif;color:#4a4538;font-size:11px;margin-top:24px;
+  font-family:Georgia,serif;color:#7a7568;font-size:11px;margin-top:24px;
 }
 </style>
 <style>
 /* Fonts loaded via async link tag in head */
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#0e0e18;--panel:#16162a;--border:#252540;--gold:#c9a84c;--gold-dim:#8b7332;--gold-bright:#e8c860;--text:#d4cfc4;--text-dim:#7a7568;--text-bright:#f0ebe0;--blue:#4a7ab5;--green:#4a8a5a;--red:#8b3a3a;--purple:#6a4a8a;--orange:#9a6a3a;--pink:#8b4a6a}
+:root{--bg:#0e0e18;--panel:#16162a;--border:#252540;--gold:#c9a84c;--gold-dim:#b8a04a;--gold-bright:#e8c860;--text:#d4cfc4;--text-dim:#a09a8e;--text-bright:#f0ebe0;--blue:#5a8ac8;--green:#5a9a6a;--red:#a84a4a;--purple:#8a6aaa;--orange:#b88a4a;--pink:#a85a7a}
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Crimson Text',Georgia,serif;font-size:calc(17px * var(--text-scale,1));line-height:1.7}
+/* Accessibility: focus indicators */
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+/* Accessibility: reduced motion */
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 
 .cover{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg);padding:40px;text-align:center;overflow-y:auto}
 .cover h1{font-family:'Cinzel',serif;color:var(--gold);font-size:52px;letter-spacing:4px}
@@ -111,7 +116,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Crimso
 .stat-assign-row{display:flex;align-items:center;gap:10px;padding:8px 14px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:6px}
 .stat-assign-row label{font-family:'Cinzel',serif;font-size:11px;color:var(--gold-dim);width:100px;letter-spacing:1px}
 .stat-select{background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text-bright);padding:6px 10px;border-radius:4px;font-family:'Crimson Text',serif;font-size:16px;min-width:60px;cursor:pointer}
-.stat-select:focus{border-color:var(--gold-dim);outline:none}
+.stat-select:focus{border-color:var(--gold);box-shadow:0 0 0 2px rgba(201,168,76,.3)}
 .bonus-toggles{display:flex;gap:4px}
 .bonus-btn{background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--text-dim);width:30px;height:28px;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:3px;transition:all .15s;font-family:'Cinzel',serif}
 .bonus-btn:hover{border-color:var(--gold-dim)}
@@ -274,7 +279,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Crimso
 
 .stat-chips{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
 .stat-chip{text-align:center;padding:4px 2px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:4px}
-.chip-label{display:block;font-family:'Cinzel',serif;font-size:9px;color:var(--gold-dim);letter-spacing:1px}
+.chip-label{display:block;font-family:'Cinzel',serif;font-size:10px;color:var(--gold-dim);letter-spacing:1px}
 .chip-val{display:block;font-size:15px;color:var(--text-bright);font-weight:700}
 .chip-mod{display:block;font-size:10px;color:var(--text-dim)}
 
@@ -291,7 +296,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Crimso
 .companion-list{display:flex;flex-wrap:wrap;gap:4px}
 .companion-tag{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:10px;font-size:11px;background:rgba(74,138,90,.15);color:#8ac8a0;border:1px solid rgba(74,138,90,.25);cursor:pointer;transition:all .15s}
 .companion-tag:hover{filter:brightness(1.2);border-color:rgba(74,138,90,.5)}
-.companion-tag .spell-tag-info{font-size:9px;opacity:.5}
+.companion-tag .spell-tag-info{font-size:10px;opacity:.6}
 .companion-tag:hover .spell-tag-info{opacity:1}
 .companion-tag.romance{background:rgba(199,74,126,.2);color:#f0a0c8;border-color:rgba(199,74,126,.4)}
 
@@ -335,7 +340,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Crimso
 .equip-slot-item.clickable:hover{color:var(--gold)}
 .equip-slot-empty.clickable:hover{color:var(--gold-dim)}
 .equip-slot.disabled .equip-slot-btn,.equip-slot.disabled select{pointer-events:none;opacity:.3}
-.history-list{font-size:11px;color:#555;max-height:120px;overflow-y:auto}
+.history-list{font-size:12px;color:var(--text-dim);max-height:120px;overflow-y:auto}
 .hist-item{padding:1px 0}
 
 .main-content{flex:1;overflow-y:auto}
@@ -425,7 +430,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Crimso
 .condition-icon.bless{border-color:var(--gold-dim);color:var(--gold)}
 .condition-icon.conc{border-color:#3498db;color:#3498db}
 .condition-icon.unconscious{border-color:#c0392b;color:#c0392b}
-.condition-icon.enemy{font-size:9px;padding:1px 4px}
+.condition-icon.enemy{font-size:10px;padding:1px 4px}
 .combat-over{text-align:center;padding:16px;border:1px solid var(--gold-dim);border-radius:6px;margin:12px 0}
 .combat-over h3{font-family:'Cinzel',serif;color:var(--gold);margin-bottom:8px}
 .game-over-panel{margin-top:12px;padding:12px;border:1px solid #c0392b;border-radius:4px}
@@ -1850,7 +1855,7 @@ function SettingsPanel({onClose}){
       e('div',{className:'settings-row'},
         e('div',null,e('div',{className:'settings-label'},'Text Size'),e('div',{className:'settings-sublabel'},'Adjust reading comfort')),
         e('div',{className:'settings-control'},
-          e('input',{type:'range',className:'settings-range',min:0.8,max:1.4,step:0.05,value:settings.textScale,onChange:ev=>update('textScale',parseFloat(ev.target.value))}),
+          e('input',{type:'range',className:'settings-range',min:0.8,max:1.6,step:0.05,value:settings.textScale,onChange:ev=>update('textScale',parseFloat(ev.target.value)),'aria-label':'Text size adjustment'}),
           e('span',{className:'settings-val'},Math.round(settings.textScale*100)+'%'))),
       e('div',{className:'settings-row'},
         e('div',null,e('div',{className:'settings-label'},'Combat Speed'),e('div',{className:'settings-sublabel'},'Animation and roll speed')),
