@@ -3,6 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0e0e18">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Knight's Oath">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='%230e0e18'/%3E%3Cpath d='M90 22L45 45v68c0 22 45 45 45 45s45-22 45-45V45L90 22z' fill='none' stroke='%23c9a84c' stroke-width='7'/%3E%3Cpath d='M90 52v75M71 90h38' stroke='%23c9a84c' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E">
 <title>Dragonlance: The Knight's Oath</title>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
@@ -1210,6 +1216,10 @@ var _lp=document.getElementById('loading-bar');
 var _ls=document.getElementById('loading-status');
 function _ldr(pct,msg){if(_lp)_lp.style.width=pct+'%';if(_ls)_ls.textContent=msg;}
 _ldr(5,'Loading fonts...');
+
+// PWA install prompt capture (must be before React)
+var deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;window.dispatchEvent(new Event('pwainstallready'));});
 </script>
 
 <div id="app"></div>
@@ -4008,8 +4018,12 @@ function CampaignSelect({onSelect,onBack}){
 function CoverScreen({onNew,onLoad}){
   const[slots,setSlots]=useState([null,null,null]);const[loading,setLoading]=useState(true);const[del,setDel]=useState(null);
   const[ready,setReady]=useState(!!window._scenesReady);
+  const[installable,setInstallable]=useState(false);
+  const isStandalone=window.matchMedia('(display-mode:standalone)').matches||window.navigator.standalone===true;
   useEffect(()=>{loadAllSlots().then(s=>{setSlots(s);setLoading(false)})},[]);
   useEffect(()=>{if(ready)return;const iv=setInterval(()=>{if(window._scenesReady){setReady(true);clearInterval(iv)}},200);return()=>clearInterval(iv)},[ready]);
+  useEffect(()=>{if(isStandalone)return;if(window.deferredPrompt){setInstallable(true);return;}const h=()=>setInstallable(true);window.addEventListener('pwainstallready',h);return()=>window.removeEventListener('pwainstallready',h)},[]);
+  const handleInstall=async()=>{if(!window.deferredPrompt)return;window.deferredPrompt.prompt();const{outcome}=await window.deferredPrompt.userChoice;if(outcome==='accepted')setInstallable(false);window.deferredPrompt=null;};
   const handleDel=async(i)=>{await deleteSave(i);const s=[...slots];s[i]=null;setSlots(s);setDel(null)};
   const e=React.createElement;
   const ls=CAMPAIGN&&CAMPAIGN.loadingScreen||{};
@@ -4027,6 +4041,7 @@ function CoverScreen({onNew,onLoad}){
     e('div',{className:'stats'},cStats),
     e('div',{className:'divider'}),
     e('button',{className:'gold-btn',onClick:onNew,style:{marginBottom:8}},'NEW GAME'),
+    installable&&e('button',{className:'ghost-btn',onClick:handleInstall,style:{marginBottom:8,fontSize:12}},'INSTALL APP'),
     e('div',{style:{fontSize:11,letterSpacing:2,color:ready?'#6a8a6a':'#8a7a5a',marginBottom:16,transition:'color .5s'}},ready?'\u2714 READY':'LOADING SCENES\u2026'),
     !loading?e('div',{className:'save-slots'},e('h3',{className:'slots-title'},'SAVED GAMES'),
       slots.map((slot,i)=>{
@@ -4608,7 +4623,7 @@ function SceneView({scene,onChoice,gs,isEnding,onViewSheet,onViewDmSummary,onBon
           e('p',{className:'detour-label'},'Before you choose:'),
           detours.map((d,i)=>e('button',{key:i,className:'detour-btn'+(d.mandatory?' mandatory':''),onClick:()=>onChoice({target:d.target,letter:'DETOUR',points:{},text:d.label})},d.label))
         ):null,
-        scene.choices.length?e('div',{className:'choices'+(hasDetour?' greyed':'')},filterChoices(scene.choices,scene.id,gs).map((c,i)=>e('button',{key:i,className:'choice-btn'+(c.conviction?' conviction':'')+(c.romance_spark||c.romance_flame||c.romance_oath?' romance-choice':''),disabled:hasDetour,onClick:()=>{if(!hasDetour)onChoice(c)},tabIndex:hasDetour?-1:0},e('span',{className:'letter'},c.letter+')'),e('span',{dangerouslySetInnerHTML:{__html:fmt(stripOrder(c.text))}})))):isEnding?null:e('p',{className:'no-choices'},'Look for navigation cues above.'))})(),
+        scene.choices.length?e('div',{className:'choices'+(hasDetour?' greyed':'')},filterChoices(scene.choices,scene.id,gs).map((c,i)=>e('button',{key:i,className:'choice-btn'+(c.conviction?' conviction':'')+(c.romance_spark||c.romance_flame||c.romance_oath?' romance-choice':''),disabled:hasDetour,onClick:()=>{if(!hasDetour)onChoice(c)},tabIndex:hasDetour?-1:0},e('span',{className:'letter'},(i+1)+')'),e('span',{dangerouslySetInnerHTML:{__html:fmt(stripOrder(c.text))}})))):isEnding?null:e('p',{className:'no-choices'},'Look for navigation cues above.'))})(),
       isEnding?e(React.Fragment,null,
         EPILOGUES?e(EpilogueBlock,{gs,sceneId:scene.id}):null,
         e('div',{className:'ending-block'},e('div',{className:'divider'}),e('p',{className:'ending-text'},'Your prelude is complete.'),
@@ -6153,6 +6168,11 @@ requestAnimationFrame(function(){
     window._scenesReady=true;
   },50);
 });
+
+// Register service worker for offline support
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js');
+}
 </script>
 </body>
 </html>
