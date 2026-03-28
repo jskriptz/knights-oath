@@ -135,6 +135,7 @@ const handlers = {
 
   'pre-bash': () => {
     // Basic command safety check — prefer stdin command data from Claude Code
+    // Silent on success, loud on failure
     const cmd = (hookInput.command || prompt).toLowerCase();
     const dangerous = ['rm -rf /', 'format c:', 'del /s /q c:\\', ':(){:|:&};:'];
     for (const d of dangerous) {
@@ -143,7 +144,7 @@ const handlers = {
         process.exit(1);
       }
     }
-    console.log('[OK] Command validated');
+    // Success: exit silently (no output)
   },
 
   'post-edit': () => {
