@@ -37,7 +37,7 @@
           },
           {
             "type": "command",
-            "command": "npx claude-flow skill run push-report",
+            "command": "bash scripts/push-report.sh",
             "timeout": 60000
           }
         ]
