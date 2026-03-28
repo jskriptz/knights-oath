@@ -150,7 +150,9 @@
     "location": "",
     "prose": [
       "*Castle Brightholm — Chapel Library*",
-      "The chapel library is cold and smells of old parchment and tallow and three centuries of people asking difficult questions in a small room. The candles are thin — the chapel gets last priority for supplies, which says something about how equipment maintenance ranks relative to justice. You find the passage: Est Sularus oth Mithas — My honour is my life. Three words. Commentaries running to thousands of pages. You are reading one of them when Ser Aldous sits down without being invited, sets his elbows on the table, looks at you, and says: 'Ask it.' You did not know there was a question visible on your face."
+      "The chapel library is cold and smells of old parchment and tallow and three centuries of people asking difficult questions in a small room. The candles are thin — the chapel gets last priority for supplies, which says something about how equipment maintenance ranks relative to justice. You find the passage: Est Sularus oth Mithas — My honour is my life. Three words. Commentaries running to thousands of pages.",
+      "An older volume catches your eye — its margin contains annotations in an ancient script. [LANG:Istaran|*The script is unfamiliar, though the letters resemble old Common.*]'Ante-Cataclysmus, the knights wrote this oath in blood. The Kingpriest called it heresy. They kept it anyway. — Loremaster Vareth, Temple of Istar, 13 PC.'[/LANG] The book is three hundred years old, from before the gods fell silent.",
+      "You are reading one of them when Ser Aldous sits down without being invited, sets his elbows on the table, looks at you, and says: 'Ask it.' You did not know there was a question visible on your face."
     ],
     "boxes": [
       {
@@ -1612,7 +1614,8 @@
     "location": "",
     "prose": [
       "*South Road — Forest Edge, Day 2*",
-      "Arrows from the treeline, then three Dragon Army soldiers and a Sivak Draconian Officer. Not a patrol. Assassins. They have a description of Solamnic squire colours. They have found you."
+      "Arrows from the treeline, then three Dragon Army soldiers and a Sivak Draconian Officer. Not a patrol. Assassins. They have a description of Solamnic squire colours. They have found you.",
+      "The Sivak officer barks orders to the soldiers. [LANG:Draconic|*The words are guttural, commanding — you cannot understand them.*]'Sivak-thral vex. The one in Solamnic colours — bring the body to Commander Hestrix. The others, leave for the crows.'[/LANG] The soldiers spread out with practiced efficiency."
     ],
     "boxes": [
       {

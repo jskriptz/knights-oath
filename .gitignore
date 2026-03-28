@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Capacitor native platforms
+ios/
+android/
+.capacitor/
+
+# Build output
+dist/
+www/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Secrets (security recommendation from Session 2A review)
+.env
+.env.*
+*.pem
+*.key
+credentials.json

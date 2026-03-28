@@ -215,7 +215,8 @@
         "weapon": "Greatsword",
         "armor": "Chain Mail",
         "hasShield": false
-      }
+      },
+      "extraLang": "Draconic"
     },
     "Paladin": {
       "cls": "Paladin",
@@ -254,7 +255,8 @@
         "weapon": "Longsword",
         "armor": "Chain Mail",
         "hasShield": true
-      }
+      },
+      "extraLang": "Elvish"
     }
   },
   "choiceFlags": [

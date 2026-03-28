@@ -1,0 +1,20 @@
+{
+  "name": "knights-oath",
+  "version": "1.0.0",
+  "description": "Dragonlance: The Knight's Oath - Browser RPG",
+  "scripts": {
+    "sync": "bash scripts/sync-www.sh && npx cap sync android",
+    "cap:sync": "cap sync",
+    "cap:open:ios": "cap open ios",
+    "cap:open:android": "cap open android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.2.1",
+    "@capacitor/core": "^6",
+    "@capacitor/preferences": "^6.0.4"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6",
+    "typescript": "^6.0.2"
+  }
+}

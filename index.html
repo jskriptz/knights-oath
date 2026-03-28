@@ -511,6 +511,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Crimso
 .mount-dismiss:hover{border-color:rgba(200,100,100,.6);color:rgba(200,100,100,1)}
 .mount-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--gold-dim);margin-left:6px;font-style:italic}
 .travel-mounted{color:var(--gold);font-style:italic;font-size:13px;margin:6px 0}
+.language-note{color:var(--blue);font-style:italic;font-size:12px;padding:4px 12px;margin:4px 0 8px;background:rgba(74,122,181,.08);border-left:3px solid var(--blue);border-radius:0 4px 4px 0}
 .cs-mount-block{margin:8px 0;padding:8px 12px;background:rgba(180,160,100,.06);border:1px solid rgba(180,160,100,.12);border-radius:6px}
 .cs-mount-name{font-family:'Cinzel',serif;color:var(--gold);font-size:14px}
 .cs-mount-stats{font-size:12px;color:var(--text-dim);margin-top:2px}
@@ -1471,6 +1472,26 @@ function filterBoxText(text,cls,companions){
   return filtered.join('\n');
 }
 
+// Language parsing: [LANG:LanguageName]text[/LANG] or [LANG:LanguageName|fallback]text[/LANG]
+// Returns {text, languageNotes} where languageNotes are [{lang, understood}]
+function parseLanguageText(text,knownLanguages){
+  if(!text||!text.includes('[LANG:'))return{text,languageNotes:[]};
+  const langs=knownLanguages||[];
+  const notes=[];
+  const parsed=text.replace(/\[LANG:([^\]|]+)(?:\|([^\]]*))?\]([\s\S]*?)\[\/LANG\]/gi,(match,lang,fallback,content)=>{
+    const langName=lang.trim();
+    const understood=langs.some(l=>l.toLowerCase()===langName.toLowerCase());
+    notes.push({lang:langName,understood});
+    if(understood){
+      return content;
+    }else{
+      // Show fallback if provided, otherwise show italicized "unknown language" marker
+      return fallback?fallback.trim():'*[Speech in '+langName+' — you do not understand]*';
+    }
+  });
+  return{text:parsed,languageNotes:notes};
+}
+
 let ENDING_SCENES=[];
 
 
@@ -1752,7 +1773,7 @@ const ST={
   async del(k){try{if(window.storage){await window.storage.delete(k);return}localStorage.removeItem(k)}catch(e){try{localStorage.removeItem(k)}catch(e2){}}}
 };
 // ── Save System: Character (persistent) + Campaign Progress (per-campaign) ──
-const CHARACTER_FIELDS=['cls','stats','style','feat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount'];
+const CHARACTER_FIELDS=['cls','stats','style','feat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount','languages'];
 const CAMPAIGN_PROGRESS_FIELDS=['history','flags','awardedScenes','completedRolls','companions','romances','romanceDeclined','companionLog','deadCompanions','rose','sword','crown','orderMax','dgTrack','godSigns','hitDiceUsed','secondWindUsed','actionSurgeUsed','spellSlotsUsed','layOnHandsPool','miraHealedThisScene','combatCount','measureTrack','measureOrientation','approval'];
 
 function splitSave(gs,sceneId){
@@ -4382,7 +4403,7 @@ function CharCreate({onDone,onBack}){
   const[miSpell,setMiSpell]=useState(null);
   // Paladin prepared spells
   const[palSpells,setPalSpells]=useState([]);
-  const[style,setStyle]=useState(null);const[mastery,setMastery]=useState([]);const[weapon,setWeapon]=useState('Longsword');const[skilledPicks,setSkilledPicks]=useState([]);const[classSkills,setClassSkills]=useState([]);const[humanSkill,setHumanSkill]=useState(null);const[armor,setArmor]=useState('Chain Mail');const[hasShield,setHasShield]=useState(true);
+  const[style,setStyle]=useState(null);const[mastery,setMastery]=useState([]);const[weapon,setWeapon]=useState('Longsword');const[skilledPicks,setSkilledPicks]=useState([]);const[classSkills,setClassSkills]=useState([]);const[humanSkill,setHumanSkill]=useState(null);const[extraLang,setExtraLang]=useState(null);const[armor,setArmor]=useState('Chain Mail');const[hasShield,setHasShield]=useState(true);
   const[name,setName]=useState('');const[errs,setErrs]=useState({});const[quickCls,setQuickCls]=useState(null);const[quickName,setQuickName]=useState('');
   // Stat generation method
   const[statMethod,setStatMethod]=useState(null); // 'standard','pointbuy','roll'
@@ -4439,6 +4460,7 @@ function CharCreate({onDone,onBack}){
       e('div',{className:'confirm-row'},e('span',null,'Origin Feat'),e('span',null,PRESETS[quickCls].feat)),
       e('div',{className:'confirm-row'},e('span',null,'Weapon'),e('span',null,PRESETS[quickCls].equip.weapon)),
       e('div',{className:'confirm-row'},e('span',null,'Skills'),e('span',null,[...PRESETS[quickCls].classSkills,PRESETS[quickCls].humanSkill].join(', '))),
+      e('div',{className:'confirm-row'},e('span',null,'Languages'),e('span',null,[...((CAMPAIGN&&CAMPAIGN.startingLanguages)||['Common']),PRESETS[quickCls].extraLang].filter(Boolean).join(', '))),
       quickCls==='Paladin'?e('div',{className:'confirm-row'},e('span',null,'Spells'),e('span',null,PRESETS[quickCls].spells.level1.join(', '))):null
     ),
     e('input',{className:'name-input',placeholder:'Enter your name',value:quickName,onChange:ev=>setQuickName(ev.target.value),style:{marginTop:20},autoFocus:true}),
@@ -4479,7 +4501,32 @@ function CharCreate({onDone,onBack}){
     e('p',{style:{fontSize:13,color:(classSkills.length===2&&humanSkill)?'#6adb6a':'#8a8578',marginTop:8}},classSkills.length+'/2 class + '+(humanSkill?'1':'0')+'/1 human'),
     e('div',{className:'btn-row',style:{marginTop:16}},
       e('button',{className:'ghost-btn',onClick:()=>setStep(0)},'\u2190 Back'),
-      e('button',{className:'gold-btn',onClick:()=>{if(classSkills.length===2&&humanSkill)setStep('0c')},disabled:classSkills.length!==2||!humanSkill},'Continue')));
+      e('button',{className:'gold-btn',onClick:()=>{if(classSkills.length===2&&humanSkill)setStep('0b2')},disabled:classSkills.length!==2||!humanSkill},'Continue')));
+
+  // Step 0b2: Language selection (Human gets 1 extra language)
+  const startLangs=(CAMPAIGN&&CAMPAIGN.startingLanguages)||['Common'];
+  const langOptions=(LANGUAGES_DATA&&LANGUAGES_DATA.extraLanguageOptions)||['Elvish','Dwarvish','Gnomish','Draconic','Goblin','Giant','Orc','Halfling'];
+  const recommendedLangs=(LANGUAGES_DATA&&LANGUAGES_DATA.recommendedLanguages&&LANGUAGES_DATA.recommendedLanguages[CAMPAIGN?.id])||{};
+  if(step==='0b2')return e('div',{className:'cover'},
+    e('h2',{className:'gold'},'CHOOSE YOUR EXTRA LANGUAGE'),
+    e('p',{className:'dim-italic',style:{fontSize:13,marginBottom:4}},'As a human, you know '+startLangs.join(' and ')+'. Choose one additional language.'),
+    e('p',{className:'dim-italic',style:{fontSize:12,marginBottom:16,color:'var(--blue)'}},'Languages marked with \u2605 are recommended for this campaign.'),
+    e('div',{className:'spell-grid',style:{maxWidth:500}},langOptions.filter(l=>!startLangs.includes(l)).map(lang=>{
+      const isRec=recommendedLangs[lang];
+      const langInfo=LANGUAGES_DATA&&LANGUAGES_DATA.languages&&LANGUAGES_DATA.languages[lang.toLowerCase()];
+      return e('button',{key:lang,
+        className:'spell-btn'+(extraLang===lang?' selected':''),
+        style:{position:'relative',textAlign:'left',padding:'8px 12px'},
+        onClick:()=>setExtraLang(lang),
+        title:isRec||''},
+        e('span',null,lang+(isRec?' \u2605':'')),
+        langInfo?e('small',{style:{display:'block',fontSize:11,color:'var(--text-dim)',marginTop:2}},langInfo.speakers):null
+      )})),
+    extraLang&&recommendedLangs[extraLang]?e('p',{style:{fontSize:12,color:'var(--blue)',marginTop:12,fontStyle:'italic'}},'\u2605 '+recommendedLangs[extraLang]):null,
+    e('p',{style:{fontSize:13,color:extraLang?'#6adb6a':'#8a8578',marginTop:12}},'Languages: '+startLangs.join(', ')+(extraLang?', '+extraLang:'')),
+    e('div',{className:'btn-row',style:{marginTop:16}},
+      e('button',{className:'ghost-btn',onClick:()=>setStep('0b')},'\u2190 Back'),
+      e('button',{className:'gold-btn',onClick:()=>{if(extraLang)setStep('0c')},disabled:!extraLang},'Continue')));
 
   // Step 0c: Stat generation method picker
   if(step==='0c')return e('div',{className:'cover'},
@@ -4670,7 +4717,7 @@ function CharCreate({onDone,onBack}){
       ):null),
     e('div',{className:'divider'}),
     e('div',{className:'btn-row'},e('button',{className:'ghost-btn',onClick:()=>setStep('3b')},'\u2190 Back'),
-      e('button',{className:'gold-btn',onClick:()=>onDone({cls,stats:finalStats,style,feat,mastery,name,spells:allSpells,equip:{weapon,armor,hasShield},skilledPicks,classSkills,humanSkill})},'Begin Adventure')));
+      e('button',{className:'gold-btn',onClick:()=>onDone({cls,stats:finalStats,style,feat,mastery,name,spells:allSpells,equip:{weapon,armor,hasShield},skilledPicks,classSkills,humanSkill,extraLang})},'Begin Adventure')));
 }
 
 // ── Sidebar ────────────────────────────────────────────
@@ -5014,14 +5061,20 @@ function showApprovalToast(comp,delta){
 function SceneView({scene,onChoice,gs,isEnding,onViewSheet,onViewDmSummary,onBonus,onStateUpdate}){
   const ref=useRef(null);const e=React.createElement;
   const cls=gs.cls;const comps=gs.companions||[];
+  const knownLangs=gs.languages||['Common'];
   useEffect(()=>{if(ref.current)ref.current.scrollTop=0},[scene.id]);
   let visibleProse=filterProse(scene.prose,cls,comps);
+  // Parse language-gated text and collect notes
+  const allLangNotes=[];
+  visibleProse=visibleProse.map(p=>{const{text,languageNotes}=parseLanguageText(p,knownLangs);allLangNotes.push(...languageNotes);return text});
+  const understoodLangs=[...new Set(allLangNotes.filter(n=>n.understood).map(n=>n.lang))];
   // Scene 71: show only the player's order description
   if(scene.id==='71'&&gs.rose!==undefined){const order=gs.rose>=gs.sword&&gs.rose>=gs.crown?'Rose':gs.sword>=gs.crown?'Sword':'Crown';visibleProse=visibleProse.filter(p=>{if(p.includes('Est Sularus oth Mithas'))return order==='Rose';if(p.includes('The blade that does not waver'))return order==='Sword';if(p.includes('Law is the shield'))return order==='Crown';if(p.includes('Voice of the Rose'))return order==='Rose';if(p.includes('Blade-Oath'))return order==='Sword';if(p.includes('standard. People will look'))return order==='Crown';if(p.includes('asking the right questions'))return order==='Rose';if(p.includes('south road, on the ridge'))return order==='Sword';if(p.includes('kept the law when others'))return order==='Crown';return true})}
   const isTravelScene=scene.title&&/travel|ride|riding|march|road|journey|camp|south|north|bridge|patrol/i.test(scene.title);
   return e('div',{className:'main-content',ref},
     e('div',{className:'scene-header'},e('h1',null,'Scene '+(scene.id.replace(/^\d+_/,''))+(scene.title?' \u2014 '+scene.title:'')),scene.location?e('div',{className:'location'},scene.location):null,
       gs.mount&&isTravelScene?e('div',{className:'travel-mounted'},'\ud83d\udc0e Mounted on '+gs.mount.name):null),
+    understoodLangs.length?e('div',{className:'language-note'},'You understand '+understoodLangs.join(', ')+'.'):null,
     e('div',{className:'scene-body'},
       visibleProse.map((p,i)=>e('p',{key:'p'+i,dangerouslySetInnerHTML:{__html:fmt(p)}})),
       e(BanterBlock,{sceneId:scene.id,gs:gs}),
@@ -5257,6 +5310,7 @@ function CharSheet({gs,isEnding,onBack,onEquipChange}){
   features.push({name:'Human: Resourceful',desc:'Gain Heroic Inspiration on each Long Rest.'});
   features.push({name:'Human: Skillful',desc:'Extra skill proficiency: '+(gs.humanSkill||'\u2014')});
   features.push({name:'Human: Versatile',desc:'Origin Feat: '+(gs.feat||'\u2014')});
+  features.push({name:'Languages',desc:(gs.languages||['Common']).join(', ')});
   if(gs.feat==='Tough')features.push({name:'Tough',desc:'+'+gs.level*2+' HP (included in total).'});
   if(gs.feat==='Lucky')features.push({name:'Lucky',desc:d.profBonus+' Luck Points per Long Rest. Advantage or impose Disadvantage.'});
   if(gs.feat==='Alert')features.push({name:'Alert',desc:'Initiative +PB (included). Can\u2019t be surprised. Swap initiative with willing ally.'});
@@ -5975,6 +6029,7 @@ let EPILOGUES=null;
 let SPECIES_DATA=null;
 let CLASS_DATA=null;
 let EQUIPMENT_DATA=null;
+let LANGUAGES_DATA=null;
 
 async function loadCampaign(campaignId){
   // Standalone build: use embedded data instead of fetching
@@ -5996,6 +6051,7 @@ async function loadCampaign(campaignId){
     if(d.species)SPECIES_DATA=d.species;
     if(d.classes)CLASS_DATA=d.classes;
     if(d.equipment)EQUIPMENT_DATA=d.equipment;
+    if(d.languages)LANGUAGES_DATA=d.languages;
     CAMPAIGN=manifest;
     if(d.scenesDeferred){setTimeout(()=>{for(const k in d.scenesDeferred)SCENES[k]=d.scenesDeferred[k];window._scenesReady=true},100)}
     else{window._scenesReady=true}
@@ -6023,9 +6079,10 @@ async function loadCampaign(campaignId){
       files.companionGifts?fetch(base+files.companionGifts).then(r=>r.json()):null,
       files.species?fetch(base+files.species).then(r=>r.json()):null,
       files.classes?fetch(base+files.classes).then(r=>r.json()):null,
-      files.equipment?fetch(base+files.equipment).then(r=>r.json()):null
+      files.equipment?fetch(base+files.equipment).then(r=>r.json()):null,
+      files.languages?fetch(base+files.languages).then(r=>r.json()):null
     ]);
-    const[scenes,scenesDeferred,combatNarr,combatOut,companions,effects,shop,rules,theme,dmSummary,epilogues,partyBanter,companionGifts,species,classes,equipment]=loads;
+    const[scenes,scenesDeferred,combatNarr,combatOut,companions,effects,shop,rules,theme,dmSummary,epilogues,partyBanter,companionGifts,species,classes,equipment,languages]=loads;
 
     // Populate engine globals
     if(scenes){for(const k in scenes)SCENES[k]=scenes[k]}
@@ -6063,6 +6120,7 @@ async function loadCampaign(campaignId){
     if(species)SPECIES_DATA=species;
     if(classes)CLASS_DATA=classes;
     if(equipment)EQUIPMENT_DATA=equipment;
+    if(languages)LANGUAGES_DATA=languages;
 
     CAMPAIGN=manifest;
 
@@ -6249,14 +6307,16 @@ function App(){
     s.boxes.filter(b=>b.type==='companion').forEach(b=>{const m=b.text.match(/COMPANION JOINS:\s*(.+?)[\n(*]/);if(m){let nm=m[1].replace(/\*+/g,'').trim();nm=nm.split(/\s+/).map(w=>w.charAt(0).toUpperCase()+w.slice(1).toLowerCase()).join(' ');const canonical=COMPANIONS_ALL.find(c=>c.toLowerCase()===nm.toLowerCase());if(canonical)nm=canonical;if(!ns.companions.includes(nm)){ns.companions=[...ns.companions,nm];if(!ns.companionLog)ns.companionLog={};if(!ns.companionLog[nm])ns.companionLog[nm]=[];ns.companionLog[nm].push('Joined in Scene '+sceneId+(s.title?' — '+s.title:''))}}});
     s.boxes.filter(b=>b.type==='levelup').forEach(b=>{if(b.text.includes('LEVEL 2')&&ns.level<2){ns.level=2;ns.derived=calcDerived(ns.stats,ns.cls,2,ns.armor,ns.hasShield,ns.feat,ns.wounds);ns.hp=ns.derived.maxHp}if(b.text.includes('LEVEL 3')&&ns.level<3){ns.level=3;ns.derived=calcDerived(ns.stats,ns.cls,3,ns.armor,ns.hasShield,ns.feat,ns.wounds);ns.hp=ns.derived.maxHp}});
     setScene(s);setSceneId(id);setGs(ns)};
-  const startGame=({cls,stats,style,feat,mastery,name,spells,equip,skilledPicks,classSkills,humanSkill})=>{const derived=calcDerived(stats,cls,1,equip.armor,equip.hasShield,feat);
+  const startGame=({cls,stats,style,feat,mastery,name,spells,equip,skilledPicks,classSkills,humanSkill,extraLang})=>{const derived=calcDerived(stats,cls,1,equip.armor,equip.hasShield,feat);
     const cRes=(CAMPAIGN&&CAMPAIGN.startingResources)||{};
     const cInv=(CAMPAIGN&&CAMPAIGN.startingInventory)||['Dagger','Explorer\u2019s Pack'];
     const cEquip=(CAMPAIGN&&CAMPAIGN.startingEquipment)||{};
     const startGods={};for(const g of GODS)(startGods[g]=0);
     const startScene=(CAMPAIGN_RULES&&CAMPAIGN_RULES.startScene)||(CAMPAIGN&&CAMPAIGN.startScene)||'1';
     const extraInv=[equip.weapon,equip.armor,equip.hasShield?'Shield':'',...cInv,cEquip.head,cEquip.hands,cEquip.boots].filter(Boolean);
-    const state={cls,stats,style,feat,mastery,name:name||'Squire',spells:spells||{cantrips:[],level1:[],alwaysPrepared:[]},weapon:equip.weapon,armor:equip.armor,skilledPicks:skilledPicks||[],classSkills:classSkills||[],humanSkill:humanSkill||null,hasShield:equip.hasShield,level:1,hp:derived.maxHp,derived,xp:0,honour:cRes.honour||5,rose:0,sword:0,crown:0,companions:[],romances:{},godSigns:startGods,dgTrack:'NONE',equipment:buildEquipment(equip.weapon,equip.armor,equip.hasShield),inventory:extraInv,history:[],awardedScenes:{},companionLog:{},romanceDeclined:{},flags:{},bonuses:[],magicItems:[],measureTrack:0,measureOrientation:null,gold:cRes.gold||0,layOnHandsPool:cls==='Paladin'?derived.layOnHandsMax:0,spellSlotsUsed:0,secondWindUsed:0,actionSurgeUsed:false,bandages:cRes.bandages||0,potions:cRes.potions||0,greaterPotions:cRes.greaterPotions||0,miraHealedThisScene:false,completedRolls:{},deadCompanions:[],hitDiceUsed:0,wounds:[],scars:[],combatCount:0,orderMax:{rose:0,sword:0,crown:0},approval:{},companionGifts:[],mount:null};setGs(state);goScene(startScene,state);setPhase('play')};
+    const startLangs=(CAMPAIGN&&CAMPAIGN.startingLanguages)||['Common'];
+    const allLangs=[...startLangs];if(extraLang&&!allLangs.includes(extraLang))allLangs.push(extraLang);
+    const state={cls,stats,style,feat,mastery,name:name||'Squire',spells:spells||{cantrips:[],level1:[],alwaysPrepared:[]},weapon:equip.weapon,armor:equip.armor,skilledPicks:skilledPicks||[],classSkills:classSkills||[],humanSkill:humanSkill||null,hasShield:equip.hasShield,level:1,hp:derived.maxHp,derived,xp:0,honour:cRes.honour||5,rose:0,sword:0,crown:0,companions:[],romances:{},godSigns:startGods,dgTrack:'NONE',equipment:buildEquipment(equip.weapon,equip.armor,equip.hasShield),inventory:extraInv,history:[],awardedScenes:{},companionLog:{},romanceDeclined:{},flags:{},bonuses:[],magicItems:[],measureTrack:0,measureOrientation:null,gold:cRes.gold||0,layOnHandsPool:cls==='Paladin'?derived.layOnHandsMax:0,spellSlotsUsed:0,secondWindUsed:0,actionSurgeUsed:false,bandages:cRes.bandages||0,potions:cRes.potions||0,greaterPotions:cRes.greaterPotions||0,miraHealedThisScene:false,completedRolls:{},deadCompanions:[],hitDiceUsed:0,wounds:[],scars:[],combatCount:0,orderMax:{rose:0,sword:0,crown:0},approval:{},companionGifts:[],mount:null,languages:allLangs};setGs(state);goScene(startScene,state);setPhase('play')};
   const loadSave=(saveData)=>{
     if(!saveData)return;
     // Handle v2 split format or auto-migrate legacy

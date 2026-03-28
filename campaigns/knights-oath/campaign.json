@@ -9,8 +9,8 @@
   "species": "Human (Solamnic)",
   "availableSpecies": ["human"],
   "speciesLocked": true,
-  "languages": "Common, Solamnic",
-  "version": "24.3.5",
+  "startingLanguages": ["Common", "Solamnic"],
+  "version": "24.3.8",
   "startScene": "1",
   "startingInventory": ["Dagger", "Explorer's Pack", "Solamnic Tabard"],
   "startingEquipment": {
@@ -110,6 +110,7 @@
     "companionGifts": "companion-gifts.json",
     "species": "species.json",
     "classes": "classes.json",
-    "equipment": "equipment.json"
+    "equipment": "equipment.json",
+    "languages": "languages.json"
   }
 }

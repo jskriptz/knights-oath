@@ -1,0 +1,104 @@
+{
+  "agents": {
+    "ko-orchestrator": {
+      "agentId": "ko-orchestrator",
+      "agentType": "planner",
+      "status": "idle",
+      "health": 1,
+      "taskCount": 0,
+      "config": {
+        "role": "orchestrator",
+        "permissions": [
+          "read",
+          "write-handoff"
+        ],
+        "restrictions": [
+          "no-code-edits"
+        ],
+        "model": "sonnet"
+      },
+      "createdAt": "2026-03-27T20:17:24.263Z",
+      "domain": "knights-oath",
+      "model": "sonnet",
+      "modelRoutedBy": "explicit"
+    },
+    "ko-coder": {
+      "agentId": "ko-coder",
+      "agentType": "coder",
+      "status": "idle",
+      "health": 1,
+      "taskCount": 0,
+      "config": {
+        "role": "coder",
+        "permissions": [
+          "read",
+          "write",
+          "edit"
+        ],
+        "requirements": [
+          "verify-line-numbers",
+          "bump-version"
+        ],
+        "model": "sonnet"
+      },
+      "createdAt": "2026-03-27T20:17:28.589Z",
+      "domain": "knights-oath",
+      "model": "sonnet",
+      "modelRoutedBy": "explicit"
+    },
+    "ko-security": {
+      "agentId": "ko-security",
+      "agentType": "reviewer",
+      "status": "idle",
+      "health": 1,
+      "taskCount": 0,
+      "config": {
+        "role": "security-reviewer",
+        "permissions": [
+          "read",
+          "write-handoff"
+        ],
+        "restrictions": [
+          "no-code-edits"
+        ],
+        "checks": [
+          "xss",
+          "save-integrity",
+          "localstorage",
+          "capacitor-permissions"
+        ],
+        "model": "sonnet"
+      },
+      "createdAt": "2026-03-27T20:17:29.498Z",
+      "domain": "knights-oath",
+      "model": "sonnet",
+      "modelRoutedBy": "explicit"
+    },
+    "ko-tester": {
+      "agentId": "ko-tester",
+      "agentType": "tester",
+      "status": "idle",
+      "health": 1,
+      "taskCount": 0,
+      "config": {
+        "role": "tester",
+        "permissions": [
+          "read",
+          "write-handoff"
+        ],
+        "checks": [
+          "scene-loading",
+          "save-load",
+          "dead-ends",
+          "version-bump"
+        ],
+        "model": "sonnet"
+      },
+      "createdAt": "2026-03-27T20:17:30.067Z",
+      "domain": "knights-oath",
+      "model": "sonnet",
+      "modelRoutedBy": "explicit"
+    }
+  },
+  "version": "3.0.0"
+}
