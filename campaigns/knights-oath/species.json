@@ -1,0 +1,294 @@
+{
+  "human": {
+    "name": "Human",
+    "desc": "Humans are the most adaptable and ambitious people among the common species. Whatever drives them, humans are the innovators, the achievers, and the pioneers of the worlds.",
+    "size": "Medium",
+    "speed": 30,
+    "darkvision": 0,
+    "languages": ["Common"],
+    "extraLanguages": 1,
+    "resistances": [],
+    "hpBonus": 0,
+    "traits": [
+      {"name": "Resourceful", "desc": "You gain Heroic Inspiration whenever you finish a Long Rest.", "type": "passive", "mechanical": "heroicInspirationOnLR"},
+      {"name": "Skillful", "desc": "You gain proficiency in one skill of your choice.", "type": "charCreate", "mechanical": "bonusSkill", "count": 1},
+      {"name": "Versatile", "desc": "You gain an Origin feat of your choice.", "type": "charCreate", "mechanical": "originFeat"}
+    ],
+    "subraces": null
+  },
+  "elf": {
+    "name": "Elf",
+    "desc": "Elves belong to a people of otherworldly grace, with keen senses and deep reverence for nature, art, and magic. They are at home in the forests and towers of Krynn.",
+    "size": "Medium",
+    "speed": 30,
+    "darkvision": 60,
+    "languages": ["Common", "Elvish"],
+    "extraLanguages": 0,
+    "resistances": [],
+    "hpBonus": 0,
+    "traits": [
+      {"name": "Keen Senses", "desc": "You have proficiency in the Perception skill.", "type": "passive", "mechanical": "skillProf", "skill": "Perception"},
+      {"name": "Fey Ancestry", "desc": "You have Advantage on saving throws you make to avoid or end the Charmed condition.", "type": "passive", "mechanical": "saveAdv", "condition": "charmed"},
+      {"name": "Trance", "desc": "You don't need to sleep, and magic can't put you to sleep. You can finish a Long Rest in 4 hours if you spend those hours in a trancelike meditation.", "type": "passive", "mechanical": "trance"}
+    ],
+    "subraces": {
+      "high_elf": {
+        "name": "High Elf",
+        "desc": "High Elves have keen minds and a mastery of at least the basics of magic. In Krynn, they are the Silvanesti and Qualinesti.",
+        "extraTraits": [
+          {"name": "Cantrip", "desc": "You know one cantrip of your choice from the Wizard spell list. Intelligence is your spellcasting ability for it.", "type": "charCreate", "mechanical": "speciesCantrip", "list": "wizard", "stat": "int"},
+          {"name": "Extra Language", "desc": "You learn one extra language of your choice.", "type": "charCreate", "mechanical": "extraLanguage", "count": 1}
+        ],
+        "speedOverride": null
+      },
+      "wood_elf": {
+        "name": "Wood Elf",
+        "desc": "Wood Elves have keen senses and intuition, and their swift feet carry them through their native forests. In Krynn, the Kagonesti are Wood Elves.",
+        "extraTraits": [
+          {"name": "Fleet of Foot", "desc": "Your base walking speed increases to 35 feet.", "type": "passive", "mechanical": "speedBonus", "value": 5},
+          {"name": "Mask of the Wild", "desc": "You can attempt to hide even when you are only lightly obscured by foliage, heavy rain, falling snow, mist, or other natural phenomena.", "type": "passive", "mechanical": "maskOfWild"}
+        ],
+        "speedOverride": 35
+      },
+      "drow": {
+        "name": "Drow",
+        "desc": "Drow have superior darkvision and innate magic. In Krynn, the dark elves are outcasts from Silvanesti society.",
+        "extraTraits": [
+          {"name": "Superior Darkvision", "desc": "Your darkvision has a range of 120 feet instead of 60.", "type": "passive", "mechanical": "darkvisionOverride", "range": 120},
+          {"name": "Drow Magic", "desc": "You know the Dancing Lights cantrip. At 3rd level you can cast Faerie Fire once per Long Rest. At 5th level you can cast Darkness once per Long Rest. Charisma is your spellcasting ability.", "type": "passive", "mechanical": "speciesSpells", "stat": "cha", "spells": [
+            {"name": "Dancing Lights", "level": 0, "minCharLevel": 1},
+            {"name": "Faerie Fire", "level": 1, "minCharLevel": 3, "uses": 1, "recharge": "longRest"},
+            {"name": "Darkness", "level": 2, "minCharLevel": 5, "uses": 1, "recharge": "longRest"}
+          ]}
+        ],
+        "speedOverride": null,
+        "darkvisionOverride": 120
+      }
+    }
+  },
+  "dwarf": {
+    "name": "Dwarf",
+    "desc": "Dwarves are solid and enduring like the mountains they love. They are a race of skilled miners, smiths, and warriors. In Krynn, the Neidar (hill dwarves) and Hylar (mountain dwarves) are the most common clans.",
+    "size": "Medium",
+    "speed": 25,
+    "darkvision": 60,
+    "languages": ["Common", "Dwarvish"],
+    "extraLanguages": 0,
+    "resistances": ["poison"],
+    "hpBonus": 1,
+    "traits": [
+      {"name": "Dwarven Resilience", "desc": "You have Resistance to Poison damage. You have Advantage on saving throws you make to avoid or end the Poisoned condition.", "type": "passive", "mechanical": "saveAdv", "condition": "poisoned"},
+      {"name": "Dwarven Toughness", "desc": "Your Hit Point maximum increases by 1, and it increases by 1 again whenever you gain a level.", "type": "passive", "mechanical": "hpPerLevel", "value": 1},
+      {"name": "Stonecunning", "desc": "As a Bonus Action, you gain Tremorsense with a range of 60 feet for 10 minutes. You can use this Bonus Action a number of times equal to your Proficiency Bonus, regaining all uses on a Long Rest.", "type": "active", "mechanical": "stonecunning"}
+    ],
+    "subraces": null
+  },
+  "halfling": {
+    "name": "Halfling",
+    "desc": "The diminutive halflings survive in a world full of larger creatures by avoiding notice or, failing that, avoiding offense. In Krynn, halflings are rare but resourceful wanderers.",
+    "size": "Small",
+    "speed": 25,
+    "darkvision": 0,
+    "languages": ["Common", "Halfling"],
+    "extraLanguages": 0,
+    "resistances": [],
+    "hpBonus": 0,
+    "traits": [
+      {"name": "Brave", "desc": "You have Advantage on saving throws you make to avoid or end the Frightened condition.", "type": "passive", "mechanical": "saveAdv", "condition": "frightened"},
+      {"name": "Halfling Nimbleness", "desc": "You can move through the space of any creature that is a size larger than you.", "type": "passive", "mechanical": "nimbleness"},
+      {"name": "Lucky", "desc": "When you roll a 1 on the d20 for a D20 Test, you can reroll the die, and you must use the new roll.", "type": "passive", "mechanical": "lucky"},
+      {"name": "Naturally Stealthy", "desc": "You can attempt to hide even when you are obscured only by a creature that is at least one size larger than you.", "type": "passive", "mechanical": "naturallyStealthy"}
+    ],
+    "subraces": null
+  },
+  "gnome": {
+    "name": "Gnome",
+    "desc": "Gnomes are magical folk created by gods of the Feywild. In Krynn, the tinker gnomes of Mount Nevermind are famous for their elaborate (and frequently explosive) inventions.",
+    "size": "Small",
+    "speed": 25,
+    "darkvision": 60,
+    "languages": ["Common", "Gnomish"],
+    "extraLanguages": 0,
+    "resistances": [],
+    "hpBonus": 0,
+    "traits": [
+      {"name": "Gnome Cunning", "desc": "You have Advantage on Intelligence, Wisdom, and Charisma saving throws.", "type": "passive", "mechanical": "saveAdvAbilities", "abilities": ["int", "wis", "cha"]}
+    ],
+    "subraces": {
+      "forest_gnome": {
+        "name": "Forest Gnome",
+        "desc": "Forest Gnomes have a knack for stealth and illusion.",
+        "extraTraits": [
+          {"name": "Natural Illusionist", "desc": "You know the Minor Illusion cantrip. Intelligence is your spellcasting ability for it.", "type": "passive", "mechanical": "speciesCantrip", "cantrip": "Minor Illusion", "stat": "int"},
+          {"name": "Speak with Small Beasts", "desc": "Through sounds and gestures, you can communicate simple ideas with Small or smaller Beasts.", "type": "passive", "mechanical": "speakSmallBeasts"}
+        ],
+        "speedOverride": null
+      },
+      "rock_gnome": {
+        "name": "Rock Gnome",
+        "desc": "Rock Gnomes are natural inventors and tinkerers.",
+        "extraTraits": [
+          {"name": "Artificer's Lore", "desc": "Whenever you make an Intelligence (History) check related to magic items, alchemical objects, or technological devices, you have Proficiency in the History skill for that check.", "type": "passive", "mechanical": "conditionalProf", "skill": "History", "condition": "magic/tech"},
+          {"name": "Tinker", "desc": "You have proficiency with Tinker's Tools. Using those tools, you can spend 1 hour and 10 gp of materials to construct a Tiny clockwork device (AC 5, 1 HP).", "type": "active", "mechanical": "tinker", "toolProf": "Tinker's Tools"}
+        ],
+        "speedOverride": null
+      }
+    }
+  },
+  "goliath": {
+    "name": "Goliath",
+    "desc": "Goliaths are towering, competitive folk born of mountains. Though rare on Krynn, some wander from lands beyond the known map of Ansalon.",
+    "size": "Medium",
+    "speed": 35,
+    "darkvision": 0,
+    "languages": ["Common", "Giant"],
+    "extraLanguages": 0,
+    "resistances": [],
+    "hpBonus": 0,
+    "traits": [
+      {"name": "Large Form", "desc": "Starting at 5th level, you can change your size to Large as a Bonus Action (PB times per Long Rest). While Large, you have Advantage on Strength checks and your speed increases by 10.", "type": "active", "mechanical": "largeForm", "minLevel": 5},
+      {"name": "Powerful Build", "desc": "You have Advantage on any saving throw you make to end the Grappled condition. You also count as one size larger for determining carrying capacity.", "type": "passive", "mechanical": "powerfulBuild"}
+    ],
+    "giantAncestry": {
+      "desc": "Choose one of the following Giant Ancestry options. You can use the chosen ability a number of times equal to your Proficiency Bonus, regaining all uses on a Long Rest.",
+      "options": {
+        "cloud": {"name": "Cloud's Jaunt", "desc": "As a Bonus Action, you magically teleport up to 30 feet to an unoccupied space you can see.", "mechanical": "teleport", "range": 30},
+        "fire": {"name": "Fire's Burn", "desc": "When you hit with an attack or deal damage with a spell, you can deal extra 1d10 Fire damage to one target.", "mechanical": "extraDamage", "dice": "1d10", "type": "fire"},
+        "frost": {"name": "Frost's Chill", "desc": "When you hit with an attack or deal damage with a spell, you can deal extra 1d6 Cold damage and reduce the target's speed by 10 until your next turn.", "mechanical": "extraDamage", "dice": "1d6", "type": "cold"},
+        "hill": {"name": "Hill's Tumble", "desc": "When you take damage, you can use your Reaction to roll a d12 and reduce the damage by the amount rolled + your Constitution modifier.", "mechanical": "damageReduction", "dice": "1d12", "addMod": "con"},
+        "stone": {"name": "Stone's Endurance", "desc": "When you take damage, you can use your Reaction to roll a d12 and reduce the damage by the amount rolled + your Constitution modifier.", "mechanical": "damageReduction", "dice": "1d12", "addMod": "con"},
+        "storm": {"name": "Storm's Thunder", "desc": "When you take damage, you can use your Reaction to deal 1d8 Thunder damage to the attacker if within 60 feet and force a CON save or be pushed 15 feet.", "mechanical": "retributiveDamage", "dice": "1d8", "type": "thunder"}
+      }
+    },
+    "subraces": null
+  },
+  "orc": {
+    "name": "Orc",
+    "desc": "Orcs trace their creation to Gruumsh, but many have broken free of his influence. On Krynn, orcs are savage raiders from the borderlands, though not all follow the path of destruction.",
+    "size": "Medium",
+    "speed": 30,
+    "darkvision": 60,
+    "languages": ["Common", "Orc"],
+    "extraLanguages": 0,
+    "resistances": [],
+    "hpBonus": 0,
+    "traits": [
+      {"name": "Adrenaline Rush", "desc": "You can take the Dash action as a Bonus Action. When you do, you gain a number of Temporary Hit Points equal to your Proficiency Bonus. You can use this a number of times equal to your Proficiency Bonus, regaining all uses on a Short or Long Rest.", "type": "active", "mechanical": "adrenalineRush", "recharge": "shortRest"},
+      {"name": "Relentless Endurance", "desc": "When you are reduced to 0 Hit Points but not killed outright, you can drop to 1 Hit Point instead. Once you use this trait, you can't do so again until you finish a Long Rest.", "type": "active", "mechanical": "relentlessEndurance", "uses": 1, "recharge": "longRest"}
+    ],
+    "subraces": null
+  },
+  "tiefling": {
+    "name": "Tiefling",
+    "desc": "Tieflings are derived from fiendish heritage. On Krynn, they are vanishingly rare and often mistaken for agents of the Dragon Armies or dark magic.",
+    "size": "Medium",
+    "speed": 30,
+    "darkvision": 60,
+    "languages": ["Common"],
+    "extraLanguages": 1,
+    "resistances": [],
+    "hpBonus": 0,
+    "traits": [],
+    "fiendishLegacy": {
+      "desc": "Choose one of the following Fiendish Legacy options. You gain the listed resistance and spells.",
+      "options": {
+        "abyssal": {
+          "name": "Abyssal",
+          "desc": "Chaotic destructive fiends. You have Resistance to Poison damage.",
+          "resistance": "poison",
+          "spells": [
+            {"name": "Poison Spray", "level": 0, "minCharLevel": 1},
+            {"name": "Ray of Sickness", "level": 1, "minCharLevel": 3, "uses": 1, "recharge": "longRest"},
+            {"name": "Hold Person", "level": 2, "minCharLevel": 5, "uses": 1, "recharge": "longRest"}
+          ],
+          "stat": "cha"
+        },
+        "chthonic": {
+          "name": "Chthonic",
+          "desc": "Fiends of the underworld. You have Resistance to Necrotic damage.",
+          "resistance": "necrotic",
+          "spells": [
+            {"name": "Chill Touch", "level": 0, "minCharLevel": 1},
+            {"name": "False Life", "level": 1, "minCharLevel": 3, "uses": 1, "recharge": "longRest"},
+            {"name": "Ray of Enfeeblement", "level": 2, "minCharLevel": 5, "uses": 1, "recharge": "longRest"}
+          ],
+          "stat": "cha"
+        },
+        "infernal": {
+          "name": "Infernal",
+          "desc": "Lawful fiends of the Nine Hells. You have Resistance to Fire damage.",
+          "resistance": "fire",
+          "spells": [
+            {"name": "Fire Bolt", "level": 0, "minCharLevel": 1},
+            {"name": "Hellish Rebuke", "level": 1, "minCharLevel": 3, "uses": 1, "recharge": "longRest"},
+            {"name": "Darkness", "level": 2, "minCharLevel": 5, "uses": 1, "recharge": "longRest"}
+          ],
+          "stat": "cha"
+        }
+      }
+    },
+    "subraces": null
+  },
+  "dragonborn": {
+    "name": "Dragonborn",
+    "desc": "Dragonborn carry the blood of ancient dragons. On Krynn, their existence would be extraordinary — a living echo of the dragonkind that shapes the fate of the world.",
+    "size": "Medium",
+    "speed": 30,
+    "darkvision": 60,
+    "languages": ["Common", "Draconic"],
+    "extraLanguages": 0,
+    "resistances": [],
+    "hpBonus": 0,
+    "traits": [
+      {"name": "Draconic Flight", "desc": "Starting at 5th level, you can sprout spectral wings as a Bonus Action. You gain flying speed equal to your walking speed for 10 minutes (PB times per Long Rest).", "type": "active", "mechanical": "draconicFlight", "minLevel": 5}
+    ],
+    "draconicAncestry": {
+      "desc": "Choose one type of dragon. Your Breath Weapon and Damage Resistance are determined by the dragon type.",
+      "options": {
+        "black": {"name": "Black", "element": "acid", "breathShape": "line", "breathSize": "30 ft", "saveStat": "dex"},
+        "blue": {"name": "Blue", "element": "lightning", "breathShape": "line", "breathSize": "30 ft", "saveStat": "dex"},
+        "brass": {"name": "Brass", "element": "fire", "breathShape": "line", "breathSize": "30 ft", "saveStat": "dex"},
+        "bronze": {"name": "Bronze", "element": "lightning", "breathShape": "line", "breathSize": "30 ft", "saveStat": "dex"},
+        "copper": {"name": "Copper", "element": "acid", "breathShape": "line", "breathSize": "30 ft", "saveStat": "dex"},
+        "gold": {"name": "Gold", "element": "fire", "breathShape": "cone", "breathSize": "15 ft", "saveStat": "dex"},
+        "green": {"name": "Green", "element": "poison", "breathShape": "cone", "breathSize": "15 ft", "saveStat": "con"},
+        "red": {"name": "Red", "element": "fire", "breathShape": "cone", "breathSize": "15 ft", "saveStat": "dex"},
+        "silver": {"name": "Silver", "element": "cold", "breathShape": "cone", "breathSize": "15 ft", "saveStat": "con"},
+        "white": {"name": "White", "element": "cold", "breathShape": "cone", "breathSize": "15 ft", "saveStat": "con"}
+      },
+      "breathWeapon": {
+        "desc": "As an Action, you exhale destructive energy. Each creature in the area must make a saving throw (DC = 8 + CON mod + PB). On a failed save, the creature takes 1d10 damage (2d10 at 5th, 3d10 at 11th, 4d10 at 17th). On success, half damage. You can use this PB times per Long Rest.",
+        "baseDice": "1d10",
+        "scaling": {"5": "2d10", "11": "3d10", "17": "4d10"},
+        "recharge": "longRest"
+      }
+    },
+    "subraces": null
+  },
+  "aasimar": {
+    "name": "Aasimar",
+    "desc": "Aasimar are beings touched by celestial power. On Krynn, where the gods have been absent for three centuries, an aasimar's existence would be a profound sign of divine return.",
+    "size": "Medium",
+    "speed": 30,
+    "darkvision": 60,
+    "languages": ["Common", "Celestial"],
+    "extraLanguages": 0,
+    "resistances": ["radiant", "necrotic"],
+    "hpBonus": 0,
+    "traits": [
+      {"name": "Celestial Resistance", "desc": "You have Resistance to Necrotic damage and Radiant damage.", "type": "passive", "mechanical": "resistance"},
+      {"name": "Healing Hands", "desc": "As a Magic action, you touch a creature and roll a number of d4s equal to your Proficiency Bonus. The creature regains a number of Hit Points equal to the total rolled. Once you use this trait, you can't use it again until you finish a Long Rest.", "type": "active", "mechanical": "healingHands", "dice": "d4", "diceCount": "profBonus", "uses": 1, "recharge": "longRest"},
+      {"name": "Light Bearer", "desc": "You know the Light cantrip. Charisma is your spellcasting ability for it.", "type": "passive", "mechanical": "speciesCantrip", "cantrip": "Light", "stat": "cha"}
+    ],
+    "celestialRevelation": {
+      "desc": "At 3rd level, choose one of the following Celestial Revelation options. As a Bonus Action, you can unleash your celestial form for 1 minute (PB times per Long Rest). While transformed, you deal extra Radiant or Necrotic damage once per turn equal to your Proficiency Bonus.",
+      "minLevel": 3,
+      "options": {
+        "heavenly_wings": {"name": "Heavenly Wings", "desc": "Spectral wings appear. You gain a flying speed equal to your walking speed.", "mechanical": "flight"},
+        "inner_radiance": {"name": "Inner Radiance", "desc": "Searing light radiates from you. At the end of each of your turns, each creature of your choice within 10 feet takes Radiant damage equal to your Proficiency Bonus.", "mechanical": "aura", "range": 10, "type": "radiant"},
+        "necrotic_shroud": {"name": "Necrotic Shroud", "desc": "Ghostly skeletal wings appear. Each creature of your choice within 10 feet must succeed on a CHA save (DC = 8 + CHA mod + PB) or be Frightened of you until end of your next turn.", "mechanical": "fear", "range": 10}
+      }
+    },
+    "subraces": null
+  }
+}

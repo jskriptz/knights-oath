@@ -48,7 +48,7 @@
 /* Fonts loaded via async link tag in head */
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#0e0e18;--panel:#16162a;--border:#252540;--gold:#c9a84c;--gold-dim:#8b7332;--gold-bright:#e8c860;--text:#d4cfc4;--text-dim:#7a7568;--text-bright:#f0ebe0;--blue:#4a7ab5;--green:#4a8a5a;--red:#8b3a3a;--purple:#6a4a8a;--orange:#9a6a3a;--pink:#8b4a6a}
-html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Crimson Text',Georgia,serif;font-size:17px;line-height:1.7}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Crimson Text',Georgia,serif;font-size:calc(17px * var(--text-scale,1));line-height:1.7}
 
 .cover{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg);padding:40px;text-align:center;overflow-y:auto}
 .cover h1{font-family:'Cinzel',serif;color:var(--gold);font-size:52px;letter-spacing:4px}
@@ -733,6 +733,24 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Crimso
 .confirm-btns{display:flex;gap:10px;justify-content:center}
 .confirm-yes{padding:10px 24px!important}
 
+/* Settings panel */
+.settings-modal{max-width:400px;text-align:left}
+.settings-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.settings-row:last-child{border-bottom:none}
+.settings-label{font-family:'Cinzel',serif;font-size:13px;color:var(--text);letter-spacing:.5px}
+.settings-sublabel{font-size:11px;color:var(--text-dim);margin-top:2px}
+.settings-control{display:flex;align-items:center;gap:8px}
+.settings-range{-webkit-appearance:none;width:120px;height:4px;background:var(--border);border-radius:2px;outline:none}
+.settings-range::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--gold);cursor:pointer}
+.settings-range::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--gold);cursor:pointer;border:none}
+.settings-val{font-family:monospace;font-size:13px;color:var(--gold);min-width:36px;text-align:right}
+.settings-toggle{position:relative;width:40px;height:22px;background:var(--border);border-radius:11px;cursor:pointer;transition:background .2s;border:none;padding:0}
+.settings-toggle.on{background:rgba(74,138,90,.6)}
+.settings-toggle::after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;background:var(--text);border-radius:50%;transition:transform .2s}
+.settings-toggle.on::after{transform:translateX(18px);background:var(--gold)}
+.settings-btn{background:none;border:1px solid var(--border);color:var(--text-dim);padding:4px 12px;border-radius:4px;cursor:pointer;font-family:'Cinzel',serif;font-size:11px;transition:all .15s}
+.settings-btn:hover{border-color:var(--gold-dim);color:var(--text)}
+
 /* Rest & Healing modals */
 .rest-modal{max-width:440px;text-align:left}
 .heal-modal{max-width:460px;text-align:left}
@@ -843,6 +861,8 @@ h2.red{color:var(--red)}
 .save-slot-row .save-slot-btn{flex:1}
 .slot-delete-btn{background:none;border:1px solid var(--border);color:var(--text-dim);width:36px;height:36px;min-width:36px;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:5px;transition:all .15s;flex-shrink:0}
 .slot-delete-btn:hover{border-color:var(--red);color:var(--red);background:rgba(139,58,58,.1)}
+.slot-export-btn{background:none;border:1px solid var(--border);color:var(--text-dim);width:36px;height:36px;min-width:36px;font-size:16px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:5px;transition:all .15s;flex-shrink:0}
+.slot-export-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(139,115,50,.1)}
 .slot-del-confirm{display:flex;gap:4px;flex-shrink:0}
 .slot-del-confirm .slot-yes{background:rgba(139,58,58,.15);border:1px solid rgba(139,58,58,.4);color:#e87070;padding:4px 12px;border-radius:4px;cursor:pointer;font-size:12px}
 .slot-del-confirm .slot-no{background:none;border:1px solid var(--border);color:var(--text-dim);padding:4px 10px;border-radius:4px;cursor:pointer;font-size:12px}
@@ -1613,6 +1633,14 @@ function getOrderTitle(cls,order){return{Rose:'Squire-Scholar of the Rose',Sword
 function suggestBackground(gs){const o=getOrder(gs.rose,gs.sword,gs.crown);if(o==='Rose')return{name:'Sage',reason:'Your pursuit of justice and wisdom aligns with the Sage background.'};if(o==='Sword')return{name:'Soldier',reason:'Your courage in battle marks you as a Soldier.'};return{name:'Noble',reason:'Your dedication to law and duty reflects a Noble\u2019s upbringing.'}}
 
 // Save/Load
+// Capacitor platform check — returns true only on native (iOS/Android)
+function isNativePlatform(){return !!(window.Capacitor?.isNativePlatform?.())}
+// Preferences backup (native only) — mirrors saves for persistence when localStorage clears
+const PrefBackup={
+  async set(k,v){if(!isNativePlatform())return;try{const{Preferences}=await import('@capacitor/preferences');await Preferences.set({key:k,value:v})}catch(e){}},
+  async get(k){if(!isNativePlatform())return null;try{const{Preferences}=await import('@capacitor/preferences');const{value}=await Preferences.get({key:k});return value}catch(e){return null}},
+  async del(k){if(!isNativePlatform())return;try{const{Preferences}=await import('@capacitor/preferences');await Preferences.remove({key:k})}catch(e){}}
+};
 // Storage: try window.storage (Claude artifact), fall back to localStorage
 const ST={
   async set(k,v){try{if(window.storage){await window.storage.set(k,v);return}localStorage.setItem(k,v)}catch(e){try{localStorage.setItem(k,v)}catch(e2){}}},
@@ -1650,14 +1678,71 @@ async function saveGame(slot,gs,sceneId){
     const{character,progress}=splitSave(gs,sceneId);
     // Strip derived from character (recalculated on load)
     delete character.derived;
-    await ST.set('save-slot-'+slot,JSON.stringify({saveVersion:2,character,progress,savedAt:new Date().toISOString()}));
+    const saveData=JSON.stringify({saveVersion:2,character,progress,savedAt:new Date().toISOString()});
+    await ST.set('save-slot-'+slot,saveData);
+    await PrefBackup.set('save-slot-'+slot,saveData); // Mirror to Preferences on native
     return true
   }catch(e){return false}
 }
-async function loadAllSlots(){const s=[null,null,null];for(let i=0;i<3;i++){try{const v=await ST.get('save-slot-'+i);if(v){let parsed=JSON.parse(v);parsed=migrateLegacySave(parsed);s[i]=parsed}}catch(e){}}return s}
-async function deleteSave(slot){try{await ST.del('save-slot-'+slot)}catch(e){}}
+const SAVE_SLOT_COUNT=6;
+async function loadAllSlots(){
+  const s=Array(SAVE_SLOT_COUNT).fill(null);
+  for(let i=0;i<SAVE_SLOT_COUNT;i++){
+    try{
+      let v=await ST.get('save-slot-'+i);
+      // Fallback: if localStorage empty, try Preferences backup
+      if(!v)v=await PrefBackup.get('save-slot-'+i);
+      if(v){
+        let parsed=JSON.parse(v);
+        parsed=migrateLegacySave(parsed);
+        s[i]=parsed;
+        // Restore to localStorage if recovered from Preferences
+        if(!await ST.get('save-slot-'+i))await ST.set('save-slot-'+i,v);
+      }
+    }catch(e){}
+  }
+  return s
+}
+async function deleteSave(slot){try{await ST.del('save-slot-'+slot);await PrefBackup.del('save-slot-'+slot)}catch(e){}}
 function fmtDate(iso){try{const d=new Date(iso);return d.toLocaleDateString(undefined,{month:'short',day:'numeric'})+' '+d.toLocaleTimeString(undefined,{hour:'2-digit',minute:'2-digit'})}catch{return''}}
 
+// ── Settings ──────────────────────────────────────────
+const DEFAULT_SETTINGS={textScale:1,combatSpeed:'normal',autoSave:true,screenShake:true,compactUI:false};
+function loadSettings(){try{const s=JSON.parse(localStorage.getItem('ko-settings'));return{...DEFAULT_SETTINGS,...s}}catch{return{...DEFAULT_SETTINGS}}}
+function saveSettings(s){try{localStorage.setItem('ko-settings',JSON.stringify(s))}catch{}}
+function applyTextScale(scale){document.documentElement.style.setProperty('--text-scale',scale)}
+// Apply saved text scale immediately on load
+(function(){const s=loadSettings();if(s.textScale!==1)applyTextScale(s.textScale)})();
+
+function SettingsPanel({onClose}){
+  const[settings,setSettings]=useState(loadSettings);
+  const e=React.createElement;
+  const update=(key,val)=>{const ns={...settings,[key]:val};setSettings(ns);saveSettings(ns);if(key==='textScale')applyTextScale(val)};
+  const scaleLabel=v=>{if(v<=0.85)return'Small';if(v<=0.95)return'';if(v<=1.05)return'Default';if(v<=1.15)return'';if(v<=1.25)return'Large';if(v<=1.35)return'';return'X-Large'};
+  return e('div',{className:'modal-overlay',onClick:ev=>{if(ev.target===ev.currentTarget)onClose()}},
+    e('div',{className:'modal-box settings-modal'},
+      e('h2',{className:'gold'},'SETTINGS'),
+      e('div',{className:'settings-row'},
+        e('div',null,e('div',{className:'settings-label'},'Text Size'),e('div',{className:'settings-sublabel'},'Adjust reading comfort')),
+        e('div',{className:'settings-control'},
+          e('input',{type:'range',className:'settings-range',min:0.8,max:1.4,step:0.05,value:settings.textScale,onChange:ev=>update('textScale',parseFloat(ev.target.value))}),
+          e('span',{className:'settings-val'},Math.round(settings.textScale*100)+'%'))),
+      e('div',{className:'settings-row'},
+        e('div',null,e('div',{className:'settings-label'},'Combat Speed'),e('div',{className:'settings-sublabel'},'Animation and roll speed')),
+        e('div',{className:'settings-control'},
+          ['slow','normal','fast'].map(v=>e('button',{key:v,className:'settings-btn'+(settings.combatSpeed===v?' selected':''),style:settings.combatSpeed===v?{borderColor:'var(--gold)',color:'var(--gold)'}:{},onClick:()=>update('combatSpeed',v)},v.charAt(0).toUpperCase()+v.slice(1))))),
+      e('div',{className:'settings-row'},
+        e('div',null,e('div',{className:'settings-label'},'Auto-Save'),e('div',{className:'settings-sublabel'},'Save automatically on scene transitions')),
+        e('button',{className:'settings-toggle'+(settings.autoSave?' on':''),onClick:()=>update('autoSave',!settings.autoSave)})),
+      e('div',{className:'settings-row'},
+        e('div',null,e('div',{className:'settings-label'},'Screen Shake'),e('div',{className:'settings-sublabel'},'Visual effects during combat')),
+        e('button',{className:'settings-toggle'+(settings.screenShake?' on':''),onClick:()=>update('screenShake',!settings.screenShake)})),
+      e('div',{className:'settings-row'},
+        e('div',null,e('div',{className:'settings-label'},'Compact UI'),e('div',{className:'settings-sublabel'},'Reduce spacing for smaller screens')),
+        e('button',{className:'settings-toggle'+(settings.compactUI?' on':''),onClick:()=>update('compactUI',!settings.compactUI)})),
+      e('div',{style:{marginTop:16,textAlign:'center'}},
+        e('button',{className:'settings-btn',onClick:()=>{update('textScale',1);update('combatSpeed','normal');update('autoSave',true);update('screenShake',true);update('compactUI',false)}},'Reset Defaults'),
+        e('button',{className:'ghost-btn',onClick:onClose,style:{marginLeft:12}},'Done'))))}
 
 function CompanionInfo({name,romance,onClose}){
   const e=React.createElement;
@@ -4016,7 +4101,7 @@ function CampaignSelect({onSelect,onBack}){
 
 // ── Cover ──────────────────────────────────────────────
 function CoverScreen({onNew,onLoad}){
-  const[slots,setSlots]=useState([null,null,null]);const[loading,setLoading]=useState(true);const[del,setDel]=useState(null);
+  const[slots,setSlots]=useState(Array(SAVE_SLOT_COUNT).fill(null));const[loading,setLoading]=useState(true);const[del,setDel]=useState(null);const[showSettings,setShowSettings]=useState(false);
   const[ready,setReady]=useState(!!window._scenesReady);
   const[installable,setInstallable]=useState(false);
   const isStandalone=window.matchMedia('(display-mode:standalone)').matches||window.navigator.standalone===true;
@@ -4042,6 +4127,7 @@ function CoverScreen({onNew,onLoad}){
     e('div',{className:'divider'}),
     e('button',{className:'gold-btn',onClick:onNew,style:{marginBottom:8}},'NEW GAME'),
     installable&&e('button',{className:'ghost-btn',onClick:handleInstall,style:{marginBottom:8,fontSize:12}},'INSTALL APP'),
+    e('button',{className:'ghost-btn',onClick:()=>setShowSettings(true),style:{marginBottom:8,fontSize:12}},'\u2699 SETTINGS'),
     e('div',{style:{fontSize:11,letterSpacing:2,color:ready?'#6a8a6a':'#8a7a5a',marginBottom:16,transition:'color .5s'}},ready?'\u2714 READY':'LOADING SCENES\u2026'),
     !loading?e('div',{className:'save-slots'},e('h3',{className:'slots-title'},'SAVED GAMES'),
       slots.map((slot,i)=>{
@@ -4055,7 +4141,8 @@ function CoverScreen({onNew,onLoad}){
       e('p',{style:{margin:'0 0 4px'}},'\u2018Dragonlance,\u2019 \u2018Krynn,\u2019 \u2018Solamnic Knights,\u2019 and all related characters, locations, and lore are trademarks of Wizards of the Coast LLC. \u2018Dungeons & Dragons\u2019 and \u2018D&D\u2019 are registered trademarks of Wizards of the Coast LLC.'),
       e('p',{style:{margin:'0 0 4px'}},'This is unofficial fan content, not approved or endorsed by Wizards of the Coast. Made under the Fan Content Policy. No copyright or trademark infringement is intended.'),
       e('p',{style:{margin:0}},'Game mechanics reference the D&D 2024 System Reference Document (SRD 5.2), available under the Creative Commons Attribution 4.0 International License (CC BY 4.0).'),
-      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},cVersion)));
+      e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},cVersion)),
+    showSettings?e(SettingsPanel,{onClose:()=>setShowSettings(false)}):null);
 }
 
 // ── World Introduction ────────────────────────────────
@@ -4093,11 +4180,42 @@ function CharCreate({onDone,onBack}){
   const[palSpells,setPalSpells]=useState([]);
   const[style,setStyle]=useState(null);const[mastery,setMastery]=useState([]);const[weapon,setWeapon]=useState('Longsword');const[skilledPicks,setSkilledPicks]=useState([]);const[classSkills,setClassSkills]=useState([]);const[humanSkill,setHumanSkill]=useState(null);const[armor,setArmor]=useState('Chain Mail');const[hasShield,setHasShield]=useState(true);
   const[name,setName]=useState('');const[errs,setErrs]=useState({});const[quickCls,setQuickCls]=useState(null);const[quickName,setQuickName]=useState('');
+  // Stat generation method
+  const[statMethod,setStatMethod]=useState(null); // 'standard','pointbuy','roll'
+  // Point Buy state
+  const[pbScores,setPbScores]=useState({str:8,dex:8,con:8,int:8,wis:8,cha:8});
+  const PB_COSTS={8:0,9:1,10:2,11:3,12:4,13:5,14:7,15:9};
+  const pbSpent=Object.values(pbScores).reduce((sum,v)=>sum+(PB_COSTS[v]||0),0);
+  const pbRemain=27-pbSpent;
+  const pbCanInc=(stat)=>{const v=pbScores[stat];if(v>=15)return false;const cost=v>=13?2:1;return pbRemain>=cost};
+  // Roll state
+  const[rolls,setRolls]=useState([null,null,null,null,null,null]);
+  const[rollAssign,setRollAssign]=useState({str:null,dex:null,con:null,int:null,wis:null,cha:null});
+  const[rolling,setRolling]=useState(-1); // index currently animating, -1=none
+  const[rollAnim,setRollAnim]=useState(null); // intermediate display during animation
+  const doRoll=(idx)=>{
+    setRolling(idx);
+    let count=0;const frames=8;
+    const anim=setInterval(()=>{
+      const preview=[1,2,3,4].map(()=>Math.floor(Math.random()*6)+1);
+      setRollAnim({idx,dice:preview});
+      count++;
+      if(count>=frames){
+        clearInterval(anim);
+        const dice=[1,2,3,4].map(()=>Math.floor(Math.random()*6)+1);
+        dice.sort((a,b)=>a-b);
+        const total=dice[1]+dice[2]+dice[3]; // drop lowest
+        setRolls(r=>{const n=[...r];n[idx]={dice,total};return n});
+        setRolling(-1);setRollAnim(null);
+      }
+    },100);
+  };
+  const rollAvailable=()=>{const used=Object.values(rollAssign).filter(v=>v!==null);const pool=rolls.filter(r=>r!==null).map(r=>r.total);for(const u of used){const idx=pool.indexOf(u);if(idx>=0)pool.splice(idx,1)}return pool.sort((a,b)=>b-a)};
   const e=React.createElement;
   const defs={Fighter:{str:16,dex:12,con:14,int:10,wis:12,cha:10},Paladin:{str:16,dex:10,con:13,int:10,wis:14,cha:14}};
   const getFinal=()=>{const f={};for(const k of STAT_NAMES)f[k]=(assign[k]||10)+(bonus2===k?2:0)+(bonus1===k?1:0);return f};
   const availableScores=()=>{const used=Object.values(assign).filter(v=>v!==null);const pool=[...STD_ARRAY];for(const u of used){const idx=pool.indexOf(u);if(idx>=0)pool.splice(idx,1)}return pool.sort((a,b)=>b-a)};
-  const validateStats=()=>{const er={};const used=Object.values(assign).filter(v=>v!==null);if(used.length<6)er.general='Assign all 6 scores';if(new Set(used).size<used.length)er.general='Each score used once';if(!bonus2)er.bonus2='Choose +2';if(!bonus1)er.bonus1='Choose +1';if(bonus2&&bonus1&&bonus2===bonus1)er.bonus1='Must be different';setErrs(er);return!Object.keys(er).length};const getWarnings=()=>{const w=[];const f=getFinal();if(cls==='Fighter'&&f.str<13&&f.dex<13)w.push('STR or DEX 13+ recommended');if(cls==='Fighter'&&f.con<13)w.push('CON 13+ recommended');if(cls==='Paladin'&&f.str<13)w.push('STR 13+ recommended');if(cls==='Paladin'&&f.cha<13)w.push('CHA 13+ recommended');return w};
+  const validateStats=()=>{const er={};const used=Object.values(assign).filter(v=>v!==null);if(used.length<6)er.general='Assign all 6 scores';if(statMethod==='standard'&&new Set(used).size<used.length)er.general='Each score used once';if(!bonus2)er.bonus2='Choose +2';if(!bonus1)er.bonus1='Choose +1';if(bonus2&&bonus1&&bonus2===bonus1)er.bonus1='Must be different';setErrs(er);return!Object.keys(er).length};const getWarnings=()=>{const w=[];const f=getFinal();if(cls==='Fighter'&&f.str<13&&f.dex<13)w.push('STR or DEX 13+ recommended');if(cls==='Fighter'&&f.con<13)w.push('CON 13+ recommended');if(cls==='Paladin'&&f.str<13)w.push('STR 13+ recommended');if(cls==='Paladin'&&f.cha<13)w.push('CHA 13+ recommended');return w};
 
   const featObj=ORIGIN_FEATS.find(f=>f.name===feat);
   const hasMiSpells=featObj&&featObj.spells;
@@ -4157,7 +4275,21 @@ function CharCreate({onDone,onBack}){
     e('p',{style:{fontSize:13,color:(classSkills.length===2&&humanSkill)?'#6adb6a':'#8a8578',marginTop:8}},classSkills.length+'/2 class + '+(humanSkill?'1':'0')+'/1 human'),
     e('div',{className:'btn-row',style:{marginTop:16}},
       e('button',{className:'ghost-btn',onClick:()=>setStep(0)},'\u2190 Back'),
-      e('button',{className:'gold-btn',onClick:()=>{if(classSkills.length===2&&humanSkill)setStep(1)},disabled:classSkills.length!==2||!humanSkill},'Continue')));
+      e('button',{className:'gold-btn',onClick:()=>{if(classSkills.length===2&&humanSkill)setStep('0c')},disabled:classSkills.length!==2||!humanSkill},'Continue')));
+
+  // Step 0c: Stat generation method picker
+  if(step==='0c')return e('div',{className:'cover'},
+    e('h2',{className:'gold'},'HOW DO YOU WANT TO DETERMINE ABILITY SCORES?'),
+    e('p',{className:'dim-italic',style:{fontSize:13}},'Choose a method. You\u2019ll assign scores to abilities on the next screen.'),
+    e('div',{className:'class-choice',style:{flexDirection:'column',maxWidth:440}},
+      e('button',{className:'class-btn',style:{minWidth:'100%'},onClick:()=>{setStatMethod('standard');setAssign({str:null,dex:null,con:null,int:null,wis:null,cha:null});setBonus2(null);setBonus1(null);setStep(1)}},
+        'STANDARD ARRAY',e('small',null,'Assign 15, 14, 13, 12, 10, 8 to your abilities.'),e('small',null,'Balanced and reliable \u2014 no randomness.')),
+      e('button',{className:'class-btn',style:{minWidth:'100%'},onClick:()=>{setStatMethod('pointbuy');setPbScores({str:8,dex:8,con:8,int:8,wis:8,cha:8});setBonus2(null);setBonus1(null);setStep('1pb')}},
+        'POINT BUY',e('small',null,'27 points to spend. Each ability starts at 8 (min) and caps at 15 (max).'),e('small',null,'Full control over your build.')),
+      e('button',{className:'class-btn',style:{minWidth:'100%'},onClick:()=>{setStatMethod('roll');setRolls([null,null,null,null,null,null]);setRollAssign({str:null,dex:null,con:null,int:null,wis:null,cha:null});setBonus2(null);setBonus1(null);setStep('1roll')}},
+        'ROLL FOR STATS',e('small',null,'Roll 4d6, drop the lowest die. Repeat six times.'),e('small',null,'High risk, high reward \u2014 the classic method.'))),
+    e('div',{className:'btn-row',style:{marginTop:24}},
+      e('button',{className:'ghost-btn',onClick:()=>setStep('0b')},'\u2190 Back')));
 
   if(step===1){const avail=availableScores();const final=getFinal();
     return e('div',{className:'cover'},e('h2',{className:'gold'},cls.toUpperCase()+' \u2014 ABILITY SCORES'),
@@ -4169,13 +4301,78 @@ function CharCreate({onDone,onBack}){
         e('span',{className:'stat-final'+((bonus2===k||bonus1===k)?' has-bonus':'')},final[k]||'\u2014'),
         e('span',{className:'stat-mod'},val!==null?'('+modStr(final[k])+')':''))})),
       Object.values(errs).filter(Boolean).map((er,i)=>e('div',{key:i,className:'stat-error center'},er)),getWarnings().map((w,i)=>e('div',{key:'w'+i,className:'stat-warning center'},w)),
-      e('div',{className:'btn-row'},e('button',{className:'ghost-btn',onClick:()=>setStep('0b')},'\u2190 Back'),e('button',{className:'ghost-btn',onClick:()=>{setAssign({str:null,dex:null,con:null,int:null,wis:null,cha:null});setBonus2(null);setBonus1(null)}},'Reset'),e('button',{className:'gold-btn',onClick:()=>{if(validateStats())setStep(2)}},'Continue')))}
+      e('div',{className:'btn-row'},e('button',{className:'ghost-btn',onClick:()=>setStep('0c')},'\u2190 Back'),e('button',{className:'ghost-btn',onClick:()=>{setAssign({str:null,dex:null,con:null,int:null,wis:null,cha:null});setBonus2(null);setBonus1(null)}},'Reset'),e('button',{className:'gold-btn',onClick:()=>{if(validateStats())setStep(2)}},'Continue')))}
+
+  // Step 1pb: Point Buy
+  if(step==='1pb'){
+    const final={};for(const k of STAT_NAMES)final[k]=pbScores[k]+(bonus2===k?2:0)+(bonus1===k?1:0);
+    const pbValidate=()=>{const er={};if(pbSpent>27)er.general='Over budget ('+pbSpent+'/27)';if(!bonus2)er.bonus2='Choose +2';if(!bonus1)er.bonus1='Choose +1';if(bonus2&&bonus1&&bonus2===bonus1)er.bonus1='Must be different';setErrs(er);return!Object.keys(er).length};
+    return e('div',{className:'cover'},e('h2',{className:'gold'},cls.toUpperCase()+' \u2014 POINT BUY'),
+      e('p',{className:'dim-italic',style:{fontSize:13}},'27 points to spend. Each score starts at 8, max 15. Costs increase above 13.'),
+      e('p',{style:{fontSize:14,color:pbRemain>=0?'var(--gold)':'var(--red)',textAlign:'center',marginBottom:8}},pbRemain+' points remaining'),
+      e('div',{className:'stat-grid'},STAT_NAMES.map(k=>{const v=pbScores[k];return e('div',{className:'stat-assign-row',key:k},
+        e('label',null,STAT_LABELS[k]),
+        e('div',{className:'stat-input-group'},
+          e('button',{className:'stat-adj',disabled:v<=8,onClick:()=>setPbScores(s=>({...s,[k]:Math.max(8,s[k]-1)}))},'\u2212'),
+          e('span',{className:'stat-num'},v),
+          e('button',{className:'stat-adj',disabled:!pbCanInc(k),onClick:()=>setPbScores(s=>({...s,[k]:Math.min(15,s[k]+1)}))},'+')
+        ),
+        e('span',{className:'pb-cost',style:{fontSize:11,color:'var(--text-dim)',minWidth:36,textAlign:'center'}},'('+PB_COSTS[v]+' pts)'),
+        e('div',{className:'bonus-toggles'},e('button',{className:'bonus-btn'+(bonus2===k?' active2':''),onClick:()=>setBonus2(bonus2===k?null:k)},'+2'),e('button',{className:'bonus-btn'+(bonus1===k?' active1':''),onClick:()=>setBonus1(bonus1===k?null:k)},'+1')),
+        e('span',{className:'stat-final'+((bonus2===k||bonus1===k)?' has-bonus':'')},final[k]),
+        e('span',{className:'stat-mod'},'('+modStr(final[k])+')'))})),
+      e('table',{style:{fontSize:11,color:'var(--text-dim)',margin:'12px auto',borderCollapse:'collapse'}},
+        e('tbody',null,
+          e('tr',null,e('td',{style:{padding:'2px 6px'}},'Score'),e('td',{style:{padding:'2px 6px'}},'8'),e('td',{style:{padding:'2px 6px'}},'9'),e('td',{style:{padding:'2px 6px'}},'10'),e('td',{style:{padding:'2px 6px'}},'11'),e('td',{style:{padding:'2px 6px'}},'12'),e('td',{style:{padding:'2px 6px'}},'13'),e('td',{style:{padding:'2px 6px'}},'14'),e('td',{style:{padding:'2px 6px'}},'15')),
+          e('tr',null,e('td',{style:{padding:'2px 6px'}},'Cost'),e('td',{style:{padding:'2px 6px'}},'0'),e('td',{style:{padding:'2px 6px'}},'1'),e('td',{style:{padding:'2px 6px'}},'2'),e('td',{style:{padding:'2px 6px'}},'3'),e('td',{style:{padding:'2px 6px'}},'4'),e('td',{style:{padding:'2px 6px'}},'5'),e('td',{style:{padding:'2px 6px'}},'7'),e('td',{style:{padding:'2px 6px'}},'9')))),
+      Object.values(errs).filter(Boolean).map((er,i)=>e('div',{key:i,className:'stat-error center'},er)),
+      e('div',{className:'btn-row'},
+        e('button',{className:'ghost-btn',onClick:()=>setStep('0c')},'\u2190 Back'),
+        e('button',{className:'ghost-btn',onClick:()=>{setPbScores({str:8,dex:8,con:8,int:8,wis:8,cha:8});setBonus2(null);setBonus1(null)}},'Reset'),
+        e('button',{className:'gold-btn',onClick:()=>{if(pbValidate()){setAssign({...pbScores});setStep(2)}}},'Continue')))}
+
+  // Step 1roll: Roll 4d6 drop lowest
+  if(step==='1roll'){
+    const allRolled=rolls.every(r=>r!==null);
+    const rollFinal={};for(const k of STAT_NAMES)rollFinal[k]=(rollAssign[k]||0)+(bonus2===k?2:0)+(bonus1===k?1:0);
+    const allAssigned=STAT_NAMES.every(k=>rollAssign[k]!==null);
+    const rollValidate=()=>{const er={};if(!allRolled)er.general='Roll all 6 scores first';if(!allAssigned)er.general='Assign all rolls to abilities';if(!bonus2)er.bonus2='Choose +2';if(!bonus1)er.bonus1='Choose +1';if(bonus2&&bonus1&&bonus2===bonus1)er.bonus1='Must be different';setErrs(er);return!Object.keys(er).length};
+    const ravail=rollAvailable();
+    return e('div',{className:'cover'},e('h2',{className:'gold'},cls.toUpperCase()+' \u2014 ROLL FOR STATS'),
+      e('p',{className:'dim-italic',style:{fontSize:13}},'Roll 4d6, drop the lowest die. Click each slot to roll, then assign results to abilities.'),
+      e('div',{style:{display:'flex',gap:10,justifyContent:'center',flexWrap:'wrap',marginBottom:16}},
+        rolls.map((r,idx)=>{
+          const isRolling=rolling===idx;
+          const animDice=rollAnim&&rollAnim.idx===idx?rollAnim.dice:null;
+          return e('button',{key:idx,className:'roll-slot'+(r?' rolled':'')+(isRolling?' rolling':''),
+            disabled:!!r||rolling>=0,
+            onClick:()=>doRoll(idx),
+            style:{minWidth:80,padding:'10px 8px',background:r?'rgba(201,168,76,.12)':'rgba(255,255,255,.03)',border:'1px solid '+(r?'var(--gold-dim)':'var(--border)'),borderRadius:6,cursor:r?'default':'pointer',textAlign:'center'}},
+            isRolling&&animDice?e('div',{style:{fontSize:18,color:'var(--gold)',fontFamily:'monospace'}},animDice.join(' ')):
+            r?e('div',null,
+              e('div',{style:{fontSize:11,color:'var(--text-dim)',fontFamily:'monospace'}},r.dice.map((d,di)=>di===0?e('span',{key:di,style:{textDecoration:'line-through',opacity:.4}},d):e('span',{key:di},(di>0?' ':'')+d)).concat()),
+              e('div',{style:{fontSize:22,color:'var(--gold)',fontWeight:700}},r.total)):
+            e('div',null,e('div',{style:{fontSize:13,color:'var(--text-dim)'}},'Roll '+(idx+1)),e('div',{style:{fontSize:18,color:'var(--gold-dim)'}},'4d6')))})),
+      allRolled?e(React.Fragment,null,
+        e('div',{className:'divider'}),
+        e('p',{style:{fontSize:13,color:'var(--text-dim)',textAlign:'center'}},'Assign your rolls to abilities, then place +2 and +1 bonuses.'),
+        e('div',{className:'stat-grid'},STAT_NAMES.map(k=>{const val=rollAssign[k];return e('div',{className:'stat-assign-row',key:k},
+          e('label',null,STAT_LABELS[k]),
+          e('select',{className:'stat-select',value:val===null?'':val,onChange:ev=>setRollAssign(a=>({...a,[k]:ev.target.value===''?null:parseInt(ev.target.value)}))},e('option',{value:''},'\u2014'),val!==null?e('option',{value:val},val):null,ravail.map((s,i)=>e('option',{key:k+s+i,value:s},s))),
+          e('div',{className:'bonus-toggles'},e('button',{className:'bonus-btn'+(bonus2===k?' active2':''),onClick:()=>setBonus2(bonus2===k?null:k)},'+2'),e('button',{className:'bonus-btn'+(bonus1===k?' active1':''),onClick:()=>setBonus1(bonus1===k?null:k)},'+1')),
+          e('span',{className:'stat-final'+((bonus2===k||bonus1===k)?' has-bonus':'')},rollFinal[k]||'\u2014'),
+          e('span',{className:'stat-mod'},val!==null?'('+modStr(rollFinal[k])+')':''))}))):null,
+      Object.values(errs).filter(Boolean).map((er,i)=>e('div',{key:i,className:'stat-error center'},er)),
+      e('div',{className:'btn-row'},
+        e('button',{className:'ghost-btn',onClick:()=>setStep('0c')},'\u2190 Back'),
+        e('button',{className:'ghost-btn',onClick:()=>{setRolls([null,null,null,null,null,null]);setRollAssign({str:null,dex:null,con:null,int:null,wis:null,cha:null});setBonus2(null);setBonus1(null)}},'Reroll All'),
+        allRolled?e('button',{className:'gold-btn',onClick:()=>{if(rollValidate()){setAssign({...rollAssign});setStep(2)}}},'Continue'):null))}
 
   // Step 2: Origin Feat
   if(step===2)return e('div',{className:'cover'},e('h2',{className:'gold'},'ORIGIN FEAT'),
     e('p',{className:'dim-italic',style:{fontSize:13}},'Human Versatile trait: choose one Origin Feat.'),
     e('div',{className:'feat-options'},ORIGIN_FEATS.map(f=>e('button',{key:f.name,className:'style-btn'+(feat===f.name?' selected':''),onClick:()=>{setFeat(f.name);setMiCantrips([]);setMiSpell(null)}},e('strong',null,f.name),e('span',null,f.desc)))),
-    e('div',{className:'btn-row',style:{marginTop:16}},e('button',{className:'ghost-btn',onClick:()=>setStep(1)},'\u2190 Back'),
+    e('div',{className:'btn-row',style:{marginTop:16}},e('button',{className:'ghost-btn',onClick:()=>setStep(statMethod==='pointbuy'?'1pb':statMethod==='roll'?'1roll':1)},'\u2190 Back'),
       e('button',{className:'gold-btn',onClick:()=>{if(!feat){setErrs({feat:'Choose a feat'});return}setErrs({});const isSkilled=feat==='Skilled';setStep(hasMiSpells?'2b':(isSkilled?'2d':(cls==='Paladin'?'2c':3)))},disabled:!feat},'Continue')));
 
   // Step 2b: Magic Initiate spell selection
@@ -4273,7 +4470,7 @@ function CharCreate({onDone,onBack}){
 }
 
 // ── Sidebar ────────────────────────────────────────────
-function Sidebar({gs,onSave,onMenu,saveMsg}){
+function Sidebar({gs,onSave,onMenu,onSettings,saveMsg}){
   const d=gs.derived;const e=React.createElement;const sp=gs.spells||{};
   const hasSpells=(sp.cantrips&&sp.cantrips.length)||(sp.level1&&sp.level1.length);
   return e('div',{className:'sidebar'+(gs._sideOpen?' open':'')},
@@ -4298,33 +4495,46 @@ function Sidebar({gs,onSave,onMenu,saveMsg}){
     gs.companions.length?e(React.Fragment,null,e('h3',null,'Companions'),e('div',{className:'companion-list'},gs.companions.map(c=>e(CompanionTag,{key:c,name:c,romance:gs.romances?.[c],onView:(n,r)=>{setSideOpen(false);setCompPopup({name:n,romance:r})}})))):null,
     gs.inventory.length?e(React.Fragment,null,e('h3',null,'Inventory'),e('div',{className:'inv-list'},gs.inventory.map(it=>e('div',{key:it,className:'inv-item'},it)))):null,
     e('h3',null,'Log'),e('div',{className:'history-list'},gs.history.slice(-10).reverse().map((h,i)=>e('div',{key:i,className:'hist-item'},h))),
-    e('div',{className:'sidebar-actions'},e('button',{className:'save-btn',onClick:onSave},'\u2716 Save'),saveMsg?e('span',{className:'save-msg'},saveMsg):null,e('button',{className:'menu-btn',onClick:onMenu},'Menu')));
+    e('div',{className:'sidebar-actions'},e('button',{className:'save-btn',onClick:onSave},'\u2716 Save'),saveMsg?e('span',{className:'save-msg'},saveMsg):null,e('button',{className:'menu-btn',onClick:onSettings},'\u2699 Settings'),e('button',{className:'menu-btn',onClick:onMenu},'Menu')));
 }
 
 // ── Save Picker ────────────────────────────────────────
 function SavePicker({onPick,onCancel}){
-  const[slots,setSlots]=useState([null,null,null]);const[loading,setLoading]=useState(true);const[del,setDel]=useState(null);const e=React.createElement;
+  const[slots,setSlots]=useState(Array(SAVE_SLOT_COUNT).fill(null));const[loading,setLoading]=useState(true);const[del,setDel]=useState(null);const[importErr,setImportErr]=useState(null);const e=React.createElement;
   useEffect(()=>{loadAllSlots().then(s=>{setSlots(s);setLoading(false)})},[]);
   const handleDel=async(i)=>{await deleteSave(i);const s=[...slots];s[i]=null;setSlots(s);setDel(null)};
+  // Get character data from slot (v2 uses .character, v1 used .gs)
+  const getChar=(slot)=>slot?.character||slot?.gs||null;
+  // Export slot to JSON file
+  const exportSlot=(i)=>{const data=slots[i];if(!data)return;const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='knights-oath-slot'+(i+1)+'.json';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);};
+  // Import save from JSON file
+  const importSave=(ev)=>{const file=ev.target.files?.[0];if(!file)return;const reader=new FileReader();reader.onload=async(re)=>{try{const data=JSON.parse(re.target.result);if(!data.character?.cls||!data.character?.stats){setImportErr('Invalid save: missing character class or stats');return;}const migrated=migrateLegacySave(data);let slot=slots.findIndex(s=>!s);if(slot<0)slot=0;const json=JSON.stringify(migrated);await ST.set('save-slot-'+slot,json);await PrefBackup.set('save-slot-'+slot,json);const fresh=await loadAllSlots();setSlots(fresh);setImportErr(null);}catch(err){setImportErr('Failed to read save file');}};reader.readAsText(file);ev.target.value='';};
   return e('div',{className:'modal-overlay'},e('div',{className:'modal-box'},
     e('h2',{className:'gold'},'SAVE / MANAGE SLOTS'),
     e('div',{className:'save-slots modal-slots'},
       loading?e('p',{className:'dim-italic'},'Loading...'):
-      slots.map((slot,i)=>e('div',{key:i,className:'save-slot-row'},
+      slots.map((slot,i)=>{const ch=getChar(slot);return e('div',{key:i,className:'save-slot-row'},
         e('button',{className:'save-slot-btn'+(slot?' has-data':''),onClick:()=>onPick(i)},
           e('span',{className:'slot-label'},'Slot '+(i+1)),
-          slot&&slot.gs?e(React.Fragment,null,
-            e('span',{className:'slot-details'},(slot.gs.name||'Squire')+' \u2022 Lv'+slot.gs.level+' '+slot.gs.cls),
+          ch?e(React.Fragment,null,
+            e('span',{className:'slot-details'},(ch.name||'Squire')+' \u2022 Lv'+ch.level+' '+ch.cls),
             e('span',{className:'slot-date'},fmtDate(slot.savedAt)),
             e('span',{className:'slot-overwrite'},'Save here')
           ):e('span',{className:'slot-empty-text'},'Empty')),
-        slot?(del===i?e('div',{className:'slot-del-confirm'},
-          e('button',{className:'slot-yes',onClick:()=>handleDel(i)},'Delete'),
-          e('button',{className:'slot-no',onClick:()=>setDel(null)},'Keep')
-        ):e('button',{className:'slot-delete-btn',onClick:ev=>{ev.stopPropagation();setDel(i)},title:'Delete save'},'\u00d7')):null
-      ))
+        slot?e(React.Fragment,null,
+          e('button',{className:'slot-export-btn',onClick:ev=>{ev.stopPropagation();exportSlot(i)},title:'Export'},'\u21e9'),
+          del===i?e('div',{className:'slot-del-confirm'},
+            e('button',{className:'slot-yes',onClick:()=>handleDel(i)},'Delete'),
+            e('button',{className:'slot-no',onClick:()=>setDel(null)},'Keep')
+          ):e('button',{className:'slot-delete-btn',onClick:ev=>{ev.stopPropagation();setDel(i)},title:'Delete save'},'\u00d7')
+        ):null
+      )})
     ),
-    e('button',{className:'ghost-btn',onClick:onCancel,style:{marginTop:16}},'Cancel')))}
+    e('div',{style:{marginTop:16,display:'flex',gap:8,flexWrap:'wrap',alignItems:'center'}},
+      e('label',{className:'ghost-btn',style:{cursor:'pointer',margin:0}},'Import Save',
+        e('input',{type:'file',accept:'.json',onChange:importSave,style:{display:'none'}})),
+      e('button',{className:'ghost-btn',onClick:onCancel},'Cancel')),
+    importErr?e('p',{style:{color:'#e74c3c',fontSize:13,marginTop:8}},importErr):null))}
 
 // ── Scene View ─────────────────────────────────────────
 
@@ -5549,6 +5759,7 @@ let CAMPAIGN=null;
 let CAMPAIGN_RULES=null;
 let DM_SUMMARY=null;
 let EPILOGUES=null;
+let SPECIES_DATA=null;
 
 async function loadCampaign(campaignId){
   // Standalone build: use embedded data instead of fetching
@@ -5567,6 +5778,7 @@ async function loadCampaign(campaignId){
     if(d.epilogues)EPILOGUES=d.epilogues;
     if(d.partyBanter)PARTY_BANTER=d.partyBanter;
     if(d.companionGifts)COMPANION_GIFTS=d.companionGifts;
+    if(d.species)SPECIES_DATA=d.species;
     CAMPAIGN=manifest;
     if(d.scenesDeferred){setTimeout(()=>{for(const k in d.scenesDeferred)SCENES[k]=d.scenesDeferred[k];window._scenesReady=true},100)}
     else{window._scenesReady=true}
@@ -5591,9 +5803,10 @@ async function loadCampaign(campaignId){
       files.dmSummary?fetch(base+files.dmSummary).then(r=>r.json()):null,
       files.epilogues?fetch(base+files.epilogues).then(r=>r.json()):null,
       files.partyBanter?fetch(base+files.partyBanter).then(r=>r.json()):null,
-      files.companionGifts?fetch(base+files.companionGifts).then(r=>r.json()):null
+      files.companionGifts?fetch(base+files.companionGifts).then(r=>r.json()):null,
+      files.species?fetch(base+files.species).then(r=>r.json()):null
     ]);
-    const[scenes,scenesDeferred,combatNarr,combatOut,companions,effects,shop,rules,theme,dmSummary,epilogues,partyBanter,companionGifts]=loads;
+    const[scenes,scenesDeferred,combatNarr,combatOut,companions,effects,shop,rules,theme,dmSummary,epilogues,partyBanter,companionGifts,species]=loads;
 
     // Populate engine globals
     if(scenes){for(const k in scenes)SCENES[k]=scenes[k]}
@@ -5628,6 +5841,7 @@ async function loadCampaign(campaignId){
     if(epilogues)EPILOGUES=epilogues;
     if(partyBanter)PARTY_BANTER=partyBanter;
     if(companionGifts)COMPANION_GIFTS=companionGifts;
+    if(species)SPECIES_DATA=species;
 
     CAMPAIGN=manifest;
 
@@ -5674,7 +5888,7 @@ function applyTheme(theme){
 
 function App(){
   const[phase,setPhase]=useState('cover');const[gs,setGs]=useState(null);const[scene,setScene]=useState(null);const[sceneId,setSceneId]=useState(null);
-  const[showSave,setShowSave]=useState(false);const[saveMsg,setSaveMsg]=useState('');const[showSheet,setShowSheet]=useState(false);const[showDmSummary,setShowDmSummary]=useState(false);const[sideOpen,setSideOpen]=useState(false);const[confirmModal,setConfirmModal]=useState(null);const[compPopup,setCompPopup]=useState(null);const[romancePrompt,setRomancePrompt]=useState(null);const[romanceManage,setRomanceManage]=useState(false);const[breakupTarget,setBreakupTarget]=useState(null);const[npcNotify,setNpcNotify]=useState(null);const[romanceCheck,setRomanceCheck]=useState(null);const[spellPrepModal,setSpellPrepModal]=useState(false);const[shortRestModal,setShortRestModal]=useState(false);const[healingPanel,setHealingPanel]=useState(false);const[defeatRecovery,setDefeatRecovery]=useState(null);const[godSignPicker,setGodSignPicker]=useState(null);const[editSlot,setEditSlot]=useState(null);
+  const[showSave,setShowSave]=useState(false);const[saveMsg,setSaveMsg]=useState('');const[showSheet,setShowSheet]=useState(false);const[showDmSummary,setShowDmSummary]=useState(false);const[sideOpen,setSideOpen]=useState(false);const[confirmModal,setConfirmModal]=useState(null);const[compPopup,setCompPopup]=useState(null);const[romancePrompt,setRomancePrompt]=useState(null);const[romanceManage,setRomanceManage]=useState(false);const[breakupTarget,setBreakupTarget]=useState(null);const[npcNotify,setNpcNotify]=useState(null);const[romanceCheck,setRomanceCheck]=useState(null);const[spellPrepModal,setSpellPrepModal]=useState(false);const[shortRestModal,setShortRestModal]=useState(false);const[healingPanel,setHealingPanel]=useState(false);const[defeatRecovery,setDefeatRecovery]=useState(null);const[godSignPicker,setGodSignPicker]=useState(null);const[editSlot,setEditSlot]=useState(null);const[showSettingsPanel,setShowSettingsPanel]=useState(false);
   // Migrate companion name casing on any active gs
   React.useEffect(()=>{
     if(!gs||!gs.companions)return;
@@ -5688,6 +5902,15 @@ function App(){
       setGs(ng);
     }
   },[gs?.companions?.length]);
+
+  // Handle PWA shortcut URL params (?action=continue or ?action=new)
+  React.useEffect(()=>{
+    const params=new URLSearchParams(window.location.search);
+    const action=params.get('action');
+    if(action==='continue'&&phase==='cover')setShowSave(true);
+    if(action==='new'&&phase==='cover')setPhase('intro');
+    if(action)window.history.replaceState({},'',window.location.pathname);
+  },[]);
 
   const goScene=(id,state)=>{
     // Check for pending NPC notifications
@@ -6134,7 +6357,7 @@ function App(){
       e('h3',null,'Log'),e('div',{className:'history-list'},gs.history.slice(-10).reverse().map((h,i)=>e('div',{key:i,className:'hist-item'},h))),
       e('div',{className:'sidebar-actions'},e('button',{className:'sheet-sidebar-btn',onClick:()=>{setShowSheet(true);setSideOpen(false)}},'Character Sheet'),
         ENDING_SCENES.includes(sceneId)&&DM_SUMMARY?e('button',{className:'sheet-sidebar-btn',style:{background:'var(--gold-dim)',color:'var(--bg)'},onClick:()=>{setShowDmSummary(true);setSideOpen(false)}},'DM Summary'):null,
-        Object.values(gs.romances||{}).filter(v=>v&&v!=='Friend').length>0?e('button',{className:'romance-manage-btn',onClick:()=>{setRomanceManage(true);setSideOpen(false)}},'Manage Romances'):null,e('button',{className:'save-btn',onClick:()=>{setShowSave(true);setSideOpen(false)}},'\u2716 Save'),saveMsg?e('span',{className:'save-msg'},saveMsg):null,e('button',{className:'menu-btn',onClick:handleMenu},'Menu'))),
+        Object.values(gs.romances||{}).filter(v=>v&&v!=='Friend').length>0?e('button',{className:'romance-manage-btn',onClick:()=>{setRomanceManage(true);setSideOpen(false)}},'Manage Romances'):null,e('button',{className:'save-btn',onClick:()=>{setShowSave(true);setSideOpen(false)}},'\u2716 Save'),saveMsg?e('span',{className:'save-msg'},saveMsg):null,e('button',{className:'menu-btn',onClick:()=>{setShowSettingsPanel(true);setSideOpen(false)}},'\u2699 Settings'),e('button',{className:'menu-btn',onClick:handleMenu},'Menu'))),
     e(SceneView,{scene,onChoice:handleChoice,gs,isEnding:ENDING_SCENES.includes(sceneId),onViewSheet:()=>setShowSheet(true),onViewDmSummary:ENDING_SCENES.includes(sceneId)&&DM_SUMMARY?()=>setShowDmSummary(true):null,onBonus:handleBonus,onStateUpdate:handleStateUpdate}),
     showSave?e(SavePicker,{onPick:handleSavePick,onCancel:()=>setShowSave(false)}):null,confirmModal?e(ConfirmModal,confirmModal):null,compPopup?e(CompanionInfo,{name:compPopup.name,romance:compPopup.romance,onClose:()=>setCompPopup(null)}):null,romancePrompt?e(RomancePrompt,{prompt:romancePrompt,gs:gs,onAccept:acceptRomance,onFriend:friendRomance,onDecline:declineRomance}):null,
     romanceManage&&gs?e(RomanceManage,{gs:gs,onClose:()=>setRomanceManage(false),onEnd:(name)=>{setRomanceManage(false);setBreakupTarget(name)},onFriend:manageFriend}):null,
@@ -6145,7 +6368,8 @@ function App(){
     shortRestModal&&gs?e(ShortRestModal,{gs:gs,onDone:(result)=>{const ns={...gs,hp:result.hp,hitDiceUsed:result.hitDiceUsed};setGs(ns);setShortRestModal(false)}}):null,
     healingPanel&&gs?e(HealingPanel,{gs:gs,onUpdate:(upd)=>{const ns={...gs,...upd};setGs(ns)},onClose:()=>setHealingPanel(false)}):null,
     defeatRecovery&&gs?e(DefeatRecoveryModal,{gs:gs,wound:defeatRecovery.wound,scar:defeatRecovery.scar,onContinue:()=>setDefeatRecovery(null)}):null,
-    godSignPicker&&gs&&gs.cls==='Paladin'?e(GodSignPicker,{options:godSignPicker.options,onPick:(god)=>{const ns={...gs,godSigns:{...(gs.godSigns||{})}};ns.godSigns[god]=(ns.godSigns[god]||0)+1;setGs(ns);setGodSignPicker(null)}}):null);
+    godSignPicker&&gs&&gs.cls==='Paladin'?e(GodSignPicker,{options:godSignPicker.options,onPick:(god)=>{const ns={...gs,godSigns:{...(gs.godSigns||{})}};ns.godSigns[god]=(ns.godSigns[god]||0)+1;setGs(ns);setGodSignPicker(null)}}):null,
+    showSettingsPanel?e(SettingsPanel,{onClose:()=>setShowSettingsPanel(false)}):null);
 }
 // Attempt to load campaign from JSON files, then mount
 (async function(){

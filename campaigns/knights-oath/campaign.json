@@ -7,8 +7,10 @@
   "setting": "Dragonlance",
   "classes": ["Fighter", "Paladin"],
   "species": "Human (Solamnic)",
+  "availableSpecies": ["human"],
+  "speciesLocked": true,
   "languages": "Common, Solamnic",
-  "version": "24.1.1",
+  "version": "24.2.0",
   "startScene": "1",
   "startingInventory": ["Dagger", "Explorer's Pack", "Solamnic Tabard"],
   "startingEquipment": {
@@ -105,6 +107,7 @@
     "dmSummary": "dm-summary.json",
     "epilogues": "epilogues.json",
     "partyBanter": "party-banter.json",
-    "companionGifts": "companion-gifts.json"
+    "companionGifts": "companion-gifts.json",
+    "species": "species.json"
   }
 }

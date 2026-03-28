@@ -196,3 +196,10 @@ Key sections in rules.json that drive engine behavior:
 - Approval: `gs.approval[companionName]` — integer score, -5 to +8
 - Campaign rules: always access via `CAMPAIGN_RULES?.property` (may be null before load)
 - Data format: `choiceFlags` use `letters: ["A"]` (array), `choiceFilters` use `letter: "A"` or `letters: ["A","B"]`
+
+## Android Workflow
+After editing any web files (index.html, sw.js, manifest.json) or campaign JSON:
+1. Run: `npm run sync`
+   This copies files to www/ and syncs to Android assets
+2. www/ is a build artifact — never edit files there directly
+3. Always edit source files in project root, then sync
