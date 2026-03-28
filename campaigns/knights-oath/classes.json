@@ -1,0 +1,517 @@
+{
+  "barbarian": {
+    "name": "Barbarian",
+    "desc": "A fierce warrior who channels primal rage to devastating effect.",
+    "dragonlance": "Barbarians are rare in Solamnia but common among the Plains peoples — the Que-Shu, Que-Kiri, and other nomadic tribes of Abanasinia. Some Kagonesti elves also follow this path.",
+    "hitDie": 12,
+    "primaryAbility": ["str"],
+    "savingThrows": ["str", "con"],
+    "armorProf": ["light", "medium", "shields"],
+    "weaponProf": ["simple", "martial"],
+    "toolProf": [],
+    "skillChoices": ["Animal Handling", "Athletics", "Intimidation", "Nature", "Perception", "Survival"],
+    "skillCount": 2,
+    "startingHp": 12,
+    "hpPerLevel": 7,
+    "weaponMasteryCount": [2, 2, 2],
+    "spellcasting": null,
+    "features": {
+      "1": [
+        {"name": "Rage", "desc": "Bonus Action to enter a rage for 1 minute. Advantage on STR checks/saves, bonus rage damage on STR melee attacks, resistance to Bludgeoning/Piercing/Slashing damage. Rages per Long Rest: 2 at Lv1, 3 at Lv3.", "mechanical": "rage", "uses": [2, 2, 3], "bonusDmg": [2, 2, 2]},
+        {"name": "Unarmored Defense", "desc": "While not wearing armor, your AC equals 10 + DEX mod + CON mod. You can use a Shield and still benefit.", "mechanical": "unarmoredDefenseBarb"}
+      ],
+      "2": [
+        {"name": "Danger Sense", "desc": "Advantage on DEX saving throws against effects you can see, such as traps and spells. You can't be Blinded, Deafened, or Incapacitated to use this.", "mechanical": "dangerSense"},
+        {"name": "Reckless Attack", "desc": "When you make your first attack on your turn, you can attack recklessly. You gain Advantage on STR-based melee attack rolls that turn, but attack rolls against you have Advantage until your next turn.", "mechanical": "recklessAttack"}
+      ],
+      "3": [
+        {"name": "Primal Knowledge", "desc": "You gain proficiency in one skill from the Barbarian skill list.", "mechanical": "bonusSkill", "from": "class"},
+        {"name": "Subclass", "desc": "Choose a Barbarian subclass: Path of the Berserker, Path of the Wild Heart, Path of the World Tree, or Path of the Zealot.", "mechanical": "subclass"}
+      ]
+    },
+    "subclasses": {
+      "berserker": {"name": "Path of the Berserker", "desc": "Channel rage into violent fury.", "feature3": {"name": "Frenzy", "desc": "While raging, you can make one extra attack as part of your Attack action once per turn. Advantage on STR checks/saves."}},
+      "wildHeart": {"name": "Path of the Wild Heart", "desc": "Attune to the natural world.", "feature3": {"name": "Animal Speaker / Rage of the Wilds", "desc": "Cast Beast Sense and Speak with Animals as rituals. While raging, choose Bear (resistance to all but Psychic), Eagle (Dash as BA, opportunity attacks have Disadvantage), or Wolf (allies have Advantage on melee attacks vs creatures within 5 ft of you)."}},
+      "worldTree": {"name": "Path of the World Tree", "desc": "Channel the life force of the World Tree.", "feature3": {"name": "Vitality of the Tree", "desc": "While raging, when you hit with an attack, you can give one creature you can see within 10 feet temporary HP equal to your rage damage bonus."}},
+      "zealot": {"name": "Path of the Zealot", "desc": "Fueled by divine fury.", "feature3": {"name": "Divine Fury", "desc": "While raging, the first creature you hit on each of your turns takes extra 1d6+half barbarian level Necrotic or Radiant damage (your choice). Warrior of the Gods: spells to revive you don't require material components."}}
+    }
+  },
+  "bard": {
+    "name": "Bard",
+    "desc": "An inspiring magician whose songs weave magic and courage.",
+    "dragonlance": "Bards on Krynn are storytellers and lorekeepers. In the absence of the gods, their magic comes from the music of the spheres — some say from the memory of what Krynn was before the Cataclysm.",
+    "hitDie": 8,
+    "primaryAbility": ["cha"],
+    "savingThrows": ["dex", "cha"],
+    "armorProf": ["light"],
+    "weaponProf": ["simple"],
+    "toolProf": ["three musical instruments"],
+    "skillChoices": "any",
+    "skillCount": 3,
+    "startingHp": 8,
+    "hpPerLevel": 5,
+    "weaponMasteryCount": [0, 0, 0],
+    "spellcasting": {
+      "ability": "cha",
+      "type": "known",
+      "cantripsKnown": [2, 2, 2],
+      "spellsKnown": [4, 5, 6],
+      "slots": {"1": [2, 2, 3], "2": [0, 0, 0]},
+      "ritual": true
+    },
+    "features": {
+      "1": [
+        {"name": "Bardic Inspiration", "desc": "As a Bonus Action, grant a creature within 60 feet a Bardic Inspiration die (d6). The creature can add the die to one ability check, attack roll, or saving throw within 10 minutes. Uses equal to CHA mod (min 1), regain all on Long Rest.", "mechanical": "bardicInspiration", "die": "d6"}
+      ],
+      "2": [
+        {"name": "Expertise", "desc": "Choose 2 skill proficiencies. Your proficiency bonus is doubled for ability checks with those skills.", "mechanical": "expertise", "count": 2},
+        {"name": "Jack of All Trades", "desc": "Add half your proficiency bonus (round down) to any ability check that doesn't already use your proficiency bonus.", "mechanical": "jackOfAllTrades"}
+      ],
+      "3": [
+        {"name": "Subclass", "desc": "Choose a Bard subclass: College of Dance, College of Glamour, College of Lore, or College of Valor.", "mechanical": "subclass"}
+      ]
+    },
+    "subclasses": {
+      "dance": {"name": "College of Dance", "desc": "Move with supernatural grace.", "feature3": {"name": "Dazzling Footwork", "desc": "When you use Bardic Inspiration, you gain benefits: no opportunity attacks against you, speed +10, Advantage on next DEX save until end of your next turn."}},
+      "glamour": {"name": "College of Glamour", "desc": "Weave fey magic through performance.", "feature3": {"name": "Mantle of Inspiration", "desc": "As a Bonus Action, expend one Bardic Inspiration to give CHA mod (min 1) creatures within 60 feet 2d6 temp HP and they can move up to their speed without opportunity attacks."}},
+      "lore": {"name": "College of Lore", "desc": "Pursue knowledge above all.", "feature3": {"name": "Cutting Words", "desc": "When a creature within 60 feet makes an attack roll, ability check, or damage roll, you can use your Reaction to expend Bardic Inspiration and subtract the die from the roll. Also gain 2 more skill proficiencies."}},
+      "valor": {"name": "College of Valor", "desc": "Inspire heroism through tales of battle.", "feature3": {"name": "Combat Inspiration", "desc": "Gain medium armor and shield proficiency. A creature using your Bardic Inspiration can add the die to a damage roll or to AC against one attack (Reaction)."}}
+    }
+  },
+  "cleric": {
+    "name": "Cleric",
+    "desc": "A priestly champion who wields divine magic in service of a higher power.",
+    "dragonlance": "For three centuries after the Cataclysm, there were no true clerics on Krynn. The gods had turned silent. Now, as the Dragon Armies rise, the first signs of divine magic are returning. A cleric in this age is a miracle — proof that the gods have not abandoned Krynn.",
+    "hitDie": 8,
+    "primaryAbility": ["wis"],
+    "savingThrows": ["wis", "cha"],
+    "armorProf": ["light", "medium", "shields"],
+    "weaponProf": ["simple"],
+    "toolProf": [],
+    "skillChoices": ["History", "Insight", "Medicine", "Persuasion", "Religion"],
+    "skillCount": 2,
+    "startingHp": 8,
+    "hpPerLevel": 5,
+    "weaponMasteryCount": [0, 0, 0],
+    "spellcasting": {
+      "ability": "wis",
+      "type": "prepared",
+      "cantripsKnown": [3, 3, 3],
+      "preparedCount": "wisModPlusLevel",
+      "slots": {"1": [2, 3, 3], "2": [0, 0, 2]},
+      "ritual": true
+    },
+    "features": {
+      "1": [
+        {"name": "Divine Order", "desc": "Choose Protector (gain Heavy Armor proficiency and martial weapon proficiency) or Thaumaturge (gain one extra cantrip and add WIS mod to Cleric cantrip damage at Lv1).", "mechanical": "divineOrder", "options": ["Protector", "Thaumaturge"]}
+      ],
+      "2": [
+        {"name": "Channel Divinity", "desc": "You can channel divine energy (1 use per Short/Long Rest). You always have Turn Undead. You regain one expended use when you finish a Short Rest.", "mechanical": "channelDivinity", "uses": 1},
+        {"name": "Turn Undead", "desc": "As a Magic action, each Undead within 30 feet must make a WIS save. On failure, it is turned for 1 minute (flees, can't attack).", "mechanical": "turnUndead"}
+      ],
+      "3": [
+        {"name": "Subclass", "desc": "Choose a Divine Domain: Life, Light, Trickery, or War.", "mechanical": "subclass"}
+      ]
+    },
+    "subclasses": {
+      "life": {"name": "Life Domain", "desc": "Gods of healing and vitality: Mishakal (on Krynn).", "feature3": {"name": "Disciple of Life", "desc": "Whenever you use a spell of 1st level or higher to restore HP, the creature regains additional HP equal to 2 + the spell's level. Also gain Preserve Life Channel Divinity: restore HP up to 5× cleric level divided among creatures within 30 feet."}},
+      "light": {"name": "Light Domain", "desc": "Gods of sun and fire: Paladine, Sirrion (on Krynn).", "feature3": {"name": "Radiance of the Dawn", "desc": "Gain Light cantrip (doesn't count against cantrips known). Warding Flare: when attacked, use Reaction to impose Disadvantage (WIS mod times per LR). Channel Divinity: dispel magical darkness within 30 feet and deal 2d10+cleric level Radiant damage."}},
+      "trickery": {"name": "Trickery Domain", "desc": "Gods of deception and cleverness: Hiddukel, Shinare (on Krynn).", "feature3": {"name": "Blessing of the Trickster", "desc": "As an Action, give a creature Advantage on Stealth checks for 1 hour. Channel Divinity: Invoke Duplicity — create an illusory duplicate within 30 feet for 1 minute, cast spells as if in its space, allies have Advantage on attacks when within 5 feet of it."}},
+      "war": {"name": "War Domain", "desc": "Gods of battle and conquest: Kiri-Jolith, Sargonnas (on Krynn).", "feature3": {"name": "War Priest", "desc": "When you take the Attack action, you can make one extra attack as a Bonus Action (WIS mod times per LR, min 1). Channel Divinity: Guided Strike — +10 to an attack roll after seeing the roll."}}
+    }
+  },
+  "druid": {
+    "name": "Druid",
+    "desc": "A priest of nature who wields the forces of the natural world.",
+    "dragonlance": "Druids on Krynn draw power from the natural world itself rather than from the gods. Some served Chislev before the Cataclysm. Now their magic is among the few that still functions — nature, at least, has not abandoned Krynn.",
+    "hitDie": 8,
+    "primaryAbility": ["wis"],
+    "savingThrows": ["int", "wis"],
+    "armorProf": ["light", "shields"],
+    "weaponProf": ["simple"],
+    "toolProf": ["Herbalism Kit"],
+    "skillChoices": ["Arcana", "Animal Handling", "Insight", "Medicine", "Nature", "Perception", "Religion", "Survival"],
+    "skillCount": 2,
+    "startingHp": 8,
+    "hpPerLevel": 5,
+    "weaponMasteryCount": [0, 0, 0],
+    "spellcasting": {
+      "ability": "wis",
+      "type": "prepared",
+      "cantripsKnown": [2, 2, 2],
+      "preparedCount": "wisModPlusLevel",
+      "slots": {"1": [2, 3, 3], "2": [0, 0, 2]},
+      "ritual": true
+    },
+    "features": {
+      "1": [
+        {"name": "Druidic", "desc": "You know Druidic, the secret language of druids.", "mechanical": "language", "language": "Druidic"},
+        {"name": "Primal Order", "desc": "Choose Magician (gain Arcana proficiency and one extra cantrip from Druid list) or Warden (gain Martial weapon proficiency and Medium armor proficiency, hit die for Primal Companion becomes d10).", "mechanical": "primalOrder", "options": ["Magician", "Warden"]}
+      ],
+      "2": [
+        {"name": "Wild Shape", "desc": "As a Bonus Action, assume the shape of a beast (CR 1/4 or lower at Lv2). Temp HP equal to beast's HP. Lasts for hours equal to half druid level (round down, min 1 hour). Uses: 2 per Short/Long Rest.", "mechanical": "wildShape", "uses": 2},
+        {"name": "Wild Companion", "desc": "You can expend a use of Wild Shape to cast Find Familiar without material components.", "mechanical": "wildCompanion"}
+      ],
+      "3": [
+        {"name": "Subclass", "desc": "Choose a Druid subclass: Circle of the Land, Circle of the Moon, Circle of the Sea, or Circle of the Stars.", "mechanical": "subclass"}
+      ]
+    },
+    "subclasses": {
+      "land": {"name": "Circle of the Land", "desc": "Draw magic from the land itself.", "feature3": {"name": "Land's Aid", "desc": "Learn one bonus cantrip. As a Magic action, expend a Wild Shape use to restore 1d6+PB HP to a creature within 60 feet. Circle Spells: gain bonus prepared spells based on chosen land type."}},
+      "moon": {"name": "Circle of the Moon", "desc": "Master wild shape combat.", "feature3": {"name": "Circle Forms", "desc": "Wild Shape into beasts of CR 1 (instead of CR 1/4). While in Wild Shape, you can expend spell slots to regain 1d8 HP per slot level."}},
+      "sea": {"name": "Circle of the Sea", "desc": "Channel the power of tides and storms.", "feature3": {"name": "Wrath of the Sea", "desc": "As a Bonus Action, create a 10-foot aura of ocean power for 10 minutes. Creatures of your choice entering or starting in the aura take 1d6 Cold or Lightning damage (your choice). Uses: PB per Long Rest."}},
+      "stars": {"name": "Circle of the Stars", "desc": "Draw power from the constellations.", "feature3": {"name": "Star Map & Starry Form", "desc": "Gain a Star Map (free castings of Guidance and Guiding Bolt). As a Bonus Action, expend a Wild Shape use to assume Starry Form: Archer (bonus 1d8+WIS Radiant ranged attack), Chalice (heal 1d8+WIS when casting spell), or Dragon (treat any roll below 10 as a 10 on Concentration/INT checks)."}}
+    }
+  },
+  "fighter": {
+    "name": "Fighter",
+    "desc": "A master of martial combat, skilled with a variety of weapons and armor.",
+    "dragonlance": "Fighters are the backbone of the Knights of Solamnia. Every squire trains in the martial arts from childhood. The Order of the Sword prizes tactical brilliance and unmatched endurance above all.",
+    "hitDie": 10,
+    "primaryAbility": ["str", "dex"],
+    "savingThrows": ["str", "con"],
+    "armorProf": ["light", "medium", "heavy", "shields"],
+    "weaponProf": ["simple", "martial"],
+    "toolProf": [],
+    "skillChoices": ["Acrobatics", "Animal Handling", "Athletics", "History", "Insight", "Intimidation", "Perception", "Persuasion", "Survival"],
+    "skillCount": 2,
+    "startingHp": 10,
+    "hpPerLevel": 6,
+    "weaponMasteryCount": [3, 3, 3],
+    "spellcasting": null,
+    "features": {
+      "1": [
+        {"name": "Fighting Style", "desc": "Choose a fighting style: Archery, Blind Fighting, Defense, Dueling, Great Weapon Fighting, Interception, Protection, Thrown Weapon Fighting, Two-Weapon Fighting, or Unarmed Fighting.", "mechanical": "fightingStyle"},
+        {"name": "Second Wind", "desc": "As a Bonus Action, regain HP equal to 1d10 + Fighter level. Uses equal to Proficiency Bonus per Long Rest.", "mechanical": "secondWind"},
+        {"name": "Weapon Mastery", "desc": "You gain the Weapon Mastery property of 3 weapons of your choice.", "mechanical": "weaponMastery", "count": 3}
+      ],
+      "2": [
+        {"name": "Action Surge", "desc": "On your turn, you can take one additional Action. Once per Short/Long Rest (two uses at Lv17).", "mechanical": "actionSurge", "uses": [0, 1, 1]},
+        {"name": "Tactical Mind", "desc": "When you fail an ability check, you can expend a Second Wind use to add 1d10 to the roll, potentially turning failure into success.", "mechanical": "tacticalMind"}
+      ],
+      "3": [
+        {"name": "Subclass", "desc": "Choose a Fighter subclass: Battle Master, Champion, Eldritch Knight, or Psi Warrior.", "mechanical": "subclass"}
+      ]
+    },
+    "subclasses": {
+      "battleMaster": {"name": "Battle Master", "desc": "Tactical superiority through maneuvers.", "feature3": {"name": "Combat Superiority", "desc": "Learn 3 maneuvers. Gain 4 Superiority Dice (d8). Expend a die to fuel maneuvers. Regain all on Short/Long Rest. Also gain Student of War: proficiency with one Artisan's tools."}},
+      "champion": {"name": "Champion", "desc": "Raw physical power and athletic perfection.", "feature3": {"name": "Improved Critical", "desc": "Your weapon attacks score a critical hit on a roll of 19 or 20. Also gain Remarkable Athlete: Advantage on Initiative and STR/DEX/CON checks when your proficiency bonus doesn't apply."}},
+      "eldritchKnight": {"name": "Eldritch Knight", "desc": "Combine martial prowess with arcane magic.", "feature3": {"name": "Spellcasting", "desc": "Learn 2 cantrips and 3 spells from the Wizard list (mostly Abjuration and Evocation). INT is your spellcasting ability. 2 spell slots at Lv3.", "spellcasting": {"ability": "int", "cantrips": 2, "spellsKnown": 3, "slots": {"1": 2}}}},
+      "psiWarrior": {"name": "Psi Warrior", "desc": "Augment physical might with psionic power.", "feature3": {"name": "Psionic Power", "desc": "Gain Psionic Energy dice (d6, count = 2× PB). Protective Field: reduce damage to you or ally within 30 feet by 1d6+INT mod (Reaction). Psionic Strike: deal extra 1d6+INT Force damage on a hit. Telekinetic Movement: move Medium or smaller objects/creatures with your mind."}}
+    }
+  },
+  "monk": {
+    "name": "Monk",
+    "desc": "A martial artist who harnesses the body's inner power.",
+    "dragonlance": "Monasteries are rare on Krynn, but some exist in remote mountain regions. The discipline of the monk mirrors the Solamnic devotion to the Measure — control of body and mind.",
+    "hitDie": 8,
+    "primaryAbility": ["dex", "wis"],
+    "savingThrows": ["str", "dex"],
+    "armorProf": [],
+    "weaponProf": ["simple", "martial_melee_no_heavy_or_special"],
+    "toolProf": ["one Artisan's Tools or Musical Instrument"],
+    "skillChoices": ["Acrobatics", "Athletics", "History", "Insight", "Religion", "Stealth"],
+    "skillCount": 2,
+    "startingHp": 8,
+    "hpPerLevel": 5,
+    "weaponMasteryCount": [0, 0, 0],
+    "spellcasting": null,
+    "features": {
+      "1": [
+        {"name": "Martial Arts", "desc": "While unarmed or wielding Monk weapons (Simple melee + martial melee without Heavy/Special), with no armor or shield: use DEX instead of STR for attacks, Martial Arts die is d6 (d8 at 5th), make one Unarmed Strike as a Bonus Action after Attack action.", "mechanical": "martialArts", "die": ["d6", "d6", "d6"]},
+        {"name": "Unarmored Defense", "desc": "While not wearing armor or wielding a Shield, your AC equals 10 + DEX mod + WIS mod.", "mechanical": "unarmoredDefenseMonk"}
+      ],
+      "2": [
+        {"name": "Monk's Focus", "desc": "Gain Focus Points equal to Monk level. Spend to fuel: Flurry of Blows (2 Unarmed Strikes as BA), Patient Defense (Dodge or Disengage as BA), Step of the Wind (Dash as BA + jump distance doubled). Regain all on Short/Long Rest.", "mechanical": "focusPoints"},
+        {"name": "Unarmored Movement", "desc": "Your speed increases by 10 feet while not wearing armor or wielding a Shield. (+15 at 6th, +20 at 10th).", "mechanical": "unarmoredMovement", "bonus": [0, 10, 10]}
+      ],
+      "3": [
+        {"name": "Deflect Attacks", "desc": "When hit by an attack that deals Bludgeoning, Piercing, or Slashing damage, use Reaction to reduce damage by 1d10 + DEX mod + Monk level. If reduced to 0, spend 1 Focus Point to redirect: make a ranged attack (20/60), deal Martial Arts die + DEX mod Force damage.", "mechanical": "deflectAttacks"},
+        {"name": "Subclass", "desc": "Choose a Monk subclass: Warrior of Mercy, Warrior of Shadow, Warrior of the Elements, or Warrior of the Open Hand.", "mechanical": "subclass"}
+      ]
+    },
+    "subclasses": {
+      "mercy": {"name": "Warrior of Mercy", "desc": "Heal and harm in equal measure.", "feature3": {"name": "Hand of Harm / Healing", "desc": "Hand of Healing: as a BA or in place of Flurry attack, spend 1 Focus Point to restore Martial Arts die + WIS mod HP. Hand of Harm: once per turn when you hit with Unarmed Strike, spend 1 Focus Point to deal extra Martial Arts die + WIS mod Necrotic damage."}},
+      "shadow": {"name": "Warrior of Shadow", "desc": "Strike from darkness.", "feature3": {"name": "Shadow Arts", "desc": "Gain Minor Illusion cantrip. Spend 2 Focus Points to cast Darkness, Darkvision, Pass Without Trace, or Silence without material components."}},
+      "elements": {"name": "Warrior of the Elements", "desc": "Channel elemental power.", "feature3": {"name": "Elemental Attunement", "desc": "As a BA, gain 10-foot reach on Unarmed Strikes until end of turn. Elemental Burst: spend 2 Focus Points — each creature in 20-foot sphere within 120 feet makes DEX save, taking 3d6 Acid/Cold/Fire/Lightning/Thunder damage on failure."}},
+      "openHand": {"name": "Warrior of the Open Hand", "desc": "Master unarmed combat.", "feature3": {"name": "Open Hand Technique", "desc": "When you hit with a Flurry of Blows attack, choose one: target must succeed DEX save or be knocked Prone, target must succeed STR save or be pushed 15 feet, target can't take Reactions until start of your next turn."}}
+    }
+  },
+  "paladin": {
+    "name": "Paladin",
+    "desc": "A holy warrior bound to a sacred oath, wielding divine magic and martial prowess.",
+    "dragonlance": "A Paladin on Krynn represents something the world thought lost — proof that the gods still answer prayers. The Order of the Rose has always valued faith, but a true divine champion has not been seen in three hundred years. Until now.",
+    "hitDie": 10,
+    "primaryAbility": ["str", "cha"],
+    "savingThrows": ["wis", "cha"],
+    "armorProf": ["light", "medium", "heavy", "shields"],
+    "weaponProf": ["simple", "martial"],
+    "toolProf": [],
+    "skillChoices": ["Athletics", "Insight", "Intimidation", "Medicine", "Persuasion", "Religion"],
+    "skillCount": 2,
+    "startingHp": 10,
+    "hpPerLevel": 6,
+    "weaponMasteryCount": [2, 2, 2],
+    "spellcasting": {
+      "ability": "cha",
+      "type": "prepared",
+      "cantripsKnown": [0, 0, 0],
+      "preparedCount": "chaModPlusHalfLevel",
+      "slots": {"1": [2, 2, 3], "2": [0, 0, 0]},
+      "ritual": false
+    },
+    "features": {
+      "1": [
+        {"name": "Lay on Hands", "desc": "You have a pool of healing power equal to 5 × your Paladin level. As a Magic action, touch a creature and restore HP from your pool, or spend 5 HP from the pool to cure one disease or neutralize one poison.", "mechanical": "layOnHands", "pool": "levelTimes5"},
+        {"name": "Spellcasting", "desc": "You can prepare Paladin spells using CHA as your spellcasting ability. Prepared spells = CHA mod + half Paladin level (round down, min 1).", "mechanical": "spellcasting"},
+        {"name": "Weapon Mastery", "desc": "You gain the Weapon Mastery property of 2 weapons of your choice.", "mechanical": "weaponMastery", "count": 2}
+      ],
+      "2": [
+        {"name": "Fighting Style", "desc": "Choose a fighting style. Paladins may also choose Blessed Warrior (2 Cleric cantrips, CHA casting).", "mechanical": "fightingStyle"},
+        {"name": "Paladin's Smite", "desc": "When you hit with a melee weapon or Unarmed Strike, you can expend a spell slot to deal extra Radiant damage: 2d8 for 1st level (+1d8 per higher slot, max 5d8). +1d8 vs Undead or Fiends. Always prepared, doesn't count against limit.", "mechanical": "divineSmite"}
+      ],
+      "3": [
+        {"name": "Channel Divinity", "desc": "You can channel divine energy (1 use per Short/Long Rest). You have Divine Sense (Bonus Action to detect Celestials/Fiends/Undead within 60 feet).", "mechanical": "channelDivinity", "uses": 1},
+        {"name": "Subclass", "desc": "Choose a Sacred Oath: Oath of Devotion, Oath of Glory, Oath of the Ancients, or Oath of Vengeance.", "mechanical": "subclass"}
+      ]
+    },
+    "subclasses": {
+      "devotion": {"name": "Oath of Devotion", "desc": "The ideal of the Solamnic Knight — honour, courage, compassion.", "feature3": {"name": "Sacred Weapon", "desc": "Channel Divinity: imbue your weapon with holy light for 10 minutes. Add CHA mod to attack rolls, weapon emits bright light 20 feet. Also gain bonus oath spells: Protection from Evil and Good, Shield of Faith."}},
+      "glory": {"name": "Oath of Glory", "desc": "Train body and soul to achieve perfection.", "feature3": {"name": "Peerless Athlete", "desc": "Channel Divinity: for 10 minutes, Advantage on Athletics and Acrobatics checks, carry/push/lift capacity doubled, jumping distance +10 feet. Also gain bonus oath spells: Guiding Bolt, Heroism."}},
+      "ancients": {"name": "Oath of the Ancients", "desc": "Protect the light against darkness.", "feature3": {"name": "Nature's Wrath", "desc": "Channel Divinity: vines restrain a creature within 10 feet (STR/DEX save). Also gain bonus oath spells: Ensnaring Strike, Speak with Animals."}},
+      "vengeance": {"name": "Oath of Vengeance", "desc": "Punish those who commit grievous sins.", "feature3": {"name": "Vow of Enmity", "desc": "Channel Divinity: as a Bonus Action, gain Advantage on attack rolls against a creature within 10 feet for 1 minute. Also gain bonus oath spells: Bane, Hunter's Mark."}}
+    }
+  },
+  "ranger": {
+    "name": "Ranger",
+    "desc": "A warrior of the wilderness, skilled in tracking and survival.",
+    "dragonlance": "Rangers roam the wild places of Ansalon — the Kharolis Mountains, the Qualinesti forests, the Plains of Dust. Some are Kagonesti guides, others are frontier scouts who report to the Solamnic outposts.",
+    "hitDie": 10,
+    "primaryAbility": ["dex", "wis"],
+    "savingThrows": ["str", "dex"],
+    "armorProf": ["light", "medium", "shields"],
+    "weaponProf": ["simple", "martial"],
+    "toolProf": [],
+    "skillChoices": ["Animal Handling", "Athletics", "Insight", "Investigation", "Nature", "Perception", "Stealth", "Survival"],
+    "skillCount": 3,
+    "startingHp": 10,
+    "hpPerLevel": 6,
+    "weaponMasteryCount": [2, 2, 2],
+    "spellcasting": {
+      "ability": "wis",
+      "type": "prepared",
+      "cantripsKnown": [0, 0, 0],
+      "preparedCount": "wisModPlusHalfLevel",
+      "slots": {"1": [0, 2, 3], "2": [0, 0, 0]},
+      "ritual": false
+    },
+    "features": {
+      "1": [
+        {"name": "Favored Enemy", "desc": "You always have Hunter's Mark prepared. You can cast it a number of times equal to your WIS mod without expending a spell slot. Concentration on Hunter's Mark doesn't break when you cast other Ranger spells.", "mechanical": "favoredEnemy"},
+        {"name": "Weapon Mastery", "desc": "You gain the Weapon Mastery property of 2 weapons of your choice.", "mechanical": "weaponMastery", "count": 2}
+      ],
+      "2": [
+        {"name": "Deft Explorer", "desc": "Gain Expertise in one skill you're proficient in. Your speed increases by 5 feet while not in Heavy armor.", "mechanical": "deftExplorer"},
+        {"name": "Fighting Style", "desc": "Choose a fighting style: Archery, Defense, Dueling, or Two-Weapon Fighting.", "mechanical": "fightingStyle"},
+        {"name": "Spellcasting", "desc": "You can prepare Ranger spells using WIS as your spellcasting ability.", "mechanical": "spellcasting"}
+      ],
+      "3": [
+        {"name": "Subclass", "desc": "Choose a Ranger subclass: Beast Master, Fey Wanderer, Gloom Stalker, or Hunter.", "mechanical": "subclass"}
+      ]
+    },
+    "subclasses": {
+      "beastMaster": {"name": "Beast Master", "desc": "Bond with a primal beast companion.", "feature3": {"name": "Primal Companion", "desc": "Gain a Primal Beast companion (Beast of the Land, Sea, or Sky). It obeys your commands, acts on your initiative, and you can command it to Attack/Dash/Disengage/Dodge as a Bonus Action."}},
+      "feyWanderer": {"name": "Fey Wanderer", "desc": "Guard the border between mortal and fey realms.", "feature3": {"name": "Dreadful Strikes / Otherworldly Glamour", "desc": "Once per turn when you hit, deal extra 1d4 Psychic damage (scales to 1d6 at 11). Add WIS mod to CHA checks. Bonus spells: Charm Person."}},
+      "gloomStalker": {"name": "Gloom Stalker", "desc": "Strike from the shadows.", "feature3": {"name": "Dread Ambusher", "desc": "Add WIS mod to Initiative. On the first turn of combat, your speed increases by 10 and you can make one extra attack that deals an additional 1d8 damage. Also gain Darkvision 60 feet (or +30 if you already have it). Bonus spells: Disguise Self."}},
+      "hunter": {"name": "Hunter", "desc": "Accept the call to defend the innocent.", "feature3": {"name": "Hunter's Prey", "desc": "Choose one: Colossus Slayer (once per turn, deal extra 1d8 when target is below max HP), Horde Breaker (once per turn, make another attack against a different creature within 5 feet of original target)."}}
+    }
+  },
+  "rogue": {
+    "name": "Rogue",
+    "desc": "A scoundrel who uses stealth and trickery to overcome obstacles.",
+    "dragonlance": "Rogues thrive in the chaos after the Cataclysm. Thieves' guilds operate in Tarsis and Haven, smugglers run the Blood Sea routes, and spies serve every faction. Even the Knights have need of scouts who can work outside the Measure.",
+    "hitDie": 8,
+    "primaryAbility": ["dex"],
+    "savingThrows": ["dex", "int"],
+    "armorProf": ["light"],
+    "weaponProf": ["simple", "hand_crossbow", "longsword", "rapier", "shortsword"],
+    "toolProf": ["Thieves' Tools"],
+    "skillChoices": ["Acrobatics", "Athletics", "Deception", "Insight", "Intimidation", "Investigation", "Perception", "Performance", "Persuasion", "Sleight of Hand", "Stealth"],
+    "skillCount": 4,
+    "startingHp": 8,
+    "hpPerLevel": 5,
+    "weaponMasteryCount": [2, 2, 2],
+    "spellcasting": null,
+    "features": {
+      "1": [
+        {"name": "Expertise", "desc": "Choose 2 skill proficiencies. Your proficiency bonus is doubled for checks with those skills.", "mechanical": "expertise", "count": 2},
+        {"name": "Sneak Attack", "desc": "Once per turn, deal extra 1d6 damage when you hit with a Finesse or Ranged weapon and have Advantage, or an ally is within 5 feet of the target. Scales: 1d6 at 1, 1d6 at 2, 2d6 at 3.", "mechanical": "sneakAttack", "dice": ["1d6", "1d6", "2d6"]},
+        {"name": "Thieves' Cant", "desc": "You know Thieves' Cant, a secret mix of dialect, jargon, and code.", "mechanical": "language", "language": "Thieves' Cant"},
+        {"name": "Weapon Mastery", "desc": "You gain the Weapon Mastery property of 2 weapons of your choice.", "mechanical": "weaponMastery", "count": 2}
+      ],
+      "2": [
+        {"name": "Cunning Action", "desc": "As a Bonus Action, you can Dash, Disengage, or Hide.", "mechanical": "cunningAction"}
+      ],
+      "3": [
+        {"name": "Steady Aim", "desc": "As a Bonus Action, give yourself Advantage on your next attack roll on the current turn. You can't use this if you moved during the turn, and your speed becomes 0 until end of turn.", "mechanical": "steadyAim"},
+        {"name": "Subclass", "desc": "Choose a Rogue subclass: Arcane Trickster, Assassin, Soulknife, or Thief.", "mechanical": "subclass"}
+      ]
+    },
+    "subclasses": {
+      "arcaneTrickster": {"name": "Arcane Trickster", "desc": "Blend magic with stealth.", "feature3": {"name": "Spellcasting", "desc": "Learn Mage Hand plus 2 cantrips and 3 spells from the Wizard list (mostly Enchantment/Illusion). INT is your spellcasting ability. 2 spell slots at Lv3.", "spellcasting": {"ability": "int", "cantrips": 3, "spellsKnown": 3, "slots": {"1": 2}}}},
+      "assassin": {"name": "Assassin", "desc": "Master the art of death.", "feature3": {"name": "Assassinate", "desc": "You have Advantage on attack rolls against creatures that haven't yet acted in combat. If you hit a surprised creature, it's a critical hit. Also gain proficiency with Disguise Kit and Poisoner's Kit."}},
+      "soulknife": {"name": "Soulknife", "desc": "Strike with psionic blades.", "feature3": {"name": "Psionic Power", "desc": "Gain Psionic Energy dice (d6, count = 2× PB). Psi-Bolstered Knack: add die to failed ability check. Psychic Whispers: telepathy with PB creatures for hours. Psychic Blades: manifest psychic blade (1d6 Psychic) as part of Attack, no hand needed. Bonus attack with off-hand blade (1d4 Psychic)."}},
+      "thief": {"name": "Thief", "desc": "Master agility and stealth.", "feature3": {"name": "Fast Hands / Second-Story Work", "desc": "Cunning Action can also include the Utilize action (Use an Object) and Sleight of Hand checks. You gain a Climb speed equal to your walking speed. When you jump, the distance increases by DEX mod feet."}}
+    }
+  },
+  "sorcerer": {
+    "name": "Sorcerer",
+    "desc": "A spellcaster who draws on inherent magic from a bloodline or cosmic event.",
+    "dragonlance": "Sorcerers on Krynn are anomalies. Arcane magic is normally channeled through the moons — the Towers of High Sorcery regulate all wizardry. A sorcerer's power comes from within, bypassing the Orders of Magic entirely. The Conclave views this with deep suspicion.",
+    "hitDie": 6,
+    "primaryAbility": ["cha"],
+    "savingThrows": ["con", "cha"],
+    "armorProf": [],
+    "weaponProf": ["simple"],
+    "toolProf": [],
+    "skillChoices": ["Arcana", "Deception", "Insight", "Intimidation", "Persuasion", "Religion"],
+    "skillCount": 2,
+    "startingHp": 6,
+    "hpPerLevel": 4,
+    "weaponMasteryCount": [0, 0, 0],
+    "spellcasting": {
+      "ability": "cha",
+      "type": "known",
+      "cantripsKnown": [4, 4, 4],
+      "spellsKnown": [2, 3, 4],
+      "slots": {"1": [2, 3, 3], "2": [0, 0, 2]},
+      "ritual": false
+    },
+    "features": {
+      "1": [
+        {"name": "Innate Sorcery", "desc": "As a Bonus Action, you can enter a state of heightened magical awareness for 1 minute. While active: spellcasting DC +1, Advantage on attack rolls for Sorcerer spells. Uses: 2 per Long Rest.", "mechanical": "innateSorcery", "uses": 2}
+      ],
+      "2": [
+        {"name": "Font of Magic", "desc": "You have Sorcery Points equal to your Sorcerer level. Spend to create spell slots (2 SP = 1st-level slot) or convert spell slots to Sorcery Points (1st-level = 1 SP). Regain all on Long Rest.", "mechanical": "fontOfMagic"},
+        {"name": "Metamagic", "desc": "Choose 2 Metamagic options. Spend Sorcery Points to modify spells: Careful (protect allies from AoE), Distant (double range), Empowered (reroll damage dice), Extended (double duration), Heightened (Disadvantage on save), Quickened (cast as Bonus Action), Seeking (reroll attack), Subtle (no V/S components), Twinned (target two creatures).", "mechanical": "metamagic", "choices": 2}
+      ],
+      "3": [
+        {"name": "Subclass", "desc": "Choose a Sorcerer subclass: Aberrant Sorcery, Clockwork Sorcery, Draconic Sorcery, or Wild Magic Sorcery.", "mechanical": "subclass"}
+      ]
+    },
+    "subclasses": {
+      "aberrant": {"name": "Aberrant Sorcery", "desc": "Power from the Far Realm or alien influence.", "feature3": {"name": "Psionic Spells / Telepathic Speech", "desc": "Gain bonus spells (Arms of Hadar, Calm Emotions, etc.). You can telepathically speak with a creature within 30 feet for a number of minutes equal to Sorcerer level. Spend 1 SP to gain resistance to Psychic damage and Advantage on INT/WIS/CHA saves."}},
+      "clockwork": {"name": "Clockwork Sorcery", "desc": "Power from the plane of Mechanus — perfect order.", "feature3": {"name": "Clockwork Magic / Restore Balance", "desc": "Gain bonus spells (Aid, Alarm, Lesser Restoration, etc. — can swap for Abjuration/Transmutation). When a creature within 60 feet is about to roll with Advantage or Disadvantage, use Reaction to cancel it. Uses: PB per Long Rest."}},
+      "draconic": {"name": "Draconic Sorcery", "desc": "Dragon blood runs in your veins.", "feature3": {"name": "Draconic Resilience", "desc": "HP maximum increases by 1 per Sorcerer level. While not wearing armor, AC = 10 + DEX mod + CHA mod. Choose a dragon type for bonus damage (1 extra die) with spells of the matching element."}},
+      "wildMagic": {"name": "Wild Magic Sorcery", "desc": "Raw, volatile magical power.", "feature3": {"name": "Wild Magic Surge / Tides of Chaos", "desc": "After casting a Sorcerer spell, DM can have you roll on Wild Magic Surge table (d20, on a 1). Tides of Chaos: gain Advantage on one attack/ability/save (1/LR), recharges when a Wild Magic Surge occurs."}}
+    }
+  },
+  "warlock": {
+    "name": "Warlock",
+    "desc": "A wielder of eldritch magic derived from a bargain with an extraplanar entity.",
+    "dragonlance": "A warlock's pact on Krynn would be extraordinary and dangerous. With the gods absent for centuries, other powers have moved into the void — ancient dragons, the Abyss, relics of the Kingpriest. A warlock's patron may be something Krynn has never seen before.",
+    "hitDie": 8,
+    "primaryAbility": ["cha"],
+    "savingThrows": ["wis", "cha"],
+    "armorProf": ["light"],
+    "weaponProf": ["simple"],
+    "toolProf": [],
+    "skillChoices": ["Arcana", "Deception", "History", "Intimidation", "Investigation", "Nature", "Religion"],
+    "skillCount": 2,
+    "startingHp": 8,
+    "hpPerLevel": 5,
+    "weaponMasteryCount": [0, 0, 0],
+    "spellcasting": {
+      "ability": "cha",
+      "type": "known",
+      "cantripsKnown": [2, 2, 2],
+      "spellsKnown": [2, 3, 4],
+      "pactSlots": {"count": [1, 2, 2], "level": [1, 1, 2]},
+      "ritual": false,
+      "pactMagic": true
+    },
+    "features": {
+      "1": [
+        {"name": "Pact Magic", "desc": "You know Warlock spells and cast using spell slots that are all the same level (1st at Lv1, 2nd at Lv3). All Pact Magic slots regain on a Short or Long Rest.", "mechanical": "pactMagic"},
+        {"name": "Eldritch Invocations", "desc": "You learn 1 Eldritch Invocation. Gain another at Lv2. These are permanent magical enhancements.", "mechanical": "eldritchInvocations", "count": [1, 3, 3]},
+        {"name": "Magical Cunning", "desc": "If all your Pact Magic slots are expended, you can perform a 1-minute ritual to regain half of them (round up). Once per Long Rest.", "mechanical": "magicalCunning"}
+      ],
+      "2": [],
+      "3": [
+        {"name": "Subclass", "desc": "Choose a Warlock subclass: Archfey Patron, Celestial Patron, Fiend Patron, or Great Old One Patron.", "mechanical": "subclass"}
+      ]
+    },
+    "invocations": [
+      {"name": "Agonizing Blast", "desc": "Add CHA mod to Eldritch Blast damage.", "requires": "Eldritch Blast cantrip"},
+      {"name": "Armor of Shadows", "desc": "Cast Mage Armor on yourself at will, without a spell slot or material components."},
+      {"name": "Beast Speech", "desc": "Cast Speak with Animals at will, without a spell slot."},
+      {"name": "Devil's Sight", "desc": "You can see normally in magical and nonmagical darkness to 120 feet."},
+      {"name": "Eldritch Mind", "desc": "Advantage on Constitution saving throws to maintain concentration."},
+      {"name": "Eldritch Spear", "desc": "Eldritch Blast range increases to 300 feet.", "requires": "Eldritch Blast cantrip"},
+      {"name": "Eyes of the Rune Keeper", "desc": "You can read all writing."},
+      {"name": "Fiendish Vigor", "desc": "Cast False Life on yourself at will as a 1st-level spell, without a spell slot."},
+      {"name": "Gaze of Two Minds", "desc": "As a Magic action, touch a willing humanoid and perceive through their senses until end of your next turn."},
+      {"name": "Lessons of the First Ones", "desc": "You learn one Origin feat of your choice.", "repeatable": true},
+      {"name": "Mask of Many Faces", "desc": "Cast Disguise Self at will, without a spell slot."},
+      {"name": "Misty Visions", "desc": "Cast Silent Image at will, without a spell slot."},
+      {"name": "Otherworldly Leap", "desc": "Cast Jump on yourself at will, without a spell slot."},
+      {"name": "Pact of the Blade", "desc": "As a Bonus Action, create a magical weapon in your hand. You are proficient with it and can use CHA for attack/damage. It counts as magical. You get one extra Eldritch Invocation."},
+      {"name": "Pact of the Chain", "desc": "Cast Find Familiar as a ritual. Your familiar can be an Imp, Pseudodragon, Quasit, Skeleton, Slaad Tadpole, Sphinx of Wonder, or Sprite. You get one extra Eldritch Invocation."},
+      {"name": "Pact of the Tome", "desc": "Gain a Book of Shadows with 3 cantrips from any spell list. Also gain 2 ritual spells (1st level from any list). You get one extra Eldritch Invocation."},
+      {"name": "Repelling Blast", "desc": "When you hit with Eldritch Blast, push the creature 10 feet away from you.", "requires": "Eldritch Blast cantrip"},
+      {"name": "Thief of Five Fates", "desc": "You can cast Bane once using a Pact Magic slot (1/LR without slot)."}
+    ],
+    "subclasses": {
+      "archfey": {"name": "Archfey Patron", "desc": "A lord or lady of the Feywild.", "feature3": {"name": "Steps of the Fey", "desc": "As a Bonus Action, teleport up to 30 feet to an unoccupied space. PB uses per Long Rest. Choose: Refreshing Step (you or adjacent ally gains PB temp HP) or Taunting Step (creature near departure point has Disadvantage on attacks against all except you)."}},
+      "celestial": {"name": "Celestial Patron", "desc": "A being of the Upper Planes.", "feature3": {"name": "Healing Light", "desc": "Gain pool of d6s equal to 1 + Warlock level. As a Bonus Action, heal a creature within 60 feet, spending up to your CHA mod dice per use. Also add Light and Sacred Flame to cantrips known and Cure Wounds and Lesser Restoration to Pact Magic spells."}},
+      "fiend": {"name": "Fiend Patron", "desc": "A being from the Lower Planes.", "feature3": {"name": "Dark One's Blessing", "desc": "When you reduce a hostile creature to 0 HP, gain temp HP equal to CHA mod + Warlock level. Also gain bonus spells: Burning Hands, Command, Scorching Ray, Suggestion."}},
+      "greatOldOne": {"name": "Great Old One Patron", "desc": "An entity from beyond the stars.", "feature3": {"name": "Awakened Mind / Psychic Spells", "desc": "You can communicate telepathically with any creature within 30 feet that you can see. The creature understands you regardless of language. Gain bonus spells: Detect Thoughts, Dissonant Whispers, Phantasmal Force, Tasha's Hideous Laughter."}}
+    }
+  },
+  "wizard": {
+    "name": "Wizard",
+    "desc": "A scholarly magic-user who draws on arcane knowledge to cast spells.",
+    "dragonlance": "Wizards on Krynn channel magic through the three moons: Solinari (white, good), Lunitari (red, neutral), and Nuitari (black, evil). The Towers of High Sorcery govern all wizardry. To wield arcane magic without the Orders' sanction is to invite their wrath — or worse, the Wild Sorcery that destroyed Tarsis.",
+    "hitDie": 6,
+    "primaryAbility": ["int"],
+    "savingThrows": ["int", "wis"],
+    "armorProf": [],
+    "weaponProf": ["simple"],
+    "toolProf": [],
+    "skillChoices": ["Arcana", "History", "Insight", "Investigation", "Medicine", "Religion"],
+    "skillCount": 2,
+    "startingHp": 6,
+    "hpPerLevel": 4,
+    "weaponMasteryCount": [0, 0, 0],
+    "spellcasting": {
+      "ability": "int",
+      "type": "prepared",
+      "cantripsKnown": [3, 3, 3],
+      "preparedCount": "intModPlusLevel",
+      "spellbook": true,
+      "spellbookStarting": 6,
+      "spellbookPerLevel": 2,
+      "slots": {"1": [2, 3, 3], "2": [0, 0, 2]},
+      "ritual": true
+    },
+    "features": {
+      "1": [
+        {"name": "Spellcasting", "desc": "You have a spellbook containing 6 first-level Wizard spells. You prepare spells from it each day: INT mod + Wizard level. INT is your spellcasting ability.", "mechanical": "spellcasting"},
+        {"name": "Ritual Casting", "desc": "You can cast any spell in your spellbook as a ritual if it has the Ritual tag, even if it's not prepared.", "mechanical": "ritualCasting"},
+        {"name": "Arcane Recovery", "desc": "Once per Long Rest, during a Short Rest, you can recover spell slots with a combined level equal to half your Wizard level (round up). No 6th-level or higher slots.", "mechanical": "arcaneRecovery"}
+      ],
+      "2": [
+        {"name": "Scholar", "desc": "You gain Expertise in one of the following skills you have proficiency in: Arcana, History, Investigation, Medicine, Nature, or Religion.", "mechanical": "expertise", "count": 1}
+      ],
+      "3": [
+        {"name": "Subclass", "desc": "Choose an Arcane Tradition: School of Abjuration, School of Divination, School of Evocation, or School of Illusion.", "mechanical": "subclass"}
+      ]
+    },
+    "subclasses": {
+      "abjuration": {"name": "School of Abjuration", "desc": "Master protective magic.", "feature3": {"name": "Abjuration Savant / Arcane Ward", "desc": "Halved gold/time to copy Abjuration spells. When you cast an Abjuration spell of 1st level or higher, create a magical ward: HP equal to 2× Wizard level + INT mod. When you take damage, the ward takes it first. Recharges when you cast Abjuration spells."}},
+      "divination": {"name": "School of Divination", "desc": "Pierce the veil of time and knowledge.", "feature3": {"name": "Divination Savant / Portent", "desc": "Halved gold/time to copy Divination spells. After each Long Rest, roll 2d20 and record the numbers. You can replace any attack roll, saving throw, or ability check made by a creature you can see with one of these rolls."}},
+      "evocation": {"name": "School of Evocation", "desc": "Master destructive energy.", "feature3": {"name": "Evocation Savant / Sculpt Spells", "desc": "Halved gold/time to copy Evocation spells. When you cast an Evocation spell that forces other creatures to make a saving throw, choose a number of creatures equal to 1 + spell level. Those creatures automatically succeed and take no damage."}},
+      "illusion": {"name": "School of Illusion", "desc": "Bend reality through deception.", "feature3": {"name": "Illusion Savant / Improved Illusions", "desc": "Halved gold/time to copy Illusion spells. Your Illusion spells of 1st level or higher that have a duration of 1 minute or longer can be reshaped as a Bonus Action. Learn Minor Illusion if you don't know it (doesn't count against limit), and it can create both sound and image simultaneously."}}
+    }
+  }
+}

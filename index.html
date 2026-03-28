@@ -502,6 +502,18 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Crimso
 .resource-val.ready{color:var(--green)}
 .resource-val.used{color:rgba(139,58,58,.7)}
 .resource-val.partial{color:var(--orange)}
+.mount-row{display:flex;align-items:center;gap:8px;margin:8px 0;padding:8px 10px;background:rgba(180,160,100,.08);border:1px solid rgba(180,160,100,.15);border-radius:6px}
+.mount-icon{font-size:18px;line-height:1}
+.mount-info{flex:1;min-width:0}
+.mount-name{font-family:'Cinzel',serif;font-size:13px;color:var(--gold);font-weight:600}
+.mount-detail{font-size:10px;color:var(--text-dim);letter-spacing:.3px}
+.mount-dismiss{background:none;border:1px solid rgba(139,58,58,.4);color:rgba(200,100,100,.7);font-size:10px;padding:2px 8px;border-radius:4px;cursor:pointer;font-family:'Cinzel',serif;letter-spacing:.5px}
+.mount-dismiss:hover{border-color:rgba(200,100,100,.6);color:rgba(200,100,100,1)}
+.mount-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--gold-dim);margin-left:6px;font-style:italic}
+.travel-mounted{color:var(--gold);font-style:italic;font-size:13px;margin:6px 0}
+.cs-mount-block{margin:8px 0;padding:8px 12px;background:rgba(180,160,100,.06);border:1px solid rgba(180,160,100,.12);border-radius:6px}
+.cs-mount-name{font-family:'Cinzel',serif;color:var(--gold);font-size:14px}
+.cs-mount-stats{font-size:12px;color:var(--text-dim);margin-top:2px}
 
 .choices{margin-top:20px;display:flex;flex-direction:column;gap:6px}
 .choice-btn{background:rgba(42,74,127,.1);border:1px solid rgba(74,122,181,.25);border-left:4px solid var(--blue);color:var(--text-bright);padding:12px 16px;text-align:left;cursor:pointer;border-radius:6px;font-family:'Crimson Text',serif;font-size:15px;line-height:1.5;transition:all .2s}
@@ -1312,15 +1324,75 @@ function calcAC(armor,hasShield,dexMod){
 }
 function calcDerived(stats,cls,lvl,armor,hasShield,feat,wounds){
   const ws=wounds||[];const woundPenalty=(stat)=>ws.filter(w=>w.stat===stat&&w.combatsLeft>0).length;
-  const d={};d.profBonus=2;
+  const d={};d.profBonus=lvl>=5?3:2;
   const effStats={str:stats.str-woundPenalty('str'),dex:stats.dex-woundPenalty('dex'),con:stats.con-woundPenalty('con'),int:stats.int-woundPenalty('int'),wis:stats.wis-woundPenalty('wis'),cha:stats.cha-woundPenalty('cha')};
   d.strMod=mod(effStats.str);d.dexMod=mod(effStats.dex);d.conMod=mod(effStats.con);d.intMod=mod(effStats.int);d.wisMod=mod(effStats.wis);d.chaMod=mod(effStats.cha);d.ac=calcAC(armor||'Chain Mail',hasShield!==false,d.dexMod);
-  d.maxHp=10+d.conMod;if(lvl>=2)d.maxHp+=6+d.conMod;if(lvl>=3)d.maxHp+=6+d.conMod;if(feat==='Tough')d.maxHp+=lvl*2;d.maxHp=Math.max(d.maxHp,1);
-  d.attackBonus=d.strMod+d.profBonus;d.damage='1d8+'+d.strMod;d.layOnHands=cls==='Paladin'?lvl*5:0;
+
+  // Hit Die — use CLASS_DATA if available, else default by known class
+  const classInfo=CLASS_DATA?CLASS_DATA[cls.toLowerCase()]||CLASS_DATA[cls]:null;
+  d.hitDie=classInfo?classInfo.hitDie:(cls==='Barbarian'?12:cls==='Wizard'||cls==='Sorcerer'?6:cls==='Bard'||cls==='Cleric'||cls==='Druid'||cls==='Monk'||cls==='Rogue'||cls==='Warlock'?8:10);
+
+  // HP calculation — startingHp at level 1, then hpPerLevel+CON for each additional level
+  const startHp=classInfo?classInfo.startingHp:d.hitDie;
+  const perLvl=classInfo?classInfo.hpPerLevel:(Math.floor(d.hitDie/2)+1);
+  d.maxHp=startHp+d.conMod;for(let i=2;i<=lvl;i++)d.maxHp+=perLvl+d.conMod;
+  if(feat==='Tough')d.maxHp+=lvl*2;d.maxHp=Math.max(d.maxHp,1);
+
+  // Attack bonus — STR-based for melee classes, DEX for finesse/ranged classes
+  const primaryMelee=cls==='Rogue'||cls==='Monk'||cls==='Ranger';
+  d.attackBonus=(primaryMelee?d.dexMod:d.strMod)+d.profBonus;d.damage='1d'+d.hitDie+'+'+(primaryMelee?d.dexMod:d.strMod);
+
+  // Lay on Hands (Paladin)
+  d.layOnHands=cls==='Paladin'?lvl*5:0;
   d.layOnHandsMax=cls==='Paladin'?lvl*5:0;
-  if(cls==='Paladin'){d.spellSlots=lvl>=3?3:2;d.spellSlotsMax=lvl>=3?3:2;d.preparedSpells=Math.max(1,d.chaMod+Math.max(1,Math.floor(lvl/2)))}
+
+  // Spell slots per class — D&D 5e 2024 spell slot table
+  // Full casters (Bard, Cleric, Druid, Sorcerer, Wizard): L1=2, L2=3, L3=4+2nd
+  // Half casters (Paladin, Ranger): L1=2, L2=2, L3=3
+  // Pact casters (Warlock): L1=1, L2=2, L3=2 (but all slots are pact slots)
+  // Non-casters (Fighter, Barbarian, Monk, Rogue): 0 base (feat-granted only)
+  const FULL_CASTERS=['Bard','Cleric','Druid','Sorcerer','Wizard'];
+  const HALF_CASTERS=['Paladin','Ranger'];
+  d.spellSlots=0;d.spellSlotsMax=0;d.spellSlots2nd=0;d.spellSlots2ndMax=0;d.preparedSpells=0;
+
+  if(FULL_CASTERS.includes(cls)){
+    // 1st-level slots
+    d.spellSlots=lvl>=3?4:lvl>=2?3:2;d.spellSlotsMax=d.spellSlots;
+    // 2nd-level slots
+    d.spellSlots2nd=lvl>=4?3:lvl>=3?2:0;d.spellSlots2ndMax=d.spellSlots2nd;
+    // Cantrips known
+    d.cantripsKnown=classInfo?.spellcasting?.cantrips?.[lvl-1]||(lvl>=4?4:lvl>=1?3:2);
+    // Prepared/known spells
+    const castMod=cls==='Wizard'||cls==='Wizard'?d.intMod:cls==='Bard'||cls==='Sorcerer'?d.chaMod:cls==='Druid'||cls==='Ranger'?d.wisMod:cls==='Cleric'?d.wisMod:d.chaMod;
+    d.preparedSpells=cls==='Bard'||cls==='Sorcerer'?lvl+3:Math.max(1,castMod+lvl);
+  } else if(HALF_CASTERS.includes(cls)){
+    d.spellSlots=lvl>=3?3:2;d.spellSlotsMax=d.spellSlots;
+    d.spellSlots2nd=lvl>=5?2:0;d.spellSlots2ndMax=d.spellSlots2nd;
+    const castMod=cls==='Paladin'?d.chaMod:d.wisMod;
+    d.preparedSpells=Math.max(1,castMod+Math.max(1,Math.floor(lvl/2)));
+  } else if(cls==='Warlock'){
+    // Pact Magic: all slots are the same level, refreshed on Short Rest
+    d.spellSlots=lvl>=2?2:1;d.spellSlotsMax=d.spellSlots;
+    d.pactSlotLevel=lvl>=5?3:lvl>=3?2:1;
+    d.cantripsKnown=classInfo?.spellcasting?.cantrips?.[lvl-1]||(lvl>=4?3:2);
+    d.preparedSpells=lvl+1; // Warlocks know spells, don't prepare
+  } else {
+    // Non-casters: Magic Initiate feat grants 1 slot (1/Long Rest)
+    if(feat&&feat.includes('Magic Initiate')){d.spellSlots=1;d.spellSlotsMax=1}
+  }
+
+  // Fighter resources
   if(cls==='Fighter'){d.secondWindUses=d.profBonus;d.secondWindMax=d.profBonus;d.actionSurgeMax=lvl>=2?1:0}
-  d.hitDiceTotal=lvl;d.hitDie=10; // Both Fighter and Paladin use d10
+  // Barbarian resources
+  if(cls==='Barbarian'){d.rages=lvl>=3?3:2;d.rageDmg=2}
+  // Monk resources
+  if(cls==='Monk'){d.ki=lvl>=2?lvl:0}
+  // Bard resources
+  if(cls==='Bard'){d.bardicInsp=Math.max(1,d.chaMod)}
+  // Channel Divinity (Paladin/Cleric)
+  if(cls==='Paladin'||cls==='Cleric'){d.channelDivinity=d.profBonus}
+
+  d.hitDiceTotal=lvl;
   return d;
 }
 function getBonus(der,skill){const m={Athletics:'strMod',Acrobatics:'dexMod',Stealth:'dexMod',Investigation:'intMod',History:'intMod',Religion:'intMod',Arcana:'intMod',Insight:'wisMod',Perception:'wisMod',Medicine:'wisMod',Survival:'wisMod',Persuasion:'chaMod',Intimidation:'chaMod',Deception:'chaMod',Performance:'chaMod',Composure:'wisMod',STR:'strMod',DEX:'dexMod',CON:'conMod',INT:'intMod',WIS:'wisMod',CHA:'chaMod'};return der[m[skill]||'wisMod']||0}
@@ -1446,6 +1518,25 @@ const SPELL_LISTS={
   },
   paladin:{
     level1:['Bless','Command','Compelled Duel','Cure Wounds','Detect Evil and Good','Detect Magic','Divine Favor','Heroism','Protection from Evil and Good','Searing Smite','Shield of Faith','Thunderous Smite','Wrathful Smite']
+  },
+  bard:{
+    cantrips:['Blade Ward','Dancing Lights','Friends','Light','Mage Hand','Mending','Message','Minor Illusion','Prestidigitation','True Strike','Vicious Mockery'],
+    level1:['Bane','Charm Person','Cure Wounds','Detect Magic','Disguise Self','Dissonant Whispers','Faerie Fire','Feather Fall','Healing Word','Heroism','Sleep','Speak with Animals','Thunderwave']
+  },
+  druid:{
+    cantrips:['Druidcraft','Guidance','Mending','Poison Spray','Produce Flame','Resistance','Shillelagh','Thorn Whip'],
+    level1:['Animal Friendship','Charm Person','Cure Wounds','Detect Magic','Entangle','Faerie Fire','Fog Cloud','Goodberry','Healing Word','Jump','Speak with Animals','Thunderwave']
+  },
+  sorcerer:{
+    cantrips:['Acid Splash','Blade Ward','Chill Touch','Dancing Lights','Fire Bolt','Light','Mage Hand','Message','Minor Illusion','Prestidigitation','Ray of Frost','Shocking Grasp','True Strike'],
+    level1:['Burning Hands','Charm Person','Chromatic Orb','Detect Magic','Disguise Self','Fog Cloud','Mage Armor','Magic Missile','Shield','Sleep','Thunderwave']
+  },
+  warlock:{
+    cantrips:['Blade Ward','Chill Touch','Eldritch Blast','Mage Hand','Minor Illusion','Prestidigitation','True Strike'],
+    level1:['Armor of Agathys','Arms of Hadar','Charm Person','Comprehend Languages','Expeditious Retreat','Hellish Rebuke','Hex','Protection from Evil and Good','Unseen Servant','Witch Bolt']
+  },
+  ranger:{
+    level1:['Absorb Elements','Alarm','Animal Friendship','Cure Wounds','Detect Magic','Detect Poison and Disease','Ensnaring Strike','Fog Cloud','Goodberry','Hail of Thorns','Hunter\'s Mark','Jump','Longstrider','Speak with Animals']
   }
 };
 
@@ -1648,7 +1739,7 @@ const ST={
   async del(k){try{if(window.storage){await window.storage.delete(k);return}localStorage.removeItem(k)}catch(e){try{localStorage.removeItem(k)}catch(e2){}}}
 };
 // ── Save System: Character (persistent) + Campaign Progress (per-campaign) ──
-const CHARACTER_FIELDS=['cls','stats','style','feat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts'];
+const CHARACTER_FIELDS=['cls','stats','style','feat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount'];
 const CAMPAIGN_PROGRESS_FIELDS=['history','flags','awardedScenes','completedRolls','companions','romances','romanceDeclined','companionLog','deadCompanions','rose','sword','crown','orderMax','dgTrack','godSigns','hitDiceUsed','secondWindUsed','actionSurgeUsed','spellSlotsUsed','layOnHandsPool','miraHealedThisScene','combatCount','measureTrack','measureOrientation','approval'];
 
 function splitSave(gs,sceneId){
@@ -2593,7 +2684,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
         setRollDisplay(dice+' + '+dice2+' = '+dmg);
         setCombat(prev=>{
           const nc={...prev};
-          if(nc.localSpellSlots>=(derived.spellSlotsMax||2))return prev;
+          if(nc.localSpellSlots>=(derived.spellSlotsMax||0))return prev;
           // Target the enemy we just hit, fallback to first alive
           const target=smiteTargetId?nc.enemies.find(e=>e.id===smiteTargetId&&e.alive):nc.enemies.find(e=>e.alive);
           if(target){
@@ -2670,7 +2761,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
   const castBless=()=>{
     setCombat(prev=>{
       const c={...prev};
-      if(c.localSpellSlots>=(derived.spellSlotsMax||2))return prev;
+      if(c.localSpellSlots>=(derived.spellSlotsMax||0))return prev;
       if(c.concentrating)dropConcentration(c); // new conc spell drops old one
       c.localSpellSlots+=1;c.blessActive=true;c.blessRoundsLeft=10;
       c.concentrating={spell:'Bless',roundsLeft:10};
@@ -2684,7 +2775,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
   const castShieldOfFaith=()=>{
     setCombat(prev=>{
       const c={...prev};
-      if(c.localSpellSlots>=(derived.spellSlotsMax||2))return prev;
+      if(c.localSpellSlots>=(derived.spellSlotsMax||0))return prev;
       if(c.concentrating)dropConcentration(c); // new conc spell drops old one
       c.localSpellSlots+=1;
       c.acBuff=(c.acBuff||0)+2;
@@ -2700,7 +2791,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
   const castCureWounds=(targetName)=>{
     setCombat(prev=>{
       const c={...prev};
-      if(c.localSpellSlots>=(derived.spellSlotsMax||2))return prev;
+      if(c.localSpellSlots>=(derived.spellSlotsMax||0))return prev;
       const heal=rollExpr('2d8')+(derived.chaMod||0);
       c.localSpellSlots+=1;
       if(targetName==='self'){
@@ -3032,6 +3123,10 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
                   if(parsed.rewards.items&&parsed.rewards.items.length){ng.inventory=[...(ng.inventory||[])];parsed.rewards.items.forEach(item=>{if(!ng.inventory.includes(item))ng.inventory.push(item)})}
                 }
               }
+              // Mount takes minor damage on victory (30% chance)
+              if(c.result==='win'&&ng.mount&&Math.random()<0.3){const mountDmg=rollDice(6);ng.mount={...ng.mount,hp:ng.mount.hp-mountDmg};
+                if(ng.mount.hp<=0){ng.mount=null;ng.history=[...(ng.history||[]),'\ud83d\udc0e Your mount was killed in the fighting.']}
+                else ng.history=[...(ng.history||[]),'\ud83d\udc0e Your mount took '+mountDmg+' damage in the fighting.']}
               if(c.result==='lose'){ng.hp=1;ng.flags={...(ng.flags||{}),exhaustion:((ng.flags||{}).exhaustion||0)+1};
                 // Add wound (random stat -1 for 3 combats) and scar
                 const woundStats=['str','dex','con','int','wis','cha'];const wStat=woundStats[Math.floor(Math.random()*6)];
@@ -3042,6 +3137,10 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
                 ng.scars=[...(ng.scars||[]),{text:scarText,scene:newWound.scene}];
                 ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds);
                 setTimeout(()=>setDefeatRecovery({wound:newWound,scar:scarText}),400);
+                // Mount takes heavy damage on defeat — 50% chance killed
+                if(ng.mount){const mountDmg=rollDice(10)+rollDice(10);ng.mount={...ng.mount,hp:ng.mount.hp-mountDmg};
+                  if(ng.mount.hp<=0){ng.mount=null;ng.history=[...(ng.history||[]),'\ud83d\udc0e Your mount was killed in the fighting.']}
+                  else ng.history=[...(ng.history||[]),'\ud83d\udc0e Your mount took '+mountDmg+' damage in the fighting.']}
               }
               const dead=c.companions.filter(cp=>!cp.alive&&!cp.rescued);
               if(dead.length){ng.companions=(g.companions||[]).filter(name=>!dead.some(d=>d.name===name));ng.deadCompanions=[...(g.deadCompanions||[]),...dead.map(d=>({name:d.name,scene:g.history&&g.history.length?g.history[g.history.length-1]:'unknown',cause:'Fell in combat'}))]}
@@ -3523,9 +3622,9 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
           // Other action options
           e('div',{className:'combat-other-actions'},
             e('button',{className:'combat-action-btn',onClick:doPlayerDodge},'\u25c7 Dodge'),
-            gs.cls==='Paladin'&&combat.localSpellSlots<(derived.spellSlotsMax||2)&&!combat.blessActive?
+            gs.cls==='Paladin'&&combat.localSpellSlots<(derived.spellSlotsMax||0)&&!combat.blessActive?
               e('button',{className:'combat-action-btn',onClick:castBless},'\u2726 Cast Bless (conc.)'):null,
-            gs.cls==='Paladin'&&combat.localSpellSlots<(derived.spellSlotsMax||2)&&!healMode?
+            gs.cls==='Paladin'&&combat.localSpellSlots<(derived.spellSlotsMax||0)&&!healMode?
               e('button',{className:'combat-action-btn',onClick:()=>setHealMode('cureWounds')},'\u2764 Cure Wounds'):null,
             combat.localBandages>0?e('button',{className:'combat-action-btn',onClick:()=>{
               setCombat(c=>{const nc={...c};nc.localBandages-=1;nc.hasActed=true;nc.turnPhase='bonus';
@@ -3572,13 +3671,13 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
         e('div',{className:'combat-section-header'},'BONUS ACTION'),
         e('div',{className:'combat-ability-panel'},
           // Divine Smite (after hit)
-          lastRollResult&&lastRollResult.hit&&!combat.smiteUsedThisTurn&&gs.cls==='Paladin'&&combat.localSpellSlots<(derived.spellSlotsMax||2)?
+          lastRollResult&&lastRollResult.hit&&!combat.smiteUsedThisTurn&&gs.cls==='Paladin'&&combat.localSpellSlots<(derived.spellSlotsMax||0)?
             e('button',{className:'combat-ability-btn smite',onClick:useSmite},'\u2728 Divine Smite (2d8 radiant)'):null,
           // Second Wind
           gs.cls==='Fighter'&&combat.localSW<(derived.secondWindMax||2)?
             e('button',{className:'combat-ability-btn',onClick:useSecondWind},'\u2764 Second Wind (1d10+'+gs.level+')'):null,
           // Shield of Faith (bonus action, concentration, +2 AC)
-          gs.cls==='Paladin'&&!combat.shieldOfFaithActive&&combat.localSpellSlots<(derived.spellSlotsMax||2)&&gs.spells&&gs.spells.level1&&gs.spells.level1.includes('Shield of Faith')?
+          gs.cls==='Paladin'&&!combat.shieldOfFaithActive&&combat.localSpellSlots<(derived.spellSlotsMax||0)&&gs.spells&&gs.spells.level1&&gs.spells.level1.includes('Shield of Faith')?
             e('button',{className:'combat-ability-btn',onClick:castShieldOfFaith},'\ud83d\udee1 Shield of Faith (+2 AC)'+(combat.concentrating?' \u2014 drops '+combat.concentrating.spell:'')):null,
           // Lay on Hands
           gs.cls==='Paladin'&&combat.localLoH>0&&!healMode?
@@ -3668,12 +3767,13 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
 // ── Shop Box ──────────────────────────────────────────
 function parseShopBox(text){
   const lines=text.split('\n');
-  const items=[];let shopName='Shop';let hasDiscount=false;let rareSection=[];let section='items';
+  const items=[];let shopName='Shop';let hasDiscount=false;let rareSection=[];let section='items';let hasStables=false;
   for(const line of lines){
     const l=line.trim();if(!l)continue;
     const nameM=l.match(/\*\*SHOP\s*[\u2014\-]+\s*(.+?)\*\*/);
     if(nameM){shopName=nameM[1].trim();continue}
     if(l.includes('Dorren')||l.includes('10%'))hasDiscount=true;
+    if(/STABLE|MOUNT|HORSE/i.test(l))hasStables=true;
     // Parse table rows: | Item | Price | Notes |
     const rowM=l.match(/^\|\s*(.+?)\s*\|\s*(\d+)\s*stl\s*\|\s*(.+?)\s*\|$/);
     if(rowM&&!l.includes('---')&&!l.includes('Item')){
@@ -3682,7 +3782,7 @@ function parseShopBox(text){
     if(l.includes('RARE STOCK')){section='rare'}
     if(section==='rare')rareSection.push(l);
   }
-  return{shopName,items,hasDiscount,rareSection};
+  return{shopName,items,hasDiscount,rareSection,hasStables};
 }
 
 // Sell price lookup (half of buy price, rounded down)
@@ -3838,6 +3938,38 @@ function ShopBox({text,gs,onStateUpdate}){
     return{name:rareName,price:50,notes:'Magical',desc:rareTiers.rare||'Magical item!'};
   };
 
+  // Mount buying/selling
+  const[localMount,setLocalMount]=useState(gs.mount||null);
+  const mountsAvail=EQUIPMENT_DATA?.mounts?.filter(m=>m.hp)||[];
+  const tack=EQUIPMENT_DATA?.mounts?.filter(m=>m.type==='tack')||[];
+  const barding=EQUIPMENT_DATA?.mounts?.filter(m=>m.type==='barding')||[];
+
+  const buyMount=(m)=>{
+    if(localGold<m.cost||localMount)return;
+    const mt={name:m.name,speed:m.speed,carry:m.carry,hp:m.hp,maxHp:m.hp,ac:m.ac||10,barding:null};
+    setLocalMount(mt);setLocalGold(g=>g-m.cost);
+    if(onStateUpdate)onStateUpdate(g=>({...g,gold:(g.gold||0)-m.cost,mount:mt}));
+  };
+  const sellMount=()=>{
+    if(!localMount)return;
+    const mData=mountsAvail.find(m=>m.name===localMount.name);
+    const price=Math.floor((mData?.cost||50)/2);
+    setLocalGold(g=>g+price);setLocalMount(null);
+    if(onStateUpdate)onStateUpdate(g=>({...g,gold:(g.gold||0)+price,mount:null}));
+  };
+  const buyTack=(item)=>{
+    if(localGold<item.cost)return;
+    setLocalGold(g=>g-item.cost);setLocalInv(inv=>[...inv,item.name]);
+    if(onStateUpdate)onStateUpdate(g=>({...g,gold:(g.gold||0)-item.cost,inventory:[...g.inventory,item.name]}));
+  };
+  const buyBarding=(b)=>{
+    if(localGold<b.cost||!localMount)return;
+    const mt={...localMount,barding:b.name,ac:(localMount.ac||10)-((localMount.barding?barding.find(x=>x.name===localMount.barding)?.acBonus:0)||0)+b.acBonus};
+    if(b.name.includes('Chain')||b.name.includes('Plate'))mt.speed=Math.max(20,mt.speed-10);
+    setLocalMount(mt);setLocalGold(g=>g-b.cost);
+    if(onStateUpdate)onStateUpdate(g=>({...g,gold:(g.gold||0)-b.cost,mount:mt}));
+  };
+
   const[rareBought,setRareBought]=useState(false);
   const buyRareItem=()=>{
     const item=getRareItem();
@@ -3912,6 +4044,41 @@ function ShopBox({text,gs,onStateUpdate}){
             e('button',{className:'shop-buy-btn'+(rareBought?' bought':''),onClick:buyRareItem,disabled:rareBought||localGold<ri.price,style:{marginTop:6}},rareBought?'Purchased':'Buy ('+ri.price+' stl)')
           ):e('p',{style:{color:'var(--text-dim)'}},'Standard stock only. Nothing unusual.')
         })()
+      ):null,
+      // Stables section
+      parsed.hasStables&&mountsAvail.length?e('div',{style:{margin:'16px 0',padding:'12px',border:'1px solid rgba(180,160,100,.2)',borderRadius:'6px',background:'rgba(180,160,100,.04)'}},
+        e('h4',{style:{color:'var(--gold)',margin:'0 0 8px',fontFamily:'Cinzel,serif',letterSpacing:1}},'\ud83d\udc0e STABLES'),
+        localMount?e('div',{style:{marginBottom:10}},
+          e('div',{style:{display:'flex',alignItems:'center',gap:8,marginBottom:6}},
+            e('span',{style:{color:'var(--gold)',fontFamily:'Cinzel,serif'}},localMount.name),
+            e('span',{style:{fontSize:11,color:'var(--text-dim)'}},'Speed '+localMount.speed+' ft \u2022 HP '+localMount.hp+'/'+localMount.maxHp+(localMount.barding?' \u2022 '+localMount.barding:''))),
+          e('button',{className:'shop-sell-btn',onClick:sellMount},'Sell Mount ('+Math.floor((mountsAvail.find(m=>m.name===localMount.name)?.cost||50)/2)+' stl)')
+        ):null,
+        !localMount?e('table',{className:'shop-table'},
+          e('thead',null,e('tr',null,e('th',null,'MOUNT'),e('th',null,'PRICE'),e('th',null,'SPEED'),e('th',null,''))),
+          e('tbody',null,mountsAvail.map((m,i)=>
+            e('tr',{key:'mt-'+i},
+              e('td',{title:m.desc||''},m.name),
+              e('td',null,m.cost+' stl'),
+              e('td',{style:{fontSize:'12px',color:'var(--text-dim)'}},m.speed+' ft, '+m.carry+' lb carry'),
+              e('td',null,e('button',{className:'shop-buy-btn',onClick:()=>buyMount(m),disabled:localGold<m.cost},'Buy')))))
+        ):null,
+        // Tack
+        tack.length?e('div',{style:{marginTop:8}},
+          e('div',{style:{fontSize:11,color:'var(--text-dim)',marginBottom:4}},'TACK & HARNESS'),
+          tack.map((t,i)=>e('div',{key:'tk-'+i,style:{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'3px 0',fontSize:12}},
+            e('span',{title:t.desc||''},t.name+' ('+t.cost+' stl)'),
+            e('button',{className:'shop-buy-btn',style:{fontSize:10,padding:'2px 8px'},onClick:()=>buyTack(t),disabled:localGold<t.cost},'Buy')
+          ))
+        ):null,
+        // Barding
+        localMount&&barding.length?e('div',{style:{marginTop:8}},
+          e('div',{style:{fontSize:11,color:'var(--text-dim)',marginBottom:4}},'BARDING (MOUNT ARMOR)'),
+          barding.map((b,i)=>e('div',{key:'bd-'+i,style:{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'3px 0',fontSize:12}},
+            e('span',{title:b.desc||''},b.name+' — AC +'+b.acBonus+' ('+b.cost+' stl)'),
+            e('button',{className:'shop-buy-btn',style:{fontSize:10,padding:'2px 8px'},onClick:()=>buyBarding(b),disabled:localGold<b.cost||localMount.barding===b.name},localMount.barding===b.name?'Equipped':'Buy')
+          ))
+        ):null
       ):null));
 }
 
@@ -4459,7 +4626,7 @@ function CharCreate({onDone,onBack}){
       e('div',{className:'confirm-row'},e('span',null,'Mastery'),e('span',null,mastery.join(', '))),
       e('div',{className:'confirm-stats'},STAT_NAMES.map(k=>e('div',{key:k,className:'mini-stat'},e('div',{className:'mini-label'},k.toUpperCase()),e('div',{className:'mini-val'},finalStats[k]),e('div',{className:'mini-mod'},modStr(finalStats[k]))))),
       allSpells.cantrips.length||allSpells.level1.length?e('div',{className:'confirm-spells'},
-        e('div',{className:'confirm-row'},e('span',null,'Spell Slots'),e('span',null,cls==='Paladin'?d.spellSlots+' (1st)':'1 (MI, 1/LR)')),
+        e('div',{className:'confirm-row'},e('span',null,'Spell Slots'),e('span',null,d.spellSlots+(d.spellSlots2nd?' (1st), '+d.spellSlots2nd+' (2nd)':' (1st)')+(d.pactSlotLevel?' (pact lv'+d.pactSlotLevel+')':'')+(d.spellSlotsMax<=1&&feat&&feat.includes('Magic Initiate')?' (MI, 1/LR)':''))),
         allSpells.cantrips.length?e('div',{className:'confirm-row'},e('span',null,'Cantrips'),e('span',null,allSpells.cantrips.join(', '))):null,
         allSpells.level1.length?e('div',{className:'confirm-row'},e('span',null,'1st Level'),e('span',null,allSpells.level1.join(', '))):null,
         allSpells.alwaysPrepared.length?e('div',{className:'confirm-row'},e('span',null,'Always Prepared'),e('span',null,allSpells.alwaysPrepared.join(', '))):null
@@ -4481,7 +4648,7 @@ function Sidebar({gs,onSave,onMenu,onSettings,saveMsg}){
     hasSpells?e(React.Fragment,null,
       e('h3',null,'Spell Book'),
       e('div',{className:'spellbook'},
-        gs.cls==='Paladin'?e('div',{className:'spell-slots'},'Slots: '+d.spellSlots+' (1st level)'):e('div',{className:'spell-slots'},'MI Slot: 1 (1/long rest)'),
+        e('div',{className:'spell-slots'},d.spellSlotsMax>1?'Slots: '+d.spellSlots+(d.spellSlots2nd?' (1st), '+d.spellSlots2nd+' (2nd)':' (1st)'):'MI Slot: 1/LR'),
         sp.alwaysPrepared&&sp.alwaysPrepared.length?e('div',{className:'spell-cat'},e('span',{className:'spell-cat-label'},'Always:'),sp.alwaysPrepared.map(s=>e(SidebarSpellTag,{key:s,name:s,type:'always'}))):null,
         sp.cantrips&&sp.cantrips.length?e('div',{className:'spell-cat'},e('span',{className:'spell-cat-label'},'Cantrips:'),sp.cantrips.map(s=>e(SidebarSpellTag,{key:s,name:s,type:'cantrip'}))):null,
         sp.level1&&sp.level1.length?e('div',{className:'spell-cat'},e('span',{className:'spell-cat-label'},'1st:'),sp.level1.map(s=>e(SidebarSpellTag,{key:s,name:s,type:'l1'}))):null
@@ -4812,8 +4979,10 @@ function SceneView({scene,onChoice,gs,isEnding,onViewSheet,onViewDmSummary,onBon
   let visibleProse=filterProse(scene.prose,cls,comps);
   // Scene 71: show only the player's order description
   if(scene.id==='71'&&gs.rose!==undefined){const order=gs.rose>=gs.sword&&gs.rose>=gs.crown?'Rose':gs.sword>=gs.crown?'Sword':'Crown';visibleProse=visibleProse.filter(p=>{if(p.includes('Est Sularus oth Mithas'))return order==='Rose';if(p.includes('The blade that does not waver'))return order==='Sword';if(p.includes('Law is the shield'))return order==='Crown';if(p.includes('Voice of the Rose'))return order==='Rose';if(p.includes('Blade-Oath'))return order==='Sword';if(p.includes('standard. People will look'))return order==='Crown';if(p.includes('asking the right questions'))return order==='Rose';if(p.includes('south road, on the ridge'))return order==='Sword';if(p.includes('kept the law when others'))return order==='Crown';return true})}
+  const isTravelScene=scene.title&&/travel|ride|riding|march|road|journey|camp|south|north|bridge|patrol/i.test(scene.title);
   return e('div',{className:'main-content',ref},
-    e('div',{className:'scene-header'},e('h1',null,'Scene '+(scene.id.replace(/^\d+_/,''))+(scene.title?' \u2014 '+scene.title:'')),scene.location?e('div',{className:'location'},scene.location):null),
+    e('div',{className:'scene-header'},e('h1',null,'Scene '+(scene.id.replace(/^\d+_/,''))+(scene.title?' \u2014 '+scene.title:'')),scene.location?e('div',{className:'location'},scene.location):null,
+      gs.mount&&isTravelScene?e('div',{className:'travel-mounted'},'\ud83d\udc0e Mounted on '+gs.mount.name):null),
     e('div',{className:'scene-body'},
       visibleProse.map((p,i)=>e('p',{key:'p'+i,dangerouslySetInnerHTML:{__html:fmt(p)}})),
       e(BanterBlock,{sceneId:scene.id,gs:gs}),
@@ -5180,7 +5349,11 @@ function CharSheet({gs,isEnding,onBack,onEquipChange}){
         e('p',{key:'bn',className:'cs-note'},bg.reason),
         row('Solamnic Order',order+' \u2014 '+getOrderTitle(gs.cls,order)),
         row('Proficiency Bonus','+'+d.profBonus),
-        row('Experience Points',(gs.xp||0)+' / '+[300,900,2700][Math.min(gs.level-1,2)]+' XP')
+        row('Experience Points',(gs.xp||0)+' / '+[300,900,2700][Math.min(gs.level-1,2)]+' XP'),
+        gs.mount?e('div',{key:'mount',className:'cs-mount-block'},
+          e('div',{className:'cs-mount-name'},'\ud83d\udc0e '+gs.mount.name),
+          e('div',{className:'cs-mount-stats'},'Speed '+gs.mount.speed+' ft \u2022 HP '+gs.mount.hp+'/'+gs.mount.maxHp+' \u2022 AC '+(gs.mount.ac||10)+(gs.mount.barding?' \u2022 '+gs.mount.barding:''))
+        ):null
       ]),
 
       // ── Ability Scores & Saving Throws ──
@@ -5248,7 +5421,7 @@ function CharSheet({gs,isEnding,onBack,onEquipChange}){
         gs.cls==='Paladin'?row('Spellcasting Ability','Charisma (Save DC '+(8+d.profBonus+d.chaMod)+', Spell Attack +'+modFmt(d.profBonus+d.chaMod)+')'):null,
         gs.feat&&gs.feat.includes('Magic Initiate')?row('Magic Initiate Ability',gs.feat.includes('Cleric')?'Wisdom':'Intelligence'):null,
         row('Hit Dice',(d.hitDiceTotal-(gs.hitDiceUsed||0))+'/'+d.hitDiceTotal+' (d'+d.hitDie+')'),
-        row('Spell Slots',gs.cls==='Paladin'?d.spellSlots+' (1st level)':'1 (Magic Initiate, 1/Long Rest)'),
+        row('Spell Slots',d.spellSlotsMax>1?d.spellSlots+(d.spellSlots2nd?' (1st), '+d.spellSlots2nd+' (2nd)':' (1st level)')+(d.pactSlotLevel?' (pact lv'+d.pactSlotLevel+')':''):d.spellSlotsMax===1?'1 (Magic Initiate, 1/Long Rest)':'None'),
         sp.alwaysPrepared&&sp.alwaysPrepared.length?row('Always Prepared',sp.alwaysPrepared.join(', ')):null,
         sp.cantrips&&sp.cantrips.length?row('Cantrips',sp.cantrips.join(', ')):null,
         sp.level1&&sp.level1.length?row('1st Level Spells',sp.level1.join(', ')):null
@@ -5672,10 +5845,11 @@ function HealingPanel({gs,onUpdate,onClose}){
     setLoh(prev=>prev-amt);const healed=applyHeal(amt);addLog('Lay on Hands: +'+healed+' HP ('+Math.max(0,loh-amt)+' pool remaining)');
   };
   const useCureWounds=()=>{
-    if(slots>=(d.spellSlotsMax||2)||atMax)return;
+    if(slots>=(d.spellSlotsMax||0)||atMax)return;
+    const castMod=['Cleric','Druid','Ranger'].includes(gs.cls)?d.wisMod:['Wizard'].includes(gs.cls)?d.intMod:d.chaMod;
     const roll=Array.from({length:2},()=>Math.floor(Math.random()*8)+1).reduce((a,b)=>a+b,0);
-    const heal=roll+(d.chaMod||0);setSlots(prev=>prev+1);const healed=applyHeal(heal);
-    addLog('Cure Wounds (2d8+'+d.chaMod+'): rolled '+roll+'+'+d.chaMod+' = +'+healed+' HP');
+    const heal=roll+(castMod||0);setSlots(prev=>prev+1);const healed=applyHeal(heal);
+    addLog('Cure Wounds (2d8+'+castMod+'): rolled '+roll+'+'+castMod+' = +'+healed+' HP');
   };
   const usePotion=()=>{
     if(potions<=0||atMax)return;const roll=Array.from({length:2},()=>Math.floor(Math.random()*4)+1).reduce((a,b)=>a+b,0)+2;
@@ -5686,8 +5860,8 @@ function HealingPanel({gs,onUpdate,onClose}){
     setBandages(prev=>prev-1);const healed=applyHeal(roll);addLog('Bandage (1d4): +'+healed+' HP');
   };
   const done=()=>{onUpdate({hp,layOnHandsPool:loh,spellSlotsUsed:slots,potions,bandages});onClose()};
-  const slotsRemaining=(d.spellSlotsMax||2)-slots;
-  const hasCureWounds=gs.cls==='Paladin'&&gs.spells&&gs.spells.level1&&gs.spells.level1.includes('Cure Wounds');
+  const slotsRemaining=(d.spellSlotsMax||0)-slots;
+  const hasCureWounds=gs.spells&&gs.spells.level1&&gs.spells.level1.includes('Cure Wounds');
   return e('div',{className:'modal-overlay'},
     e('div',{className:'modal-box heal-modal'},
       e('h2',{className:'gold',style:{marginBottom:4}},'HEALING'),
@@ -5696,16 +5870,16 @@ function HealingPanel({gs,onUpdate,onClose}){
       atMax?e('p',{style:{color:'var(--gold)',fontSize:13}},'You are at full health.'):null,
       e('div',{className:'heal-options'},
         // Lay on Hands (Paladin)
-        gs.cls==='Paladin'&&loh>0?e('div',{className:'heal-option'},
+        loh>0?e('div',{className:'heal-option'},
           e('div',{className:'heal-option-header'},'Lay on Hands ('+loh+' pool)'),
           e('div',{className:'heal-loh-row'},
             e('input',{type:'range',min:1,max:Math.min(loh,maxHp-hp||1),value:Math.min(lohAmt,loh),onChange:ev=>setLohAmt(parseInt(ev.target.value))}),
             e('span',{style:{marginLeft:8,minWidth:30}},Math.min(lohAmt,loh)+' HP')),
           e('button',{className:'gold-btn heal-btn',onClick:useLoh,disabled:atMax},'Heal '+Math.min(lohAmt,loh)+' HP')):null,
-        // Cure Wounds (Paladin with spell prepared)
+        // Cure Wounds (any class with spell prepared)
         hasCureWounds&&slotsRemaining>0?e('div',{className:'heal-option'},
           e('div',{className:'heal-option-header'},'Cure Wounds ('+slotsRemaining+' slots)'),
-          e('div',{style:{fontSize:12,color:'var(--text-dim)'}},'2d8 + '+d.chaMod+' (CHA)'),
+          e('div',{style:{fontSize:12,color:'var(--text-dim)'}},'2d8 + '+(['Cleric','Druid','Ranger'].includes(gs.cls)?d.wisMod+' (WIS)':d.chaMod+' (CHA)')),
           e('button',{className:'gold-btn heal-btn',onClick:useCureWounds,disabled:atMax},'Cast Cure Wounds')):null,
         // Potions
         potions>0?e('div',{className:'heal-option'},
@@ -5718,7 +5892,7 @@ function HealingPanel({gs,onUpdate,onClose}){
           e('div',{style:{fontSize:12,color:'var(--text-dim)'}},'1d4'),
           e('button',{className:'gold-btn heal-btn',onClick:useBandage,disabled:atMax},'Apply Bandage')):null,
         // Nothing available
-        (gs.cls!=='Paladin'||loh<=0)&&(!hasCureWounds||slotsRemaining<=0)&&potions<=0&&bandages<=0?
+        loh<=0&&(!hasCureWounds||slotsRemaining<=0)&&potions<=0&&bandages<=0?
           e('p',{style:{fontSize:13,color:'var(--text-dim)'}},'No healing resources available.'):null),
       log.length?e('div',{className:'heal-log'},log.map((l,i)=>e('div',{key:i,className:'heal-log-entry'},l))):null,
       e('div',{className:'confirm-btns',style:{marginTop:12}},
@@ -5735,8 +5909,8 @@ function SpellPrepModal({gs,onConfirm,onKeep}){
   return e('div',{className:'modal-overlay'},
     e('div',{className:'modal-box spell-prep-modal'},
       e('h2',{className:'gold',style:{marginBottom:4}},'LONG REST \u2014 PREPARE SPELLS'),
-      e('p',{style:{fontSize:13,color:'var(--text-dim)',marginBottom:12}},'After prayer and meditation, choose '+maxPrep+' spells to prepare. Paladin\u2019s Smite is always prepared.'),
-      e('div',{className:'spell-grid'},SPELL_LISTS.paladin.level1.map(sp=>
+      e('p',{style:{fontSize:13,color:'var(--text-dim)',marginBottom:12}},'After '+(['Wizard'].includes(gs.cls)?'study':'prayer and meditation')+', choose '+maxPrep+' spells to prepare.'+(gs.cls==='Paladin'?' Paladin\u2019s Smite is always prepared.':'')),
+      e('div',{className:'spell-grid'},(SPELL_LISTS[gs.cls.toLowerCase()]?.level1||SPELL_LISTS.paladin?.level1||[]).map(sp=>
         e(SpellButton,{key:sp,name:sp,selected:selected.includes(sp),onClick:()=>toggle(sp)}))),
       e('div',{style:{fontSize:12,color:'var(--text-dim)',margin:'8px 0'}},selected.length+' / '+maxPrep+' prepared'),
       e('div',{className:'confirm-btns',style:{marginTop:12}},
@@ -5760,6 +5934,8 @@ let CAMPAIGN_RULES=null;
 let DM_SUMMARY=null;
 let EPILOGUES=null;
 let SPECIES_DATA=null;
+let CLASS_DATA=null;
+let EQUIPMENT_DATA=null;
 
 async function loadCampaign(campaignId){
   // Standalone build: use embedded data instead of fetching
@@ -5779,6 +5955,8 @@ async function loadCampaign(campaignId){
     if(d.partyBanter)PARTY_BANTER=d.partyBanter;
     if(d.companionGifts)COMPANION_GIFTS=d.companionGifts;
     if(d.species)SPECIES_DATA=d.species;
+    if(d.classes)CLASS_DATA=d.classes;
+    if(d.equipment)EQUIPMENT_DATA=d.equipment;
     CAMPAIGN=manifest;
     if(d.scenesDeferred){setTimeout(()=>{for(const k in d.scenesDeferred)SCENES[k]=d.scenesDeferred[k];window._scenesReady=true},100)}
     else{window._scenesReady=true}
@@ -5804,9 +5982,11 @@ async function loadCampaign(campaignId){
       files.epilogues?fetch(base+files.epilogues).then(r=>r.json()):null,
       files.partyBanter?fetch(base+files.partyBanter).then(r=>r.json()):null,
       files.companionGifts?fetch(base+files.companionGifts).then(r=>r.json()):null,
-      files.species?fetch(base+files.species).then(r=>r.json()):null
+      files.species?fetch(base+files.species).then(r=>r.json()):null,
+      files.classes?fetch(base+files.classes).then(r=>r.json()):null,
+      files.equipment?fetch(base+files.equipment).then(r=>r.json()):null
     ]);
-    const[scenes,scenesDeferred,combatNarr,combatOut,companions,effects,shop,rules,theme,dmSummary,epilogues,partyBanter,companionGifts,species]=loads;
+    const[scenes,scenesDeferred,combatNarr,combatOut,companions,effects,shop,rules,theme,dmSummary,epilogues,partyBanter,companionGifts,species,classes,equipment]=loads;
 
     // Populate engine globals
     if(scenes){for(const k in scenes)SCENES[k]=scenes[k]}
@@ -5842,6 +6022,8 @@ async function loadCampaign(campaignId){
     if(partyBanter)PARTY_BANTER=partyBanter;
     if(companionGifts)COMPANION_GIFTS=companionGifts;
     if(species)SPECIES_DATA=species;
+    if(classes)CLASS_DATA=classes;
+    if(equipment)EQUIPMENT_DATA=equipment;
 
     CAMPAIGN=manifest;
 
@@ -5931,8 +6113,14 @@ function App(){
     }
     // Process rest boxes and wage boxes
     const allBoxText=s.boxes.map(b=>b.text||'').join('\n');
-    if(allBoxText.includes('Short rest available')){ns.actionSurgeUsed=false;if(ns.secondWindUsed>0)ns.secondWindUsed=Math.max(0,ns.secondWindUsed-1);if(ns.hp<ns.derived.maxHp&&(ns.derived.hitDiceTotal-(ns.hitDiceUsed||0))>0)setTimeout(()=>setShortRestModal(true),300)}
-    if(allBoxText.includes('Long rest')||allBoxText.includes('LONG REST')){ns.secondWindUsed=0;ns.actionSurgeUsed=false;ns.spellSlotsUsed=0;ns.layOnHandsPool=ns.derived.layOnHandsMax||0;ns.hp=ns.derived.maxHp;const hdRecover=Math.max(1,Math.floor(ns.derived.hitDiceTotal/2));ns.hitDiceUsed=Math.max(0,(ns.hitDiceUsed||0)-hdRecover);if(ns.cls==='Paladin')setSpellPrepModal(true)}
+    if(allBoxText.includes('Short rest available')){ns.actionSurgeUsed=false;if(ns.secondWindUsed>0)ns.secondWindUsed=Math.max(0,ns.secondWindUsed-1);if(ns.hp<ns.derived.maxHp&&(ns.derived.hitDiceTotal-(ns.hitDiceUsed||0))>0)setTimeout(()=>setShortRestModal(true),300);
+      // Warlock Pact Magic refreshes on short rest
+      if(ns.cls==='Warlock')ns.spellSlotsUsed=0;
+      // Mount recovers some HP on short rest
+      if(ns.mount&&ns.mount.hp<ns.mount.maxHp){const heal=rollDice(6)+2;ns.mount={...ns.mount,hp:Math.min(ns.mount.maxHp,ns.mount.hp+heal)}}}
+    if(allBoxText.includes('Long rest')||allBoxText.includes('LONG REST')){ns.secondWindUsed=0;ns.actionSurgeUsed=false;ns.spellSlotsUsed=0;ns.layOnHandsPool=ns.derived.layOnHandsMax||0;ns.hp=ns.derived.maxHp;const hdRecover=Math.max(1,Math.floor(ns.derived.hitDiceTotal/2));ns.hitDiceUsed=Math.max(0,(ns.hitDiceUsed||0)-hdRecover);if(['Paladin','Cleric','Druid','Wizard'].includes(ns.cls))setSpellPrepModal(true);
+      // Mount heals on long rest
+      if(ns.mount&&ns.mount.hp<ns.mount.maxHp){ns.mount={...ns.mount,hp:ns.mount.maxHp}}}
     const wageM=allBoxText.match(/(?:WAGES?|stipend|field.*pay|march.*pay)[^]*?(\d+)\s*stl/i);if(wageM&&!ns.awardedScenes['wage_'+id]){ns.gold+=(parseInt(wageM[1])||0);ns.awardedScenes['wage_'+id]=true}
     s.boxes.forEach(b=>{
       // Auto-set story flags from scene content
@@ -5987,7 +6175,7 @@ function App(){
         const orient=t.match(/MEASURE TRACK:\s*(ROSE|SWORD|CROWN|BALANCE)\s+orientation/i);
         if(orient)ns.measureOrientation=orient[1].charAt(0)+orient[1].slice(1).toLowerCase();
       }
-      // Track DG track state (Paladin)  
+      // Track DG track state (Paladin)
       if(b.type==='dg_track'){
         if(t.includes('PURIFIED'))ns.dgTrack='PURIFIED';
         else if(t.includes('HELD FIRM'))ns.dgTrack='HELD FIRM';
@@ -5998,6 +6186,13 @@ function App(){
         else if(t.includes('LISTENING'))ns.dgTrack='LISTENING';
         else if(t.includes('HELD'))ns.dgTrack='HELD';
       }
+      // Track mount acquisition / loss
+      if(t.includes('MOUNT ACQUIRED')||t.includes('MOUNT GAINED')){
+        const mm=t.match(/MOUNT (?:ACQUIRED|GAINED)[:\s]*\*?\*?([^*\n]+)/);
+        if(mm){const mName=mm[1].trim();const mData=EQUIPMENT_DATA?.mounts?.find(m=>m.name.toLowerCase()===mName.toLowerCase());
+          ns.mount={name:mName,speed:mData?.speed||60,carry:mData?.carry||480,hp:mData?.hp||19,maxHp:mData?.hp||19,barding:null}}
+      }
+      if(t.includes('MOUNT LOST')||t.includes('HORSE KILLED')||t.includes('HORSE LOST')||t.includes('MOUNT KILLED'))ns.mount=null;
     });
     // Auto-award god sign tallies from Paladin box text
     if(ns.cls==='Paladin'){const godKey='godsign_'+id;if(!ns.awardedScenes[godKey]){
@@ -6022,7 +6217,7 @@ function App(){
     const startGods={};for(const g of GODS)(startGods[g]=0);
     const startScene=(CAMPAIGN_RULES&&CAMPAIGN_RULES.startScene)||(CAMPAIGN&&CAMPAIGN.startScene)||'1';
     const extraInv=[equip.weapon,equip.armor,equip.hasShield?'Shield':'',...cInv,cEquip.head,cEquip.hands,cEquip.boots].filter(Boolean);
-    const state={cls,stats,style,feat,mastery,name:name||'Squire',spells:spells||{cantrips:[],level1:[],alwaysPrepared:[]},weapon:equip.weapon,armor:equip.armor,skilledPicks:skilledPicks||[],classSkills:classSkills||[],humanSkill:humanSkill||null,hasShield:equip.hasShield,level:1,hp:derived.maxHp,derived,xp:0,honour:cRes.honour||5,rose:0,sword:0,crown:0,companions:[],romances:{},godSigns:startGods,dgTrack:'NONE',equipment:buildEquipment(equip.weapon,equip.armor,equip.hasShield),inventory:extraInv,history:[],awardedScenes:{},companionLog:{},romanceDeclined:{},flags:{},bonuses:[],magicItems:[],measureTrack:0,measureOrientation:null,gold:cRes.gold||0,layOnHandsPool:cls==='Paladin'?derived.layOnHandsMax:0,spellSlotsUsed:0,secondWindUsed:0,actionSurgeUsed:false,bandages:cRes.bandages||0,potions:cRes.potions||0,greaterPotions:cRes.greaterPotions||0,miraHealedThisScene:false,completedRolls:{},deadCompanions:[],hitDiceUsed:0,wounds:[],scars:[],combatCount:0,orderMax:{rose:0,sword:0,crown:0},approval:{},companionGifts:[]};setGs(state);goScene(startScene,state);setPhase('play')};
+    const state={cls,stats,style,feat,mastery,name:name||'Squire',spells:spells||{cantrips:[],level1:[],alwaysPrepared:[]},weapon:equip.weapon,armor:equip.armor,skilledPicks:skilledPicks||[],classSkills:classSkills||[],humanSkill:humanSkill||null,hasShield:equip.hasShield,level:1,hp:derived.maxHp,derived,xp:0,honour:cRes.honour||5,rose:0,sword:0,crown:0,companions:[],romances:{},godSigns:startGods,dgTrack:'NONE',equipment:buildEquipment(equip.weapon,equip.armor,equip.hasShield),inventory:extraInv,history:[],awardedScenes:{},companionLog:{},romanceDeclined:{},flags:{},bonuses:[],magicItems:[],measureTrack:0,measureOrientation:null,gold:cRes.gold||0,layOnHandsPool:cls==='Paladin'?derived.layOnHandsMax:0,spellSlotsUsed:0,secondWindUsed:0,actionSurgeUsed:false,bandages:cRes.bandages||0,potions:cRes.potions||0,greaterPotions:cRes.greaterPotions||0,miraHealedThisScene:false,completedRolls:{},deadCompanions:[],hitDiceUsed:0,wounds:[],scars:[],combatCount:0,orderMax:{rose:0,sword:0,crown:0},approval:{},companionGifts:[],mount:null};setGs(state);goScene(startScene,state);setPhase('play')};
   const loadSave=(saveData)=>{
     if(!saveData)return;
     // Handle v2 split format or auto-migrate legacy
@@ -6297,21 +6492,39 @@ function App(){
       e('h3',null,'Order Points'),e('div',{className:'order-points'},e('div',{className:'order-badge rose'},e('span',{className:'num'},gs.rose),'Rose'),e('div',{className:'order-badge sword'},e('span',{className:'num'},gs.sword),'Sword'),e('div',{className:'order-badge crown'},e('span',{className:'num'},gs.crown),'Crown')),e('div',{className:'honour-row'},e('span',{className:'honour-label'},'Honour'),e('span',{className:'honour-val'},gs.honour||0)),
       // Gold & Resources
       e('div',{className:'sidebar-gold'},e('span',{className:'sidebar-gold-icon'},'\u2694'),e('span',{className:'sidebar-gold-val'},(gs.gold||0)),e('span',{className:'sidebar-gold-label'},'STL')),
-      (gs.cls==='Paladin'||gs.cls==='Fighter')?e('div',{className:'sidebar-resources'},
-        gs.cls==='Paladin'?e(React.Fragment,null,
-          e('div',{className:'resource-row'},e('span',null,'Lay on Hands'),e('span',null,(gs.layOnHandsPool||0)+'/'+(d.layOnHandsMax||0))),
-          e('div',{className:'resource-row'},e('span',null,'Spell Slots'),e('span',null,(d.spellSlotsMax||2)-(gs.spellSlotsUsed||0)+'/'+(d.spellSlotsMax||2)))
-        ):e(React.Fragment,null,
-          e('div',{className:'resource-row'},e('span',null,'Second Wind'),e('span',null,(d.secondWindMax||2)-(gs.secondWindUsed||0)+'/'+(d.secondWindMax||2))),
-          d.actionSurgeMax?e('div',{className:'resource-row'},e('span',null,'Action Surge'),e('span',null,gs.actionSurgeUsed?'USED':'READY')):null
-        )
+      // Mount
+      gs.mount?e('div',{className:'mount-row'},
+        e('span',{className:'mount-icon'},'\ud83d\udc0e'),
+        e('div',{className:'mount-info'},
+          e('div',{className:'mount-name'},gs.mount.name),
+          e('div',{className:'mount-detail'},'Speed '+gs.mount.speed+' ft \u2022 HP '+gs.mount.hp+'/'+gs.mount.maxHp+(gs.mount.barding?' \u2022 '+gs.mount.barding:''))),
+        e('button',{className:'mount-dismiss',onClick:()=>{if(confirm('Release your mount?'))handleStateUpdate(g=>({...g,mount:null}))},title:'Release mount'},'\u2715')
       ):null,
+      e('div',{className:'sidebar-resources'},
+        // Lay on Hands (Paladin)
+        d.layOnHandsMax?e('div',{className:'resource-row'},e('span',null,'Lay on Hands'),e('span',null,(gs.layOnHandsPool||0)+'/'+d.layOnHandsMax)):null,
+        // Spell Slots (any caster)
+        d.spellSlotsMax?e('div',{className:'resource-row'},e('span',null,d.spellSlotsMax<=1?'MI Slot':'Spell Slots (1st)'),e('span',null,(d.spellSlotsMax-(gs.spellSlotsUsed||0))+'/'+d.spellSlotsMax)):null,
+        d.spellSlots2ndMax?e('div',{className:'resource-row'},e('span',null,'Spell Slots (2nd)'),e('span',null,(d.spellSlots2ndMax-(gs.spellSlots2ndUsed||0))+'/'+d.spellSlots2ndMax)):null,
+        // Channel Divinity (Paladin/Cleric)
+        d.channelDivinity?e('div',{className:'resource-row'},e('span',null,'Channel Divinity'),e('span',null,d.channelDivinity+'/LR')):null,
+        // Second Wind (Fighter)
+        d.secondWindMax?e('div',{className:'resource-row'},e('span',null,'Second Wind'),e('span',null,(d.secondWindMax-(gs.secondWindUsed||0))+'/'+d.secondWindMax)):null,
+        // Action Surge (Fighter)
+        d.actionSurgeMax?e('div',{className:'resource-row'},e('span',null,'Action Surge'),e('span',null,gs.actionSurgeUsed?'USED':'READY')):null,
+        // Rage (Barbarian)
+        d.rages?e('div',{className:'resource-row'},e('span',null,'Rages'),e('span',null,d.rages+'/LR')):null,
+        // Ki (Monk)
+        d.ki?e('div',{className:'resource-row'},e('span',null,'Ki Points'),e('span',null,d.ki)):null,
+        // Bardic Inspiration (Bard)
+        d.bardicInsp?e('div',{className:'resource-row'},e('span',null,'Bardic Insp.'),e('span',null,d.bardicInsp+'/LR')):null
+      ),
       e('div',{className:'sidebar-resources'},
         e('div',{className:'resource-row'},e('span',null,'Hit Dice'),e('span',null,(d.hitDiceTotal-(gs.hitDiceUsed||0))+'/'+d.hitDiceTotal+' (d'+d.hitDie+')')),
         gs.bandages?e('div',{className:'resource-row'},e('span',null,'Bandages'),e('span',null,gs.bandages)):null,
         gs.potions?e('div',{className:'resource-row'},e('span',null,'Potions'),e('span',null,gs.potions)):null,
         gs.greaterPotions?e('div',{className:'resource-row'},e('span',null,'Greater Potions'),e('span',null,gs.greaterPotions)):null),
-      gs.hp<d.maxHp&&((gs.cls==='Paladin'&&(gs.layOnHandsPool>0||((d.spellSlotsMax||2)-(gs.spellSlotsUsed||0))>0))||(gs.potions||0)>0||(gs.bandages||0)>0)?
+      gs.hp<d.maxHp&&((gs.layOnHandsPool||0)>0||((d.spellSlotsMax||0)-(gs.spellSlotsUsed||0))>0||(gs.potions||0)>0||(gs.bandages||0)>0)?
         e('button',{className:'heal-sidebar-btn',onClick:()=>{setSideOpen(false);setHealingPanel(true)}},'\u2764 Heal'):null,
       // Active wounds
       gs.wounds&&gs.wounds.filter(w=>w.combatsLeft>0).length?e('div',{className:'sidebar-wounds'},
@@ -6321,7 +6534,7 @@ function App(){
           e('span',{style:{color:'var(--text-dim)'}},w.combatsLeft+' combats left')))):null,
       // Spell Book in sidebar
       gs.spells&&(gs.spells.cantrips?.length||gs.spells.level1?.length)?e(React.Fragment,null,e('h3',null,'Spell Book'),e('div',{className:'spellbook'},
-        gs.cls==='Paladin'?e('div',{className:'spell-slots'},'Slots: '+d.spellSlots+' (1st)'):e('div',{className:'spell-slots'},'MI Slot: 1/LR'),
+        e('div',{className:'spell-slots'},d.spellSlotsMax>1?'Slots: '+d.spellSlots+(d.spellSlots2nd?' (1st), '+d.spellSlots2nd+' (2nd)':' (1st)'):'MI Slot: 1/LR'),
         gs.spells.alwaysPrepared?.length?e('div',{className:'spell-cat'},e('span',{className:'spell-cat-label'},'Always:'),gs.spells.alwaysPrepared.map(s=>e(SidebarSpellTag,{key:s,name:s,type:'always'}))):null,
         gs.spells.cantrips?.length?e('div',{className:'spell-cat'},e('span',{className:'spell-cat-label'},'Cantrips:'),gs.spells.cantrips.map(s=>e(SidebarSpellTag,{key:s,name:s,type:'cantrip'}))):null,
         gs.spells.level1?.length?e('div',{className:'spell-cat'},e('span',{className:'spell-cat-label'},'1st:'),gs.spells.level1.map(s=>e(SidebarSpellTag,{key:s,name:s,type:'l1'}))):null)):null,
@@ -6364,7 +6577,7 @@ function App(){
     npcNotify?e(NpcNotification,{notif:npcNotify,onDismiss:dismissNpcNotify}):null,
     breakupTarget&&gs?e(BreakupScene,{name:breakupTarget,gs:gs,onResolve:handleBreakup}):null,
     romanceCheck?e(RelationshipCheck,{check:romanceCheck,gs:gs,onResolve:resolveRelationship}):null,
-    spellPrepModal&&gs&&gs.cls==='Paladin'?e(SpellPrepModal,{gs:gs,onConfirm:(spells)=>{const ns={...gs,spells:{...gs.spells,level1:spells}};ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds);setGs(ns);setSpellPrepModal(false)},onKeep:()=>setSpellPrepModal(false)}):null,
+    spellPrepModal&&gs&&['Paladin','Cleric','Druid','Wizard'].includes(gs.cls)?e(SpellPrepModal,{gs:gs,onConfirm:(spells)=>{const ns={...gs,spells:{...gs.spells,level1:spells}};ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds);setGs(ns);setSpellPrepModal(false)},onKeep:()=>setSpellPrepModal(false)}):null,
     shortRestModal&&gs?e(ShortRestModal,{gs:gs,onDone:(result)=>{const ns={...gs,hp:result.hp,hitDiceUsed:result.hitDiceUsed};setGs(ns);setShortRestModal(false)}}):null,
     healingPanel&&gs?e(HealingPanel,{gs:gs,onUpdate:(upd)=>{const ns={...gs,...upd};setGs(ns)},onClose:()=>setHealingPanel(false)}):null,
     defeatRecovery&&gs?e(DefeatRecoveryModal,{gs:gs,wound:defeatRecovery.wound,scar:defeatRecovery.scar,onContinue:()=>setDefeatRecovery(null)}):null,
