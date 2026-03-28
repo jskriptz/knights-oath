@@ -1887,8 +1887,8 @@ function parseRollBox(text){
     if(!l)continue;
     if(l.match(/\*\*ROLL REQUIRED/i)){isRequired=true;preamble.push(l);section='pre';continue}
     if(l.match(/\*\*OPTIONAL ROLL/i)){isRequired=false;preamble.push(l);section='pre';continue}
-    if(l.match(/\*\*SUCCESS\s*\(/i)){section='success';success.push(l);continue}
-    if(l.match(/\*\*FAILURE\s*\(/i)){section='failure';failure.push(l);continue}
+    if(l.match(/\*\*SUCCESS[\s:(]/i)){section='success';success.push(l);continue}
+    if(l.match(/\*\*FAILURE[\s:(]/i)){section='failure';failure.push(l);continue}
     if(l.match(/No dice\?|Flip a coin/i)){coinflip=l;continue}
     if(section==='pre')preamble.push(l);
     else if(section==='success')success.push(l);
