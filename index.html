@@ -751,6 +751,17 @@ button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:2px solid 
 .confirm-btns{display:flex;gap:10px;justify-content:center}
 .confirm-yes{padding:10px 24px!important}
 
+/* Knighting ceremony modal */
+.knighting-modal{max-width:420px;text-align:left}
+.knighting-modal h2{text-align:center;font-size:16px;letter-spacing:1.5px}
+.knighting-modal p{text-align:center}
+.knighting-skills{margin:16px 0}
+.knighting-skill-btn{font-family:'Cinzel',serif;letter-spacing:.5px;transition:all .15s}
+.knighting-skill-btn:hover{background:rgba(201,168,76,.15)!important}
+.knighting-skill-btn.selected{box-shadow:0 0 12px rgba(201,168,76,.3)}
+.knighting-order-icon{display:block;font-size:28px;margin:0 auto 8px;text-align:center}
+.knighting-stat-bonus{font-size:12px;color:var(--gold-dim);margin-top:4px;text-align:center}
+
 /* Settings panel */
 .settings-modal{max-width:400px;text-align:left}
 .settings-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)}
@@ -913,7 +924,7 @@ h2.red{color:var(--red)}
 .cs-journey-block{background:rgba(0,0,0,.2);border:1px solid var(--border);border-radius:8px;padding:16px;text-align:center}
 .cs-journey-label{font-family:'Cinzel',serif;color:var(--gold-dim);font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
 .cs-journey-order{font-family:'Cinzel',serif;font-size:28px;font-weight:700}
-.cs-order-rose{color:#e8a0a0}.cs-order-sword{color:#a0c0e8}.cs-order-crown{color:#e8d8a0}
+.cs-order-rose{color:#e8a0a0}.cs-order-sword{color:#a0c0e8}.cs-order-crown{color:#e8d8a0}.cs-order-unknown{color:var(--text-dim)}
 .cs-journey-title-sub{color:var(--text-dim);font-size:13px;font-style:italic;margin-top:4px}
 .cs-journey-points{display:flex;justify-content:center;gap:12px;margin-top:8px;font-size:13px}
 .cs-journey-points .jp{padding:2px 8px;border-radius:4px}
@@ -5733,11 +5744,11 @@ function CharSheet({gs,isEnding,onBack,onEquipChange}){
       e('h2',{className:'cs-journey-title'},'JOURNEY SUMMARY'),
       e('div',{className:'cs-journey-grid'},
 
-        // Final Order
+        // Final Order / Knight Status
         e('div',{className:'cs-journey-block order-block'},
-          e('div',{className:'cs-journey-label'},'SOLAMNIC ORDER'),
-          e('div',{className:'cs-journey-order cs-order-'+order.toLowerCase()},order),
-          e('div',{className:'cs-journey-title-sub'},getOrderTitle(gs.cls,order)),
+          e('div',{className:'cs-journey-label'},gs.flags?.knighted?'KNIGHT OF SOLAMNIA':gs.flags?.unproven_squire?'UNPROVEN SQUIRE':'SOLAMNIC ORDER'),
+          e('div',{className:'cs-journey-order cs-order-'+order.toLowerCase()},gs.flags?.knighted?'Ser '+gs.name:gs.flags?.unproven_squire?'Squire':order),
+          e('div',{className:'cs-journey-title-sub'},gs.flags?.knighted?'Knight of the '+order:gs.flags?.unproven_squire?'Not yet proven worthy':getOrderTitle(gs.cls,order)),
           e('div',{className:'cs-journey-points'},
             e('span',{className:'jp rose'},'Rose: '+gs.rose),
             e('span',{className:'jp sword'},'Sword: '+gs.sword),
@@ -5844,7 +5855,11 @@ function CharSheet({gs,isEnding,onBack,onEquipChange}){
         row('Class & Level','Level '+gs.level+' '+gs.cls),
         row('Background',bg.name),
         e('p',{key:'bn',className:'cs-note'},bg.reason),
-        row('Solamnic Order',order+' \u2014 '+getOrderTitle(gs.cls,order)),
+        gs.flags?.knighted?row('Title','Ser '+gs.name+', Knight of the '+order):
+          gs.flags?.unproven_squire?row('Title','Squire '+gs.name+' (Unproven)'):
+          row('Solamnic Order',order+' \u2014 '+getOrderTitle(gs.cls,order)),
+        gs.flags?.knighted?row('Order','Order of the '+order):null,
+        gs.knightingSkill?row('Knighting Bonus','+1 '+gs.knightingSkill+' (Order gift)'):null,
         row('Proficiency Bonus','+'+d.profBonus),
         row('Experience Points',(gs.xp||0)+' / '+[300,900,2700][Math.min(gs.level-1,2)]+' XP'),
         gs.mount?e('div',{key:'mount',className:'cs-mount-block'},
@@ -6474,18 +6489,22 @@ function KnightingSkillPicker({order,onConfirm}){
   if(!bonus)return null;
   const[choice,setChoice]=useState(null);
   const statNames={str:'Strength',dex:'Dexterity',con:'Constitution',int:'Intelligence',wis:'Wisdom',cha:'Charisma'};
+  const orderIcons={Rose:'\u2740',Sword:'\u2694',Crown:'\u265b'};// ❀ ⚔ ♛
+  const orderMottos={Rose:'Est Sularus oth Mithas — My honor is my life',Sword:'Est Solarus oth Kadran — My strength for the weak',Crown:'Est Draconis oth Paladine — The law is my guide'};
   return e('div',{className:'modal-overlay'},
     e('div',{className:'modal-box knighting-modal'},
-      e('h2',{className:'gold',style:{marginBottom:8}},'KNIGHTING — ORDER OF THE '+order.toUpperCase()),
-      e('p',{style:{fontSize:13,marginBottom:12,color:'var(--text-dim)'}},
-        'As you are dubbed a Knight of the '+order+', you gain +1 '+statNames[bonus.stat]+' and proficiency in one skill:'),
-      e('div',{className:'knighting-skills',style:{display:'flex',flexDirection:'column',gap:8,marginBottom:16}},
+      e('div',{className:'knighting-order-icon'},orderIcons[order]||'\u2726'),
+      e('h2',{className:'gold',style:{marginBottom:4}},'ORDER OF THE '+order.toUpperCase()),
+      e('div',{className:'knighting-stat-bonus'},orderMottos[order]),
+      e('p',{style:{fontSize:13,margin:'16px 0 12px',color:'var(--text)'}},
+        'You gain +1 '+statNames[bonus.stat]+'. Choose your skill proficiency:'),
+      e('div',{className:'knighting-skills'},
         bonus.skills.map(sk=>
           e('button',{key:sk,className:'knighting-skill-btn'+(choice===sk?' selected':''),
-            style:{padding:'10px 16px',border:'1px solid var(--gold)',background:choice===sk?'var(--gold)':'transparent',
-              color:choice===sk?'var(--bg)':'var(--gold)',borderRadius:4,cursor:'pointer',fontSize:14,textAlign:'left'},
+            style:{padding:'12px 16px',border:'1px solid var(--gold)',background:choice===sk?'var(--gold)':'transparent',
+              color:choice===sk?'var(--bg)':'var(--gold)',borderRadius:4,cursor:'pointer',fontSize:14,textAlign:'center'},
             onClick:()=>setChoice(sk)},sk))),
-      e('div',{className:'confirm-btns',style:{marginTop:12}},
+      e('div',{className:'confirm-btns',style:{marginTop:16}},
         e('button',{className:'gold-btn',onClick:()=>onConfirm(choice),disabled:!choice},'Accept Knighting'))));
 }
 
