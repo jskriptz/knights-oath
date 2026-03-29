@@ -6676,6 +6676,22 @@ function App(){
     if(id!=='DISGRACE'&&((oMax.rose>0&&ns.rose<=0)||(oMax.sword>0&&ns.sword<=0)||(oMax.crown>0&&ns.crown<=0))){
       const ds=SCENES['DISGRACE'];if(ds){setScene(ds);setSceneId('DISGRACE');setGs(ns);return}
     }
+    // Ceremony trigger — intercept scene 71 if not yet knighted
+    if(id==='71'&&!ns.flags.knighted&&!ns.flags.unproven_squire&&!ns.flags.ceremony_complete){
+      ns.flags.ceremony_complete=true;// prevent re-trigger
+      const r=ns.rose||0,sw=ns.sword||0,cr=ns.crown||0;
+      let ceremonyTarget='CEREMONY_VIGIL';
+      if(r===0&&sw===0&&cr===0)ceremonyTarget='CEREMONY_UNPROVEN';
+      else{const tied=getTiedOrders(r,sw,cr);
+        if(tied.length===3)ceremonyTarget='CEREMONY_TIEBREAKER_ALL';
+        else if(tied.length===2){
+          if(tied.includes('Rose')&&tied.includes('Sword'))ceremonyTarget='CEREMONY_TIEBREAKER_ROSE_SWORD';
+          else if(tied.includes('Rose')&&tied.includes('Crown'))ceremonyTarget='CEREMONY_TIEBREAKER_ROSE_CROWN';
+          else ceremonyTarget='CEREMONY_TIEBREAKER_SWORD_CROWN';
+        }
+      }
+      const cs=SCENES[ceremonyTarget];if(cs){setScene(cs);setSceneId(ceremonyTarget);setGs(ns);return}
+    }
     // Process rest boxes and wage boxes
     const allBoxText=s.boxes.map(b=>b.text||'').join('\n');
     if(allBoxText.includes('Short rest available')){ns.actionSurgeUsed=false;if(ns.secondWindUsed>0)ns.secondWindUsed=Math.max(0,ns.secondWindUsed-1);if(ns.hp<ns.derived.maxHp&&(ns.derived.hitDiceTotal-(ns.hitDiceUsed||0))>0)setTimeout(()=>setShortRestModal(true),300);
