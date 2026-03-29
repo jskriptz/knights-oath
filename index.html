@@ -6815,8 +6815,8 @@ function App(){
     for(const ov of (CAMPAIGN_RULES?.targetOverrides||[])){
       if(sceneId===ov.scene&&finalTarget===ov.target&&ns.cls===ov.ifClass)finalTarget=ov.redirectTo;
     }
-    // Handle RETURN target — go back to previous scene
-    if(finalTarget==='RETURN'){const hist=ns.history||[];for(let i=hist.length-1;i>=0;i--){const prevId=hist[i].split(':')[0].trim();if(prevId!==sceneId&&SCENES[prevId]){finalTarget=prevId;break}}}
+    // Handle RETURN target — go back to previous non-arc scene (skip same arc chain)
+    if(finalTarget==='RETURN'){const hist=ns.history||[];const arcPrefix=sceneId.match(/^(ARC_[A-Z]+_)/)?.[1];for(let i=hist.length-1;i>=0;i--){const prevId=hist[i].split(':')[0].trim();if(prevId===sceneId)continue;if(arcPrefix&&prevId.startsWith(arcPrefix))continue;if(SCENES[prevId]){finalTarget=prevId;break}}}
     if(finalTarget&&SCENES[finalTarget])goScene(finalTarget,ns);else setGs(ns)};
   const handleSavePick=async(slot)=>{await saveGame(slot,gs,sceneId);setShowSave(false);setSaveMsg('Saved!');setTimeout(()=>setSaveMsg(''),2500)};
   const resolveRelationship=(action,names,picked)=>{
