@@ -1544,33 +1544,60 @@ function calcDerived(stats,cls,lvl,armor,hasShield,feat,wounds,exhaustion){
   // Non-casters (Fighter, Barbarian, Monk, Rogue): 0 base (feat-granted only)
   const FULL_CASTERS=['Bard','Cleric','Druid','Sorcerer','Wizard'];
   const HALF_CASTERS=['Paladin','Ranger'];
-  d.spellSlots=0;d.spellSlotsMax=0;d.spellSlots2nd=0;d.spellSlots2ndMax=0;d.preparedSpells=0;
+  // Initialize all spell slot levels to 0
+  d.spellSlots=0;d.spellSlotsMax=0;d.spellSlots2nd=0;d.spellSlots2ndMax=0;
+  d.spellSlots3rd=0;d.spellSlots3rdMax=0;d.spellSlots4th=0;d.spellSlots4thMax=0;
+  d.spellSlots5th=0;d.spellSlots5thMax=0;d.spellSlots6th=0;d.spellSlots6thMax=0;
+  d.spellSlots7th=0;d.spellSlots7thMax=0;d.spellSlots8th=0;d.spellSlots8thMax=0;
+  d.spellSlots9th=0;d.spellSlots9thMax=0;d.preparedSpells=0;
+
+  // D&D 5e 2024 Full Caster spell slot progression
+  const FULL_SLOTS=[
+    [2,0,0,0,0,0,0,0,0],[3,0,0,0,0,0,0,0,0],[4,2,0,0,0,0,0,0,0],[4,3,0,0,0,0,0,0,0],
+    [4,3,2,0,0,0,0,0,0],[4,3,3,0,0,0,0,0,0],[4,3,3,1,0,0,0,0,0],[4,3,3,2,0,0,0,0,0],
+    [4,3,3,3,1,0,0,0,0],[4,3,3,3,2,0,0,0,0],[4,3,3,3,2,1,0,0,0],[4,3,3,3,2,1,0,0,0],
+    [4,3,3,3,2,1,1,0,0],[4,3,3,3,2,1,1,0,0],[4,3,3,3,2,1,1,1,0],[4,3,3,3,2,1,1,1,0],
+    [4,3,3,3,2,1,1,1,1],[4,3,3,3,3,1,1,1,1],[4,3,3,3,3,2,1,1,1],[4,3,3,3,3,2,2,1,1]
+  ];
+  // Half casters use half level (rounded down, min 1) to index full caster table
+  const HALF_SLOT_LEVELS=[[0,0,0,0,0],[2,0,0,0,0],[3,0,0,0,0],[3,0,0,0,0],[4,2,0,0,0],[4,2,0,0,0],[4,3,0,0,0],[4,3,0,0,0],[4,3,2,0,0],[4,3,2,0,0]];
 
   if(FULL_CASTERS.includes(cls)){
-    // 1st-level slots
-    d.spellSlots=lvl>=3?4:lvl>=2?3:2;d.spellSlotsMax=d.spellSlots;
-    // 2nd-level slots
-    d.spellSlots2nd=lvl>=4?3:lvl>=3?2:0;d.spellSlots2ndMax=d.spellSlots2nd;
-    // Cantrips known
-    d.cantripsKnown=classInfo?.spellcasting?.cantrips?.[lvl-1]||(lvl>=4?4:lvl>=1?3:2);
-    // Prepared/known spells
-    const castMod=cls==='Wizard'||cls==='Wizard'?d.intMod:cls==='Bard'||cls==='Sorcerer'?d.chaMod:cls==='Druid'||cls==='Ranger'?d.wisMod:cls==='Cleric'?d.wisMod:d.chaMod;
+    const slots=FULL_SLOTS[Math.min(lvl,20)-1]||FULL_SLOTS[0];
+    d.spellSlots=slots[0];d.spellSlotsMax=slots[0];
+    d.spellSlots2nd=slots[1];d.spellSlots2ndMax=slots[1];
+    d.spellSlots3rd=slots[2];d.spellSlots3rdMax=slots[2];
+    d.spellSlots4th=slots[3];d.spellSlots4thMax=slots[3];
+    d.spellSlots5th=slots[4];d.spellSlots5thMax=slots[4];
+    d.spellSlots6th=slots[5];d.spellSlots6thMax=slots[5];
+    d.spellSlots7th=slots[6];d.spellSlots7thMax=slots[6];
+    d.spellSlots8th=slots[7];d.spellSlots8thMax=slots[7];
+    d.spellSlots9th=slots[8];d.spellSlots9thMax=slots[8];
+    d.cantripsKnown=classInfo?.spellcasting?.cantrips?.[lvl-1]||(lvl>=10?5:lvl>=4?4:3);
+    const castMod=cls==='Wizard'?d.intMod:cls==='Bard'||cls==='Sorcerer'?d.chaMod:cls==='Druid'?d.wisMod:cls==='Cleric'?d.wisMod:d.chaMod;
     d.preparedSpells=cls==='Bard'||cls==='Sorcerer'?lvl+3:Math.max(1,castMod+lvl);
   } else if(HALF_CASTERS.includes(cls)){
-    d.spellSlots=lvl>=3?3:2;d.spellSlotsMax=d.spellSlots;
-    d.spellSlots2nd=lvl>=5?2:0;d.spellSlots2ndMax=d.spellSlots2nd;
+    const idx=Math.min(Math.max(lvl,2),10)-1;
+    const slots=HALF_SLOT_LEVELS[idx]||[0,0,0,0,0];
+    d.spellSlots=slots[0];d.spellSlotsMax=slots[0];
+    d.spellSlots2nd=slots[1];d.spellSlots2ndMax=slots[1];
+    d.spellSlots3rd=slots[2];d.spellSlots3rdMax=slots[2];
+    d.spellSlots4th=slots[3];d.spellSlots4thMax=slots[3];
+    d.spellSlots5th=slots[4];d.spellSlots5thMax=slots[4];
     const castMod=cls==='Paladin'?d.chaMod:d.wisMod;
     d.preparedSpells=Math.max(1,castMod+Math.max(1,Math.floor(lvl/2)));
   } else if(cls==='Warlock'){
     // Pact Magic: all slots are the same level, refreshed on Short Rest
-    d.spellSlots=lvl>=2?2:1;d.spellSlotsMax=d.spellSlots;
-    d.pactSlotLevel=lvl>=5?3:lvl>=3?2:1;
-    d.cantripsKnown=classInfo?.spellcasting?.cantrips?.[lvl-1]||(lvl>=4?3:2);
+    d.spellSlots=lvl>=11?3:lvl>=2?2:1;d.spellSlotsMax=d.spellSlots;
+    d.pactSlotLevel=lvl>=9?5:lvl>=7?4:lvl>=5?3:lvl>=3?2:1;
+    d.cantripsKnown=classInfo?.spellcasting?.cantrips?.[lvl-1]||(lvl>=10?5:lvl>=4?4:3);
     d.preparedSpells=lvl+1; // Warlocks know spells, don't prepare
   } else {
     // Non-casters: Magic Initiate feat grants 1 slot (1/Long Rest)
     if(feat&&feat.includes('Magic Initiate')){d.spellSlots=1;d.spellSlotsMax=1}
   }
+  // Highest spell level this caster can access
+  d.maxSpellLevel=d.spellSlots9thMax?9:d.spellSlots8thMax?8:d.spellSlots7thMax?7:d.spellSlots6thMax?6:d.spellSlots5thMax?5:d.spellSlots4thMax?4:d.spellSlots3rdMax?3:d.spellSlots2ndMax?2:d.spellSlotsMax?1:0;
 
   // Fighter resources
   if(cls==='Fighter'){d.secondWindUses=d.profBonus;d.secondWindMax=d.profBonus;d.actionSurgeMax=lvl>=2?1:0}
@@ -2020,7 +2047,7 @@ const ST={
 };
 // ── Save System: Character (persistent) + Campaign Progress (per-campaign) ──
 const CHARACTER_FIELDS=['cls','stats','style','feat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount','languages','exhaustion'];
-const CAMPAIGN_PROGRESS_FIELDS=['history','flags','awardedScenes','completedRolls','companions','romances','romanceDeclined','companionLog','deadCompanions','rose','sword','crown','orderMax','dgTrack','godSigns','hitDiceUsed','secondWindUsed','actionSurgeUsed','spellSlotsUsed','layOnHandsPool','miraHealedThisScene','combatCount','measureTrack','measureOrientation','approval'];
+const CAMPAIGN_PROGRESS_FIELDS=['history','flags','awardedScenes','completedRolls','companions','romances','romanceDeclined','companionLog','deadCompanions','rose','sword','crown','orderMax','dgTrack','godSigns','hitDiceUsed','secondWindUsed','actionSurgeUsed','spellSlotsUsed','spellSlots2ndUsed','spellSlots3rdUsed','spellSlots4thUsed','spellSlots5thUsed','spellSlots6thUsed','spellSlots7thUsed','spellSlots8thUsed','spellSlots9thUsed','layOnHandsPool','miraHealedThisScene','combatCount','measureTrack','measureOrientation','approval'];
 
 function splitSave(gs,sceneId){
   const character={};const progress={};
@@ -4961,7 +4988,13 @@ function CharCreate({onDone,onBack}){
       e('div',{className:'confirm-row'},e('span',null,'Mastery'),e('span',null,mastery.join(', '))),
       e('div',{className:'confirm-stats'},STAT_NAMES.map(k=>e('div',{key:k,className:'mini-stat'},e('div',{className:'mini-label'},k.toUpperCase()),e('div',{className:'mini-val'},finalStats[k]),e('div',{className:'mini-mod'},modStr(finalStats[k]))))),
       allSpells.cantrips.length||allSpells.level1.length?e('div',{className:'confirm-spells'},
-        e('div',{className:'confirm-row'},e('span',null,'Spell Slots'),e('span',null,d.spellSlots+(d.spellSlots2nd?' (1st), '+d.spellSlots2nd+' (2nd)':' (1st)')+(d.pactSlotLevel?' (pact lv'+d.pactSlotLevel+')':'')+(d.spellSlotsMax<=1&&feat&&feat.includes('Magic Initiate')?' (MI, 1/LR)':''))),
+        e('div',{className:'confirm-row'},e('span',null,'Spell Slots'),e('span',null,
+          (d.spellSlotsMax?'1st: '+d.spellSlotsMax:'')
+          +(d.spellSlots2ndMax?' | 2nd: '+d.spellSlots2ndMax:'')
+          +(d.spellSlots3rdMax?' | 3rd: '+d.spellSlots3rdMax:'')
+          +(d.pactSlotLevel?' (Pact lv'+d.pactSlotLevel+')':'')
+          +(d.spellSlotsMax<=1&&feat&&feat.includes('Magic Initiate')?' (MI, 1/LR)':'')
+        )),
         allSpells.cantrips.length?e('div',{className:'confirm-row'},e('span',null,'Cantrips'),e('span',null,allSpells.cantrips.join(', '))):null,
         allSpells.level1.length?e('div',{className:'confirm-row'},e('span',null,'1st Level'),e('span',null,allSpells.level1.join(', '))):null,
         allSpells.alwaysPrepared.length?e('div',{className:'confirm-row'},e('span',null,'Always Prepared'),e('span',null,allSpells.alwaysPrepared.join(', '))):null
@@ -5762,13 +5795,26 @@ function CharSheet({gs,isEnding,onBack,onEquipChange}){
 
       // ── Spellcasting ──
       hasSpells?section('SPELLCASTING',[
-        gs.cls==='Paladin'?row('Spellcasting Ability','Charisma (Save DC '+(8+d.profBonus+d.chaMod)+', Spell Attack +'+modFmt(d.profBonus+d.chaMod)+')'):null,
-        gs.feat&&gs.feat.includes('Magic Initiate')?row('Magic Initiate Ability',gs.feat.includes('Cleric')?'Wisdom':'Intelligence'):null,
-        row('Hit Dice',(d.hitDiceTotal-(gs.hitDiceUsed||0))+'/'+d.hitDiceTotal+' (d'+d.hitDie+')'),
-        row('Spell Slots',d.spellSlotsMax>1?d.spellSlots+(d.spellSlots2nd?' (1st), '+d.spellSlots2nd+' (2nd)':' (1st level)')+(d.pactSlotLevel?' (pact lv'+d.pactSlotLevel+')':''):d.spellSlotsMax===1?'1 (Magic Initiate, 1/Long Rest)':'None'),
-        sp.alwaysPrepared&&sp.alwaysPrepared.length?row('Always Prepared',sp.alwaysPrepared.join(', ')):null,
-        sp.cantrips&&sp.cantrips.length?row('Cantrips',sp.cantrips.join(', ')):null,
-        sp.level1&&sp.level1.length?row('1st Level Spells',sp.level1.join(', ')):null
+        ['Cleric','Druid','Wizard'].includes(gs.cls)?row('Spellcasting Ability','Wisdom (DC '+(8+d.profBonus+d.wisMod)+', +'+modFmt(d.profBonus+d.wisMod)+')'):null,
+        ['Paladin','Bard','Sorcerer','Warlock'].includes(gs.cls)?row('Spellcasting Ability','Charisma (DC '+(8+d.profBonus+d.chaMod)+', +'+modFmt(d.profBonus+d.chaMod)+')'):null,
+        gs.feat&&gs.feat.includes('Magic Initiate')?row('Magic Initiate',gs.feat.includes('Cleric')?'Wisdom':'Intelligence'):null,
+        row('Prepared',d.preparedSpells+' spells'),
+        // Show slots per level compactly
+        d.spellSlotsMax?row('Slots',
+          (d.spellSlotsMax?'1st: '+(d.spellSlotsMax-(gs.spellSlotsUsed||0))+'/'+d.spellSlotsMax:'')
+          +(d.spellSlots2ndMax?' | 2nd: '+(d.spellSlots2ndMax-(gs.spellSlots2ndUsed||0))+'/'+d.spellSlots2ndMax:'')
+          +(d.spellSlots3rdMax?' | 3rd: '+(d.spellSlots3rdMax-(gs.spellSlots3rdUsed||0))+'/'+d.spellSlots3rdMax:'')
+          +(d.spellSlots4thMax?' | 4th: '+(d.spellSlots4thMax-(gs.spellSlots4thUsed||0))+'/'+d.spellSlots4thMax:'')
+          +(d.spellSlots5thMax?' | 5th: '+(d.spellSlots5thMax-(gs.spellSlots5thUsed||0))+'/'+d.spellSlots5thMax:'')
+          +(d.pactSlotLevel?' (Pact lv'+d.pactSlotLevel+')':'')
+        ):d.spellSlotsMax===0&&gs.feat?.includes('Magic Initiate')?row('MI Slot','1/Long Rest'):null,
+        sp.alwaysPrepared?.length?row('Always Prepared',sp.alwaysPrepared.join(', ')):null,
+        sp.cantrips?.length?row('Cantrips',sp.cantrips.join(', ')):null,
+        sp.level1?.length?row('1st Level',sp.level1.join(', ')):null,
+        sp.level2?.length?row('2nd Level',sp.level2.join(', ')):null,
+        sp.level3?.length?row('3rd Level',sp.level3.join(', ')):null,
+        sp.level4?.length?row('4th Level',sp.level4.join(', ')):null,
+        sp.level5?.length?row('5th Level',sp.level5.join(', ')):null
       ].filter(Boolean)):null,
 
       // ── Features & Traits ──
@@ -6256,19 +6302,39 @@ function SpellPrepModal({gs,onConfirm,onKeep}){
   const e=React.createElement;
   const d=gs.derived;
   const maxPrep=d.preparedSpells||3;
-  const currentPrep=(gs.spells&&gs.spells.level1)||[];
-  const[selected,setSelected]=useState([...currentPrep]);
-  const toggle=(sp)=>{if(selected.includes(sp))setSelected(selected.filter(x=>x!==sp));else if(selected.length<maxPrep)setSelected([...selected,sp])};
+  const maxLevel=d.maxSpellLevel||1;
+  const clsKey=gs.cls.toLowerCase();
+  const classList=SPELL_LISTS[clsKey]||SPELL_LISTS.paladin||{};
+  // Build initial selection from all levels
+  const initSel={};
+  for(let lv=1;lv<=maxLevel;lv++){const k='level'+lv;initSel[k]=gs.spells&&gs.spells[k]?[...gs.spells[k]]:[]}
+  const[selected,setSelected]=useState(initSel);
+  const[activeTab,setActiveTab]=useState(1);
+  const totalSelected=Object.values(selected).flat().length;
+  const toggle=(lv,sp)=>{
+    const k='level'+lv;const cur=selected[k]||[];
+    if(cur.includes(sp))setSelected({...selected,[k]:cur.filter(x=>x!==sp)});
+    else if(totalSelected<maxPrep)setSelected({...selected,[k]:[...cur,sp]})};
+  const levelNames=['','1st','2nd','3rd','4th','5th','6th','7th','8th','9th'];
+  const spellsForLevel=lv=>classList['level'+lv]||[];
   return e('div',{className:'modal-overlay'},
-    e('div',{className:'modal-box spell-prep-modal'},
+    e('div',{className:'modal-box spell-prep-modal',style:{maxHeight:'85vh',overflowY:'auto'}},
       e('h2',{className:'gold',style:{marginBottom:4}},'LONG REST \u2014 PREPARE SPELLS'),
-      e('p',{style:{fontSize:13,color:'var(--text-dim)',marginBottom:12}},'After '+(['Wizard'].includes(gs.cls)?'study':'prayer and meditation')+', choose '+maxPrep+' spells to prepare.'+(gs.cls==='Paladin'?' Paladin\u2019s Smite is always prepared.':'')),
-      e('div',{className:'spell-grid'},(SPELL_LISTS[gs.cls.toLowerCase()]?.level1||SPELL_LISTS.paladin?.level1||[]).map(sp=>
-        e(SpellButton,{key:sp,name:sp,selected:selected.includes(sp),onClick:()=>toggle(sp)}))),
-      e('div',{style:{fontSize:12,color:'var(--text-dim)',margin:'8px 0'}},selected.length+' / '+maxPrep+' prepared'),
+      e('p',{style:{fontSize:13,color:'var(--text-dim)',marginBottom:8}},'After '+(['Wizard'].includes(gs.cls)?'study':'prayer and meditation')+', choose '+maxPrep+' spells to prepare.'+(gs.cls==='Paladin'?' Divine Smite is always prepared.':'')),
+      // Level tabs
+      maxLevel>1?e('div',{className:'spell-level-tabs',style:{display:'flex',gap:4,marginBottom:8,flexWrap:'wrap'}},
+        Array.from({length:maxLevel},(_, i)=>i+1).filter(lv=>spellsForLevel(lv).length>0).map(lv=>
+          e('button',{key:lv,className:'spell-tab'+(activeTab===lv?' active':''),style:{padding:'4px 10px',border:'1px solid var(--gold)',background:activeTab===lv?'var(--gold)':'transparent',color:activeTab===lv?'var(--bg)':'var(--gold)',borderRadius:4,cursor:'pointer',fontSize:12},onClick:()=>setActiveTab(lv)},
+            levelNames[lv]+(selected['level'+lv]?.length?' ('+selected['level'+lv].length+')':'')))):null,
+      // Spell grid for active level
+      e('div',{style:{fontSize:11,color:'var(--text-dim)',marginBottom:4}},levelNames[activeTab]+' Level Spells'),
+      e('div',{className:'spell-grid',style:{maxHeight:200,overflowY:'auto'}},
+        spellsForLevel(activeTab).map(sp=>
+          e(SpellButton,{key:sp,name:sp,selected:(selected['level'+activeTab]||[]).includes(sp),onClick:()=>toggle(activeTab,sp)}))),
+      e('div',{style:{fontSize:12,color:'var(--text-dim)',margin:'8px 0'}},totalSelected+' / '+maxPrep+' prepared'),
       e('div',{className:'confirm-btns',style:{marginTop:12}},
         e('button',{className:'ghost-btn',onClick:onKeep},'Keep Current'),
-        e('button',{className:'gold-btn',onClick:()=>onConfirm(selected),disabled:selected.length!==maxPrep},'Confirm Spells'))));
+        e('button',{className:'gold-btn',onClick:()=>onConfirm(selected),disabled:totalSelected!==maxPrep},'Confirm Spells'))));
 }
 
 function ConfirmModal({msg,onYes,onNo}){
@@ -6475,7 +6541,7 @@ function App(){
       if(ns.cls==='Warlock')ns.spellSlotsUsed=0;
       // Mount recovers some HP on short rest
       if(ns.mount&&ns.mount.hp<ns.mount.maxHp){const heal=rollDice(6)+2;ns.mount={...ns.mount,hp:Math.min(ns.mount.maxHp,ns.mount.hp+heal)}}}
-    if(allBoxText.includes('Long rest')||allBoxText.includes('LONG REST')){ns.secondWindUsed=0;ns.actionSurgeUsed=false;ns.spellSlotsUsed=0;ns.layOnHandsPool=ns.derived.layOnHandsMax||0;ns.hp=ns.derived.maxHp;const hdRecover=Math.max(1,Math.floor(ns.derived.hitDiceTotal/2));ns.hitDiceUsed=Math.max(0,(ns.hitDiceUsed||0)-hdRecover);ns.exhaustion=Math.max(0,(ns.exhaustion||0)-1);if(['Paladin','Cleric','Druid','Wizard'].includes(ns.cls))setSpellPrepModal(true);
+    if(allBoxText.includes('Long rest')||allBoxText.includes('LONG REST')){ns.secondWindUsed=0;ns.actionSurgeUsed=false;ns.spellSlotsUsed=0;ns.spellSlots2ndUsed=0;ns.spellSlots3rdUsed=0;ns.spellSlots4thUsed=0;ns.spellSlots5thUsed=0;ns.spellSlots6thUsed=0;ns.spellSlots7thUsed=0;ns.spellSlots8thUsed=0;ns.spellSlots9thUsed=0;ns.layOnHandsPool=ns.derived.layOnHandsMax||0;ns.hp=ns.derived.maxHp;const hdRecover=Math.max(1,Math.floor(ns.derived.hitDiceTotal/2));ns.hitDiceUsed=Math.max(0,(ns.hitDiceUsed||0)-hdRecover);ns.exhaustion=Math.max(0,(ns.exhaustion||0)-1);if(['Paladin','Cleric','Druid','Wizard','Bard','Sorcerer'].includes(ns.cls))setSpellPrepModal(true);
       // Mount heals on long rest
       if(ns.mount&&ns.mount.hp<ns.mount.maxHp){ns.mount={...ns.mount,hp:ns.mount.maxHp}}}
     const wageM=allBoxText.match(/(?:WAGES?|stipend|field.*pay|march.*pay)[^]*?(\d+)\s*stl/i);if(wageM&&!ns.awardedScenes['wage_'+id]){ns.gold+=(parseInt(wageM[1])||0);ns.awardedScenes['wage_'+id]=true}
@@ -6583,7 +6649,7 @@ function App(){
     const extraInv=[equip.weapon,equip.armor,equip.hasShield?'Shield':'',...cInv,cEquip.head,cEquip.hands,cEquip.boots].filter(Boolean);
     const startLangs=(CAMPAIGN&&CAMPAIGN.startingLanguages)||['Common'];
     const allLangs=[...startLangs];if(extraLang&&!allLangs.includes(extraLang))allLangs.push(extraLang);
-    const state={cls,stats,style,feat,mastery,name:name||'Squire',spells:spells||{cantrips:[],level1:[],alwaysPrepared:[]},weapon:equip.weapon,armor:equip.armor,skilledPicks:skilledPicks||[],classSkills:classSkills||[],humanSkill:humanSkill||null,hasShield:equip.hasShield,level:1,hp:derived.maxHp,derived,xp:0,honour:cRes.honour||5,rose:0,sword:0,crown:0,companions:[],romances:{},godSigns:startGods,dgTrack:'NONE',equipment:buildEquipment(equip.weapon,equip.armor,equip.hasShield),inventory:extraInv,history:[],awardedScenes:{},companionLog:{},romanceDeclined:{},flags:{},bonuses:[],magicItems:[],measureTrack:0,measureOrientation:null,gold:cRes.gold||0,layOnHandsPool:cls==='Paladin'?derived.layOnHandsMax:0,spellSlotsUsed:0,secondWindUsed:0,actionSurgeUsed:false,bandages:cRes.bandages||0,potions:cRes.potions||0,greaterPotions:cRes.greaterPotions||0,miraHealedThisScene:false,completedRolls:{},deadCompanions:[],hitDiceUsed:0,wounds:[],scars:[],combatCount:0,orderMax:{rose:0,sword:0,crown:0},approval:{},companionGifts:[],mount:null,languages:allLangs,exhaustion:0};setGs(state);goScene(startScene,state);setPhase('play')};
+    const state={cls,stats,style,feat,mastery,name:name||'Squire',spells:spells||{cantrips:[],level1:[],alwaysPrepared:[]},weapon:equip.weapon,armor:equip.armor,skilledPicks:skilledPicks||[],classSkills:classSkills||[],humanSkill:humanSkill||null,hasShield:equip.hasShield,level:1,hp:derived.maxHp,derived,xp:0,honour:cRes.honour||5,rose:0,sword:0,crown:0,companions:[],romances:{},godSigns:startGods,dgTrack:'NONE',equipment:buildEquipment(equip.weapon,equip.armor,equip.hasShield),inventory:extraInv,history:[],awardedScenes:{},companionLog:{},romanceDeclined:{},flags:{},bonuses:[],magicItems:[],measureTrack:0,measureOrientation:null,gold:cRes.gold||0,layOnHandsPool:cls==='Paladin'?derived.layOnHandsMax:0,spellSlotsUsed:0,spellSlots2ndUsed:0,spellSlots3rdUsed:0,spellSlots4thUsed:0,spellSlots5thUsed:0,spellSlots6thUsed:0,spellSlots7thUsed:0,spellSlots8thUsed:0,spellSlots9thUsed:0,secondWindUsed:0,actionSurgeUsed:false,bandages:cRes.bandages||0,potions:cRes.potions||0,greaterPotions:cRes.greaterPotions||0,miraHealedThisScene:false,completedRolls:{},deadCompanions:[],hitDiceUsed:0,wounds:[],scars:[],combatCount:0,orderMax:{rose:0,sword:0,crown:0},approval:{},companionGifts:[],mount:null,languages:allLangs,exhaustion:0};setGs(state);goScene(startScene,state);setPhase('play')};
   const loadSave=(saveData)=>{
     if(!saveData)return;
     // Handle v2 split format or auto-migrate legacy
@@ -6603,7 +6669,7 @@ function App(){
       }
     }
     // Field defaults (migration safety)
-    if(!g.inventory)g.inventory=[];if(!g.deadCompanions)g.deadCompanions=[];if(!g.completedRolls)g.completedRolls={};if(!g.awardedScenes)g.awardedScenes={};if(!g.romances)g.romances={};if(!g.flags)g.flags={};if(!g.bonuses)g.bonuses=[];if(!g.magicItems)g.magicItems=[];if(g.hitDiceUsed===undefined)g.hitDiceUsed=0;if(!g.wounds)g.wounds=[];if(!g.scars)g.scars=[];if(g.combatCount===undefined)g.combatCount=0;if(g.xp===undefined)g.xp=0;if(g.honour===undefined)g.honour=5;if(!g.approval)g.approval={};if(!g.companionGifts)g.companionGifts=[];if(!g.orderMax)g.orderMax={rose:Math.max(0,g.rose||0),sword:Math.max(0,g.sword||0),crown:Math.max(0,g.crown||0)};if(g.exhaustion===undefined)g.exhaustion=0;
+    if(!g.inventory)g.inventory=[];if(!g.deadCompanions)g.deadCompanions=[];if(!g.completedRolls)g.completedRolls={};if(!g.awardedScenes)g.awardedScenes={};if(!g.romances)g.romances={};if(!g.flags)g.flags={};if(!g.bonuses)g.bonuses=[];if(!g.magicItems)g.magicItems=[];if(g.hitDiceUsed===undefined)g.hitDiceUsed=0;if(!g.wounds)g.wounds=[];if(!g.scars)g.scars=[];if(g.combatCount===undefined)g.combatCount=0;if(g.xp===undefined)g.xp=0;if(g.honour===undefined)g.honour=5;if(!g.approval)g.approval={};if(!g.companionGifts)g.companionGifts=[];if(!g.orderMax)g.orderMax={rose:Math.max(0,g.rose||0),sword:Math.max(0,g.sword||0),crown:Math.max(0,g.crown||0)};if(g.exhaustion===undefined)g.exhaustion=0;if(g.spellSlots2ndUsed===undefined)g.spellSlots2ndUsed=0;if(g.spellSlots3rdUsed===undefined)g.spellSlots3rdUsed=0;if(g.spellSlots4thUsed===undefined)g.spellSlots4thUsed=0;if(g.spellSlots5thUsed===undefined)g.spellSlots5thUsed=0;if(g.spellSlots6thUsed===undefined)g.spellSlots6thUsed=0;if(g.spellSlots7thUsed===undefined)g.spellSlots7thUsed=0;if(g.spellSlots8thUsed===undefined)g.spellSlots8thUsed=0;if(g.spellSlots9thUsed===undefined)g.spellSlots9thUsed=0;
     if(!g.equipment){g.equipment=buildEquipment(g.weapon,g.armor,g.hasShield);if(!g.inventory.includes('Leather Helm')){g.inventory.push('Leather Helm','Leather Gloves','Leather Boots')}}
     // Migrate companion names to canonical casing
     g.companions=(g.companions||[]).map(c=>{const canon=COMPANIONS_ALL.find(x=>x.toLowerCase()===c.toLowerCase());return canon||c});
@@ -6870,8 +6936,15 @@ function App(){
         // Lay on Hands (Paladin)
         d.layOnHandsMax?e('div',{className:'resource-row'},e('span',null,'Lay on Hands'),e('span',null,(gs.layOnHandsPool||0)+'/'+d.layOnHandsMax)):null,
         // Spell Slots (any caster)
-        d.spellSlotsMax?e('div',{className:'resource-row'},e('span',null,d.spellSlotsMax<=1?'MI Slot':'Spell Slots (1st)'),e('span',null,(d.spellSlotsMax-(gs.spellSlotsUsed||0))+'/'+d.spellSlotsMax)):null,
-        d.spellSlots2ndMax?e('div',{className:'resource-row'},e('span',null,'Spell Slots (2nd)'),e('span',null,(d.spellSlots2ndMax-(gs.spellSlots2ndUsed||0))+'/'+d.spellSlots2ndMax)):null,
+        d.spellSlotsMax?e('div',{className:'resource-row'},e('span',null,d.spellSlotsMax<=1?'MI Slot':'Slots (1st)'),e('span',null,(d.spellSlotsMax-(gs.spellSlotsUsed||0))+'/'+d.spellSlotsMax)):null,
+        d.spellSlots2ndMax?e('div',{className:'resource-row'},e('span',null,'Slots (2nd)'),e('span',null,(d.spellSlots2ndMax-(gs.spellSlots2ndUsed||0))+'/'+d.spellSlots2ndMax)):null,
+        d.spellSlots3rdMax?e('div',{className:'resource-row'},e('span',null,'Slots (3rd)'),e('span',null,(d.spellSlots3rdMax-(gs.spellSlots3rdUsed||0))+'/'+d.spellSlots3rdMax)):null,
+        d.spellSlots4thMax?e('div',{className:'resource-row'},e('span',null,'Slots (4th)'),e('span',null,(d.spellSlots4thMax-(gs.spellSlots4thUsed||0))+'/'+d.spellSlots4thMax)):null,
+        d.spellSlots5thMax?e('div',{className:'resource-row'},e('span',null,'Slots (5th)'),e('span',null,(d.spellSlots5thMax-(gs.spellSlots5thUsed||0))+'/'+d.spellSlots5thMax)):null,
+        d.spellSlots6thMax?e('div',{className:'resource-row'},e('span',null,'Slots (6th)'),e('span',null,(d.spellSlots6thMax-(gs.spellSlots6thUsed||0))+'/'+d.spellSlots6thMax)):null,
+        d.spellSlots7thMax?e('div',{className:'resource-row'},e('span',null,'Slots (7th)'),e('span',null,(d.spellSlots7thMax-(gs.spellSlots7thUsed||0))+'/'+d.spellSlots7thMax)):null,
+        d.spellSlots8thMax?e('div',{className:'resource-row'},e('span',null,'Slots (8th)'),e('span',null,(d.spellSlots8thMax-(gs.spellSlots8thUsed||0))+'/'+d.spellSlots8thMax)):null,
+        d.spellSlots9thMax?e('div',{className:'resource-row'},e('span',null,'Slots (9th)'),e('span',null,(d.spellSlots9thMax-(gs.spellSlots9thUsed||0))+'/'+d.spellSlots9thMax)):null,
         // Channel Divinity (Paladin/Cleric)
         d.channelDivinity?e('div',{className:'resource-row'},e('span',null,'Channel Divinity'),e('span',null,d.channelDivinity+'/LR')):null,
         // Second Wind (Fighter)
@@ -6943,7 +7016,7 @@ function App(){
     npcNotify?e(NpcNotification,{notif:npcNotify,onDismiss:dismissNpcNotify}):null,
     breakupTarget&&gs?e(BreakupScene,{name:breakupTarget,gs:gs,onResolve:handleBreakup}):null,
     romanceCheck?e(RelationshipCheck,{check:romanceCheck,gs:gs,onResolve:resolveRelationship}):null,
-    spellPrepModal&&gs&&['Paladin','Cleric','Druid','Wizard'].includes(gs.cls)?e(SpellPrepModal,{gs:gs,onConfirm:(spells)=>{const ns={...gs,spells:{...gs.spells,level1:spells}};ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion);setGs(ns);setSpellPrepModal(false)},onKeep:()=>setSpellPrepModal(false)}):null,
+    spellPrepModal&&gs&&['Paladin','Cleric','Druid','Wizard','Bard','Sorcerer'].includes(gs.cls)?e(SpellPrepModal,{gs:gs,onConfirm:(spells)=>{const ns={...gs,spells:{...gs.spells,...spells}};ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion);setGs(ns);setSpellPrepModal(false)},onKeep:()=>setSpellPrepModal(false)}):null,
     shortRestModal&&gs?e(ShortRestModal,{gs:gs,onDone:(result)=>{const ns={...gs,hp:result.hp,hitDiceUsed:result.hitDiceUsed};setGs(ns);setShortRestModal(false)}}):null,
     healingPanel&&gs?e(HealingPanel,{gs:gs,onUpdate:(upd)=>{const ns={...gs,...upd};setGs(ns)},onClose:()=>setHealingPanel(false)}):null,
     defeatRecovery&&gs?e(DefeatRecoveryModal,{gs:gs,wound:defeatRecovery.wound,scar:defeatRecovery.scar,onContinue:()=>setDefeatRecovery(null)}):null,
