@@ -10,9 +10,9 @@
   "availableSpecies": ["human"],
   "speciesLocked": true,
   "startingLanguages": ["Common", "Solamnic"],
-  "version": "24.4.3",
+  "version": "24.4.4",
   "startScene": "1",
-  "startingInventory": ["Dagger", "Explorer's Pack", "Solamnic Tabard"],
+  "startingInventory": ["Dagger", "Backpack", "Bedroll", "Mess Kit", "Tinderbox", "Waterskin", "Rope (50 ft)", "Solamnic Tabard"],
   "startingEquipment": {
     "head": "Leather Helm",
     "hands": "Leather Gloves",
@@ -24,7 +24,9 @@
     "potions": 0,
     "greaterPotions": 0,
     "gold": 0,
-    "honour": 5
+    "honour": 5,
+    "rations": 10,
+    "torches": 10
   },
   "orders": {
     "rose": {

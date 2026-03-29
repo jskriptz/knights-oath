@@ -32,8 +32,13 @@
     "Whetstone": 0,
     "Caltrops": 1,
     "Rope": 0,
+    "Rope (50 ft)": 0,
     "Torch": 0,
-    "Explorer’s Pack": 2,
+    "Backpack": 1,
+    "Bedroll": 0,
+    "Mess Kit": 0,
+    "Tinderbox": 0,
+    "Waterskin": 0,
     "+1 Weapon": 50,
     "+1 Longsword": 50,
     "+1 Armor": 75,
@@ -58,5 +63,5 @@
     "Elven Chain": 200,
     "Masterwork": 15
   },
-  "unsellablePattern": "tabard|aldric.s dagger|sera.s|mira.s|serath.s|thessaly.s|vael.s|lysander.s|tariel.s|caeron.s|rose commentary|garrison watch token|patrol sketch|family ring|carved wooden token|kapak venom|dawnstrike|Explorer\\u2019s Pack|boar tusks"
+  "unsellablePattern": "tabard|aldric.s dagger|sera.s|mira.s|serath.s|thessaly.s|vael.s|lysander.s|tariel.s|caeron.s|rose commentary|garrison watch token|patrol sketch|family ring|carved wooden token|kapak venom|dawnstrike|boar tusks"
 }
