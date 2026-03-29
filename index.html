@@ -1510,9 +1510,12 @@ function calcAC(armor,hasShield,dexMod){
   const acs={'None':10+dexMod,'Chain Mail':16,'Scale Mail':Math.min(14+dexMod,16),'Leather Armor':11+dexMod,'Studded Leather':12+dexMod,'Half-Plate':Math.min(15+dexMod,17)};
   return(acs[armor]!=null?acs[armor]:16)+(hasShield?2:0);
 }
-function calcDerived(stats,cls,lvl,armor,hasShield,feat,wounds){
+function calcDerived(stats,cls,lvl,armor,hasShield,feat,wounds,exhaustion){
   const ws=wounds||[];const woundPenalty=(stat)=>ws.filter(w=>w.stat===stat&&w.combatsLeft>0).length;
+  const exh=Math.min(Math.max(exhaustion||0,0),10);
   const d={};d.profBonus=lvl>=5?3:2;
+  // D&D 5e 2024 Exhaustion: -1 per level to d20 rolls, speed halved at 5+, death at 10
+  d.exhaustion=exh;d.exhaustionPenalty=exh;d.exhaustionSpeedHalved=exh>=5;d.exhaustionDead=exh>=10;
   const effStats={str:stats.str-woundPenalty('str'),dex:stats.dex-woundPenalty('dex'),con:stats.con-woundPenalty('con'),int:stats.int-woundPenalty('int'),wis:stats.wis-woundPenalty('wis'),cha:stats.cha-woundPenalty('cha')};
   d.strMod=mod(effStats.str);d.dexMod=mod(effStats.dex);d.conMod=mod(effStats.con);d.intMod=mod(effStats.int);d.wisMod=mod(effStats.wis);d.chaMod=mod(effStats.cha);d.ac=calcAC(armor||'Chain Mail',hasShield!==false,d.dexMod);
 
@@ -1913,7 +1916,7 @@ function equipItem(gs,itemName,slotOverride){
   eq[slot]=itemName;
   const ns={...gs,equipment:eq};
   syncEquipToState(ns);
-  ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds);
+  ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion);
   return ns;
 }
 function unequipItem(gs,slotId){
@@ -1922,7 +1925,7 @@ function unequipItem(gs,slotId){
   eq[slotId]=null;
   const ns={...gs,equipment:eq};
   syncEquipToState(ns);
-  ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds);
+  ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion);
   return ns;
 }
 function isLightWeapon(name){const w=WEAPONS_WITH_MASTERY.find(x=>x.name===name);return w&&/Light/i.test(w.props)}
@@ -2016,7 +2019,7 @@ const ST={
   async del(k){try{if(window.storage){await window.storage.delete(k);return}localStorage.removeItem(k)}catch(e){try{localStorage.removeItem(k)}catch(e2){}}}
 };
 // ── Save System: Character (persistent) + Campaign Progress (per-campaign) ──
-const CHARACTER_FIELDS=['cls','stats','style','feat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount','languages'];
+const CHARACTER_FIELDS=['cls','stats','style','feat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount','languages','exhaustion'];
 const CAMPAIGN_PROGRESS_FIELDS=['history','flags','awardedScenes','completedRolls','companions','romances','romanceDeclined','companionLog','deadCompanions','rose','sword','crown','orderMax','dgTrack','godSigns','hitDiceUsed','secondWindUsed','actionSurgeUsed','spellSlotsUsed','layOnHandsPool','miraHealedThisScene','combatCount','measureTrack','measureOrientation','approval'];
 
 function splitSave(gs,sceneId){
@@ -2226,6 +2229,9 @@ function RollBox({text,derived,gs,onBonus,rollKey,onRollSave}){
   if(gs&&gs.flags&&gs.flags.aldous_mentor&&roseSkills.includes(parsed.skill))bonus+=1;
   // Apply accumulated roll bonuses from gs.bonuses
   if(gs&&gs.bonuses){gs.bonuses.forEach(b=>{if(b.type==='roll_bonus'&&b.name){const sk=parsed.skill.toLowerCase();const bn=b.name.toLowerCase();if(bn.includes(sk)||bn.includes('any')||bn.includes('all'))bonus+=1}})}
+  // Exhaustion penalty (D&D 5e 2024: -1 per level to d20 rolls)
+  const exhPenalty=derived?.exhaustionPenalty||0;
+  bonus-=exhPenalty;
   const e=React.createElement;
 
   // Persist a roll result to gs.completedRolls
@@ -2879,7 +2885,9 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
         let blessBonus=0;
         if(c.blessActive){blessBonus=rollDice(4)}
 
-        const total=d20+weapAtk+atkMod+blessBonus;
+        // Exhaustion penalty (D&D 5e 2024: -1 per level to d20 rolls)
+        const exhPenalty=gs?.derived?.exhaustionPenalty||0;
+        const total=d20+weapAtk+atkMod+blessBonus-exhPenalty;
         const isCrit=d20===20;
         const isFumble=d20===1;
         const hit=isCrit||(total>=target.ac&&!isFumble);
@@ -2896,9 +2904,9 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
           c.enemies=[...c.enemies];c.enemies[tIdx]={...c.enemies[tIdx],currentHp:Math.max(0,c.enemies[tIdx].currentHp-dmg)};
           if(c.enemies[tIdx].currentHp<=0)c.enemies[tIdx].alive=false;
           const bronwynBonus=gs&&gs.flags&&gs.flags.bronwyn_fix&&target.ac>=13;
-          logMsg='R'+c.round+' Attack: d20='+d20+(d20b!==null?' (adv/disadv: '+d20b+')':'')+' +'+weapAtk+(atkMod?'+'+atkMod:'')+(blessBonus?'+'+blessBonus+' bless':'')+' = '+total+' vs AC '+target.ac+' \u2714 HIT'+(isCrit?' (CRITICAL!)':'')+' for '+dmg+' damage'+(bronwynBonus?' (incl. Bronwyn\u2019s +1)':'');
+          logMsg='R'+c.round+' Attack: d20='+d20+(d20b!==null?' (adv/disadv: '+d20b+')':'')+' +'+weapAtk+(atkMod?'+'+atkMod:'')+(blessBonus?'+'+blessBonus+' bless':'')+(exhPenalty?'-'+exhPenalty+' exhaustion':'')+' = '+total+' vs AC '+target.ac+' \u2714 HIT'+(isCrit?' (CRITICAL!)':'')+' for '+dmg+' damage'+(bronwynBonus?' (incl. Bronwyn\u2019s +1)':'');
         }else{
-          logMsg='R'+c.round+' Attack: d20='+d20+(d20b!==null?' (adv/disadv: '+d20b+')':'')+' +'+weapAtk+(atkMod?'+'+atkMod:'')+(blessBonus?'+'+blessBonus+' bless':'')+' = '+total+' vs AC '+target.ac+' \u2718 MISS';
+          logMsg='R'+c.round+' Attack: d20='+d20+(d20b!==null?' (adv/disadv: '+d20b+')':'')+' +'+weapAtk+(atkMod?'+'+atkMod:'')+(blessBonus?'+'+blessBonus+' bless':'')+(exhPenalty?'-'+exhPenalty+' exhaustion':'')+' = '+total+' vs AC '+target.ac+' \u2718 MISS';
         }
 
         // Apply weapon mastery
@@ -3404,7 +3412,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
               if(c.result==='win'&&ng.mount&&Math.random()<0.3){const mountDmg=rollDice(6);ng.mount={...ng.mount,hp:ng.mount.hp-mountDmg};
                 if(ng.mount.hp<=0){ng.mount=null;ng.history=[...(ng.history||[]),'\ud83d\udc0e Your mount was killed in the fighting.']}
                 else ng.history=[...(ng.history||[]),'\ud83d\udc0e Your mount took '+mountDmg+' damage in the fighting.']}
-              if(c.result==='lose'){ng.hp=1;ng.flags={...(ng.flags||{}),exhaustion:((ng.flags||{}).exhaustion||0)+1};
+              if(c.result==='lose'){ng.hp=1;ng.exhaustion=Math.min(10,(ng.exhaustion||0)+1);
                 // Add wound (random stat -1 for 3 combats) and scar
                 const woundStats=['str','dex','con','int','wis','cha'];const wStat=woundStats[Math.floor(Math.random()*6)];
                 const newWound={stat:wStat,combatsLeft:3,scene:g.history&&g.history.length?g.history[g.history.length-1]:'unknown'};
@@ -3412,7 +3420,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
                 const usedScars=(ng.scars||[]).map(s=>s.text);const availScars=SCARS.filter(s=>!usedScars.includes(s));
                 const scarText=availScars.length>0?availScars[Math.floor(Math.random()*availScars.length)]:SCARS[Math.floor(Math.random()*SCARS.length)];
                 ng.scars=[...(ng.scars||[]),{text:scarText,scene:newWound.scene}];
-                ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds);
+                ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds,ng.exhaustion);
                 setTimeout(()=>setDefeatRecovery({wound:newWound,scar:scarText}),400);
                 // Mount takes heavy damage on defeat — 50% chance killed
                 if(ng.mount){const mountDmg=rollDice(10)+rollDice(10);ng.mount={...ng.mount,hp:ng.mount.hp-mountDmg};
@@ -3424,7 +3432,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
               if(c.civilianRescued&&c.result==='win'){ng.xp=(ng.xp||0)+10;ng.rose=(ng.rose||0)+2;ng.flags={...(ng.flags||{}),civilianRescued:true}}
               // Tick down wound timers on combat completion (victory heals; defeat adds new wound above)
               ng.combatCount=(ng.combatCount||0)+1;
-              if(c.result==='win'&&ng.wounds&&ng.wounds.length){ng.wounds=ng.wounds.map(w=>({...w,combatsLeft:Math.max(0,w.combatsLeft-1)})).filter(w=>w.combatsLeft>0);ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds)}
+              if(c.result==='win'&&ng.wounds&&ng.wounds.length){ng.wounds=ng.wounds.map(w=>({...w,combatsLeft:Math.max(0,w.combatsLeft-1)})).filter(w=>w.combatsLeft>0);ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds,ng.exhaustion)}
               return ng;
             });
           }
@@ -3572,7 +3580,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
               }
             }
             ng.combatCount=(ng.combatCount||0)+1;
-            if(ng.wounds&&ng.wounds.length){ng.wounds=ng.wounds.map(w=>({...w,combatsLeft:Math.max(0,w.combatsLeft-1)})).filter(w=>w.combatsLeft>0);ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds)}
+            if(ng.wounds&&ng.wounds.length){ng.wounds=ng.wounds.map(w=>({...w,combatsLeft:Math.max(0,w.combatsLeft-1)})).filter(w=>w.combatsLeft>0);ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds,ng.exhaustion)}
             return ng;
           });
           setCombat({result:'win',log:[{type:'result',text:'Victory (pen & paper)',round:0}],phase:'over'});
@@ -3580,14 +3588,14 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
         parsed.winOutcome?e('div',{className:'outcome-text'},parsed.winOutcome):null,
         e('button',{className:'combat-outcome-btn lose',onClick:()=>{
           if(onStateUpdate)onStateUpdate(g=>{
-            const ng={...g,hp:1,combatResolved:true,flags:{...(g.flags||{}),exhaustion:((g.flags||{}).exhaustion||0)+1}};
+            const ng={...g,hp:1,combatResolved:true,exhaustion:Math.min(10,(g.exhaustion||0)+1)};
             const woundStats=['str','dex','con','int','wis','cha'];const wStat=woundStats[Math.floor(Math.random()*6)];
             const newWound={stat:wStat,combatsLeft:3,scene:g.history&&g.history.length?g.history[g.history.length-1]:'unknown'};
             ng.wounds=[...(ng.wounds||[]),newWound];
             const usedScars=(ng.scars||[]).map(s=>s.text);const availScars=SCARS.filter(s=>!usedScars.includes(s));
             const scarText=availScars.length>0?availScars[Math.floor(Math.random()*availScars.length)]:SCARS[Math.floor(Math.random()*SCARS.length)];
             ng.scars=[...(ng.scars||[]),{text:scarText,scene:newWound.scene}];
-            ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds);
+            ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds,ng.exhaustion);
             setTimeout(()=>setDefeatRecovery({wound:newWound,scar:scarText}),400);
             return ng;
           });
@@ -3752,7 +3760,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
                 ng.inventory.push('Dawnstrike','Half-Plate');
                 ng.flags={...(ng.flags||{}),dawnstrike:true};
                 if(ng.equipment)ng.equipment={...ng.equipment,mainHand:'Dawnstrike',armor:'Half-Plate',offHand:null};
-                ng.derived=calcDerived(ng.stats,ng.cls,ng.level,'Half-Plate',false,ng.feat,ng.wounds);
+                ng.derived=calcDerived(ng.stats,ng.cls,ng.level,'Half-Plate',false,ng.feat,ng.wounds,ng.exhaustion);
                 return ng;
               });
             }},e('strong',null,'A) Accept Dawnstrike and the Half-Plate'),' \u2014 A greatsword of legend and the armour of a true knight.'),
@@ -4160,7 +4168,7 @@ function ShopBox({text,gs,onStateUpdate}){
         if(item.name.includes('Bandage'))ng.bandages=(ng.bandages||0)+1;
         if(item.name.includes('Potion of Healing')&&!item.name.includes('Greater'))ng.potions=(ng.potions||0)+1;
         if(item.name.includes('Greater Potion'))ng.greaterPotions=(ng.greaterPotions||0)+1;
-        if(item.name==='Shield'&&!ng.hasShield){ng.hasShield=true;if(ng.equipment)ng.equipment={...ng.equipment,offHand:'Shield'};ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,true,ng.feat,ng.wounds)}
+        if(item.name==='Shield'&&!ng.hasShield){ng.hasShield=true;if(ng.equipment)ng.equipment={...ng.equipment,offHand:'Shield'};ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,true,ng.feat,ng.wounds,ng.exhaustion)}
         return ng;
       });
     }
@@ -4187,8 +4195,8 @@ function ShopBox({text,gs,onStateUpdate}){
         if(itemName.includes('Potion of Healing')&&!itemName.includes('Greater'))ng.potions=Math.max(0,(ng.potions||0)-1);
         if(itemName.includes('Greater Potion'))ng.greaterPotions=Math.max(0,(ng.greaterPotions||0)-1);
         // Unequip from equipment slots if selling an equipped item
-        if(ng.equipment){const eq={...ng.equipment};let changed=false;for(const[k,v]of Object.entries(eq)){if(v===itemName&&!ng.inventory.includes(itemName)){eq[k]=null;changed=true;break}}if(changed){ng.equipment=eq;syncEquipToState(ng);ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds)}}
-        if(itemName==='Shield'&&ng.hasShield&&!ng.inventory.includes('Shield')){ng.hasShield=false;if(ng.equipment)ng.equipment={...ng.equipment,offHand:null};ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,false,ng.feat,ng.wounds)}
+        if(ng.equipment){const eq={...ng.equipment};let changed=false;for(const[k,v]of Object.entries(eq)){if(v===itemName&&!ng.inventory.includes(itemName)){eq[k]=null;changed=true;break}}if(changed){ng.equipment=eq;syncEquipToState(ng);ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds,ng.exhaustion)}}
+        if(itemName==='Shield'&&ng.hasShield&&!ng.inventory.includes('Shield')){ng.hasShield=false;if(ng.equipment)ng.equipment={...ng.equipment,offHand:null};ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,false,ng.feat,ng.wounds,ng.exhaustion)}
         return ng;
       });
     }
@@ -4938,7 +4946,7 @@ function CharCreate({onDone,onBack}){
         e('button',{className:'gold-btn',onClick:()=>setStep(4)},'Continue')));
   }
 
-  const d=calcDerived(finalStats,cls,1,armor,hasShield,feat);
+  const d=calcDerived(finalStats,cls,1,armor,hasShield,feat,[],0);
   const allSpells={cantrips:[...miCantrips],level1:[...(miSpell?[miSpell]:[]),...palSpells],alwaysPrepared:cls==='Paladin'?["Paladin\u2019s Smite"]:[]};
   return e('div',{className:'cover'},e('h2',{className:'gold'},name||'Squire'),e('div',{className:'divider'}),
     e('div',{className:'confirm-sheet'},
@@ -5373,7 +5381,7 @@ function evaluateDmCondition(cond,gs,sceneId){
 function DmSummary({gs,sceneId,onBack}){
   const e=React.createElement;
   const dm=DM_SUMMARY||{};
-  const d=gs.derived||calcDerived(gs.stats,gs.cls,gs.level,gs.armor,gs.hasShield,gs.feat,gs.wounds);
+  const d=gs.derived||calcDerived(gs.stats,gs.cls,gs.level,gs.armor,gs.hasShield,gs.feat,gs.wounds,gs.exhaustion);
   const cTitle=(CAMPAIGN&&CAMPAIGN.title)||'Campaign';
 
   // Ending info
@@ -5829,6 +5837,15 @@ function CharSheet({gs,isEnding,onBack,onEquipChange}){
           e('span',{className:'cs-bonus-name'},b.name),
           b.desc?e('span',{className:'cs-bonus-desc'},b.desc):null
         )))):null,
+
+      // ── Exhaustion ──
+      (gs.exhaustion>0)?section('EXHAUSTION',e('div',{className:'cs-exhaustion',style:{padding:'8px',background:'rgba(139,58,58,.1)',border:'1px solid rgba(139,58,58,.3)',borderRadius:6}},
+        e('div',{style:{display:'flex',alignItems:'center',gap:8}},
+          e('span',{style:{fontSize:24,color:'#c0392b',fontFamily:'Cinzel',fontWeight:'bold'}},gs.exhaustion),
+          e('span',{style:{color:'var(--text)'}},gs.exhaustion>=10?'DEAD':gs.exhaustion>=5?'Speed halved, -'+gs.exhaustion+' to d20 rolls':'-'+gs.exhaustion+' to d20 rolls')
+        ),
+        e('div',{style:{fontSize:11,color:'var(--text-dim)',marginTop:4}},'Reduced by 1 on Long Rest')
+      )):null,
 
       // ── Wounds & Scars ──
       (gs.wounds&&gs.wounds.filter(w=>w.combatsLeft>0).length)?section('ACTIVE WOUNDS',e('div',{className:'cs-wounds'},
@@ -6458,7 +6475,7 @@ function App(){
       if(ns.cls==='Warlock')ns.spellSlotsUsed=0;
       // Mount recovers some HP on short rest
       if(ns.mount&&ns.mount.hp<ns.mount.maxHp){const heal=rollDice(6)+2;ns.mount={...ns.mount,hp:Math.min(ns.mount.maxHp,ns.mount.hp+heal)}}}
-    if(allBoxText.includes('Long rest')||allBoxText.includes('LONG REST')){ns.secondWindUsed=0;ns.actionSurgeUsed=false;ns.spellSlotsUsed=0;ns.layOnHandsPool=ns.derived.layOnHandsMax||0;ns.hp=ns.derived.maxHp;const hdRecover=Math.max(1,Math.floor(ns.derived.hitDiceTotal/2));ns.hitDiceUsed=Math.max(0,(ns.hitDiceUsed||0)-hdRecover);if(['Paladin','Cleric','Druid','Wizard'].includes(ns.cls))setSpellPrepModal(true);
+    if(allBoxText.includes('Long rest')||allBoxText.includes('LONG REST')){ns.secondWindUsed=0;ns.actionSurgeUsed=false;ns.spellSlotsUsed=0;ns.layOnHandsPool=ns.derived.layOnHandsMax||0;ns.hp=ns.derived.maxHp;const hdRecover=Math.max(1,Math.floor(ns.derived.hitDiceTotal/2));ns.hitDiceUsed=Math.max(0,(ns.hitDiceUsed||0)-hdRecover);ns.exhaustion=Math.max(0,(ns.exhaustion||0)-1);if(['Paladin','Cleric','Druid','Wizard'].includes(ns.cls))setSpellPrepModal(true);
       // Mount heals on long rest
       if(ns.mount&&ns.mount.hp<ns.mount.maxHp){ns.mount={...ns.mount,hp:ns.mount.maxHp}}}
     const wageM=allBoxText.match(/(?:WAGES?|stipend|field.*pay|march.*pay)[^]*?(\d+)\s*stl/i);if(wageM&&!ns.awardedScenes['wage_'+id]){ns.gold+=(parseInt(wageM[1])||0);ns.awardedScenes['wage_'+id]=true}
@@ -6515,6 +6532,13 @@ function App(){
         const orient=t.match(/MEASURE TRACK:\s*(ROSE|SWORD|CROWN|BALANCE)\s+orientation/i);
         if(orient)ns.measureOrientation=orient[1].charAt(0)+orient[1].slice(1).toLowerCase();
       }
+      // Track exhaustion changes (D&D 5e 2024)
+      const exhMatch=t.match(/EXHAUSTION\s*([+-]?\d+)/i);
+      if(exhMatch){
+        const delta=parseInt(exhMatch[1]);
+        ns.exhaustion=Math.max(0,Math.min(10,(ns.exhaustion||0)+delta));
+        if(ns.exhaustion>=10){if(!ns.history)ns.history=[];ns.history.push('[You have died from exhaustion.]')}
+      }
       // Track DG track state (Paladin)
       if(b.type==='dg_track'){
         if(t.includes('PURIFIED'))ns.dgTrack='PURIFIED';
@@ -6548,9 +6572,9 @@ function App(){
       else if(boxFull.includes('whichever god feels right')){ns.awardedScenes[godKey]=true;setTimeout(()=>setGodSignPicker({scene:id,options:null}),400)}
     }}
     s.boxes.filter(b=>b.type==='companion').forEach(b=>{const m=b.text.match(/COMPANION JOINS:\s*(.+?)[\n(*]/);if(m){let nm=m[1].replace(/\*+/g,'').trim();nm=nm.split(/\s+/).map(w=>w.charAt(0).toUpperCase()+w.slice(1).toLowerCase()).join(' ');const canonical=COMPANIONS_ALL.find(c=>c.toLowerCase()===nm.toLowerCase());if(canonical)nm=canonical;if(!ns.companions.includes(nm)){ns.companions=[...ns.companions,nm];if(!ns.companionLog)ns.companionLog={};if(!ns.companionLog[nm])ns.companionLog[nm]=[];ns.companionLog[nm].push('Joined in Scene '+sceneId+(s.title?' — '+s.title:''))}}});
-    s.boxes.filter(b=>b.type==='levelup').forEach(b=>{if(b.text.includes('LEVEL 2')&&ns.level<2){ns.level=2;ns.derived=calcDerived(ns.stats,ns.cls,2,ns.armor,ns.hasShield,ns.feat,ns.wounds);ns.hp=ns.derived.maxHp}if(b.text.includes('LEVEL 3')&&ns.level<3){ns.level=3;ns.derived=calcDerived(ns.stats,ns.cls,3,ns.armor,ns.hasShield,ns.feat,ns.wounds);ns.hp=ns.derived.maxHp}});
+    s.boxes.filter(b=>b.type==='levelup').forEach(b=>{if(b.text.includes('LEVEL 2')&&ns.level<2){ns.level=2;ns.derived=calcDerived(ns.stats,ns.cls,2,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion);ns.hp=ns.derived.maxHp}if(b.text.includes('LEVEL 3')&&ns.level<3){ns.level=3;ns.derived=calcDerived(ns.stats,ns.cls,3,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion);ns.hp=ns.derived.maxHp}});
     setScene(s);setSceneId(id);setGs(ns)};
-  const startGame=({cls,stats,style,feat,mastery,name,spells,equip,skilledPicks,classSkills,humanSkill,extraLang})=>{const derived=calcDerived(stats,cls,1,equip.armor,equip.hasShield,feat);
+  const startGame=({cls,stats,style,feat,mastery,name,spells,equip,skilledPicks,classSkills,humanSkill,extraLang})=>{const derived=calcDerived(stats,cls,1,equip.armor,equip.hasShield,feat,[],0);
     const cRes=(CAMPAIGN&&CAMPAIGN.startingResources)||{};
     const cInv=(CAMPAIGN&&CAMPAIGN.startingInventory)||['Dagger','Explorer\u2019s Pack'];
     const cEquip=(CAMPAIGN&&CAMPAIGN.startingEquipment)||{};
@@ -6559,7 +6583,7 @@ function App(){
     const extraInv=[equip.weapon,equip.armor,equip.hasShield?'Shield':'',...cInv,cEquip.head,cEquip.hands,cEquip.boots].filter(Boolean);
     const startLangs=(CAMPAIGN&&CAMPAIGN.startingLanguages)||['Common'];
     const allLangs=[...startLangs];if(extraLang&&!allLangs.includes(extraLang))allLangs.push(extraLang);
-    const state={cls,stats,style,feat,mastery,name:name||'Squire',spells:spells||{cantrips:[],level1:[],alwaysPrepared:[]},weapon:equip.weapon,armor:equip.armor,skilledPicks:skilledPicks||[],classSkills:classSkills||[],humanSkill:humanSkill||null,hasShield:equip.hasShield,level:1,hp:derived.maxHp,derived,xp:0,honour:cRes.honour||5,rose:0,sword:0,crown:0,companions:[],romances:{},godSigns:startGods,dgTrack:'NONE',equipment:buildEquipment(equip.weapon,equip.armor,equip.hasShield),inventory:extraInv,history:[],awardedScenes:{},companionLog:{},romanceDeclined:{},flags:{},bonuses:[],magicItems:[],measureTrack:0,measureOrientation:null,gold:cRes.gold||0,layOnHandsPool:cls==='Paladin'?derived.layOnHandsMax:0,spellSlotsUsed:0,secondWindUsed:0,actionSurgeUsed:false,bandages:cRes.bandages||0,potions:cRes.potions||0,greaterPotions:cRes.greaterPotions||0,miraHealedThisScene:false,completedRolls:{},deadCompanions:[],hitDiceUsed:0,wounds:[],scars:[],combatCount:0,orderMax:{rose:0,sword:0,crown:0},approval:{},companionGifts:[],mount:null,languages:allLangs};setGs(state);goScene(startScene,state);setPhase('play')};
+    const state={cls,stats,style,feat,mastery,name:name||'Squire',spells:spells||{cantrips:[],level1:[],alwaysPrepared:[]},weapon:equip.weapon,armor:equip.armor,skilledPicks:skilledPicks||[],classSkills:classSkills||[],humanSkill:humanSkill||null,hasShield:equip.hasShield,level:1,hp:derived.maxHp,derived,xp:0,honour:cRes.honour||5,rose:0,sword:0,crown:0,companions:[],romances:{},godSigns:startGods,dgTrack:'NONE',equipment:buildEquipment(equip.weapon,equip.armor,equip.hasShield),inventory:extraInv,history:[],awardedScenes:{},companionLog:{},romanceDeclined:{},flags:{},bonuses:[],magicItems:[],measureTrack:0,measureOrientation:null,gold:cRes.gold||0,layOnHandsPool:cls==='Paladin'?derived.layOnHandsMax:0,spellSlotsUsed:0,secondWindUsed:0,actionSurgeUsed:false,bandages:cRes.bandages||0,potions:cRes.potions||0,greaterPotions:cRes.greaterPotions||0,miraHealedThisScene:false,completedRolls:{},deadCompanions:[],hitDiceUsed:0,wounds:[],scars:[],combatCount:0,orderMax:{rose:0,sword:0,crown:0},approval:{},companionGifts:[],mount:null,languages:allLangs,exhaustion:0};setGs(state);goScene(startScene,state);setPhase('play')};
   const loadSave=(saveData)=>{
     if(!saveData)return;
     // Handle v2 split format or auto-migrate legacy
@@ -6579,13 +6603,13 @@ function App(){
       }
     }
     // Field defaults (migration safety)
-    if(!g.inventory)g.inventory=[];if(!g.deadCompanions)g.deadCompanions=[];if(!g.completedRolls)g.completedRolls={};if(!g.awardedScenes)g.awardedScenes={};if(!g.romances)g.romances={};if(!g.flags)g.flags={};if(!g.bonuses)g.bonuses=[];if(!g.magicItems)g.magicItems=[];if(g.hitDiceUsed===undefined)g.hitDiceUsed=0;if(!g.wounds)g.wounds=[];if(!g.scars)g.scars=[];if(g.combatCount===undefined)g.combatCount=0;if(g.xp===undefined)g.xp=0;if(g.honour===undefined)g.honour=5;if(!g.approval)g.approval={};if(!g.companionGifts)g.companionGifts=[];if(!g.orderMax)g.orderMax={rose:Math.max(0,g.rose||0),sword:Math.max(0,g.sword||0),crown:Math.max(0,g.crown||0)};
+    if(!g.inventory)g.inventory=[];if(!g.deadCompanions)g.deadCompanions=[];if(!g.completedRolls)g.completedRolls={};if(!g.awardedScenes)g.awardedScenes={};if(!g.romances)g.romances={};if(!g.flags)g.flags={};if(!g.bonuses)g.bonuses=[];if(!g.magicItems)g.magicItems=[];if(g.hitDiceUsed===undefined)g.hitDiceUsed=0;if(!g.wounds)g.wounds=[];if(!g.scars)g.scars=[];if(g.combatCount===undefined)g.combatCount=0;if(g.xp===undefined)g.xp=0;if(g.honour===undefined)g.honour=5;if(!g.approval)g.approval={};if(!g.companionGifts)g.companionGifts=[];if(!g.orderMax)g.orderMax={rose:Math.max(0,g.rose||0),sword:Math.max(0,g.sword||0),crown:Math.max(0,g.crown||0)};if(g.exhaustion===undefined)g.exhaustion=0;
     if(!g.equipment){g.equipment=buildEquipment(g.weapon,g.armor,g.hasShield);if(!g.inventory.includes('Leather Helm')){g.inventory.push('Leather Helm','Leather Gloves','Leather Boots')}}
     // Migrate companion names to canonical casing
     g.companions=(g.companions||[]).map(c=>{const canon=COMPANIONS_ALL.find(x=>x.toLowerCase()===c.toLowerCase());return canon||c});
     const fixKeys=(obj)=>{if(!obj)return obj;const fixed={};for(const[k,v]of Object.entries(obj)){const canon=COMPANIONS_ALL.find(x=>x.toLowerCase()===k.toLowerCase());fixed[canon||k]=v}return fixed};
     g.romances=fixKeys(g.romances);g.companionLog=fixKeys(g.companionLog||{});g.romanceDeclined=fixKeys(g.romanceDeclined||{});
-    g.derived=calcDerived(g.stats,g.cls,g.level,g.armor,g.hasShield,g.feat,g.wounds);setGs(g);const s=SCENES[loadSceneId];if(s){setScene(s);setSceneId(loadSceneId)}setPhase('play')};
+    g.derived=calcDerived(g.stats,g.cls,g.level,g.armor,g.hasShield,g.feat,g.wounds,g.exhaustion);setGs(g);const s=SCENES[loadSceneId];if(s){setScene(s);setSceneId(loadSceneId)}setPhase('play')};
   const handleChoice=(c)=>{setSideOpen(false);const ns={...gs,romances:{...gs.romances},awardedScenes:{...(gs.awardedScenes||{})}};
     // Only award points if this scene hasn't awarded yet (anti-cycle)
     const scKey=sceneId;
@@ -6769,7 +6793,7 @@ function App(){
     if(npcNotify&&npcNotify.type==='gift'&&npcNotify.gift){
       const ns={...gs,companionGifts:[...(gs.companionGifts||[]),npcNotify.comp],bonuses:[...(gs.bonuses||[])]};
       ns.bonuses.push({source:npcNotify.comp.split(' ')[0]+"'s Gift",skill:npcNotify.gift.skill,value:1});
-      ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds);
+      ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion);
       if(!ns.companionLog)ns.companionLog={};
       if(!ns.companionLog[npcNotify.comp])ns.companionLog[npcNotify.comp]=[];
       ns.companionLog[npcNotify.comp].push('Gift: +1 '+npcNotify.gift.skill);
@@ -6812,7 +6836,7 @@ function App(){
       }
     }
     setGs(ns)};
-  const handleStateUpdate=(updater)=>{if(!gs)return;const ns=typeof updater==='function'?updater(gs):{...gs,...updater};ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds);setGs(ns)};
+  const handleStateUpdate=(updater)=>{if(!gs)return;const ns=typeof updater==='function'?updater(gs):{...gs,...updater};ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion);setGs(ns)};
   const handleMenu=()=>{setConfirmModal({msg:'Return to main menu? Unsaved progress will be lost.',onYes:()=>{setPhase('cover');setGs(null);setScene(null);setShowSheet(false);setShowDmSummary(false);setSideOpen(false);setConfirmModal(null)},onNo:()=>setConfirmModal(null)})};
   const e=React.createElement;
   if(phase==='campaigns')return e(CampaignSelect,{onSelect:async(id)=>{
@@ -6919,7 +6943,7 @@ function App(){
     npcNotify?e(NpcNotification,{notif:npcNotify,onDismiss:dismissNpcNotify}):null,
     breakupTarget&&gs?e(BreakupScene,{name:breakupTarget,gs:gs,onResolve:handleBreakup}):null,
     romanceCheck?e(RelationshipCheck,{check:romanceCheck,gs:gs,onResolve:resolveRelationship}):null,
-    spellPrepModal&&gs&&['Paladin','Cleric','Druid','Wizard'].includes(gs.cls)?e(SpellPrepModal,{gs:gs,onConfirm:(spells)=>{const ns={...gs,spells:{...gs.spells,level1:spells}};ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds);setGs(ns);setSpellPrepModal(false)},onKeep:()=>setSpellPrepModal(false)}):null,
+    spellPrepModal&&gs&&['Paladin','Cleric','Druid','Wizard'].includes(gs.cls)?e(SpellPrepModal,{gs:gs,onConfirm:(spells)=>{const ns={...gs,spells:{...gs.spells,level1:spells}};ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion);setGs(ns);setSpellPrepModal(false)},onKeep:()=>setSpellPrepModal(false)}):null,
     shortRestModal&&gs?e(ShortRestModal,{gs:gs,onDone:(result)=>{const ns={...gs,hp:result.hp,hitDiceUsed:result.hitDiceUsed};setGs(ns);setShortRestModal(false)}}):null,
     healingPanel&&gs?e(HealingPanel,{gs:gs,onUpdate:(upd)=>{const ns={...gs,...upd};setGs(ns)},onClose:()=>setHealingPanel(false)}):null,
     defeatRecovery&&gs?e(DefeatRecoveryModal,{gs:gs,wound:defeatRecovery.wound,scar:defeatRecovery.scar,onContinue:()=>setDefeatRecovery(null)}):null,
