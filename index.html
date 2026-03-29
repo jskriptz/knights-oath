@@ -2804,7 +2804,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
       playerHp:gs.hp,playerMaxHp:derived.maxHp,playerAc:derived.ac,
       deathSaves:{success:0,fail:0},unconscious:false,
       companionActionsThisRound:{},
-      vexTarget:null,dodging:false,
+      vexTarget:null,helpTarget:null,dodging:false,
       localSpellSlots:gs.spellSlotsUsed||0,
       localSW:gs.secondWindUsed||0,
       localAS:gs.actionSurgeUsed||false,
@@ -2940,10 +2940,15 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
 
         // Roll attack
         let d20=rollDice(20);let d20b=null;
-        const hasAdvantage=(c.vexTarget===targetId)||(target.conditions.some(cd=>cd.name==='Prone')&&c.activeWeapon.type==='melee');
+        // Advantage sources: Vex mastery, Help action, Prone (melee), Faerie Fire, Guiding Bolt, Flanking
+        const isFlanked=c.companions.filter(cp=>cp.alive&&!cp.unconscious&&cp.engaged===targetId).length>=1;
+        const hasAdvantage=(c.vexTarget===targetId)||(c.helpTarget===targetId)||(target.conditions.some(cd=>cd.name==='Prone')&&c.activeWeapon.type==='melee')||(target.conditions.some(cd=>cd.name==='Faerie Fire'||cd.name==='Guiding Bolt'))||isFlanked;
+        // Disadvantage sources: Dodging, Restrained attacker, Blinded attacker
         const hasDisadvantage=target.conditions.some(cd=>cd.name==='Dodging');
         if(hasAdvantage&&!hasDisadvantage){d20b=rollDice(20);d20=Math.max(d20,d20b)}
         else if(hasDisadvantage&&!hasAdvantage){d20b=rollDice(20);d20=Math.min(d20,d20b)}
+        // Clear help target after use
+        if(c.helpTarget===targetId)c.helpTarget=null;
 
         // Companion bonuses
         let atkMod=c.attackBuff||0;c.attackBuff=0;
@@ -3025,6 +3030,20 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
       c.log=[...c.log,{type:'action',text:'R'+c.round+' Dodge: Attacks against you have disadvantage until next turn',round:c.round}];
       return c;
     });
+  };
+
+  // Player help action — grants advantage on next attack against target
+  const[helpMode,setHelpMode]=useState(false);
+  const doPlayerHelp=(targetId)=>{
+    setCombat(prev=>{
+      const c={...prev};
+      const target=c.enemies.find(e=>e.id===targetId);
+      c.helpTarget=targetId;
+      c.hasActed=true;c.turnPhase='bonus';
+      c.log=[...c.log,{type:'action',text:'R'+c.round+' Help: You assist allies — next attack against '+(target?.name||'target')+' has advantage',round:c.round}];
+      return c;
+    });
+    setHelpMode(false);
   };
 
   // Divine Smite (bonus action, after hit)
@@ -3914,6 +3933,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
     (combat.conditions.length>0||combat.concentrating||combat.blessActive||combat.shieldOfFaithActive||combat.dodging)?
       e('div',{className:'combat-conditions-row'},
         combat.dodging?e('span',{className:'condition-icon',title:'Dodging: attacks against you have disadvantage'},'\u25c7 Dodge'):null,
+        combat.helpTarget?e('span',{className:'condition-icon',style:{color:'var(--gold)'},title:'Helping: next attack against this enemy has advantage'},'\ud83e\udd1d Help'):null,
         combat.blessActive?e('span',{className:'condition-icon bless',title:'Bless: +1d4 to attacks and saves ('+combat.blessRoundsLeft+' rounds)'},'\u2726 Bless'):null,
         combat.shieldOfFaithActive?e('span',{className:'condition-icon bless',title:'Shield of Faith: +2 AC (concentration)'},'\ud83d\udee1 +2 AC'):null,
         combat.concentrating?e('span',{className:'condition-icon conc',title:'Concentrating on '+combat.concentrating.spell},'\u25ce Conc'):null,
@@ -3977,6 +3997,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
           // Other action options
           e('div',{className:'combat-other-actions'},
             e('button',{className:'combat-action-btn',onClick:doPlayerDodge},'\u25c7 Dodge'),
+            combat.companions.length>0&&!helpMode?e('button',{className:'combat-action-btn',onClick:()=>setHelpMode(true)},'\ud83e\udd1d Help'):null,
             gs.cls==='Paladin'&&combat.localSpellSlots<(derived.spellSlotsMax||0)&&!combat.blessActive?
               e('button',{className:'combat-action-btn',onClick:castBless},'\u2726 Cast Bless (conc.)'):null,
             gs.cls==='Paladin'&&combat.localSpellSlots<(derived.spellSlotsMax||0)&&!healMode?
@@ -4002,6 +4023,13 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
                 setHealMode(null);
               }},cp.name+(cp.unconscious?' (DOWN)':' ('+cp.hp+'/'+cp.maxHp+')'))),
             e('button',{className:'ghost-btn',style:{fontSize:'11px',marginTop:'4px'},onClick:()=>setHealMode(null)},'Cancel')
+          ):null,
+          // Help target selection
+          helpMode&&combat.turnPhase==='action'?e('div',{className:'combat-heal-targets',style:{marginTop:'10px'}},
+            e('div',{className:'combat-section-header'},'HELP \u2014 Choose Enemy to Grant Advantage Against'),
+            combat.enemies.filter(en=>en.alive&&en.currentHp>0).map(en=>
+              e('button',{key:'help_'+en.id,className:'combat-action-btn',onClick:()=>doPlayerHelp(en.id)},en.name)),
+            e('button',{className:'ghost-btn',style:{fontSize:'11px',marginTop:'4px'},onClick:()=>setHelpMode(false)},'Cancel')
           ):null)
         ):e('div',null,
           // Selected target — roll attack
