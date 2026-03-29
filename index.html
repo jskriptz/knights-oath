@@ -918,6 +918,12 @@ h2.red{color:var(--red)}
 .cs-title-block h1{font-family:'Cinzel',serif;color:var(--gold);font-size:28px;letter-spacing:3px}
 .cs-title-block h2{font-family:'Cinzel',serif;color:var(--text-dim);font-size:14px;font-weight:400;letter-spacing:2px;margin-top:4px}
 .cs-divider{width:200px;height:1px;background:var(--gold-dim);margin:16px auto}
+.cs-portrait-section{display:flex;flex-direction:column;align-items:center;margin-bottom:20px}
+.cs-portrait{width:120px;height:120px;border-radius:50%;border:3px solid var(--gold-dim);object-fit:cover;background:var(--panel)}
+.cs-portrait-placeholder{width:120px;height:120px;border-radius:50%;border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-size:11px;text-align:center;cursor:pointer;transition:border-color .2s}
+.cs-portrait-placeholder:hover{border-color:var(--gold-dim)}
+.cs-portrait-btn{margin-top:8px;background:none;border:1px solid var(--border);color:var(--text-dim);padding:4px 12px;border-radius:4px;cursor:pointer;font-size:11px;transition:all .15s}
+.cs-portrait-btn:hover{border-color:var(--gold-dim);color:var(--text)}
 .cs-journey-summary{background:linear-gradient(135deg,rgba(201,168,76,.08),rgba(201,168,76,.02));border:1px solid var(--gold-dim);border-radius:12px;padding:28px 24px;margin-bottom:28px}
 .cs-journey-title{font-family:'Cinzel',serif;color:var(--gold);font-size:20px;letter-spacing:3px;text-align:center;margin-bottom:20px}
 .cs-journey-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
@@ -2089,7 +2095,7 @@ const ST={
   async del(k){try{if(window.storage){await window.storage.delete(k);return}localStorage.removeItem(k)}catch(e){try{localStorage.removeItem(k)}catch(e2){}}}
 };
 // ── Save System: Character (persistent) + Campaign Progress (per-campaign) ──
-const CHARACTER_FIELDS=['cls','stats','style','feat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','rations','torches','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount','languages','exhaustion','toolProficiencies','knightingSkill'];
+const CHARACTER_FIELDS=['cls','stats','style','feat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','rations','torches','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount','languages','exhaustion','toolProficiencies','knightingSkill','portrait'];
 const CAMPAIGN_PROGRESS_FIELDS=['history','flags','awardedScenes','completedRolls','companions','romances','romanceDeclined','companionLog','deadCompanions','rose','sword','crown','orderMax','dgTrack','godSigns','hitDiceUsed','secondWindUsed','actionSurgeUsed','spellSlotsUsed','spellSlots2ndUsed','spellSlots3rdUsed','spellSlots4thUsed','spellSlots5thUsed','spellSlots6thUsed','spellSlots7thUsed','spellSlots8thUsed','spellSlots9thUsed','layOnHandsPool','miraHealedThisScene','combatCount','measureTrack','measureOrientation','approval'];
 
 function splitSave(gs,sceneId){
@@ -5668,7 +5674,8 @@ function DmSummary({gs,sceneId,onBack}){
 }
 
 function CharSheet({gs,isEnding,onBack,onEquipChange}){
-  const[csComp,setCSComp]=useState(null);const[csEditSlot,setCsEditSlot]=useState(null);
+  const[csComp,setCSComp]=useState(null);const[csEditSlot,setCsEditSlot]=useState(null);const portraitRef=useRef(null);
+  const handlePortraitUpload=(ev)=>{const file=ev.target.files?.[0];if(!file)return;if(file.size>500000){alert('Image too large (max 500KB)');return}const reader=new FileReader();reader.onload=(e)=>{const dataUrl=e.target.result;onEquipChange({...gs,portrait:dataUrl})};reader.readAsDataURL(file)};
   const e=React.createElement;const d=gs.derived;
   const order=getOrder(gs.rose,gs.sword,gs.crown);const bg=getBackground();const sp=gs.spells||{};
   const hasSpells=(sp.cantrips&&sp.cantrips.length)||(sp.level1&&sp.level1.length);
@@ -5737,10 +5744,18 @@ function CharSheet({gs,isEnding,onBack,onEquipChange}){
     e('div',{className:'cs-header'},e('div',{className:'cs-title-block'},
       e('h1',null,'CHARACTER SHEET'),
       e('h2',null,(CAMPAIGN?.title||'The Knight\u2019s Oath')+' '+(CAMPAIGN?.version?'v'+CAMPAIGN.version:'')+' \u2022 D&D 2024'),
-      e('div',{className:'cs-divider'}))),
+      e('div',{className:'cs-divider'})),
+      // Portrait section
+      e('div',{className:'cs-portrait-section'},
+        gs.portrait?e('img',{className:'cs-portrait',src:gs.portrait,alt:'Character portrait'}):
+          e('div',{className:'cs-portrait-placeholder',onClick:()=>portraitRef.current?.click()},'Click to add portrait'),
+        e('input',{type:'file',accept:'image/*',ref:portraitRef,style:{display:'none'},onChange:handlePortraitUpload}),
+        e('button',{className:'cs-portrait-btn',onClick:()=>portraitRef.current?.click()},gs.portrait?'Change Portrait':'Upload Portrait'),
+        gs.portrait?e('button',{className:'cs-portrait-btn',style:{marginLeft:4},onClick:()=>onEquipChange({...gs,portrait:null})},'Remove'):null)),
 
     // ── Journey Summary (ending only) ──
     isEnding?e('div',{className:'cs-journey-summary'},
+      gs.portrait?e('img',{className:'cs-portrait',src:gs.portrait,alt:'Character portrait',style:{display:'block',margin:'0 auto 16px'}}):null,
       e('h2',{className:'cs-journey-title'},'JOURNEY SUMMARY'),
       e('div',{className:'cs-journey-grid'},
 
