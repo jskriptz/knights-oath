@@ -49,9 +49,29 @@ The game features a dark fantasy aesthetic with gold accents, dynamic combat UI,
 - **LocalStorage saves** - your progress stays in your browser
 - **Mobile responsive** - playable on phones and tablets
 
+### Progressive Web App (PWA)
+
+Install directly from your browser:
+- **Desktop**: Click the install icon in the address bar
+- **Mobile**: "Add to Home Screen" from browser menu
+- **Offline play**: Service worker caches all game assets
+- **Shortcuts**: Quick access to "Continue Game" and "New Character"
+
+### Native Mobile (Capacitor)
+
+Build as a native Android/iOS app:
+
+| Platform | Status | App ID |
+|----------|--------|--------|
+| Android | Ready | `com.knightsoath.game` |
+| iOS | Scaffolded | `com.knightsoath.game` |
+
 ### Project Structure
 ```
 index.html                    # Game engine (~6500 lines)
+manifest.json                 # PWA manifest
+sw.js                         # Service worker (offline caching)
+capacitor.config.ts           # Native app config
 campaigns/knights-oath/       # Campaign data
   campaign.json              # Manifest
   scenes.json                # Primary scenes
@@ -60,18 +80,27 @@ campaigns/knights-oath/       # Campaign data
   combat-narration.json      # Dynamic combat text
   ...
 dist/knights-oath.html       # Standalone build
+android/                      # Native Android project
 ```
 
 ## Development
 
-### Build Standalone
+### Build Standalone HTML
 ```bash
 node scripts/build-standalone.js
 ```
 
-### Sync to Mobile (Capacitor)
+### Sync to Android (Capacitor)
 ```bash
-npm run sync
+npm run sync                  # Copy web files to www/ and sync
+npx cap open android          # Open in Android Studio
+```
+
+### Build Android APK
+```bash
+cd android
+./gradlew assembleDebug       # Debug APK in app/build/outputs/apk/
+./gradlew assembleRelease     # Release APK (requires signing)
 ```
 
 ## Version History
