@@ -2005,7 +2005,34 @@ function getDurability(gs,slot){
   if(!gs.durability)return MAX_DURABILITY;
   return gs.durability[slot]!=null?gs.durability[slot]:MAX_DURABILITY;
 }
-function degradeEquipment(gs,slot,amount=1){
+// Check if item is magical (immune to normal degradation)
+function isMagicalItem(itemName,gs){
+  if(!itemName)return false;
+  const n=itemName.toLowerCase();
+  // +1/+2/+3 items are magical
+  if(/^\+\d/.test(itemName))return true;
+  // Named magical items (artifacts, quest rewards)
+  const MAGICAL_ITEMS=['dawnstrike','dragonlance','wyrmslayer','solamnic blade','brightblade',
+    'huma\'s lance','kiri-jolith\'s blessing','paladine\'s light','mishakal\'s grace'];
+  if(MAGICAL_ITEMS.some(m=>n.includes(m)))return true;
+  // Items in player's magicItems array
+  if(gs?.magicItems?.includes(itemName))return true;
+  // Items with "magical" or "enchanted" in name
+  if(/magical|enchanted|holy|blessed|divine/i.test(n))return true;
+  return false;
+}
+// Check if damage source can harm magical items
+function canDamageMagicalGear(enemy){
+  if(!enemy)return false;
+  const n=(enemy.name||'').toLowerCase();
+  // Adult/ancient dragons, gods, demon lords
+  return /adult|ancient|elder|highlord|takhisis|chemosh|sargonnas|lord soth|death knight/i.test(n);
+}
+function degradeEquipment(gs,slot,amount=1,enemy=null){
+  // Get the item in this slot
+  const itemName=slot==='mainHand'?gs.weapon:(slot==='armor'?gs.armor:null);
+  // Magical items immune unless damaged by powerful foe
+  if(isMagicalItem(itemName,gs)&&!canDamageMagicalGear(enemy))return gs;
   const dur={...(gs.durability||{})};
   const current=dur[slot]!=null?dur[slot]:MAX_DURABILITY;
   dur[slot]=Math.max(0,current-amount);
@@ -3095,14 +3122,19 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
           logMsg='R'+c.round+' Attack: d20='+d20+(d20b!==null?' (adv/disadv: '+d20b+')':'')+' +'+weapAtk+(atkMod?'+'+atkMod:'')+(blessBonus?'+'+blessBonus+' bless':'')+(exhPenalty?'-'+exhPenalty+' exhaustion':'')+' = '+total+' vs AC '+target.ac+' \u2714 HIT'+(isCrit?' (CRITICAL!)':'')+' for '+dmg+' damage'+(mountCharge?' (incl. +'+mountCharge+' mounted charge)':'')+(bronwynBonus?' (incl. Bronwyn\u2019s +1)':'');
         }else{
           logMsg='R'+c.round+' Attack: d20='+d20+(d20b!==null?' (adv/disadv: '+d20b+')':'')+' +'+weapAtk+(atkMod?'+'+atkMod:'')+(blessBonus?'+'+blessBonus+' bless':'')+(exhPenalty?'-'+exhPenalty+' exhaustion':'')+' = '+total+' vs AC '+target.ac+' \u2718 MISS';
-          // Fumble: weapon takes 1 durability damage
-          if(isFumble&&onStateUpdate){
-            onStateUpdate(g=>{
-              const ng=degradeEquipment(g,'mainHand');
-              ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds,ng.exhaustion,ng.durability);
-              return ng;
-            });
-            logMsg+=' [FUMBLE: weapon damaged!]';
+          // Fumble: weapon takes 1 durability damage (magical weapons immune)
+          if(isFumble){
+            const weaponIsMagical=isMagicalItem(gs.weapon,gs);
+            if(weaponIsMagical){
+              logMsg+=' [FUMBLE: magical weapon resists!]';
+            }else if(onStateUpdate){
+              onStateUpdate(g=>{
+                const ng=degradeEquipment(g,'mainHand');
+                ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds,ng.exhaustion,ng.durability);
+                return ng;
+              });
+              logMsg+=' [FUMBLE: weapon damaged!]';
+            }
           }
         }
 
@@ -3690,11 +3722,15 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
           dmg=rollExpr(attack.damage);
           if(targetType==='player'&&!c.unconscious){
             c.playerHp=Math.max(0,c.playerHp-dmg);
-            logEntries.push(enemy.name+' attacks '+targetName+': d20='+d20+'+'+attack.bonus+'='+total+' vs AC '+targetAc+' \u2714 '+dmg+' damage'+(isCrit?' [CRIT: armor damaged!]':''));
-            // Critical hit damages player's armor
-            if(isCrit&&onStateUpdate){
+            // Critical hit may damage player's armor (magical gear immune unless powerful foe)
+            const armorIsMagical=isMagicalItem(gs.armor,gs);
+            const foeCanDamageMagic=canDamageMagicalGear(enemy);
+            const armorWillDegrade=isCrit&&(!armorIsMagical||foeCanDamageMagic);
+            logEntries.push(enemy.name+' attacks '+targetName+': d20='+d20+'+'+attack.bonus+'='+total+' vs AC '+targetAc+' \u2714 '+dmg+' damage'+(armorWillDegrade?' [CRIT: armor damaged!]':(isCrit&&armorIsMagical?' [CRIT: magical armor resists!]':'')));
+            if(armorWillDegrade&&onStateUpdate){
+              const enemyRef=enemy; // capture for closure
               onStateUpdate(g=>{
-                const ng=degradeEquipment(g,'armor');
+                const ng=degradeEquipment(g,'armor',1,enemyRef);
                 ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds,ng.exhaustion,ng.durability);
                 return ng;
               });
