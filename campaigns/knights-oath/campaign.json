@@ -10,7 +10,7 @@
   "availableSpecies": ["human"],
   "speciesLocked": true,
   "startingLanguages": ["Common", "Solamnic"],
-  "version": "24.4.7",
+  "version": "24.4.8",
   "startScene": "1",
   "startingInventory": ["Dagger", "Backpack", "Bedroll", "Mess Kit", "Tinderbox", "Waterskin", "Rope (50 ft)", "Solamnic Tabard"],
   "startingEquipment": {
@@ -23,7 +23,7 @@
     "bandages": 2,
     "potions": 0,
     "greaterPotions": 0,
-    "gold": 0,
+    "gold": 3,
     "honour": 5,
     "rations": 10,
     "torches": 10
