@@ -180,6 +180,25 @@
     {
       "ifFlag": "stayed_burning_village",
       "text": "Stayed two days at the burned village to help survivors rebuild. Arrived at Vogler later than planned, but with purpose reinforced."
+    },
+    {
+      "ifFlag": "knighted",
+      "ifFlagValue": "Rose",
+      "text": "Was formally knighted as a Knight of the Rose — bound by wisdom, compassion, and sacrifice."
+    },
+    {
+      "ifFlag": "knighted",
+      "ifFlagValue": "Sword",
+      "text": "Was formally knighted as a Knight of the Sword — bound by courage, heroism, and martial resolve."
+    },
+    {
+      "ifFlag": "knighted",
+      "ifFlagValue": "Crown",
+      "text": "Was formally knighted as a Knight of the Crown — bound by loyalty, discipline, and duty."
+    },
+    {
+      "ifFlag": "unproven_squire",
+      "text": "Was not knighted — remained a Squire at the campaign's end. Must prove themselves in the trials ahead."
     }
   ],
   "companionChronicle": {
@@ -329,6 +348,16 @@
       "ifFlagValue": "KEEPER",
       "title": "Orthodox Knight",
       "hint": "This Fighter holds the Measure as sacred law. They will clash with anyone who bends the rules — including allies. Their discipline is an asset in wartime, but their rigidity may be tested when the Measure has no answer."
+    },
+    {
+      "ifFlag": "unproven_squire",
+      "title": "The Unproven Squire",
+      "hint": "This character was not knighted — they did not distinguish themselves in any order. In Shadow of the Dragon Queen, they must prove themselves worthy through heroic deeds. A knighting ceremony awaits them if they can demonstrate clear dedication to the Rose, Sword, or Crown through decisive action. Until then, they carry the shame of remaining a squire while their peers were elevated. NPCs will react to their lack of sigil. Some will see potential; others will see failure."
+    },
+    {
+      "ifFlag": "knighted",
+      "title": "Knight of Solamnia",
+      "hint": "This character was formally knighted during the campaign. They carry the sigil of their order and have sworn the oaths. They will be treated as a full knight by NPCs and can invoke the authority of the Solamnic Orders."
     }
   ]
 }

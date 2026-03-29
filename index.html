@@ -2026,9 +2026,41 @@ function findCompanion(name){
 let GODS=[];
 const MASTERY_DESC={Cleave:'On hit, damage another adjacent creature (no ability mod)',Graze:'On miss, deal ability mod damage anyway',Nick:'Extra light weapon attack as part of Attack action',Push:'Push target 10ft away on hit',Sap:'Target has Disadvantage on next attack roll',Slow:'Target speed \u221210ft until start of your next turn',Topple:'Target must make CON save or fall Prone',Vex:'Gain Advantage on next attack vs same target'};
 
-function getOrder(r,s,c){if(r>=s&&r>=c)return'Rose';if(s>=r&&s>=c)return'Sword';return'Crown'}
-function getOrderTitle(cls,order){return{Rose:'Squire-Scholar of the Rose',Sword:'Squire-Warrior of the Sword',Crown:'Squire-Commander of the Crown'}[order]||'Squire'}
-function suggestBackground(gs){const o=getOrder(gs.rose,gs.sword,gs.crown);if(o==='Rose')return{name:'Sage',reason:'Your pursuit of justice and wisdom aligns with the Sage background.'};if(o==='Sword')return{name:'Soldier',reason:'Your courage in battle marks you as a Soldier.'};return{name:'Noble',reason:'Your dedication to law and duty reflects a Noble\u2019s upbringing.'}}
+function getOrder(r,s,c){if(r===0&&s===0&&c===0)return'Unknown';if(r>=s&&r>=c)return'Rose';if(s>=r&&s>=c)return'Sword';return'Crown'}
+function getOrderTitle(cls,order){return{Rose:'Squire-Scholar',Sword:'Squire-Champion',Crown:'Squire-Marshal',Unknown:'Squire'}[order]||'Squire'}
+function getBackground(){return{name:'Squire',desc:'You serve the Knights of Solamnia, learning the ways of honor and the Measure.'}}
+// Get tied orders for tiebreaker scene
+function getTiedOrders(r,s,c){const max=Math.max(r,s,c);if(max===0)return[];const tied=[];if(r===max)tied.push('Rose');if(s===max)tied.push('Sword');if(c===max)tied.push('Crown');return tied.length>1?tied:[]}
+
+// Knighting ceremony — apply order bonuses
+const ORDER_BONUSES={
+  Rose:{stat:'wis',skills:['History','Insight'],title:'Knight of the Rose'},
+  Sword:{stat:'str',skills:['Athletics','Intimidation'],title:'Knight of the Sword'},
+  Crown:{stat:'cha',skills:['Deception','Persuasion'],title:'Knight of the Crown'}
+};
+const ORDER_SIGILS={
+  Rose:{name:'Sigil of the Rose',desc:'A palm-sized medallion of pure Solamnic silver, worth more than most peasants see in a lifetime—but its true value cannot be measured in steel. The rose is etched deep, its petals worn smooth by generations of knights who held it before you. This is your proof. Your bond. Without it, you are merely someone claiming to be a Knight of Solamnia. With it, you carry the weight of the Oath, the Measure, and every knight who fell upholding both. It feels heavier than silver should.'},
+  Sword:{name:'Sigil of the Sword',desc:'A palm-sized medallion of pure Solamnic silver, worth more than most peasants see in a lifetime—but its true value cannot be measured in steel. The sword is etched deep, its blade worn smooth by generations of knights who held it before you. This is your proof. Your bond. Without it, you are merely someone claiming to be a Knight of Solamnia. With it, you carry the weight of the Oath, the Measure, and every knight who fell upholding both. It feels heavier than silver should.'},
+  Crown:{name:'Sigil of the Crown',desc:'A palm-sized medallion of pure Solamnic silver, worth more than most peasants see in a lifetime—but its true value cannot be measured in steel. The crown is etched deep, its points worn smooth by generations of knights who held it before you. This is your proof. Your bond. Without it, you are merely someone claiming to be a Knight of Solamnia. With it, you carry the weight of the Oath, the Measure, and every knight who fell upholding both. It feels heavier than silver should.'}
+};
+function applyKnightingBonus(gs,order,skillChoice){
+  const bonus=ORDER_BONUSES[order];if(!bonus)return gs;
+  const ns={...gs,stats:{...gs.stats},inventory:[...gs.inventory],flags:{...gs.flags}};
+  // +1 to order stat
+  ns.stats[bonus.stat]=(ns.stats[bonus.stat]||10)+1;
+  // Add skill proficiency
+  if(!ns.knightingSkill)ns.knightingSkill=skillChoice;
+  // Add sigil to inventory
+  const sigil=ORDER_SIGILS[order];
+  if(sigil&&!ns.inventory.includes(sigil.name))ns.inventory.push(sigil.name);
+  // Set flags
+  ns.flags.knighted=true;
+  ns.flags.knightOrder=order;
+  ns.flags.knightTitle='Ser';
+  // Recalc derived
+  ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion);
+  return ns;
+}
 
 // Save/Load
 // Capacitor platform check — returns true only on native (iOS/Android)
@@ -2046,7 +2078,7 @@ const ST={
   async del(k){try{if(window.storage){await window.storage.delete(k);return}localStorage.removeItem(k)}catch(e){try{localStorage.removeItem(k)}catch(e2){}}}
 };
 // ── Save System: Character (persistent) + Campaign Progress (per-campaign) ──
-const CHARACTER_FIELDS=['cls','stats','style','feat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','rations','torches','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount','languages','exhaustion','toolProficiencies'];
+const CHARACTER_FIELDS=['cls','stats','style','feat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','rations','torches','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount','languages','exhaustion','toolProficiencies','knightingSkill'];
 const CAMPAIGN_PROGRESS_FIELDS=['history','flags','awardedScenes','completedRolls','companions','romances','romanceDeclined','companionLog','deadCompanions','rose','sword','crown','orderMax','dgTrack','godSigns','hitDiceUsed','secondWindUsed','actionSurgeUsed','spellSlotsUsed','spellSlots2ndUsed','spellSlots3rdUsed','spellSlots4thUsed','spellSlots5thUsed','spellSlots6thUsed','spellSlots7thUsed','spellSlots8thUsed','spellSlots9thUsed','layOnHandsPool','miraHealedThisScene','combatCount','measureTrack','measureOrientation','approval'];
 
 function splitSave(gs,sceneId){
@@ -5422,6 +5454,23 @@ function SceneView({scene,onChoice,gs,isEnding,onViewSheet,onViewDmSummary,onBon
   // Parse language-gated text and collect notes
   const allLangNotes=[];
   visibleProse=visibleProse.map(p=>{const{text,languageNotes}=parseLanguageText(p,knownLangs);allLangNotes.push(...languageNotes);return text});
+  // Replace [COMPANION_REACTIONS] with dynamic companion reactions
+  visibleProse=visibleProse.map(p=>{
+    if(p.includes('[COMPANION_REACTIONS]')){
+      const reactions=[];const order=getOrder(gs.rose||0,gs.sword||0,gs.crown||0);
+      if(comps.includes('Aldric Voss'))reactions.push('Aldric pounds his fist to his chest, grinning.');
+      if(comps.includes('Thessaly Brightwater'))reactions.push('Thessaly is already writing, tears on her cheeks.');
+      if(comps.includes('Commander Serath'))reactions.push('Serath nods once — the highest praise they give.');
+      if(comps.includes('Mira of the Oaks'))reactions.push('Mira smiles quietly, hands clasped.');
+      if(comps.includes('Lord Caeron Ashvale'))reactions.push('Caeron inclines his head with genuine respect.');
+      if(comps.includes('Sera Nighthollow'))reactions.push('Sera catches your eye. Says nothing. Says everything.');
+      if(comps.includes('Vael Ashmore'))reactions.push('Vael applauds with the rest — and you sense they mean it.');
+      if(comps.includes('Tariel Duskmantle'))reactions.push('Tariel watches with scholarly interest, filing this away.');
+      if(comps.includes('Lysander Graves'))reactions.push('Lysander stands straighter, remembering his own oath.');
+      return p.replace('[COMPANION_REACTIONS]',reactions.length?reactions.join(' '):'The hall watches in silence.');
+    }
+    return p;
+  });
   const understoodLangs=[...new Set(allLangNotes.filter(n=>n.understood).map(n=>n.lang))];
   // Scene 71: show only the player's order description
   if(scene.id==='71'&&gs.rose!==undefined){const order=gs.rose>=gs.sword&&gs.rose>=gs.crown?'Rose':gs.sword>=gs.crown?'Sword':'Crown';visibleProse=visibleProse.filter(p=>{if(p.includes('Est Sularus oth Mithas'))return order==='Rose';if(p.includes('The blade that does not waver'))return order==='Sword';if(p.includes('Law is the shield'))return order==='Crown';if(p.includes('Voice of the Rose'))return order==='Rose';if(p.includes('Blade-Oath'))return order==='Sword';if(p.includes('standard. People will look'))return order==='Crown';if(p.includes('asking the right questions'))return order==='Rose';if(p.includes('south road, on the ridge'))return order==='Sword';if(p.includes('kept the law when others'))return order==='Crown';return true})}
@@ -5610,7 +5659,7 @@ function DmSummary({gs,sceneId,onBack}){
 function CharSheet({gs,isEnding,onBack,onEquipChange}){
   const[csComp,setCSComp]=useState(null);const[csEditSlot,setCsEditSlot]=useState(null);
   const e=React.createElement;const d=gs.derived;
-  const order=getOrder(gs.rose,gs.sword,gs.crown);const bg=suggestBackground(gs);const sp=gs.spells||{};
+  const order=getOrder(gs.rose,gs.sword,gs.crown);const bg=getBackground();const sp=gs.spells||{};
   const hasSpells=(sp.cantrips&&sp.cantrips.length)||(sp.level1&&sp.level1.length);
   
   // Compute all proficient skills
@@ -5793,7 +5842,7 @@ function CharSheet({gs,isEnding,onBack,onEquipChange}){
         row('Name',gs.name||'Squire'),
         row('Species','Human (Solamnic)'),
         row('Class & Level','Level '+gs.level+' '+gs.cls),
-        row('Background (Suggested)',bg.name),
+        row('Background',bg.name),
         e('p',{key:'bn',className:'cs-note'},bg.reason),
         row('Solamnic Order',order+' \u2014 '+getOrderTitle(gs.cls,order)),
         row('Proficiency Bonus','+'+d.profBonus),
@@ -6418,6 +6467,28 @@ function ConfirmModal({msg,onYes,onNo}){
         e('button',{className:'gold-btn confirm-yes',onClick:onYes},'Yes, leave'))));
 }
 
+// Knighting ceremony skill choice modal
+function KnightingSkillPicker({order,onConfirm}){
+  const e=React.createElement;
+  const bonus=ORDER_BONUSES[order];
+  if(!bonus)return null;
+  const[choice,setChoice]=useState(null);
+  const statNames={str:'Strength',dex:'Dexterity',con:'Constitution',int:'Intelligence',wis:'Wisdom',cha:'Charisma'};
+  return e('div',{className:'modal-overlay'},
+    e('div',{className:'modal-box knighting-modal'},
+      e('h2',{className:'gold',style:{marginBottom:8}},'KNIGHTING — ORDER OF THE '+order.toUpperCase()),
+      e('p',{style:{fontSize:13,marginBottom:12,color:'var(--text-dim)'}},
+        'As you are dubbed a Knight of the '+order+', you gain +1 '+statNames[bonus.stat]+' and proficiency in one skill:'),
+      e('div',{className:'knighting-skills',style:{display:'flex',flexDirection:'column',gap:8,marginBottom:16}},
+        bonus.skills.map(sk=>
+          e('button',{key:sk,className:'knighting-skill-btn'+(choice===sk?' selected':''),
+            style:{padding:'10px 16px',border:'1px solid var(--gold)',background:choice===sk?'var(--gold)':'transparent',
+              color:choice===sk?'var(--bg)':'var(--gold)',borderRadius:4,cursor:'pointer',fontSize:14,textAlign:'left'},
+            onClick:()=>setChoice(sk)},sk))),
+      e('div',{className:'confirm-btns',style:{marginTop:12}},
+        e('button',{className:'gold-btn',onClick:()=>onConfirm(choice),disabled:!choice},'Accept Knighting'))));
+}
+
 // ── Campaign Loader ──
 let CAMPAIGN=null;
 let CAMPAIGN_RULES=null;
@@ -6564,7 +6635,7 @@ function applyTheme(theme){
 
 function App(){
   const[phase,setPhase]=useState('cover');const[gs,setGs]=useState(null);const[scene,setScene]=useState(null);const[sceneId,setSceneId]=useState(null);
-  const[showSave,setShowSave]=useState(false);const[saveMsg,setSaveMsg]=useState('');const[showSheet,setShowSheet]=useState(false);const[showDmSummary,setShowDmSummary]=useState(false);const[sideOpen,setSideOpen]=useState(false);const[confirmModal,setConfirmModal]=useState(null);const[compPopup,setCompPopup]=useState(null);const[romancePrompt,setRomancePrompt]=useState(null);const[romanceManage,setRomanceManage]=useState(false);const[breakupTarget,setBreakupTarget]=useState(null);const[npcNotify,setNpcNotify]=useState(null);const[romanceCheck,setRomanceCheck]=useState(null);const[spellPrepModal,setSpellPrepModal]=useState(false);const[shortRestModal,setShortRestModal]=useState(false);const[healingPanel,setHealingPanel]=useState(false);const[defeatRecovery,setDefeatRecovery]=useState(null);const[godSignPicker,setGodSignPicker]=useState(null);const[editSlot,setEditSlot]=useState(null);const[showSettingsPanel,setShowSettingsPanel]=useState(false);
+  const[showSave,setShowSave]=useState(false);const[saveMsg,setSaveMsg]=useState('');const[showSheet,setShowSheet]=useState(false);const[showDmSummary,setShowDmSummary]=useState(false);const[sideOpen,setSideOpen]=useState(false);const[confirmModal,setConfirmModal]=useState(null);const[compPopup,setCompPopup]=useState(null);const[romancePrompt,setRomancePrompt]=useState(null);const[romanceManage,setRomanceManage]=useState(false);const[breakupTarget,setBreakupTarget]=useState(null);const[npcNotify,setNpcNotify]=useState(null);const[romanceCheck,setRomanceCheck]=useState(null);const[spellPrepModal,setSpellPrepModal]=useState(false);const[shortRestModal,setShortRestModal]=useState(false);const[healingPanel,setHealingPanel]=useState(false);const[defeatRecovery,setDefeatRecovery]=useState(null);const[godSignPicker,setGodSignPicker]=useState(null);const[editSlot,setEditSlot]=useState(null);const[showSettingsPanel,setShowSettingsPanel]=useState(false);const[knightingPicker,setKnightingPicker]=useState(null);
   // Migrate companion name casing on any active gs
   React.useEffect(()=>{
     if(!gs||!gs.companions)return;
@@ -6694,7 +6765,15 @@ function App(){
           ns.mount={name:mName,speed:mData?.speed||60,carry:mData?.carry||480,hp:mData?.hp||19,maxHp:mData?.hp||19,barding:null}}
       }
       if(t.includes('MOUNT LOST')||t.includes('HORSE KILLED')||t.includes('HORSE LOST')||t.includes('MOUNT KILLED'))ns.mount=null;
+      // Parse [SET_FLAG:xxx] tags in box text
+      const flagMatch=t.match(/\[SET_FLAG:(\w+)\]/);
+      if(flagMatch){ns.flags[flagMatch[1]]=true}
     });
+    // Knighting ceremony trigger — check if entering a CEREMONY_DUBBING scene
+    if(id==='CEREMONY_DUBBING'&&!ns.flags.knighted){
+      const order=getOrder(ns.rose,ns.sword,ns.crown);
+      if(order!=='Unknown'){setTimeout(()=>setKnightingPicker({order,sceneId:id}),300)}
+    }
     // Auto-award god sign tallies from Paladin box text
     if(ns.cls==='Paladin'){const godKey='godsign_'+id;if(!ns.awardedScenes[godKey]){
       const GODS_RE=/Mark 1 tally(?:\s+under)?\s*:?\s*(PALADINE|KIRI-JOLITH|MISHAKAL|HABBAKUK|BRANCHALA)/gi;
@@ -6885,6 +6964,23 @@ function App(){
     let finalTarget=c.target;
     for(const ov of (CAMPAIGN_RULES?.targetOverrides||[])){
       if(sceneId===ov.scene&&finalTarget===ov.target&&ns.cls===ov.ifClass)finalTarget=ov.redirectTo;
+    }
+    // Ceremony routing — redirect to appropriate ceremony scene based on order points
+    if(finalTarget==='CEREMONY_VIGIL'||finalTarget==='CEREMONY'){
+      const r=ns.rose||0,s=ns.sword||0,cr=ns.crown||0;
+      // All zero → unproven path
+      if(r===0&&s===0&&cr===0){finalTarget='CEREMONY_UNPROVEN'}
+      else{
+        const tied=getTiedOrders(r,s,cr);
+        if(tied.length===3)finalTarget='CEREMONY_TIEBREAKER_ALL';
+        else if(tied.length===2){
+          if(tied.includes('Rose')&&tied.includes('Sword'))finalTarget='CEREMONY_TIEBREAKER_ROSE_SWORD';
+          else if(tied.includes('Rose')&&tied.includes('Crown'))finalTarget='CEREMONY_TIEBREAKER_ROSE_CROWN';
+          else if(tied.includes('Sword')&&tied.includes('Crown'))finalTarget='CEREMONY_TIEBREAKER_SWORD_CROWN';
+        }
+        // No tie — proceed to CEREMONY_VIGIL
+        else finalTarget='CEREMONY_VIGIL';
+      }
     }
     // Handle RETURN target — go back to previous non-arc scene (skip same arc chain)
     if(finalTarget==='RETURN'){const hist=ns.history||[];const arcPrefix=sceneId.match(/^(ARC_[A-Z]+_)/)?.[1];for(let i=hist.length-1;i>=0;i--){const prevId=hist[i].split(':')[0].trim();if(prevId===sceneId)continue;if(arcPrefix&&prevId.startsWith(arcPrefix))continue;if(SCENES[prevId]){finalTarget=prevId;break}}}
@@ -7094,6 +7190,7 @@ function App(){
     healingPanel&&gs?e(HealingPanel,{gs:gs,onUpdate:(upd)=>{const ns={...gs,...upd};setGs(ns)},onClose:()=>setHealingPanel(false)}):null,
     defeatRecovery&&gs?e(DefeatRecoveryModal,{gs:gs,wound:defeatRecovery.wound,scar:defeatRecovery.scar,onContinue:()=>setDefeatRecovery(null)}):null,
     godSignPicker&&gs&&gs.cls==='Paladin'?e(GodSignPicker,{options:godSignPicker.options,onPick:(god)=>{const ns={...gs,godSigns:{...(gs.godSigns||{})}};ns.godSigns[god]=(ns.godSigns[god]||0)+1;setGs(ns);setGodSignPicker(null)}}):null,
+    knightingPicker&&gs?e(KnightingSkillPicker,{order:knightingPicker.order,onConfirm:(skillChoice)=>{const ns=applyKnightingBonus(gs,knightingPicker.order,skillChoice);setGs(ns);setKnightingPicker(null)}}):null,
     showSettingsPanel?e(SettingsPanel,{onClose:()=>setShowSettingsPanel(false)}):null);
 }
 // Attempt to load campaign from JSON files, then mount

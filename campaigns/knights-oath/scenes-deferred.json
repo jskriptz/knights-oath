@@ -8465,5 +8465,323 @@
         "points": {}
       }
     ]
+  },
+  "CEREMONY_VIGIL": {
+    "id": "CEREMONY_VIGIL",
+    "title": "THE VIGIL",
+    "location": "Chapel of Paladine — Night",
+    "prose": [
+      "The chapel is cold. Ancient stone, older than the fortress itself. The only light comes from seven candles arranged in the shape of the platinum dragon's constellation.",
+      "You kneel alone, your sword laid across your palms. The blade catches the candlelight — each nick and scratch a story you remember. Every battle. Every choice.",
+      "The night stretches. Hours pass like water through cupped hands.",
+      "You think of the road that brought you here. The companions who walked it with you. The moments when you could have turned back — but didn't.",
+      "Somewhere in the deep watches of the night, you hear footsteps. A priest enters, checks the candles, and leaves without speaking. Even he knows this silence is not his to break.",
+      "By the time dawn touches the eastern windows, you have made your peace with what comes next."
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**THE VIGIL** — You have spent the night in prayer and reflection. At dawn, you will face the Hall of High Justice."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Rise. It is time.",
+        "target": "CEREMONY_HALL",
+        "points": {}
+      }
+    ]
+  },
+  "CEREMONY_TIEBREAKER_ROSE_SWORD": {
+    "id": "CEREMONY_TIEBREAKER_ROSE_SWORD",
+    "title": "TWO PATHS",
+    "location": "Chapel Antechamber — Before the Vigil",
+    "prose": [
+      "Before you can begin your vigil, two figures enter the antechamber. They wear the symbols of different orders — the Rose and the Sword — and both have come for you.",
+      "Lady Elara of the Rose speaks first. She is old, her hands spotted with age, but her eyes hold the sharp clarity of a scholar who has read every text worth reading.",
+      "\"The Rose remembers,\" she says softly. \"When others saw only a battle to win, you saw people to save. Knowledge without compassion is cruelty; courage without wisdom is recklessness. The Rose needs knights who understand this.\"",
+      "Ser Garrett of the Sword steps forward. His face is a map of scars, his armor dented from a hundred battles. But his voice is gentle.",
+      "\"I've watched you fight,\" he says. \"Not for glory — for the ones who couldn't fight for themselves. The Sword isn't about killing. It's about standing between darkness and those it would devour. That's you.\"",
+      "Both watch you. Waiting."
+    ],
+    "boxes": [],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "\"I choose the Rose. Wisdom guides my blade.\"",
+        "target": "CEREMONY_VIGIL",
+        "points": {"ROSE": 1}
+      },
+      {
+        "letter": "B",
+        "text": "\"I choose the Sword. My strength for the weak.\"",
+        "target": "CEREMONY_VIGIL",
+        "points": {"SWORD": 1}
+      }
+    ]
+  },
+  "CEREMONY_TIEBREAKER_ROSE_CROWN": {
+    "id": "CEREMONY_TIEBREAKER_ROSE_CROWN",
+    "title": "TWO PATHS",
+    "location": "Chapel Antechamber — Before the Vigil",
+    "prose": [
+      "Before you can begin your vigil, two figures enter the antechamber. They wear the symbols of different orders — the Rose and the Crown — and both have come for you.",
+      "Lady Elara of the Rose speaks first. She is old, her hands spotted with age, but her eyes hold the sharp clarity of a scholar who has read every text worth reading.",
+      "\"The Rose remembers,\" she says softly. \"When others saw only a battle to win, you saw people to save. Knowledge without compassion is cruelty; courage without wisdom is recklessness. The Rose needs knights who understand this.\"",
+      "Dame Isolde of the Crown steps forward. Her bearing is regal, her voice measured — every word chosen with care.",
+      "\"Order is not oppression,\" she says. \"It is the promise that tomorrow will come. You've shown you understand that law serves the people, not the other way around. The Crown needs knights who can lead, not just follow.\"",
+      "Both watch you. Waiting."
+    ],
+    "boxes": [],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "\"I choose the Rose. Wisdom guides my blade.\"",
+        "target": "CEREMONY_VIGIL",
+        "points": {"ROSE": 1}
+      },
+      {
+        "letter": "B",
+        "text": "\"I choose the Crown. Law is my guide.\"",
+        "target": "CEREMONY_VIGIL",
+        "points": {"CROWN": 1}
+      }
+    ]
+  },
+  "CEREMONY_TIEBREAKER_SWORD_CROWN": {
+    "id": "CEREMONY_TIEBREAKER_SWORD_CROWN",
+    "title": "TWO PATHS",
+    "location": "Chapel Antechamber — Before the Vigil",
+    "prose": [
+      "Before you can begin your vigil, two figures enter the antechamber. They wear the symbols of different orders — the Sword and the Crown — and both have come for you.",
+      "Ser Garrett of the Sword speaks first. His face is a map of scars, his armor dented from a hundred battles. But his voice is gentle.",
+      "\"I've watched you fight,\" he says. \"Not for glory — for the ones who couldn't fight for themselves. The Sword isn't about killing. It's about standing between darkness and those it would devour. That's you.\"",
+      "Dame Isolde of the Crown steps forward. Her bearing is regal, her voice measured — every word chosen with care.",
+      "\"Order is not oppression,\" she says. \"It is the promise that tomorrow will come. You've shown you understand that law serves the people, not the other way around. The Crown needs knights who can lead, not just follow.\"",
+      "Both watch you. Waiting."
+    ],
+    "boxes": [],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "\"I choose the Sword. My strength for the weak.\"",
+        "target": "CEREMONY_VIGIL",
+        "points": {"SWORD": 1}
+      },
+      {
+        "letter": "B",
+        "text": "\"I choose the Crown. Law is my guide.\"",
+        "target": "CEREMONY_VIGIL",
+        "points": {"CROWN": 1}
+      }
+    ]
+  },
+  "CEREMONY_TIEBREAKER_ALL": {
+    "id": "CEREMONY_TIEBREAKER_ALL",
+    "title": "THREE PATHS",
+    "location": "Chapel Antechamber — Before the Vigil",
+    "prose": [
+      "Before you can begin your vigil, three figures enter the antechamber. Each wears the symbol of a different order — Rose, Sword, Crown — and all three have come for you.",
+      "Lady Elara of the Rose speaks first. \"The Rose remembers. When others saw only a battle to win, you saw people to save. Wisdom and compassion — the Rose needs knights who understand this.\"",
+      "Ser Garrett of the Sword steps forward. \"I've watched you fight. Not for glory — for the ones who couldn't fight for themselves. The Sword needs knights who stand between darkness and the innocent.\"",
+      "Dame Isolde of the Crown inclines her head. \"Order is the promise that tomorrow will come. The Crown needs knights who can lead, who understand that law serves the people.\"",
+      "Three paths. Three orders. Each has chosen you. Now you must choose."
+    ],
+    "boxes": [],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "\"I choose the Rose. Wisdom guides my blade.\"",
+        "target": "CEREMONY_VIGIL",
+        "points": {"ROSE": 1}
+      },
+      {
+        "letter": "B",
+        "text": "\"I choose the Sword. My strength for the weak.\"",
+        "target": "CEREMONY_VIGIL",
+        "points": {"SWORD": 1}
+      },
+      {
+        "letter": "C",
+        "text": "\"I choose the Crown. Law is my guide.\"",
+        "target": "CEREMONY_VIGIL",
+        "points": {"CROWN": 1}
+      }
+    ]
+  },
+  "CEREMONY_HALL": {
+    "id": "CEREMONY_HALL",
+    "title": "THE HALL OF HIGH JUSTICE",
+    "location": "Castle Brightholm — Dawn",
+    "prose": [
+      "Dawn light floods the Hall of High Justice. Ancient banners hang from rafters older than memory — the platinum dragon of Paladine, the kingfisher of Brightholm, the rose and sword and crown of the three orders.",
+      "The Knights of Solamnia stand in witness. Weathered faces. Gleaming armor. The weight of centuries in their silence.",
+      "At the far end of the hall, Commander Serath waits. His blade is drawn — old steel, notched from battles you've only heard sung. The same blade that knighted him, decades ago.",
+      "Your companions stand among the witnesses. You see their faces — some proud, some afraid for you, some already composing how they'll tell this story later.",
+      "The hall falls silent. Even the wind outside seems to hold its breath.",
+      "\"Approach,\" Serath commands."
+    ],
+    "boxes": [],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Walk forward. This is the moment you were made for.",
+        "target": "CEREMONY_OATHS",
+        "points": {}
+      }
+    ]
+  },
+  "CEREMONY_OATHS": {
+    "id": "CEREMONY_OATHS",
+    "title": "THE THREE OATHS",
+    "location": "Hall of High Justice",
+    "prose": [
+      "You kneel before Commander Serath. The stone is cold through your trousers. The hall holds its breath.",
+      "\"You have walked the path of the Squire,\" Serath intones. His voice fills the hall without shouting — a trick of the acoustics, or of decades spent commanding men. \"You have learned the Measure. You have been tested in battle and in choice.\"",
+      "He looks down at you. In this light, you can see every year he's carried.",
+      "\"Now you will speak the Oaths. And if you speak them true, you will rise as something more than you were.\"",
+      "The hall waits."
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**THE OATHS** — You will now speak the sacred words of Solamnic knighthood. [KNIGHTING_OATHS]"
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Speak the Oath of the Rose: \"Est Sularus oth Mithas — My honor is my life.\"",
+        "target": "CEREMONY_DUBBING",
+        "points": {},
+        "class": "Rose"
+      },
+      {
+        "letter": "B",
+        "text": "Speak the Oath of the Sword: \"Est Solarus oth Kadran — My strength for the weak.\"",
+        "target": "CEREMONY_DUBBING",
+        "points": {},
+        "class": "Sword"
+      },
+      {
+        "letter": "C",
+        "text": "Speak the Oath of the Crown: \"Est Draconis oth Paladine — The law is my guide.\"",
+        "target": "CEREMONY_DUBBING",
+        "points": {},
+        "class": "Crown"
+      }
+    ]
+  },
+  "CEREMONY_DUBBING": {
+    "id": "CEREMONY_DUBBING",
+    "title": "THE DUBBING",
+    "location": "Hall of High Justice",
+    "prose": [
+      "Your voice echoes off the ancient stone. The oath hangs in the air — words spoken by ten thousand knights before you, each one meaning them as much as you do now.",
+      "Serath nods. Once. The smallest gesture, carrying the largest weight.",
+      "He raises his blade. The notched steel catches the dawn light.",
+      "The flat of the blade touches your left shoulder. Cold. Heavy. Real.",
+      "Then your right.",
+      "\"By the authority of the High Clerist,\" Serath intones. \"By the Measure that binds us. By the witness of Paladine himself.\"",
+      "The blade lifts. Serath's eyes meet yours.",
+      "\"Rise, Ser. Knight of the Order.\""
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**KNIGHTED** — You are now a Knight of Solamnia. [APPLY_KNIGHTING]"
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Rise.",
+        "target": "CEREMONY_SIGIL",
+        "points": {}
+      }
+    ]
+  },
+  "CEREMONY_SIGIL": {
+    "id": "CEREMONY_SIGIL",
+    "title": "THE SIGIL",
+    "location": "Hall of High Justice",
+    "prose": [
+      "You stand. For the first time, you stand as a knight.",
+      "Serath reaches into his cloak and withdraws something that catches the light — a medallion of pure Solamnic silver, the symbol of your order etched deep into its face.",
+      "He places it in your hands. It is heavier than it looks. Heavier than silver should be.",
+      "\"This is your proof,\" Serath says quietly, for you alone. \"Your bond. Without it, you are merely someone claiming to be a Knight of Solamnia. With it, you carry the weight of the Oath, the Measure, and every knight who fell upholding both.\"",
+      "He releases the medallion into your hands.",
+      "\"Carry it always. It will remind you of what you swore today. And what that oath will cost you, before the end.\""
+    ],
+    "boxes": [],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Close your fingers around the sigil. Feel its weight.",
+        "target": "CEREMONY_HALL_RISES",
+        "points": {}
+      }
+    ]
+  },
+  "CEREMONY_HALL_RISES": {
+    "id": "CEREMONY_HALL_RISES",
+    "title": "THE HALL RISES",
+    "location": "Hall of High Justice",
+    "prose": [
+      "The knights stamp their feet.",
+      "The sound begins as a rumble — boots on ancient stone — and builds into thunder. A rhythm that shakes dust from the banners. That makes the torch flames dance.",
+      "They are cheering. For you.",
+      "Through the noise, you see your companions. Their faces tell you everything words cannot.",
+      "[COMPANION_REACTIONS]",
+      "The stamping fades. The silence that follows is different from the silence before. Warmer. You belong here now.",
+      "Serath's hand lands on your shoulder. Just for a moment.",
+      "\"Welcome, Ser. Now the real work begins.\""
+    ],
+    "boxes": [],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Turn to face your future as a Knight of Solamnia.",
+        "target": "RETURN",
+        "points": {}
+      }
+    ]
+  },
+  "CEREMONY_UNPROVEN": {
+    "id": "CEREMONY_UNPROVEN",
+    "title": "THE UNPROVEN PATH",
+    "location": "Hall of High Justice — Dawn",
+    "prose": [
+      "Dawn light floods the Hall of High Justice. The Knights of Solamnia stand in witness. Commander Serath waits at the far end, his blade drawn.",
+      "But something is wrong. You can feel it in the air.",
+      "When you kneel before Serath, he studies you for a long moment. His eyes are not unkind — but they are not merciful either.",
+      "\"You have served,\" he says finally. \"You have fought. You have walked the road with us.\"",
+      "He sheathes his blade. The sound echoes in the suddenly silent hall.",
+      "\"But the Measure is clear. A knight must show which path they walk. Rose, Sword, or Crown. You have not.\"",
+      "The words hit harder than any blow.",
+      "\"You remain a Squire. This is not punishment—\" He pauses. Chooses his words. \"It is opportunity. The trials ahead will test you. Show us who you truly are, and the Order will welcome you.\"",
+      "He places a hand on your shoulder. \"Until then, Squire. Serve well.\""
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**UNPROVEN** — You remain a Squire. In the campaigns ahead, you may yet prove yourself worthy of knighthood. [SET_FLAG:unproven_squire]"
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Accept this with grace. You will prove yourself.",
+        "target": "RETURN",
+        "points": {}
+      },
+      {
+        "letter": "B",
+        "text": "Bow your head. The shame is heavy, but you will carry it.",
+        "target": "RETURN",
+        "points": {}
+      }
+    ]
   }
 }
