@@ -354,6 +354,53 @@
     {"name": "Blue Dragon Scale Mail", "rarity": "very rare", "attunement": true, "desc": "Forged from the scales of Ansalon's blue dragons. AC 14 + DEX (max 2) + 1. Resistance to Lightning damage. Advantage on saves vs dragon breath weapons. Once per day, sense the nearest blue dragon within 30 miles.", "mechanical": {"acBase": 15, "resistance": "lightning"}, "source": "dragonlance", "appliesTo": "scale_mail"},
     {"name": "Green Dragon Scale Mail", "rarity": "very rare", "attunement": true, "desc": "Forged from the scales of Ansalon's green dragons. AC 14 + DEX (max 2) + 1. Resistance to Poison damage. Advantage on saves vs dragon breath weapons. Once per day, sense the nearest green dragon within 30 miles.", "mechanical": {"acBase": 15, "resistance": "poison"}, "source": "dragonlance", "appliesTo": "scale_mail"}
   ],
+  "tools": {
+    "artisanTools": [
+      {"name": "Alchemist's Supplies", "cost": 50, "weight": 8, "ability": "INT", "desc": "Create alchemical substances, identify potions and substances. Advantage on checks to brew potions, identify alchemical items, or detect poisoned food/drink."},
+      {"name": "Brewer's Supplies", "cost": 20, "weight": 9, "ability": "INT", "desc": "Brew beverages, identify alcohol quality. Advantage on checks to purify water, identify potables, or detect poison in drinks."},
+      {"name": "Calligrapher's Supplies", "cost": 10, "weight": 5, "ability": "DEX", "desc": "Create elegant writing and documents. Advantage on checks to forge signatures, identify handwriting, or create official-looking documents."},
+      {"name": "Carpenter's Tools", "cost": 8, "weight": 6, "ability": "STR", "desc": "Build and repair wooden structures. Advantage on checks to assess wooden structures, find weaknesses in doors/walls, or build temporary fortifications."},
+      {"name": "Cartographer's Tools", "cost": 15, "weight": 6, "ability": "WIS", "desc": "Create and interpret maps. Advantage on checks to navigate, find your way when lost, or estimate distances and terrain."},
+      {"name": "Cobbler's Tools", "cost": 5, "weight": 5, "ability": "DEX", "desc": "Make and repair footwear. Advantage on checks to create hidden compartments in boots, identify tracks by footwear, or move quietly."},
+      {"name": "Cook's Utensils", "cost": 1, "weight": 8, "ability": "WIS", "desc": "Prepare food. Advantage on checks to detect poison in food, prepare rations for travel, or boost morale with a good meal (+1 temp HP on long rest)."},
+      {"name": "Glassblower's Tools", "cost": 30, "weight": 5, "ability": "DEX", "desc": "Create glass items. Advantage on checks to identify glass quality, spot concealed glass panels, or create vials and containers."},
+      {"name": "Jeweler's Tools", "cost": 25, "weight": 2, "ability": "INT", "desc": "Appraise and create jewelry. Advantage on checks to identify gems, detect fake jewelry, or assess the value of treasure."},
+      {"name": "Leatherworker's Tools", "cost": 5, "weight": 5, "ability": "DEX", "desc": "Work with leather. Advantage on checks to repair leather armor, create leather items, or identify leather quality and origin."},
+      {"name": "Mason's Tools", "cost": 10, "weight": 8, "ability": "STR", "desc": "Work with stone. Advantage on checks to find secret doors in stonework, assess structural integrity, or identify worked stone."},
+      {"name": "Painter's Supplies", "cost": 10, "weight": 5, "ability": "DEX", "desc": "Create visual art. Advantage on checks to create forgeries, identify paintings, or create convincing illusions via paint."},
+      {"name": "Potter's Tools", "cost": 10, "weight": 3, "ability": "DEX", "desc": "Create pottery and ceramics. Advantage on checks to identify clay origins, repair ceramics, or create watertight containers."},
+      {"name": "Smith's Tools", "cost": 20, "weight": 8, "ability": "STR", "desc": "Work with metal. Advantage on checks to repair metal armor/weapons, identify metal quality, or detect flaws in metalwork."},
+      {"name": "Tinker's Tools", "cost": 50, "weight": 10, "ability": "DEX", "desc": "Repair and create mechanical devices. Advantage on checks to repair objects, disarm mechanical traps, or create clockwork gadgets."},
+      {"name": "Weaver's Tools", "cost": 1, "weight": 5, "ability": "DEX", "desc": "Work with cloth and textiles. Advantage on checks to repair clothing, assess fabric quality, or create rope from cloth."},
+      {"name": "Woodcarver's Tools", "cost": 1, "weight": 5, "ability": "DEX", "desc": "Carve and work with wood. Advantage on checks to create wooden items, identify wood types, or repair wooden equipment."}
+    ],
+    "otherTools": [
+      {"name": "Disguise Kit", "cost": 25, "weight": 3, "ability": "CHA", "desc": "Create disguises. Advantage on checks to disguise yourself, see through others' disguises, or create false identities."},
+      {"name": "Forgery Kit", "cost": 15, "weight": 5, "ability": "DEX", "desc": "Create forged documents. Advantage on checks to forge documents, detect forgeries, or replicate seals and signatures."},
+      {"name": "Herbalism Kit", "cost": 5, "weight": 3, "ability": "WIS", "desc": "Identify and use plants. Advantage on checks to identify plants, create antitoxins, or brew Potions of Healing (1/long rest with materials)."},
+      {"name": "Navigator's Tools", "cost": 25, "weight": 2, "ability": "WIS", "desc": "Navigate by stars and maps. Advantage on checks to navigate, avoid getting lost, or determine your position."},
+      {"name": "Poisoner's Kit", "cost": 50, "weight": 2, "ability": "INT", "desc": "Create and identify poisons. Advantage on checks to craft poisons, detect poison, or apply poison to weapons."},
+      {"name": "Thieves' Tools", "cost": 25, "weight": 1, "ability": "DEX", "desc": "Pick locks and disarm traps. Required to attempt lockpicking. Advantage on checks to open locks, disarm traps, or detect trap mechanisms."}
+    ],
+    "gamingSets": [
+      {"name": "Dice Set", "cost": 1, "weight": 0, "ability": "WIS", "desc": "Play dice games. Advantage on checks to detect cheating, win gambling games, or read opponents."},
+      {"name": "Dragonchess Set", "cost": 1, "weight": 0.5, "ability": "INT", "desc": "Play dragonchess. Advantage on checks involving strategy, planning, or predicting opponent moves."},
+      {"name": "Playing Card Set", "cost": 5, "weight": 0, "ability": "WIS", "desc": "Play card games. Advantage on checks to detect cheating, read tells, or win gambling games."},
+      {"name": "Three-Dragon Ante Set", "cost": 1, "weight": 0, "ability": "WIS", "desc": "Play Three-Dragon Ante. Advantage on checks in gambling, reading people, or bluffing."}
+    ],
+    "musicalInstruments": [
+      {"name": "Bagpipes", "cost": 30, "weight": 6, "ability": "CHA", "desc": "Loud wind instrument. Advantage on Performance checks, can be heard from far away."},
+      {"name": "Drum", "cost": 6, "weight": 3, "ability": "CHA", "desc": "Percussion instrument. Advantage on Performance checks and for keeping time/coordination."},
+      {"name": "Dulcimer", "cost": 25, "weight": 10, "ability": "CHA", "desc": "Stringed instrument played with hammers. Advantage on Performance checks in formal settings."},
+      {"name": "Flute", "cost": 2, "weight": 1, "ability": "CHA", "desc": "Wind instrument. Advantage on Performance checks, easy to carry and conceal."},
+      {"name": "Lute", "cost": 35, "weight": 2, "ability": "CHA", "desc": "Popular stringed instrument. Advantage on Performance checks, versatile for many musical styles."},
+      {"name": "Lyre", "cost": 30, "weight": 2, "ability": "CHA", "desc": "Ancient stringed instrument. Advantage on Performance checks, associated with bards and poets."},
+      {"name": "Horn", "cost": 3, "weight": 2, "ability": "CHA", "desc": "Brass instrument. Advantage on Performance checks, can signal over long distances."},
+      {"name": "Pan Flute", "cost": 12, "weight": 2, "ability": "CHA", "desc": "Multiple pipe wind instrument. Advantage on Performance checks, pastoral associations."},
+      {"name": "Shawm", "cost": 2, "weight": 1, "ability": "CHA", "desc": "Double-reed wind instrument. Advantage on Performance checks, loud outdoor performances."},
+      {"name": "Viol", "cost": 30, "weight": 1, "ability": "CHA", "desc": "Bowed stringed instrument. Advantage on Performance checks in formal or courtly settings."}
+    ]
+  },
   "masteryProperties": {
     "Cleave": "If you hit a creature, you can make an attack roll against a second creature within 5 feet of the first, using the same modifier. On a hit, deal the weapon's damage (no ability modifier) to the second creature.",
     "Graze": "If your attack roll misses, the target still takes damage equal to the ability modifier you used for the attack roll.",

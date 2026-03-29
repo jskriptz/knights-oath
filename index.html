@@ -2046,7 +2046,7 @@ const ST={
   async del(k){try{if(window.storage){await window.storage.delete(k);return}localStorage.removeItem(k)}catch(e){try{localStorage.removeItem(k)}catch(e2){}}}
 };
 // ── Save System: Character (persistent) + Campaign Progress (per-campaign) ──
-const CHARACTER_FIELDS=['cls','stats','style','feat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','rations','torches','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount','languages','exhaustion'];
+const CHARACTER_FIELDS=['cls','stats','style','feat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','rations','torches','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount','languages','exhaustion','toolProficiencies'];
 const CAMPAIGN_PROGRESS_FIELDS=['history','flags','awardedScenes','completedRolls','companions','romances','romanceDeclined','companionLog','deadCompanions','rose','sword','crown','orderMax','dgTrack','godSigns','hitDiceUsed','secondWindUsed','actionSurgeUsed','spellSlotsUsed','spellSlots2ndUsed','spellSlots3rdUsed','spellSlots4thUsed','spellSlots5thUsed','spellSlots6thUsed','spellSlots7thUsed','spellSlots8thUsed','spellSlots9thUsed','layOnHandsPool','miraHealedThisScene','combatCount','measureTrack','measureOrientation','approval'];
 
 function splitSave(gs,sceneId){
@@ -2236,6 +2236,41 @@ function SidebarSpellTag({name,type}){
       e('span',{className:'spell-tag-info'},'\u24d8')),
     show?e(SpellInfo,{name:name,onClose:()=>setShow(false)}):null);
 }
+// ── Tool Proficiency Check ────────────────────────────
+// Returns tool name if player has proficiency + tool in inventory for this check
+const TOOL_SKILL_MAP={
+  "Thieves' Tools":['Sleight of Hand','DEX'],
+  "Herbalism Kit":['Nature','Medicine','WIS'],
+  "Disguise Kit":['Deception','Performance','CHA'],
+  "Forgery Kit":['Sleight of Hand','Deception','DEX'],
+  "Poisoner's Kit":['Nature','Medicine','INT'],
+  "Navigator's Tools":['Survival','Nature','WIS'],
+  "Smith's Tools":['Athletics','STR','Investigation'],
+  "Carpenter's Tools":['Athletics','STR'],
+  "Mason's Tools":['Investigation','STR'],
+  "Jeweler's Tools":['Investigation','INT','Arcana'],
+  "Cook's Utensils":['Survival','Medicine','WIS'],
+  "Tinker's Tools":['Investigation','Sleight of Hand','DEX'],
+  "Alchemist's Supplies":['Arcana','Nature','Investigation','INT'],
+  "Calligrapher's Supplies":['History','Investigation','DEX'],
+  "Cartographer's Tools":['Survival','Nature','History','WIS'],
+  "Leatherworker's Tools":['Investigation','DEX'],
+  "Painter's Supplies":['Investigation','Perception','DEX'],
+  "Brewer's Supplies":['Medicine','Survival','INT'],
+  "Cobbler's Tools":['Investigation','Stealth','DEX'],
+  "Glassblower's Tools":['Investigation','DEX'],
+  "Potter's Tools":['Investigation','History','DEX'],
+  "Weaver's Tools":['Investigation','History','DEX'],
+  "Woodcarver's Tools":['Nature','Investigation','DEX']
+};
+function checkToolAdvantage(gs,skill){
+  if(!gs||!gs.toolProficiencies||!gs.inventory)return null;
+  for(const[tool,skills]of Object.entries(TOOL_SKILL_MAP)){
+    if(skills.includes(skill)&&gs.toolProficiencies.includes(tool)&&gs.inventory.includes(tool))return tool;
+  }
+  return null;
+}
+
 // ── Roll Box ───────────────────────────────────────────
 function RollBox({text,derived,gs,onBonus,rollKey,onRollSave}){
   // Check for persisted roll result
@@ -2279,11 +2314,18 @@ function RollBox({text,derived,gs,onBonus,rollKey,onRollSave}){
     return gs.dgTrack==='FALLEN'?'Takhisis':'Paladine';
   };
 
+  // Check for tool advantage
+  const toolAdvantage=checkToolAdvantage(gs,parsed.skill);
+
   const roll=()=>{setRolling(true);setResult(null);setPrayerAvail(false);let c=0;
     const iv=setInterval(()=>{setDisplay(Math.floor(Math.random()*20)+1);if(++c>=10){clearInterval(iv);
-      const d20=Math.floor(Math.random()*20)+1;const total=d20+bonus;
+      let d20=Math.floor(Math.random()*20)+1;
+      let d20b=null;
+      // Tool advantage: roll twice, take higher
+      if(toolAdvantage){d20b=Math.floor(Math.random()*20)+1;d20=Math.max(d20,d20b)}
+      const total=d20+bonus;
       const ok=total>=parsed.dc;
-      const res={d20,total,ok};
+      const res={d20,d20b,total,ok,tool:toolAdvantage};
       setResult(res);setDisplay(d20);setRolling(false);
       saveRoll(res,null);
       if(ok&&onBonus&&parsed.success){
@@ -2346,10 +2388,11 @@ function RollBox({text,derived,gs,onBonus,rollKey,onRollSave}){
       parsed.coinflip?e('p',{className:'coinflip',dangerouslySetInnerHTML:{__html:fmt(parsed.coinflip)}}):null
     ),
     parsed.dc?e('div',{className:'dice-area'},
-      e('div',{className:'dice-info'},parsed.skill+' \u2022 DC '+parsed.dc+' \u2022 Mod '+(bonus>=0?'+':'')+bonus+(isOptional?' \u2022 Optional':'')),
+      e('div',{className:'dice-info'},parsed.skill+' \u2022 DC '+parsed.dc+' \u2022 Mod '+(bonus>=0?'+':'')+bonus+(isOptional?' \u2022 Optional':'')+(toolAdvantage?' \u2022 '+toolAdvantage+' (Adv)':'')),
       // Show result
       result?e('div',{className:'dice-result '+(result.ok?'success':'fail')},
         e('span',{className:'dice-num'},result.d20),
+        result.d20b!==null?e('span',{className:'dice-bonus',style:{color:'var(--gold)'}},' (adv: '+Math.min(result.d20,result.d20b)+'/'+Math.max(result.d20,result.d20b)+')'):null,
         bonus!==0?e('span',{className:'dice-bonus'},' '+(bonus>=0?'+':'\u2212')+' '+Math.abs(bonus)+' = '+result.total):null,
         e('div',{className:'dice-verdict'},result.ok?'\u2714 SUCCESS':'\u2718 FAILURE')
       ):e('div',{className:'dice-placeholder'},rolling&&display?display:'?'),
@@ -6649,7 +6692,7 @@ function App(){
     const extraInv=[equip.weapon,equip.armor,equip.hasShield?'Shield':'',...cInv,cEquip.head,cEquip.hands,cEquip.boots].filter(Boolean);
     const startLangs=(CAMPAIGN&&CAMPAIGN.startingLanguages)||['Common'];
     const allLangs=[...startLangs];if(extraLang&&!allLangs.includes(extraLang))allLangs.push(extraLang);
-    const state={cls,stats,style,feat,mastery,name:name||'Squire',spells:spells||{cantrips:[],level1:[],alwaysPrepared:[]},weapon:equip.weapon,armor:equip.armor,skilledPicks:skilledPicks||[],classSkills:classSkills||[],humanSkill:humanSkill||null,hasShield:equip.hasShield,level:1,hp:derived.maxHp,derived,xp:0,honour:cRes.honour||5,rose:0,sword:0,crown:0,companions:[],romances:{},godSigns:startGods,dgTrack:'NONE',equipment:buildEquipment(equip.weapon,equip.armor,equip.hasShield),inventory:extraInv,history:[],awardedScenes:{},companionLog:{},romanceDeclined:{},flags:{},bonuses:[],magicItems:[],measureTrack:0,measureOrientation:null,gold:cRes.gold||0,layOnHandsPool:cls==='Paladin'?derived.layOnHandsMax:0,spellSlotsUsed:0,spellSlots2ndUsed:0,spellSlots3rdUsed:0,spellSlots4thUsed:0,spellSlots5thUsed:0,spellSlots6thUsed:0,spellSlots7thUsed:0,spellSlots8thUsed:0,spellSlots9thUsed:0,secondWindUsed:0,actionSurgeUsed:false,bandages:cRes.bandages||0,potions:cRes.potions||0,greaterPotions:cRes.greaterPotions||0,rations:cRes.rations||0,torches:cRes.torches||0,miraHealedThisScene:false,completedRolls:{},deadCompanions:[],hitDiceUsed:0,wounds:[],scars:[],combatCount:0,orderMax:{rose:0,sword:0,crown:0},approval:{},companionGifts:[],mount:null,languages:allLangs,exhaustion:0};setGs(state);goScene(startScene,state);setPhase('play')};
+    const state={cls,stats,style,feat,mastery,name:name||'Squire',spells:spells||{cantrips:[],level1:[],alwaysPrepared:[]},weapon:equip.weapon,armor:equip.armor,skilledPicks:skilledPicks||[],classSkills:classSkills||[],humanSkill:humanSkill||null,hasShield:equip.hasShield,level:1,hp:derived.maxHp,derived,xp:0,honour:cRes.honour||5,rose:0,sword:0,crown:0,companions:[],romances:{},godSigns:startGods,dgTrack:'NONE',equipment:buildEquipment(equip.weapon,equip.armor,equip.hasShield),inventory:extraInv,history:[],awardedScenes:{},companionLog:{},romanceDeclined:{},flags:{},bonuses:[],magicItems:[],measureTrack:0,measureOrientation:null,gold:cRes.gold||0,layOnHandsPool:cls==='Paladin'?derived.layOnHandsMax:0,spellSlotsUsed:0,spellSlots2ndUsed:0,spellSlots3rdUsed:0,spellSlots4thUsed:0,spellSlots5thUsed:0,spellSlots6thUsed:0,spellSlots7thUsed:0,spellSlots8thUsed:0,spellSlots9thUsed:0,secondWindUsed:0,actionSurgeUsed:false,bandages:cRes.bandages||0,potions:cRes.potions||0,greaterPotions:cRes.greaterPotions||0,rations:cRes.rations||0,torches:cRes.torches||0,miraHealedThisScene:false,completedRolls:{},deadCompanions:[],hitDiceUsed:0,wounds:[],scars:[],combatCount:0,orderMax:{rose:0,sword:0,crown:0},approval:{},companionGifts:[],mount:null,languages:allLangs,exhaustion:0,toolProficiencies:[]};setGs(state);goScene(startScene,state);setPhase('play')};
   const loadSave=(saveData)=>{
     if(!saveData)return;
     // Handle v2 split format or auto-migrate legacy
@@ -6669,7 +6712,7 @@ function App(){
       }
     }
     // Field defaults (migration safety)
-    if(!g.inventory)g.inventory=[];if(!g.deadCompanions)g.deadCompanions=[];if(!g.completedRolls)g.completedRolls={};if(!g.awardedScenes)g.awardedScenes={};if(!g.romances)g.romances={};if(!g.flags)g.flags={};if(!g.bonuses)g.bonuses=[];if(!g.magicItems)g.magicItems=[];if(g.hitDiceUsed===undefined)g.hitDiceUsed=0;if(!g.wounds)g.wounds=[];if(!g.scars)g.scars=[];if(g.combatCount===undefined)g.combatCount=0;if(g.xp===undefined)g.xp=0;if(g.honour===undefined)g.honour=5;if(!g.approval)g.approval={};if(!g.companionGifts)g.companionGifts=[];if(!g.orderMax)g.orderMax={rose:Math.max(0,g.rose||0),sword:Math.max(0,g.sword||0),crown:Math.max(0,g.crown||0)};if(g.exhaustion===undefined)g.exhaustion=0;if(g.rations===undefined)g.rations=0;if(g.torches===undefined)g.torches=0;if(g.spellSlots2ndUsed===undefined)g.spellSlots2ndUsed=0;if(g.spellSlots3rdUsed===undefined)g.spellSlots3rdUsed=0;if(g.spellSlots4thUsed===undefined)g.spellSlots4thUsed=0;if(g.spellSlots5thUsed===undefined)g.spellSlots5thUsed=0;if(g.spellSlots6thUsed===undefined)g.spellSlots6thUsed=0;if(g.spellSlots7thUsed===undefined)g.spellSlots7thUsed=0;if(g.spellSlots8thUsed===undefined)g.spellSlots8thUsed=0;if(g.spellSlots9thUsed===undefined)g.spellSlots9thUsed=0;
+    if(!g.inventory)g.inventory=[];if(!g.deadCompanions)g.deadCompanions=[];if(!g.completedRolls)g.completedRolls={};if(!g.awardedScenes)g.awardedScenes={};if(!g.romances)g.romances={};if(!g.flags)g.flags={};if(!g.bonuses)g.bonuses=[];if(!g.magicItems)g.magicItems=[];if(g.hitDiceUsed===undefined)g.hitDiceUsed=0;if(!g.wounds)g.wounds=[];if(!g.scars)g.scars=[];if(g.combatCount===undefined)g.combatCount=0;if(g.xp===undefined)g.xp=0;if(g.honour===undefined)g.honour=5;if(!g.approval)g.approval={};if(!g.companionGifts)g.companionGifts=[];if(!g.orderMax)g.orderMax={rose:Math.max(0,g.rose||0),sword:Math.max(0,g.sword||0),crown:Math.max(0,g.crown||0)};if(g.exhaustion===undefined)g.exhaustion=0;if(g.rations===undefined)g.rations=0;if(g.torches===undefined)g.torches=0;if(!g.toolProficiencies)g.toolProficiencies=[];if(g.spellSlots2ndUsed===undefined)g.spellSlots2ndUsed=0;if(g.spellSlots3rdUsed===undefined)g.spellSlots3rdUsed=0;if(g.spellSlots4thUsed===undefined)g.spellSlots4thUsed=0;if(g.spellSlots5thUsed===undefined)g.spellSlots5thUsed=0;if(g.spellSlots6thUsed===undefined)g.spellSlots6thUsed=0;if(g.spellSlots7thUsed===undefined)g.spellSlots7thUsed=0;if(g.spellSlots8thUsed===undefined)g.spellSlots8thUsed=0;if(g.spellSlots9thUsed===undefined)g.spellSlots9thUsed=0;
     if(!g.equipment){g.equipment=buildEquipment(g.weapon,g.armor,g.hasShield);if(!g.inventory.includes('Leather Helm')){g.inventory.push('Leather Helm','Leather Gloves','Leather Boots')}}
     // Migrate companion names to canonical casing
     g.companions=(g.companions||[]).map(c=>{const canon=COMPANIONS_ALL.find(x=>x.toLowerCase()===c.toLowerCase());return canon||c});
