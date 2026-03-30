@@ -66,6 +66,16 @@ body.light-theme .box{background:#fafaf8;border-color:#d4d0c8}body.light-theme .
 /* High contrast mode */
 body.high-contrast{--bg:#000000;--panel:#0a0a0a;--border:#ffffff;--gold:#ffdd00;--gold-dim:#ffee44;--gold-bright:#ffffff;--text:#ffffff;--text-dim:#dddddd;--text-bright:#ffffff}
 body.high-contrast .box{border-width:2px}body.high-contrast button{border-width:2px}body.high-contrast a{text-decoration:underline}
+/* Map modal */
+.map-modal{max-width:440px;text-align:center}
+.campaign-map{width:100%;max-height:60vh;border:1px solid var(--border);border-radius:6px;background:var(--bg)}
+.map-location{cursor:default;transition:opacity .2s}.map-location:hover circle{stroke-width:2}
+.map-location.current circle{filter:drop-shadow(0 0 6px var(--gold))}
+.map-location-info{margin-top:12px;padding:10px;background:var(--panel);border:1px solid var(--border);border-radius:6px;text-align:left}
+.map-loc-name{color:var(--gold);font-family:'Cinzel',serif;font-size:14px;margin-bottom:4px}
+.map-loc-desc{color:var(--text-dim);font-size:13px}
+.map-btn{background:transparent;border:1px solid var(--border);color:var(--text-dim);padding:6px 10px;font-size:11px;border-radius:4px;cursor:pointer;margin-right:8px}
+.map-btn:hover{border-color:var(--gold-dim);color:var(--gold-dim)}
 
 .cover{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg);padding:40px;text-align:center;overflow-y:auto}
 .cover h1{font-family:'Cinzel',serif;color:var(--gold);font-size:52px;letter-spacing:4px}
@@ -5359,6 +5369,62 @@ function Sidebar({gs,onSave,onMenu,onSettings,saveMsg}){
     e('div',{className:'sidebar-actions'},e('button',{className:'save-btn',onClick:onSave},'\u2716 Save'),saveMsg?e('span',{className:'save-msg'},saveMsg):null,e('button',{className:'menu-btn',onClick:onSettings},'\u2699 Settings'),e('button',{className:'menu-btn',onClick:onMenu},'Menu')));
 }
 
+// ── Map System ─────────────────────────────────────────
+const MAP_LOCATIONS={
+  'knights-spur':{name:"Knight's Spur",x:320,y:80,desc:'Training grounds of the Solamnic Order',scenes:['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29']},
+  'palanthas-road':{name:'Palanthas Road',x:280,y:160,desc:'The main road south from the Spur',scenes:['30','31','32','33','34','35','36','37','38','39','40']},
+  'river-crossing':{name:'River Crossing',x:200,y:220,desc:'Where the column must ford the Vingaard',scenes:['41','42','43','44','45','46','47']},
+  'west-bank':{name:'West Bank',x:140,y:260,desc:'Forested approach to the village',scenes:['48','49','50','51','52','53','54','55']},
+  'village':{name:'Kalaman Village',x:100,y:340,desc:'A village under Dragon Army occupation',scenes:['56','57','58','59','60','61','62','63','64','65','66','67','68','69','70']},
+  'final-stand':{name:'The Final Stand',x:160,y:400,desc:'Where the battle reaches its climax',scenes:['71','72','73','74','75','76','77','78','79','80']}
+};
+function getPlayerLocation(sceneId){
+  for(const[locId,loc]of Object.entries(MAP_LOCATIONS)){
+    if(loc.scenes.includes(sceneId))return locId;
+  }
+  return null;
+}
+function MapView({gs,sceneId,onClose}){
+  const e=React.createElement;
+  const currentLoc=getPlayerLocation(sceneId);
+  const visited=new Set();
+  (gs.history||[]).forEach(h=>{const m=h.match(/^(\w+):/);if(m){for(const[id,loc]of Object.entries(MAP_LOCATIONS)){if(loc.scenes.includes(m[1]))visited.add(id)}}});
+  return e('div',{className:'modal-overlay map-overlay',onClick:ev=>{if(ev.target===ev.currentTarget)onClose()}},
+    e('div',{className:'modal-box map-modal'},
+      e('h2',{className:'gold',style:{marginBottom:12}},'CAMPAIGN MAP'),
+      e('svg',{viewBox:'0 0 400 480',className:'campaign-map'},
+        e('rect',{x:0,y:0,width:400,height:480,fill:'var(--bg)'}),
+        e('path',{d:'M350 60 Q380 100 360 140 Q340 180 320 200',stroke:'var(--border)',strokeWidth:2,fill:'none',strokeDasharray:'4,4'}),
+        e('path',{d:'M0 200 Q100 180 200 220 Q300 260 400 240',stroke:'var(--blue)',strokeWidth:3,fill:'none',opacity:0.6}),
+        e('text',{x:320,y:230,fill:'var(--blue)',fontSize:10,opacity:0.7},'Vingaard River'),
+        e('path',{d:'M320 100 L280 160 L200 220 L140 260 L100 340 L160 400',stroke:'var(--gold-dim)',strokeWidth:2,fill:'none',strokeDasharray:'6,3'}),
+        Object.entries(MAP_LOCATIONS).map(([id,loc])=>{
+          const isCurrent=id===currentLoc;
+          const isVisited=visited.has(id);
+          const color=isCurrent?'var(--gold)':isVisited?'var(--green)':'var(--border)';
+          const radius=isCurrent?10:7;
+          return e('g',{key:id,className:'map-location'+(isCurrent?' current':'')},
+            e('circle',{cx:loc.x,cy:loc.y,r:radius+4,fill:isCurrent?'rgba(201,168,76,0.3)':'transparent'}),
+            e('circle',{cx:loc.x,cy:loc.y,r:radius,fill:color,stroke:'var(--text)',strokeWidth:1}),
+            e('text',{x:loc.x,y:loc.y+22,textAnchor:'middle',fill:isCurrent?'var(--gold)':'var(--text)',fontSize:11,fontWeight:isCurrent?'bold':'normal'},loc.name),
+            isCurrent?e('text',{x:loc.x,y:loc.y+34,textAnchor:'middle',fill:'var(--text-dim)',fontSize:9},'(You are here)'):null
+          );
+        }),
+        e('g',{transform:'translate(280,420)'},
+          e('circle',{cx:10,cy:0,r:5,fill:'var(--gold)'}),e('text',{x:20,y:4,fill:'var(--text)',fontSize:10},'Current'),
+          e('circle',{cx:10,cy:18,r:5,fill:'var(--green)'}),e('text',{x:20,y:22,fill:'var(--text)',fontSize:10},'Visited'),
+          e('circle',{cx:10,cy:36,r:5,fill:'var(--border)'}),e('text',{x:20,y:40,fill:'var(--text)',fontSize:10},'Unexplored')
+        )
+      ),
+      currentLoc?e('div',{className:'map-location-info'},
+        e('div',{className:'map-loc-name'},MAP_LOCATIONS[currentLoc].name),
+        e('div',{className:'map-loc-desc'},MAP_LOCATIONS[currentLoc].desc)
+      ):null,
+      e('button',{className:'gold-btn',style:{marginTop:16},onClick:onClose},'Close')
+    )
+  );
+}
+
 // ── Save Picker ────────────────────────────────────────
 function SavePicker({onPick,onCancel}){
   const[slots,setSlots]=useState(Array(SAVE_SLOT_COUNT).fill(null));const[loading,setLoading]=useState(true);const[del,setDel]=useState(null);const[importErr,setImportErr]=useState(null);const e=React.createElement;
@@ -6864,7 +6930,7 @@ function applyTheme(theme){
 
 function App(){
   const[phase,setPhase]=useState('cover');const[gs,setGs]=useState(null);const[scene,setScene]=useState(null);const[sceneId,setSceneId]=useState(null);
-  const[showSave,setShowSave]=useState(false);const[saveMsg,setSaveMsg]=useState('');const[showSheet,setShowSheet]=useState(false);const[showDmSummary,setShowDmSummary]=useState(false);const[sideOpen,setSideOpen]=useState(false);const[confirmModal,setConfirmModal]=useState(null);const[compPopup,setCompPopup]=useState(null);const[romancePrompt,setRomancePrompt]=useState(null);const[romanceManage,setRomanceManage]=useState(false);const[breakupTarget,setBreakupTarget]=useState(null);const[npcNotify,setNpcNotify]=useState(null);const[romanceCheck,setRomanceCheck]=useState(null);const[spellPrepModal,setSpellPrepModal]=useState(false);const[shortRestModal,setShortRestModal]=useState(false);const[healingPanel,setHealingPanel]=useState(false);const[defeatRecovery,setDefeatRecovery]=useState(null);const[godSignPicker,setGodSignPicker]=useState(null);const[editSlot,setEditSlot]=useState(null);const[showSettingsPanel,setShowSettingsPanel]=useState(false);const[knightingPicker,setKnightingPicker]=useState(null);
+  const[showSave,setShowSave]=useState(false);const[saveMsg,setSaveMsg]=useState('');const[showSheet,setShowSheet]=useState(false);const[showDmSummary,setShowDmSummary]=useState(false);const[showMap,setShowMap]=useState(false);const[sideOpen,setSideOpen]=useState(false);const[confirmModal,setConfirmModal]=useState(null);const[compPopup,setCompPopup]=useState(null);const[romancePrompt,setRomancePrompt]=useState(null);const[romanceManage,setRomanceManage]=useState(false);const[breakupTarget,setBreakupTarget]=useState(null);const[npcNotify,setNpcNotify]=useState(null);const[romanceCheck,setRomanceCheck]=useState(null);const[spellPrepModal,setSpellPrepModal]=useState(false);const[shortRestModal,setShortRestModal]=useState(false);const[healingPanel,setHealingPanel]=useState(false);const[defeatRecovery,setDefeatRecovery]=useState(null);const[godSignPicker,setGodSignPicker]=useState(null);const[editSlot,setEditSlot]=useState(null);const[showSettingsPanel,setShowSettingsPanel]=useState(false);const[knightingPicker,setKnightingPicker]=useState(null);
   // Migrate companion name casing on any active gs
   React.useEffect(()=>{
     if(!gs||!gs.companions)return;
@@ -7427,7 +7493,7 @@ function App(){
         return remaining.length?e(React.Fragment,null,e('h3',null,'Inventory'),
           e('div',{className:'inv-list'},remaining.map((it,i)=>e('div',{key:it+i,className:'inv-item'},it)))):null})(),
       e('h3',null,'Log'),e('div',{className:'history-list'},gs.history.slice(-10).reverse().map((h,i)=>e('div',{key:i,className:'hist-item'},h))),
-      e('div',{className:'sidebar-actions'},e('button',{className:'sheet-sidebar-btn',onClick:()=>{setShowSheet(true);setSideOpen(false)}},'Character Sheet'),
+      e('div',{className:'sidebar-actions'},e('button',{className:'map-btn',onClick:()=>{setShowMap(true);setSideOpen(false)}},'\u{1F5FA} Map'),e('button',{className:'sheet-sidebar-btn',onClick:()=>{setShowSheet(true);setSideOpen(false)}},'Character Sheet'),
         ENDING_SCENES.includes(sceneId)&&DM_SUMMARY?e('button',{className:'sheet-sidebar-btn',style:{background:'var(--gold-dim)',color:'var(--bg)'},onClick:()=>{setShowDmSummary(true);setSideOpen(false)}},'DM Summary'):null,
         Object.values(gs.romances||{}).filter(v=>v&&v!=='Friend').length>0?e('button',{className:'romance-manage-btn',onClick:()=>{setRomanceManage(true);setSideOpen(false)}},'Manage Romances'):null,e('button',{className:'save-btn',onClick:()=>{setShowSave(true);setSideOpen(false)}},'\u2716 Save'),saveMsg?e('span',{className:'save-msg'},saveMsg):null,e('button',{className:'menu-btn',onClick:()=>{setShowSettingsPanel(true);setSideOpen(false)}},'\u2699 Settings'),e('button',{className:'menu-btn',onClick:handleMenu},'Menu'))),
     e(SceneView,{scene,onChoice:handleChoice,gs,isEnding:ENDING_SCENES.includes(sceneId),onViewSheet:()=>setShowSheet(true),onViewDmSummary:ENDING_SCENES.includes(sceneId)&&DM_SUMMARY?()=>setShowDmSummary(true):null,onBonus:handleBonus,onStateUpdate:handleStateUpdate}),
@@ -7442,7 +7508,8 @@ function App(){
     defeatRecovery&&gs?e(DefeatRecoveryModal,{gs:gs,wound:defeatRecovery.wound,scar:defeatRecovery.scar,onContinue:()=>setDefeatRecovery(null)}):null,
     godSignPicker&&gs&&gs.cls==='Paladin'?e(GodSignPicker,{options:godSignPicker.options,onPick:(god)=>{const ns={...gs,godSigns:{...(gs.godSigns||{})}};ns.godSigns[god]=(ns.godSigns[god]||0)+1;setGs(ns);setGodSignPicker(null)}}):null,
     knightingPicker&&gs?e(KnightingSkillPicker,{order:knightingPicker.order,onConfirm:(skillChoice)=>{const ns=applyKnightingBonus(gs,knightingPicker.order,skillChoice);setGs(ns);setKnightingPicker(null)}}):null,
-    showSettingsPanel?e(SettingsPanel,{onClose:()=>setShowSettingsPanel(false)}):null);
+    showSettingsPanel?e(SettingsPanel,{onClose:()=>setShowSettingsPanel(false)}):null,
+    showMap&&gs?e(MapView,{gs:gs,sceneId:sceneId,onClose:()=>setShowMap(false)}):null);
 }
 // Attempt to load campaign from JSON files, then mount
 (async function(){
