@@ -60,6 +60,12 @@ body.shake{animation:shake .2s ease-out}
 /* Compact UI mode */
 .compact-ui .scene{padding:12px 16px}.compact-ui .box{padding:10px 14px;margin-bottom:10px}.compact-ui .prose p{margin-bottom:8px}
 .compact-ui .choice-btn{padding:10px 14px}.compact-ui .sidebar{padding:12px}.compact-ui h1{font-size:20px}.compact-ui h2{font-size:18px}
+/* Light theme */
+body.light-theme{--bg:#f5f3ef;--panel:#ffffff;--border:#d4d0c8;--gold:#8b6914;--gold-dim:#a68520;--gold-bright:#6b4f0a;--text:#2a2520;--text-dim:#5a5550;--text-bright:#1a1510;--blue:#2a5a98;--green:#2a6a3a;--red:#9a2a2a;--purple:#5a3a7a;--orange:#8a5a1a}
+body.light-theme .box{background:#fafaf8;border-color:#d4d0c8}body.light-theme .modal-box{background:#ffffff}
+/* High contrast mode */
+body.high-contrast{--bg:#000000;--panel:#0a0a0a;--border:#ffffff;--gold:#ffdd00;--gold-dim:#ffee44;--gold-bright:#ffffff;--text:#ffffff;--text-dim:#dddddd;--text-bright:#ffffff}
+body.high-contrast .box{border-width:2px}body.high-contrast button{border-width:2px}body.high-contrast a{text-decoration:underline}
 
 .cover{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg);padding:40px;text-align:center;overflow-y:auto}
 .cover h1{font-family:'Cinzel',serif;color:var(--gold);font-size:52px;letter-spacing:4px}
@@ -2248,22 +2254,26 @@ async function deleteSave(slot){try{await ST.del('save-slot-'+slot);await PrefBa
 function fmtDate(iso){try{const d=new Date(iso);return d.toLocaleDateString(undefined,{month:'short',day:'numeric'})+' '+d.toLocaleTimeString(undefined,{hour:'2-digit',minute:'2-digit'})}catch{return''}}
 
 // ── Settings ──────────────────────────────────────────
-const DEFAULT_SETTINGS={textScale:1,combatSpeed:'normal',autoSave:true,screenShake:true,compactUI:false};
+const DEFAULT_SETTINGS={textScale:1,combatSpeed:'normal',autoSave:true,screenShake:true,compactUI:false,soundEffects:true,theme:'dark',highContrast:false,combatLogVerbosity:'normal'};
 function loadSettings(){try{const s=JSON.parse(localStorage.getItem('ko-settings'));return{...DEFAULT_SETTINGS,...s}}catch{return{...DEFAULT_SETTINGS}}}
 function saveSettings(s){try{localStorage.setItem('ko-settings',JSON.stringify(s))}catch{}}
 function applyTextScale(scale){document.documentElement.style.setProperty('--text-scale',scale)}
 function applyCompactUI(on){document.body.classList.toggle('compact-ui',on)}
+function applyThemeMode(theme){document.body.classList.toggle('light-theme',theme==='light')}
+function applyHighContrast(on){document.body.classList.toggle('high-contrast',on)}
 function getCombatDelay(){const s=loadSettings();return s.combatSpeed==='fast'?30:s.combatSpeed==='slow'?100:60}
 function shouldAutoSave(){return loadSettings().autoSave}
 function shouldScreenShake(){return loadSettings().screenShake}
+function shouldPlaySound(){return loadSettings().soundEffects}
+function getCombatLogVerbosity(){return loadSettings().combatLogVerbosity}
 function doScreenShake(){if(!shouldScreenShake())return;document.body.classList.add('shake');setTimeout(()=>document.body.classList.remove('shake'),200)}
 // Apply saved settings immediately on load
-(function(){const s=loadSettings();if(s.textScale!==1)applyTextScale(s.textScale);if(s.compactUI)applyCompactUI(true)})();
+(function(){const s=loadSettings();if(s.textScale!==1)applyTextScale(s.textScale);if(s.compactUI)applyCompactUI(true);if(s.theme==='light')applyThemeMode('light');if(s.highContrast)applyHighContrast(true)})();
 
 function SettingsPanel({onClose}){
   const[settings,setSettings]=useState(loadSettings);
   const e=React.createElement;
-  const update=(key,val)=>{const ns={...settings,[key]:val};setSettings(ns);saveSettings(ns);if(key==='textScale')applyTextScale(val);if(key==='compactUI')applyCompactUI(val)};
+  const update=(key,val)=>{const ns={...settings,[key]:val};setSettings(ns);saveSettings(ns);if(key==='textScale')applyTextScale(val);if(key==='compactUI')applyCompactUI(val);if(key==='theme')applyThemeMode(val);if(key==='highContrast')applyHighContrast(val)};
   const scaleLabel=v=>{if(v<=0.85)return'Small';if(v<=0.95)return'';if(v<=1.05)return'Default';if(v<=1.15)return'';if(v<=1.25)return'Large';if(v<=1.35)return'';return'X-Large'};
   return e('div',{className:'modal-overlay',onClick:ev=>{if(ev.target===ev.currentTarget)onClose()}},
     e('div',{className:'modal-box settings-modal'},
@@ -2286,8 +2296,22 @@ function SettingsPanel({onClose}){
       e('div',{className:'settings-row'},
         e('div',null,e('div',{className:'settings-label'},'Compact UI'),e('div',{className:'settings-sublabel'},'Reduce spacing for smaller screens')),
         e('button',{className:'settings-toggle'+(settings.compactUI?' on':''),onClick:()=>update('compactUI',!settings.compactUI)})),
+      e('div',{className:'settings-row'},
+        e('div',null,e('div',{className:'settings-label'},'Sound Effects'),e('div',{className:'settings-sublabel'},'Audio feedback (when available)')),
+        e('button',{className:'settings-toggle'+(settings.soundEffects?' on':''),onClick:()=>update('soundEffects',!settings.soundEffects)})),
+      e('div',{className:'settings-row'},
+        e('div',null,e('div',{className:'settings-label'},'Theme'),e('div',{className:'settings-sublabel'},'Dark or light color scheme')),
+        e('div',{className:'settings-control'},
+          ['dark','light'].map(v=>e('button',{key:v,className:'settings-btn'+(settings.theme===v?' selected':''),style:settings.theme===v?{borderColor:'var(--gold)',color:'var(--gold)'}:{},onClick:()=>update('theme',v)},v.charAt(0).toUpperCase()+v.slice(1))))),
+      e('div',{className:'settings-row'},
+        e('div',null,e('div',{className:'settings-label'},'High Contrast'),e('div',{className:'settings-sublabel'},'Increased visibility for accessibility')),
+        e('button',{className:'settings-toggle'+(settings.highContrast?' on':''),onClick:()=>update('highContrast',!settings.highContrast)})),
+      e('div',{className:'settings-row'},
+        e('div',null,e('div',{className:'settings-label'},'Combat Log'),e('div',{className:'settings-sublabel'},'Detail level for combat messages')),
+        e('div',{className:'settings-control'},
+          ['minimal','normal','verbose'].map(v=>e('button',{key:v,className:'settings-btn'+(settings.combatLogVerbosity===v?' selected':''),style:settings.combatLogVerbosity===v?{borderColor:'var(--gold)',color:'var(--gold)'}:{},onClick:()=>update('combatLogVerbosity',v)},v.charAt(0).toUpperCase()+v.slice(1))))),
       e('div',{style:{marginTop:16,display:'flex',justifyContent:'center',gap:12}},
-        e('button',{className:'ghost-btn',onClick:()=>{update('textScale',1);update('combatSpeed','normal');update('autoSave',true);update('screenShake',true);update('compactUI',false)}},'Reset Defaults'),
+        e('button',{className:'ghost-btn',onClick:()=>{update('textScale',1);update('combatSpeed','normal');update('autoSave',true);update('screenShake',true);update('compactUI',false);update('soundEffects',true);update('theme','dark');update('highContrast',false);update('combatLogVerbosity','normal')}},'Reset Defaults'),
         e('button',{className:'gold-btn',onClick:onClose},'Done'))))}
 
 function CompanionInfo({name,romance,onClose}){
