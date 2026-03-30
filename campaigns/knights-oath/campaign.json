@@ -10,7 +10,7 @@
   "availableSpecies": ["human"],
   "speciesLocked": true,
   "startingLanguages": ["Common", "Solamnic"],
-  "version": "24.5.7",
+  "version": "24.5.8",
   "startScene": "1",
   "startingInventory": ["Dagger", "Backpack", "Bedroll", "Mess Kit", "Tinderbox", "Waterskin", "Rope (50 ft)", "Solamnic Tabard"],
   "startingEquipment": {

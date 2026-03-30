@@ -5384,24 +5384,39 @@ function Sidebar({gs,onSave,onMenu,onSettings,saveMsg}){
 
 // ── Map System ─────────────────────────────────────────
 const MAP_LOCATIONS={
-  'knights-spur':{name:"Knight's Spur",x:340,y:70,desc:'The fortress training grounds of the Solamnic Order, perched on a rocky promontory overlooking the northern plains.',icon:'castle',known:true,scenes:['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29']},
-  'palanthas-road':{name:'Palanthas Road',x:290,y:150,desc:'The ancient highway connecting Palanthas to the southern provinces. Well-maintained but increasingly dangerous.',icon:'road',known:true,scenes:['30','31','32','33','34','35','36','37','38','39','40']},
-  'river-crossing':{name:'River Crossing',x:210,y:220,desc:'A shallow ford across the Vingaard River, marked by ancient standing stones. The water runs cold from mountain snowmelt.',icon:'bridge',known:false,scenes:['41','42','43','44','45','46','47']},
-  'west-bank':{name:'West Bank',x:130,y:280,desc:'Dense woodland of oak and pine. Good cover, but easy to get lost. Locals say the forest remembers the old wars.',icon:'forest',known:false,hiddenName:'Dense Forest',scenes:['48','49','50','51','52','53','54','55']},
-  'village':{name:'Kalaman Village',x:90,y:360,desc:'A farming settlement under Dragon Army occupation. Smoke rises from chimneys, but the streets are too quiet.',icon:'village',known:false,hiddenName:'Occupied Village',scenes:['56','57','58','59','60','61','62','63','64','65','66','67','68','69','70']},
-  'final-stand':{name:'The Final Stand',x:150,y:430,desc:'The old mill and surrounding fields. Here, the column must make its stand or fall.',icon:'battle',secret:true,scenes:['71','72','73','74','75','76','77','78','79','80']}
+  // Act 1: Knight's Spur - Training & Preparation
+  'knights-spur':{name:"Knight's Spur",x:340,y:65,desc:'The fortress training grounds of the Solamnic Order. Here you learned the blade, the Measure, and the meaning of the Oath.',icon:'castle',known:true,scenes:['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','CROWN','ROSE','SWORD']},
+  // Act 2: The March Begins
+  'march-camp':{name:'First Camp',x:310,y:125,desc:'Where the column made camp the first night out. The fire felt different here — no walls, no certainty.',icon:'camp',known:false,hiddenName:'Roadside Camp',scenes:['30','31','62D','EV1','BOND_HUB']},
+  'palanthas-road':{name:'South Road',x:270,y:170,desc:'The ancient highway south. Each milestone marks another day closer to whatever waits at the end.',icon:'road',known:true,scenes:['32','33','34','35','63','64','65']},
+  // Act 3: River & Crossing
+  'road-ambush':{name:'Ambush Site',x:230,y:200,desc:'Where the draconians struck from the treeline. The first real blood of the campaign.',icon:'danger',known:false,hiddenName:'Dangerous Stretch',secret:true,scenes:['36','37','38','39','40','66','66B']},
+  'river-crossing':{name:'Vingaard Ford',x:195,y:235,desc:'The ancient ford across the Vingaard. Standing stones mark the crossing — older than the Order itself.',icon:'bridge',known:false,hiddenName:'River Crossing',scenes:['41','42','43','44','45','67','68','68B','68C']},
+  // Act 4: West Bank & Approach
+  'last-camp':{name:'Last Camp',x:155,y:270,desc:'The final night before Vogler. Conversations that felt like goodbyes.',icon:'camp',known:false,hiddenName:'Forest Camp',scenes:['46','47','48','69']},
+  'west-bank':{name:'Thornwood',x:115,y:310,desc:'Dense woodland approaching the village. Good cover, poor visibility. The locals avoid these woods.',icon:'forest',known:false,hiddenName:'Dense Forest',scenes:['49','50','51','52','53','54','55']},
+  // Act 5: Vogler
+  'vogler':{name:'Vogler',x:85,y:365,desc:'A farming village under Dragon Army occupation. Smoke rises from chimneys, but the streets are too quiet.',icon:'village',known:false,hiddenName:'Occupied Settlement',scenes:['56','57','58','59','60','61','62','70','71']},
+  'vogler-mill':{name:'The Mill',x:130,y:410,desc:'The old grain mill on the village outskirts. Stone walls. Defensible. The column\'s last redoubt.',icon:'battle',secret:true,scenes:['STANDING_GROUND','REFORMER','DARK_QUEEN']},
+  // Companion Codex (no physical location)
+  'codex':{name:'Companion Records',x:0,y:0,desc:'Character profiles and companion information.',icon:'none',hidden:true,scenes:['72','73','74','75','76','77','78','79','80']}
 };
 const MAP_LANDMARKS=[
-  {x:380,y:40,label:'To Palanthas',type:'arrow-n',known:true},
-  {x:50,y:480,label:'Dragon Army Territory',type:'arrow-s',known:true},
-  {x:360,y:120,label:'Watchtower',type:'tower',known:true},
-  {x:180,y:180,label:'Old Bridge',type:'ruins',known:false},
-  {x:60,y:220,label:'Thornwood',type:'forest',known:true},
-  {x:40,y:300,label:'Burnt Farm',type:'ruins',known:false},
-  {x:200,y:380,label:'Dragon Patrol Route',type:'danger',known:false}
+  {x:385,y:35,label:'To Palanthas',type:'arrow-n',known:true},
+  {x:45,y:480,label:'Dragon Army Lines',type:'arrow-s',known:true},
+  {x:370,y:95,label:'Signal Tower',type:'tower',known:true},
+  {x:340,y:145,label:'Milestone',type:'marker',known:true},
+  {x:250,y:145,label:'Refugee Column',type:'marker',known:false},
+  {x:175,y:195,label:'Ruined Bridge',type:'ruins',known:false},
+  {x:55,y:235,label:'Thornwood Edge',type:'forest',known:true},
+  {x:35,y:295,label:'Burnt Homestead',type:'ruins',known:false},
+  {x:75,y:340,label:'Watchtower (enemy)',type:'danger',known:false},
+  {x:165,y:390,label:'Dragon Patrol',type:'danger',known:false},
+  {x:110,y:450,label:'Enemy Camp',type:'danger',known:false}
 ];
 function getPlayerLocation(sceneId){
   for(const[locId,loc]of Object.entries(MAP_LOCATIONS)){
+    if(loc.hidden)continue;
     if(loc.scenes.includes(sceneId))return locId;
   }
   return null;
@@ -5413,12 +5428,17 @@ function MapView({gs,sceneId,onClose}){
   const[dragging,setDragging]=useState(false);
   const[dragStart,setDragStart]=useState(null);
   const[selected,setSelected]=useState(null);
+  const[touchDist,setTouchDist]=useState(null);
   const currentLoc=getPlayerLocation(sceneId);
   const visited=new Set();
   (gs.history||[]).forEach(h=>{const m=h.match(/^(\w+):/);if(m){for(const[id,loc]of Object.entries(MAP_LOCATIONS)){if(loc.scenes.includes(m[1]))visited.add(id)}}});
-  // Zoom handlers
+  // Mouse handlers
   const handleWheel=(ev)=>{ev.preventDefault();const delta=ev.deltaY>0?-0.1:0.1;setZoom(z=>Math.max(0.5,Math.min(2.5,z+delta)))};
   const handleMouseDown=(ev)=>{if(ev.button===0){setDragging(true);setDragStart({x:ev.clientX-pan.x,y:ev.clientY-pan.y})}};
+  // Touch handlers for mobile
+  const handleTouchStart=(ev)=>{if(ev.touches.length===1){setDragging(true);setDragStart({x:ev.touches[0].clientX-pan.x,y:ev.touches[0].clientY-pan.y})}else if(ev.touches.length===2){const d=Math.hypot(ev.touches[0].clientX-ev.touches[1].clientX,ev.touches[0].clientY-ev.touches[1].clientY);setTouchDist(d)}};
+  const handleTouchMove=(ev)=>{ev.preventDefault();if(ev.touches.length===1&&dragging&&dragStart){setPan({x:ev.touches[0].clientX-dragStart.x,y:ev.touches[0].clientY-dragStart.y})}else if(ev.touches.length===2&&touchDist){const d=Math.hypot(ev.touches[0].clientX-ev.touches[1].clientX,ev.touches[0].clientY-ev.touches[1].clientY);const scale=d/touchDist;setZoom(z=>Math.max(0.5,Math.min(2.5,z*scale)));setTouchDist(d)}};
+  const handleTouchEnd=()=>{setDragging(false);setDragStart(null);setTouchDist(null)};
   const handleMouseMove=(ev)=>{if(dragging&&dragStart){setPan({x:ev.clientX-dragStart.x,y:ev.clientY-dragStart.y})}};
   const handleMouseUp=()=>{setDragging(false);setDragStart(null)};
   const resetView=()=>{setZoom(1);setPan({x:0,y:0})};
@@ -5433,6 +5453,8 @@ function MapView({gs,sceneId,onClose}){
     if(type==='bridge')return e('g',null,e('ellipse',{cx:x,cy:y,rx:size,ry:size*0.6,fill:'none',stroke:color,strokeWidth:2}),e('line',{x1:x-size,y1:y,x2:x+size,y2:y,stroke:color,strokeWidth:2}));
     if(type==='forest')return e('g',null,e('circle',{cx:x-4,cy:y+2,r:size*0.7,fill:color,opacity:0.7}),e('circle',{cx:x+4,cy:y+2,r:size*0.7,fill:color,opacity:0.7}),e('circle',{cx:x,cy:y-3,r:size*0.8,fill:color}));
     if(type==='battle')return e('g',null,e('line',{x1:x-size,y1:y-size,x2:x+size,y2:y+size,stroke:color,strokeWidth:2}),e('line',{x1:x+size,y1:y-size,x2:x-size,y2:y+size,stroke:color,strokeWidth:2}),e('circle',{cx:x,cy:y,r:size*0.5,fill:color}));
+    if(type==='camp')return e('g',null,e('path',{d:'M'+(x-size)+' '+(y+size*0.6)+' L'+x+' '+(y-size)+' L'+(x+size)+' '+(y+size*0.6)+' Z',fill:color,stroke:'var(--text)',strokeWidth:1}),e('line',{x1:x,y1:y+size*0.6,x2:x,y2:y+size,stroke:color,strokeWidth:2}));
+    if(type==='road')return e('g',null,e('circle',{cx:x,cy:y,r:size*0.7,fill:'none',stroke:color,strokeWidth:2}),e('circle',{cx:x,cy:y,r:size*0.3,fill:color}));
     return e('circle',{cx:x,cy:y,r:size,fill:color,stroke:'var(--text)',strokeWidth:1});
   };
   const infoLoc=selected?MAP_LOCATIONS[selected]:currentLoc?MAP_LOCATIONS[currentLoc]:null;
@@ -5445,7 +5467,7 @@ function MapView({gs,sceneId,onClose}){
         e('span',{className:'map-zoom-level'},Math.round(zoom*100)+'%'),
         e('button',{className:'map-zoom-btn',onClick:()=>setZoom(z=>Math.max(0.5,z-0.25))},'-'),
         e('button',{className:'map-reset-btn',onClick:resetView},'Reset')),
-      e('div',{className:'map-container',onWheel:handleWheel,onMouseDown:handleMouseDown,onMouseMove:handleMouseMove,onMouseUp:handleMouseUp,onMouseLeave:handleMouseUp},
+      e('div',{className:'map-container',onWheel:handleWheel,onMouseDown:handleMouseDown,onMouseMove:handleMouseMove,onMouseUp:handleMouseUp,onMouseLeave:handleMouseUp,onTouchStart:handleTouchStart,onTouchMove:handleTouchMove,onTouchEnd:handleTouchEnd},
       e('svg',{viewBox:'0 0 440 520',className:'campaign-map',style:{transform:'scale('+zoom+') translate('+pan.x/zoom+'px,'+pan.y/zoom+'px)',cursor:dragging?'grabbing':'grab'}},
         // Defs for gradients and patterns
         e('defs',null,
@@ -5476,6 +5498,7 @@ function MapView({gs,sceneId,onClose}){
           if(lm.type==='ruins')return e('g',{key:'lm'+i},e('path',{d:'M'+(lm.x-6)+' '+lm.y+' L'+(lm.x-4)+' '+(lm.y-6)+' L'+(lm.x)+' '+(lm.y-4)+' L'+(lm.x+4)+' '+(lm.y-8)+' L'+(lm.x+6)+' '+(lm.y-2),stroke:'#5a5a70',strokeWidth:2,fill:'none'}),e('text',{x:lm.x,y:lm.y+12,textAnchor:'middle',fill:'var(--text-dim)',fontSize:7},lm.label));
           if(lm.type==='forest')return e('g',{key:'lm'+i},e('text',{x:lm.x,y:lm.y,textAnchor:'middle',fill:'#3a5a3a',fontSize:8,fontStyle:'italic'},lm.label));
           if(lm.type==='danger')return e('g',{key:'lm'+i},e('path',{d:'M'+(lm.x-30)+' '+lm.y+' Q'+lm.x+' '+(lm.y-15)+' '+(lm.x+30)+' '+lm.y,stroke:'#8b3a3a',strokeWidth:2,strokeDasharray:'4,4',fill:'none'}),e('text',{x:lm.x,y:lm.y+12,textAnchor:'middle',fill:'#a84a4a',fontSize:7},lm.label));
+          if(lm.type==='marker')return e('g',{key:'lm'+i},e('circle',{cx:lm.x,cy:lm.y,r:4,fill:'var(--gold-dim)',stroke:'var(--border)',strokeWidth:1}),e('text',{x:lm.x,y:lm.y+14,textAnchor:'middle',fill:'var(--text-dim)',fontSize:7},lm.label));
           if(lm.type==='arrow-n')return e('text',{key:'lm'+i,x:lm.x,y:lm.y,textAnchor:'middle',fill:'var(--text-dim)',fontSize:8},'↑ '+lm.label);
           if(lm.type==='arrow-s')return e('text',{key:'lm'+i,x:lm.x,y:lm.y,textAnchor:'middle',fill:'#a84a4a',fontSize:8},'↓ '+lm.label);
           return null;
