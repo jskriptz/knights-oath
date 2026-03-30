@@ -54,6 +54,12 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Crimso
 button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 /* Accessibility: reduced motion */
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+/* Screen shake effect */
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-4px)}40%{transform:translateX(4px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+body.shake{animation:shake .2s ease-out}
+/* Compact UI mode */
+.compact-ui .scene{padding:12px 16px}.compact-ui .box{padding:10px 14px;margin-bottom:10px}.compact-ui .prose p{margin-bottom:8px}
+.compact-ui .choice-btn{padding:10px 14px}.compact-ui .sidebar{padding:12px}.compact-ui h1{font-size:20px}.compact-ui h2{font-size:18px}
 
 .cover{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg);padding:40px;text-align:center;overflow-y:auto}
 .cover h1{font-family:'Cinzel',serif;color:var(--gold);font-size:52px;letter-spacing:4px}
@@ -2246,13 +2252,18 @@ const DEFAULT_SETTINGS={textScale:1,combatSpeed:'normal',autoSave:true,screenSha
 function loadSettings(){try{const s=JSON.parse(localStorage.getItem('ko-settings'));return{...DEFAULT_SETTINGS,...s}}catch{return{...DEFAULT_SETTINGS}}}
 function saveSettings(s){try{localStorage.setItem('ko-settings',JSON.stringify(s))}catch{}}
 function applyTextScale(scale){document.documentElement.style.setProperty('--text-scale',scale)}
-// Apply saved text scale immediately on load
-(function(){const s=loadSettings();if(s.textScale!==1)applyTextScale(s.textScale)})();
+function applyCompactUI(on){document.body.classList.toggle('compact-ui',on)}
+function getCombatDelay(){const s=loadSettings();return s.combatSpeed==='fast'?30:s.combatSpeed==='slow'?100:60}
+function shouldAutoSave(){return loadSettings().autoSave}
+function shouldScreenShake(){return loadSettings().screenShake}
+function doScreenShake(){if(!shouldScreenShake())return;document.body.classList.add('shake');setTimeout(()=>document.body.classList.remove('shake'),200)}
+// Apply saved settings immediately on load
+(function(){const s=loadSettings();if(s.textScale!==1)applyTextScale(s.textScale);if(s.compactUI)applyCompactUI(true)})();
 
 function SettingsPanel({onClose}){
   const[settings,setSettings]=useState(loadSettings);
   const e=React.createElement;
-  const update=(key,val)=>{const ns={...settings,[key]:val};setSettings(ns);saveSettings(ns);if(key==='textScale')applyTextScale(val)};
+  const update=(key,val)=>{const ns={...settings,[key]:val};setSettings(ns);saveSettings(ns);if(key==='textScale')applyTextScale(val);if(key==='compactUI')applyCompactUI(val)};
   const scaleLabel=v=>{if(v<=0.85)return'Small';if(v<=0.95)return'';if(v<=1.05)return'Default';if(v<=1.15)return'';if(v<=1.25)return'Large';if(v<=1.35)return'';return'X-Large'};
   return e('div',{className:'modal-overlay',onClick:ev=>{if(ev.target===ev.currentTarget)onClose()}},
     e('div',{className:'modal-box settings-modal'},
@@ -2478,7 +2489,7 @@ function RollBox({text,derived,gs,onBonus,rollKey,onRollSave}){
         });
       }
       if(!ok&&Math.random()<0.10)setPrayerAvail(true);
-    }},60)};
+    }},getCombatDelay())};
 
   // Tactical Mind (Fighter Lv2+): add 1d10 to failed ability check, uses Second Wind charge
   const canTacticalMind=gs&&gs.cls==='Fighter'&&gs.level>=2&&result&&!result.ok&&!result.skipped&&!tmResult&&!prayerResult&&((derived.secondWindMax||2)-(gs.secondWindUsed||0))>0;
@@ -2499,7 +2510,7 @@ function RollBox({text,derived,gs,onBonus,rollKey,onRollSave}){
         ];
         bonusPatterns.forEach(bp=>{const m=stxt.match(bp.re);if(m)onBonus({name:m[0].substring(0,60).trim(),desc:m[0].substring(0,100).trim(),scene:'tactical_mind',type:bp.type})});
       }
-    }},60)};
+    }},getCombatDelay())};
 
   const pray=()=>{setPrayRolling(true);let c=0;
     const iv=setInterval(()=>{setDisplay(Math.floor(Math.random()*20)+1);if(++c>=10){clearInterval(iv);
@@ -2513,7 +2524,7 @@ function RollBox({text,derived,gs,onBonus,rollKey,onRollSave}){
         const m=stxt.match(/\+1 to (?:any |all )?(.+?)(?:check|roll|interaction)/i);
         if(m)onBonus({name:m[0].substring(0,60).trim(),desc:m[0].substring(0,100).trim(),scene:'prayer',type:'roll_bonus'});
       }
-    }},60)};
+    }},getCombatDelay())};
 
   const isOptional=!parsed.isRequired;
   const finalResult=tmResult?{d20:result.d20,total:tmResult.newTotal,ok:tmResult.ok}:prayerResult||result;
@@ -3721,7 +3732,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
         if(hit){
           dmg=rollExpr(attack.damage);
           if(targetType==='player'&&!c.unconscious){
-            c.playerHp=Math.max(0,c.playerHp-dmg);
+            c.playerHp=Math.max(0,c.playerHp-dmg);doScreenShake();
             // Critical hit may damage player's armor (magical gear immune unless powerful foe)
             const armorIsMagical=isMagicalItem(gs.armor,gs);
             const foeCanDamageMagic=canDamageMagicalGear(enemy);
@@ -4564,7 +4575,7 @@ function ShopBox({text,gs,onStateUpdate}){
     setRareRolling(true);let c=0;
     const iv=setInterval(()=>{setRareDisplay(rollDice(20));if(++c>=10){clearInterval(iv);
       const d20=rollDice(20);setRareResult(d20);setRareDisplay(d20);setRareRolling(false);setRareRolled(true);
-    }},60);
+    }},getCombatDelay());
   };
 
   return e('div',{className:'shop-wrapper'},
@@ -4806,7 +4817,7 @@ function LootBox({text,gs,onStateUpdate}){
           }
         },1000);
       }
-    }},60);
+    }},getCombatDelay());
   };
 
   const doLeave=()=>{
@@ -6526,7 +6537,7 @@ function ShortRestModal({gs,onDone}){
       setHdUsed(prev=>prev+1);
       setRolls(prev=>[...prev,{roll,conMod:d.conMod,heal:actual}]);
       setRolling(false);setDisplay(null);
-    }},60);
+    }},getCombatDelay());
   };
   const finish=()=>{onDone({hp,hitDiceUsed:hdUsed})};
   const totalHealed=rolls.reduce((s,r)=>s+r.heal,0);
@@ -7016,7 +7027,7 @@ function App(){
     }}
     s.boxes.filter(b=>b.type==='companion').forEach(b=>{const m=b.text.match(/COMPANION JOINS:\s*(.+?)[\n(*]/);if(m){let nm=m[1].replace(/\*+/g,'').trim();nm=nm.split(/\s+/).map(w=>w.charAt(0).toUpperCase()+w.slice(1).toLowerCase()).join(' ');const canonical=COMPANIONS_ALL.find(c=>c.toLowerCase()===nm.toLowerCase());if(canonical)nm=canonical;if(!ns.companions.includes(nm)){ns.companions=[...ns.companions,nm];if(!ns.companionLog)ns.companionLog={};if(!ns.companionLog[nm])ns.companionLog[nm]=[];ns.companionLog[nm].push('Joined in Scene '+sceneId+(s.title?' — '+s.title:''))}}});
     s.boxes.filter(b=>b.type==='levelup').forEach(b=>{if(b.text.includes('LEVEL 2')&&ns.level<2){ns.level=2;ns.derived=calcDerived(ns.stats,ns.cls,2,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability);ns.hp=ns.derived.maxHp}if(b.text.includes('LEVEL 3')&&ns.level<3){ns.level=3;ns.derived=calcDerived(ns.stats,ns.cls,3,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability);ns.hp=ns.derived.maxHp}});
-    setScene(s);setSceneId(id);setGs(ns)};
+    setScene(s);setSceneId(id);setGs(ns);if(shouldAutoSave())saveGame(0,ns,id)};
   const startGame=({cls,stats,style,feat,mastery,name,spells,equip,skilledPicks,classSkills,humanSkill,extraLang})=>{const derived=calcDerived(stats,cls,1,equip.armor,equip.hasShield,feat,[],0);
     const cRes=(CAMPAIGN&&CAMPAIGN.startingResources)||{};
     const cInv=(CAMPAIGN&&CAMPAIGN.startingInventory)||['Dagger','Explorer\u2019s Pack'];
