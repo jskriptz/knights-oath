@@ -6743,28 +6743,17 @@ async function loadCampaign(campaignId){
     return manifest;
   }
   const base='campaigns/'+campaignId+'/';
+  const bust='?_='+Date.now();
   try{
-    const manifest=await fetch(base+'campaign.json').then(r=>{if(!r.ok)throw new Error('Campaign not found: '+campaignId);return r.json()});
+    const manifest=await fetch(base+'campaign.json'+bust).then(r=>{if(!r.ok)throw new Error('Campaign not found: '+campaignId);return r.json()});
     const files=manifest.files||{};
     // Load all data files in parallel
+    const f=file=>file?fetch(base+file+bust).then(r=>r.json()):null;
     const loads=await Promise.all([
-      files.scenes?fetch(base+files.scenes).then(r=>r.json()):null,
-      files.scenesDeferred?fetch(base+files.scenesDeferred).then(r=>r.json()):null,
-      files.combatNarration?fetch(base+files.combatNarration).then(r=>r.json()):null,
-      files.combatOutcomes?fetch(base+files.combatOutcomes).then(r=>r.json()):null,
-      files.companions?fetch(base+files.companions).then(r=>r.json()):null,
-      files.sceneEffects?fetch(base+files.sceneEffects).then(r=>r.json()):null,
-      files.shopData?fetch(base+files.shopData).then(r=>r.json()):null,
-      files.rules?fetch(base+files.rules).then(r=>r.json()):null,
-      files.theme?fetch(base+files.theme).then(r=>r.json()):null,
-      files.dmSummary?fetch(base+files.dmSummary).then(r=>r.json()):null,
-      files.epilogues?fetch(base+files.epilogues).then(r=>r.json()):null,
-      files.partyBanter?fetch(base+files.partyBanter).then(r=>r.json()):null,
-      files.companionGifts?fetch(base+files.companionGifts).then(r=>r.json()):null,
-      files.species?fetch(base+files.species).then(r=>r.json()):null,
-      files.classes?fetch(base+files.classes).then(r=>r.json()):null,
-      files.equipment?fetch(base+files.equipment).then(r=>r.json()):null,
-      files.languages?fetch(base+files.languages).then(r=>r.json()):null
+      f(files.scenes),f(files.scenesDeferred),f(files.combatNarration),f(files.combatOutcomes),
+      f(files.companions),f(files.sceneEffects),f(files.shopData),f(files.rules),f(files.theme),
+      f(files.dmSummary),f(files.epilogues),f(files.partyBanter),f(files.companionGifts),
+      f(files.species),f(files.classes),f(files.equipment),f(files.languages)
     ]);
     const[scenes,scenesDeferred,combatNarr,combatOut,companions,effects,shop,rules,theme,dmSummary,epilogues,partyBanter,companionGifts,species,classes,equipment,languages]=loads;
 
