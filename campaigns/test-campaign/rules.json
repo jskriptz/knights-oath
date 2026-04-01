@@ -1,0 +1,34 @@
+{
+  "startScene": "1",
+  "endingScenes": ["END"],
+  "hubScenes": [],
+  "exemptTargets": [],
+  "noLootScenes": [],
+  "relationshipCheckScenes": [],
+  "gods": [],
+  "presets": {
+    "Fighter": {
+      "stats": [15, 14, 13, 12, 10, 8],
+      "style": "Defense",
+      "feat": "Great Weapon Master",
+      "mastery": "Greatsword"
+    },
+    "Paladin": {
+      "stats": [15, 10, 13, 8, 12, 14],
+      "style": "Defense",
+      "feat": "Sentinel",
+      "mastery": "Longsword"
+    }
+  },
+  "choiceFlags": [],
+  "targetOverrides": [],
+  "choiceFilters": [],
+  "companionChoiceGates": [],
+  "hubCompanionSwaps": [],
+  "mandatoryDetours": [],
+  "classTargetGates": [],
+  "dgTrackGates": [],
+  "specialCombat": {},
+  "bundleExpansions": {},
+  "approvalDeltas": []
+}

@@ -7,6 +7,14 @@
       "type": "origin",
       "levelRange": [1, 3],
       "setting": "Dragonlance"
+    },
+    {
+      "id": "test-campaign",
+      "title": "Test Campaign",
+      "subtitle": "Multi-Campaign Loader Verification",
+      "type": "test",
+      "levelRange": [1, 1],
+      "setting": "Test"
     }
   ]
 }

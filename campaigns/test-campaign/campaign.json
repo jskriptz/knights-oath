@@ -1,0 +1,52 @@
+{
+  "id": "test-campaign",
+  "title": "Test Campaign",
+  "subtitle": "Multi-Campaign Loader Verification",
+  "type": "test",
+  "levelRange": [1, 1],
+  "setting": "Test",
+  "classes": ["Fighter", "Paladin"],
+  "species": "Human",
+  "availableSpecies": ["human"],
+  "speciesLocked": true,
+  "startingLanguages": ["Common"],
+  "version": "1.0.0",
+  "startScene": "1",
+  "startingInventory": ["Dagger", "Torch"],
+  "startingEquipment": {},
+  "startingResources": {
+    "bandages": 1,
+    "potions": 1,
+    "greaterPotions": 0,
+    "gold": 10,
+    "honour": 5,
+    "rations": 5,
+    "torches": 3
+  },
+  "orders": {
+    "rose": {
+      "name": "Rose",
+      "positive": ["Test positive."],
+      "negative": ["Test negative."]
+    }
+  },
+  "intro": {
+    "pages": [
+      {
+        "title": "TEST CAMPAIGN",
+        "body": [
+          "This is a minimal test campaign to verify the multi-campaign engine works correctly.",
+          "If you can see this, the campaign loader successfully loaded a different campaign.",
+          "The theme should appear purple instead of gold."
+        ]
+      }
+    ]
+  },
+  "importRequires": null,
+  "files": {
+    "scenes": "scenes.json",
+    "rules": "rules.json",
+    "theme": "theme.json",
+    "companions": "companions.json"
+  }
+}

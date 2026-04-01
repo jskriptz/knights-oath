@@ -1,0 +1,58 @@
+{
+  "1": {
+    "id": "1",
+    "title": "The Beginning",
+    "prose": [
+      "You stand at the start of the test campaign.",
+      "This scene verifies that the campaign loader correctly loaded scenes.json from a different campaign folder.",
+      "The purple theme confirms theme.json loaded correctly."
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Continue to scene 2 (test navigation)",
+        "target": "2"
+      },
+      {
+        "letter": "B",
+        "text": "Skip to the ending (test direct jump)",
+        "target": "END"
+      }
+    ]
+  },
+  "2": {
+    "id": "2",
+    "title": "The Middle",
+    "prose": [
+      "You have successfully navigated to scene 2.",
+      "This confirms scene transitions work correctly across campaigns."
+    ],
+    "boxes": [
+      {
+        "type": "roll",
+        "text": "**TEST ROLL:** Roll 1d20 + STR modifier | DC 10\n**SUCCESS:** You pass the test.\n**FAILURE:** You still pass, because this is just a test."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Proceed to the ending",
+        "target": "END"
+      }
+    ]
+  },
+  "END": {
+    "id": "END",
+    "title": "Test Complete",
+    "prose": [
+      "Congratulations! The multi-campaign engine is working correctly.",
+      "You have verified:",
+      "• Campaign loader fetches from the correct folder",
+      "• Theme applies correctly (purple instead of gold)",
+      "• Scene transitions work",
+      "• Roll boxes parse and render",
+      "The engine is ready for additional campaigns."
+    ],
+    "choices": []
+  }
+}
