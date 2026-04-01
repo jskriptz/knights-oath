@@ -2012,6 +2012,7 @@ function equipItem(gs,itemName,slotOverride){
   const ns={...gs,equipment:eq};
   syncEquipToState(ns);
   ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability);
+  SoundManager.play('equip');
   return ns;
 }
 function unequipItem(gs,slotId){
@@ -2293,6 +2294,136 @@ function doScreenShake(){if(!shouldScreenShake())return;document.body.classList.
 // Apply saved settings immediately on load
 (function(){const s=loadSettings();if(s.textScale!==1)applyTextScale(s.textScale);if(s.compactUI)applyCompactUI(true);if(s.theme==='light')applyThemeMode('light');if(s.highContrast)applyHighContrast(true)})();
 
+// ── Sound System (Web Audio API) ───────────────────────
+const SoundManager={
+  ctx:null,
+  init(){if(!this.ctx&&window.AudioContext)this.ctx=new AudioContext()},
+  play(type){
+    if(!shouldPlaySound())return;
+    this.init();
+    if(!this.ctx)return;
+    const ctx=this.ctx;
+    const now=ctx.currentTime;
+    try{
+      if(type==='click'){
+        // Short click sound
+        const osc=ctx.createOscillator();const gain=ctx.createGain();
+        osc.connect(gain);gain.connect(ctx.destination);
+        osc.frequency.setValueAtTime(800,now);osc.frequency.exponentialRampToValueAtTime(400,now+0.05);
+        gain.gain.setValueAtTime(0.1,now);gain.gain.exponentialRampToValueAtTime(0.001,now+0.05);
+        osc.start(now);osc.stop(now+0.05);
+      }else if(type==='roll'){
+        // Dice roll - multiple short clicks
+        for(let i=0;i<6;i++){
+          const osc=ctx.createOscillator();const gain=ctx.createGain();
+          osc.connect(gain);gain.connect(ctx.destination);
+          osc.frequency.setValueAtTime(200+Math.random()*300,now+i*0.05);
+          gain.gain.setValueAtTime(0.08,now+i*0.05);gain.gain.exponentialRampToValueAtTime(0.001,now+i*0.05+0.04);
+          osc.start(now+i*0.05);osc.stop(now+i*0.05+0.04);
+        }
+      }else if(type==='hit'){
+        // Impact sound
+        const osc=ctx.createOscillator();const gain=ctx.createGain();
+        const noise=ctx.createOscillator();const noiseGain=ctx.createGain();
+        osc.type='sawtooth';osc.connect(gain);gain.connect(ctx.destination);
+        osc.frequency.setValueAtTime(150,now);osc.frequency.exponentialRampToValueAtTime(50,now+0.15);
+        gain.gain.setValueAtTime(0.15,now);gain.gain.exponentialRampToValueAtTime(0.001,now+0.15);
+        noise.type='square';noise.connect(noiseGain);noiseGain.connect(ctx.destination);
+        noise.frequency.setValueAtTime(100,now);
+        noiseGain.gain.setValueAtTime(0.05,now);noiseGain.gain.exponentialRampToValueAtTime(0.001,now+0.08);
+        osc.start(now);osc.stop(now+0.15);noise.start(now);noise.stop(now+0.08);
+      }else if(type==='miss'){
+        // Whoosh sound
+        const osc=ctx.createOscillator();const gain=ctx.createGain();
+        osc.type='sine';osc.connect(gain);gain.connect(ctx.destination);
+        osc.frequency.setValueAtTime(400,now);osc.frequency.exponentialRampToValueAtTime(200,now+0.2);
+        gain.gain.setValueAtTime(0.06,now);gain.gain.exponentialRampToValueAtTime(0.001,now+0.2);
+        osc.start(now);osc.stop(now+0.2);
+      }else if(type==='crit'){
+        // Critical hit - impact + high chime
+        this.play('hit');
+        setTimeout(()=>{
+          const osc=ctx.createOscillator();const gain=ctx.createGain();
+          osc.type='sine';osc.connect(gain);gain.connect(ctx.destination);
+          osc.frequency.setValueAtTime(880,ctx.currentTime);
+          gain.gain.setValueAtTime(0.1,ctx.currentTime);gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.3);
+          osc.start(ctx.currentTime);osc.stop(ctx.currentTime+0.3);
+        },50);
+      }else if(type==='victory'){
+        // Triumphant fanfare
+        const notes=[523,659,784,1047];
+        notes.forEach((freq,i)=>{
+          const osc=ctx.createOscillator();const gain=ctx.createGain();
+          osc.type='triangle';osc.connect(gain);gain.connect(ctx.destination);
+          osc.frequency.setValueAtTime(freq,now+i*0.15);
+          gain.gain.setValueAtTime(0.12,now+i*0.15);gain.gain.exponentialRampToValueAtTime(0.001,now+i*0.15+0.4);
+          osc.start(now+i*0.15);osc.stop(now+i*0.15+0.4);
+        });
+      }else if(type==='defeat'){
+        // Descending minor
+        const notes=[392,349,330,294];
+        notes.forEach((freq,i)=>{
+          const osc=ctx.createOscillator();const gain=ctx.createGain();
+          osc.type='sawtooth';osc.connect(gain);gain.connect(ctx.destination);
+          osc.frequency.setValueAtTime(freq,now+i*0.2);
+          gain.gain.setValueAtTime(0.08,now+i*0.2);gain.gain.exponentialRampToValueAtTime(0.001,now+i*0.2+0.35);
+          osc.start(now+i*0.2);osc.stop(now+i*0.2+0.35);
+        });
+      }else if(type==='levelup'){
+        // Ascending arpeggio
+        const notes=[440,554,659,880,1108];
+        notes.forEach((freq,i)=>{
+          const osc=ctx.createOscillator();const gain=ctx.createGain();
+          osc.type='sine';osc.connect(gain);gain.connect(ctx.destination);
+          osc.frequency.setValueAtTime(freq,now+i*0.1);
+          gain.gain.setValueAtTime(0.1,now+i*0.1);gain.gain.exponentialRampToValueAtTime(0.001,now+i*0.1+0.25);
+          osc.start(now+i*0.1);osc.stop(now+i*0.1+0.25);
+        });
+      }else if(type==='pickup'){
+        // Item pickup chime
+        const osc=ctx.createOscillator();const gain=ctx.createGain();
+        osc.type='sine';osc.connect(gain);gain.connect(ctx.destination);
+        osc.frequency.setValueAtTime(660,now);osc.frequency.setValueAtTime(880,now+0.08);
+        gain.gain.setValueAtTime(0.1,now);gain.gain.exponentialRampToValueAtTime(0.001,now+0.2);
+        osc.start(now);osc.stop(now+0.2);
+      }else if(type==='equip'){
+        // Equip clunk
+        const osc=ctx.createOscillator();const gain=ctx.createGain();
+        osc.type='triangle';osc.connect(gain);gain.connect(ctx.destination);
+        osc.frequency.setValueAtTime(220,now);osc.frequency.exponentialRampToValueAtTime(110,now+0.1);
+        gain.gain.setValueAtTime(0.12,now);gain.gain.exponentialRampToValueAtTime(0.001,now+0.1);
+        osc.start(now);osc.stop(now+0.1);
+      }else if(type==='gold'){
+        // Coin jingle
+        for(let i=0;i<3;i++){
+          const osc=ctx.createOscillator();const gain=ctx.createGain();
+          osc.type='sine';osc.connect(gain);gain.connect(ctx.destination);
+          osc.frequency.setValueAtTime(1200+i*200,now+i*0.06);
+          gain.gain.setValueAtTime(0.06,now+i*0.06);gain.gain.exponentialRampToValueAtTime(0.001,now+i*0.06+0.1);
+          osc.start(now+i*0.06);osc.stop(now+i*0.06+0.1);
+        }
+      }else if(type==='heal'){
+        // Healing shimmer
+        const notes=[523,659,784];
+        notes.forEach((freq,i)=>{
+          const osc=ctx.createOscillator();const gain=ctx.createGain();
+          osc.type='sine';osc.connect(gain);gain.connect(ctx.destination);
+          osc.frequency.setValueAtTime(freq,now+i*0.12);
+          gain.gain.setValueAtTime(0.08,now+i*0.12);gain.gain.exponentialRampToValueAtTime(0.001,now+i*0.12+0.3);
+          osc.start(now+i*0.12);osc.stop(now+i*0.12+0.3);
+        });
+      }else if(type==='damage'){
+        // Player takes damage
+        const osc=ctx.createOscillator();const gain=ctx.createGain();
+        osc.type='sawtooth';osc.connect(gain);gain.connect(ctx.destination);
+        osc.frequency.setValueAtTime(200,now);osc.frequency.exponentialRampToValueAtTime(80,now+0.2);
+        gain.gain.setValueAtTime(0.1,now);gain.gain.exponentialRampToValueAtTime(0.001,now+0.2);
+        osc.start(now);osc.stop(now+0.2);
+      }
+    }catch(e){}
+  }
+};
+
 function SettingsPanel({onClose}){
   const[settings,setSettings]=useState(loadSettings);
   const e=React.createElement;
@@ -2512,7 +2643,7 @@ function RollBox({text,derived,gs,onBonus,rollKey,onRollSave}){
   // Check for tool advantage
   const toolAdvantage=checkToolAdvantage(gs,parsed.skill);
 
-  const roll=()=>{setRolling(true);setResult(null);setPrayerAvail(false);let c=0;
+  const roll=()=>{SoundManager.play('roll');setRolling(true);setResult(null);setPrayerAvail(false);let c=0;
     const iv=setInterval(()=>{setDisplay(Math.floor(Math.random()*20)+1);if(++c>=10){clearInterval(iv);
       let d20=Math.floor(Math.random()*20)+1;
       let d20b=null;
@@ -3161,6 +3292,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
         const isCrit=d20===20;
         const isFumble=d20===1;
         const hit=isCrit||(total>=target.ac&&!isFumble);
+        SoundManager.play(hit?(isCrit?'crit':'hit'):'miss');
 
         let dmg=0;let logMsg='';
 
@@ -3325,6 +3457,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
 
   // Potion (bonus action)
   const usePotion=()=>{
+    SoundManager.play('heal');
     setCombat(prev=>{
       const c={...prev};
       if(c.localPotions<=0)return prev;
@@ -3657,7 +3790,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
           else if(save===1){ds.fail+=2;logEntries.push('Death save: nat 1 \u2718\u2718 ('+ds.fail+'/3 failures)')}
           else{ds.fail+=1;logEntries.push('Death save: '+save+' \u2718 ('+ds.fail+'/3 failures)')}
           if(ds.success>=3){c.unconscious=false;logEntries.push('You are stabilized.')}
-          if(ds.fail>=3){c.result='lose';logEntries.push('You have fallen.')}
+          if(ds.fail>=3){c.result='lose';SoundManager.play('defeat');logEntries.push('You have fallen.')}
           c.deathSaves=ds;
         }
 
@@ -3665,7 +3798,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
         if(!enemy||c.result){
           // No more enemies — finish turn
           c.enemies=c.enemies.map(e=>({...e,conditions:e.conditions.filter(cd=>{if(cd.duration<=1)return false;cd.duration--;return true})}));
-          if(c.enemies.every(e=>!e.alive)){c.result='win';c.log=[...c.log,{type:'result',text:'VICTORY \u2014 All enemies defeated!',round:c.round}]}
+          if(c.enemies.every(e=>!e.alive)){c.result='win';SoundManager.play('victory');c.log=[...c.log,{type:'result',text:'VICTORY \u2014 All enemies defeated!',round:c.round}]}
           if(!c.result){
             // Opportunity Attack: if player hasn't used reaction and a bloodied enemy repositions
             const bloodiedEnemy=c.enemies.find(e=>e.alive&&e.hp<=e.maxHp*0.5&&e.hp>0);
@@ -3761,6 +3894,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
         const total=d20+attack.bonus-(c.enemyDebuff||0);
         let hit=d20===20||(total>=targetAc&&d20!==1);
         const isCrit=d20===20;
+        setTimeout(()=>SoundManager.play(hit?(isCrit?'crit':'hit'):'miss'),100);
 
         // ── Reactions ──
         // Shield spell (Wizard): +5 AC, costs spell slot and reaction
@@ -3779,7 +3913,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
         if(hit){
           dmg=rollExpr(attack.damage);
           if(targetType==='player'&&!c.unconscious){
-            c.playerHp=Math.max(0,c.playerHp-dmg);doScreenShake();
+            c.playerHp=Math.max(0,c.playerHp-dmg);doScreenShake();SoundManager.play('damage');
             // Critical hit may damage player's armor (magical gear immune unless powerful foe)
             const armorIsMagical=isMagicalItem(gs.armor,gs);
             const foeCanDamageMagic=canDamageMagicalGear(enemy);
@@ -3799,7 +3933,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
             else narrEvents.playerHurt=true;
             narrEvents.enemyHitPlayer=true;
             if(c.concentrating){const conDC=Math.max(10,Math.floor(dmg/2));const conSave=rollDice(20)+derived.conMod+(c.blessActive?rollDice(4):0);if(conSave<conDC){dropConcentration(c);logEntries.push('Concentration broken! (CON save '+conSave+' vs DC '+conDC+')')}else{logEntries.push('Concentration held (CON save '+conSave+' vs DC '+conDC+')')}}
-            if(c.playerHp<=0){c.playerHp=0;if(livingComps.length>0){c.unconscious=true;c.deathSaves={success:0,fail:0};logEntries.push('You fall unconscious! Your companions fight on.')}else{c.result='lose';logEntries.push('You fall. There is no one left to save you.')}}
+            if(c.playerHp<=0){c.playerHp=0;if(livingComps.length>0){c.unconscious=true;c.deathSaves={success:0,fail:0};logEntries.push('You fall unconscious! Your companions fight on.')}else{c.result='lose';SoundManager.play('defeat');logEntries.push('You fall. There is no one left to save you.')}}
           }else if(targetType==='companion'){
             const cIdx=c.companions.findIndex(cp=>cp.name===targetName);
             if(cIdx>=0){c.companions=[...c.companions];c.companions[cIdx]={...c.companions[cIdx],hp:Math.max(0,c.companions[cIdx].hp-dmg)};logEntries.push(enemy.name+' attacks '+targetName+': d20='+d20+'+'+attack.bonus+'='+total+' vs AC '+targetAc+' \u2714 '+dmg+' damage');narrEvents.enemyHitCompanion=targetName;if(c.companions[cIdx].hp<=0){c.companions[cIdx]={...c.companions[cIdx],hp:0,unconscious:true,deathSaves:{success:0,fail:0}};logEntries.push(targetName+' falls unconscious!')}}
@@ -6807,11 +6941,11 @@ function HealingPanel({gs,onUpdate,onClose}){
   };
   const usePotion=()=>{
     if(potions<=0||atMax)return;const roll=Array.from({length:2},()=>Math.floor(Math.random()*4)+1).reduce((a,b)=>a+b,0)+2;
-    setPotions(prev=>prev-1);const healed=applyHeal(roll);addLog('Potion of Healing (2d4+2): +'+healed+' HP');
+    setPotions(prev=>prev-1);const healed=applyHeal(roll);addLog('Potion of Healing (2d4+2): +'+healed+' HP');SoundManager.play('heal');
   };
   const useBandage=()=>{
     if(bandages<=0||atMax)return;const roll=Math.floor(Math.random()*4)+1;
-    setBandages(prev=>prev-1);const healed=applyHeal(roll);addLog('Bandage (1d4): +'+healed+' HP');
+    setBandages(prev=>prev-1);const healed=applyHeal(roll);addLog('Bandage (1d4): +'+healed+' HP');SoundManager.play('heal');
   };
   const done=()=>{onUpdate({hp,layOnHandsPool:loh,spellSlotsUsed:slots,potions,bandages});onClose()};
   const slotsRemaining=(d.spellSlotsMax||0)-slots;
@@ -7136,7 +7270,7 @@ function App(){
       if(isNight&&(ns.torches||0)>0){ns.torches=ns.torches-1;ns.history.push('Used 1 torch for the night. ('+(ns.torches)+' remaining)')}
       // Mount heals on long rest
       if(ns.mount&&ns.mount.hp<ns.mount.maxHp){ns.mount={...ns.mount,hp:ns.mount.maxHp}}}
-    const wageM=allBoxText.match(/(?:WAGES?|stipend|field.*pay|march.*pay)[^]*?(\d+)\s*stl/i);if(wageM&&!ns.awardedScenes['wage_'+id]){ns.gold+=(parseInt(wageM[1])||0);ns.awardedScenes['wage_'+id]=true}
+    const wageM=allBoxText.match(/(?:WAGES?|stipend|field.*pay|march.*pay)[^]*?(\d+)\s*stl/i);if(wageM&&!ns.awardedScenes['wage_'+id]){ns.gold+=(parseInt(wageM[1])||0);ns.awardedScenes['wage_'+id]=true;SoundManager.play('gold')}
     s.boxes.forEach(b=>{
       // Auto-set story flags from scene content
       const ft=b.text||'';
@@ -7161,7 +7295,7 @@ function App(){
               bundleMatched=true;break;
             }
           }
-          if(!bundleMatched){if(!ns.inventory.includes(item))ns.inventory=[...ns.inventory,item]}
+          if(!bundleMatched){if(!ns.inventory.includes(item)){ns.inventory=[...ns.inventory,item];SoundManager.play('pickup')}}else{SoundManager.play('pickup')}
         }
       }
       // Track permanent bonuses from ADD TO KNOWLEDGE or success-granted bonuses  
@@ -7238,7 +7372,7 @@ function App(){
       else if(boxFull.includes('whichever god feels right')){ns.awardedScenes[godKey]=true;setTimeout(()=>setGodSignPicker({scene:id,options:null}),400)}
     }}
     s.boxes.filter(b=>b.type==='companion').forEach(b=>{const m=b.text.match(/COMPANION JOINS:\s*(.+?)[\n(*]/);if(m){let nm=m[1].replace(/\*+/g,'').trim();nm=nm.split(/\s+/).map(w=>w.charAt(0).toUpperCase()+w.slice(1).toLowerCase()).join(' ');const canonical=COMPANIONS_ALL.find(c=>c.toLowerCase()===nm.toLowerCase());if(canonical)nm=canonical;if(!ns.companions.includes(nm)){ns.companions=[...ns.companions,nm];if(!ns.companionLog)ns.companionLog={};if(!ns.companionLog[nm])ns.companionLog[nm]=[];ns.companionLog[nm].push('Joined in Scene '+sceneId+(s.title?' — '+s.title:''))}}});
-    s.boxes.filter(b=>b.type==='levelup').forEach(b=>{if(b.text.includes('LEVEL 2')&&ns.level<2){ns.level=2;ns.derived=calcDerived(ns.stats,ns.cls,2,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability);ns.hp=ns.derived.maxHp}if(b.text.includes('LEVEL 3')&&ns.level<3){ns.level=3;ns.derived=calcDerived(ns.stats,ns.cls,3,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability);ns.hp=ns.derived.maxHp}});
+    s.boxes.filter(b=>b.type==='levelup').forEach(b=>{if(b.text.includes('LEVEL 2')&&ns.level<2){ns.level=2;ns.derived=calcDerived(ns.stats,ns.cls,2,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability);ns.hp=ns.derived.maxHp;SoundManager.play('levelup')}if(b.text.includes('LEVEL 3')&&ns.level<3){ns.level=3;ns.derived=calcDerived(ns.stats,ns.cls,3,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability);ns.hp=ns.derived.maxHp;SoundManager.play('levelup')}});
     setScene(s);setSceneId(id);setGs(ns);if(shouldAutoSave())saveGame(0,ns,id)};
   const startGame=({cls,stats,style,feat,mastery,name,spells,equip,skilledPicks,classSkills,humanSkill,extraLang})=>{const derived=calcDerived(stats,cls,1,equip.armor,equip.hasShield,feat,[],0);
     const cRes=(CAMPAIGN&&CAMPAIGN.startingResources)||{};
@@ -7276,7 +7410,7 @@ function App(){
     const fixKeys=(obj)=>{if(!obj)return obj;const fixed={};for(const[k,v]of Object.entries(obj)){const canon=COMPANIONS_ALL.find(x=>x.toLowerCase()===k.toLowerCase());fixed[canon||k]=v}return fixed};
     g.romances=fixKeys(g.romances);g.companionLog=fixKeys(g.companionLog||{});g.romanceDeclined=fixKeys(g.romanceDeclined||{});
     g.derived=calcDerived(g.stats,g.cls,g.level,g.armor,g.hasShield,g.feat,g.wounds,g.exhaustion,g.durability);setGs(g);const s=SCENES[loadSceneId];if(s){setScene(s);setSceneId(loadSceneId)}setPhase('play')};
-  const handleChoice=(c)=>{setSideOpen(false);const ns={...gs,romances:{...gs.romances},awardedScenes:{...(gs.awardedScenes||{})}};
+  const handleChoice=(c)=>{SoundManager.play('click');setSideOpen(false);const ns={...gs,romances:{...gs.romances},awardedScenes:{...(gs.awardedScenes||{})}};
     // Only award points if this scene hasn't awarded yet (anti-cycle)
     const scKey=sceneId;
     if(!ns.awardedScenes[scKey]){ns.rose+=(c.points.ROSE||0);ns.sword+=(c.points.SWORD||0);ns.crown+=(c.points.CROWN||0);if(Object.keys(c.points).length)ns.awardedScenes[scKey]=true;
