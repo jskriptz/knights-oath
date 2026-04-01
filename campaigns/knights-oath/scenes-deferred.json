@@ -4017,11 +4017,7 @@
     "boxes": [
       {
         "type": "loot",
-        "text": "**SEARCH THE FALLEN (Optional — moral choice)**\nThe goblins are dead. Their equipment is crude but they may carry coin or useful items.\nSearching enemy dead is not forbidden by the Measure, but it is not honoured either.\nAldric looks at his boots. Corwin does not care — he is being bandaged.\n\n**A) Search them.** (-1 ROSE or -1 CROWN, whichever is lower. Roll below.)\n**B) Leave them. Report to the garrison.** (+1 ROSE or +1 CROWN. No loot.)"
-      },
-      {
-        "type": "loot",
-        "text": "**LOOT ROLL (if searched):** Roll 1d20.\n1–5: Nothing useful. Goblin gear is garbage.\n6–10: 1d4 stl in a belt pouch. Copper mixed with steel. 1 day rations (smoked rat meat — edible, barely).\n11–14: 2d4 stl + a mundane item (whetstone, 10ft rope, 2 days rations).\n15–17: 3d4 stl + a useful item (Potion of Healing, caltrops, a signal horn). 1 day rations.\n18–19: 4d4 stl + a quality item (masterwork dagger, a map of the south road). 2 days rations.\n20: 5d4 stl + RARE ITEM ROLL. 3 days rations."
+        "text": "**SEARCH THE FALLEN (Optional — moral choice)**\nThe goblins are dead. Their equipment is crude but they may carry coin or useful items.\nSearching enemy dead is not forbidden by the Measure, but it is not honoured either.\nAldric looks at his boots. Corwin does not care — he is being bandaged.\n\n**A) Search them.** (-1 ROSE or -1 CROWN, whichever is lower. Roll below.)\n**B) Leave them. Report to the garrison.** (+1 ROSE or +1 CROWN. No loot.)\n\n**LOOT ROLL (if searched):** Roll 1d20.\n1-5: Nothing useful. Goblin gear is garbage.\n6-10: 1d4 stl in a belt pouch. Copper mixed with steel. 1 day rations.\n11-14: 2d4 stl + a mundane item (whetstone, 10ft rope, 2 days rations).\n15-17: 3d4 stl + a useful item (Potion of Healing, caltrops, a signal horn). 1 day rations.\n18-19: 4d4 stl + a quality item (masterwork dagger, a map of the south road). 2 days rations.\n20: 5d4 stl + RARE ITEM ROLL. 3 days rations."
       },
       {
         "type": "loot",
