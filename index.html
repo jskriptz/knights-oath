@@ -5812,6 +5812,11 @@ function filterChoices(choices, sceneId, gs) {
     // Hub visit gating
     if (HUB_SCENES.includes(sceneId) && target && !EXEMPT.has(target) && visitedScenes.has(target)) return null;
 
+    // Story checkpoint gating - block return to earlier narrative acts
+    for (const cp of (rules.storyCheckpoints || [])) {
+      if (visitedScenes.has(cp.after) && cp.blocks && cp.blocks.includes(target)) return null;
+    }
+
     // Hub companion swaps
     for (const swap of (rules.hubCompanionSwaps || [])) {
       if (swap.scenes.includes(sceneId) && (txt.includes(swap.textContains) || (swap.targets && swap.targets.includes(target)))) {

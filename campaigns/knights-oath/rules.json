@@ -23,7 +23,10 @@
   "hubScenes": [
     "11_MORNING",
     "11_AFTERNOON",
-    "11_EVENING"
+    "11_EVENING",
+    "1_HUB",
+    "53_HUB",
+    "BOND_HUB"
   ],
   "exemptTargets": [
     "11_MORNING",
@@ -107,7 +110,10 @@
     "CEREMONY_TIEBREAKER_ROSE_CROWN",
     "CEREMONY_TIEBREAKER_SWORD_CROWN",
     "CEREMONY_TIEBREAKER_ALL",
-    "CEREMONY_UNPROVEN"
+    "CEREMONY_UNPROVEN",
+    "BOND_RETURN",
+    "1_HUB",
+    "53_HUB"
   ],
   "noLootScenes": [
     "11_YARD",
@@ -2002,6 +2008,20 @@
         "Tariel": 1,
         "Serath": 1
       }
+    }
+  ],
+  "storyCheckpoints": [
+    {
+      "after": "30",
+      "blocks": ["1", "1A", "1B", "2", "3", "3B", "4", "4A", "5", "5B", "6", "7", "8", "9", "10", "11", "11B", "12", "13", "14", "15", "16", "17", "19", "20", "21", "22", "23", "24", "25", "29"]
+    },
+    {
+      "after": "50",
+      "blocks": ["30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49"]
+    },
+    {
+      "after": "60",
+      "blocks": ["50", "51", "52", "53", "54", "55", "56", "57", "58", "59"]
     }
   ]
 }
