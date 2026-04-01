@@ -6933,7 +6933,7 @@
       {
         "letter": "A",
         "text": "\"I would not have it any other way.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {
           "ROSE": 1
         }
@@ -7054,7 +7054,7 @@
       {
         "letter": "A",
         "text": "\"It is an honour.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {
           "ROSE": 1
         }
@@ -7175,7 +7175,7 @@
       {
         "letter": "A",
         "text": "\"The road ahead needs you. We all do.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {
           "ROSE": 1
         }
@@ -7299,7 +7299,7 @@
       {
         "letter": "A",
         "text": "\"Always.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {
           "ROSE": 1
         }
@@ -7421,7 +7421,7 @@
       {
         "letter": "A",
         "text": "\"The name is lucky to have you.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {
           "ROSE": 1
         }
@@ -7541,7 +7541,7 @@
       {
         "letter": "A",
         "text": "Take the staff. \"Welcome back.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {
           "ROSE": 1
         }
@@ -7662,7 +7662,7 @@
       {
         "letter": "A",
         "text": "\"And you are still the only one who keeps me honest. For the record.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {
           "SWORD": 1
         }
@@ -7774,7 +7774,7 @@
       {
         "letter": "A",
         "text": "\"The world needs scholars who can also believe.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {
           "ROSE": 1
         }
@@ -7898,7 +7898,7 @@
       {
         "letter": "A",
         "text": "\"You never have to cross alone again.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {
           "ROSE": 1
         }
@@ -7920,7 +7920,7 @@
       {
         "letter": "A",
         "text": "\"You are right. I have lost my way. I will do better.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {
           "ROSE": 1
         }
@@ -7928,7 +7928,7 @@
       {
         "letter": "B",
         "text": "\"I made the best choices I could. You do not have to agree.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {
           "SWORD": 1
         }
@@ -7936,7 +7936,7 @@
       {
         "letter": "C",
         "text": "\"Then leave. I will not force anyone to follow me.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {}
       }
     ]
@@ -7956,7 +7956,7 @@
       {
         "letter": "A",
         "text": "\"You are right. The truth matters, and I have not honoured it.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {
           "ROSE": 1
         }
@@ -7964,7 +7964,7 @@
       {
         "letter": "B",
         "text": "\"The truth is more complicated than your chronicle allows.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {
           "SWORD": 1
         }
@@ -7972,7 +7972,7 @@
       {
         "letter": "C",
         "text": "\"Then stop writing. I never asked for a biographer.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {}
       }
     ]
@@ -7992,7 +7992,7 @@
       {
         "letter": "A",
         "text": "\"I hear you. I will be more careful with people's lives.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {
           "ROSE": 1
         }
@@ -8000,7 +8000,7 @@
       {
         "letter": "B",
         "text": "\"War requires hard choices. Not every risk can be avoided.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {
           "SWORD": 1
         }
@@ -8008,7 +8008,7 @@
       {
         "letter": "C",
         "text": "\"Then walk. I will not beg a defector to stay.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {}
       }
     ]
@@ -8028,7 +8028,7 @@
       {
         "letter": "A",
         "text": "\"You are right. I have been callous, and I am sorry.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {
           "ROSE": 1
         }
@@ -8036,7 +8036,7 @@
       {
         "letter": "B",
         "text": "\"I make hard choices so that more people live. That IS compassion.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {
           "SWORD": 1
         }
@@ -8044,7 +8044,7 @@
       {
         "letter": "C",
         "text": "\"I understand. I will not stop you from leaving.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {}
       }
     ]
@@ -8064,7 +8064,7 @@
       {
         "letter": "A",
         "text": "\"You are right. Honour is not a joke, and I have treated it as one.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {
           "ROSE": 1
         }
@@ -8072,7 +8072,7 @@
       {
         "letter": "B",
         "text": "\"Honour means nothing if you cannot survive to uphold it.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {
           "SWORD": 1
         }
@@ -8080,7 +8080,7 @@
       {
         "letter": "C",
         "text": "\"Go find your honour elsewhere, then. I have a war to fight.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {}
       }
     ]
@@ -8100,7 +8100,7 @@
       {
         "letter": "A",
         "text": "\"You are right. I have been controlling, and I am sorry.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {
           "ROSE": 1
         }
@@ -8108,7 +8108,7 @@
       {
         "letter": "B",
         "text": "\"I lead because someone has to. But I hear you.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {
           "SWORD": 1
         }
@@ -8116,7 +8116,7 @@
       {
         "letter": "C",
         "text": "\"Then go. The door was never locked.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {}
       }
     ]
@@ -8136,7 +8136,7 @@
       {
         "letter": "A",
         "text": "\"You deserve better from me. I will take this seriously.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {
           "ROSE": 1
         }
@@ -8144,7 +8144,7 @@
       {
         "letter": "B",
         "text": "\"I take this more seriously than you know. We simply disagree on method.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {
           "SWORD": 1
         }
@@ -8152,7 +8152,7 @@
       {
         "letter": "C",
         "text": "\"If I am not meeting your standards, find someone who does.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {}
       }
     ]
@@ -8172,7 +8172,7 @@
       {
         "letter": "A",
         "text": "\"You are right. I have not been listening, and that stops now.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {
           "ROSE": 1
         }
@@ -8180,7 +8180,7 @@
       {
         "letter": "B",
         "text": "\"There are times when instinct matters more than information.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {
           "SWORD": 1
         }
@@ -8188,7 +8188,7 @@
       {
         "letter": "C",
         "text": "\"If you feel undervalued, I understand. I will not hold you here.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {}
       }
     ]
@@ -8209,7 +8209,7 @@
       {
         "letter": "A",
         "text": "\"I hear you. A promise is a promise, and I will keep mine.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {
           "ROSE": 1
         }
@@ -8217,7 +8217,7 @@
       {
         "letter": "B",
         "text": "\"Sometimes circumstances change. But I understand your line.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {
           "SWORD": 1
         }
@@ -8225,7 +8225,7 @@
       {
         "letter": "C",
         "text": "\"I understand. Walk your own road, Lysander.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {}
       }
     ]
@@ -8251,7 +8251,7 @@
       {
         "letter": "A",
         "text": "\"Thank you, Aldric. Truly.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {}
       }
     ]
@@ -8277,7 +8277,7 @@
       {
         "letter": "A",
         "text": "\"I will use it well.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {}
       }
     ]
@@ -8303,7 +8303,7 @@
       {
         "letter": "A",
         "text": "\"I will not forget this. Or your trust.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {}
       }
     ]
@@ -8329,7 +8329,7 @@
       {
         "letter": "A",
         "text": "\"Thank you, Mira. For everything.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {}
       }
     ]
@@ -8355,7 +8355,7 @@
       {
         "letter": "A",
         "text": "\"Your mother would be proud.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {}
       }
     ]
@@ -8382,7 +8382,7 @@
       {
         "letter": "A",
         "text": "\"I will carry this with me always.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {}
       }
     ]
@@ -8408,7 +8408,7 @@
       {
         "letter": "A",
         "text": "\"I will not forget this. Or you.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {}
       }
     ]
@@ -8434,7 +8434,7 @@
       {
         "letter": "A",
         "text": "\"Thank you, Tariel. For showing me how to see.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {}
       }
     ]
@@ -8461,7 +8461,7 @@
       {
         "letter": "A",
         "text": "\"Thank you, Lysander. For trusting me with this.\"",
-        "target": "RETURN",
+        "target": "BOND_RETURN",
         "points": {}
       }
     ]
