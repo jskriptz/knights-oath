@@ -627,70 +627,70 @@ body.high-contrast .box{border-width:2px}body.high-contrast button{border-width:
   /* Main content fills screen */
   .main-content{width:100%;height:100vh;height:100dvh;padding-bottom:60px}
   .scene-header{padding:14px 16px}
-  .scene-header h1{font-size:18px}
+  .scene-header h1{font-size:calc(18px * var(--text-scale,1))}
   .scene-body{padding:16px}
-  .scene-body p{font-size:16px;line-height:1.65;margin-bottom:12px}
-  
+  .scene-body p{font-size:calc(16px * var(--text-scale,1));line-height:1.65;margin-bottom:12px}
+
   /* Touch-friendly choices */
-  .choice-btn{padding:14px 16px;font-size:16px;min-height:48px}
+  .choice-btn{padding:14px 16px;font-size:calc(16px * var(--text-scale,1));min-height:48px}
   .choice-btn:hover{transform:none} /* no hover shift on mobile */
   .choice-btn:active{background:rgba(74,122,181,.25);transform:scale(.98)}
-  .detour-btn{padding:14px 16px;font-size:15px;min-height:48px}
-  
+  .detour-btn{padding:14px 16px;font-size:calc(15px * var(--text-scale,1));min-height:48px}
+
   /* Boxes */
-  .box{padding:12px 14px;font-size:14px}
-  .box p{font-size:14px}
-  
+  .box{padding:12px 14px;font-size:calc(14px * var(--text-scale,1))}
+  .box p{font-size:calc(14px * var(--text-scale,1))}
+
   /* Dice roller */
   .dice-area{padding:16px}
-  .dice-btn{padding:14px 32px;font-size:16px;min-height:48px}
-  .dice-num{font-size:40px}
-  
+  .dice-btn{padding:14px 32px;font-size:calc(16px * var(--text-scale,1));min-height:48px}
+  .dice-num{font-size:calc(40px * var(--text-scale,1))}
+
   /* Cover screen */
   .cover{padding:24px 16px;min-height:100vh;min-height:100dvh}
-  .cover h1{font-size:clamp(24px,8vw,32px);letter-spacing:2px}
-  .cover h2{font-size:clamp(16px,5vw,20px)}
-  .cover p{font-size:14px}
-  .cover .stats{font-size:11px}
+  .cover h1{font-size:clamp(calc(24px * var(--text-scale,1)),8vw,calc(32px * var(--text-scale,1)));letter-spacing:2px}
+  .cover h2{font-size:clamp(calc(16px * var(--text-scale,1)),5vw,calc(20px * var(--text-scale,1)))}
+  .cover p{font-size:calc(14px * var(--text-scale,1))}
+  .cover .stats{font-size:calc(11px * var(--text-scale,1))}
   .world-intro{padding-top:32px}
-  .intro-text{font-size:14px;line-height:1.7}
+  .intro-text{font-size:calc(14px * var(--text-scale,1));line-height:1.7}
   .intro-nav{gap:12px}
-  .intro-btn{padding:6px 14px;font-size:11px}
+  .intro-btn{padding:6px 14px;font-size:calc(11px * var(--text-scale,1))}
   .arrow-hide{display:none}
   .divider{width:120px;margin:10px auto}
-  .gold-btn{padding:12px 28px;font-size:14px;width:100%;max-width:300px}
-  .ghost-btn{padding:10px 20px;font-size:12px}
+  .gold-btn{padding:12px 28px;font-size:calc(14px * var(--text-scale,1));width:100%;max-width:300px}
+  .ghost-btn{padding:10px 20px;font-size:calc(12px * var(--text-scale,1))}
   .btn-row{flex-wrap:wrap;justify-content:center}
   
   /* Class selection */
   .class-choice{flex-direction:column;width:100%;max-width:340px}
-  .class-btn{padding:20px 24px;font-size:18px;width:100%}
-  .class-btn small{font-size:12px}
-  
+  .class-btn{padding:20px 24px;font-size:calc(18px * var(--text-scale,1));width:100%}
+  .class-btn small{font-size:calc(12px * var(--text-scale,1))}
+
   /* Stat assignment */
   .stat-grid{max-width:100%}
   .stat-assign-row{flex-wrap:wrap;gap:8px;padding:10px 12px}
   .stat-assign-row label{width:100%;margin-bottom:-4px}
-  .stat-select{flex:1;min-width:50px;font-size:18px;padding:8px}
-  .bonus-btn{width:36px;height:36px;font-size:13px}
-  .stat-final{font-size:22px;min-width:36px}
+  .stat-select{flex:1;min-width:50px;font-size:calc(18px * var(--text-scale,1));padding:8px}
+  .bonus-btn{width:36px;height:36px;font-size:calc(13px * var(--text-scale,1))}
+  .stat-final{font-size:calc(22px * var(--text-scale,1));min-width:36px}
   .stat-input-row{flex-wrap:wrap;gap:6px;padding:10px 12px}
   .stat-input-row label{width:100%;margin-bottom:-2px}
-  .stat-adj{width:40px;height:40px;font-size:22px}
-  .stat-num{font-size:24px;width:44px}
-  
+  .stat-adj{width:40px;height:40px;font-size:calc(22px * var(--text-scale,1))}
+  .stat-num{font-size:calc(24px * var(--text-scale,1));width:44px}
+
   /* Feat & style options */
   .style-options,.feat-options{max-width:100%}
   .style-btn{padding:14px 16px}
-  .style-btn strong{font-size:15px}
-  .style-btn span{font-size:13px}
+  .style-btn strong{font-size:calc(15px * var(--text-scale,1))}
+  .style-btn span{font-size:calc(13px * var(--text-scale,1))}
   .mastery-grid{grid-template-columns:1fr;max-width:100%}
   .mastery-btn{padding:12px 14px}
   .spell-grid{max-width:100%}
-  .spell-btn{padding:10px 14px;font-size:15px;flex:1 0 45%}
+  .spell-btn{padding:10px 14px;font-size:calc(15px * var(--text-scale,1));flex:1 0 45%}
   .spell-btn-wrap{flex:1 0 45%}
-  .spell-btn-wrap .spell-btn{padding:10px 12px;font-size:14px}
-  .spell-info-btn{width:38px;font-size:16px}
+  .spell-btn-wrap .spell-btn{padding:10px 12px;font-size:calc(14px * var(--text-scale,1))}
+  .spell-info-btn{width:38px;font-size:calc(16px * var(--text-scale,1))}
   .equip-grid{grid-template-columns:1fr;max-width:100%}
   .equip-btn{padding:12px 14px}
   .prayer-btn{padding:14px 24px;font-size:14px;width:100%}
