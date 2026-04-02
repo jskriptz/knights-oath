@@ -2095,5 +2095,18 @@
       "Rose_Crown": "CEREMONY_TIEBREAKER_ROSE_CROWN",
       "Sword_Crown": "CEREMONY_TIEBREAKER_SWORD_CROWN"
     }
-  }
+  },
+  "safeRestScenes": [
+    "1_HUB",
+    "11_MORNING",
+    "11_AFTERNOON",
+    "11_EVENING",
+    "11_NIGHT",
+    "53_HUB",
+    "BOND_HUB",
+    "44_REPORT",
+    "REST_1",
+    "REST_2",
+    "REST_3"
+  ]
 }

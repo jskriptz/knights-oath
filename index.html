@@ -950,6 +950,8 @@ h2.red{color:var(--red)}
 .save-btn:hover{background:rgba(201,168,76,.2);border-color:var(--gold)}
 .sheet-sidebar-btn{background:rgba(74,122,181,.12);border:1px solid rgba(74,122,181,.3);color:var(--blue);padding:8px 12px;font-family:'Cinzel',serif;font-size:12px;border-radius:5px;cursor:pointer;transition:all .2s;letter-spacing:1px;width:100%}
 .sheet-sidebar-btn:hover{background:rgba(74,122,181,.2);border-color:var(--blue)}
+.camp-btn{background:rgba(74,138,90,.12);border:1px solid rgba(74,138,90,.3);color:var(--green);padding:8px 12px;font-family:'Cinzel',serif;font-size:12px;border-radius:5px;cursor:pointer;transition:all .2s;letter-spacing:1px;width:100%;margin-bottom:8px}
+.camp-btn:hover{background:rgba(74,138,90,.2);border-color:var(--green)}
 .menu-btn{background:none;border:1px solid var(--border);color:var(--text-dim);padding:6px 12px;font-family:'Cinzel',serif;font-size:11px;border-radius:5px;cursor:pointer;transition:all .2s}
 .menu-btn:hover{border-color:var(--text-dim);color:var(--text)}
 .save-msg{font-size:12px;color:var(--green);text-align:center;font-style:italic;animation:fadeMsg 2.5s forwards}
@@ -2240,7 +2242,7 @@ const ST={
 };
 // ── Save System: Character (persistent) + Campaign Progress (per-campaign) ──
 const CHARACTER_FIELDS=['cls','stats','style','feat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','rations','torches','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount','languages','exhaustion','toolProficiencies','knightingSkill','portrait','durability'];
-const CAMPAIGN_PROGRESS_FIELDS=['history','flags','awardedScenes','completedRolls','companions','romances','romanceDeclined','companionLog','deadCompanions','rose','sword','crown','orderMax','dgTrack','godSigns','hitDiceUsed','secondWindUsed','actionSurgeUsed','spellSlotsUsed','spellSlots2ndUsed','spellSlots3rdUsed','spellSlots4thUsed','spellSlots5thUsed','spellSlots6thUsed','spellSlots7thUsed','spellSlots8thUsed','spellSlots9thUsed','layOnHandsPool','miraHealedThisScene','combatCount','measureTrack','measureOrientation','approval'];
+const CAMPAIGN_PROGRESS_FIELDS=['history','flags','awardedScenes','completedRolls','companions','romances','romanceDeclined','companionLog','deadCompanions','rose','sword','crown','orderMax','dgTrack','godSigns','hitDiceUsed','secondWindUsed','actionSurgeUsed','spellSlotsUsed','spellSlots2ndUsed','spellSlots3rdUsed','spellSlots4thUsed','spellSlots5thUsed','spellSlots6thUsed','spellSlots7thUsed','spellSlots8thUsed','spellSlots9thUsed','layOnHandsPool','miraHealedThisScene','combatCount','measureTrack','measureOrientation','approval','shortRestsToday','longRestTaken','dayNumber'];
 
 function splitSave(gs,sceneId){
   const character={};const progress={};
@@ -7012,6 +7014,130 @@ function HealingPanel({gs,onUpdate,onClose}){
         e('button',{className:'gold-btn',onClick:done},'Done'))));
 }
 
+function CampModal({gs,sceneId,onDone,onCancel}){
+  const e=React.createElement;
+  const d=gs.derived;
+  const[mode,setMode]=useState(null); // null, 'short', 'long'
+  const[hdUsed,setHdUsed]=useState(gs.hitDiceUsed||0);
+  const[hp,setHp]=useState(gs.hp);
+  const[rolls,setRolls]=useState([]);
+  const[rolling,setRolling]=useState(false);
+  const[display,setDisplay]=useState(null);
+  const[longRestDone,setLongRestDone]=useState(false);
+  const shortsToday=gs.shortRestsToday||0;
+  const longTaken=gs.longRestTaken||false;
+  const dayNum=gs.dayNumber||1;
+  const canShortRest=shortsToday<3;
+  const safeScenes=CAMPAIGN_RULES?.safeRestScenes||[];
+  const canLongRest=!longTaken&&(safeScenes.includes(sceneId)||safeScenes.length===0);
+  const remaining=d.hitDiceTotal-hdUsed;
+  const atMax=hp>=d.maxHp;
+
+  const spendHitDie=()=>{
+    if(remaining<=0||atMax||rolling)return;
+    setRolling(true);let c=0;
+    const iv=setInterval(()=>{setDisplay(Math.floor(Math.random()*d.hitDie)+1);if(++c>=10){clearInterval(iv);
+      const roll=Math.floor(Math.random()*d.hitDie)+1;
+      const heal=roll+d.conMod;const actual=Math.min(heal,d.maxHp-hp);
+      setHp(prev=>Math.min(prev+Math.max(0,heal),d.maxHp));
+      setHdUsed(prev=>prev+1);
+      setRolls(prev=>[...prev,{roll,conMod:d.conMod,heal:actual}]);
+      setRolling(false);setDisplay(null);
+    }},getCombatDelay());
+  };
+
+  const finishShortRest=()=>{
+    const newSW=Math.min((gs.secondWindUsed||0)>0?(gs.secondWindUsed-1):0,0); // Regain 1 SW use
+    const newAS=false; // Action Surge resets
+    onDone({
+      hp,hitDiceUsed:hdUsed,shortRestsToday:shortsToday+1,
+      secondWindUsed:Math.max(0,(gs.secondWindUsed||0)-1),
+      actionSurgeUsed:false
+    });
+  };
+
+  const doLongRest=()=>{
+    // Long rest: full HP, all slots, Lay on Hands, half hit dice back, reset daily counters
+    const halfHd=Math.ceil(d.hitDiceTotal/2);
+    const newHdUsed=Math.max(0,hdUsed-halfHd);
+    const lohMax=gs.cls==='Paladin'?5*gs.level:0;
+    setLongRestDone(true);
+    SoundManager.play('levelup');
+    onDone({
+      hp:d.maxHp,
+      hitDiceUsed:newHdUsed,
+      shortRestsToday:0,
+      longRestTaken:true,
+      dayNumber:dayNum+1,
+      secondWindUsed:0,
+      actionSurgeUsed:false,
+      spellSlotsUsed:0,
+      spellSlots2ndUsed:0,
+      spellSlots3rdUsed:0,
+      spellSlots4thUsed:0,
+      spellSlots5thUsed:0,
+      layOnHandsPool:lohMax,
+      exhaustion:Math.max(0,(gs.exhaustion||0)-1)
+    });
+  };
+
+  const totalHealed=rolls.reduce((s,r)=>s+r.heal,0);
+
+  // Main camp menu
+  if(!mode){
+    return e('div',{className:'modal-overlay'},
+      e('div',{className:'modal-box rest-modal',style:{maxWidth:480}},
+        e('h2',{className:'gold',style:{marginBottom:4}},'MAKE CAMP'),
+        e('p',{style:{fontSize:13,color:'var(--text-dim)',marginBottom:12}},'Day '+dayNum+' \u2014 '+shortsToday+'/3 short rests taken'+(longTaken?' \u2014 Long rest taken':'')),
+        e('div',{className:'rest-stats',style:{marginBottom:16}},
+          e('div',{className:'rest-stat'},e('span',{className:'rest-label'},'HP'),e('span',{className:'rest-val'},gs.hp+' / '+d.maxHp)),
+          e('div',{className:'rest-stat'},e('span',{className:'rest-label'},'Hit Dice'),e('span',{className:'rest-val'},(d.hitDiceTotal-(gs.hitDiceUsed||0))+' / '+d.hitDiceTotal))),
+        e('div',{style:{display:'flex',flexDirection:'column',gap:8}},
+          e('button',{className:canShortRest?'gold-btn':'ghost-btn',onClick:()=>canShortRest&&setMode('short'),disabled:!canShortRest,style:{padding:'12px 16px'}},
+            'Short Rest',e('span',{style:{display:'block',fontSize:11,opacity:.7}},'Spend Hit Dice to heal. Resets Action Surge.')),
+          e('button',{className:canLongRest?'gold-btn':'ghost-btn',onClick:()=>canLongRest&&setMode('long'),disabled:!canLongRest,style:{padding:'12px 16px'}},
+            'Long Rest',e('span',{style:{display:'block',fontSize:11,opacity:.7}},canLongRest?'Full recovery. Advances to next day.':'Requires safe location or already taken today.')),
+          e('button',{className:'ghost-btn',onClick:onCancel,style:{marginTop:8}},'Break Camp'))));
+  }
+
+  // Short rest mode
+  if(mode==='short'){
+    return e('div',{className:'modal-overlay'},
+      e('div',{className:'modal-box rest-modal'},
+        e('h2',{className:'gold',style:{marginBottom:4}},'SHORT REST'),
+        e('p',{style:{fontSize:13,color:'var(--text-dim)',marginBottom:12}},'Spend Hit Dice to recover HP. Action Surge will reset.'),
+        e('div',{className:'rest-stats'},
+          e('div',{className:'rest-stat'},e('span',{className:'rest-label'},'HP'),e('span',{className:'rest-val'},hp+' / '+d.maxHp)),
+          e('div',{className:'rest-stat'},e('span',{className:'rest-label'},'Hit Dice'),e('span',{className:'rest-val'},remaining+' / '+d.hitDiceTotal+' (d'+d.hitDie+')'))),
+        rolls.length?e('div',{className:'rest-rolls'},rolls.map((r,i)=>
+          e('div',{key:i,className:'rest-roll-row'},'d'+d.hitDie+': '+r.roll+' + '+r.conMod+' CON = '+r.heal+' HP healed'))):null,
+        rolling?e('div',{className:'rest-rolling'},e('span',{className:'roll-anim'},display)):null,
+        totalHealed>0?e('div',{style:{fontSize:13,color:'var(--gold)',margin:'8px 0'}},'Total healed: '+totalHealed+' HP'):null,
+        e('div',{className:'confirm-btns',style:{marginTop:12}},
+          remaining>0&&!atMax?e('button',{className:'gold-btn',onClick:spendHitDie,disabled:rolling},'Spend Hit Die (d'+d.hitDie+' + '+d.conMod+')'):null,
+          e('button',{className:'ghost-btn',onClick:()=>setMode(null)},'Back'),
+          e('button',{className:remaining>0&&!atMax?'ghost-btn':'gold-btn',onClick:finishShortRest},atMax?'Fully Rested':'Finish Rest'))));
+  }
+
+  // Long rest mode
+  if(mode==='long'){
+    return e('div',{className:'modal-overlay'},
+      e('div',{className:'modal-box rest-modal'},
+        e('h2',{className:'gold',style:{marginBottom:4}},'LONG REST'),
+        e('p',{style:{fontSize:13,color:'var(--text-dim)',marginBottom:12}},'You settle in for a full night\'s rest. Dawn brings renewal.'),
+        e('div',{className:'rest-stats',style:{marginBottom:12}},
+          e('div',{className:'rest-stat'},e('span',{className:'rest-label'},'HP'),e('span',{className:'rest-val'},gs.hp+' \u2192 '+d.maxHp)),
+          e('div',{className:'rest-stat'},e('span',{className:'rest-label'},'Spell Slots'),e('span',{className:'rest-val'},'Restored')),
+          gs.cls==='Paladin'?e('div',{className:'rest-stat'},e('span',{className:'rest-label'},'Lay on Hands'),e('span',{className:'rest-val'},(5*gs.level)+' pool')):null,
+          e('div',{className:'rest-stat'},e('span',{className:'rest-label'},'Hit Dice'),e('span',{className:'rest-val'},'+'+Math.ceil(d.hitDiceTotal/2)+' regained'))),
+        e('div',{className:'confirm-btns',style:{marginTop:12}},
+          e('button',{className:'ghost-btn',onClick:()=>setMode(null)},'Back'),
+          e('button',{className:'gold-btn',onClick:doLongRest},'Rest Until Dawn'))));
+  }
+
+  return null;
+}
+
 function SpellPrepModal({gs,onConfirm,onKeep}){
   const e=React.createElement;
   const d=gs.derived;
@@ -7222,7 +7348,7 @@ function applyTheme(theme){
 
 function App(){
   const[phase,setPhase]=useState('cover');const[gs,setGs]=useState(null);const[scene,setScene]=useState(null);const[sceneId,setSceneId]=useState(null);
-  const[showSave,setShowSave]=useState(false);const[saveMsg,setSaveMsg]=useState('');const[showSheet,setShowSheet]=useState(false);const[showDmSummary,setShowDmSummary]=useState(false);const[showMap,setShowMap]=useState(false);const[sideOpen,setSideOpen]=useState(false);const[confirmModal,setConfirmModal]=useState(null);const[compPopup,setCompPopup]=useState(null);const[romancePrompt,setRomancePrompt]=useState(null);const[romanceManage,setRomanceManage]=useState(false);const[breakupTarget,setBreakupTarget]=useState(null);const[npcNotify,setNpcNotify]=useState(null);const[romanceCheck,setRomanceCheck]=useState(null);const[spellPrepModal,setSpellPrepModal]=useState(false);const[shortRestModal,setShortRestModal]=useState(false);const[healingPanel,setHealingPanel]=useState(false);const[defeatRecovery,setDefeatRecovery]=useState(null);const[godSignPicker,setGodSignPicker]=useState(null);const[editSlot,setEditSlot]=useState(null);const[showSettingsPanel,setShowSettingsPanel]=useState(false);const[knightingPicker,setKnightingPicker]=useState(null);
+  const[showSave,setShowSave]=useState(false);const[saveMsg,setSaveMsg]=useState('');const[showSheet,setShowSheet]=useState(false);const[showDmSummary,setShowDmSummary]=useState(false);const[showMap,setShowMap]=useState(false);const[sideOpen,setSideOpen]=useState(false);const[confirmModal,setConfirmModal]=useState(null);const[compPopup,setCompPopup]=useState(null);const[romancePrompt,setRomancePrompt]=useState(null);const[romanceManage,setRomanceManage]=useState(false);const[breakupTarget,setBreakupTarget]=useState(null);const[npcNotify,setNpcNotify]=useState(null);const[romanceCheck,setRomanceCheck]=useState(null);const[spellPrepModal,setSpellPrepModal]=useState(false);const[shortRestModal,setShortRestModal]=useState(false);const[healingPanel,setHealingPanel]=useState(false);const[defeatRecovery,setDefeatRecovery]=useState(null);const[godSignPicker,setGodSignPicker]=useState(null);const[editSlot,setEditSlot]=useState(null);const[showSettingsPanel,setShowSettingsPanel]=useState(false);const[knightingPicker,setKnightingPicker]=useState(null);const[showCamp,setShowCamp]=useState(false);
   // Migrate companion name casing on any active gs
   React.useEffect(()=>{
     if(!gs||!gs.companions)return;
@@ -7782,7 +7908,7 @@ function App(){
         return remaining.length?e(React.Fragment,null,e('h3',null,'Inventory'),
           e('div',{className:'inv-list'},remaining.map((it,i)=>e('div',{key:it+i,className:'inv-item'},it)))):null})(),
       e('h3',null,'Log'),e('div',{className:'history-list'},gs.history.slice(-10).reverse().map((h,i)=>e('div',{key:i,className:'hist-item'},h))),
-      e('div',{className:'sidebar-actions'},e('button',{className:'map-btn',onClick:()=>{setShowMap(true);setSideOpen(false)}},'\u{1F5FA} Map'),e('button',{className:'sheet-sidebar-btn',onClick:()=>{setShowSheet(true);setSideOpen(false)}},'Character Sheet'),
+      e('div',{className:'sidebar-actions'},e('button',{className:'map-btn',onClick:()=>{setShowMap(true);setSideOpen(false)}},'\u{1F5FA} Map'),e('button',{className:'camp-btn',onClick:()=>{setShowCamp(true);setSideOpen(false)}},'\u26fa Make Camp'),e('button',{className:'sheet-sidebar-btn',onClick:()=>{setShowSheet(true);setSideOpen(false)}},'Character Sheet'),
         ENDING_SCENES.includes(sceneId)&&DM_SUMMARY?e('button',{className:'sheet-sidebar-btn',style:{background:'var(--gold-dim)',color:'var(--bg)'},onClick:()=>{setShowDmSummary(true);setSideOpen(false)}},'DM Summary'):null,
         Object.values(gs.romances||{}).filter(v=>v&&v!=='Friend').length>0?e('button',{className:'romance-manage-btn',onClick:()=>{setRomanceManage(true);setSideOpen(false)}},'Manage Romances'):null,e('button',{className:'save-btn',onClick:()=>{setShowSave(true);setSideOpen(false)}},'\u2716 Save'),saveMsg?e('span',{className:'save-msg'},saveMsg):null,e('button',{className:'menu-btn',onClick:()=>{setShowSettingsPanel(true);setSideOpen(false)}},'\u2699 Settings'),e('button',{className:'menu-btn',onClick:handleMenu},'Menu'))),
     e(SceneView,{scene,onChoice:handleChoice,gs,isEnding:ENDING_SCENES.includes(sceneId),onViewSheet:()=>setShowSheet(true),onViewDmSummary:ENDING_SCENES.includes(sceneId)&&DM_SUMMARY?()=>setShowDmSummary(true):null,onBonus:handleBonus,onStateUpdate:handleStateUpdate}),
@@ -7793,6 +7919,7 @@ function App(){
     romanceCheck?e(RelationshipCheck,{check:romanceCheck,gs:gs,onResolve:resolveRelationship}):null,
     spellPrepModal&&gs&&['Paladin','Cleric','Druid','Wizard','Bard','Sorcerer'].includes(gs.cls)?e(SpellPrepModal,{gs:gs,onConfirm:(spells)=>{const ns={...gs,spells:{...gs.spells,...spells}};ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability);setGs(ns);setSpellPrepModal(false)},onKeep:()=>setSpellPrepModal(false)}):null,
     shortRestModal&&gs?e(ShortRestModal,{gs:gs,onDone:(result)=>{const ns={...gs,hp:result.hp,hitDiceUsed:result.hitDiceUsed};setGs(ns);setShortRestModal(false)}}):null,
+    showCamp&&gs?e(CampModal,{gs:gs,sceneId:sceneId,onDone:(result)=>{const ns={...gs,...result};ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability);setGs(ns);setShowCamp(false)},onCancel:()=>setShowCamp(false)}):null,
     healingPanel&&gs?e(HealingPanel,{gs:gs,onUpdate:(upd)=>{const ns={...gs,...upd};setGs(ns)},onClose:()=>setHealingPanel(false)}):null,
     defeatRecovery&&gs?e(DefeatRecoveryModal,{gs:gs,wound:defeatRecovery.wound,scar:defeatRecovery.scar,onContinue:()=>setDefeatRecovery(null)}):null,
     godSignPicker&&gs&&gs.cls==='Paladin'?e(GodSignPicker,{options:godSignPicker.options,onPick:(god)=>{const ns={...gs,godSigns:{...(gs.godSigns||{})}};ns.godSigns[god]=(ns.godSigns[god]||0)+1;setGs(ns);setGodSignPicker(null)}}):null,
