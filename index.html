@@ -1699,10 +1699,11 @@ const WOUND_FLAVOUR={str:'Your muscles ache from the beating. Swinging a blade t
 function fmt(t){if(!t)return'';return t.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>').replace(/-->/g,'\u2192')}
 function stripOrder(t){if(!t)return'';return t.replace(/\s*\(\s*[+\-]?\d+\s+(?:ROSE|SWORD|CROWN)(?:\s*,\s*[+\-]?\d+\s+(?:ROSE|SWORD|CROWN))*(?:\s*,\s*[+\-]?\d+\s+XP)?\s*\)/gi,'').replace(/[.\s]*[+\-]\d+\s+(?:ROSE|SWORD|CROWN)(?:\s*,\s*[+\-]?\d+\s*(?:ROSE|SWORD|CROWN))*/gi,'').replace(/\s{2,}/g,' ').trim()}
 
-// Filter lines/paragraphs by class and companion presence
-function shouldHideLine(line,cls,companions){
+// Filter lines/paragraphs by class, companion presence, and flags
+function shouldHideLine(line,cls,companions,flags){
   const l=line.trim();if(!l)return false;
   const comps=companions||[];
+  const f=flags||{};
   // Class-conditional lines
   if(cls==='Fighter'){
     if(/^(?:\*\*)?If you are a Paladin/i.test(l))return true;
@@ -1717,34 +1718,53 @@ function shouldHideLine(line,cls,companions){
     if(/^(?:\*\*)?Fighter(?:s)?:/i.test(l)&&!/Paladin/i.test(l))return true;
     if(/^(?:\*\*)?FIGHTER\b/i.test(l)&&!/PALADIN/i.test(l)&&!/Fighter Level \d/i.test(l))return true;
   }
-  // Companion-conditional lines
+  // Companion-conditional lines: "IF X IS IN YOUR PARTY" (show only if X present)
   const compMatch=l.match(/^(?:\*\*)?IF\s+(\w+)\s+IS\s+(?:IN YOUR PARTY|PRESENT)/i)||l.match(/^(?:\*\*)?(?:If|if)\s+(\w+)\s+is\s+(?:in your party|present|in the party)/i)||l.match(/^\(If\s+(\w+)\)/i);
   if(compMatch){
     const name=compMatch[1];
-    // Check if this companion is in the party (match first name to full name)
     const hasComp=comps.some(c=>c.toLowerCase().startsWith(name.toLowerCase()));
     if(!hasComp)return true;
+  }
+  // Companion-conditional lines: "IF X IS NOT IN YOUR PARTY" (show only if X absent)
+  const notMatch=l.match(/^(?:\*\*)?IF\s+(\w+)\s+IS\s+NOT\s+(?:IN YOUR PARTY|PRESENT)/i)||l.match(/^(?:\*\*)?(?:If|if)\s+(\w+)\s+is\s+not\s+(?:in your party|present|in the party)/i);
+  if(notMatch){
+    const name=notMatch[1];
+    const hasComp=comps.some(c=>c.toLowerCase().startsWith(name.toLowerCase()));
+    if(hasComp)return true; // Hide if companion IS present
+  }
+  // Flag-conditional lines: "IF flagname IS SET:" (show only if flag is truthy)
+  const flagSetMatch=l.match(/^(?:\*\*)?IF\s+([\w_]+)\s+IS\s+SET[:\*]/i);
+  if(flagSetMatch){
+    const flagName=flagSetMatch[1];
+    if(!f[flagName])return true; // Hide if flag is not set
+  }
+  // Flag-conditional lines: "IF flagname IS NOT SET:" (show only if flag is falsy)
+  const flagNotSetMatch=l.match(/^(?:\*\*)?IF\s+([\w_]+)\s+IS\s+NOT\s+SET[:\*]/i);
+  if(flagNotSetMatch){
+    const flagName=flagNotSetMatch[1];
+    if(f[flagName])return true; // Hide if flag IS set
   }
   return false;
 }
 function stripCompanionLabel(line){
-  // Remove "**IF X IS IN YOUR PARTY (...):**" / "**IF X IS PRESENT:**" headers, keep remaining content
+  // Remove "**IF X IS (NOT) IN YOUR PARTY:**" / "**IF X IS (NOT) PRESENT:**" / "**IF flag IS (NOT) SET:**" headers
   return line
-    .replace(/\*\*IF\s+\w+\s+IS\s+(?:IN YOUR PARTY|PRESENT)[^*]*\*\*\s*/gi,'')
-    .replace(/\*\*(?:If|if)\s+\w+\s+is\s+(?:in your party|present|in the party)[^*]*\*\*\s*/gi,'')
+    .replace(/\*\*IF\s+\w+\s+IS\s+(?:NOT\s+)?(?:IN YOUR PARTY|PRESENT)[^*]*\*\*\s*/gi,'')
+    .replace(/\*\*(?:If|if)\s+\w+\s+is\s+(?:not\s+)?(?:in your party|present|in the party)[^*]*\*\*\s*/gi,'')
+    .replace(/\*\*IF\s+[\w_]+\s+IS\s+(?:NOT\s+)?SET[:\*][^*]*\*\*\s*/gi,'')
     .replace(/^\(If\s+\w+\)\s*/i,'');
 }
-function filterProse(proseArr,cls,companions){
+function filterProse(proseArr,cls,companions,flags){
   if(!proseArr)return[];
-  return proseArr.filter(p=>!shouldHideLine(p,cls,companions)).map(p=>stripCompanionLabel(p)).filter(p=>p.trim());
+  return proseArr.filter(p=>!shouldHideLine(p,cls,companions,flags)).map(p=>stripCompanionLabel(p)).filter(p=>p.trim());
 }
-function filterBoxText(text,cls,companions){
+function filterBoxText(text,cls,companions,flags){
   if(!text)return text;
   const lines=text.split('\n');
   const filtered=[];let skipping=false;
   for(let i=0;i<lines.length;i++){
     const l=lines[i];
-    if(shouldHideLine(l,cls,companions)){
+    if(shouldHideLine(l,cls,companions,flags)){
       skipping=true;continue;
     }
     // If previous line was hidden and this is a continuation (no bold header), skip it too
@@ -6011,7 +6031,7 @@ function SceneView({scene,onChoice,gs,isEnding,onViewSheet,onViewDmSummary,onBon
   const cls=gs.cls;const comps=gs.companions||[];
   const knownLangs=gs.languages||['Common'];
   useEffect(()=>{if(ref.current)ref.current.scrollTop=0},[scene.id]);
-  let visibleProse=filterProse(scene.prose,cls,comps);
+  let visibleProse=filterProse(scene.prose,cls,comps,gs.flags);
   // Parse language-gated text and collect notes
   const allLangNotes=[];
   visibleProse=visibleProse.map(p=>{const{text,languageNotes}=parseLanguageText(p,knownLangs);allLangNotes.push(...languageNotes);return text});
@@ -6044,7 +6064,7 @@ function SceneView({scene,onChoice,gs,isEnding,onViewSheet,onViewDmSummary,onBon
       visibleProse.map((p,i)=>e('p',{key:'p'+i,dangerouslySetInnerHTML:{__html:fmt(p)}})),
       e(BanterBlock,{sceneId:scene.id,gs:gs}),
       filterBoxes(scene.boxes,gs).map((box,i)=>{
-        const txt=filterBoxText(box.text,cls,comps);
+        const txt=filterBoxText(box.text,cls,comps,gs.flags);
         if(!txt||!txt.trim())return null;
         // Use RollBox for roll-type boxes
         if(box.type==='roll')return e(RollBox,{key:scene.id+'_r'+i,rollKey:scene.id+'_r'+i,text:txt,derived:gs.derived,gs:gs,onBonus:onBonus,onRollSave:onStateUpdate});

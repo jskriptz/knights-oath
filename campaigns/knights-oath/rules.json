@@ -289,6 +289,26 @@
   },
   "choiceFlags": [
     {
+      "scene": "44",
+      "letter": "A",
+      "setFlags": { "refugee_report": true }
+    },
+    {
+      "scene": "44",
+      "letter": "B",
+      "setFlags": { "refugee_move": true }
+    },
+    {
+      "scene": "44",
+      "letter": "C",
+      "setFlags": { "refugee_defend": true }
+    },
+    {
+      "scene": "44",
+      "letter": "D",
+      "setFlags": { "refugee_caeron": true }
+    },
+    {
       "scene": "27",
       "letters": [
         "B",
@@ -515,6 +535,30 @@
   ],
   "choiceFilters": [
     {
+      "scene": "44_REPORT",
+      "letter": "A",
+      "requireFlag": "refugee_report",
+      "comment": "Only show if player chose to report in Scene 44"
+    },
+    {
+      "scene": "44_REPORT",
+      "letter": "B",
+      "requireFlag": "refugee_move",
+      "comment": "Only show if player chose to move refugees in Scene 44"
+    },
+    {
+      "scene": "44_REPORT",
+      "letter": "C",
+      "requireFlag": "refugee_defend",
+      "comment": "Only show if player chose to defend in Scene 44"
+    },
+    {
+      "scene": "44_REPORT",
+      "letter": "D",
+      "requireFlag": "refugee_caeron",
+      "comment": "Only show if player chose to find Caeron in Scene 44"
+    },
+    {
       "scene": "8",
       "letters": [
         "C",
@@ -601,6 +645,11 @@
     }
   ],
   "companionChoiceGates": [
+    {
+      "scene": "34",
+      "textContains": "Share it with Sera",
+      "requireCompanion": "Sera"
+    },
     {
       "scene": "66B",
       "target": "66B_Thessaly",

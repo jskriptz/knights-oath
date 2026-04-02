@@ -4304,6 +4304,10 @@
     "prose": [
       "The fire is the small, efficient kind that field exercises teach — enough light to see faces, not enough to see from a distance. The refugee column is behind you now, in every sense. What remains is the weight of it: thirty-one people, three children, the man with the barrel-stave splint who stood at attention for a tabard. You are learning that some things become heavier after you stop carrying them.",
       "Aldric sits across from you, cleaning his blade with the particular focus of a man who is processing something by giving his hands work. He has not spoken since the column. After a while: 'I keep thinking about the children.' He says this to the blade, not to you.",
+      "**IF refugee_report IS SET:** You sent the runner. Protocol satisfied, conscience less so. The garrison will make a decision — probably the right one, eventually, after the proper forms are filled. The refugees are still at the waystation. Waiting. The children do not know what they are waiting for.",
+      "**IF refugee_move IS SET:** You moved them yourself. Thirty-one people are walking north because you decided they should be. No orders. No authorisation. Just a squire who looked at three children and made a choice. Caeron will have questions. You do not have answers yet — only the certainty that waiting would have been worse.",
+      "**IF refugee_defend IS SET:** You held the line. The scout patrol found you instead of the refugees, and by the time reinforcements arrived the column was already moving north under Sera's guidance. Your sword arm aches. There is draconian blood on your tabard that will not wash out. But thirty-one people are alive because you stood between them and what was coming.",
+      "**IF refugee_caeron IS SET:** You found Caeron first. He listened — really listened, not the performative attention of officers managing subordinates. Then he said three words: 'Show me. Now.' You showed him. He made decisions. The refugees are moving north under garrison escort. Proper. Legal. Slower than you would have liked, but alive.",
       "Lord Caeron arrives at the fire and does what officers do — takes the report, asks the right questions, writes the answers in his small precise hand. Casualties: none. Contact: confirmed Dragon Army presence. Assessment: the south road is not safe for civilian movement.",
       "Then he closes the report book and does something you have not seen before. He sits. Not at the fire — at the edge of it, half in the dark, the way people sit when they want to be present without being the centre. He looks south. He does not say anything about what he is looking at."
     ],
@@ -4311,73 +4315,53 @@
       {
         "type": "info",
         "text": "**OPTIONAL SCENE — SERATH'S BARN**\nIf you have not yet encountered Serath: there is a figure in the barn at the edge of the camp clearing. Turn to Scene 36 (Wound and Trust) now. If you have already met Serath, skip this."
-      },
-      {
-        "type": "info",
-        "text": ""
-      },
-      {
-        "type": "info",
-        "text": ""
-      },
-      {
-        "type": "info",
-        "text": ""
-      },
-      {
-        "type": "info",
-        "text": ""
-      },
-      {
-        "type": "info",
-        "text": ""
       }
     ],
     "choices": [
       {
         "letter": "A",
-        "text": "(If you chose to report) Take the full report to the command tent. The chain of command will decide what happens next",
+        "text": "Take the full report to the command tent. The chain of command will decide what happens next.",
         "target": "31",
         "points": {
-          "crown": 1
+          "CROWN": 1
         }
       },
       {
         "letter": "B",
-        "text": "(If you chose to move them) You already acted. The column is moving north. Face the consequences",
+        "text": "You already acted. The column is moving north. Time to face the consequences.",
         "target": "51",
         "points": {
-          "rose": 1
+          "ROSE": 1
         }
       },
       {
         "letter": "C",
-        "text": "(If you chose to defend) You held the waystation. The refugees had time. Now you need to report what you found",
+        "text": "You held the waystation. The refugees had time. Now report what you found.",
         "target": "52",
         "points": {
-          "sword": 1
+          "SWORD": 1
         }
       },
       {
         "letter": "D",
-        "text": "(If you chose to find Caeron) Present your assessment directly. He is listening",
+        "text": "Present your assessment to Caeron directly. He is listening.",
         "target": "31",
         "points": {
-          "crown": 1
+          "CROWN": 1
         }
       },
       {
         "letter": "E",
-        "text": "There is a peddler camped at the edge of the firelight. He has been following the column",
+        "text": "There is a peddler camped at the edge of the firelight. He has been following the column.",
         "target": "44_PEDDLER",
         "points": {}
       },
       {
         "letter": "F",
-        "text": "Smoke on the south road. Something is burning. Caeron nods once — investigate",
+        "text": "Smoke on the south road. Something is burning. Caeron nods once — investigate.",
         "target": "28_CARAVAN",
         "points": {
-          "sword": 1
+          "SWORD": 1
         }
       },
       {
