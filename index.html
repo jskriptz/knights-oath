@@ -5534,7 +5534,6 @@ function Sidebar({gs,onSave,onMenu,onSettings,saveMsg}){
     ):null,
     gs.companions.length?e(React.Fragment,null,e('h3',null,'Companions'),e('div',{className:'companion-list'},gs.companions.map(c=>e(CompanionTag,{key:c,name:c,romance:gs.romances?.[c],onView:(n,r)=>{setSideOpen(false);setCompPopup({name:n,romance:r})}})))):null,
     gs.inventory.length?e(React.Fragment,null,e('h3',null,'Inventory'),e('div',{className:'inv-list'},gs.inventory.map(it=>e('div',{key:it,className:'inv-item'},it)))):null,
-    e('h3',null,'Log'),e('div',{className:'history-list'},gs.history.slice(-10).reverse().map((h,i)=>e('div',{key:i,className:'hist-item'},h))),
     e('div',{className:'sidebar-actions'},e('button',{className:'save-btn',onClick:onSave},'\u2716 Save'),saveMsg?e('span',{className:'save-msg'},saveMsg):null,e('button',{className:'menu-btn',onClick:onSettings},'\u2699 Settings'),e('button',{className:'menu-btn',onClick:onMenu},'Menu')));
 }
 
@@ -7907,7 +7906,6 @@ function App(){
         (gs.inventory||[]).forEach(it=>{const uKey=it;if(eqSet.includes(it)&&!used[uKey]){used[uKey]=true}else{remaining.push(it)}});
         return remaining.length?e(React.Fragment,null,e('h3',null,'Inventory'),
           e('div',{className:'inv-list'},remaining.map((it,i)=>e('div',{key:it+i,className:'inv-item'},it)))):null})(),
-      e('h3',null,'Log'),e('div',{className:'history-list'},gs.history.slice(-10).reverse().map((h,i)=>e('div',{key:i,className:'hist-item'},h))),
       e('div',{className:'sidebar-actions'},e('button',{className:'map-btn',onClick:()=>{setShowMap(true);setSideOpen(false)}},'\u{1F5FA} Map'),e('button',{className:'camp-btn',onClick:()=>{setShowCamp(true);setSideOpen(false)}},'\u26fa Make Camp'),e('button',{className:'sheet-sidebar-btn',onClick:()=>{setShowSheet(true);setSideOpen(false)}},'Character Sheet'),
         ENDING_SCENES.includes(sceneId)&&DM_SUMMARY?e('button',{className:'sheet-sidebar-btn',style:{background:'var(--gold-dim)',color:'var(--bg)'},onClick:()=>{setShowDmSummary(true);setSideOpen(false)}},'DM Summary'):null,
         Object.values(gs.romances||{}).filter(v=>v&&v!=='Friend').length>0?e('button',{className:'romance-manage-btn',onClick:()=>{setRomanceManage(true);setSideOpen(false)}},'Manage Romances'):null,e('button',{className:'save-btn',onClick:()=>{setShowSave(true);setSideOpen(false)}},'\u2716 Save'),saveMsg?e('span',{className:'save-msg'},saveMsg):null,e('button',{className:'menu-btn',onClick:()=>{setShowSettingsPanel(true);setSideOpen(false)}},'\u2699 Settings'),e('button',{className:'menu-btn',onClick:handleMenu},'Menu'))),
