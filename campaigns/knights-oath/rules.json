@@ -2023,5 +2023,28 @@
       "after": "60",
       "blocks": ["50", "51", "52", "53", "54", "55", "56", "57", "58", "59"]
     }
-  ]
+  ],
+  "visitedPrefixes": ["P", "DG", "M"],
+  "confrontationScenes": {
+    "CONFRONT_ALDRIC": "Aldric Voss",
+    "CONFRONT_THESS": "Thessaly Brightwater",
+    "CONFRONT_SERATH": "Commander Serath",
+    "CONFRONT_MIRA": "Mira of the Oaks",
+    "CONFRONT_CAERON": "Lord Caeron Ashvale",
+    "CONFRONT_SERA": "Sera Nighthollow",
+    "CONFRONT_VAEL": "Vael Ashmore",
+    "CONFRONT_TARIEL": "Tariel Duskmantle",
+    "CONFRONT_LYSANDER": "Lysander Graves"
+  },
+  "ceremonyRouting": {
+    "triggers": ["CEREMONY_VIGIL", "CEREMONY"],
+    "unproven": "CEREMONY_UNPROVEN",
+    "default": "CEREMONY_VIGIL",
+    "tiebreakers": {
+      "all": "CEREMONY_TIEBREAKER_ALL",
+      "Rose_Sword": "CEREMONY_TIEBREAKER_ROSE_SWORD",
+      "Rose_Crown": "CEREMONY_TIEBREAKER_ROSE_CROWN",
+      "Sword_Crown": "CEREMONY_TIEBREAKER_SWORD_CROWN"
+    }
+  }
 }

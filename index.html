@@ -7465,9 +7465,9 @@ function App(){
     }
     // Mark detour scenes as visited
     if(c.letter==='DETOUR'&&c.target){ns.awardedScenes[c.target+'_visited']=true}
-    // Also mark any P/DG/M scene as visited when you enter it
+    // Mark scenes with configured prefixes as visited when entering
     const t=c.target||'';
-    if(t.startsWith('P')||t.startsWith('DG')||t.startsWith('M'))ns.awardedScenes[t+'_visited']=true;
+    for(const pfx of (CAMPAIGN_RULES?.visitedPrefixes||[]))if(t.startsWith(pfx))ns.awardedScenes[t+'_visited']=true;
     // Set story flags from campaign rules
     if(!ns.flags)ns.flags={};
     for(const rule of (CAMPAIGN_RULES?.choiceFlags||[])){
@@ -7535,40 +7535,37 @@ function App(){
         ns.companionLog[comp].push(summary);
       }
     }
-    // Handle confrontation scenes
-    if(sceneId.startsWith('CONFRONT_')){
-      const cMap={CONFRONT_ALDRIC:'Aldric Voss',CONFRONT_THESS:'Thessaly Brightwater',CONFRONT_SERATH:'Commander Serath',CONFRONT_MIRA:'Mira of the Oaks',CONFRONT_CAERON:'Lord Caeron Ashvale',CONFRONT_SERA:'Sera Nighthollow',CONFRONT_VAEL:'Vael Ashmore',CONFRONT_TARIEL:'Tariel Duskmantle',CONFRONT_LYSANDER:'Lysander Graves'};
-      const confrontComp=cMap[sceneId];
-      if(confrontComp){
-        if(c.letter==='C'&&ns.companions.includes(confrontComp)){
-          ns.companions=ns.companions.filter(x=>x!==confrontComp);
-          if(!ns.companionLog)ns.companionLog={};
-          if(!ns.companionLog[confrontComp])ns.companionLog[confrontComp]=[];
-          ns.companionLog[confrontComp].push('Left the party after confrontation.');
-        }
-        if(c.letter==='A')ns.approval[confrontComp]=0;
+    // Handle confrontation scenes (from rules.json)
+    const confrontMap=CAMPAIGN_RULES?.confrontationScenes||{};
+    const confrontComp=confrontMap[sceneId];
+    if(confrontComp){
+      if(c.letter==='C'&&ns.companions.includes(confrontComp)){
+        ns.companions=ns.companions.filter(x=>x!==confrontComp);
+        if(!ns.companionLog)ns.companionLog={};
+        if(!ns.companionLog[confrontComp])ns.companionLog[confrontComp]=[];
+        ns.companionLog[confrontComp].push('Left the party after confrontation.');
       }
+      if(c.letter==='A')ns.approval[confrontComp]=0;
     }
     // Class-conditional target overrides
     let finalTarget=c.target;
     for(const ov of (CAMPAIGN_RULES?.targetOverrides||[])){
       if(sceneId===ov.scene&&finalTarget===ov.target&&ns.cls===ov.ifClass)finalTarget=ov.redirectTo;
     }
-    // Ceremony routing — redirect to appropriate ceremony scene based on order points
-    if(finalTarget==='CEREMONY_VIGIL'||finalTarget==='CEREMONY'){
+    // Ceremony routing — redirect based on order points (from rules.json)
+    const cRoute=CAMPAIGN_RULES?.ceremonyRouting;
+    if(cRoute&&(cRoute.triggers||[]).includes(finalTarget)){
       const r=ns.rose||0,s=ns.sword||0,cr=ns.crown||0;
-      // All zero → unproven path
-      if(r===0&&s===0&&cr===0){finalTarget='CEREMONY_UNPROVEN'}
+      if(r===0&&s===0&&cr===0){finalTarget=cRoute.unproven||finalTarget}
       else{
         const tied=getTiedOrders(r,s,cr);
-        if(tied.length===3)finalTarget='CEREMONY_TIEBREAKER_ALL';
+        const tb=cRoute.tiebreakers||{};
+        if(tied.length===3)finalTarget=tb.all||cRoute.default||finalTarget;
         else if(tied.length===2){
-          if(tied.includes('Rose')&&tied.includes('Sword'))finalTarget='CEREMONY_TIEBREAKER_ROSE_SWORD';
-          else if(tied.includes('Rose')&&tied.includes('Crown'))finalTarget='CEREMONY_TIEBREAKER_ROSE_CROWN';
-          else if(tied.includes('Sword')&&tied.includes('Crown'))finalTarget='CEREMONY_TIEBREAKER_SWORD_CROWN';
+          const key=tied.sort().join('_');
+          finalTarget=tb[key]||cRoute.default||finalTarget;
         }
-        // No tie — proceed to CEREMONY_VIGIL
-        else finalTarget='CEREMONY_VIGIL';
+        else finalTarget=cRoute.default||finalTarget;
       }
     }
     // Handle RETURN target — go back to previous non-arc scene (skip same arc chain)
