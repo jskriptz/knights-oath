@@ -300,7 +300,8 @@ body.high-contrast .box{border-width:2px}body.high-contrast button{border-width:
 .sidebar{width:300px;min-width:300px;background:var(--panel);border-right:1px solid var(--border);overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
 .sidebar h3{font-family:'Cinzel',serif;color:var(--gold-dim);font-size:11px;text-transform:uppercase;letter-spacing:2px;margin-top:4px}
 .sidebar-section{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:6px;padding:10px}
-.char-header{text-align:center;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.char-header{text-align:center;padding-bottom:12px;border-bottom:1px solid var(--border);display:flex;flex-direction:column;align-items:center;gap:6px}
+.char-header-portrait{width:48px;height:48px;border-radius:50%;border:2px solid var(--gold);object-fit:cover;box-shadow:0 0 8px rgba(201,168,76,.3)}
 .char-name{font-family:'Cinzel',serif;color:var(--gold);font-size:18px;font-weight:600}
 .char-name.clickable{cursor:pointer;transition:color .2s}.char-name.clickable:hover{color:var(--gold-bright)}
 .char-title{color:var(--gold-dim);font-size:11px;font-style:italic;margin-top:-2px}
@@ -588,6 +589,8 @@ body.high-contrast .box{border-width:2px}body.high-contrast button{border-width:
 .battlefield-token.active{animation:token-pulse 1.5s ease-in-out infinite}
 @keyframes token-pulse{0%,100%{box-shadow:0 0 8px rgba(201,168,76,.4)}50%{box-shadow:0 0 16px rgba(201,168,76,.8),0 0 24px rgba(201,168,76,.4)}}
 .battlefield-token-initial{position:relative;z-index:2}
+.battlefield-token-portrait{position:absolute;inset:2px;border-radius:50%;background-size:cover;background-position:center;z-index:1}
+.battlefield-token.has-portrait .battlefield-token-initial{display:none}
 .battlefield-token-hp{position:absolute;inset:-3px;border-radius:50%;pointer-events:none}
 .battlefield-token-hp svg{width:100%;height:100%}
 .battlefield-token-hp circle{fill:none;stroke-width:3;stroke-linecap:round}
@@ -3296,6 +3299,8 @@ function BattlefieldMap({combat,gs,derived,onMoveCompanion,selectedCompanion,set
     const classes=['battlefield-token',entity.type];
     if(!entity.alive)classes.push('dead');
     if(entity.active)classes.push('active');
+    const hasPortrait=entity.type==='player'&&gs.portrait;
+    if(hasPortrait)classes.push('has-portrait');
 
     const moveOpts=entity.type==='player'?getPlayerMoveOpts():getMoveOptions(entity);
     const isSelected=(entity.type==='ally'&&selectedCompanion===entity.idx)||(entity.type==='player'&&selectedPlayer);
@@ -3305,6 +3310,7 @@ function BattlefieldMap({combat,gs,derived,onMoveCompanion,selectedCompanion,set
 
     return e('div',{key:entity.id,className:classes.join(' '),onClick:(ev)=>handleTokenClick(entity,ev)},
       renderHpRing(hpPct),
+      hasPortrait?e('div',{className:'battlefield-token-portrait',style:{backgroundImage:'url('+gs.portrait+')'}}):null,
       e('span',{className:'battlefield-token-initial'},entity.initial),
       e('div',{className:'battlefield-tooltip'},
         e('span',{className:'battlefield-tooltip-name'},entity.name),
@@ -7916,7 +7922,7 @@ function DmSummary({gs,sceneId,onBack}){
 
 function CharSheet({gs,isEnding,onBack,onEquipChange}){
   const[csComp,setCSComp]=useState(null);const[csEditSlot,setCsEditSlot]=useState(null);const[csSheet,setCsSheet]=useState(null);const portraitRef=useRef(null);
-  const handlePortraitUpload=(ev)=>{const file=ev.target.files?.[0];if(!file)return;if(file.size>500000){alert('Image too large (max 500KB)');return}const reader=new FileReader();reader.onload=(e)=>{const dataUrl=e.target.result;onEquipChange({...gs,portrait:dataUrl})};reader.readAsDataURL(file)};
+  const handlePortraitUpload=(ev)=>{const file=ev.target.files?.[0];if(!file)return;if(!file.type.startsWith('image/')){alert('Please select an image file');return}const reader=new FileReader();reader.onload=(e)=>{const img=new Image();img.onload=()=>{const maxSize=400;let w=img.width,h=img.height;if(w>maxSize||h>maxSize){if(w>h){h=Math.round(h*(maxSize/w));w=maxSize}else{w=Math.round(w*(maxSize/h));h=maxSize}}const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;const ctx=canvas.getContext('2d');ctx.drawImage(img,0,0,w,h);const dataUrl=canvas.toDataURL('image/jpeg',0.75);onEquipChange({...gs,portrait:dataUrl})};img.src=e.target.result};reader.readAsDataURL(file)};
   const e=React.createElement;const d=gs.derived;
   const order=getOrder(gs.rose,gs.sword,gs.crown);const bg=getBackground();const sp=gs.spells||{};
   const hasSpells=(sp.cantrips&&sp.cantrips.length)||(sp.level1&&sp.level1.length);
@@ -9980,7 +9986,7 @@ function App(){
     e('div',{className:'mobile-bar'},e('button',{className:'hamburger',onClick:()=>setSideOpen(!sideOpen)},sideOpen?'\u2715':'\u2630'),e('div',{style:{flex:1,textAlign:'center'}},e('div',{className:'bar-name'},gs.name),e('div',{className:'bar-stats'},e('span',null,'Lv'+gs.level),e('span',null,'HP '+gs.hp+'/'+d.maxHp),e('span',{style:{color:'#e8a0a0'}},'R:'+gs.rose),e('span',{style:{color:'#a0c0e8'}},'S:'+gs.sword),e('span',{style:{color:'#e8d8a0'}},'C:'+gs.crown),e('span',{style:{color:'#c9a84c'}},'\u2694'+(gs.gold||0)))),e('button',{className:'hamburger',onClick:()=>setShowSave(true)},'\u2716')),
     e('div',{className:'sidebar-backdrop'+(sideOpen?' show':''),onClick:()=>setSideOpen(false)}),
     e('div',{className:'sidebar'+(sideOpen?' open':'')},
-      e('div',{className:'char-header'},e('div',{className:'char-name clickable',onClick:()=>{const n=prompt('Enter new name:',gs.name||'');if(n&&n.trim())handleStateUpdate(g=>({...g,name:n.trim()}))},title:'Click to rename'},gs.name||'Squire'),e('div',{className:'char-class'},'Level '+gs.level+' '+gs.cls)),
+      e('div',{className:'char-header'},gs.portrait?e('img',{className:'char-header-portrait',src:gs.portrait,alt:''}):null,e('div',{className:'char-name clickable',onClick:()=>{const n=prompt('Enter new name:',gs.name||'');if(n&&n.trim())handleStateUpdate(g=>({...g,name:n.trim()}))},title:'Click to rename'},gs.name||'Squire'),e('div',{className:'char-class'},'Level '+gs.level+' '+gs.cls)),
       e('div',{className:'sidebar-section'},e('div',{className:'hp-bar-container'},e('div',{className:'hp-bar',style:{width:Math.max(0,(gs.hp/d.maxHp)*100)+'%'}}),e('span',{className:'hp-text'},'HP '+gs.hp+' / '+d.maxHp)),e('div',{className:'xp-bar-container'},e('div',{className:'xp-bar',style:{width:Math.min(100,((gs.xp||0)/[300,900,2700][Math.min(gs.level-1,2)])*100)+'%'}}),e('span',{className:'xp-text'},'XP '+(gs.xp||0)+' / '+[300,900,2700][Math.min(gs.level-1,2)])),e('div',{className:'mini-stats-row'},e('span',null,'AC '+d.ac),e('span',null,'Atk +'+d.attackBonus),e('span',null,'Prof +'+d.profBonus))),
       e('div',{className:'stat-chips'},STAT_NAMES.map(k=>e('div',{key:k,className:'stat-chip'},e('span',{className:'chip-label'},k.toUpperCase()),e('span',{className:'chip-val'},gs.stats[k]),e('span',{className:'chip-mod'},modStr(gs.stats[k]))))),
       e('h3',null,'Order Points'),e('div',{className:'order-points'},e('div',{className:'order-badge rose'},e('span',{className:'num'},gs.rose),'Rose'),e('div',{className:'order-badge sword'},e('span',{className:'num'},gs.sword),'Sword'),e('div',{className:'order-badge crown'},e('span',{className:'num'},gs.crown),'Crown')),e('div',{className:'honour-row'},e('span',{className:'honour-label'},'Honour'),e('span',{className:'honour-val'},gs.honour||0)),
