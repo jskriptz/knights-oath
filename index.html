@@ -2753,11 +2753,14 @@ function SettingsPanel({onClose,onSave,onLoad}){
         e('div',null,e('div',{className:'settings-label'},'Combat Log'),e('div',{className:'settings-sublabel'},'Detail level for combat messages')),
         e('div',{className:'settings-control'},
           ['minimal','normal','verbose'].map(v=>e('button',{key:v,className:'settings-btn'+(settings.combatLogVerbosity===v?' selected':''),style:settings.combatLogVerbosity===v?{borderColor:'var(--gold)',color:'var(--gold)'}:{},onClick:()=>update('combatLogVerbosity',v)},v.charAt(0).toUpperCase()+v.slice(1))))),
-      e('div',{style:{marginTop:16,display:'flex',justifyContent:'center',gap:12,flexWrap:'wrap'}},
-        e('button',{className:'ghost-btn',onClick:()=>{update('textScale',1);update('combatSpeed','normal');update('autoSave',true);update('screenShake',true);update('compactUI',false);update('soundEffects',true);update('theme','dark');update('highContrast',false);update('combatLogVerbosity','normal')}},'Reset Defaults'),
+      // Save/Load row
+      (onSave||onLoad)?e('div',{style:{marginTop:16,display:'flex',justifyContent:'center',gap:12}},
         onSave?e('button',{className:'settings-btn-save',onClick:onSave},'Save Game'):null,
-        onLoad?e('button',{className:'settings-btn-load',onClick:onLoad},'Load Game'):null,
-        e('button',{className:'gold-btn',onClick:onClose},'Done'))))}
+        onLoad?e('button',{className:'settings-btn-load',onClick:onLoad},'Load Game'):null):null,
+      // Reset/Done row
+      e('div',{style:{marginTop:12,display:'flex',justifyContent:'center',gap:12}},
+        e('button',{className:'ghost-btn',style:{padding:'10px 20px',fontSize:12},onClick:()=>{update('textScale',1);update('combatSpeed','normal');update('autoSave',true);update('screenShake',true);update('compactUI',false);update('soundEffects',true);update('theme','dark');update('highContrast',false);update('combatLogVerbosity','normal')}},'Reset Defaults'),
+        e('button',{className:'gold-btn',style:{padding:'10px 20px',fontSize:12},onClick:onClose},'Done'))))}
 
 function CompanionInfo({name,romance,onClose}){
   const e=React.createElement;
