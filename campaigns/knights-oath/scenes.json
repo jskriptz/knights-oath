@@ -643,7 +643,7 @@
     "choices": [
       {
         "letter": "A",
-        "text": "Let him win. Concede with grace.",
+        "text": "Let him win. Concede with grace. He hesitates — he knows what you did — and lowers his blade. 'Next time,' he says quietly, 'do not give me anything.' But there is something new in his voice. Respect, perhaps. Or something closer.",
         "target": "11_MORNING",
         "points": {
           "CROWN": 1
@@ -653,7 +653,7 @@
       },
       {
         "letter": "B",
-        "text": "Take your opening. Win clean.",
+        "text": "Take your opening. Win clean. He hits the ground hard. The yard goes silent. Then he laughs — actually laughs — and takes your offered hand. 'Finally,' he says. 'I was getting bored.'",
         "target": "11_MORNING",
         "points": {
           "SWORD": 2
@@ -661,7 +661,7 @@
       },
       {
         "letter": "C",
-        "text": "Call it a draw.",
+        "text": "Call it a draw. You both step back at the same moment. Neither of you says anything. Neither of you needs to. The morning bell rings and you walk to formation side by side.",
         "target": "11_MORNING",
         "points": {
           "ROSE": 1,
@@ -683,7 +683,7 @@
     "choices": [
       {
         "letter": "A",
-        "text": "'Thank you, my lord.' Accept it quietly.",
+        "text": "'Thank you, my lord.' Accept it quietly. He inclines his head — the smallest acknowledgment — and moves on. The silence says: *you are noted. You are not yet interesting.*",
         "target": "11_MORNING",
         "points": {
           "CROWN": 1
@@ -760,7 +760,7 @@
     "choices": [
       {
         "letter": "A",
-        "text": "File it away and move on.",
+        "text": "File it away and move on. The corridor empties. You carry the words with you like a puzzle without an answer — yet.",
         "target": "11_MORNING",
         "points": {
           "CROWN": 1
@@ -768,7 +768,7 @@
       },
       {
         "letter": "B",
-        "text": "Find Aldric and tell him. He will find it funny or annoying. Probably both.",
+        "text": "Find Aldric and tell him. He will find it funny or annoying. 'Satisfactory,' he repeats, flat. Then the corner of his mouth twitches. 'We should celebrate. Identically.' It is almost a joke. From Aldric, this is progress.",
         "target": "11_MORNING",
         "points": {
           "ROSE": 1
@@ -797,7 +797,7 @@
     "choices": [
       {
         "letter": "A",
-        "text": "Yes. An ally who hears everything is valuable.",
+        "text": "Yes. An ally who hears everything is valuable. She smiles — quick and genuine — and makes a note. 'Then we have an arrangement.' Her pen is already moving again.",
         "target": "11_MORNING",
         "points": {
           "ROSE": 1
@@ -805,7 +805,7 @@
       },
       {
         "letter": "B",
-        "text": "Yes, but you want to read what she writes first.",
+        "text": "Yes, but you want to read what she writes first. She raises an eyebrow. 'Fair,' she says, and hands you the page. It is surprisingly accurate. Also surprisingly flattering.",
         "target": "11_MORNING",
         "points": {
           "CROWN": 1
@@ -910,7 +910,7 @@
     "choices": [
       {
         "letter": "A",
-        "text": "Thank him. Mean it.",
+        "text": "Thank him. Mean it. He meets your eyes — brief, direct — and nods once. The nod of a man who has just given you something he cannot take back.",
         "target": "11_MORNING",
         "points": {
           "ROSE": 1
@@ -918,7 +918,7 @@
       },
       {
         "letter": "B",
-        "text": "Sit with him in silence a while longer.",
+        "text": "Sit with him in silence a while longer. The candle gutters out. Neither of you moves to relight it. When you finally rise to leave, he says only: 'Tomorrow.' It is both a farewell and a command.",
         "target": "11_MORNING",
         "points": {
           "ROSE": 2
@@ -947,7 +947,7 @@
     "choices": [
       {
         "letter": "A",
-        "text": "'I will. Thank you.' Hold her gaze.",
+        "text": "'I will. Thank you.' Hold her gaze. She holds it back — longer than professional necessity requires. 'Be careful,' she says. Two words carrying more weight than their purpose.",
         "target": "11_AFTERNOON",
         "points": {
           "ROSE": 1
@@ -957,7 +957,7 @@
       },
       {
         "letter": "B",
-        "text": "Ask her to come as a field medic.",
+        "text": "Ask her to come as a field medic. 'I am needed here,' she says — but there is something in her voice that suggests she considered it. 'Come back in one piece. That is what I can do for the south road.'",
         "target": "11_AFTERNOON",
         "points": {
           "ROSE": 2
@@ -965,7 +965,7 @@
       },
       {
         "letter": "C",
-        "text": "Accept efficiently and leave.",
+        "text": "Accept efficiently and leave. She watches you go — you feel it rather than see it. Healers are practical people. So are you.",
         "target": "11_AFTERNOON",
         "points": {
           "CROWN": 1
@@ -1087,7 +1087,7 @@
     "choices": [
       {
         "letter": "A",
-        "text": "'Yes.' You mean it.",
+        "text": "'Yes.' You mean it. Aldric tilts his head — acknowledgment, assessment — and walks beside you back toward the barracks. The silence is companionable.",
         "target": "11_MORNING",
         "points": {
           "SWORD": 1
@@ -1095,7 +1095,7 @@
       },
       {
         "letter": "B",
-        "text": "'Ask me at the end of tomorrow.'",
+        "text": "'Ask me at the end of tomorrow.' He almost smiles. Almost. 'That is the right answer,' he says. 'But I will remind you: the end of tomorrow is not a safe bet on a patrol.'",
         "target": "11_MORNING",
         "points": {
           "ROSE": 1
@@ -1103,7 +1103,7 @@
       },
       {
         "letter": "C",
-        "text": "'I will not be ready until I am there.'",
+        "text": "'I will not be ready until I am there.' He studies you the way he studies a sparring opponent — finding the weak points, deciding what to do about them. 'No one is,' he says finally. 'That is why we train.'",
         "target": "11_MORNING",
         "points": {
           "ROSE": 1
@@ -1128,7 +1128,7 @@
     "choices": [
       {
         "letter": "A",
-        "text": "'I will come back and tell you how it went.'",
+        "text": "'I will come back and tell you how it went.' She meets your eyes finally. 'Yes,' she says. 'You will.' Not a question. A requirement.",
         "target": "11_AFTERNOON",
         "points": {
           "ROSE": 2
@@ -1138,7 +1138,7 @@
       },
       {
         "letter": "B",
-        "text": "Nod. Say nothing. It means the same thing.",
+        "text": "Nod. Say nothing. It means the same thing. She nods back — the nod of someone who has spent too many dawns watching people leave and knows better than to ask for words.",
         "target": "11_AFTERNOON",
         "points": {
           "ROSE": 1

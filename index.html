@@ -636,6 +636,11 @@ body.high-contrast .box{border-width:2px}body.high-contrast button{border-width:
 .sidebar-gold-icon{font-size:16px}
 .sidebar-gold-val{font-family:'Cinzel',serif;font-size:18px;color:var(--gold);font-weight:700}
 .sidebar-gold-label{font-family:'Cinzel',serif;font-size:10px;color:var(--gold-dim);letter-spacing:1px}
+.sidebar-survival{display:flex;gap:8px;justify-content:center;margin:8px 0;flex-wrap:wrap}
+.survival-row{display:flex;align-items:center;gap:4px;padding:4px 8px;background:rgba(255,255,255,.03);border-radius:4px;font-size:12px}
+.survival-row.low{background:rgba(180,80,40,.15);color:var(--orange)}
+.survival-row.exhausted{background:rgba(180,40,40,.2);color:var(--red)}
+.survival-label{font-size:10px;color:var(--text-dim)}
 .sidebar-resources{margin:8px 0}
 .resource-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;font-size:12px;border-bottom:1px solid rgba(255,255,255,.03)}
 .resource-name{color:var(--text-dim);font-family:'Cinzel',serif;font-size:10px;letter-spacing:.5px}
@@ -1246,6 +1251,15 @@ h2.red{color:var(--red)}
 .cs-order.crown{background:rgba(200,180,100,.1);color:#e8d8a0;border:1px solid rgba(200,180,100,.25)}
 .cs-order-num{font-size:28px;font-weight:700;display:block}
 .cs-order-result{width:100%;text-align:center;font-family:'Cinzel',serif;color:var(--gold);font-size:16px;font-weight:600;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)}
+.cs-kills{display:flex;flex-direction:column;gap:4px}
+.cs-kills-section{background:rgba(0,0,0,.1);padding:8px;border-radius:4px}
+.cs-kills-header{font-family:'Cinzel',serif;font-size:13px;color:var(--gold);margin-bottom:4px}
+.cs-kills-list{display:grid;grid-template-columns:repeat(2,1fr);gap:2px 12px}
+.cs-kill-row{display:flex;justify-content:space-between;font-size:12px;color:var(--text-dim)}
+.cs-kill-row span:last-child{color:var(--text);font-weight:600}
+.cs-comp-kills{font-size:11px;color:var(--text-dim);padding:2px 0}
+.cs-comp-kill-name{color:var(--text);margin-right:6px}
+.cs-comp-kill-list{font-style:italic}
 
 .cs-companion-grid{display:flex;flex-direction:column;gap:6px}
 .cs-companion{display:flex;justify-content:space-between;align-items:center;padding:6px 12px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:4px}
@@ -2458,7 +2472,7 @@ const ST={
   async del(k){try{if(window.storage){await window.storage.delete(k);return}localStorage.removeItem(k)}catch(e){try{localStorage.removeItem(k)}catch(e2){}}}
 };
 // ── Save System: Character (persistent) + Campaign Progress (per-campaign) ──
-const CHARACTER_FIELDS=['cls','stats','style','feat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','rations','torches','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount','languages','exhaustion','toolProficiencies','knightingSkill','portrait','durability','titles','selectedTitle','completedCampaigns','loveInterest','partedCompanions','lastApproval'];
+const CHARACTER_FIELDS=['cls','stats','style','feat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','rations','torches','waterskinUses','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount','languages','exhaustion','toolProficiencies','knightingSkill','portrait','durability','titles','selectedTitle','completedCampaigns','loveInterest','partedCompanions','lastApproval','kills'];
 const CAMPAIGN_PROGRESS_FIELDS=['history','flags','awardedScenes','completedRolls','companions','romances','romanceDeclined','companionLog','deadCompanions','rose','sword','crown','orderMax','dgTrack','godSigns','hitDiceUsed','secondWindUsed','actionSurgeUsed','spellSlotsUsed','spellSlots2ndUsed','spellSlots3rdUsed','spellSlots4thUsed','spellSlots5thUsed','spellSlots6thUsed','spellSlots7thUsed','spellSlots8thUsed','spellSlots9thUsed','layOnHandsPool','miraHealedThisScene','combatCount','measureTrack','measureOrientation','approval','shortRestsToday','longRestTaken','dayNumber'];
 
 function splitSave(gs,sceneId){
@@ -3823,6 +3837,24 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
     return null;
   };
 
+  // Record a kill for stats tracking
+  const recordKill=(enemyName,killerName='player')=>{
+    // Normalize enemy type (strip numbers, adjectives)
+    const enemyType=enemyName.replace(/\s*\d+$/,'').replace(/^(Wounded|Injured|Elite|Young|Old)\s+/i,'').trim();
+    if(onStateUpdate){
+      onStateUpdate(g=>{
+        const ng={...g,kills:{...g.kills||{},player:{...g.kills?.player||{}},companions:{...g.kills?.companions||{}}}};
+        if(killerName==='player'){
+          ng.kills.player[enemyType]=(ng.kills.player[enemyType]||0)+1;
+        }else{
+          if(!ng.kills.companions[killerName])ng.kills.companions[killerName]={};
+          ng.kills.companions[killerName][enemyType]=(ng.kills.companions[killerName][enemyType]||0)+1;
+        }
+        return ng;
+      });
+    }
+  };
+
   const handleDraconianDeath=(c,enemy,killerIsPlayer=true)=>{
     const type=getDraconianType(enemy.name);
     if(!type)return{c,log:[],weaponStuck:false};
@@ -3965,6 +3997,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
       enemy.hp=Math.max(0,enemy.hp-oaDmg);
       if(enemy.hp<=0){
         enemy.alive=false;
+        recordKill(enemy.name,'player');
         c.log=[...c.log,{type:'kill',text:'\u26a1 OA: '+enemy.name+' struck down! (d20='+oaRoll+'+'+atkBonus+'='+oaTotal+' \u2714 '+oaDmg+' dmg)',round:c.round}];
         const deathResult=handleDraconianDeath(c,enemy,true);
         c=deathResult.c;
@@ -4187,6 +4220,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
           c.enemies=[...c.enemies];c.enemies[tIdx]={...c.enemies[tIdx],currentHp:Math.max(0,c.enemies[tIdx].currentHp-dmg)};
           if(c.enemies[tIdx].currentHp<=0){
             c.enemies[tIdx].alive=false;
+            recordKill(c.enemies[tIdx].name,'player');
             // Draconian death trigger
             const deathResult=handleDraconianDeath(c,c.enemies[tIdx],true);
             c=deathResult.c;
@@ -4427,6 +4461,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
             nc.enemies=[...nc.enemies];nc.enemies[tIdx]={...nc.enemies[tIdx],currentHp:Math.max(0,nc.enemies[tIdx].currentHp-dmg)};
             if(nc.enemies[tIdx].currentHp<=0){
               nc.enemies[tIdx].alive=false;
+              recordKill(nc.enemies[tIdx].name,'player');
               const deathResult=handleDraconianDeath(nc,nc.enemies[tIdx],true);
               Object.assign(nc,deathResult.c);
               deathResult.log.forEach(l=>nc.log=[...nc.log,l]);
@@ -4621,6 +4656,8 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
               c.enemies=[...c.enemies];c.enemies[tIdx]={...c.enemies[tIdx],currentHp:Math.max(0,c.enemies[tIdx].currentHp-dmg)};
               if(c.enemies[tIdx].currentHp<=0){
                 c.enemies[tIdx].alive=false;
+                const compFirstName=(comp.name.match(/^(\w+)/)||[])[1]||comp.name;
+                recordKill(c.enemies[tIdx].name,compFirstName);
                 // Draconian death trigger (companion kill — player not in melee)
                 const deathResult=handleDraconianDeath(c,c.enemies[tIdx],false);
                 c=deathResult.c;
@@ -8135,6 +8172,30 @@ function CharSheet({gs,isEnding,onBack,onEquipChange}){
         e('div',{className:'cs-order-result'},'Order: '+(gs.rose===0&&gs.sword===0&&gs.crown===0?'Unknown':order))
       )),
 
+      // ── Kill Tracker ──
+      (gs.kills&&(Object.keys(gs.kills.player||{}).length||Object.keys(gs.kills.companions||{}).length))?section('KILL TRACKER',(()=>{
+        const pk=gs.kills.player||{};const ck=gs.kills.companions||{};
+        const playerKills=Object.entries(pk).sort((a,b)=>b[1]-a[1]);
+        const compKills=Object.entries(ck);
+        const playerTotal=playerKills.reduce((s,[,n])=>s+n,0);
+        return e('div',{className:'cs-kills'},
+          e('div',{className:'cs-kills-section'},
+            e('div',{className:'cs-kills-header'},'You ('+playerTotal+' kills)'),
+            playerKills.length?e('div',{className:'cs-kills-list'},
+              playerKills.slice(0,8).map(([type,n])=>e('div',{key:type,className:'cs-kill-row'},e('span',null,type),e('span',null,'×'+n)))
+            ):e('div',{className:'cs-empty'},'No kills yet')),
+          compKills.length?e('div',{className:'cs-kills-section',style:{marginTop:8}},
+            e('div',{className:'cs-kills-header'},'Companions'),
+            compKills.map(([name,kills])=>{
+              const total=Object.values(kills).reduce((s,n)=>s+n,0);
+              return e('div',{key:name,className:'cs-comp-kills'},
+                e('span',{className:'cs-comp-kill-name'},name+' ('+total+')'),
+                e('span',{className:'cs-comp-kill-list'},Object.entries(kills).slice(0,3).map(([t,n])=>t+' ×'+n).join(', ')));
+            })
+          ):null
+        );
+      })()):null,
+
       // ── Companions ──
       section('COMPANIONS & RELATIONSHIPS',gs.companions.length?e('div',{className:'cs-companion-grid'},
         gs.companions.map(c=>{
@@ -8400,7 +8461,7 @@ function DefeatRecoveryModal({gs,wound,scar,onContinue}){
         e('button',{className:'gold-btn',onClick:onContinue},'Press On'))));
 }
 
-function ShortRestModal({gs,onDone}){
+function ShortRestModal({gs,onDone,hardcoreMode}){
   const e=React.createElement;
   const d=gs.derived;
   const[hdUsed,setHdUsed]=useState(gs.hitDiceUsed||0);
@@ -8408,10 +8469,42 @@ function ShortRestModal({gs,onDone}){
   const[rolls,setRolls]=useState([]);
   const[rolling,setRolling]=useState(false);
   const[display,setDisplay]=useState(null);
+  const[waterUsed,setWaterUsed]=useState(false);
+  const[waterUses,setWaterUses]=useState(gs.waterskinUses||3); // 3 uses per waterskin
+  const[forageResult,setForageResult]=useState(null); // null | {success,roll,found}
+  const[foraging,setForaging]=useState(false);
+  const[exhaustion,setExhaustion]=useState(gs.exhaustion||0);
   const remaining=d.hitDiceTotal-hdUsed;
   const atMax=hp>=d.maxHp;
+  const thirsty=waterUsed&&waterUses<=0; // No water to drink
+  const canHeal=!thirsty&&!forageResult; // Can't heal if thirsty or chose to forage
+
+  // Drink water at rest
+  const drinkWater=()=>{
+    if(waterUsed)return;
+    setWaterUsed(true);
+    if(waterUses>0)setWaterUses(prev=>prev-1);
+    else if(hardcoreMode)setExhaustion(prev=>prev+1);
+  };
+
+  // Forage instead of healing (Survival DC 12)
+  const doForage=()=>{
+    if(foraging||forageResult)return;
+    setForaging(true);
+    let c=0;const iv=setInterval(()=>{setDisplay(Math.floor(Math.random()*20)+1);if(++c>=10){clearInterval(iv);
+      const roll=Math.floor(Math.random()*20)+1;
+      const survBonus=d.wisMod+(d.skills?.Survival||0);
+      const total=roll+survBonus;
+      const success=total>=12;
+      const found=success?Math.floor(Math.random()*4)+1:0; // 1d4 rations on success
+      setForageResult({success,roll,survBonus,total,found});
+      setForaging(false);setDisplay(null);
+    }},getCombatDelay());
+  };
+
   const spendHitDie=()=>{
-    if(remaining<=0||atMax||rolling)return;
+    if(remaining<=0||atMax||rolling||!canHeal)return;
+    if(!waterUsed)drinkWater(); // Auto-drink on first heal attempt
     setRolling(true);let c=0;
     const iv=setInterval(()=>{setDisplay(Math.floor(Math.random()*d.hitDie)+1);if(++c>=10){clearInterval(iv);
       const roll=Math.floor(Math.random()*d.hitDie)+1;
@@ -8422,22 +8515,34 @@ function ShortRestModal({gs,onDone}){
       setRolling(false);setDisplay(null);
     }},getCombatDelay());
   };
-  const finish=()=>{onDone({hp,hitDiceUsed:hdUsed})};
+  const finish=()=>{onDone({hp:canHeal?hp:gs.hp,hitDiceUsed:hdUsed,waterskinUses:waterUses,exhaustion,rationsFound:forageResult?.found||0})};
   const totalHealed=rolls.reduce((s,r)=>s+r.heal,0);
   return e('div',{className:'modal-overlay'},
     e('div',{className:'modal-box rest-modal'},
       e('h2',{className:'gold',style:{marginBottom:4}},'SHORT REST'),
-      e('p',{style:{fontSize:13,color:'var(--text-dim)',marginBottom:12}},'You take a breather, binding wounds and catching your breath. Spend Hit Dice to recover hit points.'),
+      e('p',{style:{fontSize:13,color:'var(--text-dim)',marginBottom:12}},forageResult?'You spent the rest foraging for food.':'You take a breather. Drink water and spend Hit Dice to heal, or forage for rations (no healing).'),
+      // Water status
       e('div',{className:'rest-stats'},
+        e('div',{className:'rest-stat'},e('span',{className:'rest-label'},'Water'),e('span',{className:'rest-val'+(waterUses<=0?' exhausted':'')},waterUses+' uses')),
         e('div',{className:'rest-stat'},e('span',{className:'rest-label'},'HP'),e('span',{className:'rest-val'},hp+' / '+d.maxHp)),
-        e('div',{className:'rest-stat'},e('span',{className:'rest-label'},'Hit Dice'),e('span',{className:'rest-val'},remaining+' / '+d.hitDiceTotal+' (d'+d.hitDie+')'))),
-      rolls.length?e('div',{className:'rest-rolls'},rolls.map((r,i)=>
+        e('div',{className:'rest-stat'},e('span',{className:'rest-label'},'Hit Dice'),e('span',{className:'rest-val'},remaining+' / '+d.hitDiceTotal))),
+      thirsty?e('div',{style:{color:'var(--red)',fontSize:13,margin:'8px 0'}},hardcoreMode?'\u26a0 No water! +1 Exhaustion':'\u26a0 No water! Cannot heal this rest'):null,
+      exhaustion>0?e('div',{style:{color:'var(--orange)',fontSize:13}},'Exhaustion: '+exhaustion):null,
+      // Foraging result
+      forageResult?e('div',{className:'rest-rolls'},
+        e('div',{className:'rest-roll-row'},'Survival: d20('+forageResult.roll+') + '+forageResult.survBonus+' = '+forageResult.total+(forageResult.success?' \u2714':' \u2718')),
+        forageResult.success?e('div',{style:{color:'var(--green)'}},'Found '+forageResult.found+' rations!'):e('div',{style:{color:'var(--text-dim)'}},'Found nothing.')
+      ):null,
+      // Healing rolls
+      !forageResult&&rolls.length?e('div',{className:'rest-rolls'},rolls.map((r,i)=>
         e('div',{key:i,className:'rest-roll-row'},'d'+d.hitDie+': '+r.roll+' + '+r.conMod+' CON = '+r.heal+' HP healed'))):null,
-      rolling?e('div',{className:'rest-rolling'},e('span',{className:'roll-anim'},display)):null,
-      totalHealed>0?e('div',{style:{fontSize:13,color:'var(--gold)',margin:'8px 0'}},'Total healed: '+totalHealed+' HP'):null,
-      e('div',{className:'confirm-btns',style:{marginTop:12}},
-        remaining>0&&!atMax?e('button',{className:'gold-btn',onClick:spendHitDie,disabled:rolling},'Spend Hit Die (d'+d.hitDie+' + '+d.conMod+')'):null,
-        e('button',{className:remaining>0&&!atMax?'ghost-btn':'gold-btn',onClick:finish},atMax?'Fully Rested — Continue':rolls.length?'Done Resting':'Skip Rest'))));
+      rolling||foraging?e('div',{className:'rest-rolling'},e('span',{className:'roll-anim'},display)):null,
+      totalHealed>0&&!forageResult?e('div',{style:{fontSize:13,color:'var(--gold)',margin:'8px 0'}},'Total healed: '+totalHealed+' HP'):null,
+      // Action buttons
+      e('div',{className:'confirm-btns',style:{marginTop:12,flexWrap:'wrap',gap:8}},
+        !forageResult&&!waterUsed?e('button',{className:'gold-btn',onClick:doForage,disabled:foraging,style:{flex:'1 1 auto'}},'\ud83c\udf3f Forage (Skip Healing)'):null,
+        !forageResult&&remaining>0&&!atMax&&canHeal?e('button',{className:'gold-btn',onClick:spendHitDie,disabled:rolling||thirsty,style:{flex:'1 1 auto'}},'Spend Hit Die'):null,
+        e('button',{className:(forageResult||rolls.length||atMax)?'gold-btn':'ghost-btn',onClick:finish,style:{flex:'1 1 auto'}},forageResult?(forageResult.found?'Take Rations \u2192':'Continue \u2192'):atMax?'Fully Rested \u2192':rolls.length?'Done \u2192':'Skip Rest'))));
 }
 
 function HealingPanel({gs,onUpdate,onClose}){
@@ -8676,7 +8781,7 @@ function SpellPrepModal({gs,onConfirm,onKeep}){
         e('button',{className:'gold-btn',onClick:()=>onConfirm(selected),disabled:totalSelected!==maxPrep},'Confirm Spells'))));
 }
 
-function SettingsPanel({onClose,onSave,onLoad,textSize,setTextSize}){
+function SettingsPanel({onClose,onSave,onLoad,textSize,setTextSize,hardcoreMode,setHardcoreMode}){
   const e=React.createElement;
   const[volume,setVolume]=useState(()=>AudioController.volume);
   const[musicOn,setMusicOn]=useState(()=>AudioController.enabled);
@@ -8701,6 +8806,12 @@ function SettingsPanel({onClose,onSave,onLoad,textSize,setTextSize}){
           e('button',{className:textSize==='small'?'active':'',onClick:()=>setTextSize('small')},'Small'),
           e('button',{className:textSize==='normal'?'active':'',onClick:()=>setTextSize('normal')},'Normal'),
           e('button',{className:textSize==='large'?'active':'',onClick:()=>setTextSize('large')},'Large'))),
+      e('div',{className:'settings-section'},
+        e('div',{className:'settings-row'},
+          e('div',null,
+            e('div',{className:'settings-label',style:{marginBottom:0}},'Hardcore Survival'),
+            e('div',{style:{fontSize:11,color:'var(--text-dim)'}},'Exhaustion from hunger/thirst instead of healing penalty')),
+          e('button',{className:'settings-toggle-btn'+(hardcoreMode?' on':''),onClick:()=>setHardcoreMode(!hardcoreMode)}))),
       e('div',{className:'settings-actions'},
         e('button',{className:'settings-btn-save',onClick:onSave},'Save Game'),
         e('button',{className:'settings-btn-load',onClick:onLoad},'Load Game')),
@@ -9064,6 +9175,7 @@ function App(){
   const[phase,setPhase]=useState('cover');const[gs,setGs]=useState(null);const[scene,setScene]=useState(null);const[sceneId,setSceneId]=useState(null);
   const[showSave,setShowSave]=useState(false);const[saveMsg,setSaveMsg]=useState('');const[showSheet,setShowSheet]=useState(false);const[showDmSummary,setShowDmSummary]=useState(false);const[showMap,setShowMap]=useState(false);const[sideOpen,setSideOpen]=useState(false);const[confirmModal,setConfirmModal]=useState(null);const[compPopup,setCompPopup]=useState(null);const[romancePrompt,setRomancePrompt]=useState(null);const[romanceManage,setRomanceManage]=useState(false);const[breakupTarget,setBreakupTarget]=useState(null);const[npcNotify,setNpcNotify]=useState(null);const[romanceCheck,setRomanceCheck]=useState(null);const[spellPrepModal,setSpellPrepModal]=useState(false);const[shortRestModal,setShortRestModal]=useState(false);const[healingPanel,setHealingPanel]=useState(false);const[defeatRecovery,setDefeatRecovery]=useState(null);const[godSignPicker,setGodSignPicker]=useState(null);const[editSlot,setEditSlot]=useState(null);const[showSettingsPanel,setShowSettingsPanel]=useState(false);const[knightingPicker,setKnightingPicker]=useState(null);const[showCamp,setShowCamp]=useState(false);const[showExportModal,setShowExportModal]=useState(false);
   const[textSize,setTextSize]=useState(()=>localStorage.getItem('textSize')||'normal');
+  const[hardcoreMode,setHardcoreMode]=useState(()=>localStorage.getItem('hardcoreMode')==='true');
   // Migrate companion name casing on any active gs
   React.useEffect(()=>{
     if(!gs||!gs.companions)return;
@@ -9093,6 +9205,9 @@ function App(){
     document.body.dataset.textSize=textSize;
     document.documentElement.style.fontSize=textSize==='small'?'14px':textSize==='large'?'18px':'16px';
   },[textSize]);
+
+  // Hardcore mode persistence
+  React.useEffect(()=>{localStorage.setItem('hardcoreMode',hardcoreMode)},[hardcoreMode]);
 
   // Initialize audio controller when THEME is available
   React.useEffect(()=>{
@@ -9142,10 +9257,22 @@ function App(){
       if(ns.cls==='Warlock')ns.spellSlotsUsed=0;
       // Mount recovers some HP on short rest
       if(ns.mount&&ns.mount.hp<ns.mount.maxHp){const heal=rollDice(6)+2;ns.mount={...ns.mount,hp:Math.min(ns.mount.maxHp,ns.mount.hp+heal)}}}
-    if(allBoxText.includes('Long rest')||allBoxText.includes('LONG REST')){ns.secondWindUsed=0;ns.actionSurgeUsed=false;ns.spellSlotsUsed=0;ns.spellSlots2ndUsed=0;ns.spellSlots3rdUsed=0;ns.spellSlots4thUsed=0;ns.spellSlots5thUsed=0;ns.spellSlots6thUsed=0;ns.spellSlots7thUsed=0;ns.spellSlots8thUsed=0;ns.spellSlots9thUsed=0;ns.layOnHandsPool=ns.derived.layOnHandsMax||0;ns.hp=ns.derived.maxHp;const hdRecover=Math.max(1,Math.floor(ns.derived.hitDiceTotal/2));ns.hitDiceUsed=Math.max(0,(ns.hitDiceUsed||0)-hdRecover);ns.exhaustion=Math.max(0,(ns.exhaustion||0)-1);if(['Paladin','Cleric','Druid','Wizard','Bard','Sorcerer'].includes(ns.cls))setSpellPrepModal(true);
-      // Camping: consume rations on long rest
-      if((ns.rations||0)>0){ns.rations=ns.rations-1;ns.history.push('Consumed 1 ration during rest. ('+(ns.rations)+' remaining)')}
-      else{ns.exhaustion=(ns.exhaustion||0)+1;ns.history.push('No rations! Gained 1 exhaustion from hunger.')}
+    if(allBoxText.includes('Long rest')||allBoxText.includes('LONG REST')){ns.secondWindUsed=0;ns.actionSurgeUsed=false;ns.spellSlotsUsed=0;ns.spellSlots2ndUsed=0;ns.spellSlots3rdUsed=0;ns.spellSlots4thUsed=0;ns.spellSlots5thUsed=0;ns.spellSlots6thUsed=0;ns.spellSlots7thUsed=0;ns.spellSlots8thUsed=0;ns.spellSlots9thUsed=0;ns.layOnHandsPool=ns.derived.layOnHandsMax||0;const hdRecover=Math.max(1,Math.floor(ns.derived.hitDiceTotal/2));ns.hitDiceUsed=Math.max(0,(ns.hitDiceUsed||0)-hdRecover);ns.exhaustion=Math.max(0,(ns.exhaustion||0)-1);if(['Paladin','Cleric','Druid','Wizard','Bard','Sorcerer'].includes(ns.cls))setSpellPrepModal(true);
+      // Survival: consume rations + water on long rest
+      let canHealLongRest=true;
+      if((ns.rations||0)>0){ns.rations=ns.rations-1;ns.history.push('Consumed 1 ration. ('+(ns.rations)+' left)')}
+      else if(hardcoreMode){ns.exhaustion=(ns.exhaustion||0)+1;ns.history.push('No rations! +1 Exhaustion from hunger.')}
+      else{canHealLongRest=false;ns.history.push('No rations! Cannot recover HP this rest.')}
+      // Water consumption: 2 uses for long rest (drink + cook)
+      if((ns.waterskinUses||0)>=2){ns.waterskinUses=ns.waterskinUses-2}
+      else if((ns.waterskinUses||0)===1){ns.waterskinUses=0;if(hardcoreMode){ns.exhaustion=(ns.exhaustion||0)+1;ns.history.push('Low water! +1 Exhaustion from thirst.')}else{canHealLongRest=false;ns.history.push('Low water! Cannot fully recover.')}}
+      else if(hardcoreMode){ns.exhaustion=(ns.exhaustion||0)+1;ns.history.push('No water! +1 Exhaustion from thirst.')}
+      else{canHealLongRest=false;ns.history.push('No water! Cannot recover HP this rest.')}
+      // Heal HP only if resources available
+      if(canHealLongRest)ns.hp=ns.derived.maxHp;
+      // Refill waterskin if near water (river, stream, well, inn, camp mentions water)
+      const nearWater=/river|stream|well|fountain|spring|inn|tavern|water.*source/i.test(allBoxText);
+      if(nearWater){ns.waterskinUses=3;ns.history.push('Refilled waterskin at water source.')}
       // Camping: consume torch if night camp
       const isNight=/night|evening|dusk|dark|camp/i.test(s.title||'')||/night|evening/i.test(s.location||'');
       if(isNight&&(ns.torches||0)>0){ns.torches=ns.torches-1;ns.history.push('Used 1 torch for the night. ('+(ns.torches)+' remaining)')}
@@ -9290,7 +9417,7 @@ function App(){
     const extraInv=[equip.weapon,equip.armor,equip.hasShield?'Shield':'',...cInv,cEquip.head,cEquip.hands,cEquip.boots].filter(Boolean);
     const startLangs=(CAMPAIGN&&CAMPAIGN.startingLanguages)||['Common'];
     const allLangs=[...startLangs];if(extraLang&&!allLangs.includes(extraLang))allLangs.push(extraLang);
-    const state={cls,stats,style,feat,mastery,name:name||'Squire',spells:spells||{cantrips:[],level1:[],alwaysPrepared:[]},weapon:equip.weapon,armor:equip.armor,skilledPicks:skilledPicks||[],classSkills:classSkills||[],humanSkill:humanSkill||null,hasShield:equip.hasShield,level:1,hp:derived.maxHp,derived,xp:0,honour:cRes.honour||5,rose:0,sword:0,crown:0,companions:[],romances:{},godSigns:startGods,dgTrack:'NONE',equipment:buildEquipment(equip.weapon,equip.armor,equip.hasShield),inventory:extraInv,history:[],awardedScenes:{},companionLog:{},romanceDeclined:{},flags:{},bonuses:[],magicItems:[],measureTrack:0,measureOrientation:null,gold:cRes.gold||0,layOnHandsPool:cls==='Paladin'?derived.layOnHandsMax:0,spellSlotsUsed:0,spellSlots2ndUsed:0,spellSlots3rdUsed:0,spellSlots4thUsed:0,spellSlots5thUsed:0,spellSlots6thUsed:0,spellSlots7thUsed:0,spellSlots8thUsed:0,spellSlots9thUsed:0,secondWindUsed:0,actionSurgeUsed:false,bandages:cRes.bandages||0,potions:cRes.potions||0,greaterPotions:cRes.greaterPotions||0,rations:cRes.rations||0,torches:cRes.torches||0,miraHealedThisScene:false,completedRolls:{},deadCompanions:[],hitDiceUsed:0,wounds:[],scars:[],combatCount:0,orderMax:{rose:0,sword:0,crown:0},approval:{},companionGifts:[],mount:null,languages:allLangs,exhaustion:0,toolProficiencies:[],durability:buildDurability()};setGs(state);goScene(startScene,state);setPhase('play')};
+    const state={cls,stats,style,feat,mastery,name:name||'Squire',spells:spells||{cantrips:[],level1:[],alwaysPrepared:[]},weapon:equip.weapon,armor:equip.armor,skilledPicks:skilledPicks||[],classSkills:classSkills||[],humanSkill:humanSkill||null,hasShield:equip.hasShield,level:1,hp:derived.maxHp,derived,xp:0,honour:cRes.honour||5,rose:0,sword:0,crown:0,companions:[],romances:{},godSigns:startGods,dgTrack:'NONE',equipment:buildEquipment(equip.weapon,equip.armor,equip.hasShield),inventory:extraInv,history:[],awardedScenes:{},companionLog:{},romanceDeclined:{},flags:{},bonuses:[],magicItems:[],measureTrack:0,measureOrientation:null,gold:cRes.gold||0,layOnHandsPool:cls==='Paladin'?derived.layOnHandsMax:0,spellSlotsUsed:0,spellSlots2ndUsed:0,spellSlots3rdUsed:0,spellSlots4thUsed:0,spellSlots5thUsed:0,spellSlots6thUsed:0,spellSlots7thUsed:0,spellSlots8thUsed:0,spellSlots9thUsed:0,secondWindUsed:0,actionSurgeUsed:false,bandages:cRes.bandages||0,potions:cRes.potions||0,greaterPotions:cRes.greaterPotions||0,rations:cRes.rations||0,torches:cRes.torches||0,waterskinUses:cRes.waterskinUses||3,miraHealedThisScene:false,completedRolls:{},deadCompanions:[],hitDiceUsed:0,wounds:[],scars:[],combatCount:0,orderMax:{rose:0,sword:0,crown:0},approval:{},kills:{player:{},companions:{}},companionGifts:[],mount:null,languages:allLangs,exhaustion:0,toolProficiencies:[],durability:buildDurability()};setGs(state);goScene(startScene,state);setPhase('play')};
   const loadSave=(saveData)=>{
     if(!saveData)return;
     // Handle v2 split format or auto-migrate legacy
@@ -9654,6 +9781,11 @@ function App(){
       e('h3',null,'Order Points'),e('div',{className:'order-points'},e('div',{className:'order-badge rose'},e('span',{className:'num'},gs.rose),'Rose'),e('div',{className:'order-badge sword'},e('span',{className:'num'},gs.sword),'Sword'),e('div',{className:'order-badge crown'},e('span',{className:'num'},gs.crown),'Crown')),e('div',{className:'honour-row'},e('span',{className:'honour-label'},'Honour'),e('span',{className:'honour-val'},gs.honour||0)),
       // Gold & Resources
       e('div',{className:'sidebar-gold'},e('span',{className:'sidebar-gold-icon'},'\u2694'),e('span',{className:'sidebar-gold-val'},(gs.gold||0)),e('span',{className:'sidebar-gold-label'},'STL')),
+      // Survival resources
+      e('div',{className:'sidebar-survival'},
+        e('div',{className:'survival-row'+(gs.rations<=2?' low':'')},e('span',null,'\ud83c\udf5e'),e('span',null,(gs.rations||0)),e('span',{className:'survival-label'},'Rations')),
+        e('div',{className:'survival-row'+((gs.waterskinUses||0)<=1?' low':'')},e('span',null,'\ud83d\udca7'),e('span',null,(gs.waterskinUses||0)+'/3'),e('span',{className:'survival-label'},'Water')),
+        (gs.exhaustion||0)>0?e('div',{className:'survival-row exhausted'},e('span',null,'\u26a0'),e('span',null,gs.exhaustion),e('span',{className:'survival-label'},'Exhaustion')):null),
       // Mount
       gs.mount?e('div',{className:'mount-row'},
         e('span',{className:'mount-icon'},'\ud83d\udc0e'),
@@ -9749,13 +9881,13 @@ function App(){
     breakupTarget&&gs?e(BreakupScene,{name:breakupTarget,gs:gs,onResolve:handleBreakup}):null,
     romanceCheck?e(RelationshipCheck,{check:romanceCheck,gs:gs,onResolve:resolveRelationship}):null,
     spellPrepModal&&gs&&['Paladin','Cleric','Druid','Wizard','Bard','Sorcerer'].includes(gs.cls)?e(SpellPrepModal,{gs:gs,onConfirm:(spells)=>{const ns={...gs,spells:{...gs.spells,...spells}};ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability);setGs(ns);setSpellPrepModal(false)},onKeep:()=>setSpellPrepModal(false)}):null,
-    shortRestModal&&gs?e(ShortRestModal,{gs:gs,onDone:(result)=>{const ns={...gs,hp:result.hp,hitDiceUsed:result.hitDiceUsed};setGs(ns);setShortRestModal(false)}}):null,
+    shortRestModal&&gs?e(ShortRestModal,{gs:gs,hardcoreMode:hardcoreMode,onDone:(result)=>{const ns={...gs,hp:result.hp,hitDiceUsed:result.hitDiceUsed,waterskinUses:result.waterskinUses,exhaustion:result.exhaustion,rations:(gs.rations||0)+(result.rationsFound||0)};ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds);setGs(ns);setShortRestModal(false)}}):null,
     showCamp&&gs?e(CampModal,{gs:gs,sceneId:sceneId,onDone:(result)=>{const ns={...gs,...result};ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability);setGs(ns);setShowCamp(false)},onCancel:()=>setShowCamp(false)}):null,
     healingPanel&&gs?e(HealingPanel,{gs:gs,onUpdate:(upd)=>{const ns={...gs,...upd};setGs(ns)},onClose:()=>setHealingPanel(false)}):null,
     defeatRecovery&&gs?e(DefeatRecoveryModal,{gs:gs,wound:defeatRecovery.wound,scar:defeatRecovery.scar,onContinue:()=>setDefeatRecovery(null)}):null,
     godSignPicker&&gs&&gs.cls==='Paladin'?e(GodSignPicker,{options:godSignPicker.options,onPick:(god)=>{const ns={...gs,godSigns:{...(gs.godSigns||{})}};ns.godSigns[god]=(ns.godSigns[god]||0)+1;setGs(ns);setGodSignPicker(null)}}):null,
     knightingPicker&&gs?e(KnightingSkillPicker,{order:knightingPicker.order,onConfirm:(skillChoice)=>{const ns=applyKnightingBonus(gs,knightingPicker.order,skillChoice);setGs(ns);setKnightingPicker(null)}}):null,
-    showSettingsPanel?e(SettingsPanel,{onClose:()=>setShowSettingsPanel(false),onSave:()=>{setShowSettingsPanel(false);setShowSave(true)},onLoad:()=>{setShowSettingsPanel(false);setShowSave(true)},textSize:textSize,setTextSize:setTextSize}):null,
+    showSettingsPanel?e(SettingsPanel,{onClose:()=>setShowSettingsPanel(false),onSave:()=>{setShowSettingsPanel(false);setShowSave(true)},onLoad:()=>{setShowSettingsPanel(false);setShowSave(true)},textSize:textSize,setTextSize:setTextSize,hardcoreMode:hardcoreMode,setHardcoreMode:setHardcoreMode}):null,
     showMap&&gs?e(MapView,{gs:gs,sceneId:sceneId,onClose:()=>setShowMap(false)}):null);
 }
 // Attempt to load campaign from JSON files, then mount
