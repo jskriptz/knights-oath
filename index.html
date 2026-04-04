@@ -440,6 +440,24 @@ body.high-contrast .box{border-width:2px}body.high-contrast button{border-width:
 .mastery-badge:hover .mastery-tip,.mastery-badge:focus .mastery-tip{display:block}
 .weapon-info{color:var(--text-dim);font-size:11px}
 .weapon-swap-select{background:var(--bg-dark);color:var(--text-dim);border:1px solid var(--gold-dim);padding:2px 6px;font-size:11px;border-radius:4px;cursor:pointer}
+/* Player movement panel */
+.combat-movement-panel{display:flex;align-items:center;gap:8px;margin-bottom:10px;padding:6px 10px;background:rgba(0,0,0,.2);border-radius:4px;font-size:12px}
+.combat-movement-panel.moved{opacity:.6}
+.movement-label{color:var(--text-dim);font-size:11px}
+.move-btn{padding:3px 10px;border-radius:3px;font-size:11px;cursor:pointer;border:1px solid var(--border);background:rgba(255,255,255,.05);color:var(--text)}
+.move-btn:hover{background:rgba(255,255,255,.1)}
+.move-btn.advance{border-color:var(--green);color:var(--green)}
+.move-btn.retreat{border-color:var(--orange);color:var(--orange)}
+.disengage-badge{font-size:10px;color:var(--green);background:rgba(39,174,96,.15);padding:2px 6px;border-radius:3px}
+.dash-badge{font-size:10px;color:var(--gold);background:rgba(201,168,76,.15);padding:2px 6px;border-radius:3px}
+.moved-badge{font-size:10px;color:var(--text-dim)}
+.movement-actions{display:flex;gap:6px;margin-right:auto}
+.move-action-btn{padding:3px 8px;border-radius:3px;font-size:10px;cursor:pointer;border:1px solid var(--border);background:rgba(255,255,255,.05);color:var(--text)}
+.move-action-btn:hover{background:rgba(255,255,255,.1)}
+.move-action-btn.disengage{border-color:var(--green);color:var(--green)}
+.move-action-btn.dash{border-color:var(--gold);color:var(--gold)}
+.move-buttons{display:flex;gap:6px}
+.move-btn.danger{border-color:var(--red);color:var(--red);animation:pulse-danger 1s infinite}
 .target-grid{display:flex;flex-direction:column;gap:4px;margin:8px 0}
 .target-btn{background:rgba(255,255,255,.05);border:1px solid var(--gold-dim);color:var(--text-bright);padding:8px 12px;cursor:pointer;text-align:left;border-radius:4px;font-size:12px;transition:all .2s}
 .target-btn:hover:not(:disabled){background:rgba(255,215,0,.1);border-color:var(--gold)}
@@ -500,6 +518,35 @@ body.high-contrast .box{border-width:2px}body.high-contrast button{border-width:
 .combat-outcome-btn.win:hover{background:rgba(39,174,96,.25)}
 .combat-outcome-btn.lose{background:rgba(192,57,43,.15);border:1px solid #c0392b;color:#c0392b}
 .combat-outcome-btn.lose:hover{background:rgba(192,57,43,.25)}
+/* P&P Tracker */
+.pnp-tracker{background:rgba(0,0,0,.2);border:1px solid var(--border);border-radius:6px;padding:10px;margin:12px 0}
+.pnp-init-list{display:flex;flex-direction:column;gap:4px}
+.pnp-combatant{display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:4px;background:rgba(255,255,255,.03);border-left:3px solid var(--border)}
+.pnp-combatant.current{background:rgba(201,168,76,.1);border-left-color:var(--gold)}
+.pnp-combatant.enemy{border-left-color:var(--red)}
+.pnp-combatant.ally{border-left-color:var(--blue)}
+.pnp-combatant.player{border-left-color:var(--green)}
+.pnp-combatant.dead{opacity:.4}
+.pnp-turn-marker{width:12px;color:var(--gold);font-size:10px}
+.pnp-init-input{width:32px;background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:3px;color:var(--text);text-align:center;font-size:11px;padding:2px}
+.pnp-name{flex:1;color:var(--text-bright);font-size:12px;font-weight:600}
+.pnp-ac{color:var(--text-dim);font-size:11px;min-width:40px}
+.pnp-hp-bar{width:60px;height:8px;background:rgba(0,0,0,.4);border-radius:4px;overflow:hidden}
+.pnp-hp-fill{height:100%;background:var(--green);transition:width .2s}
+.pnp-hp-fill.hurt{background:var(--orange)}
+.pnp-hp-fill.critical{background:var(--red)}
+.pnp-hp-text{font-size:11px;color:var(--text-dim);min-width:45px;text-align:right}
+.pnp-hp-btn{width:20px;height:20px;border-radius:3px;border:1px solid var(--border);background:rgba(255,255,255,.05);color:var(--text);font-size:14px;cursor:pointer;padding:0;line-height:18px}
+.pnp-hp-btn:hover{background:rgba(255,255,255,.1)}
+.pnp-roll-group{display:flex;gap:3px}
+.pnp-target-select{width:70px;background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:3px;color:var(--text);font-size:10px;padding:1px 2px}
+.pnp-roll-btn{padding:2px 6px;border-radius:3px;border:1px solid var(--gold-dim);background:rgba(201,168,76,.1);color:var(--gold);font-size:10px;cursor:pointer}
+.pnp-roll-btn:hover{background:rgba(201,168,76,.2)}
+.pnp-next-turn{display:block;width:100%;margin-top:10px;padding:8px;border-radius:4px;border:1px solid var(--gold);background:rgba(201,168,76,.1);color:var(--gold);font-family:'Cinzel',serif;font-size:12px;cursor:pointer;letter-spacing:1px}
+.pnp-next-turn:hover{background:rgba(201,168,76,.2)}
+.pnp-roll-result{margin-top:10px;padding:8px;border-radius:4px;text-align:center;font-size:12px}
+.pnp-roll-result.hit{background:rgba(39,174,96,.15);border:1px solid #27ae60;color:#27ae60}
+.pnp-roll-result.miss{background:rgba(100,100,100,.15);border:1px solid #666;color:#999}
 .outcome-text{font-size:12px;color:var(--text-dim);padding:4px 8px;margin:4px 0}
 .combat-enemy-preview{margin:4px 0;font-size:12px;color:var(--text-bright)}
 .combat-stat-blocks{margin:12px 0}
@@ -509,6 +556,51 @@ body.high-contrast .box{border-width:2px}body.high-contrast button{border-width:
 .combat-enemy-roll-name{font-family:'Cinzel',serif;font-size:13px;color:#e74c3c;letter-spacing:1px;margin-bottom:6px}
 @media(max-width:600px){.combat-hp-label{min-width:80px;font-size:10px}.target-btn{font-size:11px;padding:6px 8px}.combat-companion-btn{font-size:10px}}
 
+/* Battlefield Map */
+.battlefield{position:relative;width:100%;height:180px;border-radius:8px;margin:12px 0;overflow:hidden;background:linear-gradient(180deg,rgba(20,25,35,.95) 0%,rgba(30,35,45,.9) 33%,rgba(40,45,50,.85) 66%,rgba(50,45,40,.9) 100%)}
+.battlefield-zone{position:absolute;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:8px;padding:4px}
+.battlefield-zone.back{top:0;height:33%;background:linear-gradient(180deg,rgba(0,0,0,.4) 0%,transparent 100%)}
+.battlefield-zone.mid{top:33%;height:34%;background:transparent}
+.battlefield-zone.front{bottom:0;height:33%;background:linear-gradient(0deg,rgba(80,60,40,.3) 0%,transparent 100%);border-top:1px solid rgba(255,255,255,.05)}
+.battlefield-zone-label{position:absolute;left:6px;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.25);font-family:'Cinzel',serif}
+.battlefield-zone.back .battlefield-zone-label{top:4px}
+.battlefield-zone.mid .battlefield-zone-label{top:50%;transform:translateY(-50%)}
+.battlefield-zone.front .battlefield-zone-label{bottom:4px}
+.battlefield-token{position:relative;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:14px;font-weight:600;cursor:default;transition:transform .15s,box-shadow .15s}
+.battlefield-token:hover{transform:scale(1.1);z-index:10}
+.battlefield-token.player{background:linear-gradient(135deg,#2a3a5a 0%,#1a2a4a 100%);border:2px solid var(--gold);color:var(--gold);box-shadow:0 0 12px rgba(201,168,76,.4)}
+.battlefield-token.ally{background:linear-gradient(135deg,#1a3a4a 0%,#0a2a3a 100%);border:2px solid #3498db;color:#5dade2;box-shadow:0 0 8px rgba(52,152,219,.3)}
+.battlefield-token.enemy{background:linear-gradient(135deg,#4a1a1a 0%,#3a0a0a 100%);border:2px solid #c0392b;color:#e74c3c;box-shadow:0 0 8px rgba(192,57,43,.4)}
+.battlefield-token.dead{opacity:.3;border-style:dashed}
+.battlefield-token.moved{opacity:.6;border-style:dotted}
+.battlefield-token.active{animation:token-pulse 1.5s ease-in-out infinite}
+@keyframes token-pulse{0%,100%{box-shadow:0 0 8px rgba(201,168,76,.4)}50%{box-shadow:0 0 16px rgba(201,168,76,.8),0 0 24px rgba(201,168,76,.4)}}
+.battlefield-token-initial{position:relative;z-index:2}
+.battlefield-token-hp{position:absolute;inset:-3px;border-radius:50%;pointer-events:none}
+.battlefield-token-hp svg{width:100%;height:100%}
+.battlefield-token-hp circle{fill:none;stroke-width:3;stroke-linecap:round}
+.battlefield-token-hp .hp-bg{stroke:rgba(0,0,0,.5)}
+.battlefield-token-hp .hp-fill{stroke:#27ae60;transform:rotate(-90deg);transform-origin:center;transition:stroke-dashoffset .3s,stroke .3s}
+.battlefield-token-hp .hp-fill.hurt{stroke:#f39c12}
+.battlefield-token-hp .hp-fill.critical{stroke:#e74c3c}
+.battlefield-tooltip{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--panel);border:1px solid var(--border);border-radius:4px;padding:4px 8px;font-size:11px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s;z-index:20}
+.battlefield-token:hover .battlefield-tooltip{opacity:1}
+.battlefield-tooltip-name{color:var(--text-bright);font-weight:600}
+.battlefield-tooltip-hp{color:var(--text-dim);margin-left:6px}
+.battlefield-move-btns{position:absolute;inset:-2px;border-radius:50%;display:none;z-index:15}
+.battlefield-token.commanding .battlefield-move-btns{display:block}
+.battlefield-move-btn{position:absolute;width:18px;height:18px;border-radius:50%;background:var(--gold);color:var(--bg);border:none;font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:.9}
+.battlefield-move-btn:hover{opacity:1;transform:scale(1.1)}
+.battlefield-move-btn.up{top:-20px;left:50%;transform:translateX(-50%)}
+.battlefield-move-btn.down{bottom:-20px;left:50%;transform:translateX(-50%)}
+.battlefield-move-btn.left{left:-20px;top:50%;transform:translateY(-50%)}
+.battlefield-move-btn.right{right:-20px;top:50%;transform:translateY(-50%)}
+.battlefield-legend{display:flex;gap:12px;justify-content:center;margin-top:6px;font-size:10px;color:var(--text-dim)}
+.battlefield-legend-item{display:flex;align-items:center;gap:4px}
+.battlefield-legend-dot{width:10px;height:10px;border-radius:50%;border:1px solid}
+.battlefield-legend-dot.player{background:#2a3a5a;border-color:var(--gold)}
+.battlefield-legend-dot.ally{background:#1a3a4a;border-color:#3498db}
+.battlefield-legend-dot.enemy{background:#4a1a1a;border-color:#c0392b}
 
 /* Shop Box */
 .shop-wrapper{margin:14px 0}
@@ -844,6 +936,15 @@ body.high-contrast .box{border-width:2px}body.high-contrast button{border-width:
 .companion-sheet-close{margin-top:16px;width:100%}
 .stat-block-header.clickable{cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px}
 .stat-block-header.clickable:hover{color:var(--gold-bright)}
+.battlefield-token.clickable{cursor:pointer}
+.battlefield-token.clickable:hover{transform:scale(1.15)}
+.battlefield-token.selected{box-shadow:0 0 0 3px var(--gold),0 0 16px rgba(201,168,76,.6)!important;transform:scale(1.1)}
+.battlefield-tooltip-hint{display:block;font-size:9px;color:var(--gold-dim);margin-top:2px}
+.battlefield-move-arrows{position:absolute;display:flex;flex-direction:column;gap:4px;z-index:25}
+.battlefield-arrow{width:24px;height:20px;border:none;border-radius:4px;cursor:pointer;font-size:10px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.battlefield-arrow.forward{position:absolute;bottom:calc(100% + 4px);left:50%;transform:translateX(-50%);background:var(--green);color:#fff}
+.battlefield-arrow.back{position:absolute;top:calc(100% + 4px);left:50%;transform:translateX(-50%);background:var(--orange);color:#fff}
+.battlefield-arrow:hover{transform:translateX(-50%) scale(1.15)}
 
 /* Knighting ceremony modal */
 .knighting-modal{max-width:420px;text-align:left}
@@ -867,10 +968,10 @@ body.high-contrast .box{border-width:2px}body.high-contrast button{border-width:
 .settings-range::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--gold);cursor:pointer}
 .settings-range::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--gold);cursor:pointer;border:none}
 .settings-val{font-family:monospace;font-size:13px;color:var(--gold);min-width:36px;text-align:right}
-.settings-toggle{position:relative;width:40px;height:22px;background:var(--border);border-radius:11px;cursor:pointer;transition:background .2s;border:none;padding:0}
-.settings-toggle.on{background:rgba(74,138,90,.6)}
-.settings-toggle::after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;background:var(--text);border-radius:50%;transition:transform .2s}
-.settings-toggle.on::after{transform:translateX(18px);background:var(--gold)}
+.settings-toggle-btn{position:relative;width:48px;height:26px;background:var(--border);border-radius:13px;cursor:pointer;transition:background .2s;border:none;padding:0;flex-shrink:0}
+.settings-toggle-btn.on{background:#2ecc71}
+.settings-toggle-btn::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;background:var(--text-bright);border-radius:50%;transition:transform .2s,background .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.settings-toggle-btn.on::after{transform:translateX(22px);background:#fff}
 .settings-btn{background:none;border:1px solid var(--border);color:var(--text-dim);padding:4px 12px;border-radius:4px;cursor:pointer;font-family:'Cinzel',serif;font-size:11px;transition:all .15s}
 .settings-btn:hover{border-color:var(--gold-dim);color:var(--text)}
 
@@ -1361,20 +1462,20 @@ h2.red{color:var(--red)}
 .settings-gear{position:fixed;top:12px;left:12px;z-index:1000;width:36px;height:36px;background:var(--panel);border:1px solid var(--border);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--gold);transition:all 0.2s;opacity:0.7}
 .settings-gear:hover{opacity:1;border-color:var(--gold);transform:rotate(30deg)}
 .settings-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:1001;display:flex;align-items:center;justify-content:center}
-.settings-panel{background:var(--panel);border:2px solid var(--gold);border-radius:8px;padding:24px;width:320px;max-width:90vw;max-height:80vh;overflow-y:auto}
-.settings-title{font-family:var(--heading);font-size:1.3em;color:var(--gold);margin-bottom:16px;text-align:center;border-bottom:1px solid var(--border);padding-bottom:12px}
-.settings-section{margin-bottom:20px}
-.settings-label{display:block;color:var(--text);font-size:0.9em;margin-bottom:6px}
-.settings-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
-.settings-row input[type="range"]{flex:1;accent-color:var(--gold)}
-.settings-row .vol-val{color:var(--gold);font-size:0.85em;width:32px;text-align:right}
-.settings-toggle{display:flex;align-items:center;gap:10px;cursor:pointer;padding:8px 0}
+.settings-panel{background:var(--panel);border:2px solid var(--gold);border-radius:8px;padding:28px 32px;width:380px;max-width:90vw;max-height:80vh;overflow-y:auto}
+.settings-title{font-family:var(--heading);font-size:1.4em;color:var(--gold);margin-bottom:20px;text-align:center;border-bottom:1px solid var(--border);padding-bottom:14px}
+.settings-section{margin-bottom:24px}
+.settings-label{display:block;color:var(--text);font-size:0.95em;margin-bottom:8px}
+.settings-row{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.settings-row input[type="range"]{flex:1;accent-color:var(--gold);height:6px}
+.settings-row .vol-val{color:var(--gold);font-size:0.9em;width:40px;text-align:right}
+.settings-toggle{display:flex;align-items:center;gap:12px;cursor:pointer;padding:10px 0}
 .settings-toggle input{display:none}
-.settings-toggle .toggle-track{width:40px;height:22px;background:var(--border);border-radius:11px;position:relative;transition:background 0.2s}
-.settings-toggle input:checked+.toggle-track{background:var(--gold)}
-.settings-toggle .toggle-thumb{position:absolute;top:2px;left:2px;width:18px;height:18px;background:var(--text);border-radius:50%;transition:left 0.2s}
-.settings-toggle input:checked+.toggle-track .toggle-thumb{left:20px}
-.settings-toggle span{color:var(--text)}
+.settings-toggle .toggle-track{width:48px;height:26px;background:var(--border);border-radius:13px;position:relative;transition:background 0.2s}
+.settings-toggle input:checked+.toggle-track{background:#2ecc71}
+.settings-toggle .toggle-thumb{position:absolute;top:3px;left:3px;width:20px;height:20px;background:var(--text-bright);border-radius:50%;transition:left 0.2s,background 0.2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.settings-toggle input:checked+.toggle-track .toggle-thumb{left:25px;background:#fff}
+.settings-toggle span{color:var(--text);font-size:0.95em}
 .settings-text-size{display:flex;gap:8px}
 .settings-text-size button{flex:1;padding:8px;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:4px;cursor:pointer;transition:all 0.2s}
 .settings-text-size button.active{border-color:var(--gold);color:var(--gold)}
@@ -2551,12 +2652,23 @@ const SoundManager={
           osc.start(now+i*0.12);osc.stop(now+i*0.12+0.3);
         });
       }else if(type==='damage'){
-        // Player takes damage
-        const osc=ctx.createOscillator();const gain=ctx.createGain();
-        osc.type='sawtooth';osc.connect(gain);gain.connect(ctx.destination);
-        osc.frequency.setValueAtTime(200,now);osc.frequency.exponentialRampToValueAtTime(80,now+0.2);
-        gain.gain.setValueAtTime(0.1,now);gain.gain.exponentialRampToValueAtTime(0.001,now+0.2);
-        osc.start(now);osc.stop(now+0.2);
+        // Sword slice sound - sharp metallic cut
+        // White noise burst for the "slice" texture
+        const bufSize=ctx.sampleRate*0.15;
+        const noiseBuf=ctx.createBuffer(1,bufSize,ctx.sampleRate);
+        const noiseData=noiseBuf.getChannelData(0);
+        for(let i=0;i<bufSize;i++)noiseData[i]=(Math.random()*2-1)*Math.pow(1-i/bufSize,2);
+        const noise=ctx.createBufferSource();noise.buffer=noiseBuf;
+        const noiseFilter=ctx.createBiquadFilter();noiseFilter.type='bandpass';noiseFilter.frequency.value=3000;noiseFilter.Q.value=1.5;
+        const noiseGain=ctx.createGain();noiseGain.gain.setValueAtTime(0.12,now);noiseGain.gain.exponentialRampToValueAtTime(0.001,now+0.12);
+        noise.connect(noiseFilter);noiseFilter.connect(noiseGain);noiseGain.connect(ctx.destination);
+        noise.start(now);noise.stop(now+0.15);
+        // High metallic "shing" sweep
+        const shing=ctx.createOscillator();const shingGain=ctx.createGain();
+        shing.type='sine';shing.connect(shingGain);shingGain.connect(ctx.destination);
+        shing.frequency.setValueAtTime(2400,now);shing.frequency.exponentialRampToValueAtTime(800,now+0.08);
+        shingGain.gain.setValueAtTime(0.06,now);shingGain.gain.exponentialRampToValueAtTime(0.001,now+0.1);
+        shing.start(now);shing.stop(now+0.1);
       }
     }catch(e){}
   }
@@ -2581,23 +2693,23 @@ function SettingsPanel({onClose}){
           ['slow','normal','fast'].map(v=>e('button',{key:v,className:'settings-btn'+(settings.combatSpeed===v?' selected':''),style:settings.combatSpeed===v?{borderColor:'var(--gold)',color:'var(--gold)'}:{},onClick:()=>update('combatSpeed',v)},v.charAt(0).toUpperCase()+v.slice(1))))),
       e('div',{className:'settings-row'},
         e('div',null,e('div',{className:'settings-label'},'Auto-Save'),e('div',{className:'settings-sublabel'},'Save automatically on scene transitions')),
-        e('button',{className:'settings-toggle'+(settings.autoSave?' on':''),onClick:()=>update('autoSave',!settings.autoSave)})),
+        e('button',{className:'settings-toggle-btn'+(settings.autoSave?' on':''),onClick:()=>update('autoSave',!settings.autoSave)})),
       e('div',{className:'settings-row'},
         e('div',null,e('div',{className:'settings-label'},'Screen Shake'),e('div',{className:'settings-sublabel'},'Visual effects during combat')),
-        e('button',{className:'settings-toggle'+(settings.screenShake?' on':''),onClick:()=>update('screenShake',!settings.screenShake)})),
+        e('button',{className:'settings-toggle-btn'+(settings.screenShake?' on':''),onClick:()=>update('screenShake',!settings.screenShake)})),
       e('div',{className:'settings-row'},
         e('div',null,e('div',{className:'settings-label'},'Compact UI'),e('div',{className:'settings-sublabel'},'Reduce spacing for smaller screens')),
-        e('button',{className:'settings-toggle'+(settings.compactUI?' on':''),onClick:()=>update('compactUI',!settings.compactUI)})),
+        e('button',{className:'settings-toggle-btn'+(settings.compactUI?' on':''),onClick:()=>update('compactUI',!settings.compactUI)})),
       e('div',{className:'settings-row'},
         e('div',null,e('div',{className:'settings-label'},'Sound Effects'),e('div',{className:'settings-sublabel'},'Audio feedback (when available)')),
-        e('button',{className:'settings-toggle'+(settings.soundEffects?' on':''),onClick:()=>update('soundEffects',!settings.soundEffects)})),
+        e('button',{className:'settings-toggle-btn'+(settings.soundEffects?' on':''),onClick:()=>update('soundEffects',!settings.soundEffects)})),
       e('div',{className:'settings-row'},
         e('div',null,e('div',{className:'settings-label'},'Theme'),e('div',{className:'settings-sublabel'},'Dark or light color scheme')),
         e('div',{className:'settings-control'},
           ['dark','light'].map(v=>e('button',{key:v,className:'settings-btn'+(settings.theme===v?' selected':''),style:settings.theme===v?{borderColor:'var(--gold)',color:'var(--gold)'}:{},onClick:()=>update('theme',v)},v.charAt(0).toUpperCase()+v.slice(1))))),
       e('div',{className:'settings-row'},
         e('div',null,e('div',{className:'settings-label'},'High Contrast'),e('div',{className:'settings-sublabel'},'Increased visibility for accessibility')),
-        e('button',{className:'settings-toggle'+(settings.highContrast?' on':''),onClick:()=>update('highContrast',!settings.highContrast)})),
+        e('button',{className:'settings-toggle-btn'+(settings.highContrast?' on':''),onClick:()=>update('highContrast',!settings.highContrast)})),
       e('div',{className:'settings-row'},
         e('div',null,e('div',{className:'settings-label'},'Combat Log'),e('div',{className:'settings-sublabel'},'Detail level for combat messages')),
         e('div',{className:'settings-control'},
@@ -2961,6 +3073,194 @@ let COMBAT_NARRATION={};
 
 let COMBAT_OUTCOMES={};
 
+// ── Battlefield Map ────────────────────────────────────
+function BattlefieldMap({combat,gs,derived,onMoveCompanion,selectedCompanion,setSelectedCompanion,onMovePlayer,selectedPlayer,setSelectedPlayer}){
+  const e=React.createElement;
+  if(!combat||!combat.enemies)return null;
+
+  const zoneOrder=['front','mid','back'];
+
+  // Get positions from combat state or default based on zone
+  const getZone=(entity)=>{
+    if(entity.position)return entity.position.zone;
+    if(entity.zone==='far')return'back';
+    if(entity.zone==='mid')return'mid';
+    return'front';
+  };
+
+  // Player position
+  const playerZone=combat.playerPosition?.zone||'front';
+
+  // Group entities by zone
+  const zones={back:[],mid:[],front:[]};
+
+  // Add player
+  zones[playerZone].push({
+    type:'player',
+    id:'player',
+    name:gs.name||'You',
+    initial:gs.name?gs.name.charAt(0).toUpperCase():'Y',
+    hp:combat.playerHp,
+    maxHp:combat.playerMaxHp,
+    alive:combat.playerHp>0,
+    active:combat.phase==='playerTurn',
+    zone:playerZone
+  });
+
+  // Add companions
+  (combat.companions||[]).forEach((cp,i)=>{
+    const zone=cp.position?.zone||getZone(cp);
+    zones[zone].push({
+      type:'ally',
+      id:'comp_'+i,
+      idx:i,
+      name:cp.name,
+      initial:cp.name.charAt(0).toUpperCase(),
+      hp:cp.hp,
+      maxHp:cp.maxHp,
+      alive:cp.alive,
+      active:false,
+      zone:zone
+    });
+  });
+
+  // Add enemies
+  (combat.enemies||[]).forEach((en,i)=>{
+    const zone=en.position?.zone||getZone(en);
+    zones[zone].push({
+      type:'enemy',
+      id:'enemy_'+i,
+      name:en.name,
+      initial:en.name.charAt(0).toUpperCase(),
+      hp:en.hp,
+      maxHp:en.maxHp,
+      alive:en.alive,
+      active:combat.phase==='enemy'&&combat.currentEnemyIdx===i,
+      zone:zone
+    });
+  });
+
+  // Render HP ring as SVG arc
+  const renderHpRing=(hpPct)=>{
+    const radius=20;
+    const circumference=2*Math.PI*radius;
+    const offset=circumference*(1-Math.max(0,Math.min(1,hpPct)));
+    const hpClass=hpPct>0.5?'':hpPct>0.25?'hurt':'critical';
+    return e('div',{className:'battlefield-token-hp'},
+      e('svg',{viewBox:'0 0 46 46'},
+        e('circle',{className:'hp-bg',cx:23,cy:23,r:radius}),
+        e('circle',{className:'hp-fill '+hpClass,cx:23,cy:23,r:radius,
+          strokeDasharray:circumference,strokeDashoffset:offset})));
+  };
+
+  // Get available move directions for an entity
+  const getMoveOptions=(entity)=>{
+    if(!entity.alive||entity.type!=='ally')return{canMoveForward:false,canMoveBack:false,hasMoved:false};
+    const firstName=(entity.name.match(/^(\w+)/)||[])[1];
+    const hasMoved=!!(combat.companionMovedThisRound?.[firstName]);
+    if(hasMoved)return{canMoveForward:false,canMoveBack:false,hasMoved:true};
+    const zoneIdx=zoneOrder.indexOf(entity.zone);
+    return{
+      canMoveForward:zoneIdx>0, // Can move toward front
+      canMoveBack:zoneIdx<2,   // Can move toward back
+      hasMoved:false
+    };
+  };
+
+  // Handle token click
+  const handleTokenClick=(entity,ev)=>{
+    ev.stopPropagation();
+    if(entity.type==='ally'&&entity.alive&&setSelectedCompanion){
+      setSelectedCompanion(selectedCompanion===entity.idx?null:entity.idx);
+      if(setSelectedPlayer)setSelectedPlayer(false);
+    }
+    if(entity.type==='player'&&entity.alive&&setSelectedPlayer){
+      setSelectedPlayer(!selectedPlayer);
+      if(setSelectedCompanion)setSelectedCompanion(null);
+    }
+  };
+
+  // Handle move
+  const handleMove=(entity,direction)=>{
+    const zoneIdx=zoneOrder.indexOf(entity.zone);
+    const newZoneIdx=direction==='forward'?zoneIdx-1:zoneIdx+1;
+    if(newZoneIdx<0||newZoneIdx>=3)return;
+    const newZone=zoneOrder[newZoneIdx];
+    if(entity.type==='ally'&&onMoveCompanion){
+      onMoveCompanion(entity.idx,newZone);
+      if(setSelectedCompanion)setSelectedCompanion(null);
+    }
+    if(entity.type==='player'&&onMovePlayer){
+      onMovePlayer(newZone);
+      if(setSelectedPlayer)setSelectedPlayer(false);
+    }
+  };
+
+  // Player move options
+  const getPlayerMoveOpts=()=>{
+    const maxMoves=combat.playerDashed?2:1;
+    const movesUsed=combat.playerMovedThisRound||0;
+    const canMove=movesUsed<maxMoves&&combat.phase==='playerTurn';
+    const zone=combat.playerPosition?.zone||'front';
+    const zoneIdx=zoneOrder.indexOf(zone);
+    return{
+      canMoveForward:canMove&&zoneIdx>0,
+      canMoveBack:canMove&&zoneIdx<2,
+      hasMoved:movesUsed>=maxMoves
+    };
+  };
+
+  // Render a single token
+  const renderToken=(entity,currentZone)=>{
+    const hpPct=entity.maxHp>0?entity.hp/entity.maxHp:0;
+    const classes=['battlefield-token',entity.type];
+    if(!entity.alive)classes.push('dead');
+    if(entity.active)classes.push('active');
+
+    const moveOpts=entity.type==='player'?getPlayerMoveOpts():getMoveOptions(entity);
+    const isSelected=(entity.type==='ally'&&selectedCompanion===entity.idx)||(entity.type==='player'&&selectedPlayer);
+    if(isSelected)classes.push('selected');
+    if((entity.type==='ally'||entity.type==='player')&&entity.alive&&!moveOpts.hasMoved)classes.push('clickable');
+    if(moveOpts.hasMoved)classes.push('moved');
+
+    return e('div',{key:entity.id,className:classes.join(' '),onClick:(ev)=>handleTokenClick(entity,ev)},
+      renderHpRing(hpPct),
+      e('span',{className:'battlefield-token-initial'},entity.initial),
+      e('div',{className:'battlefield-tooltip'},
+        e('span',{className:'battlefield-tooltip-name'},entity.name),
+        e('span',{className:'battlefield-tooltip-hp'},entity.hp+'/'+entity.maxHp+' HP'),
+        entity.type==='ally'&&entity.alive?e('span',{className:'battlefield-tooltip-hint'},moveOpts.hasMoved?'(already moved)':'(click to move)'):null),
+      // Move arrows for selected companion
+      isSelected?e('div',{className:'battlefield-move-arrows'},
+        moveOpts.canMoveBack?e('button',{className:'battlefield-arrow back',onClick:(ev)=>{ev.stopPropagation();handleMove(entity,'back')},title:'Retreat (back)'},'\u25b2'):null,
+        moveOpts.canMoveForward?e('button',{className:'battlefield-arrow forward',onClick:(ev)=>{ev.stopPropagation();handleMove(entity,'forward')},title:'Advance (forward)'},'\u25bc'):null
+      ):null);
+  };
+
+  // Render zone
+  const renderZone=(zoneName,label)=>{
+    return e('div',{className:'battlefield-zone '+zoneName,onClick:()=>setSelectedCompanion&&setSelectedCompanion(null)},
+      e('span',{className:'battlefield-zone-label'},label),
+      zones[zoneName].map(entity=>renderToken(entity,zoneName)));
+  };
+
+  return e('div',{className:'battlefield-container'},
+    e('div',{className:'battlefield'},
+      renderZone('back','Ranged'),
+      renderZone('mid','Mid'),
+      renderZone('front','Melee')),
+    e('div',{className:'battlefield-legend'},
+      e('div',{className:'battlefield-legend-item'},
+        e('div',{className:'battlefield-legend-dot player'}),
+        e('span',null,'You')),
+      e('div',{className:'battlefield-legend-item'},
+        e('div',{className:'battlefield-legend-dot ally'}),
+        e('span',null,'Allies')),
+      e('div',{className:'battlefield-legend-item'},
+        e('div',{className:'battlefield-legend-dot enemy'}),
+        e('span',null,'Enemies'))));
+}
+
 // ── Combat Box ────────────────────────────────────────
 function parseCombatBox(text){
   const lines=text.split('\n');
@@ -3313,8 +3613,13 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
       concentrating:null,conditions:[],
       log:[],result:null,selectedTarget:null,
       playerHp:gs.hp,playerMaxHp:derived.maxHp,playerAc:derived.ac,
+      playerPosition:{zone:'front'}, // player zone position
+      playerMovedThisRound:0, // 0=not moved, 1=moved once, 2=moved twice (dash)
+      playerDisengaged:false, // used Disengage action (no OA when moving)
+      playerDashed:false, // used Dash action (can move 2 zones)
       deathSaves:{success:0,fail:0},unconscious:false,stabilized:false,
       companionActionsThisRound:{},
+      companionMovedThisRound:{}, // track which companions have moved
       vexTarget:null,helpTarget:null,dodging:false,
       localSpellSlots:gs.spellSlotsUsed||0,
       localSW:gs.secondWindUsed||0,
@@ -3340,6 +3645,161 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
   const[rollDisplay,setRollDisplay]=useState(null);
   const[lastRollResult,setLastRollResult]=useState(null);
   const[healMode,setHealMode]=useState(null); // 'cureWounds' or 'layOnHands'
+  const[selectedCompanion,setSelectedCompanion]=useState(null); // index of companion being commanded
+  const[selectedPlayer,setSelectedPlayer]=useState(false); // player token selected for movement
+  // P&P mode state
+  const[pnpTracker,setPnpTracker]=useState(null); // {combatants:[{name,init,hp,maxHp,type}], round:1, turn:0}
+  const[pnpRollResult,setPnpRollResult]=useState(null); // {attacker,target,d20,total,hit,damage}
+  const[pnpAttackTarget,setPnpAttackTarget]=useState(null); // selected target name for enemy attack
+
+  // Initialize P&P tracker
+  const initPnpTracker=()=>{
+    const combatants=[];
+    // Add player
+    combatants.push({name:gs.name||'Player',init:10+(derived.dexMod||0),hp:gs.hp,maxHp:derived.maxHp,type:'player',ac:derived.ac});
+    // Add companions
+    (gs.companions||[]).forEach(name=>{
+      const first=(name.match(/^(\w+)/)||[])[1];
+      const stats=COMPANION_COMBAT_STATS[first];
+      if(stats)combatants.push({name:first,init:10+Math.floor(((stats.dex||10)-10)/2),hp:stats.maxHp,maxHp:stats.maxHp,type:'ally',ac:stats.ac});
+    });
+    // Add enemies
+    parsed.enemies.forEach(en=>{
+      combatants.push({name:en.name,init:10+Math.floor(((en.dex||10)-10)/2),hp:en.maxHp,maxHp:en.maxHp,type:'enemy',ac:en.ac,attacks:en.attacks});
+    });
+    // Sort by initiative (highest first)
+    combatants.sort((a,b)=>b.init-a.init);
+    setPnpTracker({combatants,round:1,turn:0});
+  };
+
+  // Roll enemy attack in P&P mode
+  const rollEnemyAttack=(attacker,targetName)=>{
+    if(!attacker.attacks||!attacker.attacks.length)return;
+    const atk=attacker.attacks[0];
+    const d20=Math.floor(Math.random()*20)+1;
+    const total=d20+atk.bonus;
+    const target=pnpTracker.combatants.find(c=>c.name===targetName);
+    const hit=d20===20||(d20!==1&&total>=(target?.ac||10));
+    let damage=0;
+    if(hit){
+      const dmgMatch=atk.damage.match(/(\d+)d(\d+)(?:\s*\+\s*(\d+))?/);
+      if(dmgMatch){
+        const[,num,die,mod]=dmgMatch;
+        for(let i=0;i<parseInt(num);i++)damage+=Math.floor(Math.random()*parseInt(die))+1;
+        if(mod)damage+=parseInt(mod);
+        if(d20===20){for(let i=0;i<parseInt(num);i++)damage+=Math.floor(Math.random()*parseInt(die))+1}
+      }
+    }
+    SoundManager.play(hit?'hit':'miss');
+    setPnpRollResult({attacker:attacker.name,target:targetName,d20,bonus:atk.bonus,total,hit,damage,crit:d20===20});
+    if(hit&&target){
+      setPnpTracker(t=>({...t,combatants:t.combatants.map(c=>c.name===targetName?{...c,hp:Math.max(0,c.hp-damage)}:c)}));
+    }
+  };
+
+  // Adjust HP in P&P tracker
+  const adjustPnpHp=(name,delta)=>{
+    setPnpTracker(t=>({...t,combatants:t.combatants.map(c=>c.name===name?{...c,hp:Math.max(0,Math.min(c.maxHp,c.hp+delta))}:c)}));
+  };
+
+  // Update initiative
+  const updatePnpInit=(name,newInit)=>{
+    setPnpTracker(t=>{
+      const combatants=t.combatants.map(c=>c.name===name?{...c,init:newInit}:c);
+      combatants.sort((a,b)=>b.init-a.init);
+      return{...t,combatants};
+    });
+  };
+
+  // Next turn in P&P
+  const nextPnpTurn=()=>{
+    setPnpTracker(t=>{
+      const nextTurn=(t.turn+1)%t.combatants.length;
+      const nextRound=nextTurn===0?t.round+1:t.round;
+      return{...t,turn:nextTurn,round:nextRound};
+    });
+    setPnpRollResult(null);
+  };
+
+  // Move companion to a new zone
+  const moveCompanion=(compIdx,newZone)=>{
+    setCombat(c=>{
+      if(!c)return c;
+      const cp=c.companions[compIdx];
+      if(!cp||!cp.alive)return c;
+      const firstName=(cp.name.match(/^(\w+)/)||[])[1];
+      // Check if already moved this round (0/1 normally, 0/1/2 if dashed)
+      const moveCount=c.companionMovedThisRound?.[firstName]||0;
+      const maxMoves=c.companionDashed?.[firstName]?2:1;
+      if(moveCount>=maxMoves){
+        return c; // Already used all moves
+      }
+      const nc={...c,companions:[...c.companions],companionMovedThisRound:{...c.companionMovedThisRound,[firstName]:moveCount+1}};
+      const oldZone=cp.position?.zone||cp.zone||'front';
+      // Check for opportunity attack when leaving front zone without Disengage
+      const hasDisengaged=nc.companionDisengaged?.[firstName];
+      if(oldZone==='front'&&newZone!=='front'&&!hasDisengaged){
+        const closeEnemies=nc.enemies.filter(e=>e.alive&&(e.position?.zone||e.zone)==='close');
+        if(closeEnemies.length>0){
+          const attacker=closeEnemies[0];
+          const atk=attacker.attacks?.[0];
+          if(atk){
+            const d20=Math.floor(Math.random()*20)+1;
+            const total=d20+atk.bonus;
+            const compStats=COMPANION_COMBAT_STATS[firstName];
+            const compAc=compStats?.ac||12;
+            const hit=d20===20||(d20!==1&&total>=compAc);
+            if(hit){
+              const dmgMatch=atk.damage.match(/(\d+)d(\d+)(?:\s*\+\s*(\d+))?/);
+              let dmg=0;
+              if(dmgMatch){
+                const[,num,die,mod]=dmgMatch;
+                for(let i=0;i<parseInt(num);i++)dmg+=Math.floor(Math.random()*parseInt(die))+1;
+                if(mod)dmg+=parseInt(mod);
+                if(d20===20)for(let i=0;i<parseInt(num);i++)dmg+=Math.floor(Math.random()*parseInt(die))+1;
+              }
+              nc.companions[compIdx]={...nc.companions[compIdx],hp:Math.max(0,nc.companions[compIdx].hp-dmg)};
+              if(nc.companions[compIdx].hp<=0)nc.companions[compIdx].alive=false;
+              nc.log=[...nc.log,{type:'enemy',text:'\u26a1 OA: '+attacker.name+' strikes '+firstName+' as they retreat! d20='+d20+'+'+atk.bonus+'='+total+' vs AC '+compAc+' \u2714 '+dmg+' dmg'+(nc.companions[compIdx].hp<=0?' ('+firstName+' falls!)':''),round:nc.round}];
+              SoundManager.play('damage');
+            }else{
+              nc.log=[...nc.log,{type:'info',text:'\u26a1 OA: '+attacker.name+' swings at '+firstName+' but misses! d20='+d20+'+'+atk.bonus+'='+total+' vs AC '+compAc+' \u2718',round:nc.round}];
+              SoundManager.play('miss');
+            }
+          }
+        }
+      }
+      nc.companions[compIdx]={...nc.companions[compIdx],position:{zone:newZone},zone:newZone==='back'?'far':newZone==='mid'?'mid':'close'};
+      const moveDir=oldZone==='back'||(oldZone==='mid'&&newZone==='front')?'advances':'falls back';
+      const dashNote=nc.companionDashed?.[firstName]&&moveCount+1<2?' (Dash: 1 more move)':'';
+      nc.log=[...nc.log,{type:'companion',text:firstName+' '+moveDir+' to '+newZone+' range.'+dashNote,round:nc.round}];
+      return nc;
+    });
+  };
+
+  // Companion disengage — uses their action to move safely
+  const doCompanionDisengage=(compName)=>{
+    const firstName=(compName.match(/^(\w+)/)||[])[1];
+    setCombat(prev=>{
+      const c={...prev,companionDisengaged:{...prev.companionDisengaged||{},[firstName]:true}};
+      // Mark companion as having taken their action (select "Disengage" as action)
+      c.companionActionsThisRound={...c.companionActionsThisRound,[compName]:'Disengage'};
+      c.log=[...c.log,{type:'companion',text:firstName+' disengages — can move freely without provoking attacks.',round:c.round}];
+      return c;
+    });
+  };
+
+  // Companion dash — uses their action to move 2 zones
+  const doCompanionDash=(compName)=>{
+    const firstName=(compName.match(/^(\w+)/)||[])[1];
+    setCombat(prev=>{
+      const c={...prev,companionDashed:{...prev.companionDashed||{},[firstName]:true}};
+      // Mark companion as having taken their action
+      c.companionActionsThisRound={...c.companionActionsThisRound,[compName]:'Dash'};
+      c.log=[...c.log,{type:'companion',text:firstName+' dashes — can move up to 2 zones this turn.',round:c.round}];
+      return c;
+    });
+  };
 
   // Check if player can cast Shield (Wizard, or any caster with Shield prepared via Magic Initiate)
   const canCastShield=()=>{
@@ -3483,6 +3943,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
       c.playerHp=Math.max(0,c.playerHp-r.damage);
       c.log=[...c.log,{type:'enemy',text:r.enemy+' hits you with '+r.attack+' for '+r.damage+' damage! (d20='+r.d20+'+bonus='+r.total+' vs AC '+r.ac+')',round:c.round}];
       doScreenShake();SoundManager.play('damage');
+      if(onStateUpdate)onStateUpdate(g=>({...g,hp:c.playerHp}));
     }
     setCombat(c);
     setTimeout(()=>continueEnemyTurn(c,r.remainingEnemies),500);
@@ -3801,8 +4262,83 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
     });
   };
 
+  // Player disengage action — no OA when moving (uses action)
+  const doPlayerDisengage=()=>{
+    setCombat(prev=>{
+      const c={...prev};
+      c.playerDisengaged=true;
+      c.hasActed=true;c.turnPhase='bonus';
+      c.log=[...c.log,{type:'action',text:'R'+c.round+' Disengage: You can move freely without provoking opportunity attacks.',round:c.round}];
+      return c;
+    });
+  };
+
+  // Player dash action — can move 2 zones (uses action)
+  const doPlayerDash=()=>{
+    setCombat(prev=>{
+      const c={...prev};
+      c.playerDashed=true;
+      c.hasActed=true;c.turnPhase='bonus';
+      c.log=[...c.log,{type:'action',text:'R'+c.round+' Dash: You can move up to 2 zones this turn.',round:c.round}];
+      return c;
+    });
+  };
+
+  // Player movement (free action: 1 zone normally, 2 zones if dashed)
+  const movePlayer=(newZone)=>{
+    setCombat(prev=>{
+      let c={...prev};
+      const maxMoves=c.playerDashed?2:1;
+      if(c.playerMovedThisRound>=maxMoves||c.unconscious)return c;
+      const oldZone=c.playerPosition?.zone||'front';
+      if(oldZone===newZone)return c;
+
+      // Check for enemy OA if leaving front zone without Disengage
+      const isRetreating=oldZone==='front'&&newZone!=='front';
+      if(isRetreating&&!c.playerDisengaged){
+        const frontEnemies=c.enemies.filter(e=>e.alive&&(e.position?.zone||e.zone||'front')==='front');
+        if(frontEnemies.length>0){
+          const attacker=frontEnemies[0];
+          const atk=attacker.attacks?.[0];
+          if(atk){
+            const d20=Math.floor(Math.random()*20)+1;
+            const total=d20+(atk.bonus||3);
+            const hit=d20===20||(d20!==1&&total>=c.playerAc);
+            if(hit){
+              const dmgMatch=atk.damage.match(/(\d+)d(\d+)(?:\s*\+\s*(\d+))?/);
+              let dmg=0;
+              if(dmgMatch){
+                const[,num,die,mod]=dmgMatch;
+                for(let i=0;i<parseInt(num);i++)dmg+=Math.floor(Math.random()*parseInt(die))+1;
+                if(mod)dmg+=parseInt(mod);
+                if(d20===20)for(let i=0;i<parseInt(num);i++)dmg+=Math.floor(Math.random()*parseInt(die))+1;
+              }
+              c.playerHp=Math.max(0,c.playerHp-dmg);
+              c.log=[...c.log,{type:'enemy',text:'\u26a1 OA: '+attacker.name+' strikes you as you retreat! d20='+d20+'+'+atk.bonus+'='+total+' vs AC '+c.playerAc+' \u2714 '+dmg+' dmg',round:c.round}];
+              doScreenShake();SoundManager.play('damage');
+              if(onStateUpdate)onStateUpdate(g=>({...g,hp:c.playerHp}));
+              if(c.playerHp<=0){c.playerHp=0;c.unconscious=true;c.deathSaves={success:0,fail:0};c.log=[...c.log,{type:'warning',text:'You fall unconscious!',round:c.round}]}
+            }else{
+              c.log=[...c.log,{type:'info',text:'\u26a1 OA: '+attacker.name+' swings at you but misses! d20='+d20+'+'+atk.bonus+'='+total+' vs AC '+c.playerAc+' \u2718',round:c.round}];
+              SoundManager.play('miss');
+            }
+          }
+        }
+      }
+
+      c.playerPosition={zone:newZone};
+      c.playerMovedThisRound=(c.playerMovedThisRound||0)+1;
+      const moveDir=oldZone==='back'||(oldZone==='mid'&&newZone==='front')?'advance':'fall back';
+      c.log=[...c.log,{type:'action',text:'You '+moveDir+' to '+newZone+' range.'+(c.playerDashed&&c.playerMovedThisRound<2?' (Dash: 1 more move available)':''),round:c.round}];
+      return c;
+    });
+  };
+
   // Player help action — grants advantage on next attack against target
   const[helpMode,setHelpMode]=useState(false);
+  const[grappleMode,setGrappleMode]=useState(false);
+  const[shoveMode,setShoveMode]=useState(false);
+
   const doPlayerHelp=(targetId)=>{
     setCombat(prev=>{
       const c={...prev};
@@ -3813,6 +4349,62 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
       return c;
     });
     setHelpMode(false);
+  };
+
+  // Grapple action (Athletics vs Athletics/Acrobatics)
+  const doPlayerGrapple=(targetId)=>{
+    setCombat(prev=>{
+      const c={...prev};
+      const target=c.enemies.find(e=>e.id===targetId);
+      if(!target||!target.alive)return c;
+      // Player Athletics check vs enemy Athletics or Acrobatics (whichever is higher)
+      const playerRoll=rollDice(20)+derived.strMod+(derived.profBonus||2); // Assume proficient
+      const enemyDex=Math.floor(((target.dex||10)-10)/2);
+      const enemyStr=Math.floor(((target.str||10)-10)/2);
+      const enemyRoll=rollDice(20)+Math.max(enemyDex,enemyStr);
+      const success=playerRoll>=enemyRoll;
+      if(success){
+        const eIdx=c.enemies.findIndex(e=>e.id===targetId);
+        c.enemies=[...c.enemies];c.enemies[eIdx]={...c.enemies[eIdx],grappled:true,speed:0};
+        c.log=[...c.log,{type:'action',text:'R'+c.round+' Grapple '+target.name+': Athletics '+playerRoll+' vs '+enemyRoll+' \u2714 GRAPPLED! (speed 0, attacks have advantage)',round:c.round}];
+      }else{
+        c.log=[...c.log,{type:'action',text:'R'+c.round+' Grapple '+target.name+': Athletics '+playerRoll+' vs '+enemyRoll+' \u2718 They break free!',round:c.round}];
+      }
+      c.hasActed=true;c.turnPhase='bonus';
+      return c;
+    });
+    setGrappleMode(false);
+  };
+
+  // Shove action (Athletics vs Athletics/Acrobatics) - push 5ft or knock prone
+  const doPlayerShove=(targetId,shoveType)=>{
+    setCombat(prev=>{
+      const c={...prev};
+      const target=c.enemies.find(e=>e.id===targetId);
+      if(!target||!target.alive)return c;
+      const playerRoll=rollDice(20)+derived.strMod+(derived.profBonus||2);
+      const enemyDex=Math.floor(((target.dex||10)-10)/2);
+      const enemyStr=Math.floor(((target.str||10)-10)/2);
+      const enemyRoll=rollDice(20)+Math.max(enemyDex,enemyStr);
+      const success=playerRoll>=enemyRoll;
+      if(success){
+        const eIdx=c.enemies.findIndex(e=>e.id===targetId);
+        c.enemies=[...c.enemies];
+        if(shoveType==='prone'){
+          c.enemies[eIdx]={...c.enemies[eIdx],prone:true};
+          c.log=[...c.log,{type:'action',text:'R'+c.round+' Shove '+target.name+': Athletics '+playerRoll+' vs '+enemyRoll+' \u2714 PRONE! (melee has advantage, ranged has disadvantage)',round:c.round}];
+        }else{
+          // Push to mid zone
+          c.enemies[eIdx]={...c.enemies[eIdx],position:{zone:'mid'},zone:'mid'};
+          c.log=[...c.log,{type:'action',text:'R'+c.round+' Shove '+target.name+': Athletics '+playerRoll+' vs '+enemyRoll+' \u2714 PUSHED to mid range!',round:c.round}];
+        }
+      }else{
+        c.log=[...c.log,{type:'action',text:'R'+c.round+' Shove '+target.name+': Athletics '+playerRoll+' vs '+enemyRoll+' \u2718 They hold their ground!',round:c.round}];
+      }
+      c.hasActed=true;c.turnPhase='bonus';
+      return c;
+    });
+    setShoveMode(false);
   };
 
   // Divine Smite (bonus action, after hit)
@@ -4225,6 +4817,159 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
   const[enemyRollResult,setEnemyRollResult]=useState(null);
   const[enemyAttackIndex,setEnemyAttackIndex]=useState(0);
 
+  // ─── Enemy AI Tactics (D&D 5e 2024 MM) ───
+  const getEnemyTactics=(enemy,combat)=>{
+    const name=(enemy.name||'').toLowerCase();
+    const zone=enemy.position?.zone||enemy.zone||'front';
+    const hasRanged=enemy.attacks?.some(a=>a.type==='ranged');
+    const hasMelee=enemy.attacks?.some(a=>a.type!=='ranged');
+    const hpPct=enemy.hp/enemy.maxHp;
+    const livingAllies=combat.enemies.filter(e=>e.alive&&e!==enemy);
+    const allyInFront=livingAllies.some(a=>(a.position?.zone||'front')==='front');
+    const companionsInFront=(combat.companions||[]).some(c=>c.alive&&(c.position?.zone||'front')==='front');
+
+    // Default tactics
+    let tactics={move:null,advantage:false,extraDamage:0,notes:[],disengage:false,targetPriority:null};
+
+    // ─── Flanking Bonus (if ally and enemy both in front) ───
+    if(zone==='front'&&allyInFront&&companionsInFront){
+      tactics.advantage=true;tactics.notes.push('Flanking: advantage (ally opposite)');
+    }
+
+    // ─── Goblinoids ───
+    if(/goblin/i.test(name)&&!/hobgoblin|bugbear/i.test(name)){
+      tactics.disengage=true; // Nimble Escape
+      if(zone==='front'&&hasRanged&&hpPct<0.5){tactics.move='mid';tactics.notes.push('Nimble Escape: retreats')}
+      else if(zone!=='front'&&hasMelee&&!hasRanged){tactics.move='front';tactics.notes.push('Goblin rushes forward')}
+    }
+    else if(/hobgoblin/i.test(name)){
+      if(allyInFront&&zone==='front'){tactics.extraDamage=rollDice(6)+rollDice(6);tactics.notes.push('Martial Advantage: +'+tactics.extraDamage)}
+      if(zone!=='front'&&hasMelee){tactics.move='front';tactics.notes.push('Advances in formation')}
+    }
+    else if(/bugbear/i.test(name)){
+      // Surprise Attack: +2d6 on first hit if target hasn't acted
+      if(combat.round===1){tactics.extraDamage=rollDice(6)+rollDice(6);tactics.notes.push('Surprise Attack: +'+tactics.extraDamage)}
+      if(zone!=='front'){tactics.move='front';tactics.notes.push('Bugbear ambushes')}
+    }
+
+    // ─── Beasts ───
+    else if(/wolf|worg|hyena|jackal/i.test(name)){
+      if(allyInFront){tactics.advantage=true;tactics.notes.push('Pack Tactics: advantage')}
+      if(zone!=='front'){tactics.move='front';tactics.notes.push('Pack advances')}
+    }
+    else if(/spider|phase spider/i.test(name)){
+      // Web Sense: advantage against webbed targets, can move freely
+      tactics.disengage=true;
+      if(zone==='front'&&hpPct<0.4){tactics.move='mid';tactics.notes.push('Spider retreats to web')}
+    }
+    else if(/bear|boar|dire/i.test(name)){
+      if(zone!=='front'){tactics.move='front';tactics.notes.push('Beast charges')}
+      tactics.targetPriority='wounded'; // Target wounded enemies
+    }
+    else if(/snake|serpent|viper/i.test(name)){
+      // Poison: extra damage already in attack
+      tactics.disengage=true;
+      if(zone!=='front'&&hasMelee){tactics.move='front'}
+    }
+
+    // ─── Undead ───
+    else if(/skeleton/i.test(name)){
+      // Mindless: just advances and attacks
+      if(zone!=='front'&&hasMelee){tactics.move='front';tactics.notes.push('Skeleton shambles forward')}
+    }
+    else if(/zombie/i.test(name)){
+      // Undead Fortitude handled elsewhere; slow advance
+      if(zone!=='front'){tactics.move='front';tactics.notes.push('Zombie lurches forward')}
+    }
+    else if(/ghoul|ghast/i.test(name)){
+      // Paralyzing touch - focus wounded targets
+      tactics.targetPriority='wounded';
+      if(zone!=='front'){tactics.move='front';tactics.notes.push('Ghoul stalks forward')}
+    }
+    else if(/wight|wraith|specter/i.test(name)){
+      // Life Drain - targets lowest HP
+      tactics.targetPriority='lowest';
+      if(zone!=='front'&&hasMelee){tactics.move='front';tactics.notes.push('Undead glides forward')}
+    }
+    else if(/vampire/i.test(name)){
+      // Charm, bite, regeneration
+      tactics.targetPriority='healer';
+      if(hpPct<0.3){tactics.move='back';tactics.notes.push('Vampire retreats to regenerate')}
+    }
+
+    // ─── Dragons & Dragonkin ───
+    else if(/dragon|drake|wyvern/i.test(name)){
+      // Breath weapon, fly, frightful presence
+      if(hasRanged&&zone==='front'){tactics.move='mid';tactics.notes.push('Dragon takes flight')}
+      else if(!hasRanged&&zone!=='front'){tactics.move='front';tactics.notes.push('Dragon swoops down')}
+    }
+    else if(/baaz/i.test(name)){
+      if(zone!=='front'){tactics.move='front';tactics.notes.push('Baaz charges')}
+    }
+    else if(/kapak/i.test(name)){
+      if(zone!=='front'&&allyInFront){tactics.move='front';tactics.advantage=true;tactics.notes.push('Kapak flanks: advantage')}
+    }
+    else if(/bozak/i.test(name)){
+      if(zone==='front'&&hasRanged){tactics.move='mid';tactics.notes.push('Bozak casts from range')}
+    }
+    else if(/sivak/i.test(name)){
+      // Shapechange - targets isolated enemies
+      tactics.targetPriority='isolated';
+      if(zone!=='front'){tactics.move='front'}
+    }
+    else if(/aurak/i.test(name)){
+      // Spellcaster - stays back
+      if(zone==='front'){tactics.move='back';tactics.notes.push('Aurak casts from safety')}
+    }
+
+    // ─── Humanoids ───
+    else if(/archer|crossbow|ranger|scout/i.test(name)){
+      if(zone==='front'){tactics.move='back';tactics.notes.push('Archer falls back')}
+    }
+    else if(/ogre|troll|giant|brute|minotaur/i.test(name)){
+      if(zone!=='front'){tactics.move='front';tactics.notes.push('Brute charges')}
+      tactics.targetPriority='nearest';
+    }
+    else if(/berserker|barbarian/i.test(name)){
+      // Reckless Attack: advantage but attacks against have advantage too
+      tactics.advantage=true;
+      tactics.notes.push('Reckless Attack: advantage (takes disadvantage on defense)');
+      if(zone!=='front'){tactics.move='front'}
+    }
+    else if(/knight|paladin|champion/i.test(name)){
+      // Brave: advantage on saves vs frightened
+      if(zone!=='front'){tactics.move='front';tactics.notes.push('Knight advances honorably')}
+    }
+    else if(/mage|wizard|sorcerer|warlock/i.test(name)){
+      if(zone==='front'){tactics.move='back';tactics.notes.push('Caster retreats')}
+    }
+    else if(/priest|cleric|shaman/i.test(name)){
+      if(zone==='front'){tactics.move='mid';tactics.notes.push('Healer stays protected')}
+      tactics.targetPriority='healer'; // Focus enemy healers
+    }
+    else if(/commander|captain|leader|warlord|highlord/i.test(name)){
+      if(zone==='front'){tactics.move='mid';tactics.notes.push('Commander directs')}
+      // Buff allies - handled separately
+    }
+    else if(/assassin|rogue|thief/i.test(name)){
+      tactics.disengage=true;
+      if(allyInFront&&zone!=='front'){tactics.move='front';tactics.advantage=true;tactics.notes.push('Sneak Attack: advantage')}
+      else if(zone==='front'&&hpPct<0.5){tactics.move='mid';tactics.notes.push('Assassin slips away')}
+    }
+
+    // ─── Default behaviors ───
+    else if(hasMelee&&!hasRanged&&zone!=='front'){
+      tactics.move='front';tactics.notes.push('Advances to engage')
+    }
+
+    // Wounded retreat (unless berserker/undead/beast)
+    if(hpPct<0.25&&!/ogre|troll|berserker|zombie|skeleton|undead|beast|wolf|bear/i.test(name)&&zone==='front'&&hasRanged){
+      tactics.move='mid';tactics.notes.push('Wounded, falls back')
+    }
+
+    return tactics;
+  };
+
   // Resolve a single enemy's attack
   const resolveSingleEnemy=(enemyIdx)=>{
     setEnemyRollResult(null);
@@ -4266,6 +5011,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
                 nc.hasActed=false;nc.hasBonused=false;nc.hasSurged=false;
                 nc.weaponSwappedThisTurn=false;nc.smiteUsedThisTurn=false;
                 nc.dodging=false;nc.selectedTarget=null;nc.reactionUsed=false;
+                nc.companionMovedThisRound={};nc.companionActionsThisRound={};nc.companionDisengaged={};nc.companionDashed={};
                 nc.companions=nc.companions.map(cp=>cp.dodging?{...cp,dodging:false}:cp);
                 nc.acBuff=0;nc.enemyDebuff=0;nc.attackBuff=0;
                 if(nc.blessActive){nc.blessRoundsLeft-=1;if(nc.blessRoundsLeft<=0)dropConcentration(nc)}
@@ -4278,6 +5024,8 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
             c.hasActed=false;c.hasBonused=false;c.hasSurged=false;
             c.weaponSwappedThisTurn=false;c.smiteUsedThisTurn=false;
             c.dodging=false;c.selectedTarget=null;c.reactionUsed=false;
+            c.playerMovedThisRound=0;c.playerDisengaged=false;c.playerDashed=false;
+            c.companionMovedThisRound={};c.companionActionsThisRound={};c.companionDisengaged={};c.companionDashed={};
             c.companions=c.companions.map(cp=>cp.dodging?{...cp,dodging:false}:cp);
             c.acBuff=0;c.enemyDebuff=0;c.attackBuff=0;
             if(c.blessActive){c.blessRoundsLeft-=1;if(c.blessRoundsLeft<=0)dropConcentration(c)}
@@ -4337,22 +5085,92 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
           return c;
         }
 
-        const attack=enemy.attacks[0]||{name:'Attack',bonus:3,damage:'1d6+2',type:'melee',reach:5};
-        const isSapped=enemy.conditions.some(cd=>cd.name==='Sapped');
+        // ─── Enemy AI Movement & Tactics ───
+        const tactics=getEnemyTactics(enemy,c);
+        const enemyZone=enemy.position?.zone||enemy.zone||'front';
+        let tacticExtraDamage=tactics.extraDamage||0;
+        let tacticAdvantage=tactics.advantage||false;
+
+        // Execute movement if AI decides to move
+        if(tactics.move&&tactics.move!==enemyZone){
+          const oldZone=enemyZone;
+          const newZone=tactics.move;
+          const isRetreating=oldZone==='front'&&newZone!=='front';
+
+          // Player gets OA if melee enemy retreats from front (unless they disengage)
+          if(isRetreating&&!tactics.disengage&&!c.unconscious&&!c.reactionUsed){
+            // Prompt for player OA
+            const enemyName=enemy.name;
+            c.reactionPending={type:'oa',enemy:enemyName,callback:(nc)=>{
+              // Apply the movement after OA resolves
+              const eIdx=nc.enemies.findIndex(e=>e.name===enemyName);
+              if(eIdx>=0&&nc.enemies[eIdx].alive){
+                nc.enemies=[...nc.enemies];
+                nc.enemies[eIdx]={...nc.enemies[eIdx],position:{zone:newZone},zone:newZone==='back'?'far':newZone==='mid'?'mid':'close'};
+                nc.log=[...nc.log,{type:'enemy',text:enemyName+' repositions to '+newZone+' range.',round:nc.round}];
+              }
+              setCombat(nc);
+              // Continue with attack after movement
+              setTimeout(()=>resolveSingleEnemy(enemyIdx),300);
+            }};
+            if(tactics.notes.length)logEntries.push(tactics.notes.join('. '));
+            c.log=[...c.log,...logEntries.map(t=>({type:'enemy',text:'R'+c.round+' '+t,round:c.round}))];
+            setCombat(c);
+            return; // Wait for OA reaction
+          }
+
+          // No OA — apply movement directly
+          const eIdx=c.enemies.findIndex(e=>e===enemy);
+          if(eIdx>=0){
+            c.enemies=[...c.enemies];
+            c.enemies[eIdx]={...c.enemies[eIdx],position:{zone:newZone},zone:newZone==='back'?'far':newZone==='mid'?'mid':'close'};
+            logEntries.push(enemy.name+' repositions to '+newZone+' range.');
+          }
+        }
+        if(tactics.notes.length)logEntries.push(tactics.notes.join('. '));
+
+        // Re-fetch enemy in case it moved
+        const currentEnemy=c.enemies.find(e=>e===enemy)||enemy;
+        const currentEnemyZone=currentEnemy.position?.zone||currentEnemy.zone||'front';
+        const attack=currentEnemy.attacks[0]||{name:'Attack',bonus:3,damage:'1d6+2',type:'melee',reach:5};
+        const isSapped=currentEnemy.conditions?.some(cd=>cd.name==='Sapped')||false;
         let targetType='player';let targetAc=c.playerAc;let targetName='you';
         const livingComps=c.companions.filter(cp=>cp.alive&&!cp.unconscious);
+        // Filter companions by attack reach: melee requires both enemy and target in range
+        const canReach=(cp)=>{
+          const cpZone=cp.position?.zone||cp.zone||'front';
+          // Ranged attacks can hit any zone from any zone
+          if(attack.type==='ranged')return true;
+          // Melee: enemy must be in front to hit, and target must be in front (or mid for reach 10)
+          if(currentEnemyZone!=='front')return false; // Melee enemy not in front can't hit
+          if(attack.reach>=10)return cpZone==='front'||cpZone==='mid';
+          return cpZone==='front';
+        };
+        // Can enemy hit the player? (player assumed in front)
+        const canHitPlayer=attack.type==='ranged'||currentEnemyZone==='front';
+        const reachableComps=livingComps.filter(canReach);
 
         const guardComp=Object.entries(c.companionActionsThisRound).find(([k,v])=>v==='GUARD_ACTIVE');
-        if(guardComp){const gc=c.companions.find(cp=>cp.name===guardComp[0]&&cp.alive&&!cp.unconscious);if(gc){targetType='companion';targetAc=gc.ac;targetName=gc.name}}
-        else if(Object.values(c.companionActionsThisRound).some(a=>/frontline|draws aggro/i.test(a))){const fc=c.companions.find(cp=>cp.name.includes('Caeron')&&cp.alive&&!cp.unconscious);if(fc){targetType='companion';targetAc=fc.ac;targetName=fc.name}}
-        else if(livingComps.length>0&&!c.unconscious&&Math.random()>0.6){const rc=livingComps[Math.floor(Math.random()*livingComps.length)];targetType='companion';targetAc=rc.ac;targetName=rc.name}
-        if(c.unconscious&&targetType==='player'&&livingComps.length>0){const rc=livingComps[Math.floor(Math.random()*livingComps.length)];targetType='companion';targetAc=rc.ac;targetName=rc.name}
+        if(guardComp){const gc=c.companions.find(cp=>cp.name===guardComp[0]&&cp.alive&&!cp.unconscious&&canReach(cp));if(gc){targetType='companion';targetAc=gc.ac;targetName=gc.name}}
+        else if(Object.values(c.companionActionsThisRound).some(a=>/frontline|draws aggro/i.test(a))){const fc=c.companions.find(cp=>cp.name.includes('Caeron')&&cp.alive&&!cp.unconscious&&canReach(cp));if(fc){targetType='companion';targetAc=fc.ac;targetName=fc.name}}
+        else if(reachableComps.length>0&&(!canHitPlayer||c.unconscious||Math.random()>0.6)){const rc=reachableComps[Math.floor(Math.random()*reachableComps.length)];targetType='companion';targetAc=rc.ac;targetName=rc.name}
+        else if(!canHitPlayer&&reachableComps.length===0){
+          // Enemy can't reach anyone — skip attack
+          logEntries.push(currentEnemy.name+' cannot reach any targets from '+currentEnemyZone+' range.');
+          c.log=[...c.log,...logEntries.map(t=>({type:'enemy',text:'R'+c.round+' '+t,round:c.round}))];
+          setEnemyAttackIndex(enemyIdx);setEnemyRollResult({enemyName:currentEnemy.name,targetName:'none',d20:0,total:0,hit:false,dmg:0,skipped:true});
+          return c;
+        }
+        if(c.unconscious&&targetType==='player'&&reachableComps.length>0){const rc=reachableComps[Math.floor(Math.random()*reachableComps.length)];targetType='companion';targetAc=rc.ac;targetName=rc.name}
         if(targetType==='player'){targetAc+=(c.acBuff||0)}
 
         let d20=rollDice(20);
         const targetComp=targetType==='companion'?c.companions.find(cp=>cp.name===targetName):null;
         const hasDisadv=(targetType==='player'&&c.dodging)||(targetComp&&targetComp.dodging)||isSapped;
-        if(hasDisadv){const d20b=rollDice(20);d20=Math.min(d20,d20b)}
+        // Apply tactical advantage (Pack Tactics, Flanking, etc.)
+        if(tacticAdvantage&&!hasDisadv){const d20b=rollDice(20);d20=Math.max(d20,d20b)}
+        else if(hasDisadv&&!tacticAdvantage){const d20b=rollDice(20);d20=Math.min(d20,d20b)}
+        // If both advantage and disadvantage, they cancel (roll normally)
         const total=d20+attack.bonus-(c.enemyDebuff||0);
         let hit=d20===20||(total>=targetAc&&d20!==1);
         const isCrit=d20===20;
@@ -4373,9 +5191,11 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
 
         let dmg=0;
         if(hit){
-          dmg=rollExpr(attack.damage);
+          dmg=rollExpr(attack.damage)+tacticExtraDamage;
           if(targetType==='player'&&!c.unconscious){
             c.playerHp=Math.max(0,c.playerHp-dmg);doScreenShake();SoundManager.play('damage');
+            // Sync HP to gs so sidebar updates
+            if(onStateUpdate)onStateUpdate(g=>({...g,hp:c.playerHp}));
             // Critical hit may damage player's armor (magical gear immune unless powerful foe)
             const armorIsMagical=isMagicalItem(gs.armor,gs);
             const foeCanDamageMagic=canDamageMagicalGear(enemy);
@@ -4481,6 +5301,45 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
       ):null,
       // Companion sheet modal
       viewingSheet?e(CompanionSheet,{name:viewingSheet,onClose:()=>setViewingSheet(null)}):null,
+      // Initiative & HP Tracker
+      pnpTracker?e('div',{className:'pnp-tracker'},
+        e('div',{className:'combat-section-header'},'INITIATIVE TRACKER \u2014 Round '+pnpTracker.round),
+        e('div',{className:'pnp-init-list'},
+          pnpTracker.combatants.map((c,i)=>{
+            const isCurrent=i===pnpTracker.turn;
+            const isDead=c.hp<=0;
+            const hpPct=Math.round(c.hp/c.maxHp*100);
+            return e('div',{key:c.name,className:'pnp-combatant'+(isCurrent?' current':'')+(isDead?' dead':'')+(c.type==='enemy'?' enemy':c.type==='ally'?' ally':' player')},
+              e('div',{className:'pnp-turn-marker'},isCurrent?'\u25b6':''),
+              e('input',{type:'number',className:'pnp-init-input',value:c.init,onChange:ev=>updatePnpInit(c.name,parseInt(ev.target.value)||0),title:'Initiative'}),
+              e('span',{className:'pnp-name'},c.name),
+              e('span',{className:'pnp-ac'},'AC '+c.ac),
+              e('div',{className:'pnp-hp-bar'},
+                e('div',{className:'pnp-hp-fill'+(hpPct<=25?' critical':hpPct<=50?' hurt':''),style:{width:hpPct+'%'}})),
+              e('span',{className:'pnp-hp-text'},c.hp+'/'+c.maxHp),
+              e('button',{className:'pnp-hp-btn',onClick:()=>adjustPnpHp(c.name,-1)},'\u2212'),
+              e('button',{className:'pnp-hp-btn',onClick:()=>adjustPnpHp(c.name,1)},'+'),
+              c.type==='enemy'&&c.attacks?.length&&!isDead?e('div',{className:'pnp-roll-group'},
+                e('select',{className:'pnp-target-select',onChange:ev=>setPnpAttackTarget(ev.target.value),defaultValue:''},
+                  e('option',{value:'',disabled:true},'Target'),
+                  pnpTracker.combatants.filter(t=>t.type!=='enemy'&&t.hp>0).map(t=>e('option',{key:t.name,value:t.name},t.name))),
+                e('button',{className:'pnp-roll-btn',onClick:()=>{
+                  const targets=pnpTracker.combatants.filter(t=>t.type!=='enemy'&&t.hp>0);
+                  const target=pnpAttackTarget||targets[0]?.name;
+                  if(target)rollEnemyAttack(c,target);
+                },title:'Roll attack for '+c.name},'\ud83c\udfb2')
+              ):null
+            );
+          })),
+        e('button',{className:'pnp-next-turn',onClick:nextPnpTurn},'\u25b6 NEXT TURN'),
+        // Enemy roll result
+        pnpRollResult?e('div',{className:'pnp-roll-result'+(pnpRollResult.hit?' hit':' miss')},
+          e('strong',null,pnpRollResult.attacker),' attacks ',e('strong',null,pnpRollResult.target),': ',
+          'd20(',pnpRollResult.d20,')+',pnpRollResult.bonus,' = ',pnpRollResult.total,
+          pnpRollResult.crit?' CRITICAL!':pnpRollResult.hit?' HIT!':' MISS',
+          pnpRollResult.hit?' for '+pnpRollResult.damage+' damage':null
+        ):null
+      ):null,
       // Win/Lose outcome boxes
       e('div',{className:'combat-outcomes'},
         e('div',{className:'combat-section-header'},'OUTCOMES'),
@@ -4533,7 +5392,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
     return e('div',{className:'combat-wrapper'},
       e('div',{className:'combat-mode-toggle'},
         e('button',{className:'combat-mode-btn active'},'NARRATIVE'),
-        e('button',{className:'combat-mode-btn',onClick:()=>{if(!gs.combatResolved)setMode('penandpaper')},disabled:gs.combatResolved},'PEN & PAPER')),
+        e('button',{className:'combat-mode-btn',onClick:()=>{if(!gs.combatResolved){setMode('penandpaper');initPnpTracker()}},disabled:gs.combatResolved},'PEN & PAPER')),
       // Show stat blocks preview
       e('div',{className:'combat-enemy-stats'},
         parsed.enemies.filter((_,i)=>!parsed.enemies.slice(0,i).some(p=>p.name.replace(/ \d+$/,'')===_.name.replace(/ \d+$/,''))).map((en,i)=>{
@@ -4586,8 +5445,11 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
         // Only show fallen companions on defeat
         combat.result==='lose'?combat.companions.filter(cp=>!cp.alive&&!cp.rescued).map(cp=>e('p',{key:cp.name,style:{color:'#c0392b'}},cp.name+' has fallen.')):null,
         combat.companions.filter(cp=>cp.rescued).map(cp=>e('p',{key:cp.name,style:{color:'#27ae60'}},cp.name+' rejoins you after the fight.')),
-        combat.result==='lose'?e('div',{className:'defeat-recovery-note',style:{padding:'8px 12px',background:'rgba(180,60,60,.1)',borderRadius:6,marginTop:8,fontSize:13}},
-          e('p',{style:{color:'#e8a0a0',margin:0}},'You were defeated. A wound and scar have been added. Continue from this scene.')):null),
+        combat.result==='lose'?e('div',{className:'defeat-recovery-note',style:{padding:'12px 14px',background:'rgba(180,60,60,.1)',borderRadius:6,marginTop:8,fontSize:13}},
+          e('p',{style:{color:'#e8a0a0',margin:'0 0 10px'}},'You were defeated. A wound and scar have been added.'),
+          e('button',{className:'gold-btn',style:{width:'100%'},onClick:()=>{
+            if(onStateUpdate)onStateUpdate(g=>({...g,combatResolved:true}));
+          }},'Continue')):null),
       // After fight text
       combat.result==='win'&&afterLines.length?e('div',{className:'box combat'},
         afterLines.map((l,i)=>e('p',{key:i,dangerouslySetInnerHTML:{__html:fmt(l)}}))):null,
@@ -4759,6 +5621,8 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
       combat.phase==='enemyTurn'?' \u2014 Enemy Turn':''),
     // Situation prose — dynamic narrator if available, fallback to static
     (narratorText||curSituation)?e('div',{className:'combat-situation'},e('em',null,...(narratorText||curSituation).split('\n').flatMap((line,i)=>i>0?[e('br',{key:'br'+i}),line]:[line]))):null,
+    // Battlefield map
+    e(BattlefieldMap,{combat:combat,gs:gs,derived:derived,onMoveCompanion:moveCompanion,selectedCompanion:selectedCompanion,setSelectedCompanion:setSelectedCompanion,onMovePlayer:movePlayer,selectedPlayer:selectedPlayer,setSelectedPlayer:setSelectedPlayer}),
     // Status conditions row
     (combat.conditions.length>0||combat.concentrating||combat.blessActive||combat.shieldOfFaithActive||combat.dodging||combat.weaponStuck)?
       e('div',{className:'combat-conditions-row'},
@@ -4817,6 +5681,37 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
           gs.inventory.filter(item=>(WEAPONS_WITH_MASTERY.some(w=>w.name===item)||item==='Pig Skewer')&&item!==weapon.name).map(item=>e('option',{key:item,value:item},item))
         ):null),
 
+      // Movement panel (Disengage/Dash use action, then free movement)
+      (function(){
+        const zone=combat.playerPosition?.zone||'front';
+        const maxMoves=combat.playerDashed?2:1;
+        const movesUsed=combat.playerMovedThisRound||0;
+        const canMove=movesUsed<maxMoves;
+        const canUseAction=!combat.hasActed&&combat.turnPhase==='action';
+        const frontEnemies=combat.enemies?.filter(e=>e.alive&&(e.position?.zone||e.zone||'front')==='front').length||0;
+        const willProvokeOA=zone==='front'&&frontEnemies>0&&!combat.playerDisengaged;
+
+        return e('div',{className:'combat-movement-panel'+(canMove?'':' moved')},
+          // Disengage/Dash buttons (use action, before moving)
+          canUseAction&&!combat.playerDisengaged&&!combat.playerDashed?e('div',{className:'movement-actions'},
+            willProvokeOA?e('button',{className:'move-action-btn disengage',onClick:doPlayerDisengage,title:'Use action to move safely'},'\u21c4 Disengage (Action)'):null,
+            e('button',{className:'move-action-btn dash',onClick:doPlayerDash,title:'Use action to move 2 zones'},'\u26a1 Dash (Action)')
+          ):null,
+          // Status badges
+          combat.playerDisengaged?e('span',{className:'disengage-badge'},'\u2714 Disengaged'):null,
+          combat.playerDashed?e('span',{className:'dash-badge'},'\u26a1 Dashed ('+(maxMoves-movesUsed)+' moves left)'):null,
+          // Move buttons
+          e('span',{className:'movement-label'},'Position: '+zone+(canMove?' \u2014':'')),
+          canMove?e('div',{className:'move-buttons'},
+            zone!=='front'?e('button',{className:'move-btn advance',onClick:()=>movePlayer('front'),title:'Advance to front'},'\u25bc Front'):null,
+            zone==='front'?e('button',{className:'move-btn retreat'+(willProvokeOA?' danger':''),onClick:()=>movePlayer('mid'),title:willProvokeOA?'Retreat (provokes OA!)':'Retreat to mid'},'\u25b2 Mid'+(willProvokeOA?' \u26a1':'')):null,
+            zone==='mid'?e('button',{className:'move-btn advance',onClick:()=>movePlayer('front'),title:'Advance'},'\u25bc Front'):null,
+            zone==='mid'?e('button',{className:'move-btn retreat',onClick:()=>movePlayer('back'),title:'Retreat to back'},'\u25b2 Back'):null,
+            zone==='back'?e('button',{className:'move-btn advance',onClick:()=>movePlayer('mid'),title:'Advance'},'\u25bc Mid'):null
+          ):e('span',{className:'moved-badge'},'(moved '+(combat.playerDashed?'2x':'')+' this turn)')
+        );
+      })(),
+
       // Action phase
       combat.turnPhase==='action'?e('div',{className:'combat-action-phase'},
         e('div',{className:'combat-section-header'},'ACTION'+(combat.hasSurged?' (SURGE)':'')),
@@ -4833,6 +5728,8 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
             combat.unarmed?e('span',{style:{color:'var(--orange)',fontSize:'11px',marginRight:'8px'}},'\u270a Unarmed (1+STR)'):null,
             e('button',{className:'combat-action-btn',onClick:doPlayerDodge},'\u25c7 Dodge'),
             combat.companions.length>0&&!helpMode?e('button',{className:'combat-action-btn',onClick:()=>setHelpMode(true)},'\ud83e\udd1d Help'):null,
+            !grappleMode&&(combat.playerPosition?.zone||'front')==='front'?e('button',{className:'combat-action-btn',onClick:()=>setGrappleMode(true)},'\ud83e\udd1c Grapple'):null,
+            !shoveMode&&(combat.playerPosition?.zone||'front')==='front'?e('button',{className:'combat-action-btn',onClick:()=>setShoveMode(true)},'\ud83d\udc4a Shove'):null,
             gs.cls==='Paladin'&&combat.localSpellSlots<(derived.spellSlotsMax||0)&&!combat.blessActive?
               e('button',{className:'combat-action-btn',onClick:castBless},'\u2726 Cast Bless (conc.)'):null,
             gs.cls==='Paladin'&&combat.localSpellSlots<(derived.spellSlotsMax||0)&&!healMode?
@@ -4857,7 +5754,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
                 if(healMode==='cureWounds'){castCureWounds(first)}else{useLayOnHands(first)}
                 setHealMode(null);
               }},cp.name+(cp.unconscious?' (DOWN)':' ('+cp.hp+'/'+cp.maxHp+')'))),
-            e('button',{className:'ghost-btn',style:{fontSize:'11px',marginTop:'4px'},onClick:()=>setHealMode(null)},'Cancel')
+            e('button',{className:'ghost-btn',style:{fontSize:'12px',padding:'6px 12px',marginTop:'6px'},onClick:()=>setHealMode(null)},'Cancel')
           ):null,
           // Help target selection
           helpMode&&combat.turnPhase==='action'?e('div',{className:'combat-heal-targets',style:{marginTop:'10px'}},
@@ -4865,6 +5762,23 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
             combat.enemies.filter(en=>en.alive&&en.currentHp>0).map(en=>
               e('button',{key:'help_'+en.id,className:'combat-action-btn',onClick:()=>doPlayerHelp(en.id)},en.name)),
             e('button',{className:'ghost-btn',style:{fontSize:'11px',marginTop:'4px'},onClick:()=>setHelpMode(false)},'Cancel')
+          ):null,
+          // Grapple target selection
+          grappleMode&&combat.turnPhase==='action'?e('div',{className:'combat-heal-targets',style:{marginTop:'10px'}},
+            e('div',{className:'combat-section-header'},'GRAPPLE \u2014 Athletics vs Athletics/Acrobatics'),
+            combat.enemies.filter(en=>en.alive&&en.currentHp>0&&(en.position?.zone||en.zone||'front')==='front').map(en=>
+              e('button',{key:'grap_'+en.id,className:'combat-action-btn',onClick:()=>doPlayerGrapple(en.id)},en.name+(en.grappled?' (already grappled)':''))),
+            e('button',{className:'ghost-btn',style:{fontSize:'11px',marginTop:'4px'},onClick:()=>setGrappleMode(false)},'Cancel')
+          ):null,
+          // Shove target selection
+          shoveMode&&combat.turnPhase==='action'?e('div',{className:'combat-heal-targets',style:{marginTop:'10px'}},
+            e('div',{className:'combat-section-header'},'SHOVE \u2014 Athletics vs Athletics/Acrobatics'),
+            combat.enemies.filter(en=>en.alive&&en.currentHp>0&&(en.position?.zone||en.zone||'front')==='front').map(en=>
+              e('div',{key:'shove_'+en.id,style:{marginBottom:'6px'}},
+                e('span',{style:{marginRight:'8px',color:'var(--text)'}},en.name+':'),
+                e('button',{className:'combat-action-btn',style:{marginRight:'4px'},onClick:()=>doPlayerShove(en.id,'prone')},'\u2b07 Knock Prone'),
+                e('button',{className:'combat-action-btn',onClick:()=>doPlayerShove(en.id,'push')},'\u2794 Push Back'))),
+            e('button',{className:'ghost-btn',style:{fontSize:'11px',marginTop:'4px'},onClick:()=>setShoveMode(false)},'Cancel')
           ):null)
         ):e('div',null,
           // Selected target — roll attack
@@ -4917,7 +5831,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
               if(healMode==='cureWounds'){castCureWounds(first)}else{useLayOnHands(first)}
               setHealMode(null);
             }},cp.name+(cp.unconscious?' (DOWN)':' ('+cp.hp+'/'+cp.maxHp+')'))),
-          e('button',{className:'ghost-btn',style:{fontSize:'11px',marginTop:'4px'},onClick:()=>setHealMode(null)},'Cancel')
+          e('button',{className:'ghost-btn',style:{fontSize:'12px',padding:'6px 12px',marginTop:'6px'},onClick:()=>setHealMode(null)},'Cancel')
         ):null
       ):null,
 
@@ -4950,8 +5864,19 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
         const cpRom=gs.romances?.[cp.name];
         const cpIsRomance=cpRom&&!['Friend','Distant','Cold','Observer','Hostile'].includes(cpRom);
         const cpRomTip=cpIsRomance&&cpFirst&&ROMANCE_TOOLTIPS[cpFirst]?ROMANCE_TOOLTIPS[cpFirst][cpRom]:'';
+        const cpZone=cp.position?.zone||'front';
+        const hasEnemyInFront=combat.enemies.some(e=>e.alive&&(e.position?.zone||e.zone)==='close');
+        const willProvokeOA=cpZone==='front'&&hasEnemyInFront&&!combat.companionDisengaged?.[cpFirst];
+        const hasSelected=combat.companionActionsThisRound[cp.name];
+        const selectedDisengage=hasSelected==='Disengage';
+        const selectedDash=hasSelected==='Dash';
         return e('div',{key:cp.name,className:'combat-companion-block'+(cpIsRomance?' romance':''),title:cpRomTip||''},
-          e('div',{className:'combat-companion-name'},cp.name+(cpIsRomance?' ♡':'')+' ('+cp.hp+'/'+cp.maxHp+' HP)'),
+          e('div',{className:'combat-companion-name'},cp.name+(cpIsRomance?' ♡':'')+' ('+cp.hp+'/'+cp.maxHp+' HP)'+(selectedDisengage?' — Disengaging':(selectedDash?' — Dashing':''))),
+          // Movement actions row
+          e('div',{className:'combat-companion-move',style:{marginBottom:'4px',display:'flex',gap:'4px'}},
+            willProvokeOA?e('button',{key:'disengage',className:'combat-companion-btn'+(selectedDisengage?' selected':''),onClick:()=>doCompanionDisengage(cp.name),style:{fontSize:'11px'}},'\u21c4 Disengage'):null,
+            e('button',{key:'dash',className:'combat-companion-btn'+(selectedDash?' selected':''),onClick:()=>doCompanionDash(cp.name),style:{fontSize:'11px'}},'\u26a1 Dash')),
+          // Regular actions row
           e('div',{className:'combat-companion-select'},
             actions.map((action,j)=>e('button',{key:j,className:'combat-companion-btn'+(combat.companionActionsThisRound[cp.name]===action?' selected':''),onClick:()=>selectCompanionAction(cp.name,action)},action))));
       }),
@@ -7766,10 +8691,9 @@ function SettingsPanel({onClose,onSave,onLoad,textSize,setTextSize}){
         e('div',{className:'settings-row'},
           e('input',{type:'range',min:0,max:1,step:0.05,value:volume,onChange:handleVolume,disabled:!hasMusic}),
           e('span',{className:'vol-val'},Math.round(volume*100)+'%')),
-        e('label',{className:'settings-toggle',onClick:handleMusicToggle},
-          e('input',{type:'checkbox',checked:musicOn,readOnly:true,disabled:!hasMusic}),
-          e('div',{className:'toggle-track'},e('div',{className:'toggle-thumb'})),
-          e('span',null,'Music '+(musicOn?'On':'Off'))),
+        e('div',{className:'settings-row',style:{marginTop:8}},
+          e('div',null,e('div',{className:'settings-label',style:{marginBottom:0}},'Background Music')),
+          e('button',{className:'settings-toggle-btn'+(musicOn?' on':''),onClick:handleMusicToggle,disabled:!hasMusic})),
         !hasMusic?e('div',{className:'music-status'},'No music configured for this campaign'):null),
       e('div',{className:'settings-section'},
         e('label',{className:'settings-label'},'Text Size'),
@@ -8003,6 +8927,7 @@ function KnightingSkillPicker({order,onConfirm}){
 // ── Campaign Loader ──
 let CAMPAIGN=null;
 let CAMPAIGN_RULES=null;
+let THEME=null;
 let DM_SUMMARY=null;
 let EPILOGUES=null;
 let SPECIES_DATA=null;
@@ -8123,6 +9048,7 @@ async function loadCampaign(campaignId){
 
 function applyTheme(theme){
   if(!theme)return;
+  THEME=theme; // Store globally for audio controller
   const root=document.documentElement;
   if(theme.cssVars){for(const[k,v]of Object.entries(theme.cssVars))root.style.setProperty(k,v)}
   if(theme.fonts&&theme.fonts.googleFontsUrl){

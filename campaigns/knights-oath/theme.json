@@ -1,11 +1,11 @@
 {
   "music": {
-    "title": "",
-    "ambient": "",
-    "combat": "",
-    "tavern": "",
-    "victory": "",
-    "defeat": ""
+    "title": "https://archive.org/download/medieval-instrumental-background-music/The%20Britons.mp3",
+    "ambient": "https://archive.org/download/medieval-instrumental-background-music/Nordic%20Wist.mp3",
+    "combat": "https://archive.org/download/medieval-instrumental-background-music/Cold%20Journey.mp3",
+    "tavern": "https://archive.org/download/medieval-instrumental-background-music/Dancing%20at%20the%20Inn.mp3",
+    "victory": "https://archive.org/download/medieval-instrumental-background-music/Celebration.mp3",
+    "defeat": "https://archive.org/download/medieval-instrumental-background-music/Painting%20Room.mp3"
   },
   "cssVars": {
     "--bg": "#0e0e18",
@@ -32,7 +32,7 @@
   "loadingScreen": {
     "title": "DRAGONLANCE",
     "subtitle": "THE KNIGHT'S OATH",
-    "version": "v24.5.34",
+    "version": "v24.5.48",
     "stats": "320 Scenes \u2022 9 Companions"
   }
 }
