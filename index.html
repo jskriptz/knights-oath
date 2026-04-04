@@ -302,6 +302,7 @@ body.high-contrast .box{border-width:2px}body.high-contrast button{border-width:
 .sidebar-section{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:6px;padding:10px}
 .char-header{text-align:center;padding-bottom:12px;border-bottom:1px solid var(--border)}
 .char-name{font-family:'Cinzel',serif;color:var(--gold);font-size:18px;font-weight:600}
+.char-name.clickable{cursor:pointer;transition:color .2s}.char-name.clickable:hover{color:var(--gold-bright)}
 .char-title{color:var(--gold-dim);font-size:11px;font-style:italic;margin-top:-2px}
 .char-class{color:var(--text-dim);font-size:13px}
 
@@ -9979,7 +9980,7 @@ function App(){
     e('div',{className:'mobile-bar'},e('button',{className:'hamburger',onClick:()=>setSideOpen(!sideOpen)},sideOpen?'\u2715':'\u2630'),e('div',{style:{flex:1,textAlign:'center'}},e('div',{className:'bar-name'},gs.name),e('div',{className:'bar-stats'},e('span',null,'Lv'+gs.level),e('span',null,'HP '+gs.hp+'/'+d.maxHp),e('span',{style:{color:'#e8a0a0'}},'R:'+gs.rose),e('span',{style:{color:'#a0c0e8'}},'S:'+gs.sword),e('span',{style:{color:'#e8d8a0'}},'C:'+gs.crown),e('span',{style:{color:'#c9a84c'}},'\u2694'+(gs.gold||0)))),e('button',{className:'hamburger',onClick:()=>setShowSave(true)},'\u2716')),
     e('div',{className:'sidebar-backdrop'+(sideOpen?' show':''),onClick:()=>setSideOpen(false)}),
     e('div',{className:'sidebar'+(sideOpen?' open':'')},
-      e('div',{className:'char-header'},e('div',{className:'char-name'},gs.name||'Squire'),e('div',{className:'char-class'},'Level '+gs.level+' '+gs.cls)),
+      e('div',{className:'char-header'},e('div',{className:'char-name clickable',onClick:()=>{const n=prompt('Enter new name:',gs.name||'');if(n&&n.trim())handleStateUpdate(g=>({...g,name:n.trim()}))},title:'Click to rename'},gs.name||'Squire'),e('div',{className:'char-class'},'Level '+gs.level+' '+gs.cls)),
       e('div',{className:'sidebar-section'},e('div',{className:'hp-bar-container'},e('div',{className:'hp-bar',style:{width:Math.max(0,(gs.hp/d.maxHp)*100)+'%'}}),e('span',{className:'hp-text'},'HP '+gs.hp+' / '+d.maxHp)),e('div',{className:'xp-bar-container'},e('div',{className:'xp-bar',style:{width:Math.min(100,((gs.xp||0)/[300,900,2700][Math.min(gs.level-1,2)])*100)+'%'}}),e('span',{className:'xp-text'},'XP '+(gs.xp||0)+' / '+[300,900,2700][Math.min(gs.level-1,2)])),e('div',{className:'mini-stats-row'},e('span',null,'AC '+d.ac),e('span',null,'Atk +'+d.attackBonus),e('span',null,'Prof +'+d.profBonus))),
       e('div',{className:'stat-chips'},STAT_NAMES.map(k=>e('div',{key:k,className:'stat-chip'},e('span',{className:'chip-label'},k.toUpperCase()),e('span',{className:'chip-val'},gs.stats[k]),e('span',{className:'chip-mod'},modStr(gs.stats[k]))))),
       e('h3',null,'Order Points'),e('div',{className:'order-points'},e('div',{className:'order-badge rose'},e('span',{className:'num'},gs.rose),'Rose'),e('div',{className:'order-badge sword'},e('span',{className:'num'},gs.sword),'Sword'),e('div',{className:'order-badge crown'},e('span',{className:'num'},gs.crown),'Crown')),e('div',{className:'honour-row'},e('span',{className:'honour-label'},'Honour'),e('span',{className:'honour-val'},gs.honour||0)),
