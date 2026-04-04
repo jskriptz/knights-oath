@@ -376,6 +376,11 @@ body.high-contrast .box{border-width:2px}body.high-contrast button{border-width:
 .inv-list{font-size:12px;color:var(--text-dim)}
 .inv-item{padding:1px 0}
 .inv-item::before{content:'\2022 ';color:var(--gold-dim)}
+.inv-item.has-drop{display:flex;justify-content:space-between;align-items:center}
+.inv-item.has-drop::before{content:none}
+.inv-item.has-drop>span::before{content:'\2022 ';color:var(--gold-dim)}
+.drop-btn{background:none;border:none;color:var(--text-dim);font-size:10px;cursor:pointer;padding:0 4px;opacity:.5;transition:opacity .2s,color .2s}
+.drop-btn:hover{opacity:1;color:var(--red)}
 /* Equipment slots */
 .equip-slots{display:flex;flex-direction:column;gap:2px;margin-bottom:8px}
 .equip-slot{display:flex;align-items:center;gap:6px;font-size:12px;padding:2px 0;border-bottom:1px solid rgba(255,255,255,.04)}
@@ -1004,6 +1009,12 @@ body.high-contrast .box{border-width:2px}body.high-contrast button{border-width:
 .rest-roll-row{font-size:13px;color:var(--text-dim);padding:3px 0;border-bottom:1px solid var(--border)}
 .rest-rolling{text-align:center;font-size:28px;font-family:'Cinzel',serif;color:var(--gold);padding:8px 0}
 .roll-anim{animation:pulse .3s ease-in-out infinite alternate}
+.stash-list{display:flex;flex-direction:column;gap:4px;max-height:200px;overflow-y:auto}
+.stash-item{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--text);padding:4px 8px;background:rgba(255,255,255,.03);border-radius:4px}
+.stash-btn{background:none;border:1px solid var(--border);color:var(--text-dim);padding:2px 8px;border-radius:4px;cursor:pointer;font-size:11px}
+.stash-btn:hover:not(:disabled){background:var(--border);color:var(--text)}
+.stash-btn:disabled{opacity:.3;cursor:not-allowed}
+.stash-btn.take{color:var(--green)}.stash-btn.store{color:var(--blue)}
 .heal-options{display:flex;flex-direction:column;gap:10px}
 .heal-option{background:rgba(201,168,76,.06);border:1px solid var(--border);border-radius:8px;padding:10px 14px}
 .heal-option-header{font-family:'Cinzel',serif;font-size:14px;color:var(--gold-dim);margin-bottom:4px}
@@ -8800,13 +8811,15 @@ function HealingPanel({gs,onUpdate,onClose}){
 function CampModal({gs,sceneId,onDone,onCancel}){
   const e=React.createElement;
   const d=gs.derived;
-  const[mode,setMode]=useState(null); // null, 'short', 'long'
+  const[mode,setMode]=useState(null); // null, 'short', 'long', 'stash'
   const[hdUsed,setHdUsed]=useState(gs.hitDiceUsed||0);
   const[hp,setHp]=useState(gs.hp);
   const[rolls,setRolls]=useState([]);
   const[rolling,setRolling]=useState(false);
   const[display,setDisplay]=useState(null);
   const[longRestDone,setLongRestDone]=useState(false);
+  const[stash,setStash]=useState(gs.campStash||[]);
+  const[inv,setInv]=useState(gs.inventory||[]);
   const shortsToday=gs.shortRestsToday||0;
   const longTaken=gs.longRestTaken||false;
   const dayNum=gs.dayNumber||1;
@@ -8880,6 +8893,8 @@ function CampModal({gs,sceneId,onDone,onCancel}){
             'Short Rest',e('span',{style:{display:'block',fontSize:11,opacity:.7}},'Spend Hit Dice to heal. Resets Action Surge.')),
           e('button',{className:canLongRest?'gold-btn':'ghost-btn',onClick:()=>canLongRest&&setMode('long'),disabled:!canLongRest,style:{padding:'12px 16px'}},
             'Long Rest',e('span',{style:{display:'block',fontSize:11,opacity:.7}},canLongRest?'Full recovery. Advances to next day.':'Requires safe location or already taken today.')),
+          stash.length>0?e('button',{className:'gold-btn',onClick:()=>setMode('stash'),style:{padding:'12px 16px'}},
+            'Camp Stash',e('span',{style:{display:'block',fontSize:11,opacity:.7}},stash.length+' item'+(stash.length>1?'s':'')+' stored')):null,
           e('button',{className:'ghost-btn',onClick:onCancel,style:{marginTop:8}},'Break Camp'))));
   }
 
@@ -8916,6 +8931,51 @@ function CampModal({gs,sceneId,onDone,onCancel}){
         e('div',{className:'confirm-btns',style:{marginTop:12}},
           e('button',{className:'ghost-btn',onClick:()=>setMode(null)},'Back'),
           e('button',{className:'gold-btn',onClick:doLongRest},'Rest Until Dawn'))));
+  }
+
+  // Stash mode
+  if(mode==='stash'){
+    const weight=calcCarryWeight({...gs,inventory:inv});
+    const cap=getCarryCapacity(gs.stats?.str||10);
+    const canTake=weight<cap;
+    const takeItem=(item)=>{
+      if(!canTake)return;
+      const i=stash.indexOf(item);if(i<0)return;
+      const newStash=[...stash];newStash.splice(i,1);
+      setStash(newStash);
+      setInv([...inv,item]);
+    };
+    const storeItem=(item)=>{
+      const i=inv.indexOf(item);if(i<0)return;
+      const newInv=[...inv];newInv.splice(i,1);
+      setInv(newInv);
+      setStash([...stash,item]);
+    };
+    const saveStash=()=>{
+      onDone({inventory:inv,campStash:stash});
+    };
+    return e('div',{className:'modal-overlay'},
+      e('div',{className:'modal-box rest-modal',style:{maxWidth:520}},
+        e('h2',{className:'gold',style:{marginBottom:4}},'CAMP STASH'),
+        e('p',{style:{fontSize:13,color:'var(--text-dim)',marginBottom:8}},'Weight: '+weight+'/'+cap+' lbs'+(weight>=cap?' (encumbered)':'')),
+        e('div',{style:{display:'flex',gap:16,marginBottom:12}},
+          e('div',{style:{flex:1}},
+            e('div',{style:{fontSize:11,color:'var(--gold-dim)',marginBottom:4}},'STASHED ('+stash.length+')'),
+            stash.length?e('div',{className:'stash-list'},stash.map((it,i)=>
+              e('div',{key:it+i,className:'stash-item'},
+                e('span',null,it),
+                e('button',{className:'stash-btn take',onClick:()=>takeItem(it),disabled:!canTake,title:canTake?'Take':'Over capacity'},'\u2191')))):
+              e('div',{style:{fontSize:12,color:'var(--text-dim)',fontStyle:'italic'}},'Empty')),
+          e('div',{style:{flex:1}},
+            e('div',{style:{fontSize:11,color:'var(--gold-dim)',marginBottom:4}},'INVENTORY ('+inv.length+')'),
+            inv.length?e('div',{className:'stash-list'},inv.map((it,i)=>
+              e('div',{key:it+i,className:'stash-item'},
+                e('span',null,it),
+                e('button',{className:'stash-btn store',onClick:()=>storeItem(it),title:'Store'},'\u2193')))):
+              e('div',{style:{fontSize:12,color:'var(--text-dim)',fontStyle:'italic'}},'Empty'))),
+        e('div',{className:'confirm-btns',style:{marginTop:12}},
+          e('button',{className:'ghost-btn',onClick:()=>setMode(null)},'Back'),
+          e('button',{className:'gold-btn',onClick:saveStash},'Done'))));
   }
 
   return null;
@@ -10008,12 +10068,27 @@ function App(){
               opts.length&&!inCombat?'click to equip':'\u2014')
           )}))})()
       ):null,
-      // ── Inventory (non-equipped items) ──
+      // ── Inventory (non-equipped items) with drop button ──
       (()=>{const eqSet=gs.equipment?Object.values(gs.equipment).filter(Boolean):[];
         const remaining=[];const used={};
         (gs.inventory||[]).forEach(it=>{const uKey=it;if(eqSet.includes(it)&&!used[uKey]){used[uKey]=true}else{remaining.push(it)}});
+        const isAtCamp=(CAMPAIGN_RULES?.hubScenes||[]).includes(sceneId);
+        const handleDrop=(item,idx)=>{
+          const action=isAtCamp?'stash':'drop';
+          const msg=isAtCamp?'Stash "'+item+'" at camp?':'Drop "'+item+'"? It will be lost forever.';
+          if(!confirm(msg))return;
+          const newInv=[...gs.inventory];const i=newInv.indexOf(item);if(i>=0)newInv.splice(i,1);
+          if(isAtCamp){
+            const newStash=[...(gs.campStash||[]),item];
+            handleStateUpdate(g=>({...g,inventory:newInv,campStash:newStash}));
+          }else{
+            handleStateUpdate(g=>({...g,inventory:newInv}));
+          }
+        };
         return remaining.length?e(React.Fragment,null,e('h3',null,'Inventory'),
-          e('div',{className:'inv-list'},remaining.map((it,i)=>e('div',{key:it+i,className:'inv-item'},it)))):null})(),
+          e('div',{className:'inv-list'},remaining.map((it,i)=>e('div',{key:it+i,className:'inv-item has-drop'},
+            e('span',null,it),
+            e('button',{className:'drop-btn',onClick:()=>handleDrop(it,i),title:isAtCamp?'Stash at camp':'Drop (lost forever)'},isAtCamp?'\u21e9':'\u2716'))))):null})(),
       e('div',{className:'sidebar-actions'},e('button',{className:'map-btn',onClick:()=>{setShowMap(true);setSideOpen(false)}},'\u{1F5FA} Map'),e('button',{className:'camp-btn',onClick:()=>{setShowCamp(true);setSideOpen(false)}},'\u26fa Make Camp'),e('button',{className:'sheet-sidebar-btn',onClick:()=>{setShowSheet(true);setSideOpen(false)}},'Character Sheet'),
         ENDING_SCENES.includes(sceneId)&&DM_SUMMARY?e('button',{className:'sheet-sidebar-btn',style:{background:'var(--gold-dim)',color:'var(--bg)'},onClick:()=>{setShowDmSummary(true);setSideOpen(false)}},'DM Summary'):null,
         Object.values(gs.romances||{}).filter(v=>v&&v!=='Friend').length>0?e('button',{className:'romance-manage-btn',onClick:()=>{setRomanceManage(true);setSideOpen(false)}},'Manage Romances'):null,e('button',{className:'save-btn',onClick:()=>{setShowSave(true);setSideOpen(false)}},'\u2716 Save'),saveMsg?e('span',{className:'save-msg'},saveMsg):null,e('button',{className:'menu-btn',onClick:()=>{setShowSettingsPanel(true);setSideOpen(false)}},'\u2699 Settings'),e('button',{className:'menu-btn',onClick:handleMenu},'Menu'))),
