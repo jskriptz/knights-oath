@@ -336,6 +336,12 @@ body.high-contrast .box{border-width:2px}body.high-contrast button{border-width:
 .rep-neutral{background:rgba(150,150,150,.1);border:1px solid rgba(150,150,150,.2)}.rep-neutral .rep-val{color:var(--text-dim)}
 .rep-tarnished{background:rgba(180,140,100,.1);border:1px solid rgba(180,140,100,.2)}.rep-tarnished .rep-val{color:#e8b8a0}
 .rep-disgraced{background:rgba(180,100,100,.1);border:1px solid rgba(180,100,100,.2)}.rep-disgraced .rep-val{color:#e8a0a0}
+.weight-row{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px;padding:4px 8px;background:rgba(100,100,150,.1);border:1px solid rgba(100,100,150,.2);border-radius:4px;font-size:12px}
+.weight-label{font-family:'Cinzel',serif;letter-spacing:1px;color:var(--text-dim)}
+.weight-val{color:var(--text)}
+.weight-row.over{background:rgba(180,100,100,.15);border-color:rgba(180,100,100,.3)}
+.weight-row.over .weight-val{color:#e8a0a0}
+.weight-warn{color:#e8a0a0;font-size:11px;font-style:italic}
 
 .companion-list{display:flex;flex-wrap:wrap;gap:4px}
 .companion-tag{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:10px;font-size:11px;background:rgba(74,138,90,.15);color:#8ac8a0;border:1px solid rgba(74,138,90,.25);cursor:pointer;transition:all .15s}
@@ -2485,7 +2491,7 @@ const ST={
 };
 // ── Save System: Character (persistent) + Campaign Progress (per-campaign) ──
 const CHARACTER_FIELDS=['cls','stats','style','feat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','rations','torches','waterskinUses','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount','languages','exhaustion','toolProficiencies','knightingSkill','portrait','durability','titles','selectedTitle','completedCampaigns','loveInterest','partedCompanions','lastApproval','kills'];
-const CAMPAIGN_PROGRESS_FIELDS=['history','flags','awardedScenes','completedRolls','companions','romances','romanceDeclined','companionLog','deadCompanions','rose','sword','crown','orderMax','dgTrack','godSigns','hitDiceUsed','secondWindUsed','actionSurgeUsed','spellSlotsUsed','spellSlots2ndUsed','spellSlots3rdUsed','spellSlots4thUsed','spellSlots5thUsed','spellSlots6thUsed','spellSlots7thUsed','spellSlots8thUsed','spellSlots9thUsed','layOnHandsPool','miraHealedThisScene','combatCount','measureTrack','measureOrientation','approval','shortRestsToday','longRestTaken','dayNumber'];
+const CAMPAIGN_PROGRESS_FIELDS=['history','flags','awardedScenes','completedRolls','companions','romances','romanceDeclined','companionLog','deadCompanions','rose','sword','crown','orderMax','dgTrack','godSigns','hitDiceUsed','secondWindUsed','actionSurgeUsed','spellSlotsUsed','spellSlots2ndUsed','spellSlots3rdUsed','spellSlots4thUsed','spellSlots5thUsed','spellSlots6thUsed','spellSlots7thUsed','spellSlots8thUsed','spellSlots9thUsed','layOnHandsPool','miraHealedThisScene','combatCount','measureTrack','measureOrientation','approval','shortRestsToday','longRestTaken','dayNumber','campStash'];
 
 function splitSave(gs,sceneId){
   const character={};const progress={};
@@ -3674,7 +3680,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
       activeWeapon:getWeaponData(gs.weapon),
       concentrating:null,conditions:[],
       log:[],result:null,selectedTarget:null,
-      playerHp:gs.hp,playerMaxHp:derived.maxHp,playerAc:derived.ac,
+      playerHp:gs.hp,playerMaxHp:derived.maxHp,playerAc:derived.ac-(isOverencumbered(gs)?1:0),
       playerPosition:{zone:'front'}, // player zone position
       playerMovedThisRound:0, // 0=not moved, 1=moved once, 2=moved twice (dash)
       playerDisengaged:false, // used Disengage action (no OA when moving)
@@ -6091,6 +6097,61 @@ function getMagicItemInfo(itemName){
   return null;
 }
 
+// Weight system — D&D 5e encumbrance (STR × 15 lbs)
+function getItemWeight(itemName){
+  if(!EQUIPMENT_DATA)return 1;
+  const nm=itemName.toLowerCase();
+  // Check weapons
+  for(const cat of ['simple_melee','simple_ranged','martial_melee','martial_ranged']){
+    for(const w of (EQUIPMENT_DATA.weapons?.[cat]||[])){
+      if(nm.includes(w.name.toLowerCase()))return w.weight||0;
+    }
+  }
+  // Check armor
+  for(const cat of ['light','medium','heavy','shield']){
+    for(const a of (EQUIPMENT_DATA.armor?.[cat]||[])){
+      if(nm.includes(a.name.toLowerCase()))return a.weight||0;
+    }
+  }
+  // Check adventuring gear
+  for(const g of (EQUIPMENT_DATA.adventuringGear||[])){
+    if(nm.includes(g.name.toLowerCase()))return g.weight||0;
+  }
+  // Check junk items (minimal weight)
+  if(isJunkItem(itemName))return 0.5;
+  // Default weight for unknown items
+  return 1;
+}
+
+function calcCarryWeight(gs){
+  let total=0;
+  // Equipment slots
+  for(const slot of Object.values(gs.equipment||{})){
+    if(slot)total+=getItemWeight(slot);
+  }
+  // Inventory
+  for(const item of (gs.inventory||[])){
+    total+=getItemWeight(item);
+  }
+  // Resources have weight
+  total+=(gs.bandages||0)*0.1;
+  total+=(gs.potions||0)*0.5;
+  total+=(gs.greaterPotions||0)*0.5;
+  total+=(gs.rations||0)*2; // 2 lbs per day
+  total+=(gs.torches||0)*1;
+  return Math.round(total*10)/10;
+}
+
+function getCarryCapacity(strScore){
+  return (strScore||10)*15;
+}
+
+function isOverencumbered(gs){
+  const cap=getCarryCapacity(gs.stats?.str||10);
+  const weight=calcCarryWeight(gs);
+  return weight>cap;
+}
+
 function getSellPrice(itemName){
   for(const[k,v]of Object.entries(SELL_PRICES)){if(itemName.toLowerCase().includes(k.toLowerCase()))return v}
   // Check magic item data for rarity-based pricing
@@ -7127,6 +7188,15 @@ function Sidebar({gs,onSave,onMenu,onSettings,saveMsg}){
     ):null,
     gs.companions.length?e(React.Fragment,null,e('h3',null,'Companions'),e('div',{className:'companion-list'},gs.companions.map(c=>e(CompanionTag,{key:c,name:c,romance:gs.romances?.[c],onView:(n,r)=>{setSideOpen(false);setCompPopup({name:n,romance:r})}})))):null,
     gs.inventory.length?e(React.Fragment,null,e('h3',null,'Inventory'),e('div',{className:'inv-list'},gs.inventory.map(it=>e('div',{key:it,className:'inv-item'},it)))):null,
+    (()=>{
+      const weight=calcCarryWeight(gs);
+      const cap=getCarryCapacity(gs.stats?.str||10);
+      const over=weight>cap;
+      return e('div',{className:'weight-row'+(over?' over':'')},
+        e('span',{className:'weight-label'},'\u2696 Weight'),
+        e('span',{className:'weight-val'},weight+' / '+cap+' lbs'),
+        over?e('span',{className:'weight-warn'},' (-1 AC)'):null);
+    })(),
     e('div',{className:'sidebar-actions'},e('button',{className:'save-btn',onClick:onSave},'\u2716 Save'),saveMsg?e('span',{className:'save-msg'},saveMsg):null,e('button',{className:'menu-btn',onClick:onSettings},'\u2699 Settings'),e('button',{className:'menu-btn',onClick:onMenu},'Menu')));
 }
 

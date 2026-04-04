@@ -829,7 +829,8 @@
       "*Castle Brightholm — East Gate*",
       "'Six generations. Does that feel like a gift or a weight?'",
       "It is the kind of question that sounds simple and isn't. Thessaly asks it the way she asks everything — without judgment already loaded into it, genuinely waiting to see what you say. Her pen is not moving. Whatever you answer, she is listening, not transcribing.",
-      "She found you near the east wall, which is not a coincidence. Thessaly Brightwater does not accidentally find people. The evening is cold and the torches have been lit and the garrison has the quieter particular quality of a place preparing for something. She has her notebook closed, which means this is not on the record, and her pen behind her ear, which means she might change her mind."
+      "She found you near the east wall, which is not a coincidence. Thessaly Brightwater does not accidentally find people. The evening is cold and the torches have been lit and the garrison has the quieter particular quality of a place preparing for something. She has her notebook closed, which means this is not on the record, and her pen behind her ear, which means she might change her mind.",
+      "She writes something in the margin of her notebook — not the answer itself, but something adjacent to it. 'That is worth remembering,' she says, and closes the book."
     ],
     "boxes": [],
     "choices": [
@@ -1038,7 +1039,8 @@
     "location": "",
     "prose": [
       "*Castle Brightholm — East Gate*",
-      "Thessaly has a better map than the garrison does. Not better as in more detailed — better as in updated, with marks the garrison does not have, from sources the garrison has not consulted. She spreads it on the table in the field tent and shows you a red mark. 'Refugees,' she says. 'About thirty. Here, not here' — she taps the bandit location — 'here.' The second location is further south. 'The bandit report and the refugee report are from the same place. Draw your own conclusions.'"
+      "Thessaly has a better map than the garrison does. Not better as in more detailed — better as in updated, with marks the garrison does not have, from sources the garrison has not consulted. She spreads it on the table in the field tent and shows you a red mark. 'Refugees,' she says. 'About thirty. Here, not here' — she taps the bandit location — 'here.' The second location is further south. 'The bandit report and the refugee report are from the same place. Draw your own conclusions.'",
+      "Aldric leans over the map, finger tracing the route. 'If this is accurate—' He does not finish the sentence. He does not need to. Thessaly is already marking the margins with her own notes. The planning happens without ceremony, three minds working the same problem from different angles."
     ],
     "boxes": [
       {
@@ -1158,7 +1160,8 @@
     "location": "",
     "prose": [
       "*Castle Brightholm — Armoury*",
-      "He says it when he thinks you are not watching — which means he says it when he thinks the conversation is over and the thing he was holding back while it was not over can now be safely set down. 'I became a knight because being a lord meant staying behind walls when the bad things came.' A pause while he examines the hilt of his sword. 'I have not always been correct about what constitutes a bad thing. That is something I have had to learn at intervals. I prefer not to keep learning it.'"
+      "He says it when he thinks you are not watching — which means he says it when he thinks the conversation is over and the thing he was holding back while it was not over can now be safely set down. 'I became a knight because being a lord meant staying behind walls when the bad things came.' A pause while he examines the hilt of his sword. 'I have not always been correct about what constitutes a bad thing. That is something I have had to learn at intervals. I prefer not to keep learning it.'",
+      "He does not look up when you move toward the door. The armour piece turns slowly in his hands. Whatever answer he needed, he will find it himself — or not at all."
     ],
     "boxes": [
       {
@@ -1281,7 +1284,8 @@
       "The night watch is four hours of looking at darkness and learning what darkness sounds like when nothing is in it. The east wall faces the road and the road faces south and south is where, at some indeterminate distance, something is happening that has not reached you yet. The stars are Solinari, half-full, and whatever scattered light the lesser moons provide. The wall is cold stone and you lean against it and breathe and the air smells of pine and frost and the particular mineral quality of a late autumn night in northern Solamnia.",
       "You are alone for the first hour. Then you are not.",
       "**IF SERA IS IN YOUR PARTY:** Sera appears without announcement, as she does. She sits on the wall rather than leaning against it, legs dangling over the dark, and for ten minutes she says nothing. Then: 'Listen.' You listen. Wind. Pine. The creak of the gate timber. Nothing. 'Exactly,' she says. 'That is what worries me. No night birds. They stopped two days ago.' She looks at you with the flat professional gaze that means she is trusting you with something she has not told the senior officers yet. 'Something is on the south road. Something that frightened the wildlife before the patrols noticed.'",
-      "**IF SERA IS NOT IN YOUR PARTY:** You are alone for the four hours. This is not a hardship. There is a particular quality to standing watch that you have come to value — the suspension of the day's noise, the reduction to essentials: eyes, ears, the dark, the question of what is in it. You learn more about Castle Brightholm from its silence than from its bustle. The stone cools at a rate that tells you the season. The wind shifts at the second hour, carrying something from the south that is not quite smoke and not quite nothing."
+      "**IF SERA IS NOT IN YOUR PARTY:** You are alone for the four hours. This is not a hardship. There is a particular quality to standing watch that you have come to value — the suspension of the day's noise, the reduction to essentials: eyes, ears, the dark, the question of what is in it. You learn more about Castle Brightholm from its silence than from its bustle. The stone cools at a rate that tells you the season. The wind shifts at the second hour, carrying something from the south that is not quite smoke and not quite nothing.",
+      "The night holds its silence a moment longer. Whatever moves on the south road, it will still be there tomorrow. The question is whether you will be ready for it."
     ],
     "boxes": [
       {
