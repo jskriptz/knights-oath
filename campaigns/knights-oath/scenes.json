@@ -13,7 +13,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Perception (WIS, proficiency if trained) (+1) | WIS | DC 10\n**SUCCESS (roll 10+):** Something is off this morning — the south-facing guards are doubled and there are fresh horses in the yard that were not there yesterday. New orders arrived overnight. You know before anyone tells you.\n**FAILURE (roll 1-9):** The morning is ordinary. Nothing unusual is visible.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Perception (WIS, proficiency if trained) (+1) | WIS | DC 10\n**SUCCESS (roll 10+):** Something is off this morning — the south-facing guards are doubled and there are fresh horses in the yard that were not there yesterday. New orders arrived overnight. You know before anyone tells you. +1 Honour.\n**FAILURE (roll 1-9):** The morning is ordinary. Nothing unusual is visible.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
       }
     ],
     "choices": [
@@ -48,7 +48,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Insight (WIS, proficiency if trained) (+1) | WIS | DC 11\n**SUCCESS (roll 11+):** Reading between the lines: she knows something specific, not just general fear. Someone has been through your village recently. Someone official, heading south. This letter was written the day after they left.\n**FAILURE (roll 1-10):** The worry in the letter is real but unreadable. You fold it and carry it.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Insight (WIS, proficiency if trained) (+1) | WIS | DC 11\n**SUCCESS (roll 11+):** Reading between the lines: she knows something specific, not just general fear. Someone has been through your village recently. Someone official, heading south. This letter was written the day after they left. +1 Honour.\n**FAILURE (roll 1-10):** The worry in the letter is real but unreadable. You fold it and carry it.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
       }
     ],
     "choices": [
@@ -95,7 +95,7 @@
       },
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Perception (+1) | WIS | DC 12\n**SUCCESS (roll 12+):** You spot a gap in his left-side footwork. Carry into Scene 12: spar check at Advantage.\n**FAILURE (roll 1-11):** His form is tight this morning. Scene 12 is a fair fight.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Perception (+1) | WIS | DC 12\n**SUCCESS (roll 12+):** You spot a gap in his left-side footwork. +1 SWORD — martial awareness noted.\n**FAILURE (roll 1-11):** His form is tight this morning. Scene 12 is a fair fight.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
       },
       {
         "type": "info",
@@ -215,7 +215,7 @@
       },
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Insight (+1) | WIS | DC 13\n**SUCCESS (roll 13+):** This is a test of your reaction, not your sword. +1 to any Caeron Persuasion check this adventure.\n**FAILURE (roll 1-12):** He is completely unreadable.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Insight (+1) | WIS | DC 13\n**SUCCESS (roll 13+):** This is a test of your reaction, not your sword. +1 CROWN — you read the situation clearly.\n**FAILURE (roll 1-12):** He is completely unreadable.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
       }
     ],
     "choices": [
@@ -637,7 +637,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**ROLL REQUIRED:** Athletics (+3) | STR | DC 14\n**SUCCESS (roll 14+):** You find the gap on his third combination. He goes down on one knee, laughing.. His respect is genuine now.\n**FAILURE (roll 1-13):** He wins by a narrow margin.. 'Better than last month.'\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**ROLL REQUIRED:** Athletics (+3) | STR | DC 14\n**SUCCESS (roll 14+):** You find the gap on his third combination. He goes down on one knee, laughing. His respect is genuine now. +1 SWORD, +1 Honour.\n**FAILURE (roll 1-13):** He wins by a narrow margin. 'Better than last month.' +1 SWORD — effort noted.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
       }
     ],
     "choices": [
@@ -984,7 +984,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** History (+3) | INT | DC 11\n**SUCCESS (roll 11+):** The eastern treeline has a hidden ford — the route is faster than Aldric thinks.\n**FAILURE (roll 1-10):** You have no useful knowledge of this terrain.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** History (+3) | INT | DC 11\n**SUCCESS (roll 11+):** The eastern treeline has a hidden ford — the route is faster than Aldric thinks. +1 Honour — your knowledge serves the mission.\n**FAILURE (roll 1-10):** You have no useful knowledge of this terrain.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
       }
     ],
     "choices": [

@@ -292,7 +292,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**ROLL REQUIRED:** Medicine (+1) | WIS | DC 12\n**SUCCESS (roll 12+):** Clean technique. Serath will be mobile by morning. +1 to all Serath trust checks.\n**FAILURE (roll 1-11):** Adequate work. They will be slow for two days.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**ROLL REQUIRED:** Medicine (+1) | WIS | DC 12\n**SUCCESS (roll 12+):** Clean technique. Serath will be mobile by morning. +1 Serath approval, +1 ROSE.\n**FAILURE (roll 1-11):** Adequate work. They will be slow for two days.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
       },
       {
         "type": "romance",
@@ -764,7 +764,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Composure (WIS Save) (+1) | WIS | DC 11\n**SUCCESS (roll 11+):** Your face stays neutral. Caeron holds your gaze a half-second longer..\n**FAILURE (roll 1-10):** Something crosses your expression. No penalty, but it was seen."
+        "text": "**OPTIONAL ROLL:** Composure (WIS Save) (+1) | WIS | DC 11\n**SUCCESS (roll 11+):** Your face stays neutral. Caeron holds your gaze a half-second longer. +1 CROWN — discipline under pressure.\n**FAILURE (roll 1-10):** Something crosses your expression. No penalty, but it was seen."
       }
     ],
     "choices": [
@@ -1230,7 +1230,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Perception (+2) | WIS | DC 12\n**SUCCESS (roll 12+):** Boot prints south of the verge — someone left the road in a hurry recently. Relevant in Scene 70.\n**FAILURE (roll 1-11):** The road looks clear."
+        "text": "**OPTIONAL ROLL:** Perception (+2) | WIS | DC 12\n**SUCCESS (roll 12+):** Boot prints south of the verge — someone left the road in a hurry recently. You'll know what to look for later. +1 Honour.\n**FAILURE (roll 1-11):** The road looks clear."
       }
     ],
     "choices": [
@@ -1569,7 +1569,7 @@
       },
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Persuasion (CHA) (+0) | CHA | DC 14\n**SUCCESS (roll 14+):** You articulate a response that accounts for the Measure's tension between law and protection. +1 to all future Tariel interactions.\n**FAILURE (roll 1-13):** 'The standard answer,' she says, without contempt.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Persuasion (CHA) (+0) | CHA | DC 14\n**SUCCESS (roll 14+):** You articulate a response that accounts for the Measure's tension between law and protection. +1 CROWN, +1 Tariel approval.\n**FAILURE (roll 1-13):** 'The standard answer,' she says, without contempt.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
       }
     ],
     "choices": [
@@ -2365,7 +2365,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Insight (+1) | WIS | DC 13\n**SUCCESS (roll 13+):** The locket portrait is recent. The grief is not old. The diplomatic observer role is a response. She is not your enemy. She is something more complicated.\n**FAILURE (roll 1-12):** She is grieving. The arguments are a form of grief."
+        "text": "**OPTIONAL ROLL:** Insight (+1) | WIS | DC 13\n**SUCCESS (roll 13+):** The locket portrait is recent. The grief is not old. The diplomatic observer role is a response. She is not your enemy. She is something more complicated. +1 ROSE — compassion guides understanding.\n**FAILURE (roll 1-12):** She is grieving. The arguments are a form of grief."
       }
     ],
     "choices": [
@@ -4285,7 +4285,7 @@
       },
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Insight (+1) | WIS | DC 13\n\n**SUCCESS (13+):** Torvin is not just a merchant. He is counting soldiers — yours, and the ones he has seen on the road. He is keeping a tally. For whom, you cannot say, but the information flows north.\n\n**FAILURE (1-12):** He seems like a man making a living. Nothing more."
+        "text": "**OPTIONAL ROLL:** Insight (+1) | WIS | DC 13\n\n**SUCCESS (13+):** Torvin is not just a merchant. He is counting soldiers — yours, and the ones he has seen on the road. He is keeping a tally. For whom, you cannot say, but the information flows north. +1 Honour — vigilance rewarded.\n\n**FAILURE (1-12):** He seems like a man making a living. Nothing more."
       }
     ],
     "choices": [
@@ -5673,7 +5673,7 @@
       },
       {
         "type": "roll",
-        "text": "**PERSUASION (CHA) DC 13** — Mediate between the knight and the merchant.\n**Success:** You find language both can accept. A compromise emerges — imperfect, liveable.\n**Failure:** One side walks away angry. The resentment festers."
+        "text": "**PERSUASION (CHA) DC 13** — Mediate between the knight and the merchant.\n**Success:** You find language both can accept. A compromise emerges — imperfect, liveable. +1 CROWN, +1 Honour.\n**Failure:** One side walks away angry. The resentment festers. -1 Honour."
       }
     ],
     "choices": [
@@ -5728,7 +5728,7 @@
       },
       {
         "type": "roll",
-        "text": "**INSIGHT (WIS) DC 12** — Read Tomas.\n**Success:** He's telling the truth. His hands are raw from climbing, not from fighting. He ran toward danger, not away from it.\n**Failure:** You can't tell. He could be lying. Deserters always have stories."
+        "text": "**INSIGHT (WIS) DC 12** — Read Tomas.\n**Success:** He's telling the truth. His hands are raw from climbing, not from fighting. He ran toward danger, not away from it. +1 ROSE — truth seen through compassion.\n**Failure:** You can't tell. He could be lying. Deserters always have stories."
       }
     ],
     "choices": [
@@ -5781,7 +5781,7 @@
       },
       {
         "type": "roll",
-        "text": "**PERCEPTION (WIS) DC 12** — Assess the village.\n**Success:** You count twelve armed men, note their positions, see the villagers' body language — compliant but not willing. The smith's forge has been cold for a week. Someone took his tools.\n**Failure:** The village looks... fine. Quiet. But quiet isn't the same as peaceful."
+        "text": "**PERCEPTION (WIS) DC 12** — Assess the village.\n**Success:** You count twelve armed men, note their positions, see the villagers' body language — compliant but not willing. The smith's forge has been cold for a week. Someone took his tools. +1 CROWN — tactical awareness.\n**Failure:** The village looks... fine. Quiet. But quiet isn't the same as peaceful."
       }
     ],
     "choices": [
@@ -5986,7 +5986,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**Athletics (STR) DC 11** — Manual labour. Fence posts, wire, stone work.\n**SUCCESS:** The fence is solid — better than solid. Edric runs his hand along the top rail and nods with genuine surprise. This will hold.\n**FAILURE:** The fence holds, but it's rough work. You see Edric out there after dinner, quietly fixing the joints you set crooked. He doesn't mention it."
+        "text": "**Athletics (STR) DC 11** — Manual labour. Fence posts, wire, stone work.\n**SUCCESS:** The fence is solid — better than solid. Edric runs his hand along the top rail and nods with genuine surprise. This will hold. +1 ROSE, +1 Honour — humble service.\n**FAILURE:** The fence holds, but it's rough work. You see Edric out there after dinner, quietly fixing the joints you set crooked. He doesn't mention it."
       },
       {
         "type": "info",
