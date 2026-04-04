@@ -475,7 +475,7 @@
       {
         "letter": "D",
         "text": ": Return to where you were. Carry what you learned here.",
-        "target": "8",
+        "target": "1_HUB",
         "points": {}
       }
     ]
