@@ -351,6 +351,7 @@ body.high-contrast .box{border-width:2px}body.high-contrast button{border-width:
 .companion-tag .spell-tag-info{font-size:10px;opacity:.6}
 .companion-tag:hover .spell-tag-info{opacity:1}
 .companion-tag.romance{background:rgba(199,74,126,.2);color:#f0a0c8;border-color:rgba(199,74,126,.4)}
+.companion-mini-token{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#1a3a4a 0%,#0a2a3a 100%);border:1px solid #3498db;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#5dade2;flex-shrink:0}
 
 /* Companion tooltip */
 .companion-tooltip .comp-meta{grid-template-columns:1fr;gap:8px}
@@ -1154,6 +1155,17 @@ h2.red{color:var(--red)}
 .cs-portrait-placeholder:hover{border-color:var(--gold-dim)}
 .cs-portrait-btn{margin-top:8px;background:none;border:1px solid var(--border);color:var(--text-dim);padding:4px 12px;border-radius:4px;cursor:pointer;font-size:11px;transition:all .15s}
 .cs-portrait-btn:hover{border-color:var(--gold-dim);color:var(--text)}
+.cs-portrait-gallery{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:12px;padding:12px;background:rgba(0,0,0,.2);border-radius:8px;max-width:320px}
+.cs-portrait-option{width:48px;height:48px;border-radius:50%;border:2px solid var(--border);cursor:pointer;object-fit:cover;transition:all .15s;opacity:.7}
+.cs-portrait-option:hover{border-color:var(--gold);opacity:1;transform:scale(1.1)}
+.cs-portrait-option.selected{border-color:var(--gold);box-shadow:0 0 8px rgba(201,168,76,.5);opacity:1}
+.cs-portrait-option.empty{background:var(--panel);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--text-dim)}
+.cs-companion-tokens{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:8px}
+.cs-companion-token{width:48px;height:48px;border-radius:50%;border:2px solid #3498db;background:linear-gradient(135deg,#1a3a4a 0%,#0a2a3a 100%);display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;transition:all .15s}
+.cs-companion-token:hover{transform:scale(1.1);box-shadow:0 0 12px rgba(52,152,219,.4)}
+.cs-companion-token img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+.cs-companion-token .initial{font-family:'Cinzel',serif;font-size:16px;font-weight:600;color:#5dade2}
+.cs-companion-token .romance-heart{position:absolute;bottom:-2px;right:-2px;font-size:12px;color:#ff6b9d}
 .cs-journey-summary{background:linear-gradient(135deg,rgba(201,168,76,.08),rgba(201,168,76,.02));border:1px solid var(--gold-dim);border-radius:12px;padding:28px 24px;margin-bottom:28px}
 .cs-journey-title{font-family:'Cinzel',serif;color:var(--gold);font-size:20px;letter-spacing:3px;text-align:center;margin-bottom:20px}
 .cs-journey-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
@@ -1298,7 +1310,9 @@ h2.red{color:var(--red)}
 .cs-companion.has-romance{border-color:rgba(173,20,87,.3);background:rgba(173,20,87,.05)}
 .cs-companion-card{padding:12px 14px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:6px;margin-bottom:8px}
 .cs-companion-card.has-romance{border-color:rgba(173,20,87,.3);background:rgba(173,20,87,.04)}
-.cs-comp-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.cs-comp-header{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.cs-comp-header .cs-companion-token{width:40px;height:40px;flex-shrink:0}
+.cs-comp-header .cs-comp-name{flex:1}
 .cs-approval-bar{margin:8px 0}
 .cs-approval-label{display:flex;justify-content:space-between;font-size:11px;color:var(--text-dim);margin-bottom:3px}
 .cs-approval-track{height:6px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden}
@@ -2810,8 +2824,10 @@ function CompanionTag({name,romance,onView}){
   const e=React.createElement;
   const firstName=(name.match(/^(\w+)/)||[])[1];
   const isRomance=romance&&!['Friend','Distant','Cold','Observer','Hostile'].includes(romance);
-  return e('span',{className:'companion-tag'+(isRomance?' romance':''),onClick:()=>{if(onView)onView(name,romance)},style:{cursor:'pointer'}},
-    name,
+  const cd=findCompanion(name);
+  return e('span',{className:'companion-tag'+(isRomance?' romance':''),onClick:()=>{if(onView)onView(name,romance)},style:{cursor:'pointer',display:'flex',alignItems:'center',gap:6}},
+    e('span',{className:'companion-mini-token'},cd?.portrait?e('img',{src:cd.portrait,alt:'',style:{width:24,height:24,borderRadius:'50%',objectFit:'cover'}}):firstName?.[0]||'?'),
+    e('span',null,name),
     isRomance?e('span',{style:{color:'#ff6b9d',marginLeft:'2px'}},'♥'):null,
     e('span',{className:'spell-tag-info'},'ⓘ'));
 }
@@ -7921,7 +7937,7 @@ function DmSummary({gs,sceneId,onBack}){
 }
 
 function CharSheet({gs,isEnding,onBack,onEquipChange}){
-  const[csComp,setCSComp]=useState(null);const[csEditSlot,setCsEditSlot]=useState(null);const[csSheet,setCsSheet]=useState(null);const portraitRef=useRef(null);
+  const[csComp,setCSComp]=useState(null);const[csEditSlot,setCsEditSlot]=useState(null);const[csSheet,setCsSheet]=useState(null);const portraitRef=useRef(null);const[showGallery,setShowGallery]=useState(false);
   const handlePortraitUpload=(ev)=>{const file=ev.target.files?.[0];if(!file)return;if(!file.type.startsWith('image/')){alert('Please select an image file');return}const reader=new FileReader();reader.onload=(e)=>{const img=new Image();img.onload=()=>{const maxSize=400;let w=img.width,h=img.height;if(w>maxSize||h>maxSize){if(w>h){h=Math.round(h*(maxSize/w));w=maxSize}else{w=Math.round(w*(maxSize/h));h=maxSize}}const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;const ctx=canvas.getContext('2d');ctx.drawImage(img,0,0,w,h);const dataUrl=canvas.toDataURL('image/jpeg',0.75);onEquipChange({...gs,portrait:dataUrl})};img.src=e.target.result};reader.readAsDataURL(file)};
   const e=React.createElement;const d=gs.derived;
   const order=getOrder(gs.rose,gs.sword,gs.crown);const bg=getBackground();const sp=gs.spells||{};
@@ -7996,10 +8012,14 @@ function CharSheet({gs,isEnding,onBack,onEquipChange}){
       // Portrait section
       e('div',{className:'cs-portrait-section'},
         gs.portrait?e('img',{className:'cs-portrait',src:gs.portrait,alt:'Character portrait'}):
-          e('div',{className:'cs-portrait-placeholder',onClick:()=>portraitRef.current?.click()},'Click to add portrait'),
+          e('div',{className:'cs-portrait-placeholder',onClick:()=>setShowGallery(!showGallery)},'Click to choose portrait'),
         e('input',{type:'file',accept:'image/*',ref:portraitRef,style:{display:'none'},onChange:handlePortraitUpload}),
-        e('button',{className:'cs-portrait-btn',onClick:()=>portraitRef.current?.click()},gs.portrait?'Change Portrait':'Upload Portrait'),
-        gs.portrait?e('button',{className:'cs-portrait-btn',style:{marginLeft:4},onClick:()=>onEquipChange({...gs,portrait:null})},'Remove'):null)),
+        e('div',{style:{display:'flex',gap:4,marginTop:8}},
+          e('button',{className:'cs-portrait-btn',onClick:()=>setShowGallery(!showGallery)},showGallery?'Hide Gallery':'Choose Portrait'),
+          e('button',{className:'cs-portrait-btn',onClick:()=>portraitRef.current?.click()},'Upload'),
+          gs.portrait?e('button',{className:'cs-portrait-btn',onClick:()=>onEquipChange({...gs,portrait:null})},'Remove'):null),
+        showGallery&&THEME?.heroPortraits?.length?e('div',{className:'cs-portrait-gallery'},
+          THEME.heroPortraits.map(p=>p.url?e('img',{key:p.id,className:'cs-portrait-option'+(gs.portrait===p.url?' selected':''),src:p.url,alt:p.label,title:p.label,onClick:()=>{onEquipChange({...gs,portrait:p.url});setShowGallery(false)}}):e('div',{key:p.id,className:'cs-portrait-option empty',title:p.label+' (no image)'},'?'))):null)),
 
     // ── Journey Summary (ending only) ──
     isEnding?e('div',{className:'cs-journey-summary'},
@@ -8408,6 +8428,9 @@ function CharSheet({gs,isEnding,onBack,onEquipChange}){
           const approvalLabel=approval<=-3?'Hostile':approval<0?'Cold':approval<3?'Neutral':approval<6?'Warm':'Devoted';
           return e('div',{key:c,className:'cs-companion-card'+(rom?' has-romance':'')},
             e('div',{className:'cs-comp-header'},
+              e('div',{className:'cs-companion-token',title:c},
+                cd?.portrait?e('img',{src:cd.portrait,alt:c}):e('span',{className:'initial'},csFirst?.[0]||'?'),
+                rom&&rom!=='Friend'?e('span',{className:'romance-heart'},'\u2661'):null),
               e('span',{className:'cs-comp-name'},c),
               rom?e('span',{className:'cs-comp-romance'+(rom==='Friend'?' friend':'')},rom==='Friend'?'\u2605 Friend':'\u2661 '+rom):null),
             cd?e('div',{className:'cs-comp-details'},

@@ -32,7 +32,17 @@
   "loadingScreen": {
     "title": "DRAGONLANCE",
     "subtitle": "THE KNIGHT'S OATH",
-    "version": "v25.0.0",
+    "version": "v25.0.1",
     "stats": "320 Scenes \u2022 9 Companions"
-  }
+  },
+  "heroPortraits": [
+    {"id": "knight_m1", "label": "Knight (Male)", "url": ""},
+    {"id": "knight_f1", "label": "Knight (Female)", "url": ""},
+    {"id": "paladin_m1", "label": "Paladin (Male)", "url": ""},
+    {"id": "paladin_f1", "label": "Paladin (Female)", "url": ""},
+    {"id": "warrior_m1", "label": "Warrior (Male)", "url": ""},
+    {"id": "warrior_f1", "label": "Warrior (Female)", "url": ""},
+    {"id": "squire_m1", "label": "Squire (Male)", "url": ""},
+    {"id": "squire_f1", "label": "Squire (Female)", "url": ""}
+  ]
 }
