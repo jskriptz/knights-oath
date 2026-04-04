@@ -1165,7 +1165,11 @@ h2.red{color:var(--red)}
 .cs-jc-events{margin-top:6px;font-size:11px;color:var(--text-dim)}
 .cs-jc-event{padding:1px 0}
 .cs-journey-inv-grid{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.cs-journey-inv-item{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:4px;padding:4px 10px;font-size:13px;color:var(--text)}
+.cs-journey-inv-item{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:4px;padding:4px 10px;font-size:13px;color:var(--text);cursor:default}
+.cs-journey-inv-item.misc{border-color:var(--blue);color:var(--blue)}
+.cs-journey-inv-item.junk{border-color:var(--text-dim);color:var(--text-dim)}
+.cs-journey-inv-item .junk-price{color:var(--gold-dim);font-size:11px}
+.cs-journey-sublabel{font-family:'Cinzel',serif;color:var(--text-dim);font-size:9px;letter-spacing:1px;text-transform:uppercase;margin-top:12px;margin-bottom:4px}
 .cs-journey-bonus{font-size:13px;color:var(--gold);padding:2px 0}
 .cs-journey-magic-item{font-size:13px;padding:2px 0}
 .cs-jm-name{color:var(--purple);font-weight:600}
@@ -6039,6 +6043,38 @@ function parseShopBox(text){
 let SELL_PRICES={};
 // Items that cannot be sold — companion gifts, quest items, key gear
 let UNSELLABLE=/^$/;
+// Junk items — sellable only, price scales with Persuasion
+let JUNK_ITEMS={};
+// Misc items — useful in future campaigns, with tooltips
+let MISC_ITEMS={};
+
+// Item categorization helpers
+function isJunkItem(itemName){
+  const nm=itemName.toLowerCase();
+  for(const k of Object.keys(JUNK_ITEMS)){if(nm.includes(k.toLowerCase()))return true}
+  return false;
+}
+function isMiscItem(itemName){
+  const nm=itemName.toLowerCase();
+  for(const k of Object.keys(MISC_ITEMS)){if(nm.includes(k.toLowerCase()))return true}
+  return false;
+}
+function getItemTooltip(itemName){
+  const nm=itemName.toLowerCase();
+  for(const[k,v]of Object.entries(JUNK_ITEMS)){if(nm.includes(k.toLowerCase()))return v.tip}
+  for(const[k,v]of Object.entries(MISC_ITEMS)){if(nm.includes(k.toLowerCase()))return v}
+  return null;
+}
+function getJunkSellPrice(itemName,persuasionMod=0){
+  const nm=itemName.toLowerCase();
+  for(const[k,v]of Object.entries(JUNK_ITEMS)){
+    if(nm.includes(k.toLowerCase())){
+      const bonus=Math.max(0,Math.floor(persuasionMod/2));
+      return v.base+bonus;
+    }
+  }
+  return 1;
+}
 
 // Magic item lookup from EQUIPMENT_DATA
 function getMagicItemInfo(itemName){
@@ -7957,12 +7993,41 @@ function CharSheet({gs,isEnding,onBack,onEquipChange}){
         ):null;
       })(),
 
-      // Key items
-      e('div',{className:'cs-journey-items'},
-        e('div',{className:'cs-journey-label'},'INVENTORY'),
-        gs.inventory.length?e('div',{className:'cs-journey-inv-grid'},
-          gs.inventory.map(it=>e('div',{key:it,className:'cs-journey-inv-item'},it))
-        ):e('div',{className:'cs-journey-none'},'Empty')),
+      // Categorized inventory
+      (()=>{
+        const items=gs.inventory||[];
+        const junk=items.filter(it=>isJunkItem(it));
+        const misc=items.filter(it=>isMiscItem(it)&&!isJunkItem(it));
+        const other=items.filter(it=>!isJunkItem(it)&&!isMiscItem(it));
+        const persuasionMod=gs.derived?.skills?.persuasion||0;
+        return e('div',{className:'cs-journey-items'},
+          e('div',{className:'cs-journey-label'},'INVENTORY'),
+          !items.length?e('div',{className:'cs-journey-none'},'Empty'):null,
+          other.length?e('div',{className:'cs-journey-inv-grid'},
+            other.map(it=>e('div',{key:it,className:'cs-journey-inv-item'},it))
+          ):null,
+          misc.length?e(React.Fragment,null,
+            e('div',{className:'cs-journey-sublabel'},'MISC'),
+            e('div',{className:'cs-journey-inv-grid'},
+              misc.map(it=>{
+                const tip=getItemTooltip(it);
+                return e('div',{key:it,className:'cs-journey-inv-item misc',title:tip||''},it)
+              })
+            )
+          ):null,
+          junk.length?e(React.Fragment,null,
+            e('div',{className:'cs-journey-sublabel'},'JUNK (Sell Only)'),
+            e('div',{className:'cs-journey-inv-grid'},
+              junk.map(it=>{
+                const tip=getItemTooltip(it);
+                const price=getJunkSellPrice(it,persuasionMod);
+                return e('div',{key:it,className:'cs-journey-inv-item junk',title:tip||''},
+                  it,e('span',{className:'junk-price'},' ('+price+'g)'))
+              })
+            )
+          ):null
+        );
+      })(),
 
       // Active bonuses
       gs.bonuses&&gs.bonuses.length?e('div',{className:'cs-journey-bonuses'},
@@ -9063,7 +9128,7 @@ async function loadCampaign(campaignId){
     if(d.combatOutcomes)COMBAT_OUTCOMES=d.combatOutcomes;
     if(d.companions){const c=d.companions;if(c.all)COMPANIONS_ALL=c.all;if(c.data)COMPANION_DATA=c.data;if(c.combatStats)COMPANION_COMBAT_STATS=c.combatStats;if(c.fullStats){COMPANION_FULL_STATS=c.fullStats;window.COMPANION_FULL_STATS=c.fullStats}if(c.romanceCompat)ROMANCE_COMPAT=c.romanceCompat;if(c.romanceTooltips)ROMANCE_TOOLTIPS=c.romanceTooltips;if(c.breakupData)BREAKUP_DATA=c.breakupData}
     if(d.sceneEffects){if(d.sceneEffects.sceneEffects)SCENE_EFFECTS=d.sceneEffects.sceneEffects;if(d.sceneEffects.npcBreakups)NPC_BREAKUPS=d.sceneEffects.npcBreakups}
-    if(d.shopData){if(d.shopData.sellPrices)SELL_PRICES=d.shopData.sellPrices;if(d.shopData.unsellablePattern)UNSELLABLE=new RegExp(d.shopData.unsellablePattern,'i')}
+    if(d.shopData){if(d.shopData.sellPrices)SELL_PRICES=d.shopData.sellPrices;if(d.shopData.unsellablePattern)UNSELLABLE=new RegExp(d.shopData.unsellablePattern,'i');if(d.shopData.junkItems)JUNK_ITEMS=d.shopData.junkItems;if(d.shopData.miscItems)MISC_ITEMS=d.shopData.miscItems}
     if(d.rules){CAMPAIGN_RULES=d.rules;if(d.rules.endingScenes)ENDING_SCENES=d.rules.endingScenes;if(d.rules.relationshipCheckScenes)RELATIONSHIP_CHECK_SCENES=d.rules.relationshipCheckScenes;if(d.rules.gods)GODS=d.rules.gods;if(d.rules.godFlavour)GOD_FLAVOUR=d.rules.godFlavour;if(d.rules.presets)PRESETS=d.rules.presets}
     if(d.theme){applyTheme(d.theme);if(d.theme.loadingScreen)manifest.loadingScreen=d.theme.loadingScreen}
     if(d.dmSummary)DM_SUMMARY=d.dmSummary;
@@ -9115,6 +9180,8 @@ async function loadCampaign(campaignId){
     if(shop){
       if(shop.sellPrices){SELL_PRICES=shop.sellPrices}
       if(shop.unsellablePattern){UNSELLABLE=new RegExp(shop.unsellablePattern,'i')}
+      if(shop.junkItems){JUNK_ITEMS=shop.junkItems}
+      if(shop.miscItems){MISC_ITEMS=shop.miscItems}
     }
     if(rules){
       CAMPAIGN_RULES=rules;

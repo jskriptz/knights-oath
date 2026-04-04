@@ -3649,7 +3649,7 @@
       },
       {
         "letter": "C",
-        "text": "(If Mira is in your party) Mira is tending a small herb pouch by firelight",
+        "text": "Mira is tending a small herb pouch by firelight",
         "target": "11_FIRE_MIRA",
         "points": {
           "rose": 1
@@ -3657,7 +3657,7 @@
       },
       {
         "letter": "D",
-        "text": "(If Caeron is nearby) Lord Caeron is standing at the edge of the light, alone",
+        "text": "Lord Caeron is standing at the edge of the light, alone",
         "target": "11_FIRE_CAERON",
         "points": {
           "crown": 1

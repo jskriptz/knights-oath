@@ -1,4 +1,32 @@
 {
+  "junkItems": {
+    "Signal Horn": { "base": 1, "tip": "Decorative only. Sell it." },
+    "Broken Tusks": { "base": 1, "tip": "Trophy. Worth a few coins." },
+    "Chipped Tooth": { "base": 1, "tip": "Gruesome souvenir. Sell it." },
+    "Ruined Pelt": { "base": 1, "tip": "Damaged beyond use. Sell it." },
+    "Broken Axe": { "base": 2, "tip": "Scrap metal. Sell it." },
+    "Dented Helm": { "base": 2, "tip": "Beyond repair. Sell it." },
+    "Torn Banner": { "base": 1, "tip": "War trophy. Sell it." },
+    "Cracked Shield": { "base": 2, "tip": "Useless for defense. Sell it." },
+    "Rusted Chain": { "base": 1, "tip": "Scrap metal. Sell it." },
+    "Boar Tusks": { "base": 2, "tip": "Hunting trophy. Sell it." },
+    "Goblin Ears": { "base": 1, "tip": "Proof of kill. Sell it." },
+    "Dragon Scale": { "base": 3, "tip": "Rare trophy. Sell it." },
+    "Bent Sword": { "base": 1, "tip": "Scrap metal. Sell it." },
+    "Scorched Leather": { "base": 1, "tip": "Fire-damaged. Sell it." },
+    "Shattered Amulet": { "base": 1, "tip": "No magic left. Sell it." }
+  },
+  "miscItems": {
+    "Rope (50 ft)": "Useful for climbing, securing prisoners, or traversing hazards in later campaigns.",
+    "Tinderbox": "Start fires for warmth, light, or signaling. Essential for wilderness survival.",
+    "Mess Kit": "Set up proper camp. Required for cooking rations and long rests in the wild.",
+    "Backpack": "Carries your gear. Losing it means losing carrying capacity.",
+    "Bedroll": "Comfortable rest. Without it, long rests are less effective.",
+    "Waterskin": "Holds 3 uses of water. Refill at streams or wells.",
+    "Torch": "Light source. Burns for 1 hour. Essential in dark places.",
+    "Rations": "One day's food. Required for travel and long rests.",
+    "Dagger": "Backup weapon. Can be thrown. Useful for utility."
+  },
   "sellPrices": {
     "Longsword": 7,
     "Greatsword": 10,

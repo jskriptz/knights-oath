@@ -740,6 +740,16 @@
       "target": "54B",
       "textContains": "Mira",
       "requireCompanion": "Mira"
+    },
+    {
+      "scene": "11_FIRE",
+      "letter": "C",
+      "requireCompanion": "Mira"
+    },
+    {
+      "scene": "11_FIRE",
+      "letter": "D",
+      "requireCompanion": "Caeron"
     }
   ],
   "hubCompanionSwaps": [
