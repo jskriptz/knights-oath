@@ -2688,11 +2688,17 @@ const SoundManager={
   }
 };
 
-function SettingsPanel({onClose}){
+function SettingsPanel({onClose,onSave,onLoad}){
   const[settings,setSettings]=useState(loadSettings);
+  const[musicVol,setMusicVol]=useState(()=>AudioController.volume);
+  const[musicOn,setMusicOn]=useState(()=>AudioController.enabled);
+  const[hardcore,setHardcore]=useState(()=>localStorage.getItem('hardcoreMode')==='true');
+  const hasMusic=AudioController.hasAnyTracks();
   const e=React.createElement;
   const update=(key,val)=>{const ns={...settings,[key]:val};setSettings(ns);saveSettings(ns);if(key==='textScale')applyTextScale(val);if(key==='compactUI')applyCompactUI(val);if(key==='theme')applyThemeMode(val);if(key==='highContrast')applyHighContrast(val)};
-  const scaleLabel=v=>{if(v<=0.85)return'Small';if(v<=0.95)return'';if(v<=1.05)return'Default';if(v<=1.15)return'';if(v<=1.25)return'Large';if(v<=1.35)return'';return'X-Large'};
+  const toggleMusic=()=>{const next=!musicOn;setMusicOn(next);AudioController.setEnabled(next)};
+  const setVolume=(v)=>{setMusicVol(v);AudioController.setVolume(v)};
+  const toggleHardcore=()=>{const next=!hardcore;setHardcore(next);localStorage.setItem('hardcoreMode',next)};
   return e('div',{className:'modal-overlay',onClick:ev=>{if(ev.target===ev.currentTarget)onClose()}},
     e('div',{className:'modal-box settings-modal'},
       e('h2',{className:'gold'},'SETTINGS'),
@@ -2701,6 +2707,14 @@ function SettingsPanel({onClose}){
         e('div',{className:'settings-control'},
           e('input',{type:'range',className:'settings-range',min:0.8,max:1.6,step:0.05,value:settings.textScale,onChange:ev=>update('textScale',parseFloat(ev.target.value)),'aria-label':'Text size adjustment'}),
           e('span',{className:'settings-val'},Math.round(settings.textScale*100)+'%'))),
+      hasMusic?e('div',{className:'settings-row'},
+        e('div',null,e('div',{className:'settings-label'},'Music Volume'),e('div',{className:'settings-sublabel'},'Background music level')),
+        e('div',{className:'settings-control'},
+          e('input',{type:'range',className:'settings-range',min:0,max:1,step:0.05,value:musicVol,onChange:ev=>setVolume(parseFloat(ev.target.value))}),
+          e('span',{className:'settings-val'},Math.round(musicVol*100)+'%'))):null,
+      hasMusic?e('div',{className:'settings-row'},
+        e('div',null,e('div',{className:'settings-label'},'Background Music'),e('div',{className:'settings-sublabel'},'Enable/disable music')),
+        e('button',{className:'settings-toggle-btn'+(musicOn?' on':''),onClick:toggleMusic})):null,
       e('div',{className:'settings-row'},
         e('div',null,e('div',{className:'settings-label'},'Combat Speed'),e('div',{className:'settings-sublabel'},'Animation and roll speed')),
         e('div',{className:'settings-control'},
@@ -2708,6 +2722,9 @@ function SettingsPanel({onClose}){
       e('div',{className:'settings-row'},
         e('div',null,e('div',{className:'settings-label'},'Auto-Save'),e('div',{className:'settings-sublabel'},'Save automatically on scene transitions')),
         e('button',{className:'settings-toggle-btn'+(settings.autoSave?' on':''),onClick:()=>update('autoSave',!settings.autoSave)})),
+      e('div',{className:'settings-row'},
+        e('div',null,e('div',{className:'settings-label'},'Hardcore Survival'),e('div',{className:'settings-sublabel'},'Exhaustion from hunger/thirst')),
+        e('button',{className:'settings-toggle-btn'+(hardcore?' on':''),onClick:toggleHardcore})),
       e('div',{className:'settings-row'},
         e('div',null,e('div',{className:'settings-label'},'Screen Shake'),e('div',{className:'settings-sublabel'},'Visual effects during combat')),
         e('button',{className:'settings-toggle-btn'+(settings.screenShake?' on':''),onClick:()=>update('screenShake',!settings.screenShake)})),
@@ -2728,8 +2745,10 @@ function SettingsPanel({onClose}){
         e('div',null,e('div',{className:'settings-label'},'Combat Log'),e('div',{className:'settings-sublabel'},'Detail level for combat messages')),
         e('div',{className:'settings-control'},
           ['minimal','normal','verbose'].map(v=>e('button',{key:v,className:'settings-btn'+(settings.combatLogVerbosity===v?' selected':''),style:settings.combatLogVerbosity===v?{borderColor:'var(--gold)',color:'var(--gold)'}:{},onClick:()=>update('combatLogVerbosity',v)},v.charAt(0).toUpperCase()+v.slice(1))))),
-      e('div',{style:{marginTop:16,display:'flex',justifyContent:'center',gap:12}},
+      e('div',{style:{marginTop:16,display:'flex',justifyContent:'center',gap:12,flexWrap:'wrap'}},
         e('button',{className:'ghost-btn',onClick:()=>{update('textScale',1);update('combatSpeed','normal');update('autoSave',true);update('screenShake',true);update('compactUI',false);update('soundEffects',true);update('theme','dark');update('highContrast',false);update('combatLogVerbosity','normal')}},'Reset Defaults'),
+        onSave?e('button',{className:'settings-btn-save',onClick:onSave},'Save Game'):null,
+        onLoad?e('button',{className:'settings-btn-load',onClick:onLoad},'Load Game'):null,
         e('button',{className:'gold-btn',onClick:onClose},'Done'))))}
 
 function CompanionInfo({name,romance,onClose}){
@@ -3028,7 +3047,7 @@ function RollBox({text,derived,gs,onBonus,rollKey,onRollSave}){
 
 // ── Audio Controller ──────────────────────────────────
 const AudioController={
-  tracks:{},audio:null,currentTrack:null,volume:0.5,enabled:true,initialized:false,
+  tracks:{},audio:null,currentTrack:null,lastContext:null,volume:0.5,enabled:true,initialized:false,
   init(musicConfig){
     if(this.initialized||!musicConfig)return;
     this.tracks=musicConfig;
@@ -3038,6 +3057,16 @@ const AudioController={
     this.audio.loop=true;
     this.audio.volume=this.volume;
     this.initialized=true;
+    // Try to play on first user interaction if enabled
+    if(this.enabled){
+      const tryPlay=()=>{
+        if(this.lastContext)this.playForContext(this.lastContext);
+        document.removeEventListener('click',tryPlay);
+        document.removeEventListener('keydown',tryPlay);
+      };
+      document.addEventListener('click',tryPlay,{once:true});
+      document.addEventListener('keydown',tryPlay,{once:true});
+    }
   },
   play(trackName){
     if(!this.initialized||!this.enabled)return;
@@ -3057,6 +3086,10 @@ const AudioController={
     this.enabled=b;
     localStorage.setItem('musicEnabled',b);
     if(!b)this.stop();
+    else if(this.lastContext){
+      // Re-enable: restart from last context
+      this.playForContext(this.lastContext);
+    }
   },
   getTrackForContext(ctx){
     // ctx: 'title','combat','shop','victory','defeat', or 'ambient'
@@ -3068,7 +3101,7 @@ const AudioController={
     if(this.tracks.ambient)return 'ambient';
     return null;
   },
-  playForContext(ctx){const t=this.getTrackForContext(ctx);if(t)this.play(t)},
+  playForContext(ctx){this.lastContext=ctx;const t=this.getTrackForContext(ctx);if(t)this.play(t)},
   hasAnyTracks(){return Object.values(this.tracks).some(u=>u&&u.length>0)}
 };
 
@@ -8781,43 +8814,6 @@ function SpellPrepModal({gs,onConfirm,onKeep}){
         e('button',{className:'gold-btn',onClick:()=>onConfirm(selected),disabled:totalSelected!==maxPrep},'Confirm Spells'))));
 }
 
-function SettingsPanel({onClose,onSave,onLoad,textSize,setTextSize,hardcoreMode,setHardcoreMode}){
-  const e=React.createElement;
-  const[volume,setVolume]=useState(()=>AudioController.volume);
-  const[musicOn,setMusicOn]=useState(()=>AudioController.enabled);
-  const hasMusic=AudioController.hasAnyTracks();
-  const handleVolume=(ev)=>{const v=parseFloat(ev.target.value);setVolume(v);AudioController.setVolume(v)};
-  const handleMusicToggle=()=>{const next=!musicOn;setMusicOn(next);AudioController.setEnabled(next)};
-  return e('div',{className:'settings-overlay',onClick:(ev)=>{if(ev.target.className==='settings-overlay')onClose()}},
-    e('div',{className:'settings-panel'},
-      e('div',{className:'settings-title'},'Settings'),
-      e('div',{className:'settings-section'},
-        e('label',{className:'settings-label'},'Music Volume'),
-        e('div',{className:'settings-row'},
-          e('input',{type:'range',min:0,max:1,step:0.05,value:volume,onChange:handleVolume,disabled:!hasMusic}),
-          e('span',{className:'vol-val'},Math.round(volume*100)+'%')),
-        e('div',{className:'settings-row',style:{marginTop:8}},
-          e('div',null,e('div',{className:'settings-label',style:{marginBottom:0}},'Background Music')),
-          e('button',{className:'settings-toggle-btn'+(musicOn?' on':''),onClick:handleMusicToggle,disabled:!hasMusic})),
-        !hasMusic?e('div',{className:'music-status'},'No music configured for this campaign'):null),
-      e('div',{className:'settings-section'},
-        e('label',{className:'settings-label'},'Text Size'),
-        e('div',{className:'settings-text-size'},
-          e('button',{className:textSize==='small'?'active':'',onClick:()=>setTextSize('small')},'Small'),
-          e('button',{className:textSize==='normal'?'active':'',onClick:()=>setTextSize('normal')},'Normal'),
-          e('button',{className:textSize==='large'?'active':'',onClick:()=>setTextSize('large')},'Large'))),
-      e('div',{className:'settings-section'},
-        e('div',{className:'settings-row'},
-          e('div',null,
-            e('div',{className:'settings-label',style:{marginBottom:0}},'Hardcore Survival'),
-            e('div',{style:{fontSize:11,color:'var(--text-dim)'}},'Exhaustion from hunger/thirst instead of healing penalty')),
-          e('button',{className:'settings-toggle-btn'+(hardcoreMode?' on':''),onClick:()=>setHardcoreMode(!hardcoreMode)}))),
-      e('div',{className:'settings-actions'},
-        e('button',{className:'settings-btn-save',onClick:onSave},'Save Game'),
-        e('button',{className:'settings-btn-load',onClick:onLoad},'Load Game')),
-      e('button',{className:'settings-close',onClick:onClose},'Close')));
-}
-
 // Companion full character sheet modal
 function CompanionSheet({name,onClose}){
   const e=React.createElement;
@@ -9887,7 +9883,7 @@ function App(){
     defeatRecovery&&gs?e(DefeatRecoveryModal,{gs:gs,wound:defeatRecovery.wound,scar:defeatRecovery.scar,onContinue:()=>setDefeatRecovery(null)}):null,
     godSignPicker&&gs&&gs.cls==='Paladin'?e(GodSignPicker,{options:godSignPicker.options,onPick:(god)=>{const ns={...gs,godSigns:{...(gs.godSigns||{})}};ns.godSigns[god]=(ns.godSigns[god]||0)+1;setGs(ns);setGodSignPicker(null)}}):null,
     knightingPicker&&gs?e(KnightingSkillPicker,{order:knightingPicker.order,onConfirm:(skillChoice)=>{const ns=applyKnightingBonus(gs,knightingPicker.order,skillChoice);setGs(ns);setKnightingPicker(null)}}):null,
-    showSettingsPanel?e(SettingsPanel,{onClose:()=>setShowSettingsPanel(false),onSave:()=>{setShowSettingsPanel(false);setShowSave(true)},onLoad:()=>{setShowSettingsPanel(false);setShowSave(true)},textSize:textSize,setTextSize:setTextSize,hardcoreMode:hardcoreMode,setHardcoreMode:setHardcoreMode}):null,
+    showSettingsPanel?e(SettingsPanel,{onClose:()=>setShowSettingsPanel(false),onSave:()=>{setShowSettingsPanel(false);setShowSave(true)},onLoad:()=>{setShowSettingsPanel(false);setShowSave(true)}}):null,
     showMap&&gs?e(MapView,{gs:gs,sceneId:sceneId,onClose:()=>setShowMap(false)}):null);
 }
 // Attempt to load campaign from JSON files, then mount
