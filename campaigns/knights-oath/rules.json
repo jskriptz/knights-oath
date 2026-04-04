@@ -2108,5 +2108,12 @@
     "REST_1",
     "REST_2",
     "REST_3"
+  ],
+  "titleGrants": [
+    {"flag": "unproven_squire", "title": "Unproven Squire"},
+    {"flag": "knighted", "title": "Knight of the {order}"},
+    {"flag": "vogler_defended", "title": "Defender of Vogler"},
+    {"flag": "dragon_slayer", "title": "Dragonslayer"},
+    {"scene": "DISGRACE", "title": "Disgraced"}
   ]
 }

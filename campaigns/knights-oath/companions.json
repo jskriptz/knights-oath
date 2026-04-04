@@ -14,47 +14,65 @@
     "Aldric Voss": {
       "desc": "Tall, sandy-haired, jaw like a cliff. Battered helmet. A scar through his left eyebrow he claims came from a bar fight. It did not.",
       "personality": "Competitive, honourable, hides feelings behind banter. Deeply loyal.",
-      "romance": "Slow burn. Spark Scene 5 or 14. Flame Scene 48. Oath Scene 75."
+      "romance": "Slow burn. Spark Scene 5 or 14. Flame Scene 48. Oath Scene 75.",
+      "partedReason": "duty calls him back to the garrison at Maelgoth Keep",
+      "reunionText": "Aldric grins when he sees you, that familiar competitive spark in his eyes. 'Miss me? I knew you would.'"
     },
     "Thessaly Brightwater": {
       "desc": "Sharp eyes, copper hair, ink-stained fingers. Silver locket she never opens.",
       "personality": "Witty, curious, emotionally guarded. Tests everyone.",
-      "romance": "Intellectual sparring first. Spark Scene 5 or 14. Flame Scene 48. Oath Scene 75."
+      "romance": "Intellectual sparring first. Spark Scene 5 or 14. Flame Scene 48. Oath Scene 75.",
+      "partedReason": "she must follow a lead on the locket's mystery to Palanthas",
+      "reunionText": "Thessaly looks up from her notes, a rare smile crossing her face. 'You found me. I suppose you're not completely hopeless after all.'"
     },
     "Commander Serath": {
       "desc": "Military posture in civilian clothes. Quiet eyes that miss nothing.",
       "personality": "Careful, precise, carrying enormous guilt. Dry humour that surprises.",
-      "romance": "Trust earned through action. Spark Scene 18. Flame Scene 44. Oath Scene 75."
+      "romance": "Trust earned through action. Spark Scene 18. Flame Scene 44. Oath Scene 75.",
+      "partedReason": "the High Command requires his report on the Dragon Army movements",
+      "reunionText": "Serath stands straighter when he sees you, the weight on his shoulders visibly lightening. 'I was beginning to think I would have to win this war alone.'"
     },
     "Mira of the Oaks": {
       "desc": "Brown skin, warm dark eyes, flour on her sleeves in a war zone.",
       "personality": "Gentle but not soft. Will tell you when you are wrong, kindly but firmly.",
-      "romance": "Warmth and honesty. Spark Scene 21. Flame Scene 44. Oath Scene 75."
+      "romance": "Warmth and honesty. Spark Scene 21. Flame Scene 44. Oath Scene 75.",
+      "partedReason": "her people in the Oakheart Grove need her healing skills",
+      "reunionText": "Mira's face softens the moment she sees you. 'The Grove stands. But I heard what you faced — I should have been there.' She takes your hands. 'I am here now.'"
     },
     "Lord Caeron Ashvale": {
       "desc": "Patrician features, dark hair silver at the temples. Immaculate armour always.",
       "personality": "Arrogant surface, deeply insecure underneath.",
-      "romance": "Complicated slow burn. Spark Scene 5 or 14. Flame Scene 48. Oath Scene 75."
+      "romance": "Complicated slow burn. Spark Scene 5 or 14. Flame Scene 48. Oath Scene 75.",
+      "partedReason": "House Ashvale's holdings require his attention before the war reaches them",
+      "reunionText": "Caeron's composure cracks for just a moment when he sees you. 'I... did not expect to be so relieved.' He clears his throat. 'That is to say — it is good tactics to reunite our forces.'"
     },
     "Sera Nighthollow": {
       "desc": "Lean, dark-skinned, silver-streaked black hair cut blunt at the jaw. Scar across her collarbone. Moves like someone who learned early that being noticed is dangerous.",
       "personality": "Dry, precise, deeply competent. Laughs rarely but when she does it is sudden and unguarded.",
-      "romance": "Slow then fast. Spark Scene 3B. Flame Scene 34B. Oath Scene 68B."
+      "romance": "Slow then fast. Spark Scene 3B. Flame Scene 34B. Oath Scene 68B.",
+      "partedReason": "a debt from her past has come due in Sanction",
+      "reunionText": "Sera emerges from the shadows like she was never gone. 'The debt is paid.' She studies your face. 'You look like you have stories. I want to hear them.'"
     },
     "Vael Ashmore": {
       "desc": "Brown skin, sharp jaw, close-cropped dark hair. Always in training gear. Callused hands. Solamnic signet ring on a cord around her neck.",
       "personality": "Competitive, concealing deep respect. Holds herself to an impossible standard. Self-deprecating humour.",
-      "romance": "Built on mutual recognition. Spark Scene 5B. Flame Scene 32B. Oath Scene 68C."
+      "romance": "Built on mutual recognition. Spark Scene 5B. Flame Scene 32B. Oath Scene 68C.",
+      "partedReason": "her family's honour demands she answer a challenge at Castle Brightblade",
+      "reunionText": "Vael punches your shoulder before you can even speak. 'I won, obviously. Now — what trouble have you gotten into without me?'"
     },
     "Tariel Duskmantle": {
       "desc": "Dark hair in eastern military braid, olive skin, green eyes that catalogue. Dresses well but not ostentatiously. Good boots, single silver ring.",
       "personality": "Intellectually precise, genuinely curious, disarming. Asks questions that reveal contradictions.",
-      "romance": "Intellectual first, then personal. Spark Scene 31B. Flame Scene 53D. Oath Scene 66B."
+      "romance": "Intellectual first, then personal. Spark Scene 31B. Flame Scene 53D. Oath Scene 66B.",
+      "partedReason": "intelligence networks in Neraka require her personal attention",
+      "reunionText": "Tariel appears beside you as if she had always been there. 'I have learned things. Terrible things.' A pause. 'I am glad to see a friendly face.'"
     },
     "Lysander Graves": {
       "desc": "Broad-shouldered, weathered, sun-darkened skin. A face that has been hit more than once and a bearing that suggests he did not start those fights. Carries a battered longsword with no ornament.",
       "personality": "Physical and philosophical. Speaks about honour from experience of losing it. Direct.",
-      "romance": "Physical and philosophical. Spark Scene 27B. Flame Scene 36B or 53E. Oath Scene 66B."
+      "romance": "Physical and philosophical. Spark Scene 27B. Flame Scene 36B or 53E. Oath Scene 66B.",
+      "partedReason": "ghosts from his disgraced past have surfaced in Solanthus",
+      "reunionText": "Lysander's weathered face creases into something almost like relief. 'The ghosts are laid to rest. I am... myself again.' He clasps your arm. 'Where do we fight next?'"
     }
   },
   "combatStats": {
@@ -490,6 +508,356 @@
         "returns": "Never",
         "text": "\"I let you in.\" Three words. He takes his sword and walks south into the dark. Alone. Again."
       }
+    }
+  },
+  "fullStats": {
+    "Aldric Voss": {
+      "class": "Fighter 2",
+      "subclass": "Champion",
+      "background": "Soldier (Squire)",
+      "species": "Human (Solamnic)",
+      "profBonus": 2,
+      "speed": 30,
+      "hitDice": "2d10",
+      "abilities": {
+        "str": 16, "dex": 12, "con": 14, "int": 10, "wis": 13, "cha": 11
+      },
+      "savingThrows": {
+        "str": 5, "dex": 1, "con": 4, "int": 0, "wis": 1, "cha": 0
+      },
+      "skills": {
+        "athletics": 5, "intimidation": 2, "perception": 3, "survival": 3
+      },
+      "armor": "Chain Mail, Shield",
+      "ac": 18,
+      "hp": 20,
+      "weapons": [
+        { "name": "Longsword", "bonus": 5, "damage": "1d8+3 slashing", "properties": "Versatile (1d10)" },
+        { "name": "Handaxe", "bonus": 5, "damage": "1d6+3 slashing", "properties": "Light, Thrown (20/60)" }
+      ],
+      "features": [
+        "Fighting Style: Defense (+1 AC when wearing armor)",
+        "Second Wind (bonus action, regain 1d10+2 HP, 1/short rest)",
+        "Improved Critical (crit on 19-20)"
+      ],
+      "equipment": ["Longsword", "Shield", "Chain Mail", "Handaxe ×2", "Explorer's Pack", "Solamnic Tabard"],
+      "personality": "Competitive but honourable. Hides feelings behind banter.",
+      "notes": "Trained alongside the PC. Deeply loyal once trust is earned."
+    },
+    "Sera Nighthollow": {
+      "class": "Ranger 2",
+      "subclass": "Hunter",
+      "background": "Scout",
+      "species": "Human",
+      "profBonus": 2,
+      "speed": 30,
+      "hitDice": "2d10",
+      "abilities": {
+        "str": 10, "dex": 16, "con": 12, "int": 12, "wis": 14, "cha": 10
+      },
+      "savingThrows": {
+        "str": 2, "dex": 5, "con": 1, "int": 1, "wis": 2, "cha": 0
+      },
+      "skills": {
+        "athletics": 2, "nature": 3, "perception": 4, "stealth": 5, "survival": 4
+      },
+      "armor": "Studded Leather",
+      "ac": 15,
+      "hp": 18,
+      "weapons": [
+        { "name": "Shortbow", "bonus": 5, "damage": "1d6+3 piercing", "properties": "Ammunition (80/320), Two-Handed" },
+        { "name": "Shortsword", "bonus": 5, "damage": "1d6+3 piercing", "properties": "Finesse, Light" }
+      ],
+      "spellcasting": {
+        "ability": "WIS",
+        "spellSaveDC": 12,
+        "spellAttack": 4,
+        "slots": { "1st": 2 },
+        "spellsKnown": ["Hunter's Mark", "Cure Wounds"]
+      },
+      "features": [
+        "Favored Enemy: Humanoids (+2 damage vs humanoids)",
+        "Natural Explorer: Grassland (double proficiency on survival/tracking)",
+        "Fighting Style: Archery (+2 to ranged attack rolls)",
+        "Hunter's Prey: Colossus Slayer (+1d8 damage to wounded targets)"
+      ],
+      "equipment": ["Shortbow", "Quiver (20 arrows)", "Shortsword", "Studded Leather", "Explorer's Pack"],
+      "personality": "Dry, precise, deeply competent. Laughs rarely but genuinely.",
+      "notes": "Former army scout. Debt from her past haunts her."
+    },
+    "Mira of the Oaks": {
+      "class": "Cleric 2",
+      "subclass": "Life Domain",
+      "background": "Herbalist",
+      "species": "Human",
+      "profBonus": 2,
+      "speed": 30,
+      "hitDice": "2d8",
+      "abilities": {
+        "str": 10, "dex": 12, "con": 12, "int": 12, "wis": 16, "cha": 14
+      },
+      "savingThrows": {
+        "str": 0, "dex": 1, "con": 1, "int": 1, "wis": 5, "cha": 4
+      },
+      "skills": {
+        "insight": 5, "medicine": 5, "nature": 3, "persuasion": 4
+      },
+      "armor": "Leather Armor",
+      "ac": 12,
+      "hp": 14,
+      "weapons": [
+        { "name": "Quarterstaff", "bonus": 2, "damage": "1d6 bludgeoning", "properties": "Versatile (1d8)" }
+      ],
+      "spellcasting": {
+        "ability": "WIS",
+        "spellSaveDC": 13,
+        "spellAttack": 5,
+        "slots": { "1st": 3 },
+        "cantrips": ["Guidance", "Spare the Dying", "Sacred Flame"],
+        "prepared": ["Bless", "Cure Wounds", "Healing Word", "Shield of Faith"],
+        "domainSpells": ["Bless", "Cure Wounds"]
+      },
+      "features": [
+        "Disciple of Life (+2+spell level HP when healing)",
+        "Channel Divinity (1/short rest): Preserve Life (heal pool = 5×cleric level)",
+        "Ritual Casting"
+      ],
+      "equipment": ["Quarterstaff", "Leather Armor", "Healer's Kit", "Herbalism Kit", "Holy Symbol (wooden acorn)"],
+      "personality": "Gentle but not soft. Will tell you when you are wrong, kindly but firmly.",
+      "notes": "Healer from Oakheart Grove. No patron god yet — the gods are silent."
+    },
+    "Commander Serath": {
+      "class": "Rogue 2",
+      "subclass": "None yet",
+      "background": "Spy (Dragon Army Defector)",
+      "species": "Human",
+      "profBonus": 2,
+      "speed": 30,
+      "hitDice": "2d8",
+      "abilities": {
+        "str": 10, "dex": 14, "con": 10, "int": 14, "wis": 12, "cha": 14
+      },
+      "savingThrows": {
+        "str": 0, "dex": 4, "con": 0, "int": 4, "wis": 1, "cha": 2
+      },
+      "skills": {
+        "deception": 4, "insight": 3, "investigation": 4, "perception": 3, "stealth": 4
+      },
+      "armor": "Leather Armor",
+      "ac": 13,
+      "hp": 12,
+      "weapons": [
+        { "name": "Dagger", "bonus": 4, "damage": "1d4+2 piercing", "properties": "Finesse, Light, Thrown (20/60)" },
+        { "name": "Shortsword", "bonus": 4, "damage": "1d6+2 piercing", "properties": "Finesse, Light" }
+      ],
+      "features": [
+        "Expertise: Stealth, Investigation (double proficiency)",
+        "Sneak Attack (+1d6 damage with advantage or ally adjacent)",
+        "Thieves' Cant",
+        "Cunning Action (bonus action: Dash, Disengage, or Hide)"
+      ],
+      "equipment": ["Dagger ×2", "Shortsword", "Leather Armor", "Thieves' Tools", "Dark Cloak"],
+      "personality": "Careful, precise, carrying enormous guilt. Dry humour that surprises.",
+      "notes": "Former Dragon Army intelligence officer. Defected after witnessing atrocities."
+    },
+    "Thessaly Brightwater": {
+      "class": "Rogue 2",
+      "subclass": "None yet",
+      "background": "Sage (Scholar)",
+      "species": "Human",
+      "profBonus": 2,
+      "speed": 30,
+      "hitDice": "2d8",
+      "abilities": {
+        "str": 8, "dex": 14, "con": 10, "int": 16, "wis": 12, "cha": 12
+      },
+      "savingThrows": {
+        "str": -1, "dex": 4, "con": 0, "int": 5, "wis": 1, "cha": 1
+      },
+      "skills": {
+        "arcana": 5, "history": 5, "insight": 3, "investigation": 7, "perception": 3
+      },
+      "armor": "Leather Armor",
+      "ac": 13,
+      "hp": 12,
+      "weapons": [
+        { "name": "Shortsword", "bonus": 4, "damage": "1d6+2 piercing", "properties": "Finesse, Light" },
+        { "name": "Dagger", "bonus": 4, "damage": "1d4+2 piercing", "properties": "Finesse, Light, Thrown (20/60)" }
+      ],
+      "features": [
+        "Expertise: Investigation, History (double proficiency)",
+        "Sneak Attack (+1d6 damage with advantage or ally adjacent)",
+        "Thieves' Cant",
+        "Cunning Action (bonus action: Dash, Disengage, or Hide)"
+      ],
+      "equipment": ["Shortsword", "Dagger", "Leather Armor", "Scholar's Pack", "Silver Locket (never opens)", "Notebook"],
+      "personality": "Witty, curious, emotionally guarded. Tests everyone.",
+      "notes": "Researcher investigating Cataclysm-era history. The locket holds secrets."
+    },
+    "Vael Ashmore": {
+      "class": "Ranger 2",
+      "subclass": "Hunter",
+      "background": "Soldier (Squire)",
+      "species": "Human (Kagonesti heritage)",
+      "profBonus": 2,
+      "speed": 30,
+      "hitDice": "2d10",
+      "abilities": {
+        "str": 12, "dex": 16, "con": 12, "int": 10, "wis": 14, "cha": 10
+      },
+      "savingThrows": {
+        "str": 3, "dex": 5, "con": 1, "int": 0, "wis": 2, "cha": 0
+      },
+      "skills": {
+        "athletics": 3, "nature": 2, "perception": 4, "stealth": 5, "survival": 4
+      },
+      "armor": "Scale Mail",
+      "ac": 16,
+      "hp": 18,
+      "weapons": [
+        { "name": "Longbow", "bonus": 5, "damage": "1d8+3 piercing", "properties": "Ammunition (150/600), Heavy, Two-Handed" },
+        { "name": "Shortsword", "bonus": 5, "damage": "1d6+3 piercing", "properties": "Finesse, Light" }
+      ],
+      "spellcasting": {
+        "ability": "WIS",
+        "spellSaveDC": 12,
+        "spellAttack": 4,
+        "slots": { "1st": 2 },
+        "spellsKnown": ["Hunter's Mark", "Ensnaring Strike"]
+      },
+      "features": [
+        "Favored Enemy: Dragons (+2 damage vs dragons)",
+        "Natural Explorer: Forest (double proficiency on survival/tracking)",
+        "Fighting Style: Archery (+2 to ranged attack rolls)",
+        "Hunter's Prey: Horde Breaker (extra attack vs adjacent enemy)"
+      ],
+      "equipment": ["Longbow", "Quiver (20 arrows)", "Shortsword", "Scale Mail", "Solamnic Signet (cord)"],
+      "personality": "Competitive, concealing deep respect. Holds herself to impossible standards.",
+      "notes": "Squire from minor noble house. Kagonesti grandmother. Proves herself constantly."
+    },
+    "Lysander Graves": {
+      "class": "Fighter 4",
+      "subclass": "Champion",
+      "background": "Knight (Disgraced)",
+      "species": "Human (Solamnic)",
+      "profBonus": 2,
+      "speed": 30,
+      "hitDice": "4d10",
+      "abilities": {
+        "str": 16, "dex": 12, "con": 14, "int": 10, "wis": 13, "cha": 11
+      },
+      "savingThrows": {
+        "str": 5, "dex": 1, "con": 4, "int": 0, "wis": 1, "cha": 0
+      },
+      "skills": {
+        "athletics": 5, "history": 2, "insight": 3, "intimidation": 2, "perception": 3
+      },
+      "armor": "Splint Armor",
+      "ac": 17,
+      "hp": 34,
+      "weapons": [
+        { "name": "Longsword", "bonus": 5, "damage": "1d10+3 slashing", "properties": "Versatile (two-handed grip)" },
+        { "name": "Dagger", "bonus": 5, "damage": "1d4+3 piercing", "properties": "Finesse, Light, Thrown (20/60)" }
+      ],
+      "features": [
+        "Fighting Style: Great Weapon Fighting (reroll 1s and 2s on damage)",
+        "Second Wind (bonus action, regain 1d10+4 HP, 1/short rest)",
+        "Action Surge (extra action, 1/short rest)",
+        "Improved Critical (crit on 19-20)",
+        "Ability Score Improvement: +2 STR (already included)"
+      ],
+      "equipment": ["Longsword (battered, unornamented)", "Splint Armor", "Dagger", "Traveler's Clothes"],
+      "personality": "Physical and philosophical. Speaks about honour from experience of losing it.",
+      "notes": "Former Knight of the Sword. Court-martialed for disobeying orders to save civilians. Seeks redemption."
+    },
+    "Tariel Duskmantle": {
+      "class": "Bard 2",
+      "subclass": "None yet (Lore at 3)",
+      "background": "Spy (Silvanesti Agent)",
+      "species": "Elf (Silvanesti)",
+      "profBonus": 2,
+      "speed": 30,
+      "hitDice": "2d8",
+      "abilities": {
+        "str": 8, "dex": 14, "con": 12, "int": 14, "wis": 10, "cha": 16
+      },
+      "savingThrows": {
+        "str": -1, "dex": 4, "con": 1, "int": 2, "wis": 0, "cha": 5
+      },
+      "skills": {
+        "deception": 5, "history": 4, "insight": 2, "perception": 2, "performance": 5, "persuasion": 5
+      },
+      "armor": "Studded Leather",
+      "ac": 14,
+      "hp": 14,
+      "weapons": [
+        { "name": "Rapier", "bonus": 4, "damage": "1d8+2 piercing", "properties": "Finesse" },
+        { "name": "Dagger", "bonus": 4, "damage": "1d4+2 piercing", "properties": "Finesse, Light, Thrown (20/60)" }
+      ],
+      "spellcasting": {
+        "ability": "CHA",
+        "spellSaveDC": 13,
+        "spellAttack": 5,
+        "slots": { "1st": 3 },
+        "cantrips": ["Vicious Mockery", "Minor Illusion"],
+        "spellsKnown": ["Charm Person", "Dissonant Whispers", "Healing Word", "Sleep"]
+      },
+      "features": [
+        "Bardic Inspiration (d6, CHA mod uses/long rest = 3)",
+        "Jack of All Trades (+1 to all non-proficient checks)",
+        "Song of Rest (allies regain +1d6 HP on short rest)",
+        "Fey Ancestry (advantage vs charm, immune to sleep)",
+        "Darkvision (60 ft)",
+        "Trance (4 hours meditation = 8 hours sleep)"
+      ],
+      "equipment": ["Rapier", "Dagger", "Studded Leather", "Diplomat's Pack", "Silver Ring", "Coded Documents"],
+      "personality": "Intellectually precise, genuinely curious, disarming. Asks revealing questions.",
+      "notes": "Silvanesti intelligence agent. Observing Solamnic response to Dragon Army. Conflicted loyalties."
+    },
+    "Lord Caeron Ashvale": {
+      "class": "Paladin 4",
+      "subclass": "Oath of Devotion",
+      "background": "Noble (Order of the Rose)",
+      "species": "Human (Solamnic)",
+      "profBonus": 2,
+      "speed": 30,
+      "hitDice": "4d10",
+      "abilities": {
+        "str": 16, "dex": 10, "con": 14, "int": 12, "wis": 12, "cha": 16
+      },
+      "savingThrows": {
+        "str": 3, "dex": 0, "con": 2, "int": 1, "wis": 3, "cha": 5
+      },
+      "skills": {
+        "athletics": 5, "history": 3, "insight": 3, "intimidation": 5, "persuasion": 5
+      },
+      "armor": "Plate Armor, Shield",
+      "ac": 20,
+      "hp": 34,
+      "weapons": [
+        { "name": "Longsword", "bonus": 5, "damage": "1d8+3 slashing", "properties": "Versatile (1d10)" }
+      ],
+      "spellcasting": {
+        "ability": "CHA",
+        "spellSaveDC": 13,
+        "spellAttack": 5,
+        "slots": { "1st": 3 },
+        "prepared": ["Bless", "Command", "Cure Wounds", "Shield of Faith", "Divine Smite"],
+        "oathSpells": ["Protection from Evil and Good", "Sanctuary"]
+      },
+      "features": [
+        "Divine Sense (detect celestial/fiend/undead, 1+CHA mod uses/long rest)",
+        "Lay on Hands (pool = 20 HP, can cure disease for 5 HP)",
+        "Fighting Style: Protection (impose disadvantage on attacks against adjacent allies)",
+        "Divine Smite (+2d8 radiant on hit, +1d8 vs undead/fiend)",
+        "Divine Health (immune to disease)",
+        "Channel Divinity (1/short rest): Sacred Weapon (+3 to hit, light) or Turn the Unholy",
+        "Ability Score Improvement: +2 CHA (already included)"
+      ],
+      "aura": "Aura of Protection: +3 to saving throws for allies within 10 ft (at level 6)",
+      "equipment": ["Longsword", "Shield (Rose emblem)", "Plate Armor", "Holy Symbol", "Signet Ring"],
+      "personality": "Arrogant surface, deeply insecure underneath. Demands perfection.",
+      "notes": "Knight of the Rose. Evaluating squires. Father's shadow looms large."
     }
   }
 }

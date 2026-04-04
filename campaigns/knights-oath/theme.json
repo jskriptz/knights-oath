@@ -1,4 +1,12 @@
 {
+  "music": {
+    "title": "",
+    "ambient": "",
+    "combat": "",
+    "tavern": "",
+    "victory": "",
+    "defeat": ""
+  },
   "cssVars": {
     "--bg": "#0e0e18",
     "--panel": "#16162a",
@@ -24,7 +32,7 @@
   "loadingScreen": {
     "title": "DRAGONLANCE",
     "subtitle": "THE KNIGHT'S OATH",
-    "version": "v24.5.18",
+    "version": "v24.5.34",
     "stats": "320 Scenes \u2022 9 Companions"
   }
 }
