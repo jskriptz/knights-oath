@@ -3315,8 +3315,12 @@ function BattlefieldMap({combat,gs,derived,onMoveCompanion,selectedCompanion,set
     const classes=['battlefield-token',entity.type];
     if(!entity.alive)classes.push('dead');
     if(entity.active)classes.push('active');
-    const hasPortrait=entity.type==='player'&&gs.portrait;
-    if(hasPortrait)classes.push('has-portrait');
+    // Get portrait URL based on entity type
+    let portraitUrl=null;
+    if(entity.type==='player'&&gs.portrait){portraitUrl=gs.portrait}
+    else if(entity.type==='ally'){const cd=findCompanion(entity.name);if(cd?.portrait)portraitUrl=cd.portrait}
+    else if(entity.type==='enemy'){const baseName=entity.name.replace(/\s*\d+$/,'');portraitUrl=ENEMY_PORTRAITS[entity.name]||ENEMY_PORTRAITS[baseName]||null}
+    if(portraitUrl)classes.push('has-portrait');
 
     const moveOpts=entity.type==='player'?getPlayerMoveOpts():getMoveOptions(entity);
     const isSelected=(entity.type==='ally'&&selectedCompanion===entity.idx)||(entity.type==='player'&&selectedPlayer);
@@ -3326,7 +3330,7 @@ function BattlefieldMap({combat,gs,derived,onMoveCompanion,selectedCompanion,set
 
     return e('div',{key:entity.id,className:classes.join(' '),onClick:(ev)=>handleTokenClick(entity,ev)},
       renderHpRing(hpPct),
-      hasPortrait?e('div',{className:'battlefield-token-portrait',style:{backgroundImage:'url('+gs.portrait+')'}}):null,
+      portraitUrl?e('div',{className:'battlefield-token-portrait',style:{backgroundImage:'url('+portraitUrl+')'}}):null,
       e('span',{className:'battlefield-token-initial'},entity.initial),
       e('div',{className:'battlefield-tooltip'},
         e('span',{className:'battlefield-tooltip-name'},entity.name),
@@ -6087,6 +6091,8 @@ let UNSELLABLE=/^$/;
 let JUNK_ITEMS={};
 // Misc items — useful in future campaigns, with tooltips
 let MISC_ITEMS={};
+// Enemy portraits for combat tokens
+let ENEMY_PORTRAITS={};
 
 // Item categorization helpers
 function isJunkItem(itemName){
@@ -9288,7 +9294,7 @@ async function loadCampaign(campaignId){
     if(d.combatOutcomes)COMBAT_OUTCOMES=d.combatOutcomes;
     if(d.companions){const c=d.companions;if(c.all)COMPANIONS_ALL=c.all;if(c.data)COMPANION_DATA=c.data;if(c.combatStats)COMPANION_COMBAT_STATS=c.combatStats;if(c.fullStats){COMPANION_FULL_STATS=c.fullStats;window.COMPANION_FULL_STATS=c.fullStats}if(c.romanceCompat)ROMANCE_COMPAT=c.romanceCompat;if(c.romanceTooltips)ROMANCE_TOOLTIPS=c.romanceTooltips;if(c.breakupData)BREAKUP_DATA=c.breakupData}
     if(d.sceneEffects){if(d.sceneEffects.sceneEffects)SCENE_EFFECTS=d.sceneEffects.sceneEffects;if(d.sceneEffects.npcBreakups)NPC_BREAKUPS=d.sceneEffects.npcBreakups}
-    if(d.shopData){if(d.shopData.sellPrices)SELL_PRICES=d.shopData.sellPrices;if(d.shopData.unsellablePattern)UNSELLABLE=new RegExp(d.shopData.unsellablePattern,'i');if(d.shopData.junkItems)JUNK_ITEMS=d.shopData.junkItems;if(d.shopData.miscItems)MISC_ITEMS=d.shopData.miscItems}
+    if(d.shopData){if(d.shopData.sellPrices)SELL_PRICES=d.shopData.sellPrices;if(d.shopData.unsellablePattern)UNSELLABLE=new RegExp(d.shopData.unsellablePattern,'i');if(d.shopData.junkItems)JUNK_ITEMS=d.shopData.junkItems;if(d.shopData.miscItems)MISC_ITEMS=d.shopData.miscItems;if(d.shopData.enemyPortraits)ENEMY_PORTRAITS=d.shopData.enemyPortraits}
     if(d.rules){CAMPAIGN_RULES=d.rules;if(d.rules.endingScenes)ENDING_SCENES=d.rules.endingScenes;if(d.rules.relationshipCheckScenes)RELATIONSHIP_CHECK_SCENES=d.rules.relationshipCheckScenes;if(d.rules.gods)GODS=d.rules.gods;if(d.rules.godFlavour)GOD_FLAVOUR=d.rules.godFlavour;if(d.rules.presets)PRESETS=d.rules.presets}
     if(d.theme){applyTheme(d.theme);if(d.theme.loadingScreen)manifest.loadingScreen=d.theme.loadingScreen}
     if(d.dmSummary)DM_SUMMARY=d.dmSummary;
@@ -9342,6 +9348,7 @@ async function loadCampaign(campaignId){
       if(shop.unsellablePattern){UNSELLABLE=new RegExp(shop.unsellablePattern,'i')}
       if(shop.junkItems){JUNK_ITEMS=shop.junkItems}
       if(shop.miscItems){MISC_ITEMS=shop.miscItems}
+      if(shop.enemyPortraits){ENEMY_PORTRAITS=shop.enemyPortraits}
     }
     if(rules){
       CAMPAIGN_RULES=rules;
