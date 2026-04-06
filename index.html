@@ -9629,11 +9629,17 @@ function App(){
     }
     // Random travel events — check travelEvents from campaign rules
     const travelEvents=CAMPAIGN_RULES?.travelEvents||[];
+    const romanceRank={Spark:1,Flame:2,Oath:3};
     for(const ev of travelEvents){
       if(!ev.triggerScenes?.includes(id))continue;
       if(ev.flag&&ns.flags[ev.flag])continue;// Already seen this event
       if(ev.requireCompanion&&!(ns.companions||[]).includes(ev.requireCompanion))continue;
       if(ev.requireClass&&ns.cls!==ev.requireClass)continue;// Class restriction
+      if(ev.requireFlag&&!ns.flags?.[ev.requireFlag])continue;// Flag requirement
+      // Romance level requirement
+      if(ev.requireRomance){const rr=ev.requireRomance;const curRom=ns.romances?.[rr.companion];if(!curRom||(romanceRank[curRom]||0)<(romanceRank[rr.minLevel]||0))continue}
+      // Multiple romances requirement (for jealousy events)
+      if(ev.requireMultipleRomances){const activeRomances=Object.entries(ns.romances||{}).filter(([k,v])=>v&&!['Friend','Distant','Cold'].includes(v));if(activeRomances.length<2)continue}
       if(Math.random()>ev.chance)continue;// Failed roll
       // Event triggers! Set flag and redirect
       if(ev.flag)ns.flags[ev.flag]=true;

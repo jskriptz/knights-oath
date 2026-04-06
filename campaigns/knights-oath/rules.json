@@ -2156,7 +2156,21 @@
     {"id": "DEPTH_LYSANDER_HONOUR", "name": "The Fall", "triggerScenes": ["41", "49", "56"], "chance": 0.35, "requireCompanion": "Lysander Graves", "flag": "seen_lysander_honour"},
     {"id": "MENTOR_HUMA_ECHO", "name": "Dragonlance Dream", "triggerScenes": ["36", "42", "48"], "chance": 0.20, "requireClass": "Fighter", "flag": "seen_huma_echo"},
     {"id": "MENTOR_BRONWYN_LESSON", "name": "Swordmaster's Ghost", "triggerScenes": ["38", "45", "52"], "chance": 0.20, "requireClass": "Fighter", "flag": "seen_bronwyn_lesson"},
-    {"id": "MENTOR_ALDOUS_WISDOM", "name": "Old Knight's Counsel", "triggerScenes": ["40", "47", "54"], "chance": 0.20, "requireClass": "Fighter", "flag": "seen_aldous_wisdom"}
+    {"id": "MENTOR_ALDOUS_WISDOM", "name": "Old Knight's Counsel", "triggerScenes": ["40", "47", "54"], "chance": 0.20, "requireClass": "Fighter", "flag": "seen_aldous_wisdom"},
+    {"id": "FLAME_ALDRIC", "name": "What We Are", "triggerScenes": ["44", "48", "52"], "chance": 0.40, "requireCompanion": "Aldric Voss", "requireRomance": {"companion": "Aldric Voss", "minLevel": "Spark"}, "flag": "seen_flame_aldric"},
+    {"id": "FLAME_THESSALY", "name": "The Locket Opens", "triggerScenes": ["44", "48", "52"], "chance": 0.40, "requireCompanion": "Thessaly Brightwater", "requireRomance": {"companion": "Thessaly Brightwater", "minLevel": "Spark"}, "flag": "seen_flame_thessaly"},
+    {"id": "FLAME_MIRA", "name": "Healing Hands", "triggerScenes": ["44", "48", "52"], "chance": 0.40, "requireCompanion": "Mira of the Oaks", "requireRomance": {"companion": "Mira of the Oaks", "minLevel": "Spark"}, "flag": "seen_flame_mira"},
+    {"id": "FLAME_SERATH", "name": "Commander's Heart", "triggerScenes": ["44", "48", "52"], "chance": 0.35, "requireCompanion": "Commander Serath", "requireRomance": {"companion": "Commander Serath", "minLevel": "Spark"}, "flag": "seen_flame_serath"},
+    {"id": "FLAME_CAERON", "name": "Beneath the Mask", "triggerScenes": ["44", "48", "52"], "chance": 0.40, "requireCompanion": "Lord Caeron Ashvale", "requireRomance": {"companion": "Lord Caeron Ashvale", "minLevel": "Spark"}, "flag": "seen_flame_caeron"},
+    {"id": "FLAME_SERA", "name": "In the Shadows", "triggerScenes": ["44", "48", "52"], "chance": 0.35, "requireCompanion": "Sera Nighthollow", "requireRomance": {"companion": "Sera Nighthollow", "minLevel": "Spark"}, "flag": "seen_flame_sera"},
+    {"id": "FLAME_VAEL", "name": "Crossed Blades", "triggerScenes": ["44", "48", "52"], "chance": 0.40, "requireCompanion": "Vael Ashmore", "requireRomance": {"companion": "Vael Ashmore", "minLevel": "Spark"}, "flag": "seen_flame_vael"},
+    {"id": "FLAME_TARIEL", "name": "Question Answered", "triggerScenes": ["44", "48", "52"], "chance": 0.35, "requireCompanion": "Tariel Duskmantle", "requireRomance": {"companion": "Tariel Duskmantle", "minLevel": "Spark"}, "flag": "seen_flame_tariel"},
+    {"id": "FLAME_LYSANDER", "name": "Disgraced Heart", "triggerScenes": ["44", "48", "52"], "chance": 0.40, "requireCompanion": "Lysander Graves", "requireRomance": {"companion": "Lysander Graves", "minLevel": "Spark"}, "flag": "seen_flame_lysander"},
+    {"id": "OATH_ALDRIC", "name": "Knight's Vow", "triggerScenes": ["60", "65", "68"], "chance": 0.50, "requireCompanion": "Aldric Voss", "requireRomance": {"companion": "Aldric Voss", "minLevel": "Flame"}, "flag": "seen_oath_aldric"},
+    {"id": "OATH_THESSALY", "name": "Scholar's Truth", "triggerScenes": ["60", "65", "68"], "chance": 0.50, "requireCompanion": "Thessaly Brightwater", "requireRomance": {"companion": "Thessaly Brightwater", "minLevel": "Flame"}, "flag": "seen_oath_thessaly"},
+    {"id": "OATH_MIRA", "name": "Healer's Promise", "triggerScenes": ["60", "65", "68"], "chance": 0.50, "requireCompanion": "Mira of the Oaks", "requireRomance": {"companion": "Mira of the Oaks", "minLevel": "Flame"}, "flag": "seen_oath_mira"},
+    {"id": "JEALOUSY_EVENT", "name": "Crossed Hearts", "triggerScenes": ["45", "50", "55", "60"], "chance": 0.30, "requireMultipleRomances": true, "flag": "seen_jealousy"},
+    {"id": "POLYAMORY_CHOICE", "name": "Honest Hearts", "triggerScenes": ["62", "66", "70"], "chance": 0.45, "requireMultipleRomances": true, "requireFlag": "considering_honesty", "flag": "seen_polyamory"}
   ],
   "honourThresholds": {
     "disgrace": 0,

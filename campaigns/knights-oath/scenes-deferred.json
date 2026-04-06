@@ -9352,5 +9352,293 @@
     "choices": [
       {"letter": "A", "text": "I will remember. Mercy is the true strength.", "target": "RETURN_TRAVEL", "points": {"ROSE": 1}, "flags": {"aldous_vision": true}}
     ]
+  },
+  "FLAME_ALDRIC": {
+    "id": "FLAME_ALDRIC",
+    "title": "WHAT WE ARE",
+    "location": "Camp — Firelight",
+    "prose": [
+      "*Camp — After Midnight*",
+      "The others are asleep. Aldric sits beside you, closer than he needs to. The fire has burned low. Neither of you has moved to feed it.",
+      "'I've been thinking,' he says. 'About what happens after. If there is an after.' He stares at the embers. 'I've trained my whole life to be a knight. To serve, to fight, to die if the Measure demands it. I never thought about what I'd want to *live* for.'",
+      "He turns to look at you. The firelight catches the scar through his eyebrow.",
+      "'Then I met you. And suddenly I had something to lose.' His voice is rough. 'That terrifies me. But not as much as the idea of never saying it.'",
+      "He reaches for your hand. His fingers are calloused, warm, shaking slightly.",
+      "'Whatever this is between us — I don't want to pretend it isn't there anymore.'"
+    ],
+    "boxes": [],
+    "choices": [
+      {"letter": "A", "text": "Take his hand. Pull him closer. Let the fire burn out.", "target": "RETURN_TRAVEL", "romance_flame": true, "romance_comp": "Aldric Voss"},
+      {"letter": "B", "text": "'I feel it too. But the timing... we're in the middle of a war.'", "target": "RETURN_TRAVEL", "approval": {"Aldric Voss": 1}},
+      {"letter": "C", "text": "'Aldric... I care for you. But not like that.'", "target": "RETURN_TRAVEL", "flags": {"aldric_flame_declined": true}}
+    ]
+  },
+  "FLAME_THESSALY": {
+    "id": "FLAME_THESSALY",
+    "title": "THE LOCKET OPENS",
+    "location": "Camp — Starlight",
+    "prose": [
+      "*Camp — Before Dawn*",
+      "Thessaly finds you awake. She sits beside you without speaking, then holds out her locket. It's open.",
+      "Inside is a tiny portrait. A woman with Thessaly's copper hair and sharp eyes, rendered in miniature with extraordinary skill.",
+      "'I opened it,' she whispers. 'I thought I'd fall apart. But I didn't. Because you were here. Because somehow, being near you makes the hard things... possible.'",
+      "She closes the locket and holds it to her chest.",
+      "'I'm not good at this. Feelings. People. I push everyone away because it's safer than letting them see me.' She meets your eyes. 'But I don't want to push you away. Not anymore.'",
+      "Her hand finds yours in the darkness.",
+      "'Stay. Just... stay.'"
+    ],
+    "boxes": [],
+    "choices": [
+      {"letter": "A", "text": "Stay. Watch the stars wheel overhead. Let the silence say everything.", "target": "RETURN_TRAVEL", "romance_flame": true, "romance_comp": "Thessaly Brightwater"},
+      {"letter": "B", "text": "'I'm not going anywhere. But I need you to know — I'm here as a friend.'", "target": "RETURN_TRAVEL", "approval": {"Thessaly Brightwater": 1}},
+      {"letter": "C", "text": "'Thessaly, I can't be what you need. I'm sorry.'", "target": "RETURN_TRAVEL", "flags": {"thessaly_flame_declined": true}}
+    ]
+  },
+  "FLAME_MIRA": {
+    "id": "FLAME_MIRA",
+    "title": "HEALING HANDS",
+    "location": "Medical Tent",
+    "prose": [
+      "*Medical Tent — Evening*",
+      "Mira is treating a wound on your arm. Minor — a scratch from the last skirmish. But she insisted.",
+      "Her hands are gentle, sure, warm. She works in silence, her dark eyes focused on the bandage.",
+      "'I've healed a lot of people,' she says finally. 'Soldiers, refugees, children. I learned to keep distance. Professional. Safe.' She ties off the bandage but doesn't release your arm.",
+      "'I can't keep distance from you.' Her voice catches. 'Every time you ride into battle, I can't breathe until you come back. Every wound you take feels like it's on my own skin.'",
+      "She looks up. Her eyes are bright with unshed tears.",
+      "'I'm supposed to heal everyone equally. But I can't. Not when it comes to you.'"
+    ],
+    "boxes": [],
+    "choices": [
+      {"letter": "A", "text": "Cup her face in your hands. Kiss her tears away.", "target": "RETURN_TRAVEL", "romance_flame": true, "romance_comp": "Mira of the Oaks"},
+      {"letter": "B", "text": "'Your care means everything. But I don't want to compromise your healing.'", "target": "RETURN_TRAVEL", "approval": {"Mira of the Oaks": 1}},
+      {"letter": "C", "text": "'Mira, I value you too much to let this become complicated.'", "target": "RETURN_TRAVEL", "flags": {"mira_flame_declined": true}}
+    ]
+  },
+  "FLAME_SERATH": {
+    "id": "FLAME_SERATH",
+    "title": "THE COMMANDER'S HEART",
+    "location": "Command Tent",
+    "prose": [
+      "*Command Tent — Late Night*",
+      "Commander Serath is reviewing maps when you enter. He looks up — and for just a moment, before the mask settles, you see something raw in his eyes.",
+      "'Close the flap,' he says quietly.",
+      "You do. He sets down his quill and stands, military precision absent for once. He looks tired. Human.",
+      "'I am not supposed to do this.' His voice is barely above a whisper. 'Officers don't form attachments. It compromises command decisions. The Measure is very clear.'",
+      "He steps closer.",
+      "'But the Measure doesn't account for you. For the way I can't stop thinking about you. For the way my heart stops every time you're in danger.' His hand rises, hovers near your cheek. 'I've lost forty-three people under my command. I cannot lose you. Not because of the mission. Because of this.'",
+      "He waits, trembling, for permission."
+    ],
+    "boxes": [],
+    "choices": [
+      {"letter": "A", "text": "Close the distance. Let him know the feeling is mutual.", "target": "RETURN_TRAVEL", "romance_flame": true, "romance_comp": "Commander Serath"},
+      {"letter": "B", "text": "'Command decisions have to come first. For both of us.'", "target": "RETURN_TRAVEL", "approval": {"Commander Serath": 1}},
+      {"letter": "C", "text": "'I respect you too much to let you compromise your position.'", "target": "RETURN_TRAVEL", "flags": {"serath_flame_declined": true}}
+    ]
+  },
+  "FLAME_CAERON": {
+    "id": "FLAME_CAERON",
+    "title": "BENEATH THE MASK",
+    "location": "Camp — Private",
+    "prose": [
+      "*Camp — Dusk*",
+      "You find Caeron alone, without his armor for once. He looks smaller. Younger. Real.",
+      "'I've been insufferable,' he says without preamble. 'I know. The arrogance, the posturing, the endless need to prove I'm better than everyone.' He laughs bitterly. 'It's exhausting to be around. I can only imagine what it's like from the outside.'",
+      "He turns to face you.",
+      "'But with you... I don't want to pretend. I'm tired of pretending.' His voice cracks. 'You see through me. You always have. And somehow you didn't leave.'",
+      "He reaches out, tentative, and takes your hand.",
+      "'I'm not good at this. At being vulnerable. At needing someone. But I need you. Whatever that means. However much it costs my pride to say it.'"
+    ],
+    "boxes": [],
+    "choices": [
+      {"letter": "A", "text": "Pull him close. Show him vulnerability isn't weakness.", "target": "RETURN_TRAVEL", "romance_flame": true, "romance_comp": "Lord Caeron Ashvale"},
+      {"letter": "B", "text": "'I see you, Caeron. The real you. And I like what I see — as a friend.'", "target": "RETURN_TRAVEL", "approval": {"Lord Caeron Ashvale": 1}},
+      {"letter": "C", "text": "'This isn't something I can give you. I'm sorry.'", "target": "RETURN_TRAVEL", "flags": {"caeron_flame_declined": true}}
+    ]
+  },
+  "FLAME_SERA": {
+    "id": "FLAME_SERA",
+    "title": "IN THE SHADOWS",
+    "location": "Camp Edge — Darkness",
+    "prose": [
+      "*Camp Edge — Third Watch*",
+      "Sera appears beside you. She does that. But tonight she doesn't speak. She just stands there, close enough that your shoulders almost touch.",
+      "'I've killed a lot of people,' she says finally. 'Told you that. What I didn't tell you is that I've never let anyone close since. Can't afford attachments in my line of work.'",
+      "She turns. Moonlight catches the scar across her collarbone.",
+      "'Then there's you. And I don't know what to do with that.' Her voice is steady but her hands are shaking. 'I've been trying to convince myself it's just proximity. War makes people desperate for connection.'",
+      "She steps closer. Her eyes are silver in the darkness.",
+      "'But it's not desperation. It's something else. Something I haven't felt in a very long time. And it scares me more than anything I've faced in the dark.'"
+    ],
+    "boxes": [],
+    "choices": [
+      {"letter": "A", "text": "Take her shaking hands in yours. Step into the shadows with her.", "target": "RETURN_TRAVEL", "romance_flame": true, "romance_comp": "Sera Nighthollow"},
+      {"letter": "B", "text": "'Whatever this is, we don't have to name it yet. I'm not going anywhere.'", "target": "RETURN_TRAVEL", "approval": {"Sera Nighthollow": 1}},
+      {"letter": "C", "text": "'The shadows have to stay shadows, Sera. I can't follow you there.'", "target": "RETURN_TRAVEL", "flags": {"sera_flame_declined": true}}
+    ]
+  },
+  "FLAME_VAEL": {
+    "id": "FLAME_VAEL",
+    "title": "CROSSED BLADES",
+    "location": "Training Ground",
+    "prose": [
+      "*Training Ground — Dawn*",
+      "Vael challenged you to a spar. She does that. But this time when she disarms you, she doesn't step back.",
+      "She stands there, breathing hard, her sword at your throat. Then she drops it.",
+      "'I can't do this anymore.' Her voice is rough. 'The competing. The pretending I don't feel what I feel. I've been fighting you because I don't know how to fight *for* you.'",
+      "She steps closer. The signet ring on its cord catches the sunrise.",
+      "'My whole life I've had to be stronger, faster, better. Never soft. Never vulnerable.' Her hand rises to touch your face. 'But with you I want to be both. Strong *and* soft. A warrior who also knows how to love.'",
+      "Her eyes meet yours.",
+      "'Spar's over. This is me, laying down my sword.'"
+    ],
+    "boxes": [],
+    "choices": [
+      {"letter": "A", "text": "Pull her into a kiss. The competition is over — you both won.", "target": "RETURN_TRAVEL", "romance_flame": true, "romance_comp": "Vael Ashmore"},
+      {"letter": "B", "text": "'We make better rivals than lovers. But I'll always have your back.'", "target": "RETURN_TRAVEL", "approval": {"Vael Ashmore": 1}},
+      {"letter": "C", "text": "'Pick up your sword, Vael. This isn't what I want.'", "target": "RETURN_TRAVEL", "flags": {"vael_flame_declined": true}}
+    ]
+  },
+  "FLAME_TARIEL": {
+    "id": "FLAME_TARIEL",
+    "title": "THE QUESTION ANSWERED",
+    "location": "Camp — Quiet",
+    "prose": [
+      "*Camp — After Dinner*",
+      "Tariel has been watching you all evening. When the others drift away, she sits beside you.",
+      "'I figured it out,' she says. 'What you fight for. I've been studying you — professionally, at first. But then it became personal.'",
+      "She smiles — rare, unguarded.",
+      "'You fight for the person next to you. Always. Not abstractions. Not causes. People.' Her green eyes hold yours. 'That's why I'm sitting here. Because I realized — I want to be the person next to you.'",
+      "She reaches out, traces the line of your jaw with one finger.",
+      "'I ask questions for a living. But this is the first time I've been afraid of the answer. So I'm just going to say it: I care about you. More than professionally. More than I should.'"
+    ],
+    "boxes": [],
+    "choices": [
+      {"letter": "A", "text": "Answer her question without words. Close the distance.", "target": "RETURN_TRAVEL", "romance_flame": true, "romance_comp": "Tariel Duskmantle"},
+      {"letter": "B", "text": "'The person next to me is a friend. A good one. Can that be enough?'", "target": "RETURN_TRAVEL", "approval": {"Tariel Duskmantle": 1}},
+      {"letter": "C", "text": "'Some questions are better left unanswered, Tariel.'", "target": "RETURN_TRAVEL", "flags": {"tariel_flame_declined": true}}
+    ]
+  },
+  "FLAME_LYSANDER": {
+    "id": "FLAME_LYSANDER",
+    "title": "THE DISGRACED KNIGHT'S HEART",
+    "location": "Camp — Firelight",
+    "prose": [
+      "*Camp — Evening*",
+      "Lysander is sharpening his blade when you join him. He doesn't look up.",
+      "'I lost everything once,' he says. 'My rank, my family, my name. I thought I'd lost the ability to feel anything except duty and regret.'",
+      "He sets down the whetstone.",
+      "'Then you walked into my life. And something woke up. Something I thought died when they burned my tabard.' He finally meets your eyes. 'I'm not a young man. I've made mistakes that haunt me. I have nothing to offer except a battered sword and whatever's left of my heart.'",
+      "He stands, massive and weathered and somehow vulnerable.",
+      "'But that's yours, if you want it. All of it. Whatever I am, whatever I have left — it's yours.'"
+    ],
+    "boxes": [],
+    "choices": [
+      {"letter": "A", "text": "Take his face in your hands. 'I want all of it.'", "target": "RETURN_TRAVEL", "romance_flame": true, "romance_comp": "Lysander Graves"},
+      {"letter": "B", "text": "'What you offer is worth more than you know. But I can only offer friendship.'", "target": "RETURN_TRAVEL", "approval": {"Lysander Graves": 1}},
+      {"letter": "C", "text": "'Your heart deserves someone who can give theirs fully. I can't.'", "target": "RETURN_TRAVEL", "flags": {"lysander_flame_declined": true}}
+    ]
+  },
+  "JEALOUSY_EVENT": {
+    "id": "JEALOUSY_EVENT",
+    "title": "CROSSED HEARTS",
+    "location": "Camp",
+    "prose": [
+      "*Camp — Tension*",
+      "You feel eyes on you. Not one pair — two.",
+      "The connection you've built with multiple companions has not gone unnoticed. By them. By the others. By yourself.",
+      "The weight of unspoken words hangs in the air. Stolen glances. Questions not asked. You cannot have all of this forever. Something will have to give.",
+      "But not tonight. Tonight, you carry the weight of hearts that trust you, and wonder if you deserve that trust."
+    ],
+    "boxes": [
+      {"type": "info", "text": "**ROMANTIC TENSION**\nYou are pursuing romances with multiple companions. Eventually, you will need to make a choice — or find a way to honor all of them honestly."}
+    ],
+    "choices": [
+      {"letter": "A", "text": "This is something to face later. For now, the mission comes first.", "target": "RETURN_TRAVEL"},
+      {"letter": "B", "text": "Maybe honesty is the answer. Talk to them. Both of them.", "target": "RETURN_TRAVEL", "flags": {"considering_honesty": true}}
+    ]
+  },
+  "OATH_ALDRIC": {
+    "id": "OATH_ALDRIC",
+    "title": "THE KNIGHT'S VOW",
+    "location": "Dawn — Private",
+    "prose": [
+      "*Dawn — The Edge of Camp*",
+      "Aldric finds you at first light. He's dressed in his best armor — cleaned, polished, the tabard fresh. This is deliberate.",
+      "'I've been thinking about oaths,' he says. 'The Oath of the Crown. The Oath of the Sword. All the vows I've made to the Order, to Solamnia, to the Measure.'",
+      "He kneels.",
+      "'But there's one oath I haven't made. The most important one.' He takes your hand, presses it to his heart. 'I swear — by Paladine, by Kiri-Jolith, by every star in the sky — that my sword is yours. My shield is yours. My heart is yours. Not because duty demands it. Because *I* demand it of myself.'",
+      "His eyes shine with unshed tears.",
+      "'Will you accept my oath? Will you let me stand beside you, not as companion or ally, but as... as what we both know we are?'"
+    ],
+    "boxes": [],
+    "choices": [
+      {"letter": "A", "text": "Kneel beside him. 'I accept. And I make the same vow to you.'", "target": "RETURN_TRAVEL", "romance_oath": true, "romance_comp": "Aldric Voss", "points": {"ROSE": 1}},
+      {"letter": "B", "text": "'Rise, Aldric. We don't need oaths. What we have is enough.'", "target": "RETURN_TRAVEL", "approval": {"Aldric Voss": 1}},
+      {"letter": "C", "text": "'I can't accept this. Not with what's coming. I'm sorry.'", "target": "RETURN_TRAVEL", "flags": {"aldric_oath_declined": true}, "points": {"honour": -1}}
+    ]
+  },
+  "OATH_THESSALY": {
+    "id": "OATH_THESSALY",
+    "title": "THE SCHOLAR'S TRUTH",
+    "location": "Starlight — Private",
+    "prose": [
+      "*Starlight — Away from Camp*",
+      "Thessaly has led you to a hilltop overlooking the plains. The stars are impossibly bright.",
+      "'I've spent my whole life searching for answers,' she says. 'Who I am. Where I come from. What happened to my mother. I thought if I found enough answers, I'd finally feel complete.'",
+      "She turns to you.",
+      "'But I was wrong. The answers aren't in books or archives or the past. The answer is standing right in front of me.'",
+      "She takes both your hands.",
+      "'I love you. Not because you complete me — I complete myself. But because you make me *better*. Braver. More honest. More willing to open that locket and face what's inside.'",
+      "Her voice trembles.",
+      "'I want to build a future with you. Whatever that looks like. Wherever it takes us.'"
+    ],
+    "boxes": [],
+    "choices": [
+      {"letter": "A", "text": "'Then let's build it. Together. Starting now.'", "target": "RETURN_TRAVEL", "romance_oath": true, "romance_comp": "Thessaly Brightwater", "points": {"ROSE": 1}},
+      {"letter": "B", "text": "'I love having you in my life. But I'm not ready for promises.'", "target": "RETURN_TRAVEL", "approval": {"Thessaly Brightwater": 1}},
+      {"letter": "C", "text": "'You deserve someone who can give you everything. I can't.'", "target": "RETURN_TRAVEL", "flags": {"thessaly_oath_declined": true}, "points": {"honour": -1}}
+    ]
+  },
+  "OATH_MIRA": {
+    "id": "OATH_MIRA",
+    "title": "THE HEALER'S PROMISE",
+    "location": "Quiet Glade",
+    "prose": [
+      "*A Quiet Glade — Dusk*",
+      "Mira has found a peaceful place away from the war. Wildflowers grow here, untouched by the Dragon Armies. She picks one, holds it gently.",
+      "'I've healed so many people,' she says. 'But I've never let anyone heal me. Never let anyone close enough to see the wounds I carry.'",
+      "She tucks the flower behind your ear.",
+      "'Until you. You see me — really see me — and you don't look away. Not from the fear, not from the exhaustion, not from the times I've failed.'",
+      "She takes your hands, presses them to her heart.",
+      "'I want to spend whatever time we have left healing *together*. Not because duty demands it. Because love demands it. Because my heart demands it.'",
+      "Her dark eyes hold yours.",
+      "'Will you let me love you? Not as a healer. As... as yours?'"
+    ],
+    "boxes": [],
+    "choices": [
+      {"letter": "A", "text": "'I'm already yours. I have been for longer than you know.'", "target": "RETURN_TRAVEL", "romance_oath": true, "romance_comp": "Mira of the Oaks", "points": {"ROSE": 1}},
+      {"letter": "B", "text": "'What we have is precious. But I'm not ready to name it.'", "target": "RETURN_TRAVEL", "approval": {"Mira of the Oaks": 1}},
+      {"letter": "C", "text": "'You deserve a peace I can't give you. I'm sorry.'", "target": "RETURN_TRAVEL", "flags": {"mira_oath_declined": true}, "points": {"honour": -1}}
+    ]
+  },
+  "POLYAMORY_CHOICE": {
+    "id": "POLYAMORY_CHOICE",
+    "title": "HONEST HEARTS",
+    "location": "Camp — Private",
+    "prose": [
+      "*Camp — After Dark*",
+      "They're both here. They know. You know they know.",
+      "The silence stretches like a blade.",
+      "'We've talked,' one says. 'About you. About... this.' The other nods. 'We're not asking you to choose — not yet. But we need to know: is this something you're willing to be honest about?'",
+      "The question hangs in the air. Multiple hearts. One truth. There are no easy answers here.",
+      "'Some people can love more than one person,' one says quietly. 'Honestly. Openly. Without betrayal. Is that what this is? Or is this you not being able to choose?'",
+      "The distinction matters. To them. To you."
+    ],
+    "boxes": [
+      {"type": "info", "text": "**CROSSROADS**\nThis is a choice about honesty, not about romance. How you answer will shape relationships going forward."}
+    ],
+    "choices": [
+      {"letter": "A", "text": "'I love you both. Differently, but truly. If you can accept that...'", "target": "RETURN_TRAVEL", "flags": {"polyamory_accepted": true}, "points": {"ROSE": 1}},
+      {"letter": "B", "text": "'I need time. This is too much to decide right now.'", "target": "RETURN_TRAVEL"},
+      {"letter": "C", "text": "'You're right. I need to choose. Give me until the war ends.'", "target": "RETURN_TRAVEL", "flags": {"romance_choice_pending": true}}
+    ]
   }
 }
