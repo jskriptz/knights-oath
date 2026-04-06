@@ -11,7 +11,14 @@
     "78",
     "79",
     "80",
-    "DISGRACE"
+    "DISGRACE",
+    "EPILOGUE_END",
+    "EPILOGUE_ROMANCE_ALDRIC",
+    "EPILOGUE_ROMANCE_THESSALY",
+    "EPILOGUE_ROMANCE_MIRA",
+    "EPILOGUE_HONOUR_HIGH",
+    "EPILOGUE_HONOUR_LOW",
+    "EPILOGUE_COMPANION_DEATHS"
   ],
   "epilogueVisitGating": [
     "71"

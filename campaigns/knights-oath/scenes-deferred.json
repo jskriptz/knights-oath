@@ -3435,7 +3435,7 @@
         "text": "Go to the mess hall. Eat. Watch. Learn",
         "target": "33",
         "points": {
-          "rose": 1
+          "ROSE": 1
         }
       },
       {
@@ -3443,7 +3443,7 @@
         "text": "Find Thessaly — she may have intelligence on the south road",
         "target": "23",
         "points": {
-          "rose": 1
+          "ROSE": 1
         }
       },
       {
@@ -3451,7 +3451,7 @@
         "text": "Check on Mira before you march",
         "target": "25",
         "points": {
-          "rose": 1
+          "ROSE": 1
         }
       },
       {
@@ -3459,7 +3459,7 @@
         "text": "Visit the forge. Your blade needs attention",
         "target": "35",
         "points": {
-          "sword": 1
+          "SWORD": 1
         }
       },
       {
@@ -3473,7 +3473,7 @@
         "text": "Shouts from the training yard. Something has come over the wall",
         "target": "11_YARD",
         "points": {
-          "sword": 1
+          "SWORD": 1
         }
       },
       {
@@ -3560,7 +3560,7 @@
         "text": "Take a night watch shift. The wall has things to teach you",
         "target": "34",
         "points": {
-          "sword": 1
+          "SWORD": 1
         }
       },
       {
@@ -3568,7 +3568,7 @@
         "text": "Find a quiet place. Write a letter home. You may not get another chance before the march",
         "target": "11_LETTER",
         "points": {
-          "rose": 1
+          "ROSE": 1
         }
       },
       {
@@ -3576,7 +3576,7 @@
         "text": "Seek out a companion for a quiet conversation by the fire",
         "target": "11_FIRE",
         "points": {
-          "rose": 1
+          "ROSE": 1
         }
       },
       {
@@ -3590,7 +3590,7 @@
         "text": "The alarm bell. Goblins on the perimeter. Grab your weapon",
         "target": "11_PATROL",
         "points": {
-          "sword": 1
+          "SWORD": 1
         }
       },
       {
@@ -3648,7 +3648,7 @@
         "text": "Aldric is here, arms crossed, watching the fire like it owes him something",
         "target": "11_FIRE_ALDRIC",
         "points": {
-          "rose": 1
+          "ROSE": 1
         }
       },
       {
@@ -3656,7 +3656,7 @@
         "text": "Thessaly is at the edge, notebook closed for once, looking at the stars",
         "target": "11_FIRE_THESSALY",
         "points": {
-          "rose": 1
+          "ROSE": 1
         }
       },
       {
@@ -3664,7 +3664,7 @@
         "text": "Mira is tending a small herb pouch by firelight",
         "target": "11_FIRE_MIRA",
         "points": {
-          "rose": 1
+          "ROSE": 1
         }
       },
       {
@@ -3672,7 +3672,7 @@
         "text": "Lord Caeron is standing at the edge of the light, alone",
         "target": "11_FIRE_CAERON",
         "points": {
-          "crown": 1
+          "CROWN": 1
         }
       },
       {
@@ -3680,7 +3680,7 @@
         "text": "Sit alone. The fire is enough company",
         "target": "11_EVENING",
         "points": {
-          "sword": 1
+          "SWORD": 1
         }
       }
     ]
@@ -3710,7 +3710,7 @@
         "text": "'Yes. Every night.' He looks at you. Something shifts. The fire pops. Neither of you moves to leave, but the silence has changed",
         "target": "11_EVENING",
         "points": {
-          "rose": 1
+          "ROSE": 1
         }
       },
       {
@@ -3718,7 +3718,7 @@
         "text": "'I try not to. It does not help.' He nods slowly. The fire burns lower. After a while he claps your shoulder once and stands",
         "target": "11_EVENING",
         "points": {
-          "sword": 1
+          "SWORD": 1
         }
       },
       {
@@ -3726,7 +3726,7 @@
         "text": "'I think about who I want beside me when it does.' He is very still. The fire is between you. Then he exhales and you sit together until the coals dim",
         "target": "11_EVENING",
         "points": {
-          "rose": 2
+          "ROSE": 2
         }
       }
     ]
@@ -3761,7 +3761,7 @@
         "text": "'What is number fourteen?' He almost smiles. Almost. You stand there until he reaches number twenty-three, and then he says 'Goodnight, squire' in a voice that is almost warm",
         "target": "11_EVENING",
         "points": {
-          "rose": 1
+          "ROSE": 1
         }
       },
       {
@@ -3769,7 +3769,7 @@
         "text": "'You care more than you show, my lord.' He goes very still. A long silence. Then: 'Go and rest.' But his voice has changed, and you carry it with you back toward the firelight",
         "target": "11_EVENING",
         "points": {
-          "rose": 2
+          "ROSE": 2
         }
       },
       {
@@ -3777,8 +3777,8 @@
         "text": "Stand with him. Count your own list. Say nothing. When you finally leave, he nods once — the nod of a man who understands that some things do not need to be spoken aloud",
         "target": "11_EVENING",
         "points": {
-          "crown": 1,
-          "rose": 1
+          "CROWN": 1,
+          "ROSE": 1
         }
       }
     ]
@@ -3811,7 +3811,7 @@
         "text": "'That sounds like a knight, too.' She smiles — genuinely. You sit together a while longer before the fire burns low and the night calls you both back",
         "target": "11_EVENING",
         "points": {
-          "rose": 1
+          "ROSE": 1
         }
       },
       {
@@ -3819,7 +3819,7 @@
         "text": "Ask her to teach you one. She does — carefully, patiently. By the time you can identify it by touch alone, the brazier has burned to embers",
         "target": "11_EVENING",
         "points": {
-          "rose": 1
+          "ROSE": 1
         }
       },
       {
@@ -3827,7 +3827,7 @@
         "text": "Sit quietly and watch her work. The silence is enough. When she finally ties the pouch closed, the fire has gone to coals and the courtyard is still",
         "target": "11_EVENING",
         "points": {
-          "rose": 1
+          "ROSE": 1
         }
       }
     ]
@@ -3856,7 +3856,7 @@
         "text": "'And now?' 'Now the pen feels like a weapon. I have not decided if that is better.' She looks at the stars a moment longer. Then the notebook comes out and the moment is over, but something was exchanged",
         "target": "11_EVENING",
         "points": {
-          "rose": 1
+          "ROSE": 1
         }
       },
       {
@@ -3864,7 +3864,7 @@
         "text": "'You are doing important work here.' She looks at you with sharp gratitude. Then the mask comes back — professional, precise — but warmer at the edges",
         "target": "11_EVENING",
         "points": {
-          "rose": 1
+          "ROSE": 1
         }
       },
       {
@@ -3872,7 +3872,7 @@
         "text": "'What would you write about tonight, if you could write anything?' She opens the notebook. For a moment you read together by firelight. Then she closes it and the evening resumes",
         "target": "11_EVENING",
         "points": {
-          "rose": 1
+          "ROSE": 1
         }
       }
     ]
@@ -3898,7 +3898,7 @@
         "text": "Seal it. Set it on the quartermaster's outbound pile. The evening is not over yet",
         "target": "11_EVENING",
         "points": {
-          "rose": 1
+          "ROSE": 1
         }
       },
       {
@@ -3906,7 +3906,7 @@
         "text": "Add a postscript. Something true. Something you have not said yet. Then seal it. The candle is lower now but the evening still has time",
         "target": "11_EVENING",
         "points": {
-          "rose": 2
+          "ROSE": 2
         }
       }
     ]
@@ -3946,7 +3946,7 @@
         "text": "Seek out Ser Aldous in the chapel library. The Measure has questions you have not answered",
         "target": "4",
         "points": {
-          "rose": 1
+          "ROSE": 1
         }
       },
       {
@@ -3954,7 +3954,7 @@
         "text": "Check the infirmary. There was mention of refugees arriving in the night",
         "target": "9",
         "points": {
-          "rose": 1
+          "ROSE": 1
         }
       },
       {
@@ -3962,7 +3962,7 @@
         "text": "Train harder. You want to be sharp for tomorrow",
         "target": "24",
         "points": {
-          "sword": 1
+          "SWORD": 1
         }
       },
       {
@@ -4275,7 +4275,7 @@
         "text": "Carry Linna back to camp. She weighs almost nothing",
         "target": "44_REPORT",
         "points": {
-          "rose": 1
+          "ROSE": 1
         }
       }
     ]
@@ -4524,7 +4524,7 @@
         "text": "The alarm bell — south wall! Draconians at the breach!",
         "target": "53_BREACH",
         "points": {
-          "sword": 1
+          "SWORD": 1
         }
       },
       {
@@ -4532,7 +4532,7 @@
         "text": "Smoke from the grain stores. Not cook-fire smoke. Something is wrong",
         "target": "53_SABOTAGE",
         "points": {
-          "sword": 1
+          "SWORD": 1
         }
       }
     ]
@@ -4626,7 +4626,7 @@
         "text": "Sit with Aldric. He is sharpening something that does not need sharpening",
         "target": "63",
         "points": {
-          "rose": 1
+          "ROSE": 1
         }
       },
       {
@@ -4634,7 +4634,7 @@
         "text": "Find Thessaly. Her pen has stopped. She is staring at nothing",
         "target": "63",
         "points": {
-          "rose": 1
+          "ROSE": 1
         }
       },
       {
@@ -4642,7 +4642,7 @@
         "text": "Walk the perimeter with Caeron. He is already walking it",
         "target": "63",
         "points": {
-          "crown": 1
+          "CROWN": 1
         }
       },
       {
@@ -4650,7 +4650,7 @@
         "text": "Sleep. The road will be long tomorrow. Let the fire do the thinking",
         "target": "63",
         "points": {
-          "sword": 1
+          "SWORD": 1
         }
       }
     ]
@@ -4713,7 +4713,7 @@
         "text": "Help Aldric with the horses. The work is quiet and good",
         "target": "65",
         "points": {
-          "sword": 1
+          "SWORD": 1
         }
       },
       {
@@ -4721,7 +4721,7 @@
         "text": "Sit with the fire. Let the day settle",
         "target": "65",
         "points": {
-          "rose": 1
+          "ROSE": 1
         }
       },
       {
@@ -4729,7 +4729,7 @@
         "text": "Ask Caeron about tomorrow's route. He has been studying the map",
         "target": "65",
         "points": {
-          "crown": 1
+          "CROWN": 1
         }
       }
     ]
@@ -4794,7 +4794,7 @@
         "text": "Count the stars in Paladine's constellation. Seven. You have counted them before. The number has not changed. Something about that steadies you",
         "target": "68",
         "points": {
-          "rose": 1
+          "ROSE": 1
         }
       },
       {
@@ -4802,7 +4802,7 @@
         "text": "Close your eyes. The sky will be there tomorrow. Sleep will not wait",
         "target": "68",
         "points": {
-          "sword": 1
+          "SWORD": 1
         }
       },
       {
@@ -4810,8 +4810,8 @@
         "text": "Stay until Solinari sets. The dark after moonset is total. You walk back to camp by memory",
         "target": "68",
         "points": {
-          "rose": 1,
-          "crown": 1
+          "ROSE": 1,
+          "CROWN": 1
         }
       }
     ]
@@ -4877,8 +4877,8 @@
         "text": "Refuse. 'I will not fight you, ser. Ride with us instead. Vogler needs every sword.'",
         "target": "69_ROAD",
         "points": {
-          "rose": 2,
-          "crown": 1
+          "ROSE": 2,
+          "CROWN": 1
         }
       }
     ]
@@ -4914,7 +4914,7 @@
         "text": "Ride in silence. Let the road be the road",
         "target": "70A",
         "points": {
-          "sword": 1
+          "SWORD": 1
         }
       },
       {
@@ -4922,7 +4922,7 @@
         "text": "Look at Aldric. Nod. He nods back",
         "target": "70A",
         "points": {
-          "rose": 1
+          "ROSE": 1
         }
       },
       {
@@ -4930,7 +4930,7 @@
         "text": "Touch the tabard. The Solamnic sun is still on your chest",
         "target": "70A",
         "points": {
-          "crown": 1
+          "CROWN": 1
         }
       },
       {
@@ -5007,8 +5007,8 @@
         "text": "'Two days. Maybe less. We will help you prepare.'",
         "target": "70C",
         "points": {
-          "crown": 1,
-          "rose": 1
+          "CROWN": 1,
+          "ROSE": 1
         }
       },
       {
@@ -5016,7 +5016,7 @@
         "text": "'We need to see your defences. Now.' Caeron is already moving",
         "target": "70C",
         "points": {
-          "crown": 1
+          "CROWN": 1
         }
       },
       {
@@ -5024,7 +5024,7 @@
         "text": "Accept the food first. These people need to feel useful",
         "target": "70C",
         "points": {
-          "rose": 2
+          "ROSE": 2
         }
       }
     ]
@@ -5071,8 +5071,8 @@
         "text": "Help Caeron plan the defence. The watchtower. The bridge. The grain stores",
         "target": "71B",
         "points": {
-          "crown": 1,
-          "sword": 1
+          "CROWN": 1,
+          "SWORD": 1
         }
       },
       {
@@ -5080,7 +5080,7 @@
         "text": "Talk to the villagers. Learn their names. They should know who is fighting for them",
         "target": "71B",
         "points": {
-          "rose": 2
+          "ROSE": 2
         }
       },
       {
@@ -5088,7 +5088,7 @@
         "text": "Walk the perimeter with Aldric. See the ground with your own eyes",
         "target": "71B",
         "points": {
-          "sword": 1
+          "SWORD": 1
         }
       },
       {
@@ -5102,7 +5102,7 @@
         "text": "(If Sera is in your party) Sera catches your eye. 'The scouts. Tonight. Before they can signal.' She needs one companion and no torches",
         "target": "70C_SCOUTS",
         "points": {
-          "sword": 1
+          "SWORD": 1
         }
       }
     ]
@@ -5236,7 +5236,7 @@
         "text": "Finish it for him. 'After Vogler, you are still standing here.' He closes his eyes. When he opens them something has changed and it is not going to change back",
         "target": "BOND_RETURN",
         "points": {
-          "rose": 2
+          "ROSE": 2
         }
       },
       {
@@ -5244,8 +5244,8 @@
         "text": "Pull him closer. Not gently. He does not need gentle. He needs to know you are as certain as he is. His breath catches. Then his arms are around you and he is holding you the way he holds a position — completely, with everything, like letting go has never occurred to him as an option. The kiss, when it happens, is not tentative. It is a decision",
         "target": "BOND_RETURN",
         "points": {
-          "rose": 2,
-          "sword": 1
+          "ROSE": 2,
+          "SWORD": 1
         }
       },
       {
@@ -5253,7 +5253,7 @@
         "text": "'You do not have to be good at saying things.' Lean your head against his shoulder. Let the fire burn down. He is very still. Then his cheek rests against the top of your head and you can feel his breathing slow and the tension leave his body one muscle at a time, like a garrison standing down",
         "target": "BOND_RETURN",
         "points": {
-          "rose": 1
+          "ROSE": 1
         }
       }
     ]
@@ -5294,8 +5294,8 @@
         "text": "Reach across the table. Take his shaking hands. Hold them still. He stares at your hands on his. Then he stands. Comes around the table. Stands in front of you and he is taller than you remembered and his eyes are the colour of whatever is underneath authority when authority admits it is not enough. He touches your face. His fingers are tentative. He has not touched another person without purpose in years. 'Tell me this is allowed,' he whispers. 'I need to hear it.'",
         "target": "BOND_RETURN",
         "points": {
-          "rose": 2,
-          "crown": 1
+          "ROSE": 2,
+          "CROWN": 1
         }
       },
       {
@@ -5303,7 +5303,7 @@
         "text": "Stand. Close the distance. 'You are enough. The number does not matter. You matter.' Kiss him before he can construct a counter-argument. He freezes. Then his hands — the shaking hands, the commander's hands — are on your back and he is pulling you in and the kiss is desperate in a way that Caeron is never desperate and the sound he makes against your mouth is the sound of a man who has been holding his breath for years and is finally, finally exhaling",
         "target": "BOND_RETURN",
         "points": {
-          "rose": 2
+          "ROSE": 2
         }
       },
       {
@@ -5311,8 +5311,8 @@
         "text": "Sit with him. Talk about nothing — home, food, the bad poetry Aldric thinks no one knows about. Make him laugh. He resists. Then he does not resist. Then he is laughing and the dispatch is still face-down and the candle burns low and at some point his hand is resting on yours on the table and neither of you moves it",
         "target": "BOND_RETURN",
         "points": {
-          "rose": 1,
-          "crown": 1
+          "ROSE": 1,
+          "CROWN": 1
         }
       }
     ]
@@ -5356,8 +5356,8 @@
         "text": "'Then do not do it gently.' Step into him. He is stiff — a soldier's posture, every muscle armoured — and then your hand is on his chest and you can feel his heart hammering beneath the leather and the scars and the years. 'I am not asking for gentle,' you say. 'I am asking for honest.' He makes a sound. Not words. Something older than words. His hand covers yours on his chest and then his mouth is on yours and the kiss is not gentle — it is raw and desperate and years of loneliness converting into a single point of contact and he is shaking and you are holding him upright and the treeline could be burning and neither of you would notice",
         "target": "BOND_RETURN",
         "points": {
-          "rose": 2,
-          "sword": 1
+          "ROSE": 2,
+          "SWORD": 1
         }
       },
       {
@@ -5365,7 +5365,7 @@
         "text": "Take his hand. The scarred one. Turn it over. Press your lips to the scar on his wrist — gently, deliberately, with the specific tenderness of someone who is saying: this is not a waste. You are not a waste. This is worth something. He is absolutely still. You can feel his pulse under your lips, fast and uneven. When you look up, his face has come apart — the cynicism, the anger, the armour, all of it gone, and underneath is a man who is fifty per cent grief and fifty per cent the sudden, devastating realisation that someone has just touched the worst thing about him and not flinched. 'You—' His voice breaks. He pulls you in. Holds on. Does not let go for a very long time",
         "target": "BOND_RETURN",
         "points": {
-          "rose": 2
+          "ROSE": 2
         }
       },
       {
@@ -5373,8 +5373,8 @@
         "text": "'Sit down. Tell me about the woman in Palanthas. Tell me all of it. Every year since.' Sit beside him against the oak and listen as the fire burns down and the story comes out, not in order, not cleanly, but in the fragments a broken man offers when he has decided to let someone see the pieces. It takes hours. He cries once — silently, briefly, furious about it. You do not comment. When he finishes, the sky is grey with predawn and he looks lighter. Not healed. But lighter. 'No one has ever listened to the whole thing,' he says. 'Thank you.' The word sounds unfamiliar in his mouth. He is learning it",
         "target": "BOND_RETURN",
         "points": {
-          "rose": 1,
-          "crown": 1
+          "ROSE": 1,
+          "CROWN": 1
         }
       }
     ]
@@ -5413,7 +5413,7 @@
         "text": "Stay. All night. She falls asleep against your shoulder sometime around the third hour and you do not move because the weight of her sleeping is the most important thing you have ever carried. When she wakes she is embarrassed. You are not",
         "target": "BOND_RETURN",
         "points": {
-          "rose": 2
+          "ROSE": 2
         }
       },
       {
@@ -5421,7 +5421,7 @@
         "text": "Kiss the top of her head. 'I am here. I do not need anything.' She makes a sound that is either a laugh or a sob or both and her arms go around you and she holds on the way she never allows herself to hold on — not as a healer, not as the steady one, just as a woman who is frightened and tired and has finally found the one person she trusts enough to be both",
         "target": "BOND_RETURN",
         "points": {
-          "rose": 2
+          "ROSE": 2
         }
       },
       {
@@ -5429,8 +5429,8 @@
         "text": "'Tell me about the scar on your left hand. The real story, not the field surgery version.' She tells you. It is a longer story than you expected and it involves a boy she loved when she was sixteen and a window she climbed out of and a knife she grabbed the wrong way in the dark. She is laughing by the end. Properly laughing. The tremor is gone",
         "target": "BOND_RETURN",
         "points": {
-          "rose": 1,
-          "crown": 1
+          "ROSE": 1,
+          "CROWN": 1
         }
       }
     ]
@@ -5473,8 +5473,8 @@
         "text": "The ridge. The moonlight. The woman who sees everything, finally letting herself be seen. Stay until you have both forgotten what precision feels like. The night is very long and neither of you uses it for sleeping and in the morning she will be Sera Nighthollow again, the mask back in place, the assessment running. But she will look at you once, across the camp, and the mask will slip for a half-second, and that half-second will be worth everything",
         "target": "BOND_RETURN",
         "points": {
-          "rose": 2,
-          "sword": 1
+          "ROSE": 2,
+          "SWORD": 1
         }
       },
       {
@@ -5482,7 +5482,7 @@
         "text": "'I see you too.' Tell her what you have observed — the way she checks the perimeter twice when she is nervous, the way she touches the bowstring when she is thinking, the way she looks south and her jaw tightens. Show her that assessment goes both ways. She is very quiet when you finish. Then: 'No one has ever watched me back.' The second kiss is slower. The third is not slow at all",
         "target": "BOND_RETURN",
         "points": {
-          "rose": 2
+          "ROSE": 2
         }
       },
       {
@@ -5490,8 +5490,8 @@
         "text": "Hold her. Not strategically. Not with any angle of approach. Just hold her and let the competence rest for one night. She is stiff at first — her body does not know how to be held without a tactical purpose — and then something releases, a tension she has been carrying since long before you met her, and she fits against you with a sigh that says she has been waiting for someone to make this feel safe",
         "target": "BOND_RETURN",
         "points": {
-          "rose": 1,
-          "crown": 1
+          "ROSE": 1,
+          "CROWN": 1
         }
       }
     ]
@@ -5529,7 +5529,7 @@
         "text": "'Then be here.' Take the notebook. Set it further away. Move closer. 'No framework. No distance. Just here.' She is trembling. Not from cold. You brush the hair from her face and she closes her eyes and when you kiss her it is the quietest, most careful kiss — not because you are uncertain, but because this woman has never let anyone this close and the gentleness is a form of respect. She kisses back. Slowly. Then not slowly. Then the notebook is forgotten and the fire is forgotten and she is holding onto you like the last true thing in a world full of analysis",
         "target": "BOND_RETURN",
         "points": {
-          "rose": 2
+          "ROSE": 2
         }
       },
       {
@@ -5537,8 +5537,8 @@
         "text": "'Write about this. Right now. Not the analysis. The feeling. What it actually feels like.' She stares at you. Opens the notebook. Writes. Her hand is shaking. When she finishes, she reads it aloud — halting, raw, nothing like her dispatches, everything like the truth. When she looks up there are tears on her face and she is smiling and the smile is the most unguarded thing you have ever seen from Tariel Duskmantle",
         "target": "BOND_RETURN",
         "points": {
-          "rose": 2,
-          "crown": 1
+          "ROSE": 2,
+          "CROWN": 1
         }
       },
       {
@@ -5546,7 +5546,7 @@
         "text": "Say nothing. Take her hand. Sit with her in the quiet space where observation ends and presence begins. She laces her fingers through yours. Holds on. The fire burns down and the stars come out and she leans against you and for the first time since you have known her, Tariel Duskmantle is not watching. She is just here",
         "target": "BOND_RETURN",
         "points": {
-          "rose": 1
+          "ROSE": 1
         }
       }
     ]
@@ -5586,7 +5586,7 @@
         "text": "Kiss her. She has written enough. The pen falls somewhere. Neither of you looks for it. The notebook slides off the log. Her hand is on the back of your neck and she kisses the way she writes — precisely, thoroughly, with the focused attention of someone who has been composing this sentence for weeks and is finally putting the pen to the page. The locket presses cold between you and then warms",
         "target": "BOND_RETURN",
         "points": {
-          "rose": 2
+          "ROSE": 2
         }
       },
       {
@@ -5594,8 +5594,8 @@
         "text": "'Read me the second column. The honest one.' She reads it. Her voice in the dark, reading sentences about you that are true and unflinching and kinder than anything she has said aloud. When she finishes, close the notebook. 'Now tell me the parts you did not write down.' She tells you. It takes a long time. She is shaking by the end — not from cold. You hold her hand through all of it and the pen stays on the ground and the night is very long and very honest and neither of you sleeps",
         "target": "BOND_RETURN",
         "points": {
-          "rose": 2,
-          "crown": 1
+          "ROSE": 2,
+          "CROWN": 1
         }
       },
       {
@@ -5603,7 +5603,7 @@
         "text": "Write something else in the third column. Something that makes her laugh — really laugh, the sound she never makes when she thinks anyone important is listening. Then something that does not make her laugh. Then close the notebook. 'Enough writing,' you say. She nods. You sit together until the fire is embers, trading the pen back and forth, filling the margins with things neither of you will say aloud, and at some point her head is on your shoulder and the pen is still and the notebook is full of a conversation that no one will ever read",
         "target": "BOND_RETURN",
         "points": {
-          "rose": 1
+          "ROSE": 1
         }
       }
     ]
@@ -5645,8 +5645,8 @@
         "text": "Show her what empty hands are for. Close the distance. Her breath hitches when your hand finds her waist and then her mouth finds yours and the competitive energy that has been building for months converts into something incandescent. She kisses like she fights — fully committed, no guard, and when you finally break apart she is breathing hard and her eyes are bright and she says, 'Best two out of three,' and she is not talking about the spar",
         "target": "BOND_RETURN",
         "points": {
-          "rose": 2,
-          "sword": 1
+          "ROSE": 2,
+          "SWORD": 1
         }
       },
       {
@@ -5654,7 +5654,7 @@
         "text": "Take her hands. Hold them still. 'You know exactly what to do with them.' She looks at your hands holding hers and her face does something you have never seen — open, unguarded, the competitor gone and just the woman underneath. She steps closer. Presses her forehead against yours. Breathes. 'I never lose,' she whispers. 'And I have completely lost this.' She is shaking. You hold her until she stops",
         "target": "BOND_RETURN",
         "points": {
-          "rose": 2
+          "ROSE": 2
         }
       },
       {
@@ -5662,8 +5662,8 @@
         "text": "Pick up the practice swords. Hand hers back. 'Again. This time without holding back.' The spar that follows is the best either of you has ever fought and when it ends you are both on the ground, breathing hard, laughing, and the distance between you is nothing and the stars are overhead and neither of you moves to stand up",
         "target": "BOND_RETURN",
         "points": {
-          "rose": 1,
-          "sword": 1
+          "ROSE": 1,
+          "SWORD": 1
         }
       }
     ]
@@ -9640,5 +9640,267 @@
       {"letter": "B", "text": "'I need time. This is too much to decide right now.'", "target": "RETURN_TRAVEL"},
       {"letter": "C", "text": "'You're right. I need to choose. Give me until the war ends.'", "target": "RETURN_TRAVEL", "flags": {"romance_choice_pending": true}}
     ]
+  },
+  "OATH_SERATH": {
+    "id": "OATH_SERATH",
+    "title": "THE COMMANDER'S OATH",
+    "location": "Command Tent — Dawn",
+    "prose": [
+      "*Command Tent — First Light*",
+      "Serath has been awake all night. Maps, reports, casualty lists. The weight of command etched into every line of his face. When he sees you enter, something shifts.",
+      "He stands. Slowly. Like a man setting down a burden he's carried too long.",
+      "'I've spent my career telling myself that duty comes first. That personal attachments are liabilities. That a good commander doesn't need... this.' He gestures between you.",
+      "He crosses the tent. Stops in front of you.",
+      "'I was wrong. I've been wrong about a lot of things. But not about you.' His voice is steady now — the voice he uses to give orders that will be obeyed. 'I love you. Not in spite of being a commander. Because of it. Because you make me want to be the kind of leader worth following.'",
+      "He takes both your hands.",
+      "'When this war ends — if we survive — I want to build something with you. A future. Whatever that looks like.'"
+    ],
+    "boxes": [],
+    "choices": [
+      {"letter": "A", "text": "'Then we build it together. Starting now.'", "target": "RETURN_TRAVEL", "romance_oath": true, "romance_comp": "Commander Serath", "points": {"ROSE": 1, "CROWN": 1}},
+      {"letter": "B", "text": "'I care for you. But I can't promise what comes after.'", "target": "RETURN_TRAVEL", "approval": {"Commander Serath": 1}},
+      {"letter": "C", "text": "'Duty has to come first. For both of us. I'm sorry.'", "target": "RETURN_TRAVEL", "flags": {"serath_oath_declined": true}, "points": {"honour": -1}}
+    ]
+  },
+  "OATH_CAERON": {
+    "id": "OATH_CAERON",
+    "title": "THE LORD'S SURRENDER",
+    "location": "Private — Starlight",
+    "prose": [
+      "*Away from Camp — Starlight*",
+      "Caeron has led you to a hilltop. The mask is gone. All of it. He looks younger without it. Frightened. Real.",
+      "'I've spent my whole life building walls,' he says. 'Pride instead of connection. Arrogance instead of vulnerability. I told myself it was strength. It wasn't. It was cowardice.'",
+      "He turns to face you.",
+      "'You tore those walls down. I didn't even notice it happening. One day I was Lord Caeron Ashvale, untouchable and alone. The next I was just... a man who couldn't stop thinking about you.'",
+      "His voice breaks.",
+      "'I don't deserve you. I know that. But I'm asking anyway. I'm asking you to take what's left of me — the real parts, the broken parts — and let me love you with all of it.'",
+      "For the first time since you've known him, Lord Caeron Ashvale looks truly humble."
+    ],
+    "boxes": [],
+    "choices": [
+      {"letter": "A", "text": "'I'll take all of it. The pride and the fear. The lord and the man.'", "target": "RETURN_TRAVEL", "romance_oath": true, "romance_comp": "Lord Caeron Ashvale", "points": {"ROSE": 1}},
+      {"letter": "B", "text": "'What we have doesn't need promises. Let's see where it goes.'", "target": "RETURN_TRAVEL", "approval": {"Lord Caeron Ashvale": 1}},
+      {"letter": "C", "text": "'You deserve someone who can love the lord. I can only see the man.'", "target": "RETURN_TRAVEL", "flags": {"caeron_oath_declined": true}, "points": {"honour": -1}}
+    ]
+  },
+  "OATH_SERA": {
+    "id": "OATH_SERA",
+    "title": "OUT OF SHADOW",
+    "location": "Edge of Dark — Moonrise",
+    "prose": [
+      "*Camp Edge — Moonrise*",
+      "Sera materializes beside you. She's been doing that for months. But tonight she doesn't disappear again.",
+      "'I've lived in shadows my whole life,' she says. 'It's safer there. Easier. No one can hurt you if no one can see you.'",
+      "She steps into the moonlight. Deliberately. Visibly.",
+      "'But I'm tired of hiding. Tired of watching you from the dark and pretending I don't feel what I feel.' Her silver-streaked hair catches the light. Her scar is visible. Everything is visible.",
+      "'I want to stand in the light with you. I want people to see us together and know. I want to stop being a ghost and start being... yours.'",
+      "She's trembling. This is harder for her than any fight.",
+      "'Is that something you want too?'"
+    ],
+    "boxes": [],
+    "choices": [
+      {"letter": "A", "text": "Step into the moonlight with her. 'I want everyone to see.'", "target": "RETURN_TRAVEL", "romance_oath": true, "romance_comp": "Sera Nighthollow", "points": {"ROSE": 1}},
+      {"letter": "B", "text": "'I care for you. But I'm not ready to be seen. Not yet.'", "target": "RETURN_TRAVEL", "approval": {"Sera Nighthollow": 1}},
+      {"letter": "C", "text": "'The shadows suit us both. I'm sorry, Sera.'", "target": "RETURN_TRAVEL", "flags": {"sera_oath_declined": true}, "points": {"honour": -1}}
+    ]
+  },
+  "OATH_VAEL": {
+    "id": "OATH_VAEL",
+    "title": "THE RING",
+    "location": "Training Ground — Dawn",
+    "prose": [
+      "*Training Ground — First Light*",
+      "Vael is waiting for you. Not training. Just waiting. The signet ring is in her hand.",
+      "'My mother earned this,' she says. 'Died for it. The Order that wouldn't accept her gave it to me like a consolation prize.'",
+      "She holds it out.",
+      "'But I don't want it anymore. I don't want to carry her legacy alone. I don't want to prove myself to people who already decided I'm not enough.'",
+      "She presses the ring into your palm.",
+      "'I want to build something new. With you. Not inherited honour — earned honour. Not fighting to be accepted — fighting because we choose to. Together.'",
+      "Her callused hands close around yours.",
+      "'Keep the ring. Or give it back. Either way, I'm choosing you.'"
+    ],
+    "boxes": [],
+    "choices": [
+      {"letter": "A", "text": "Close your hands around hers and the ring. 'Then we carry it together.'", "target": "RETURN_TRAVEL", "romance_oath": true, "romance_comp": "Vael Ashmore", "points": {"SWORD": 1, "ROSE": 1}},
+      {"letter": "B", "text": "'Keep the ring. Your mother earned it. But I'll stand beside you.'", "target": "RETURN_TRAVEL", "approval": {"Vael Ashmore": 1}},
+      {"letter": "C", "text": "'You shouldn't give this up. Not for me. Not for anyone.'", "target": "RETURN_TRAVEL", "flags": {"vael_oath_declined": true}, "points": {"honour": -1}}
+    ]
+  },
+  "OATH_TARIEL": {
+    "id": "OATH_TARIEL",
+    "title": "THE ANSWER",
+    "location": "Quiet Place — Night",
+    "prose": [
+      "*A Quiet Place — Late Night*",
+      "Tariel has been asking questions since the day you met. Tonight, she has an answer.",
+      "'I know what you fight for,' she says. 'I figured that out months ago. What I didn't know — what I couldn't figure out — was what I fight for.'",
+      "She moves closer.",
+      "'I'm a spy. An analyst. A collector of secrets. I've never had anything of my own. Just borrowed truths, borrowed identities, borrowed lives.'",
+      "Her green eyes hold yours.",
+      "'But you're not borrowed. You're real. And when I'm with you, I'm real too.' Her voice softens. 'I want to stop collecting secrets and start keeping one. A real one. Ours.'",
+      "She takes your hand.",
+      "'I love you. That's my answer. What's yours?'"
+    ],
+    "boxes": [],
+    "choices": [
+      {"letter": "A", "text": "'My answer is yes. To all of it. To you.'", "target": "RETURN_TRAVEL", "romance_oath": true, "romance_comp": "Tariel Duskmantle", "points": {"ROSE": 1, "CROWN": 1}},
+      {"letter": "B", "text": "'I don't have an answer yet. But I want to find it with you.'", "target": "RETURN_TRAVEL", "approval": {"Tariel Duskmantle": 1}},
+      {"letter": "C", "text": "'Some questions are better left unanswered. This is one of them.'", "target": "RETURN_TRAVEL", "flags": {"tariel_oath_declined": true}, "points": {"honour": -1}}
+    ]
+  },
+  "OATH_LYSANDER": {
+    "id": "OATH_LYSANDER",
+    "title": "THE DISGRACED KNIGHT'S VOW",
+    "location": "Firelight — Quiet",
+    "prose": [
+      "*Camp — By the Fire*",
+      "Lysander has been sharpening his blade for an hour. He hasn't made a sound. Finally, he sets it down.",
+      "'I lost my honour once,' he says. 'Burned my own tabard rather than let them take it. Spent years thinking that was the end of my story.'",
+      "He stands.",
+      "'But honour isn't something they can take. It's something you carry. Something you choose, every day, with every action.' He crosses to you. 'And the most honourable thing I can do — the bravest, the truest — is this.'",
+      "He kneels. A knight's kneel. The one he hasn't used in years.",
+      "'I love you. Not as a disgraced knight. Not as a broken man. As whatever I am now — whatever you've made me. I'm offering you everything I have left. My sword. My heart. My oath.'",
+      "His weathered face is steady. Certain.",
+      "'Will you accept it?'"
+    ],
+    "boxes": [],
+    "choices": [
+      {"letter": "A", "text": "Kneel with him. 'I accept. And I give you mine in return.'", "target": "RETURN_TRAVEL", "romance_oath": true, "romance_comp": "Lysander Graves", "points": {"SWORD": 1, "ROSE": 1}},
+      {"letter": "B", "text": "'Rise, Lysander. You don't need to kneel. Not to me.'", "target": "RETURN_TRAVEL", "approval": {"Lysander Graves": 1}},
+      {"letter": "C", "text": "'Your honour belongs to you. I can't be part of that oath.'", "target": "RETURN_TRAVEL", "flags": {"lysander_oath_declined": true}, "points": {"honour": -1}}
+    ]
+  },
+  "EPILOGUE_ROMANCE_ALDRIC": {
+    "id": "EPILOGUE_ROMANCE_ALDRIC",
+    "title": "EPILOGUE — ALDRIC",
+    "location": "After",
+    "prose": [
+      "*One Year Later*",
+      "The war changed everything. The war changed nothing.",
+      "Aldric still trains at dawn. Still makes that same joke about his scar. Still looks at you like you're the only person in the room, even when the room is full of knights.",
+      "But now there's a ring on his finger. And one on yours.",
+      "You build a life together in the years that follow. Not perfect — nothing is perfect after a war. But real. He teaches young squires the forms he learned from his father. You teach them the forms you learned from him.",
+      "Sometimes, late at night, he still talks about the war. The price of doing the right thing. You listen. You always listen.",
+      "'I used to be afraid I'd become my father,' he says once. 'Gone before I was ready. Leaving you alone.'",
+      "'You're not him,' you say. 'You came home.'",
+      "He holds you tighter.",
+      "'Every time.'"
+    ],
+    "boxes": [],
+    "choices": [{"letter": "A", "text": "Continue.", "target": "EPILOGUE_END"}]
+  },
+  "EPILOGUE_ROMANCE_THESSALY": {
+    "id": "EPILOGUE_ROMANCE_THESSALY",
+    "title": "EPILOGUE — THESSALY",
+    "location": "After",
+    "prose": [
+      "*Three Years Later*",
+      "The locket sits on her writing desk, open now. She looks at it sometimes — her mother's face, preserved in miniature. She doesn't cry anymore. The grief has softened into something else. Memory. Gratitude.",
+      "You found her mother's village. What was left of it. There was a grave, tended by an old woman who remembered. Thessaly wept for three days. Then she wrote the story down.",
+      "She's written many stories since. The war. The march. The people who didn't come home. Her books sit in libraries across Solamnia now.",
+      "But her favorite story is the one she's still writing. The one about a copper-haired scholar who learned to open doors she'd kept locked. About a knight who stayed.",
+      "'Will you read it?' she asks, handing you pages still wet with ink.",
+      "'Always.'",
+      "Her smile is the same one she gave you the first time. Sharp. Guarded. Slowly opening.",
+      "Some lockets take years to unlock."
+    ],
+    "boxes": [],
+    "choices": [{"letter": "A", "text": "Continue.", "target": "EPILOGUE_END"}]
+  },
+  "EPILOGUE_ROMANCE_MIRA": {
+    "id": "EPILOGUE_ROMANCE_MIRA",
+    "title": "EPILOGUE — MIRA",
+    "location": "After",
+    "prose": [
+      "*Five Years Later*",
+      "The clinic in Oakheart Grove has grown. Refugees from the war, settlers building new lives, children who never knew the Dragon Armies. Mira heals them all.",
+      "But she doesn't do it alone anymore.",
+      "You learned the herbs. The poultices. The quiet words that help when medicine can't. Not a healer — never that — but a partner. Someone to hold the frightened hands while she works.",
+      "At night, in your small cottage at the edge of the grove, she rests her head on your shoulder and tells you about the ones she couldn't save. The old weight. The constant companion.",
+      "'It's lighter now,' she says once. 'Carrying it with you.'",
+      "There are children in the village who call you both by name. There are grandmothers who bless your union. There is a garden where she grows the herbs and you grow the vegetables and sometimes you just sit together and watch things bloom.",
+      "The war took so much.",
+      "This, it could not take."
+    ],
+    "boxes": [],
+    "choices": [{"letter": "A", "text": "Continue.", "target": "EPILOGUE_END"}]
+  },
+  "EPILOGUE_HONOUR_HIGH": {
+    "id": "EPILOGUE_HONOUR_HIGH",
+    "title": "EPILOGUE — THE EXEMPLARY KNIGHT",
+    "location": "After",
+    "prose": [
+      "*The Ceremony — High Clerist's Tower*",
+      "They speak your name with reverence now.",
+      "The war is over. The Dragon Armies scattered. And when the Grand Master calls for knights whose honour never wavered, yours is the first name spoken.",
+      "You kneel in the great hall where Huma himself once knelt. The blade that touches your shoulder is ancient, blessed, heavy with the weight of every knight who came before.",
+      "'Rise, Knight of the Rose.'",
+      "The Order of the Rose. The highest calling. Wisdom, justice, sacrifice — the virtues you chose when easier paths beckoned.",
+      "Your companions are there. The ones who survived. They watched you make the hard choices. Spare the enemy. Show mercy. Put honour above expedience. They know what it cost.",
+      "But they also know what it built.",
+      "The world is watching a knight who proved the Measure still matters. Who showed that honour isn't a burden — it's a gift.",
+      "Est Sularus oth Mithas.",
+      "My honour is my life."
+    ],
+    "boxes": [],
+    "choices": [{"letter": "A", "text": "Continue.", "target": "EPILOGUE_END"}]
+  },
+  "EPILOGUE_HONOUR_LOW": {
+    "id": "EPILOGUE_HONOUR_LOW",
+    "title": "EPILOGUE — THE PRAGMATIST",
+    "location": "After",
+    "prose": [
+      "*The Road — Alone*",
+      "The war is over. You survived. That's more than many can say.",
+      "The Order... has opinions about your methods. The prisoner you questioned. The supplies you took. The lines you crossed when crossing them seemed necessary.",
+      "You're not expelled. Not exactly. But you're not invited to the ceremonies either. Not praised in the great halls. Not held up as an example.",
+      "'A knight should be better than the times demand,' the Grand Master said. 'You were exactly as good as they demanded. No more.'",
+      "There's truth in that. More truth than you'd like.",
+      "The road stretches ahead. New battles. New choices. Maybe this time you'll find the path you missed before. Maybe this time honour won't feel like a luxury you can't afford.",
+      "Or maybe pragmatism is its own kind of honour. The honour of surviving. The honour of winning.",
+      "The debate continues. In your head. In your heart.",
+      "The road doesn't care. The road just goes on."
+    ],
+    "boxes": [],
+    "choices": [{"letter": "A", "text": "Continue.", "target": "EPILOGUE_END"}]
+  },
+  "EPILOGUE_COMPANION_DEATHS": {
+    "id": "EPILOGUE_COMPANION_DEATHS",
+    "title": "EPILOGUE — THE FALLEN",
+    "location": "After",
+    "prose": [
+      "*The Memorial — Knight's Spur*",
+      "The names are carved into stone. Too many names.",
+      "You visit when you can. Bring flowers. Stand in silence. Remember faces that will never age now, voices that will never speak again.",
+      "The war took them. One by one. In battles you fought together, in moments you couldn't prevent. Each loss carved something out of you that will never grow back.",
+      "But you survived. You carry their stories now — the only one left who knows how they laughed, how they fought, how they loved. The last witness to lives that mattered.",
+      "'They didn't die for nothing,' someone says at the memorial. 'They died for Solamnia.'",
+      "You don't correct them. But you know the truth.",
+      "They died for you. For the person beside them. For one more dawn, one more chance, one more moment of holding the line.",
+      "Abstract causes don't bleed. People do.",
+      "You remember. You always will."
+    ],
+    "boxes": [],
+    "choices": [{"letter": "A", "text": "Continue.", "target": "EPILOGUE_END"}]
+  },
+  "EPILOGUE_END": {
+    "id": "EPILOGUE_END",
+    "title": "THE END",
+    "location": "After",
+    "prose": [
+      "*The story continues...*",
+      "This is not the end. It is never the end.",
+      "The Dragon Armies will regroup. New threats will rise. The darkness that Takhisis brought to Krynn will linger in shadows and hearts for generations.",
+      "But so will the light.",
+      "You have proven that one person can make a difference. That choices matter. That honour — however you define it — is worth fighting for.",
+      "The Companions of the Lance will need allies in the battles to come. Knights whose oaths mean something. Warriors who know the cost of war and pay it anyway.",
+      "Perhaps, when the call comes, you will answer again.",
+      "Until then: rest. Heal. Remember.",
+      "And keep the faith.",
+      "**THE END**",
+      "*Thank you for playing The Knight's Oath.*"
+    ],
+    "boxes": [],
+    "choices": []
   }
 }

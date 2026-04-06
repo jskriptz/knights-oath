@@ -95,6 +95,7 @@ const eventPrefixes = [
   'CONFRONT_',  // Confrontation scenes (triggered by low approval)
   'GIFT_',      // Gift scenes (triggered by max approval)
   'CEREMONY_',  // Ceremony variants (triggered by order point ties)
+  'EPILOGUE_',  // Epilogue variations (triggered by endgame state)
   'F1_', 'F2_', 'F3_', 'F4_'  // Fighter side content
 ];
 
