@@ -292,7 +292,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**ROLL REQUIRED:** Medicine (+1) | WIS | DC 12\n**SUCCESS (roll 12+):** Clean technique. Serath will be mobile by morning. +1 Serath approval, +1 ROSE.\n**FAILURE (roll 1-11):** Adequate work. They will be slow for two days.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**ROLL REQUIRED:** Medicine (+1) | WIS | DC 12\n**SUCCESS (roll 12+):** Clean technique. Serath watches your hands the whole time — not checking your work, just watching. 'You have done this before,' they say. It is not quite a question. When you finish, they flex the joint experimentally and nod once. By morning they will be mobile.\n**FAILURE (roll 1-11):** Adequate work. The bandage holds, but Serath will move carefully for a day or two. They don't complain. They wouldn't.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
       },
       {
         "type": "romance",
@@ -764,7 +764,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Composure (WIS Save) (+1) | WIS | DC 11\n**SUCCESS (roll 11+):** Your face stays neutral. Caeron holds your gaze a half-second longer. +1 CROWN — discipline under pressure.\n**FAILURE (roll 1-10):** Something crosses your expression. No penalty, but it was seen."
+        "text": "**OPTIONAL ROLL:** Composure (WIS Save) (+1) | WIS | DC 11\n**SUCCESS (roll 11+):** Your face stays neutral. Caeron holds your gaze a half-second longer than necessary — measuring, perhaps. Or acknowledging. With him, it is hard to tell the difference.\n**FAILURE (roll 1-10):** Something crosses your expression. Caeron's eyes flick to it and away. He has filed it somewhere. Everything gets filed with him.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
       }
     ],
     "choices": [
@@ -1063,7 +1063,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**ROLL REQUIRED:** Athletics (Sparring Bout) (+3) | STR | DC 15\n**SUCCESS (roll 15+):** You disarm Aldric on the third pass.. The panel leans forward.\n**FAILURE (roll 1-14):** Aldric takes the bout. +1 SWORD — they evaluate effort, not only outcome.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**ROLL REQUIRED:** Athletics (Sparring Bout) (+3) | STR | DC 15\n**SUCCESS (roll 15+):** You disarm Aldric on the third pass. His blade clatters across the stones and for a moment there is silence. Then Aldric laughs — genuine, surprised — and the panel leans forward.\n**FAILURE (roll 1-14):** Aldric takes the bout. His blade touches your chest a half-second before yours touches his. He nods once — respect for the attempt. The panel makes notes.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
       },
       {
         "type": "roll",
@@ -1230,7 +1230,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Perception (+2) | WIS | DC 12\n**SUCCESS (roll 12+):** Boot prints south of the verge — someone left the road in a hurry recently. You'll know what to look for later. +1 Honour.\n**FAILURE (roll 1-11):** The road looks clear."
+        "text": "**OPTIONAL ROLL:** Perception (+2) | WIS | DC 12\n**SUCCESS (roll 12+):** Boot prints south of the verge — someone left the road in a hurry recently. Dragon Army standard issue, but the stride is wrong. Too short for a soldier in formation. Someone running. Someone alone.\n**FAILURE (roll 1-11):** The road looks clear. Whatever passed this way left no trace you can read.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
       }
     ],
     "choices": [
@@ -1569,7 +1569,7 @@
       },
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Persuasion (CHA) (+0) | CHA | DC 14\n**SUCCESS (roll 14+):** You articulate a response that accounts for the Measure's tension between law and protection. +1 CROWN, +1 Tariel approval.\n**FAILURE (roll 1-13):** 'The standard answer,' she says, without contempt.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Persuasion (CHA) (+0) | CHA | DC 14\n**SUCCESS (roll 14+):** Your response accounts for the tension between law and protection — not resolving it, but naming it honestly. Tariel tilts her head slightly. 'You actually thought about that,' she says. It sounds like the beginning of something.\n**FAILURE (roll 1-13):** 'The standard answer,' she says, without contempt. 'It is not wrong. Just... well-rehearsed.'\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
       }
     ],
     "choices": [
