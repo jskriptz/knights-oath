@@ -8856,6 +8856,8 @@ function CampModal({gs,sceneId,onDone,onCancel}){
   const[longRestDone,setLongRestDone]=useState(false);
   const[stash,setStash]=useState(gs.campStash||[]);
   const[inv,setInv]=useState(gs.inventory||[]);
+  const[forageResult,setForageResult]=useState(null); // {success,roll,survBonus,total,found,type:'forage'|'hunt'}
+  const[foraging,setForaging]=useState(false);
   const shortsToday=gs.shortRestsToday||0;
   const longTaken=gs.longRestTaken||false;
   const dayNum=gs.dayNumber||1;
@@ -8866,7 +8868,7 @@ function CampModal({gs,sceneId,onDone,onCancel}){
   const atMax=hp>=d.maxHp;
 
   const spendHitDie=()=>{
-    if(remaining<=0||atMax||rolling)return;
+    if(remaining<=0||atMax||rolling||forageResult)return;
     setRolling(true);let c=0;
     const iv=setInterval(()=>{setDisplay(Math.floor(Math.random()*d.hitDie)+1);if(++c>=10){clearInterval(iv);
       const roll=Math.floor(Math.random()*d.hitDie)+1;
@@ -8878,13 +8880,46 @@ function CampModal({gs,sceneId,onDone,onCancel}){
     }},getCombatDelay());
   };
 
+  // Forage (short rest): DC 12 Survival, 1d4 rations
+  const doForage=()=>{
+    if(foraging||forageResult||rolls.length>0)return;
+    setForaging(true);
+    let c=0;const iv=setInterval(()=>{setDisplay(Math.floor(Math.random()*20)+1);if(++c>=10){clearInterval(iv);
+      const roll=Math.floor(Math.random()*20)+1;
+      const survBonus=(d.wisMod||0)+(d.skills?.Survival||0);
+      const total=roll+survBonus;
+      const success=total>=12;
+      const found=success?Math.floor(Math.random()*4)+1:0;
+      setForageResult({success,roll,survBonus,total,found,type:'forage'});
+      setForaging(false);setDisplay(null);
+    }},getCombatDelay());
+  };
+
+  // Hunt (long rest): DC 15 Survival, 2d4 rations + chance of water
+  const doHunt=()=>{
+    if(foraging||forageResult)return;
+    setForaging(true);
+    let c=0;const iv=setInterval(()=>{setDisplay(Math.floor(Math.random()*20)+1);if(++c>=10){clearInterval(iv);
+      const roll=Math.floor(Math.random()*20)+1;
+      const survBonus=(d.wisMod||0)+(d.skills?.Survival||0);
+      const total=roll+survBonus;
+      const success=total>=15;
+      const found=success?(Math.floor(Math.random()*4)+1+Math.floor(Math.random()*4)+1):0; // 2d4
+      const waterFound=success&&roll>=15; // Nat 15+ also finds water source
+      setForageResult({success,roll,survBonus,total,found,waterFound,type:'hunt'});
+      setForaging(false);setDisplay(null);
+    }},getCombatDelay());
+  };
+
   const finishShortRest=()=>{
-    const newSW=Math.min((gs.secondWindUsed||0)>0?(gs.secondWindUsed-1):0,0); // Regain 1 SW use
-    const newAS=false; // Action Surge resets
+    const rationsGained=forageResult?.found||0;
     onDone({
-      hp,hitDiceUsed:hdUsed,shortRestsToday:shortsToday+1,
+      hp:forageResult?gs.hp:hp, // No healing if foraged
+      hitDiceUsed:hdUsed,
+      shortRestsToday:shortsToday+1,
       secondWindUsed:Math.max(0,(gs.secondWindUsed||0)-1),
-      actionSurgeUsed:false
+      actionSurgeUsed:false,
+      rations:(gs.rations||0)+rationsGained
     });
   };
 
@@ -8893,6 +8928,8 @@ function CampModal({gs,sceneId,onDone,onCancel}){
     const halfHd=Math.ceil(d.hitDiceTotal/2);
     const newHdUsed=Math.max(0,hdUsed-halfHd);
     const lohMax=gs.cls==='Paladin'?5*gs.level:0;
+    const rationsGained=forageResult?.found||0;
+    const waterGained=forageResult?.waterFound?3:0; // Refill waterskin
     setLongRestDone(true);
     SoundManager.play('levelup');
     onDone({
@@ -8909,7 +8946,9 @@ function CampModal({gs,sceneId,onDone,onCancel}){
       spellSlots4thUsed:0,
       spellSlots5thUsed:0,
       layOnHandsPool:lohMax,
-      exhaustion:Math.max(0,(gs.exhaustion||0)-1)
+      exhaustion:Math.max(0,(gs.exhaustion||0)-1),
+      rations:(gs.rations||0)+rationsGained,
+      waterskinUses:waterGained?(gs.waterskinUses||0)+waterGained:gs.waterskinUses
     });
   };
 
@@ -8939,18 +8978,23 @@ function CampModal({gs,sceneId,onDone,onCancel}){
     return e('div',{className:'modal-overlay'},
       e('div',{className:'modal-box rest-modal'},
         e('h2',{className:'gold',style:{marginBottom:4}},'SHORT REST'),
-        e('p',{style:{fontSize:13,color:'var(--text-dim)',marginBottom:12}},'Spend Hit Dice to recover HP. Action Surge will reset.'),
+        e('p',{style:{fontSize:13,color:'var(--text-dim)',marginBottom:12}},forageResult?'You spent the rest foraging.':'Spend Hit Dice to heal, or forage for rations (skips healing).'),
         e('div',{className:'rest-stats'},
           e('div',{className:'rest-stat'},e('span',{className:'rest-label'},'HP'),e('span',{className:'rest-val'},hp+' / '+d.maxHp)),
           e('div',{className:'rest-stat'},e('span',{className:'rest-label'},'Hit Dice'),e('span',{className:'rest-val'},remaining+' / '+d.hitDiceTotal+' (d'+d.hitDie+')'))),
-        rolls.length?e('div',{className:'rest-rolls'},rolls.map((r,i)=>
+        forageResult?e('div',{className:'rest-rolls'},
+          e('div',{className:'rest-roll-row'},'Survival: d20('+forageResult.roll+') + '+forageResult.survBonus+' = '+forageResult.total+(forageResult.success?' ✔':' ✘')),
+          forageResult.success?e('div',{style:{color:'var(--green)'}},'Found '+forageResult.found+' rations!'):e('div',{style:{color:'var(--text-dim)'}},'Found nothing.')
+        ):null,
+        !forageResult&&rolls.length?e('div',{className:'rest-rolls'},rolls.map((r,i)=>
           e('div',{key:i,className:'rest-roll-row'},'d'+d.hitDie+': '+r.roll+' + '+r.conMod+' CON = '+r.heal+' HP healed'))):null,
-        rolling?e('div',{className:'rest-rolling'},e('span',{className:'roll-anim'},display)):null,
-        totalHealed>0?e('div',{style:{fontSize:13,color:'var(--gold)',margin:'8px 0'}},'Total healed: '+totalHealed+' HP'):null,
-        e('div',{className:'confirm-btns',style:{marginTop:12}},
-          remaining>0&&!atMax?e('button',{className:'gold-btn',onClick:spendHitDie,disabled:rolling},'Spend Hit Die (d'+d.hitDie+' + '+d.conMod+')'):null,
+        rolling||foraging?e('div',{className:'rest-rolling'},e('span',{className:'roll-anim'},display)):null,
+        totalHealed>0&&!forageResult?e('div',{style:{fontSize:13,color:'var(--gold)',margin:'8px 0'}},'Total healed: '+totalHealed+' HP'):null,
+        e('div',{className:'confirm-btns',style:{marginTop:12,flexWrap:'wrap',gap:8}},
+          !forageResult&&rolls.length===0?e('button',{className:'gold-btn',onClick:doForage,disabled:foraging,style:{flex:'1 1 auto'}},'🌿 Forage (DC 12)'):null,
+          !forageResult&&remaining>0&&!atMax?e('button',{className:'gold-btn',onClick:spendHitDie,disabled:rolling||foraging,style:{flex:'1 1 auto'}},'Spend Hit Die'):null,
           e('button',{className:'ghost-btn',onClick:()=>setMode(null)},'Back'),
-          e('button',{className:remaining>0&&!atMax?'ghost-btn':'gold-btn',onClick:finishShortRest},atMax?'Fully Rested':'Finish Rest'))));
+          e('button',{className:(forageResult||rolls.length||atMax)?'gold-btn':'ghost-btn',onClick:finishShortRest},forageResult?(forageResult.found?'Take Rations →':'Continue →'):atMax?'Fully Rested →':rolls.length?'Done →':'Skip Rest'))));
   }
 
   // Long rest mode
@@ -8958,15 +9002,21 @@ function CampModal({gs,sceneId,onDone,onCancel}){
     return e('div',{className:'modal-overlay'},
       e('div',{className:'modal-box rest-modal'},
         e('h2',{className:'gold',style:{marginBottom:4}},'LONG REST'),
-        e('p',{style:{fontSize:13,color:'var(--text-dim)',marginBottom:12}},'You settle in for a full night\'s rest. Dawn brings renewal.'),
+        e('p',{style:{fontSize:13,color:'var(--text-dim)',marginBottom:12}},forageResult?'You spent time hunting before settling in for the night.':'You settle in for a full night\'s rest. Dawn brings renewal.'),
         e('div',{className:'rest-stats',style:{marginBottom:12}},
-          e('div',{className:'rest-stat'},e('span',{className:'rest-label'},'HP'),e('span',{className:'rest-val'},gs.hp+' \u2192 '+d.maxHp)),
+          e('div',{className:'rest-stat'},e('span',{className:'rest-label'},'HP'),e('span',{className:'rest-val'},gs.hp+' → '+d.maxHp)),
           e('div',{className:'rest-stat'},e('span',{className:'rest-label'},'Spell Slots'),e('span',{className:'rest-val'},'Restored')),
           gs.cls==='Paladin'?e('div',{className:'rest-stat'},e('span',{className:'rest-label'},'Lay on Hands'),e('span',{className:'rest-val'},(5*gs.level)+' pool')):null,
           e('div',{className:'rest-stat'},e('span',{className:'rest-label'},'Hit Dice'),e('span',{className:'rest-val'},'+'+Math.ceil(d.hitDiceTotal/2)+' regained'))),
-        e('div',{className:'confirm-btns',style:{marginTop:12}},
+        forageResult?e('div',{className:'rest-rolls',style:{marginBottom:12}},
+          e('div',{className:'rest-roll-row'},'Survival: d20('+forageResult.roll+') + '+forageResult.survBonus+' = '+forageResult.total+(forageResult.success?' ✔':' ✘')),
+          forageResult.success?e('div',{style:{color:'var(--green)'}},'Caught '+forageResult.found+' rations!'+(forageResult.waterFound?' Found a water source (+3 waterskin)':'')):e('div',{style:{color:'var(--text-dim)'}},'The hunt was unsuccessful.')
+        ):null,
+        foraging?e('div',{className:'rest-rolling'},e('span',{className:'roll-anim'},display)):null,
+        e('div',{className:'confirm-btns',style:{marginTop:12,flexWrap:'wrap',gap:8}},
+          !forageResult?e('button',{className:'gold-btn',onClick:doHunt,disabled:foraging,style:{flex:'1 1 auto'}},'🦌 Hunt (DC 15)'):null,
           e('button',{className:'ghost-btn',onClick:()=>setMode(null)},'Back'),
-          e('button',{className:'gold-btn',onClick:doLongRest},'Rest Until Dawn'))));
+          e('button',{className:'gold-btn',onClick:doLongRest,disabled:foraging},forageResult?(forageResult.found?'Take Spoils & Rest':'Rest Until Dawn'):'Rest Until Dawn'))));
   }
 
   // Stash mode
