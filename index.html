@@ -353,6 +353,20 @@ body.high-contrast .box{border-width:2px}body.high-contrast button{border-width:
 .companion-tag.romance{background:rgba(199,74,126,.2);color:#f0a0c8;border-color:rgba(199,74,126,.4)}
 .companion-mini-token{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#1a3a4a 0%,#0a2a3a 100%);border:1px solid #3498db;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#5dade2;flex-shrink:0}
 
+/* Relationship tracker */
+.relationship-tracker{display:flex;flex-direction:column;gap:6px;padding:8px 0}
+.rel-row{display:flex;align-items:center;gap:6px}
+.rel-name{font-size:11px;color:var(--text-dim);min-width:60px}
+.rel-bar-bg{flex:1;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
+.rel-bar{height:100%;border-radius:3px;transition:width .3s}
+.rel-label{font-size:10px;min-width:50px;text-align:right}
+
+/* Quest log */
+.quest-log{display:flex;flex-direction:column;gap:6px;padding:6px 0}
+.quest-item{background:rgba(201,168,76,.06);border-left:2px solid var(--gold-dim);padding:6px 10px;border-radius:0 4px 4px 0}
+.quest-name{display:block;font-size:12px;font-weight:600;color:var(--gold)}
+.quest-desc{display:block;font-size:11px;color:var(--text-dim);margin-top:2px}
+
 /* Companion tooltip */
 .companion-tooltip .comp-meta{grid-template-columns:1fr;gap:8px}
 .companion-tooltip .comp-romance-info{font-size:13px;color:var(--pink);padding:10px 18px;border-top:1px solid var(--border)}
@@ -7227,6 +7241,39 @@ function Sidebar({gs,onSave,onMenu,onSettings,saveMsg}){
         Object.values(gs.godSigns||{}).every(v=>v===0)?e('div',{className:'god-sign-empty'},'No signs yet'):null)
     ):null,
     gs.companions.length?e(React.Fragment,null,e('h3',null,'Companions'),e('div',{className:'companion-list'},gs.companions.map(c=>e(CompanionTag,{key:c,name:c,romance:gs.romances?.[c],onView:(n,r)=>{setSideOpen(false);setCompPopup({name:n,romance:r})}})))):null,
+    // Relationship tracker
+    gs.companions.length&&gs.approval?e(React.Fragment,null,
+      e('h3',null,'Relationships'),
+      e('div',{className:'relationship-tracker'},gs.companions.map(c=>{
+        const appr=(gs.approval||{})[c]||0;const rom=gs.romances?.[c];
+        const isRom=rom&&!['Friend','Distant','Cold','Observer','Hostile'].includes(rom);
+        const barPct=Math.min(100,Math.max(0,((appr+5)/13)*100)); // -5 to +8 range
+        const color=appr>=6?'var(--green)':appr>=3?'var(--gold)':appr>=0?'var(--text-dim)':appr>=-2?'var(--orange)':'var(--red)';
+        const label=appr>=6?'Devoted':appr>=3?'Trusted':appr>=0?'Neutral':appr>=-2?'Wary':'Hostile';
+        return e('div',{key:c,className:'rel-row'},
+          e('span',{className:'rel-name'},c.split(' ')[0]+(isRom?' ♡':'')),
+          e('div',{className:'rel-bar-bg'},e('div',{className:'rel-bar',style:{width:barPct+'%',background:color}})),
+          e('span',{className:'rel-label',style:{color}},label));
+      }))
+    ):null,
+    // Quest log
+    (()=>{
+      const quests=CAMPAIGN_RULES?.questObjectives||[];
+      const history=gs.history||[];
+      const visitedScenes=new Set(history.map(h=>(h.match(/^(\w+):/)||[])[1]).filter(Boolean));
+      const active=quests.filter(q=>{
+        if(q.endFlag&&gs.flags?.[q.endFlag])return false; // Completed
+        if(q.flag&&!gs.flags?.[q.flag])return false; // Not started (requires flag)
+        if(q.startScene&&!visitedScenes.has(q.startScene))return false; // Not reached yet
+        return true;
+      });
+      return active.length?e(React.Fragment,null,
+        e('h3',null,'Objectives'),
+        e('div',{className:'quest-log'},active.map(q=>e('div',{key:q.id,className:'quest-item'+(q.endFlag&&gs.flags?.[q.endFlag]?' complete':'')},
+          e('span',{className:'quest-name'},q.name),
+          e('span',{className:'quest-desc'},q.desc))))
+      ):null;
+    })(),
     gs.inventory.length?e(React.Fragment,null,e('h3',null,'Inventory'),e('div',{className:'inv-list'},gs.inventory.map(it=>e('div',{key:it,className:'inv-item'},it)))):null,
     (()=>{
       const weight=calcCarryWeight(gs);
@@ -9569,6 +9616,17 @@ function App(){
       if(isNight&&(ns.torches||0)>0){ns.torches=ns.torches-1;ns.history.push('Used 1 torch for the night. ('+(ns.torches)+' remaining)')}
       // Mount heals on long rest
       if(ns.mount&&ns.mount.hp<ns.mount.maxHp){ns.mount={...ns.mount,hp:ns.mount.maxHp}}}
+    // Travel consumption: consume rations/water when entering travel scenes
+    const travelScenes=CAMPAIGN_RULES?.travelScenes||[];
+    if(travelScenes.includes(id)&&!ns.awardedScenes['travel_'+id]){
+      ns.awardedScenes['travel_'+id]=true;
+      // Consume 1 ration during travel
+      if((ns.rations||0)>0){ns.rations=ns.rations-1}
+      else{ns.exhaustion=(ns.exhaustion||0)+1;ns.history.push('No rations during march! +1 Exhaustion.')}
+      // Consume 1 waterskin use during travel (thirst)
+      if((ns.waterskinUses||0)>0){ns.waterskinUses=ns.waterskinUses-1}
+      else{ns.exhaustion=(ns.exhaustion||0)+1;ns.history.push('No water during march! +1 Exhaustion.')}
+    }
     const wageM=allBoxText.match(/(?:WAGES?|stipend|field.*pay|march.*pay)[^]*?(\d+)\s*stl/i);if(wageM&&!ns.awardedScenes['wage_'+id]){ns.gold+=(parseInt(wageM[1])||0);ns.awardedScenes['wage_'+id]=true;SoundManager.play('gold')}
     s.boxes.forEach(b=>{
       // Auto-set story flags from scene content

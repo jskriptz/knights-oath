@@ -2125,5 +2125,17 @@
     {"flag": "vogler_defended", "title": "Defender of Vogler"},
     {"flag": "dragon_slayer", "title": "Dragonslayer"},
     {"scene": "DISGRACE", "title": "Disgraced"}
+  ],
+  "travelScenes": [
+    "30", "31", "32", "33", "34", "35", "36", "37", "38", "39",
+    "40", "41", "42", "43", "44", "45", "46", "47", "48", "49",
+    "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60"
+  ],
+  "questObjectives": [
+    {"id": "march", "name": "March to Vogler", "desc": "Escort the refugee column south to the village of Vogler", "startScene": "30", "endScene": "56"},
+    {"id": "dispatch", "name": "Dispatch Pouch", "desc": "Deliver the sealed dispatch to Commander Serath", "flag": "dispatch_kept", "endFlag": "dispatch_delivered"},
+    {"id": "knighthood", "name": "Earn Your Knighthood", "desc": "Prove yourself worthy of the Order through deeds", "startScene": "1", "endFlag": "knighted"},
+    {"id": "aldric_trust", "name": "Aldric's Trust", "desc": "Earn the respect of your fellow squire", "flag": "aldric_met", "endFlag": "aldric_trust"},
+    {"id": "vogler_defense", "name": "Defend Vogler", "desc": "Protect the village from the Dragon Army", "startScene": "56", "endFlag": "vogler_defended"}
   ]
 }
