@@ -9185,5 +9185,172 @@
         "flags": {"kiri_jolith_test": true}
       }
     ]
+  },
+  "DEPTH_CAERON_PRIDE": {
+    "id": "DEPTH_CAERON_PRIDE",
+    "title": "THE MASK",
+    "location": "Camp",
+    "prose": [
+      "*Camp — After Dark*",
+      "Lord Caeron sits apart from the others, methodically cleaning his already immaculate armor. The firelight catches the silver filigree — House Ashvale's mark.",
+      "'They think I'm arrogant.' He doesn't look up. 'I am. It's easier than the alternative.'",
+      "He sets down the cloth.",
+      "'My father lost everything in the Cataclysm. Not land — we kept the name, the titles, the hollow prestige. He lost his *certainty*. The gods he prayed to went silent. The order he served became a joke. He spent his last years drunk and raging at a sky that wouldn't answer.'",
+      "Caeron's jaw tightens.",
+      "'So I built walls. Made sure no one could see the doubt underneath. If I act like I'm better than everyone, maybe I'll start to believe it. Maybe they will too.' He finally meets your eyes. 'It's exhausting. Pretending to be unbreakable when you're held together with pride and spite.'"
+    ],
+    "boxes": [],
+    "choices": [
+      {"letter": "A", "text": "'The fact that you can admit it — that's real strength. Not the armor.'", "target": "RETURN_TRAVEL", "approval": {"Lord Caeron Ashvale": 2}},
+      {"letter": "B", "text": "'We're all pretending. The Measure is just structured pretending.'", "target": "RETURN_TRAVEL", "approval": {"Lord Caeron Ashvale": 1}},
+      {"letter": "C", "text": "Offer him a drink. Some truths are easier with wine.", "target": "RETURN_TRAVEL", "approval": {"Lord Caeron Ashvale": 2}}
+    ]
+  },
+  "DEPTH_SERA_SHADOWS": {
+    "id": "DEPTH_SERA_SHADOWS",
+    "title": "THE DEBT",
+    "location": "Camp Edge",
+    "prose": [
+      "*Camp — Third Watch*",
+      "Sera appears beside you like smoke. You've stopped being startled by it.",
+      "'I killed someone once who didn't deserve it.' Her voice is flat, matter-of-fact. 'I was young. Desperate. Someone paid me to make a man disappear. I didn't ask why until after.'",
+      "She watches the darkness beyond the firelight.",
+      "'Turned out he was a healer. Had a family. The person who hired me was his sister's creditor — wanted the inheritance.' A long pause. 'I found that out three years later. By then I'd killed a dozen people. Some deserved it. Most didn't.'",
+      "Her silver-streaked hair catches moonlight.",
+      "'I don't sleep well. That's why I take the third watch. It's not generosity — it's penance. Every night I'm awake is a night I'm not dreaming about the faces of people I made into ghosts.'"
+    ],
+    "boxes": [],
+    "choices": [
+      {"letter": "A", "text": "'The fact that it haunts you means you're not the person who did those things anymore.'", "target": "RETURN_TRAVEL", "approval": {"Sera Nighthollow": 2}},
+      {"letter": "B", "text": "'What happened to the creditor?'", "target": "RETURN_TRAVEL", "approval": {"Sera Nighthollow": 1}},
+      {"letter": "C", "text": "Take the watch with her. Silence can be its own comfort.", "target": "RETURN_TRAVEL", "approval": {"Sera Nighthollow": 2}}
+    ]
+  },
+  "DEPTH_VAEL_STANDARD": {
+    "id": "DEPTH_VAEL_STANDARD",
+    "title": "THE RING",
+    "location": "Camp",
+    "prose": [
+      "*Camp — Dawn*",
+      "Vael is doing sword forms in the grey pre-dawn light. Perfect. Relentless. The Solamnic signet on its cord swings with each movement.",
+      "She catches you watching and doesn't stop. 'My mother's ring.' Thrust. Parry. 'She wasn't a knight — women couldn't join the Order back then. But she trained like one. Fought like one. Died like one, defending our holdings when the goblin raids came.'",
+      "Her blade catches the first sunlight.",
+      "'The Order gave her a posthumous commendation. *Posthumous*.' Her voice is bitter. 'They couldn't acknowledge her in life, so they praised her in death. As if that made up for anything.'",
+      "She sheaths the blade.",
+      "'I wear the ring to remember what she earned and was never given. I train twice as hard because I have to be twice as good to get half the respect.' She finally looks at you. 'That's not complaint. That's fact.'"
+    ],
+    "boxes": [],
+    "choices": [
+      {"letter": "A", "text": "'You're already better than half the knights I've met. And they know it — that's why they resent you.'", "target": "RETURN_TRAVEL", "approval": {"Vael Ashmore": 2}},
+      {"letter": "B", "text": "'The Order is changing. Slowly. People like you are why.'", "target": "RETURN_TRAVEL", "approval": {"Vael Ashmore": 1}},
+      {"letter": "C", "text": "Draw your blade. 'Show me those forms.' Learn from her.", "target": "RETURN_TRAVEL", "approval": {"Vael Ashmore": 2}}
+    ]
+  },
+  "DEPTH_TARIEL_TRUTH": {
+    "id": "DEPTH_TARIEL_TRUTH",
+    "title": "THE QUESTION",
+    "location": "Camp",
+    "prose": [
+      "*Camp — Midnight*",
+      "Tariel finds you awake, which seems to please her. She has that look — the one that means she's been thinking.",
+      "'I've been wondering.' She sits beside you, close enough that her shoulder almost touches yours. 'Why do you do this? Not the grand reasons — the Oath, the Measure, protecting the innocent. The real reason. The one underneath.'",
+      "She waits. Tariel always waits. She knows silence makes people fill it with truth.",
+      "'Because I've watched a lot of people answer that question,' she continues eventually. 'The ones who fight for glory burn out first. The ones who fight for vengeance burn everyone around them. The ones who fight because they don't know what else to do — they're the dangerous ones. They stop caring when it matters.'",
+      "Her green eyes study your face.",
+      "'The ones who last? They fight because they love something more than they fear losing it. I'm trying to figure out what you love.'"
+    ],
+    "boxes": [],
+    "choices": [
+      {"letter": "A", "text": "'The people beside me. The column behind me. Something that simple.'", "target": "RETURN_TRAVEL", "approval": {"Tariel Duskmantle": 2}},
+      {"letter": "B", "text": "'I don't know yet. I'm still figuring it out.'", "target": "RETURN_TRAVEL", "approval": {"Tariel Duskmantle": 2}},
+      {"letter": "C", "text": "'What do you fight for, Tariel?'", "target": "RETURN_TRAVEL", "approval": {"Tariel Duskmantle": 1}}
+    ]
+  },
+  "DEPTH_LYSANDER_HONOUR": {
+    "id": "DEPTH_LYSANDER_HONOUR",
+    "title": "THE FALL",
+    "location": "Camp",
+    "prose": [
+      "*Camp — Dusk*",
+      "Lysander sits sharpening his battered longsword. There's no ornament on it — there used to be. You can see where the pommel was replaced with plain iron.",
+      "'I was a knight once.' He doesn't look up. 'Order of the Sword. Had the tabard, the title, the family proud enough to burst.' The whetstone rasps against steel. 'Then I made a choice.'",
+      "He tests the edge against his thumb.",
+      "'My commander ordered us to hold a bridge. Not strategically important — just a noble's property. Refugees were trying to cross. He said let them drown. The bridge mattered more than peasants.'",
+      "His voice hardens.",
+      "'I refused. Drew on him when he tried to enforce the order. Saved the refugees. Lost everything else.' He finally meets your eyes. 'They called it desertion. Stripped my rank. Burned my tabard. My family hasn't spoken to me in eight years.'",
+      "'But the thing is — I'd do it again. Every time. Because the Oath isn't about obeying orders. It's about protecting people who can't protect themselves. And if the Order forgets that, then the Order is wrong.'"
+    ],
+    "boxes": [],
+    "choices": [
+      {"letter": "A", "text": "'You kept the real oath. The one that matters.'", "target": "RETURN_TRAVEL", "approval": {"Lysander Graves": 2}, "points": {"ROSE": 1}},
+      {"letter": "B", "text": "'That commander — is he still alive?'", "target": "RETURN_TRAVEL", "approval": {"Lysander Graves": 1}},
+      {"letter": "C", "text": "Say nothing. Just clasp his arm. Warrior to warrior.", "target": "RETURN_TRAVEL", "approval": {"Lysander Graves": 2}}
+    ]
+  },
+  "MENTOR_HUMA_ECHO": {
+    "id": "MENTOR_HUMA_ECHO",
+    "title": "THE DRAGONLANCE DREAM",
+    "location": "Sleep",
+    "prose": [
+      "*Dream — The Field of Huma's Rest*",
+      "You know this place. Every Solamnic child knows it from the stories. The field where Huma Dragonbane made his last stand against the Queen of Darkness herself.",
+      "But in your dream, he's not fighting. He's sitting on a fallen log, cleaning a blade that shimmers with impossible light. When he sees you, he smiles — tired, knowing, kind.",
+      "**'Squire.'** His voice is exactly how you imagined it. **'You're scared. Good. Only fools aren't scared.'**",
+      "He gestures for you to sit.",
+      "**'They'll tell you I was fearless. I wasn't. I was terrified from the first battle to the last. The difference is — I did what needed doing anyway. Fear is not the enemy. *Letting* fear stop you is.'**",
+      "He hands you the blade. It's warm. It feels like holding sunlight.",
+      "**'You won't carry this lance. That's not your story. But you'll face your own dragon. Everyone does. When you do — remember: courage isn't the absence of fear. It's deciding that something else matters more.'**",
+      "You wake. Your hands are still warm."
+    ],
+    "boxes": [
+      {"type": "info", "text": "**MENTOR VISION — HUMA**\nThe greatest knight who ever lived has touched your dreams. When you are frightened or shaken, you have advantage on saves to end the condition.", "class": "Fighter"}
+    ],
+    "choices": [
+      {"letter": "A", "text": "I will remember. Fear is not my master.", "target": "RETURN_TRAVEL", "points": {"SWORD": 1}, "flags": {"huma_vision": true}}
+    ]
+  },
+  "MENTOR_BRONWYN_LESSON": {
+    "id": "MENTOR_BRONWYN_LESSON",
+    "title": "THE SWORDMASTER'S GHOST",
+    "location": "Dream",
+    "prose": [
+      "*Dream — The Training Yard*",
+      "Swordmaster Bronwyn died three years ago. You were there. But in this dream, she's young again — her hair still black, her stance perfect, her eyes sharp as the blade she carries.",
+      "**'Stance.'** The word snaps like a whip. **'Again.'**",
+      "You find yourself drilling. High guard. Low guard. Middle guard. The forms you've done ten thousand times. Your muscles remember even when your mind is dreaming.",
+      "**'Technique fails,'** she says, circling you. **'Strength fails. Speed fails. But discipline? Discipline is the one thing that gets *better* when everything else gets worse. When you're tired, hurt, outnumbered — discipline is what keeps your guard up when your arms want to drop.'**",
+      "She stops in front of you.",
+      "**'I taught you the forms. But forms are just movements. What I really taught you is this: when it matters, you don't think. You trust your training. The thinking happens before the fight. The doing happens during.'**",
+      "She salutes — the old way, before the reforms.",
+      "**'You were my best student. Don't waste that.'**"
+    ],
+    "boxes": [
+      {"type": "info", "text": "**MENTOR VISION — BRONWYN**\nYour swordmaster's training runs deep. Once per combat, when you miss an attack, you may reroll the attack die (take the new result).", "class": "Fighter"}
+    ],
+    "choices": [
+      {"letter": "A", "text": "I will trust my training. Thank you, Swordmaster.", "target": "RETURN_TRAVEL", "points": {"CROWN": 1}, "flags": {"bronwyn_vision": true}}
+    ]
+  },
+  "MENTOR_ALDOUS_WISDOM": {
+    "id": "MENTOR_ALDOUS_WISDOM",
+    "title": "THE OLD KNIGHT'S COUNSEL",
+    "location": "Dream",
+    "prose": [
+      "*Dream — The Chapel*",
+      "Aldous sits in the pew where he always sat — third from the front, left side, near the Kingfisher banner. The chapel is empty except for him and the light through the stained glass.",
+      "**'Sit.'** His voice is gruff. He never was one for ceremony. **'We need to talk about mercy.'**",
+      "You sit. Even in dreams, you don't disobey Aldous.",
+      "**'The Measure says a lot about honour. About duty. About oaths and obligations and the proper way to hold a fork at formal dinners.'** He snorts. **'What it doesn't say enough about is mercy.'**",
+      "He turns to face you. His eyes are the same — kind and fierce in equal measure.",
+      "**'Mercy isn't weakness. Any fool can kill. Mercy is strength — the hardest kind. It means looking at someone who wronged you, who hurt you, who maybe even deserves to die... and choosing to stay your hand anyway. Not because you can't kill them. Because you choose not to.'**",
+      "He grips your shoulder.",
+      "**'The Order used to understand that. Before the Cataclysm made everyone hard. Remember it. When you have power over someone — mercy is the truest measure of who you are.'**"
+    ],
+    "boxes": [
+      {"type": "info", "text": "**MENTOR VISION — ALDOUS**\nThe old knight's wisdom stays with you. When you show mercy to a defeated enemy, gain +1 honour and restore 1d6 HP from renewed purpose.", "class": "Fighter"}
+    ],
+    "choices": [
+      {"letter": "A", "text": "I will remember. Mercy is the true strength.", "target": "RETURN_TRAVEL", "points": {"ROSE": 1}, "flags": {"aldous_vision": true}}
+    ]
   }
 }

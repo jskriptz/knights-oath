@@ -2148,7 +2148,15 @@
     {"id": "DEPTH_SERATH_COMMAND", "name": "Weight of Command", "triggerScenes": ["40", "47", "54"], "chance": 0.30, "requireCompanion": "Commander Serath", "flag": "seen_serath_command"},
     {"id": "DIVINE_PALADINE_GUIDANCE", "name": "Light in Darkness", "triggerScenes": ["39", "44", "49"], "chance": 0.20, "requireClass": "Paladin", "flag": "seen_paladine_guidance"},
     {"id": "DIVINE_MISHAKAL_VISION", "name": "Healer's Gift", "triggerScenes": ["41", "47", "53"], "chance": 0.20, "requireClass": "Paladin", "flag": "seen_mishakal_vision"},
-    {"id": "DIVINE_KIRI_JOLITH_TEST", "name": "Sword's Question", "triggerScenes": ["43", "50", "55"], "chance": 0.20, "requireClass": "Paladin", "flag": "seen_kiri_jolith_test"}
+    {"id": "DIVINE_KIRI_JOLITH_TEST", "name": "Sword's Question", "triggerScenes": ["43", "50", "55"], "chance": 0.20, "requireClass": "Paladin", "flag": "seen_kiri_jolith_test"},
+    {"id": "DEPTH_CAERON_PRIDE", "name": "The Mask", "triggerScenes": ["37", "44", "51"], "chance": 0.35, "requireCompanion": "Lord Caeron Ashvale", "flag": "seen_caeron_pride"},
+    {"id": "DEPTH_SERA_SHADOWS", "name": "The Debt", "triggerScenes": ["38", "46", "53"], "chance": 0.30, "requireCompanion": "Sera Nighthollow", "flag": "seen_sera_shadows"},
+    {"id": "DEPTH_VAEL_STANDARD", "name": "The Ring", "triggerScenes": ["39", "47", "54"], "chance": 0.35, "requireCompanion": "Vael Ashmore", "flag": "seen_vael_standard"},
+    {"id": "DEPTH_TARIEL_TRUTH", "name": "The Question", "triggerScenes": ["40", "48", "55"], "chance": 0.30, "requireCompanion": "Tariel Duskmantle", "flag": "seen_tariel_truth"},
+    {"id": "DEPTH_LYSANDER_HONOUR", "name": "The Fall", "triggerScenes": ["41", "49", "56"], "chance": 0.35, "requireCompanion": "Lysander Graves", "flag": "seen_lysander_honour"},
+    {"id": "MENTOR_HUMA_ECHO", "name": "Dragonlance Dream", "triggerScenes": ["36", "42", "48"], "chance": 0.20, "requireClass": "Fighter", "flag": "seen_huma_echo"},
+    {"id": "MENTOR_BRONWYN_LESSON", "name": "Swordmaster's Ghost", "triggerScenes": ["38", "45", "52"], "chance": 0.20, "requireClass": "Fighter", "flag": "seen_bronwyn_lesson"},
+    {"id": "MENTOR_ALDOUS_WISDOM", "name": "Old Knight's Counsel", "triggerScenes": ["40", "47", "54"], "chance": 0.20, "requireClass": "Fighter", "flag": "seen_aldous_wisdom"}
   ],
   "honourThresholds": {
     "disgrace": 0,
