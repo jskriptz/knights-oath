@@ -9627,6 +9627,20 @@ function App(){
       if((ns.waterskinUses||0)>0){ns.waterskinUses=ns.waterskinUses-1}
       else{ns.exhaustion=(ns.exhaustion||0)+1;ns.history.push('No water during march! +1 Exhaustion.')}
     }
+    // Random travel events — check travelEvents from campaign rules
+    const travelEvents=CAMPAIGN_RULES?.travelEvents||[];
+    for(const ev of travelEvents){
+      if(!ev.triggerScenes?.includes(id))continue;
+      if(ev.flag&&ns.flags[ev.flag])continue;// Already seen this event
+      if(ev.requireCompanion&&!(ns.companions||[]).includes(ev.requireCompanion))continue;
+      if(ev.requireClass&&ns.cls!==ev.requireClass)continue;// Class restriction
+      if(Math.random()>ev.chance)continue;// Failed roll
+      // Event triggers! Set flag and redirect
+      if(ev.flag)ns.flags[ev.flag]=true;
+      ns._travelEventReturnScene=id;// Store return destination
+      const evScene=SCENES[ev.id];
+      if(evScene){setScene(evScene);setSceneId(ev.id);setGs(ns);return}
+    }
     const wageM=allBoxText.match(/(?:WAGES?|stipend|field.*pay|march.*pay)[^]*?(\d+)\s*stl/i);if(wageM&&!ns.awardedScenes['wage_'+id]){ns.gold+=(parseInt(wageM[1])||0);ns.awardedScenes['wage_'+id]=true;SoundManager.play('gold')}
     s.boxes.forEach(b=>{
       // Auto-set story flags from scene content
@@ -9948,6 +9962,13 @@ function App(){
     }
     // Handle RETURN target — go back to previous non-arc scene (skip same arc chain)
     if(finalTarget==='RETURN'){const hist=ns.history||[];const arcPrefix=sceneId.match(/^(ARC_[A-Z]+_)/)?.[1];for(let i=hist.length-1;i>=0;i--){const prevId=hist[i].split(':')[0].trim();if(prevId===sceneId)continue;if(arcPrefix&&prevId.startsWith(arcPrefix))continue;if(SCENES[prevId]){finalTarget=prevId;break}}}
+    // Handle RETURN_TRAVEL target — return to scene stored before travel event triggered
+    if(finalTarget==='RETURN_TRAVEL'){
+      const returnTo=ns._travelEventReturnScene;
+      delete ns._travelEventReturnScene;
+      if(returnTo&&SCENES[returnTo]){finalTarget=returnTo}
+      else{const hist=ns.history||[];for(let i=hist.length-1;i>=0;i--){const prevId=hist[i].split(':')[0].trim();if(!prevId.startsWith('TEMPT_')&&!prevId.startsWith('DEPTH_')&&!prevId.startsWith('DIVINE_')&&!prevId.startsWith('RETURN')&&SCENES[prevId]){finalTarget=prevId;break}}}
+    }
     if(finalTarget&&SCENES[finalTarget])goScene(finalTarget,ns);else setGs(ns)};
   const handleSavePick=async(slot)=>{await saveGame(slot,gs,sceneId);setShowSave(false);setSaveMsg('Saved!');setTimeout(()=>setSaveMsg(''),2500)};
   const resolveRelationship=(action,names,picked)=>{

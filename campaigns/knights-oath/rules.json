@@ -2141,7 +2141,14 @@
   "travelEvents": [
     {"id": "TEMPT_SUPPLIES", "name": "Abandoned Larder", "triggerScenes": ["35", "40", "45", "50"], "chance": 0.3, "flag": "seen_supplies_tempt"},
     {"id": "TEMPT_CREDIT", "name": "Stolen Victory", "triggerScenes": ["38", "43"], "chance": 0.4, "requireCompanion": "Aldric Voss", "flag": "seen_credit_tempt"},
-    {"id": "TEMPT_PRISONER", "name": "Wounded Scout", "triggerScenes": ["42", "48", "55"], "chance": 0.25, "flag": "seen_prisoner_tempt"}
+    {"id": "TEMPT_PRISONER", "name": "Wounded Scout", "triggerScenes": ["42", "48", "55"], "chance": 0.25, "flag": "seen_prisoner_tempt"},
+    {"id": "DEPTH_ALDRIC_FIRE", "name": "By the Fire", "triggerScenes": ["36", "41", "46", "51"], "chance": 0.35, "requireCompanion": "Aldric Voss", "flag": "seen_aldric_fire"},
+    {"id": "DEPTH_THESS_LOCKET", "name": "The Locket", "triggerScenes": ["37", "44", "49"], "chance": 0.35, "requireCompanion": "Thessaly Brightwater", "flag": "seen_thess_locket"},
+    {"id": "DEPTH_MIRA_HEALING", "name": "The Healer's Hands", "triggerScenes": ["38", "45", "52"], "chance": 0.35, "requireCompanion": "Mira of the Oaks", "flag": "seen_mira_healing"},
+    {"id": "DEPTH_SERATH_COMMAND", "name": "Weight of Command", "triggerScenes": ["40", "47", "54"], "chance": 0.30, "requireCompanion": "Commander Serath", "flag": "seen_serath_command"},
+    {"id": "DIVINE_PALADINE_GUIDANCE", "name": "Light in Darkness", "triggerScenes": ["39", "44", "49"], "chance": 0.20, "requireClass": "Paladin", "flag": "seen_paladine_guidance"},
+    {"id": "DIVINE_MISHAKAL_VISION", "name": "Healer's Gift", "triggerScenes": ["41", "47", "53"], "chance": 0.20, "requireClass": "Paladin", "flag": "seen_mishakal_vision"},
+    {"id": "DIVINE_KIRI_JOLITH_TEST", "name": "Sword's Question", "triggerScenes": ["43", "50", "55"], "chance": 0.20, "requireClass": "Paladin", "flag": "seen_kiri_jolith_test"}
   ],
   "honourThresholds": {
     "disgrace": 0,

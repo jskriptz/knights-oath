@@ -8938,8 +8938,251 @@
       {
         "letter": "A",
         "text": "Continue.",
-        "target": "44_REPORT",
+        "target": "RETURN_TRAVEL",
         "points": {}
+      }
+    ]
+  },
+  "DEPTH_ALDRIC_FIRE": {
+    "id": "DEPTH_ALDRIC_FIRE",
+    "title": "BY THE FIRE",
+    "location": "Camp",
+    "prose": [
+      "*Camp — Late Watch*",
+      "Everyone else is asleep. Aldric sits by the dying fire, staring at his hands. When he notices you watching, he doesn't look away.",
+      "'My father was a knight,' he says quietly. 'Order of the Sword. Died at the Battle of Fallow Fields when I was eight.' He turns his palm over, studying the calluses. 'I remember thinking — if he was such a great knight, why didn't he come home?'",
+      "The fire crackles. Somewhere in the darkness, an owl calls.",
+      "'Now I understand. He didn't *choose* not to come home. He chose something else *instead* of coming home. The oath. The cause. The people who needed him more than we did.' Aldric finally looks at you. 'I used to hate him for that. Now I'm terrified I'm becoming him.'"
+    ],
+    "boxes": [],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "'The fact that you're scared means you're not him. He probably never doubted.'",
+        "target": "RETURN_TRAVEL",
+        "approval": {"Aldric Voss": 2}
+      },
+      {
+        "letter": "B",
+        "text": "'Maybe becoming him isn't the worst thing. He sounds like a good man.'",
+        "target": "RETURN_TRAVEL",
+        "approval": {"Aldric Voss": 1}
+      },
+      {
+        "letter": "C",
+        "text": "Say nothing. Just sit with him until dawn.",
+        "target": "RETURN_TRAVEL",
+        "approval": {"Aldric Voss": 1}
+      }
+    ]
+  },
+  "DEPTH_THESS_LOCKET": {
+    "id": "DEPTH_THESS_LOCKET",
+    "title": "THE LOCKET",
+    "location": "Camp",
+    "prose": [
+      "*Camp — Before Dawn*",
+      "You find Thessaly holding her locket, thumb tracing the silver edge. She doesn't startle when you approach — she heard you coming. She always does.",
+      "'It was my mother's.' She doesn't open it. 'She gave it to me the night before the Dragon Armies came to our village. Told me to run and not look back.' Her voice is steady, reciting facts. 'I was eleven. I ran. I didn't look back.'",
+      "She finally meets your eyes. 'I've never opened it. Because if I open it and see her face, then she's real. And if she's real, then I left her. As long as the locket stays closed, she's just... a story I tell myself.'",
+      "Her fingers tighten around the silver.",
+      "'Some nights I almost open it. Tonight is one of those nights.'"
+    ],
+    "boxes": [],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "'You don't have to open it tonight. Or ever. It's yours to decide.'",
+        "target": "RETURN_TRAVEL",
+        "approval": {"Thessaly Brightwater": 2}
+      },
+      {
+        "letter": "B",
+        "text": "'If you want to open it, I'll be here. You won't be alone when you see her.'",
+        "target": "RETURN_TRAVEL",
+        "approval": {"Thessaly Brightwater": 2}
+      },
+      {
+        "letter": "C",
+        "text": "'Running was the right choice. She wanted you to live. You did.'",
+        "target": "RETURN_TRAVEL",
+        "approval": {"Thessaly Brightwater": 1}
+      }
+    ]
+  },
+  "DEPTH_MIRA_HEALING": {
+    "id": "DEPTH_MIRA_HEALING",
+    "title": "THE HEALER'S HANDS",
+    "location": "Camp",
+    "prose": [
+      "*Camp — Dusk*",
+      "Mira is grinding herbs by firelight, her movements practiced and sure. But her hands are shaking.",
+      "'I ran out,' she says without looking up. 'During the last fight. I had one poultice left and two people bleeding. I chose who to save.' She crushes the herbs harder than necessary. 'The other one died calling for his mother.'",
+      "She sets down the mortar, finally still.",
+      "'Everyone thinks healers are gentle. That we're soft. They don't understand — we make decisions every day that haunt us every night. Who lives. Who dies. Who gets the last bandage, the last herb, the last prayer.'",
+      "Her dark eyes find yours.",
+      "'I'm very good at what I do. That's not a boast. It's an explanation for why I haven't broken yet.'"
+    ],
+    "boxes": [],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "'You saved who you could. The one who died — that's not on you. That's on the war.'",
+        "target": "RETURN_TRAVEL",
+        "approval": {"Mira of the Oaks": 2}
+      },
+      {
+        "letter": "B",
+        "text": "'How do you choose? When you have to.'",
+        "target": "RETURN_TRAVEL",
+        "approval": {"Mira of the Oaks": 1}
+      },
+      {
+        "letter": "C",
+        "text": "Help her grind the herbs. Some things don't need words.",
+        "target": "RETURN_TRAVEL",
+        "approval": {"Mira of the Oaks": 2}
+      }
+    ]
+  },
+  "DEPTH_SERATH_COMMAND": {
+    "id": "DEPTH_SERATH_COMMAND",
+    "title": "THE WEIGHT OF COMMAND",
+    "location": "Camp",
+    "prose": [
+      "*Camp — Midnight*",
+      "Commander Serath stands at the edge of camp, watching the northern horizon. There's smoke there. There's always smoke now.",
+      "'I lost forty-three knights at the Neraka crossing,' he says when you join him. His voice is perfectly level. 'Forty-three good people who followed my orders into an ambush I should have seen coming. The Dragon Army commander sent me their tabards. Folded neatly. With a note thanking me for my contribution to their cause.'",
+      "He's silent for a long moment.",
+      "'I keep those tabards in my pack. Every single one. People think it's memorial. Respect for the fallen.' His jaw tightens. 'It's penance. Weight. So I never forget the cost of a wrong decision.'",
+      "He finally looks at you.",
+      "'Command is not about being right. It's about being responsible when you're wrong. Remember that.'"
+    ],
+    "boxes": [],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "'They didn't die because of you. They died because of the enemy. There's a difference.'",
+        "target": "RETURN_TRAVEL",
+        "approval": {"Commander Serath": 1}
+      },
+      {
+        "letter": "B",
+        "text": "'Carrying the weight is what makes you worth following. Lesser commanders forget.'",
+        "target": "RETURN_TRAVEL",
+        "approval": {"Commander Serath": 2}
+      },
+      {
+        "letter": "C",
+        "text": "'What would you have done differently? If you could go back.'",
+        "target": "RETURN_TRAVEL",
+        "approval": {"Commander Serath": 1}
+      }
+    ]
+  },
+  "DIVINE_PALADINE_GUIDANCE": {
+    "id": "DIVINE_PALADINE_GUIDANCE",
+    "title": "A LIGHT IN DARKNESS",
+    "location": "March",
+    "prose": [
+      "*The March — Twilight*",
+      "You are walking when the light changes. Not sunset — something else. A quality of gold in the air that shouldn't exist. The others don't seem to notice.",
+      "And then you *hear* it. Not words. Not exactly. A presence at the edge of thought, vast and sorrowful and kind.",
+      "**'Child of the Oath.'**",
+      "The voice is everywhere and nowhere. You feel it in your bones, in the steel of your weapon, in the oath you swore.",
+      "**'The darkness rises. But you carry a light you do not yet understand. Choose well. Choose true. The Measure is not just law — it is the shape of what you might become.'**",
+      "Then it fades. The twilight returns to normal. Your companions look at you strangely — you've stopped walking. Tears are running down your face and you don't know why.",
+      "Something has changed. You feel it in your soul."
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**DIVINE CONTACT — PALADINE**\nThe Platinum Dragon speaks to those who carry the light. This is the first true divine contact in three hundred years. You are not alone.",
+        "class": "Paladin"
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Speak of it to your companions. This cannot be kept secret.",
+        "target": "RETURN_TRAVEL",
+        "points": {"ROSE": 1},
+        "flags": {"paladine_contact_shared": true}
+      },
+      {
+        "letter": "B",
+        "text": "Hold it close. Some truths are too fragile to speak aloud yet.",
+        "target": "RETURN_TRAVEL",
+        "flags": {"paladine_contact_private": true}
+      }
+    ]
+  },
+  "DIVINE_MISHAKAL_VISION": {
+    "id": "DIVINE_MISHAKAL_VISION",
+    "title": "THE HEALER'S GIFT",
+    "location": "Camp",
+    "prose": [
+      "*Camp — Before Dawn*",
+      "You wake from a dream of blue light. A woman's face, beautiful beyond mortal measure, with eyes that held all the sorrows of the world and all its hopes in equal measure.",
+      "**'Healer. Protector. The wounds you cannot see are deeper than the ones you can.'**",
+      "Your hands are warm. Not hot — warm like sunlight through glass. When you look at Mira sleeping nearby, you can *see* the exhaustion in her like a grey shadow. When you look at Aldric, you see the grief he carries like a stone in his chest.",
+      "The warmth fades. But the sight remains. Just for a moment — just long enough to understand.",
+      "Healing is not just about bodies. It never was.",
+      "Mishakal, the Blue Lady, goddess of healing. Her constellation has been missing from the sky for three centuries. But her light just touched you. The gods are returning."
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**DIVINE VISION — MISHAKAL**\nThe Blue Lady has granted you sight beyond sight. Your Lay on Hands can now also remove one level of exhaustion per use (costs 5 points from pool).",
+        "class": "Paladin"
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Use the gift. Touch Mira's shoulder as she sleeps. Let her rest deeply.",
+        "target": "RETURN_TRAVEL",
+        "points": {"ROSE": 1},
+        "flags": {"mishakal_vision": true},
+        "approval": {"Mira of the Oaks": 1}
+      },
+      {
+        "letter": "B",
+        "text": "Sit with the vision until dawn. Let the gift settle before you use it.",
+        "target": "RETURN_TRAVEL",
+        "flags": {"mishakal_vision": true}
+      }
+    ]
+  },
+  "DIVINE_KIRI_JOLITH_TEST": {
+    "id": "DIVINE_KIRI_JOLITH_TEST",
+    "title": "THE SWORD'S QUESTION",
+    "location": "Battle's Edge",
+    "prose": [
+      "*The Field — After Combat*",
+      "The enemy is routed. Your blade is still hot from use. And standing before you, though no one else can see him, is a figure in battered armor. His face is scarred. His eyes are ancient. He carries a sword that has killed gods.",
+      "Kiri-Jolith. The Bison of Heaven. God of righteous warfare.",
+      "**'Squire.'** His voice is thunder on a clear day. **'You fight well. But do you know *why* you fight?'**",
+      "He doesn't wait for an answer.",
+      "**'Not for glory. Not for honour. Not even for the Measure, though the Measure shapes you. You fight because others cannot. Because the strong must shield the weak. Because courage means nothing if it only protects yourself.'**",
+      "He raises his blade in salute.",
+      "**'When the moment comes — and it will come — you will choose between victory and righteousness. Remember this: the Sword does not serve the knight. The knight serves the Sword. We are instruments of protection, not conquest.'**",
+      "Then he is gone. The battlefield is still. Your companions are looting corpses. Life continues. But something fundamental has shifted in how you understand your oath."
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**DIVINE TEST — KIRI-JOLITH**\nThe God of Just War has marked you. When you use Smite to defend an innocent or protect a companion, add an additional 1d8 radiant damage.",
+        "class": "Paladin"
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "I will remember. The sword serves the people, not the other way around.",
+        "target": "RETURN_TRAVEL",
+        "points": {"SWORD": 2},
+        "flags": {"kiri_jolith_test": true}
       }
     ]
   }
