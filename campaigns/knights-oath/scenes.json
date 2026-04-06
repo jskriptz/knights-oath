@@ -1045,7 +1045,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Investigation (INT, proficiency if trained) (+3) | INT | DC 13\n**SUCCESS (roll 13+):** Thessaly's map has three additional marks she did not explain. Cross-referencing with garrison road records: the Dragon Army has made at least two probing passes on this road in the last month. The refugees are not just fleeing the war — they are fleeing something that has been methodically clearing the area ahead of the main advance.\n**FAILURE (roll 1-12):** The map shows what Thessaly told you. Nothing more is visible.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Investigation (INT, proficiency if trained) (+3) | INT | DC 13\n**SUCCESS (roll 13+):** Thessaly's map has three additional marks she did not explain — small x's, spaced evenly along the south road. Cross-referencing with garrison records: the Dragon Army has made at least two probing passes this month. The refugees are not just fleeing the war. They are fleeing something that has been methodically clearing the area ahead of the main advance. Village by village. The x's are villages that no longer respond to messages.\n**FAILURE (roll 1-12):** The map shows what Thessaly told you. If there is more hidden in it, you cannot find it.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
       }
     ],
     "choices": [
@@ -1233,7 +1233,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Perception (WIS, proficiency if trained) (+1) | WIS | DC 10\n**SUCCESS (roll 10+):** At the corner table, partly hidden by the pillar: Lord Caeron is eating alone. He is not reading. He is watching the room — specifically, the squires. Specifically, for slightly longer than the others, you. When your eyes meet he looks down at his plate with the speed of someone who was not expecting to be caught. +1 to any Caeron Insight check this Act.\n**FAILURE (roll 1-9):** The mess hall is busy and loud and you notice nothing beyond the turnips.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Perception (WIS, proficiency if trained) (+1) | WIS | DC 10\n**SUCCESS (roll 10+):** At the corner table, partly hidden by the pillar: Lord Caeron is eating alone. He is not reading. He is watching the room — specifically, the squires. Specifically, for slightly longer than the others, you. When your eyes meet he looks down at his plate with the speed of someone who was not expecting to be caught. You file that away.\n**FAILURE (roll 1-9):** The mess hall is busy and loud. You eat quickly and leave.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
       },
       {
         "type": "info",

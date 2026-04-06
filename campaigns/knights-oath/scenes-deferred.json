@@ -2365,7 +2365,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Insight (+1) | WIS | DC 13\n**SUCCESS (roll 13+):** The locket portrait is recent. The grief is not old. The diplomatic observer role is a response. She is not your enemy. She is something more complicated. +1 ROSE — compassion guides understanding.\n**FAILURE (roll 1-12):** She is grieving. The arguments are a form of grief."
+        "text": "**OPTIONAL ROLL:** Insight (+1) | WIS | DC 13\n**SUCCESS (roll 13+):** The locket portrait is recent — within the year. The grief is not old. The diplomatic observer role is not a career choice. It is a response. She came here looking for someone to blame, and she has not found them yet. That makes her dangerous in ways that have nothing to do with politics.\n**FAILURE (roll 1-12):** She is grieving. That much is clear. What she intends to do with that grief is not.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
       }
     ],
     "choices": [
@@ -4285,7 +4285,7 @@
       },
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Insight (+1) | WIS | DC 13\n\n**SUCCESS (13+):** Torvin is not just a merchant. He is counting soldiers — yours, and the ones he has seen on the road. He is keeping a tally. For whom, you cannot say, but the information flows north. +1 Honour — vigilance rewarded.\n\n**FAILURE (1-12):** He seems like a man making a living. Nothing more."
+        "text": "**OPTIONAL ROLL:** Insight (+1) | WIS | DC 13\n\n**SUCCESS (13+):** Torvin is not just a merchant. Watch his eyes — every time a soldier passes, he counts. Fingers twitch against his belt, marking tallies he will write down later. The information flows somewhere. North, you think. Whether that makes him spy or survivor depends on who is asking.\n\n**FAILURE (1-12):** He seems like a man making a living in hard times. If there is more to him, you do not see it.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
       }
     ],
     "choices": [
@@ -5673,7 +5673,7 @@
       },
       {
         "type": "roll",
-        "text": "**PERSUASION (CHA) DC 13** — Mediate between the knight and the merchant.\n**Success:** You find language both can accept. A compromise emerges — imperfect, liveable. +1 CROWN, +1 Honour.\n**Failure:** One side walks away angry. The resentment festers. -1 Honour."
+        "text": "**PERSUASION (CHA) DC 13** — Mediate between the knight and the merchant.\n**Success:** You find language both can accept. A compromise emerges — imperfect, liveable. Derren looks at you with something approaching respect. The knight looks at you with something approaching surprise. Neither expected a squire to solve what they could not.\n**Failure:** One side walks away angry. Derren's jaw is set in a way that says this isn't over. The resentment will find its way somewhere. These things always do.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
       }
     ],
     "choices": [
@@ -5728,7 +5728,7 @@
       },
       {
         "type": "roll",
-        "text": "**INSIGHT (WIS) DC 12** — Read Tomas.\n**Success:** He's telling the truth. His hands are raw from climbing, not from fighting. He ran toward danger, not away from it. +1 ROSE — truth seen through compassion.\n**Failure:** You can't tell. He could be lying. Deserters always have stories."
+        "text": "**INSIGHT (WIS) DC 12** — Read Tomas.\n**Success:** He's telling the truth. His hands are raw from climbing, not from fighting. The dirt under his nails is from scrabbling up a hillside, not from burying evidence. He ran toward danger, not away from it. His story is exactly what it looks like.\n**Failure:** You can't tell. He could be lying — deserters always have stories. But then again, so do heroes.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
       }
     ],
     "choices": [
@@ -5781,7 +5781,7 @@
       },
       {
         "type": "roll",
-        "text": "**PERCEPTION (WIS) DC 12** — Assess the village.\n**Success:** You count twelve armed men, note their positions, see the villagers' body language — compliant but not willing. The smith's forge has been cold for a week. Someone took his tools. +1 CROWN — tactical awareness.\n**Failure:** The village looks... fine. Quiet. But quiet isn't the same as peaceful."
+        "text": "**PERCEPTION (WIS) DC 12** — Assess the village.\n**Success:** You count twelve armed men, note their positions, see the villagers' body language — compliant but not willing. The smith's forge has been cold for a week. Someone took his tools. A woman near the well watches you with the particular attention of someone who is hoping for something she does not dare name aloud.\n**Failure:** The village looks... fine. Quiet. But quiet is not the same as peaceful, and you have been a squire long enough to know the difference.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
       }
     ],
     "choices": [
@@ -5986,7 +5986,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**Athletics (STR) DC 11** — Manual labour. Fence posts, wire, stone work.\n**SUCCESS:** The fence is solid — better than solid. Edric runs his hand along the top rail and nods with genuine surprise. This will hold. +1 ROSE, +1 Honour — humble service.\n**FAILURE:** The fence holds, but it's rough work. You see Edric out there after dinner, quietly fixing the joints you set crooked. He doesn't mention it."
+        "text": "**Athletics (STR) DC 11** — Manual labour. Fence posts, wire, stone work.\n**SUCCESS:** The fence is solid — better than solid. Edric runs his hand along the top rail and nods with genuine surprise. 'Huh,' he says. It is the first time he has looked at you as if you might be useful for something other than sword work. This will hold.\n**FAILURE:** The fence holds, but it's rough work. You see Edric out there after dinner, quietly fixing the joints you set crooked. He doesn't mention it. He didn't expect any different.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
       },
       {
         "type": "info",
