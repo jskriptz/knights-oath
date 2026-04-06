@@ -836,7 +836,7 @@
     "choices": [
       {
         "letter": "A",
-        "text": "'Both. Always both.'",
+        "text": "'Both. Always both.' Thessaly's pen moves — a single note, quick and sure. 'Honest answer. Most people pick one or the other because it is simpler. You did not.'",
         "target": "16",
         "points": {
           "ROSE": 2
@@ -844,7 +844,7 @@
       },
       {
         "letter": "B",
-        "text": "'A gift. I carry it proudly.'",
+        "text": "'A gift. I carry it proudly.' Thessaly tilts her head, studying you. 'You believe that. Good. The ones who believe it are the ones who can bear it.' She tucks the pen away — the conversation is over, and she has what she came for.",
         "target": "11_MORNING",
         "points": {
           "CROWN": 2
@@ -852,7 +852,7 @@
       },
       {
         "letter": "C",
-        "text": "'Mostly a weight lately.'",
+        "text": "'Mostly a weight lately.' Something shifts in Thessaly's expression — not softening, exactly, but a recognition. 'That is the answer I would have given,' she says quietly. 'Before I stopped answering.' The locket at her throat catches the torchlight. She does not touch it.",
         "target": "16",
         "points": {
           "ROSE": 1
@@ -1051,7 +1051,7 @@
     "choices": [
       {
         "letter": "A",
-        "text": "Take the map directly to Lord Caeron before the exercise.",
+        "text": "Take the map directly to Lord Caeron before the exercise. Thessaly raises an eyebrow but does not object. 'Proper channels. I expected nothing less.' Aldric looks like he wants to say something, then thinks better of it. The chain of command is the chain of command.",
         "target": "11_AFTERNOON",
         "points": {
           "CROWN": 2
@@ -1059,7 +1059,7 @@
       },
       {
         "letter": "B",
-        "text": "Share it with Aldric and plan together.",
+        "text": "Share it with Aldric and plan together. He leans closer, finger already tracing routes. 'Here. If we swing wide—' Thessaly watches the two of you with something that might be approval. 'I will leave you to it,' she says. 'Try not to get killed.'",
         "target": "11_AFTERNOON",
         "points": {
           "ROSE": 1,
@@ -1068,7 +1068,7 @@
       },
       {
         "letter": "C",
-        "text": "Ask Thessaly to come with you as an observer.",
+        "text": "Ask Thessaly to come with you as an observer. She hesitates — genuinely surprised. 'I am not a fighter.' But she is already folding the map. 'I suppose someone should keep notes on what actually happens, as opposed to what gets reported.' Aldric grins. 'Welcome to the exercise, chronicler.'",
         "target": "11_AFTERNOON",
         "points": {
           "ROSE": 1
@@ -1172,7 +1172,7 @@
     "choices": [
       {
         "letter": "A",
-        "text": "Leave quietly.",
+        "text": "Leave quietly. Some answers are not yours to witness. Caeron does not look up, but as you reach the door: 'Thank you for not asking.' It is the closest he has come to acknowledging that you were there at all.",
         "target": "11_MORNING",
         "points": {
           "ROSE": 1
@@ -1180,7 +1180,7 @@
       },
       {
         "letter": "B",
-        "text": "'I think you are more correct about it than you believe.'",
+        "text": "'I think you are more correct about it than you believe.' Caeron's hands still on the armour piece. He does not look up, but the quality of his silence changes — from a man thinking aloud to a man who has been heard. 'That is a generous assessment,' he says finally. 'I am not certain I have earned it.' A pause. 'But I would like to.'",
         "target": "11_MORNING",
         "points": {
           "ROSE": 1
@@ -1317,7 +1317,7 @@
       },
       {
         "letter": "C",
-        "text": "Share it with Sera . Two sets of eyes are better.",
+        "text": "Share it with Sera. Two sets of eyes are better. She listens without interrupting, then nods once — the sharp, economical acknowledgment of someone who has been trusted with information and will not waste it. 'Good. You noticed. Most would not have.' She looks south, toward the road. 'Tomorrow night we watch together. If it happens again, we will have a bearing.'",
         "target": "11_EVENING",
         "points": {
           "ROSE": 1
