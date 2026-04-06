@@ -128,7 +128,11 @@ if (unreachableCategories.other.length > 0) {
 // 3. Check for orphaned event scenes (travel events that don't exist)
 console.log('3. Checking event scene coverage...');
 const travelEventIds = new Set((rules.travelEvents || []).map(ev => ev.id));
+// System-triggered prefixes: these are triggered by game systems, not travel events
+const systemTriggeredPrefixes = ['ARC_', 'CONFRONT_', 'GIFT_', 'CEREMONY_', 'EPILOGUE_'];
 for (const id of unreachableCategories.events) {
+  // Skip scenes triggered by game systems (approval, endings, etc.) rather than travel events
+  if (systemTriggeredPrefixes.some(p => id.startsWith(p))) continue;
   if (!travelEventIds.has(id)) {
     warnings.push(`[EVENT] Scene "${id}" looks like an event but has no travel event trigger`);
   }
