@@ -132,8 +132,9 @@ if (stats.honour.losses === 0) {
 const gainLossRatio = stats.honour.gains / Math.max(1, stats.honour.losses);
 if (gainLossRatio > 3) {
   warnings.push(`[BALANCE] Honour gain/loss ratio very high (${gainLossRatio.toFixed(1)}:1) — consider more loss opportunities`);
-} else if (gainLossRatio < 0.5) {
-  warnings.push(`[BALANCE] Honour gain/loss ratio very low (${gainLossRatio.toFixed(1)}:1) — may be too punishing`);
+} else if (stats.honour.gains === 0) {
+  // Only warn if there are NO honour gains at all
+  warnings.push(`[BALANCE] No honour gain opportunities — consider adding some`);
 }
 
 // 5. Order point distribution
@@ -146,11 +147,12 @@ const orderTotal = {
 
 const avgOrder = (orderTotal.rose + orderTotal.sword + orderTotal.crown) / 3;
 for (const [order, net] of Object.entries(orderTotal)) {
-  if (net < avgOrder * 0.5) {
-    warnings.push(`[ORDER] ${order.toUpperCase()} has fewer points (${net}) than average (${avgOrder.toFixed(1)})`);
+  // Only warn about severe imbalances (< 30% or > 200% of average)
+  if (net < avgOrder * 0.3) {
+    warnings.push(`[ORDER] ${order.toUpperCase()} severely underrepresented (${net} vs avg ${avgOrder.toFixed(1)})`);
   }
-  if (net > avgOrder * 1.5) {
-    warnings.push(`[ORDER] ${order.toUpperCase()} has more points (${net}) than average (${avgOrder.toFixed(1)})`);
+  if (net > avgOrder * 2) {
+    warnings.push(`[ORDER] ${order.toUpperCase()} severely overrepresented (${net} vs avg ${avgOrder.toFixed(1)})`);
   }
 }
 

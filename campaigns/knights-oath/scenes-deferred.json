@@ -154,7 +154,8 @@
         "text": "Hide it and find the nearest refugee camp.",
         "target": "44",
         "points": {
-          "ROSE": 1
+          "ROSE": 1,
+          "honour": 1
         }
       },
       {
@@ -255,7 +256,8 @@
         "text": "Refuse outright.",
         "target": "48",
         "points": {
-          "ROSE": 3
+          "ROSE": 3,
+          "honour": 2
         }
       },
       {
@@ -1088,7 +1090,8 @@
         "text": "'The protection of the innocent, from which all other laws derive.'",
         "target": "61",
         "points": {
-          "ROSE": 3
+          "ROSE": 3,
+          "honour": 1
         }
       },
       {
@@ -1096,7 +1099,8 @@
         "text": "'Courage in the face of darkness, maintained even when the outcome is uncertain.'",
         "target": "61",
         "points": {
-          "SWORD": 2
+          "SWORD": 2,
+          "honour": 1
         }
       },
       {

@@ -175,8 +175,12 @@ if (loopsFound.length > 0) {
 
 // 5. Check ending reachability
 console.log('5. Checking ending reachability...');
+// Some endings are triggered by game logic (DISGRACE, EPILOGUE_*), not graph navigation
+const systemTriggeredEndings = ['DISGRACE', 'EPILOGUE_'];
 for (const endId of endingScenes) {
   if (!reachable.has(endId)) {
+    // Skip warning for system-triggered endings
+    if (systemTriggeredEndings.some(prefix => endId.startsWith(prefix) || endId === prefix)) continue;
     warnings.push(`[ENDING] Ending scene "${endId}" may not be reachable`);
   }
 }

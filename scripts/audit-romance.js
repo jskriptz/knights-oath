@@ -48,9 +48,9 @@ for (const [id, scene] of Object.entries(ALL_SCENES)) {
         romanceScenes[comp][stage].push({ scene: id, letter: choice.letter });
       } else if (comp) {
         errors.push(`[ROMANCE] Scene "${id}" [${choice.letter}] ${stage} for unknown companion: "${comp}"`);
-      } else {
-        warnings.push(`[ROMANCE] Scene "${id}" [${choice.letter}] ${stage} trigger but no romance_comp specified`);
       }
+      // Note: No warning for missing romance_comp - these are generic romance triggers
+      // that work with whoever the player is currently romancing
     }
   }
 }

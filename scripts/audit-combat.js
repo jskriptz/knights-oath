@@ -31,7 +31,18 @@ console.log('=== COMBAT AUDIT ===\n');
 
 // 1. Find all scenes with combat boxes
 console.log('1. Finding combat scenes...');
+// Include special combat scenes from rules (duel, boar fight, etc.)
+const specialCombatScenes = new Set();
+const specialCombatRules = rules.specialCombat || {};
+for (const sceneList of Object.values(specialCombatRules)) {
+  if (Array.isArray(sceneList)) sceneList.forEach(s => specialCombatScenes.add(s));
+}
 for (const [id, scene] of Object.entries(ALL_SCENES)) {
+  // Check for combat box OR special combat scene
+  if (specialCombatScenes.has(id)) {
+    stats.combatScenes.push(id);
+    continue;
+  }
   if (!scene.boxes) continue;
   for (const box of scene.boxes) {
     const text = box.text || '';

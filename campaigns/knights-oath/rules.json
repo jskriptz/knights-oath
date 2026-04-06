@@ -1125,8 +1125,7 @@
   },
   "specialCombat": {
     "boarFight": [
-      "11_YARD",
-      "11"
+      "11_YARD"
     ],
     "duel": [
       "69"
@@ -1135,6 +1134,7 @@
       "64B_WOLVES"
     ],
     "spar": [
+      "12",
       "F1_TAVERN_SWORD"
     ],
     "villageRaid": [

@@ -646,7 +646,8 @@
         "text": "Let him win. Concede with grace. He hesitates — he knows what you did — and lowers his blade. 'Next time,' he says quietly, 'do not give me anything.' But there is something new in his voice. Respect, perhaps. Or something closer.",
         "target": "11_MORNING",
         "points": {
-          "CROWN": 1
+          "CROWN": 1,
+          "honour": 1
         },
         "romance_comp": "Aldric Voss",
         "romance_spark": true
@@ -656,7 +657,8 @@
         "text": "Take your opening. Win clean. He hits the ground hard. The yard goes silent. Then he laughs — actually laughs — and takes your offered hand. 'Finally,' he says. 'I was getting bored.'",
         "target": "11_MORNING",
         "points": {
-          "SWORD": 2
+          "SWORD": 2,
+          "honour": 1
         }
       },
       {
