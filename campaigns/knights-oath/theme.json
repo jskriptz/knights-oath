@@ -32,17 +32,17 @@
   "loadingScreen": {
     "title": "DRAGONLANCE",
     "subtitle": "THE KNIGHT'S OATH",
-    "version": "v25.0.1",
+    "version": "v25.1.0",
     "stats": "320 Scenes \u2022 9 Companions"
   },
   "heroPortraits": [
-    {"id": "knight_m1", "label": "Knight (Male)", "url": ""},
-    {"id": "knight_f1", "label": "Knight (Female)", "url": ""},
-    {"id": "paladin_m1", "label": "Paladin (Male)", "url": ""},
-    {"id": "paladin_f1", "label": "Paladin (Female)", "url": ""},
-    {"id": "warrior_m1", "label": "Warrior (Male)", "url": ""},
-    {"id": "warrior_f1", "label": "Warrior (Female)", "url": ""},
-    {"id": "squire_m1", "label": "Squire (Male)", "url": ""},
-    {"id": "squire_f1", "label": "Squire (Female)", "url": ""}
+    {"id": "knight_m1", "label": "Knight (Male)", "url": "https://api.dicebear.com/9.x/adventurer/svg?seed=SirKnightMale&backgroundColor=1a2a4a"},
+    {"id": "knight_f1", "label": "Knight (Female)", "url": "https://api.dicebear.com/9.x/adventurer/svg?seed=DameKnightFemale&backgroundColor=1a2a4a"},
+    {"id": "paladin_m1", "label": "Paladin (Male)", "url": "https://api.dicebear.com/9.x/adventurer/svg?seed=HolyPaladinMale&backgroundColor=1a2a4a"},
+    {"id": "paladin_f1", "label": "Paladin (Female)", "url": "https://api.dicebear.com/9.x/adventurer/svg?seed=HolyPaladinFemale&backgroundColor=1a2a4a"},
+    {"id": "warrior_m1", "label": "Warrior (Male)", "url": "https://api.dicebear.com/9.x/adventurer/svg?seed=BattleWarriorMale&backgroundColor=1a2a4a"},
+    {"id": "warrior_f1", "label": "Warrior (Female)", "url": "https://api.dicebear.com/9.x/adventurer/svg?seed=BattleWarriorFemale&backgroundColor=1a2a4a"},
+    {"id": "squire_m1", "label": "Squire (Male)", "url": "https://api.dicebear.com/9.x/adventurer/svg?seed=YoungSquireMale&backgroundColor=1a2a4a"},
+    {"id": "squire_f1", "label": "Squire (Female)", "url": "https://api.dicebear.com/9.x/adventurer/svg?seed=YoungSquireFemale&backgroundColor=1a2a4a"}
   ]
 }
