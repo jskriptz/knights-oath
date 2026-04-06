@@ -631,5 +631,115 @@
       {"speaker": "Lysander", "text": "Speaks from experience?"},
       {"speaker": "Serath", "text": "I was the one who wouldn't meet anyone's eyes. Draw your own conclusions."}
     ]
+  },
+  {
+    "scene": "30",
+    "requireCompanion": ["Aldric"],
+    "lines": [
+      {"speaker": "Aldric", "text": "First night on the march. Strange to think we may never see the Spur again."},
+      {"speaker": "Thessaly", "text": "You say that like it's a bad thing."},
+      {"speaker": "Aldric", "text": "It's the only home I've known for three years."},
+      {"speaker": "Thessaly", "text": "Then build a better one. That's what stories are for."}
+    ]
+  },
+  {
+    "scene": "30",
+    "requireCompanion": ["Mira"],
+    "lines": [
+      {"speaker": "Mira", "text": "The stars are different here. Clearer. No torch smoke."},
+      {"speaker": "Sera", "text": "You watch the stars?"},
+      {"speaker": "Mira", "text": "My grandmother taught me. She said they're the eyes of the gods. Watching to see what we'll do next."}
+    ]
+  },
+  {
+    "scene": "40",
+    "requireCompanion": ["Vael"],
+    "lines": [
+      {"speaker": "Vael", "text": "The enemy chose this ground. That means they had time to prepare."},
+      {"speaker": "Aldric", "text": "Traps?"},
+      {"speaker": "Vael", "text": "Worse. Confidence. A trap you can disarm. Confidence you have to break."}
+    ]
+  },
+  {
+    "scene": "45",
+    "requireCompanion": ["Serath"],
+    "lines": [
+      {"speaker": "Serath", "text": "I crossed this river once before. Going the other way. Wearing different colors."},
+      {"speaker": "Lysander", "text": "And now?"},
+      {"speaker": "Serath", "text": "Now I cross it going the right direction. That has to count for something."}
+    ]
+  },
+  {
+    "scene": "45",
+    "requireCompanion": ["Thessaly"],
+    "lines": [
+      {"speaker": "Thessaly", "text": "The Vingaard Ford. Three thousand years of history. Huma himself crossed here."},
+      {"speaker": "Sera", "text": "Did he complain about his boots getting wet?"},
+      {"speaker": "Thessaly", "text": "The chronicles are silent on the matter. I choose to believe yes."}
+    ]
+  },
+  {
+    "scene": "50",
+    "requireCompanion": ["Serath"],
+    "lines": [
+      {"speaker": "Serath", "text": "In the Dragon Army, mornings meant roll call. Missing it meant punishment. Missing it twice meant death."},
+      {"speaker": "Aldric", "text": "And here?"},
+      {"speaker": "Serath", "text": "Here someone asks if I slept well. It's unsettling in the best possible way."}
+    ]
+  },
+  {
+    "scene": "55",
+    "requireCompanion": ["Aldric", "Thessaly"],
+    "lines": [
+      {"speaker": "Thessaly", "text": "The great hall. Empty now. But these stones remember feasts, coronations, oaths sworn in firelight."},
+      {"speaker": "Aldric", "text": "And now they'll remember us."},
+      {"speaker": "Thessaly", "text": "That's the weight of it, isn't it? We become part of the story whether we're ready or not."}
+    ]
+  },
+  {
+    "scene": "63",
+    "requireCompanion": ["Caeron"],
+    "lines": [
+      {"speaker": "Caeron", "text": "My family had maps of this road. Trade routes, supply lines, safe harbors. All worthless now."},
+      {"speaker": "Sera", "text": "Maps don't show what matters."},
+      {"speaker": "Caeron", "text": "No. They don't show the people. That's what I'm learning."}
+    ]
+  },
+  {
+    "scene": "63",
+    "requireCompanion": ["Mira"],
+    "lines": [
+      {"speaker": "Mira", "text": "There are herbs growing wild here. Useful ones. In the city, they'd cost a week's wages."},
+      {"speaker": "Aldric", "text": "Should we stop?"},
+      {"speaker": "Mira", "text": "No. But I'm noting the location. For after. There has to be an after."}
+    ]
+  },
+  {
+    "scene": "66",
+    "requireCompanion": ["Vael"],
+    "lines": [
+      {"speaker": "Vael", "text": "An ambush. Someone's been watching the road."},
+      {"speaker": "Serath", "text": "Dragon Army scouts. They've been tracking us for two days."},
+      {"speaker": "Vael", "text": "You knew and didn't say anything?"},
+      {"speaker": "Serath", "text": "I was waiting to see if you'd notice. You did. Good."}
+    ]
+  },
+  {
+    "scene": "BV4",
+    "requireCompanion": ["Lysander"],
+    "lines": [
+      {"speaker": "Lysander", "text": "Survivors. Good. That means there's something left to save."},
+      {"speaker": "Thessaly", "text": "You sound almost optimistic."},
+      {"speaker": "Lysander", "text": "Don't get used to it. It's a temporary condition."}
+    ]
+  },
+  {
+    "scene": "BV5",
+    "requireCompanion": ["Sera"],
+    "lines": [
+      {"speaker": "Sera", "text": "I've seen this before. Villages burned to force refugees south. It's a tactic."},
+      {"speaker": "Aldric", "text": "A tactic."},
+      {"speaker": "Sera", "text": "Don't look at me like that. Naming it doesn't mean I approve. It means I understand. Those are different things."}
+    ]
   }
 ]

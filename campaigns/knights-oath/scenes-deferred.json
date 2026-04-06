@@ -28,7 +28,8 @@
         "text": "Hide them. Treat the wound. Sort the implications later.",
         "target": "36",
         "points": {
-          "ROSE": 1
+          "ROSE": 1,
+          "Honour": 1
         },
         "romance_comp": "Commander Serath",
         "romance_spark": true
@@ -473,7 +474,8 @@
         "target": "44_REPORT",
         "points": {
           "ROSE": 2,
-          "SWORD": 1
+          "SWORD": 1,
+          "Honour": 1
         }
       },
       {
@@ -6622,7 +6624,7 @@
         "letter": "A",
         "text": "Go down. Now. If there are survivors, every minute matters.",
         "target": "BV2",
-        "points": {}
+        "points": {"Honour": 1}
       },
       {
         "letter": "B",
@@ -6714,7 +6716,8 @@
         "text": "Stay. Help them rebuild. We didn't become knights to ride past the people who need us. (Costs 2 days' rations. You spend two days. Your supplies are depleted. But the cellar has a roof again, and Bessa's children sleep under it.)",
         "target": "REST_2",
         "points": {
-          "ROSE": 2
+          "ROSE": 2,
+          "Honour": 1
         }
       },
       {
