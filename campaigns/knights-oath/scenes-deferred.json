@@ -1443,15 +1443,19 @@
       },
       {
         "letter": "C",
-        "text": "Ask who is speaking. Not agreement — but you engage with it.",
+        "text": "Ask who is speaking. Not agreement — but you engage with it. (-1 Honour)",
         "target": "DG1_listen",
-        "points": {}
+        "points": {
+          "honour": -1
+        }
       },
       {
         "letter": "D",
-        "text": "The wound is real. The help is real. You do not say yes — but you do not say no.",
+        "text": "The wound is real. The help is real. You do not say yes — but you do not say no. (-1 Honour)",
         "target": "DG1_silent",
-        "points": {}
+        "points": {
+          "honour": -1
+        }
       }
     ]
   },
@@ -1653,21 +1657,27 @@
       },
       {
         "letter": "B",
-        "text": "No — but you ask how she would arrange it. Just information.",
+        "text": "No — but you ask how she would arrange it. Just information. (-1 Honour)",
         "target": "DG2_listen",
-        "points": {}
+        "points": {
+          "honour": -1
+        }
       },
       {
         "letter": "C",
-        "text": "You ask for a day to think.",
+        "text": "You ask for a day to think. (-1 Honour)",
         "target": "DG2_delay",
-        "points": {}
+        "points": {
+          "honour": -1
+        }
       },
       {
         "letter": "D",
-        "text": "You accept. The refugees will be safe. That is what matters.",
+        "text": "You accept. The refugees will be safe. That is what matters. (-3 Honour)",
         "target": "DG2_fall",
-        "points": {}
+        "points": {
+          "honour": -3
+        }
       }
     ]
   },
@@ -2767,9 +2777,11 @@
       },
       {
         "letter": "C",
-        "text": "You accept. The bridge metaphor is genuinely compelling.",
+        "text": "You accept. The bridge metaphor is genuinely compelling. (-3 Honour)",
         "target": "DG3_fall",
-        "points": {}
+        "points": {
+          "honour": -3
+        }
       }
     ]
   },
@@ -5892,10 +5904,10 @@
       },
       {
         "letter": "B",
-        "text": "Leave them to it. You've done enough. An old woman watches you mount up. 'You'll leave,' she says. 'He would have stayed.' The words follow you down the road.",
+        "text": "Leave them to it. You've done enough. An old woman watches you mount up. 'You'll leave,' she says. 'He would have stayed.' The words follow you down the road. (-2 Honour)",
         "target": "REST_2",
         "points": {
-          "CROWN": 1
+          "honour": -2
         }
       }
     ]
@@ -8748,6 +8760,185 @@
         "letter": "B",
         "text": "Bow your head. The shame is heavy, but you will carry it.",
         "target": "71",
+        "points": {}
+      }
+    ]
+  },
+  "TEMPT_SUPPLIES": {
+    "id": "TEMPT_SUPPLIES",
+    "title": "THE ABANDONED LARDER",
+    "location": "Roadside Farmstead",
+    "prose": [
+      "*An abandoned farmstead — Late Afternoon*",
+      "The family left in a hurry. The door hangs open. Inside: salted meat, dried fruit, a half-wheel of cheese, travel bread wrapped in cloth. Enough to feed your group for three days. Enough to feed a refugee family for a week.",
+      "No one would know. The family is gone — fled south, or dead, or somewhere between. These supplies will spoil if no one takes them. The practical thing is clear.",
+      "But you are not here to be practical. You are here to be a knight. And knights do not take what is not offered, even from the abandoned. Even when it makes sense.",
+      "Aldric looks at the food. Looks at you. Says nothing. The choice is yours."
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**MORAL CHOICE**\nThe Measure does not explicitly forbid taking abandoned supplies. But the spirit of the Oath asks: if the family returns, what will they find? If refugees pass this way, what will sustain them?"
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Take the supplies. The column needs them and the family is gone. This is war.",
+        "target": "RETURN_TO_MARCH",
+        "points": {
+          "honour": -2
+        },
+        "effects": {
+          "rations": 6
+        }
+      },
+      {
+        "letter": "B",
+        "text": "Leave coin on the table — more than the food is worth. Take only what you need.",
+        "target": "RETURN_TO_MARCH",
+        "points": {
+          "ROSE": 1
+        },
+        "effects": {
+          "rations": 2,
+          "gold": -3
+        }
+      },
+      {
+        "letter": "C",
+        "text": "Leave everything. Write a note: 'Solamnic patrol passed. Supplies untouched. Est Sularus.'",
+        "target": "RETURN_TO_MARCH",
+        "points": {
+          "ROSE": 2
+        }
+      }
+    ]
+  },
+  "TEMPT_CREDIT": {
+    "id": "TEMPT_CREDIT",
+    "title": "THE STOLEN VICTORY",
+    "location": "Field Camp",
+    "prose": [
+      "*Field Camp — After the Skirmish*",
+      "The patrol is reporting to Caeron. The flanking manoeuvre that won the skirmish — the one that turned a losing fight into a rout — Caeron thinks it was your idea. He says so, in front of everyone. 'Quick thinking, squire. That kind of tactical instinct is exactly what the Order needs.'",
+      "But it wasn't your idea. It was Aldric's. He suggested it in the chaos, you relayed it, and somehow in the telling it became yours. Aldric is standing three feet away. He heard Caeron's praise. His face is carefully blank.",
+      "No one would contradict you. Aldric certainly won't — he doesn't seek credit, never has. Caeron's good opinion is valuable. The Order notices things like this.",
+      "Do you take what isn't yours?"
+    ],
+    "boxes": [],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Accept the credit. It's a small thing, and Aldric doesn't seem to mind.",
+        "target": "RETURN_TO_MARCH",
+        "points": {
+          "CROWN": 1,
+          "honour": -2
+        }
+      },
+      {
+        "letter": "B",
+        "text": "'The flanking was Aldric's idea, my lord. I only passed it on.'",
+        "target": "RETURN_TO_MARCH",
+        "points": {
+          "ROSE": 2
+        },
+        "approval": {
+          "Aldric Voss": 2
+        }
+      }
+    ]
+  },
+  "TEMPT_PRISONER": {
+    "id": "TEMPT_PRISONER",
+    "title": "THE WOUNDED SCOUT",
+    "location": "Roadside",
+    "prose": [
+      "*South Road — Dawn*",
+      "The Dragon Army scout lies against a tree, holding his stomach. Your blade did that. He is young — maybe younger than you — and he is dying slowly. His unit is gone, fled when the ambush turned. No one will come for him.",
+      "He has information. You can see it in his eyes — he knows things. Patrol routes. Supply lines. Maybe even where the main force is heading. Information that could save lives. Solamnic lives.",
+      "The Measure is clear: prisoners are to be treated with honour, offered quarter, given medical care if possible. But the Measure was written before the Dragon Armies. Before draconians. Before the enemy stopped taking prisoners themselves.",
+      "He watches you approach. Fear and defiance and something that might be hope.",
+      "What do you do with a dying enemy who knows things you need to know?"
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**GRAVE CHOICE**\nThe information could save lives. The method of obtaining it will stain yours."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Heal him. Offer quarter. Ask nothing — if he wants to talk, he will. The Measure is the Measure.",
+        "target": "RETURN_TO_MARCH",
+        "points": {
+          "ROSE": 3
+        }
+      },
+      {
+        "letter": "B",
+        "text": "'Tell me what you know and I'll make the pain stop.' Press the wound.",
+        "target": "TEMPT_PRISONER_INFO",
+        "points": {
+          "honour": -3,
+          "SWORD": -1
+        }
+      },
+      {
+        "letter": "C",
+        "text": "Walk away. Let nature take its course. You didn't kill him — the wound did.",
+        "target": "RETURN_TO_MARCH",
+        "points": {
+          "honour": -1
+        }
+      }
+    ]
+  },
+  "TEMPT_PRISONER_INFO": {
+    "id": "TEMPT_PRISONER_INFO",
+    "title": "WHAT HE TELLS YOU",
+    "location": "Roadside",
+    "prose": [
+      "*South Road — Moments Later*",
+      "He talks. They always talk. The Dragon Army camp is two days east. The supply wagons come every third day. There's a commander — a Highlord's lieutenant — who rides with a small guard.",
+      "Good intelligence. Actionable intelligence. Caeron will want to know.",
+      "When he's done talking, the scout looks at you with something that isn't fear anymore. It's recognition. He knows what you are now. So do you.",
+      "He dies an hour later. You could have healed him after. You didn't.",
+      "Aldric won't meet your eyes for the rest of the day."
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**CONSEQUENCE**\nYou have intelligence that may save lives. You have also crossed a line the Measure drew very clearly. Some companions will remember this."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Report the intelligence to Caeron. Do not mention how you obtained it.",
+        "target": "RETURN_TO_MARCH",
+        "points": {},
+        "flags": {
+          "tortured_prisoner": true
+        }
+      }
+    ]
+  },
+  "RETURN_TO_MARCH": {
+    "id": "RETURN_TO_MARCH",
+    "title": "THE MARCH CONTINUES",
+    "location": "South Road",
+    "prose": [
+      "The column moves on. The road stretches south. Whatever you chose back there — it's done now. The weight of it settles into the miles like everything else."
+    ],
+    "boxes": [],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Continue.",
+        "target": "44_REPORT",
         "points": {}
       }
     ]

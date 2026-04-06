@@ -2137,5 +2137,17 @@
     {"id": "knighthood", "name": "Earn Your Knighthood", "desc": "Prove yourself worthy of the Order through deeds", "startScene": "1", "endFlag": "knighted"},
     {"id": "aldric_trust", "name": "Aldric's Trust", "desc": "Earn the respect of your fellow squire", "flag": "aldric_met", "endFlag": "aldric_trust"},
     {"id": "vogler_defense", "name": "Defend Vogler", "desc": "Protect the village from the Dragon Army", "startScene": "56", "endFlag": "vogler_defended"}
-  ]
+  ],
+  "travelEvents": [
+    {"id": "TEMPT_SUPPLIES", "name": "Abandoned Larder", "triggerScenes": ["35", "40", "45", "50"], "chance": 0.3, "flag": "seen_supplies_tempt"},
+    {"id": "TEMPT_CREDIT", "name": "Stolen Victory", "triggerScenes": ["38", "43"], "chance": 0.4, "requireCompanion": "Aldric Voss", "flag": "seen_credit_tempt"},
+    {"id": "TEMPT_PRISONER", "name": "Wounded Scout", "triggerScenes": ["42", "48", "55"], "chance": 0.25, "flag": "seen_prisoner_tempt"}
+  ],
+  "honourThresholds": {
+    "disgrace": 0,
+    "shamed": 3,
+    "questionable": 5,
+    "honourable": 8,
+    "exemplary": 12
+  }
 }
