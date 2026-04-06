@@ -74,11 +74,14 @@
     ],
     "playerCrit": [
       "The blade comes down between the scales with devastating precision. The draconian staggers, dark blood spraying, its legs buckling.",
-      "You catch it mid-lunge. The longsword drives through the chest scales and the draconian's eyes go wide — shocked, almost offended."
+      "You catch it mid-lunge. The longsword drives through the chest scales and the draconian's eyes go wide — shocked, almost offended.",
+      "Steel meets scale and scale loses. The blade punches through with a sound like breaking pottery. The draconian's war cry becomes a wheeze.",
+      "A killing blow that would have ended any human soldier. The draconian merely staggers — but the wound is mortal. You can see it in how the scales are already greying."
     ],
     "enemyBloodied": [
       "The draconian is wounded and furious. Blood slicks its bronze scales dark. It drops into a crouch — lower, faster, more desperate.",
-      "Dark blood trails behind it on the road stones. The draconian bares fangs that were not designed for a creature that walks upright."
+      "Dark blood trails behind it on the road stones. The draconian bares fangs that were not designed for a creature that walks upright.",
+      "The draconian's movements have changed — less confident, more savage. A wounded predator is still a predator."
     ],
     "enemyNearDeath": [
       "The draconian can barely stand but it will not retreat. Dragon Army soldiers do not retreat. Its scales have gone dull — the lustre fading as the life beneath them fails.",
@@ -213,19 +216,25 @@
     ],
     "playerCrit": [
       "The strike is perfect — timing, angle, weight. The draconian goes down and turns to stone in the middle of the road, creating a barrier the others have to navigate.",
-      "You catch the draconian at full extension. The blade goes through bronze scales like they were parchment."
+      "You catch the draconian at full extension. The blade goes through bronze scales like they were parchment.",
+      "A devastating overhead blow that splits the draconian's guard entirely. It drops, stone spreading from the wound.",
+      "The corporal's eyes widen as you drop one of his soldiers in a single stroke. He starts reaching for his signal horn."
     ],
     "enemyBloodied": [
       "The draconian is wounded but the corporal's command keeps it pressing forward. Discipline over pain.",
-      "Dark blood on the road stones. The draconian is fading but the corporal has not yet called retreat."
+      "Dark blood on the road stones. The draconian is fading but the corporal has not yet called retreat.",
+      "The Baaz stumbles, leaving a trail of dark blood. The corporal shouts something in draconic. It keeps fighting."
     ],
     "enemyNearDeath": [
       "The draconian is barely standing. Behind it, the corporal is weighing the cost. The recall horn must come soon.",
-      "One more hit. The stone transformation is already gathering in the draconian's extremities."
+      "One more hit. The stone transformation is already gathering in the draconian's extremities.",
+      "The draconian's scales have gone dull grey. It fights on instinct now, not will."
     ],
     "enemyDeath": [
       "The Baaz petrifies on the road. Another stone obstacle for the patrol to navigate. You are making this road expensive.",
-      "It falls and turns to stone. The corporal looks at the statue, looks at you, and his hand drifts toward his signal horn."
+      "It falls and turns to stone. The corporal looks at the statue, looks at you, and his hand drifts toward his signal horn.",
+      "The stone transformation catches it mid-swing. A grotesque monument to the cost of pressing this rearguard.",
+      "Another statue for the road. The refugees are still moving. That is what counts."
     ],
     "playerHit_scar": [
       "A draconian blade catches your face in the press. Blood and adrenaline — the scar will sit along your jawline.",
@@ -285,19 +294,25 @@
     ],
     "playerCrit": [
       "You catch the Sivak mid-landing. The greatsword drives through its guard and the draconian actually staggers — genuine surprise on a face designed for menace.",
-      "The strike shatters a soldier's shield and the man behind it. The Sivak hisses — losing resources."
+      "The strike shatters a soldier's shield and the man behind it. The Sivak hisses — losing resources.",
+      "You time the dive perfectly. The Sivak's own momentum drives it onto your blade. Dark blood sprays across the road.",
+      "A devastating strike catches the Sivak's wing membrane. It crashes to the ground, grounded and furious."
     ],
     "enemyBloodied": [
       "The Sivak is wounded. It stays airborne longer now, circling, conserving. Wounded Sivaks are more dangerous, not less — they fight smarter when hurt.",
-      "Soldiers down, formation broken. The Sivak lands and fights alone now. Its aura flickers — command presence wavering with its blood."
+      "Soldiers down, formation broken. The Sivak lands and fights alone now. Its aura flickers — command presence wavering with its blood.",
+      "The Sivak's dives become shorter, its climbs more labored. It is bleeding badly but too proud to retreat."
     ],
     "enemyNearDeath": [
       "The Sivak is dying. REMEMBER: do not kill it with a melee blow. Shape Steal will copy your form. Ranged. Force it to flee. Anything but a blade.",
-      "The Sivak staggers. Its shape is already flickering — the transformation ability activating involuntarily. End it at range or not at all."
+      "The Sivak staggers. Its shape is already flickering — the transformation ability activating involuntarily. End it at range or not at all.",
+      "The Sivak can barely stay airborne. One wing drags. Its transformation flickers uncontrollably — your face, Aldric's, a stranger's, cycling."
     ],
     "enemyDeath": [
       "The Sivak falls — and as it dies, its form shimmers and shifts. For one horrible moment, your own face stares back at you from the road stones. Then the illusion fades and it is just a dead draconian.",
-      "The last soldier throws down his weapon. The Sivak lies still on the forest road. Sealed orders spill from its belt pouch — written in Draconic, stamped with a black wing seal. Your name is on them."
+      "The last soldier throws down his weapon. The Sivak lies still on the forest road. Sealed orders spill from its belt pouch — written in Draconic, stamped with a black wing seal. Your name is on them.",
+      "The Sivak crashes into the trees, its transformation cycling through a dozen faces before settling on its true form. Dead. The mission is compromised.",
+      "A final, desperate dive that ends with Solamnic steel. The Sivak's form shimmers through your face, your commander's face, the Highlord's face — then goes still."
     ],
     "playerHit_scar": [
       "The Sivak's greatsword catches you from above — a diving strike with forty feet of momentum behind it. The wound is deep and wide.",
@@ -361,11 +376,14 @@
     ],
     "playerCrit": [
       "The strike drives through Hadrian's guard with everything you have. The old knight staggers — genuinely hurt. For the first time, his eyes show something like doubt. Not in you. In himself.",
-      "You catch Dawnstrike's hilt and force the blade wide. Your pommel strike catches Hadrian's chin. He drops to one knee. The column holds its breath."
+      "You catch Dawnstrike's hilt and force the blade wide. Your pommel strike catches Hadrian's chin. He drops to one knee. The column holds its breath.",
+      "A perfect combination that Aldous taught you — the one he said was for emergencies only. It drives Hadrian back three steps and draws blood.",
+      "Your blade finds the gap between pauldron and breastplate. A gap that was not there forty years ago, when his armour fit better."
     ],
     "enemyBloodied": [
       "Hadrian is hurt. Blood on his lip, favouring his right side. But his guard has not dropped. \"Do not stop now,\" he says. \"I did not ride six months for a careful fight.\"",
-      "Dawnstrike's light flickers. Hadrian's stance wavers, then steadies. The old forms hold him up when his body cannot."
+      "Dawnstrike's light flickers. Hadrian's stance wavers, then steadies. The old forms hold him up when his body cannot.",
+      "The old knight is bleeding. Dawnstrike hums a worried note — the sword knows its wielder is failing. Hadrian only grins harder."
     ],
     "enemyNearDeath": [
       "Hadrian can barely lift Dawnstrike. His arms shake. His stance is collapsing — the old forms finally failing the old knight. One more blow. He is waiting for it. He wants it to be clean.",
@@ -420,19 +438,25 @@
     ],
     "playerCrit": [
       "The strike shatters a section of the barricade and the soldier behind it. Wood and steel scatter across the bridge. The gap is open.",
-      "You catch the sergeant mid-rally. The blow drives him back and his soldiers lose their nerve for one crucial moment."
+      "You catch the sergeant mid-rally. The blow drives him back and his soldiers lose their nerve for one crucial moment.",
+      "A devastating overhead blow that splits the barricade in half. The soldiers scramble back, their cover destroyed.",
+      "The sergeant's Last Stand falters as your blade drives through his guard. He drops to one knee on the ancient Solamnic stones."
     ],
     "enemyBloodied": [
       "The sergeant is wounded. His Rally falters — the words come out strained, and for the first time, his soldiers exchange uncertain glances.",
-      "Soldiers falling, barricade breaking. The Dragon Army standard starts to lean as the defenders thin."
+      "Soldiers falling, barricade breaking. The Dragon Army standard starts to lean as the defenders thin.",
+      "The barricade is half-wrecked. The sergeant bleeds but does not retreat. His soldiers take courage from his stubbornness."
     ],
     "enemyNearDeath": [
       "The sergeant is the last one standing. Half his barricade is shattered. He sets his feet on the bridge stones and raises his sword one more time. Last Stand. His eyes go bright and dangerous.",
-      "One soldier left, wounded, pressed against the Dragon Army standard. He could surrender. His eyes say he will not."
+      "One soldier left, wounded, pressed against the Dragon Army standard. He could surrender. His eyes say he will not.",
+      "The Dragon Army standard wavers. The sergeant is all that holds this position. His Last Stand flickers — exhaustion and blood loss taking their toll."
     ],
     "enemyDeath": [
       "The sergeant falls. His sword clatters on the Solamnic bridge stones — a Dragon Army blade on Solamnic architecture. The standard behind him dips, catches the wind, and tears free from its mounting.",
-      "The last soldier drops his weapon. The bridge is yours. The river continues below, indifferent. On the far side, a woman hanging laundry has stopped. A child is pointing. An old man has his hand over his mouth. They watched the whole fight. Hope requires witnesses."
+      "The last soldier drops his weapon. The bridge is yours. The river continues below, indifferent. On the far side, a woman hanging laundry has stopped. A child is pointing. An old man has his hand over his mouth. They watched the whole fight. Hope requires witnesses.",
+      "The Dragon Army standard falls into the river. The bridge is clear. Vogler lies ahead, and the people on the walls have seen Solamnic steel reclaim what was theirs.",
+      "The sergeant dies on his feet — Last Stand burning out with his life. His soldiers throw down their weapons. The bridge is won."
     ],
     "playerHit_scar": [
       "The sergeant's longsword finds your face. A clean cut, precisely placed — this man knows exactly where to put a blade. The scar will cross your nose.",
