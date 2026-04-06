@@ -5516,8 +5516,12 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
             const usedScars=(ng.scars||[]).map(s=>s.text);const availScars=SCARS.filter(s=>!usedScars.includes(s));
             const scarText=availScars.length>0?availScars[Math.floor(Math.random()*availScars.length)]:SCARS[Math.floor(Math.random()*SCARS.length)];
             ng.scars=[...(ng.scars||[]),{text:scarText,scene:newWound.scene}];
+            // Equipment degradation on defeat (weapon 2-4, armor 1-3)
+            const weaponDmg=2+Math.floor(Math.random()*3);const armorDmg=1+Math.floor(Math.random()*3);
+            if(ng.weapon&&ng.weapon!=='Unarmed'){const tmp=degradeEquipment(ng,'mainHand',weaponDmg);ng.durability=tmp.durability}
+            if(ng.armor&&ng.armor!=='None'){const tmp=degradeEquipment(ng,'armor',armorDmg);ng.durability=tmp.durability}
             ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds,ng.exhaustion,ng.durability);
-            setTimeout(()=>setDefeatRecovery({wound:newWound,scar:scarText}),400);
+            setTimeout(()=>setDefeatRecovery({wound:newWound,scar:scarText,weaponDmg,armorDmg}),400);
             return ng;
           });
           setCombat({result:'lose',log:[{type:'result',text:'Defeat (pen & paper)',round:0}],phase:'over'});
@@ -8703,12 +8707,13 @@ function GodSignPicker({options,onPick}){
           e('span',{className:'god-picker-desc'},GOD_FLAVOUR[g]))))));
 }
 
-function DefeatRecoveryModal({gs,wound,scar,onContinue}){
+function DefeatRecoveryModal({gs,wound,scar,weaponDmg,armorDmg,onContinue}){
   const e=React.createElement;
   const d=gs.derived;
   const statNames={str:'Strength',dex:'Dexterity',con:'Constitution',int:'Intelligence',wis:'Wisdom',cha:'Charisma'};
   const hasMira=gs.companions.includes('Mira Brightforge')||gs.companions.some(c=>c.toLowerCase().includes('mira'));
   const hasCompanions=gs.companions.length>0;
+  const hasEquipDmg=(weaponDmg&&gs.weapon&&gs.weapon!=='Unarmed')||(armorDmg&&gs.armor&&gs.armor!=='None');
   return e('div',{className:'modal-overlay'},
     e('div',{className:'modal-box defeat-modal'},
       e('h2',{className:'gold',style:{marginBottom:8}},'RECOVERY'),
@@ -8728,6 +8733,11 @@ function DefeatRecoveryModal({gs,wound,scar,onContinue}){
         e('div',{className:'defeat-section-header'},'WOUND'),
         e('p',null,e('strong',null,statNames[wound.stat]+' \u22121'),' for '+wound.combatsLeft+' combats'),
         e('p',{style:{fontStyle:'italic',color:'var(--text-dim)',fontSize:13}},WOUND_FLAVOUR[wound.stat])),
+      hasEquipDmg?e('div',{className:'defeat-equip',style:{marginTop:12}},
+        e('div',{className:'defeat-section-header'},'EQUIPMENT DAMAGE'),
+        weaponDmg&&gs.weapon&&gs.weapon!=='Unarmed'?e('p',{style:{color:'var(--orange)',fontSize:13}},gs.weapon+' durability \u22122\u20134 points'):null,
+        armorDmg&&gs.armor&&gs.armor!=='None'?e('p',{style:{color:'var(--orange)',fontSize:13}},gs.armor+' durability \u22121\u20133 points'):null,
+        e('p',{style:{fontStyle:'italic',color:'var(--text-dim)',fontSize:12,marginTop:4}},'Visit a shop to repair damaged equipment.')):null,
       e('div',{style:{marginTop:12,padding:'8px 12px',background:'rgba(201,168,76,.08)',borderRadius:6,fontSize:12,color:'var(--text-dim)'}},
         'Your HP has been restored to 1. Abilities and spell slots are unchanged. The wound will heal after '+wound.combatsLeft+' more combats.'),
       e('div',{className:'confirm-btns',style:{marginTop:16}},
@@ -10275,7 +10285,7 @@ function App(){
     shortRestModal&&gs?e(ShortRestModal,{gs:gs,hardcoreMode:hardcoreMode,onDone:(result)=>{const ns={...gs,hp:result.hp,hitDiceUsed:result.hitDiceUsed,waterskinUses:result.waterskinUses,exhaustion:result.exhaustion,rations:(gs.rations||0)+(result.rationsFound||0)};ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds);setGs(ns);setShortRestModal(false)}}):null,
     showCamp&&gs?e(CampModal,{gs:gs,sceneId:sceneId,onDone:(result)=>{const ns={...gs,...result};ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability);setGs(ns);setShowCamp(false)},onCancel:()=>setShowCamp(false)}):null,
     healingPanel&&gs?e(HealingPanel,{gs:gs,onUpdate:(upd)=>{const ns={...gs,...upd};setGs(ns)},onClose:()=>setHealingPanel(false)}):null,
-    defeatRecovery&&gs?e(DefeatRecoveryModal,{gs:gs,wound:defeatRecovery.wound,scar:defeatRecovery.scar,onContinue:()=>setDefeatRecovery(null)}):null,
+    defeatRecovery&&gs?e(DefeatRecoveryModal,{gs:gs,wound:defeatRecovery.wound,scar:defeatRecovery.scar,weaponDmg:defeatRecovery.weaponDmg,armorDmg:defeatRecovery.armorDmg,onContinue:()=>setDefeatRecovery(null)}):null,
     godSignPicker&&gs&&gs.cls==='Paladin'?e(GodSignPicker,{options:godSignPicker.options,onPick:(god)=>{const ns={...gs,godSigns:{...(gs.godSigns||{})}};ns.godSigns[god]=(ns.godSigns[god]||0)+1;setGs(ns);setGodSignPicker(null)}}):null,
     knightingPicker&&gs?e(KnightingSkillPicker,{order:knightingPicker.order,onConfirm:(skillChoice)=>{const ns=applyKnightingBonus(gs,knightingPicker.order,skillChoice);setGs(ns);setKnightingPicker(null)}}):null,
     showSettingsPanel?e(SettingsPanel,{onClose:()=>setShowSettingsPanel(false),onSave:()=>{setShowSettingsPanel(false);setShowSave(true)},onLoad:()=>{setShowSettingsPanel(false);setShowSave(true)}}):null,

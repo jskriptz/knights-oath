@@ -82,38 +82,52 @@ for (const sceneId of outcomeScenes) {
 
 // 4. Validate narration structure
 console.log('4. Validating narration structure...');
+// Two valid formats:
+// 1. Dynamic: roundStart[], playerHit[], playerMiss[], playerCrit[], etc.
+// 2. Scripted: setting, stakes, rounds{} (narrative style)
 for (const [sceneId, narration] of Object.entries(combatNarration)) {
-  // Check for required fields
-  if (!narration.intro && !narration.rounds) {
-    warnings.push(`[NARRATION] Scene "${sceneId}" missing intro/rounds`);
-  }
-  // Check rounds have content
-  if (narration.rounds) {
-    for (let i = 0; i < narration.rounds.length; i++) {
-      const round = narration.rounds[i];
-      if (!round.situation && !round.playerTurn && !round.enemyTurn) {
-        warnings.push(`[NARRATION] Scene "${sceneId}" round ${i + 1} is empty`);
-      }
-    }
+  // Check for either dynamic or scripted format
+  const hasDynamic = narration.roundStart || narration.playerHit || narration.playerMiss;
+  const hasScripted = narration.setting || narration.rounds;
+  if (!hasDynamic && !hasScripted) {
+    warnings.push(`[NARRATION] Scene "${sceneId}" missing narration content`);
   }
 }
 
 // 5. Validate outcomes structure
 console.log('5. Validating outcomes structure...');
+// Two valid formats:
+// 1. HP-scaled: victory is array of {minHpRatio, text}, defeat is object with companion keys + default
+// 2. Simple: victory/defeat are arrays of strings
 for (const [sceneId, outcomes] of Object.entries(combatOutcomes)) {
   if (!outcomes.victory && !outcomes.defeat) {
     warnings.push(`[OUTCOMES] Scene "${sceneId}" missing victory/defeat`);
   }
-  // Check victory has prose
+  // Check victory has content (either format)
   if (outcomes.victory) {
-    if (!outcomes.victory.prose && !outcomes.victory.text) {
-      warnings.push(`[OUTCOMES] Scene "${sceneId}" victory missing prose`);
+    if (Array.isArray(outcomes.victory)) {
+      // Check for {minHpRatio, text} or plain strings
+      const hasContent = outcomes.victory.some(v => v.text || (typeof v === 'string' && v.length > 0));
+      if (!hasContent) {
+        warnings.push(`[OUTCOMES] Scene "${sceneId}" victory entries missing text`);
+      }
+    } else if (!outcomes.victory.text) {
+      warnings.push(`[OUTCOMES] Scene "${sceneId}" victory missing text`);
     }
   }
-  // Check defeat has prose
+  // Check defeat has content (either format)
   if (outcomes.defeat) {
-    if (!outcomes.defeat.prose && !outcomes.defeat.text) {
-      warnings.push(`[OUTCOMES] Scene "${sceneId}" defeat missing prose`);
+    if (Array.isArray(outcomes.defeat)) {
+      // Simple array of strings
+      const hasContent = outcomes.defeat.some(v => typeof v === 'string' && v.length > 0);
+      if (!hasContent) {
+        warnings.push(`[OUTCOMES] Scene "${sceneId}" defeat missing prose`);
+      }
+    } else if (typeof outcomes.defeat === 'object') {
+      const hasText = outcomes.defeat.default || Object.values(outcomes.defeat).some(v => typeof v === 'string' && v.length > 0);
+      if (!hasText) {
+        warnings.push(`[OUTCOMES] Scene "${sceneId}" defeat missing prose`);
+      }
     }
   }
 }
