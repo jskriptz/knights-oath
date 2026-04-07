@@ -12,7 +12,7 @@
   ],
   "data": {
     "Aldric Voss": {
-      "portrait": "https://game-icons.net/icons/c9a84c/1a2a4a/1x1/lorc/visored-helm.svg",
+      "portrait": "https://api.dicebear.com/9.x/notionists/svg?seed=AldricKnight&backgroundColor=1a2a4a",
       "desc": "Tall, sandy-haired, jaw like a cliff. Battered helmet. A scar through his left eyebrow he claims came from a bar fight. It did not.",
       "personality": "Competitive, honourable, hides feelings behind banter. Deeply loyal.",
       "romance": "Slow burn. Spark Scene 5 or 14. Flame Scene 48. Oath Scene 75.",
@@ -20,7 +20,7 @@
       "reunionText": "Aldric grins when he sees you, that familiar competitive spark in his eyes. 'Miss me? I knew you would.'"
     },
     "Thessaly Brightwater": {
-      "portrait": "https://game-icons.net/icons/e8c860/1a2a4a/1x1/lorc/feather-and-scroll.svg",
+      "portrait": "https://api.dicebear.com/9.x/notionists/svg?seed=ThessalyScholar&backgroundColor=1a2a4a",
       "desc": "Sharp eyes, copper hair, ink-stained fingers. Silver locket she never opens.",
       "personality": "Witty, curious, emotionally guarded. Tests everyone.",
       "romance": "Intellectual sparring first. Spark Scene 5 or 14. Flame Scene 48. Oath Scene 75.",
@@ -28,7 +28,7 @@
       "reunionText": "Thessaly looks up from her notes, a rare smile crossing her face. 'You found me. I suppose you're not completely hopeless after all.'"
     },
     "Commander Serath": {
-      "portrait": "https://game-icons.net/icons/8b3a3a/1a2a4a/1x1/lorc/crested-helmet.svg",
+      "portrait": "https://api.dicebear.com/9.x/notionists/svg?seed=SerathCommander&backgroundColor=1a2a4a",
       "desc": "Military posture in civilian clothes. Quiet eyes that miss nothing.",
       "personality": "Careful, precise, carrying enormous guilt. Dry humour that surprises.",
       "romance": "Trust earned through action. Spark Scene 18. Flame Scene 44. Oath Scene 75.",
@@ -36,7 +36,7 @@
       "reunionText": "Serath stands straighter when he sees you, the weight on his shoulders visibly lightening. 'I was beginning to think I would have to win this war alone.'"
     },
     "Mira of the Oaks": {
-      "portrait": "https://game-icons.net/icons/4a8a5a/1a2a4a/1x1/lorc/health-normal.svg",
+      "portrait": "https://api.dicebear.com/9.x/notionists/svg?seed=MiraHealer&backgroundColor=1a2a4a",
       "desc": "Brown skin, warm dark eyes, flour on her sleeves in a war zone.",
       "personality": "Gentle but not soft. Will tell you when you are wrong, kindly but firmly.",
       "romance": "Warmth and honesty. Spark Scene 21. Flame Scene 44. Oath Scene 75.",
@@ -44,7 +44,7 @@
       "reunionText": "Mira's face softens the moment she sees you. 'The Grove stands. But I heard what you faced — I should have been there.' She takes your hands. 'I am here now.'"
     },
     "Lord Caeron Ashvale": {
-      "portrait": "https://game-icons.net/icons/6a4a8a/1a2a4a/1x1/lorc/crowned-skull.svg",
+      "portrait": "https://api.dicebear.com/9.x/notionists/svg?seed=CaeronNoble&backgroundColor=1a2a4a",
       "desc": "Patrician features, dark hair silver at the temples. Immaculate armour always.",
       "personality": "Arrogant surface, deeply insecure underneath.",
       "romance": "Complicated slow burn. Spark Scene 5 or 14. Flame Scene 48. Oath Scene 75.",
@@ -52,7 +52,7 @@
       "reunionText": "Caeron's composure cracks for just a moment when he sees you. 'I... did not expect to be so relieved.' He clears his throat. 'That is to say — it is good tactics to reunite our forces.'"
     },
     "Sera Nighthollow": {
-      "portrait": "https://game-icons.net/icons/5a5a6a/1a2a4a/1x1/lorc/cowled.svg",
+      "portrait": "https://api.dicebear.com/9.x/notionists/svg?seed=SeraScout&backgroundColor=1a2a4a",
       "desc": "Lean, dark-skinned, silver-streaked black hair cut blunt at the jaw. Scar across her collarbone. Moves like someone who learned early that being noticed is dangerous.",
       "personality": "Dry, precise, deeply competent. Laughs rarely but when she does it is sudden and unguarded.",
       "romance": "Slow then fast. Spark Scene 3B. Flame Scene 34B. Oath Scene 68B.",
@@ -60,7 +60,7 @@
       "reunionText": "Sera emerges from the shadows like she was never gone. 'The debt is paid.' She studies your face. 'You look like you have stories. I want to hear them.'"
     },
     "Vael Ashmore": {
-      "portrait": "https://game-icons.net/icons/4a7ab5/1a2a4a/1x1/delapouite/woman-elf-face.svg",
+      "portrait": "https://api.dicebear.com/9.x/notionists/svg?seed=VaelWarrior&backgroundColor=1a2a4a",
       "desc": "Brown skin, sharp jaw, close-cropped dark hair. Always in training gear. Callused hands. Solamnic signet ring on a cord around her neck.",
       "personality": "Competitive, concealing deep respect. Holds herself to an impossible standard. Self-deprecating humour.",
       "romance": "Built on mutual recognition. Spark Scene 5B. Flame Scene 32B. Oath Scene 68C.",
@@ -68,7 +68,7 @@
       "reunionText": "Vael punches your shoulder before you can even speak. 'I won, obviously. Now — what trouble have you gotten into without me?'"
     },
     "Tariel Duskmantle": {
-      "portrait": "https://game-icons.net/icons/9a6a3a/1a2a4a/1x1/lorc/spy.svg",
+      "portrait": "https://api.dicebear.com/9.x/notionists/svg?seed=TarielSpy&backgroundColor=1a2a4a",
       "desc": "Dark hair in eastern military braid, olive skin, green eyes that catalogue. Dresses well but not ostentatiously. Good boots, single silver ring.",
       "personality": "Intellectually precise, genuinely curious, disarming. Asks questions that reveal contradictions.",
       "romance": "Intellectual first, then personal. Spark Scene 31B. Flame Scene 53D. Oath Scene 66B.",
@@ -76,7 +76,7 @@
       "reunionText": "Tariel appears beside you as if she had always been there. 'I have learned things. Terrible things.' A pause. 'I am glad to see a friendly face.'"
     },
     "Lysander Graves": {
-      "portrait": "https://game-icons.net/icons/7a7568/1a2a4a/1x1/lorc/gladius.svg",
+      "portrait": "https://api.dicebear.com/9.x/notionists/svg?seed=LysanderVeteran&backgroundColor=1a2a4a",
       "desc": "Broad-shouldered, weathered, sun-darkened skin. A face that has been hit more than once and a bearing that suggests he did not start those fights. Carries a battered longsword with no ornament.",
       "personality": "Physical and philosophical. Speaks about honour from experience of losing it. Direct.",
       "romance": "Physical and philosophical. Spark Scene 27B. Flame Scene 36B or 53E. Oath Scene 66B.",
