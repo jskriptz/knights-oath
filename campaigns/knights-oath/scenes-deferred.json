@@ -15,7 +15,7 @@
       },
       {
         "type": "roll",
-        "text": "**ROLL REQUIRED:** Insight (+1) | WIS | DC 14\n**SUCCESS (roll 14+):** They are telling the truth. The fear points south, not at you. Choose with full knowledge.\n**FAILURE (roll 1-13):** You cannot read them. You decide blind.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**ROLL REQUIRED:** Insight (+1) | WIS | DC 14\n**SUCCESS (roll 14+):** They are telling the truth. The fear points south, not at you. Choose with full knowledge.\n**FAILURE (roll 1-13):** You cannot read them. You decide blind."
       },
       {
         "type": "info",
@@ -224,7 +224,7 @@
       },
       {
         "type": "roll",
-        "text": "**ROLL REQUIRED:** Persuasion (+0) | CHA | DC 15\n**SUCCESS (roll 15+):** You find wording in the decree permitting a 24-hour field assessment delay. Caeron approves. The refugees have time..\n**FAILURE (roll 1-14):** The decree is airtight. You must choose: comply or refuse.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**ROLL REQUIRED:** Persuasion (+0) | CHA | DC 15\n**SUCCESS (roll 15+):** You find wording in the decree permitting a 24-hour field assessment delay. Caeron approves. The refugees have time..\n**FAILURE (roll 1-14):** The decree is airtight. You must choose: comply or refuse."
       },
       {
         "type": "info",
@@ -295,7 +295,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**ROLL REQUIRED:** Medicine (+1) | WIS | DC 12\n**SUCCESS (roll 12+):** Clean technique. Serath watches your hands the whole time — not checking your work, just watching. 'You have done this before,' they say. It is not quite a question. When you finish, they flex the joint experimentally and nod once. By morning they will be mobile.\n**FAILURE (roll 1-11):** Adequate work. The bandage holds, but Serath will move carefully for a day or two. They don't complain. They wouldn't.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**ROLL REQUIRED:** Medicine (+1) | WIS | DC 12\n**SUCCESS (roll 12+):** Clean technique. Serath watches your hands the whole time — not checking your work, just watching. 'You have done this before,' they say. It is not quite a question. When you finish, they flex the joint experimentally and nod once. By morning they will be mobile.\n**FAILURE (roll 1-11):** Adequate work. The bandage holds, but Serath will move carefully for a day or two. They don't complain. They wouldn't."
       },
       {
         "type": "romance",
@@ -342,7 +342,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**ROLL REQUIRED:** Investigation (INT, proficiency if trained) (+3) | INT | DC 12\n**SUCCESS (roll 12+):** The patrol schedules are genuine. But there is something else: the description of Commander Hestrix's seal matches what is on the dispatch pouch from Scene 27 exactly. Serath knew about that pouch before you mentioned it.\n**FAILURE (roll 1-11):** The information checks out.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**ROLL REQUIRED:** Investigation (INT, proficiency if trained) (+3) | INT | DC 12\n**SUCCESS (roll 12+):** The patrol schedules are genuine. But there is something else: the description of Commander Hestrix's seal matches what is on the dispatch pouch from Scene 27 exactly. Serath knew about that pouch before you mentioned it.\n**FAILURE (roll 1-11):** The information checks out."
       }
     ],
     "choices": [
@@ -448,7 +448,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**ROLL REQUIRED:** Perception (+2) | WIS | DC 13\n**SUCCESS (roll 13+):** Scout still half a mile back. All options available without time pressure.\n**FAILURE (roll 1-12):** Patrol is closer than you thought. Options B and C cost one extra round.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**ROLL REQUIRED:** Perception (+2) | WIS | DC 13\n**SUCCESS (roll 13+):** Scout still half a mile back. All options available without time pressure.\n**FAILURE (roll 1-12):** Patrol is closer than you thought. Options B and C cost one extra round."
       },
       {
         "type": "info",
@@ -768,7 +768,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Composure (WIS Save) (+1) | WIS | DC 11\n**SUCCESS (roll 11+):** Your face stays neutral. Caeron holds your gaze a half-second longer than necessary — measuring, perhaps. Or acknowledging. With him, it is hard to tell the difference.\n**FAILURE (roll 1-10):** Something crosses your expression. Caeron's eyes flick to it and away. He has filed it somewhere. Everything gets filed with him.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Composure (WIS Save) (+1) | WIS | DC 11\n**SUCCESS (roll 11+):** Your face stays neutral. Caeron holds your gaze a half-second longer than necessary — measuring, perhaps. Or acknowledging. With him, it is hard to tell the difference.\n**FAILURE (roll 1-10):** Something crosses your expression. Caeron's eyes flick to it and away. He has filed it somewhere. Everything gets filed with him."
       }
     ],
     "choices": [
@@ -934,7 +934,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** History (INT, proficiency if trained) (+3) | INT | DC 13\n**SUCCESS (roll 13+):** Vogler is on Lake Akh-Tiel — the only navigable route between the southern Solamnic coast and the northern fortresses that does not require mountain passes. Whoever controls Vogler controls that supply line for the whole northern campaign. The Dragon Army does not need something in the village. They need the village itself.\n**FAILURE (roll 1-12):** The strategic value is military. You cannot narrow it further.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** History (INT, proficiency if trained) (+3) | INT | DC 13\n**SUCCESS (roll 13+):** Vogler is on Lake Akh-Tiel — the only navigable route between the southern Solamnic coast and the northern fortresses that does not require mountain passes. Whoever controls Vogler controls that supply line for the whole northern campaign. The Dragon Army does not need something in the village. They need the village itself.\n**FAILURE (roll 1-12):** The strategic value is military. You cannot narrow it further."
       }
     ],
     "choices": [
@@ -1022,7 +1022,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Insight (WIS, proficiency if trained) (+1) | WIS | DC 15\n**SUCCESS (roll 15+):** He said 'still' — present tense. This is not a past doubt: it is active. Lord Caeron Ashvale does not know if he has what this moment requires. He told you because he trusts you with it. ROMANCE FLAME Caeron activates immediately if you respond without trying to reassure him.\n**FAILURE (roll 1-14):** He is speaking honestly but opaquely. The layer beneath the words is not clear.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Insight (WIS, proficiency if trained) (+1) | WIS | DC 15\n**SUCCESS (roll 15+):** He said 'still' — present tense. This is not a past doubt: it is active. Lord Caeron Ashvale does not know if he has what this moment requires. He told you because he trusts you with it. ROMANCE FLAME Caeron activates immediately if you respond without trying to reassure him.\n**FAILURE (roll 1-14):** He is speaking honestly but opaquely. The layer beneath the words is not clear."
       }
     ],
     "choices": [
@@ -1067,11 +1067,11 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**ROLL REQUIRED:** Athletics (Sparring Bout) (+3) | STR | DC 15\n**SUCCESS (roll 15+):** You disarm Aldric on the third pass. His blade clatters across the stones and for a moment there is silence. Then Aldric laughs — genuine, surprised — and the panel leans forward.\n**FAILURE (roll 1-14):** Aldric takes the bout. His blade touches your chest a half-second before yours touches his. He nods once — respect for the attempt. The panel makes notes.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**ROLL REQUIRED:** Athletics (Sparring Bout) (+3) | STR | DC 15\n**SUCCESS (roll 15+):** You disarm Aldric on the third pass. His blade clatters across the stones and for a moment there is silence. Then Aldric laughs — genuine, surprised — and the panel leans forward.\n**FAILURE (roll 1-14):** Aldric takes the bout. His blade touches your chest a half-second before yours touches his. He nods once — respect for the attempt. The panel makes notes."
       },
       {
         "type": "roll",
-        "text": "**ROLL REQUIRED:** History / Religion (Written Measure Exam) (+0) | INT | DC 14\n**SUCCESS (roll 14+):** Your responses are precise and occasionally surprising. Aldous underlines one answer twice.. (Paladins: your answer on divine duty is unexpectedly sophisticated.)\n**FAILURE (roll 1-13):** Solid, correct, conventional..\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**ROLL REQUIRED:** History / Religion (Written Measure Exam) (+0) | INT | DC 14\n**SUCCESS (roll 14+):** Your responses are precise and occasionally surprising. Aldous underlines one answer twice.. (Paladins: your answer on divine duty is unexpectedly sophisticated.)\n**FAILURE (roll 1-13):** Solid, correct, conventional.."
       },
       {
         "type": "info",
@@ -1236,7 +1236,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Perception (+2) | WIS | DC 12\n**SUCCESS (roll 12+):** Boot prints south of the verge — someone left the road in a hurry recently. Dragon Army standard issue, but the stride is wrong. Too short for a soldier in formation. Someone running. Someone alone.\n**FAILURE (roll 1-11):** The road looks clear. Whatever passed this way left no trace you can read.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Perception (+2) | WIS | DC 12\n**SUCCESS (roll 12+):** Boot prints south of the verge — someone left the road in a hurry recently. Dragon Army standard issue, but the stride is wrong. Too short for a soldier in formation. Someone running. Someone alone.\n**FAILURE (roll 1-11):** The road looks clear. Whatever passed this way left no trace you can read."
       }
     ],
     "choices": [
@@ -1297,7 +1297,7 @@
       },
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Insight (WIS, proficiency if trained) (+1) | WIS | DC 12\n**SUCCESS (roll 12+):** The half-filed insignia. He started removing his Order markings and stopped. Not because he changed his mind about leaving — his body language is clear: he has left. He stopped filing because erasing it felt dishonest. He earned it. He does not want to serve under it. He does not want to pretend he never wore it. This is a man for whom honesty is the last principle standing, and he is holding onto it with both hands.\n**FAILURE (roll 1-11):** He is a Knight, or was. He fights well. That is all you can read in the firelight.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Insight (WIS, proficiency if trained) (+1) | WIS | DC 12\n**SUCCESS (roll 12+):** The half-filed insignia. He started removing his Order markings and stopped. Not because he changed his mind about leaving — his body language is clear: he has left. He stopped filing because erasing it felt dishonest. He earned it. He does not want to serve under it. He does not want to pretend he never wore it. This is a man for whom honesty is the last principle standing, and he is holding onto it with both hands.\n**FAILURE (roll 1-11):** He is a Knight, or was. He fights well. That is all you can read in the firelight."
       }
     ],
     "choices": [
@@ -1579,7 +1579,7 @@
       },
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Persuasion (CHA) (+0) | CHA | DC 14\n**SUCCESS (roll 14+):** Your response accounts for the tension between law and protection — not resolving it, but naming it honestly. Tariel tilts her head slightly. 'You actually thought about that,' she says. It sounds like the beginning of something.\n**FAILURE (roll 1-13):** 'The standard answer,' she says, without contempt. 'It is not wrong. Just... well-rehearsed.'\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Persuasion (CHA) (+0) | CHA | DC 14\n**SUCCESS (roll 14+):** Your response accounts for the tension between law and protection — not resolving it, but naming it honestly. Tariel tilts her head slightly. 'You actually thought about that,' she says. It sounds like the beginning of something.\n**FAILURE (roll 1-13):** 'The standard answer,' she says, without contempt. 'It is not wrong. Just... well-rehearsed.'"
       }
     ],
     "choices": [
@@ -1805,7 +1805,7 @@
       },
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Investigation (INT, proficiency if trained) (+3) | INT | DC 12\n**SUCCESS (roll 12+):** Four days ago — but the supplies show three days of consumption after the army passed. Some people survived the initial visit and stayed or left afterward. The casualty count is lower than it first appears.\n**FAILURE (roll 1-11):** The village shows you what happened. You cannot read more than the obvious.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Investigation (INT, proficiency if trained) (+3) | INT | DC 12\n**SUCCESS (roll 12+):** Four days ago — but the supplies show three days of consumption after the army passed. Some people survived the initial visit and stayed or left afterward. The casualty count is lower than it first appears.\n**FAILURE (roll 1-11):** The village shows you what happened. You cannot read more than the obvious."
       }
     ],
     "choices": [
@@ -2291,7 +2291,7 @@
       },
       {
         "type": "roll",
-        "text": "**ROLL REQUIRED:** Investigation (INT, proficiency if trained) (+3) | INT | DC 14\n**SUCCESS (roll 14+):** The cipher reference uses a secondary field code, not the primary garrison cipher. A traitor using the primary code would be caught by standard security sweeps. Using the secondary requires counter-intelligence knowledge — this narrows the suspect list significantly and rules out the obvious names.\n**FAILURE (roll 1-13):** The evidence is what Thessaly described. You cannot evaluate it further without more information.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**ROLL REQUIRED:** Investigation (INT, proficiency if trained) (+3) | INT | DC 14\n**SUCCESS (roll 14+):** The cipher reference uses a secondary field code, not the primary garrison cipher. A traitor using the primary code would be caught by standard security sweeps. Using the secondary requires counter-intelligence knowledge — this narrows the suspect list significantly and rules out the obvious names.\n**FAILURE (roll 1-13):** The evidence is what Thessaly described. You cannot evaluate it further without more information."
       }
     ],
     "choices": [
@@ -2381,7 +2381,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Insight (+1) | WIS | DC 13\n**SUCCESS (roll 13+):** The locket portrait is recent — within the year. The grief is not old. The diplomatic observer role is not a career choice. It is a response. She came here looking for someone to blame, and she has not found them yet. That makes her dangerous in ways that have nothing to do with politics.\n**FAILURE (roll 1-12):** She is grieving. That much is clear. What she intends to do with that grief is not.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Insight (+1) | WIS | DC 13\n**SUCCESS (roll 13+):** The locket portrait is recent — within the year. The grief is not old. The diplomatic observer role is not a career choice. It is a response. She came here looking for someone to blame, and she has not found them yet. That makes her dangerous in ways that have nothing to do with politics.\n**FAILURE (roll 1-12):** She is grieving. That much is clear. What she intends to do with that grief is not."
       }
     ],
     "choices": [
@@ -2563,7 +2563,7 @@
       },
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Medicine (WIS, proficiency if trained) (+1) | WIS | DC 12\n**SUCCESS (roll 12+):** His knuckles are split and his breathing is slightly elevated — not from exertion but from the controlled effort of not shaking. He stopped himself mid-action. That kind of stop leaves a specific mark: not guilt about what he did but the physical memory of choosing not to continue. He is more in control of himself than he believes. Tell him this.\n**FAILURE (roll 1-11):** He is in distress. The specific detail of his emotional state is not readable.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Medicine (WIS, proficiency if trained) (+1) | WIS | DC 12\n**SUCCESS (roll 12+):** His knuckles are split and his breathing is slightly elevated — not from exertion but from the controlled effort of not shaking. He stopped himself mid-action. That kind of stop leaves a specific mark: not guilt about what he did but the physical memory of choosing not to continue. He is more in control of himself than he believes. Tell him this.\n**FAILURE (roll 1-11):** He is in distress. The specific detail of his emotional state is not readable."
       }
     ],
     "choices": [
@@ -4303,7 +4303,7 @@
       },
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Insight (+1) | WIS | DC 13\n\n**SUCCESS (13+):** Torvin is not just a merchant. Watch his eyes — every time a soldier passes, he counts. Fingers twitch against his belt, marking tallies he will write down later. The information flows somewhere. North, you think. Whether that makes him spy or survivor depends on who is asking.\n\n**FAILURE (1-12):** He seems like a man making a living in hard times. If there is more to him, you do not see it.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Insight (+1) | WIS | DC 13\n\n**SUCCESS (13+):** Torvin is not just a merchant. Watch his eyes — every time a soldier passes, he counts. Fingers twitch against his belt, marking tallies he will write down later. The information flows somewhere. North, you think. Whether that makes him spy or survivor depends on who is asking.\n\n**FAILURE (1-12):** He seems like a man making a living in hard times. If there is more to him, you do not see it."
       }
     ],
     "choices": [
@@ -5691,7 +5691,7 @@
       },
       {
         "type": "roll",
-        "text": "**PERSUASION (CHA) DC 13** — Mediate between the knight and the merchant.\n**Success:** You find language both can accept. A compromise emerges — imperfect, liveable. Derren looks at you with something approaching respect. The knight looks at you with something approaching surprise. Neither expected a squire to solve what they could not.\n**Failure:** One side walks away angry. Derren's jaw is set in a way that says this isn't over. The resentment will find its way somewhere. These things always do.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**PERSUASION (CHA) DC 13** — Mediate between the knight and the merchant.\n**Success:** You find language both can accept. A compromise emerges — imperfect, liveable. Derren looks at you with something approaching respect. The knight looks at you with something approaching surprise. Neither expected a squire to solve what they could not.\n**Failure:** One side walks away angry. Derren's jaw is set in a way that says this isn't over. The resentment will find its way somewhere. These things always do."
       }
     ],
     "choices": [
@@ -5746,7 +5746,7 @@
       },
       {
         "type": "roll",
-        "text": "**INSIGHT (WIS) DC 12** — Read Tomas.\n**Success:** He's telling the truth. His hands are raw from climbing, not from fighting. The dirt under his nails is from scrabbling up a hillside, not from burying evidence. He ran toward danger, not away from it. His story is exactly what it looks like.\n**Failure:** You can't tell. He could be lying — deserters always have stories. But then again, so do heroes.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**INSIGHT (WIS) DC 12** — Read Tomas.\n**Success:** He's telling the truth. His hands are raw from climbing, not from fighting. The dirt under his nails is from scrabbling up a hillside, not from burying evidence. He ran toward danger, not away from it. His story is exactly what it looks like.\n**Failure:** You can't tell. He could be lying — deserters always have stories. But then again, so do heroes."
       }
     ],
     "choices": [
@@ -5799,7 +5799,7 @@
       },
       {
         "type": "roll",
-        "text": "**PERCEPTION (WIS) DC 12** — Assess the village.\n**Success:** You count twelve armed men, note their positions, see the villagers' body language — compliant but not willing. The smith's forge has been cold for a week. Someone took his tools. A woman near the well watches you with the particular attention of someone who is hoping for something she does not dare name aloud.\n**Failure:** The village looks... fine. Quiet. But quiet is not the same as peaceful, and you have been a squire long enough to know the difference.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**PERCEPTION (WIS) DC 12** — Assess the village.\n**Success:** You count twelve armed men, note their positions, see the villagers' body language — compliant but not willing. The smith's forge has been cold for a week. Someone took his tools. A woman near the well watches you with the particular attention of someone who is hoping for something she does not dare name aloud.\n**Failure:** The village looks... fine. Quiet. But quiet is not the same as peaceful, and you have been a squire long enough to know the difference."
       }
     ],
     "choices": [
@@ -6004,7 +6004,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**Athletics (STR) DC 11** — Manual labour. Fence posts, wire, stone work.\n**SUCCESS:** The fence is solid — better than solid. Edric runs his hand along the top rail and nods with genuine surprise. 'Huh,' he says. It is the first time he has looked at you as if you might be useful for something other than sword work. This will hold.\n**FAILURE:** The fence holds, but it's rough work. You see Edric out there after dinner, quietly fixing the joints you set crooked. He doesn't mention it. He didn't expect any different.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**Athletics (STR) DC 11** — Manual labour. Fence posts, wire, stone work.\n**SUCCESS:** The fence is solid — better than solid. Edric runs his hand along the top rail and nods with genuine surprise. 'Huh,' he says. It is the first time he has looked at you as if you might be useful for something other than sword work. This will hold.\n**FAILURE:** The fence holds, but it's rough work. You see Edric out there after dinner, quietly fixing the joints you set crooked. He doesn't mention it. He didn't expect any different."
       },
       {
         "type": "info",
@@ -6759,7 +6759,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Insight (WIS, proficiency if trained) (+1) | WIS | DC 11\n**SUCCESS (roll 11+):** Tam is not just watching for pursuit. He is counting everyone in the column every hour. He knows exactly who is here, who is injured, who is slowing them down. He has been doing his father's job.\n**FAILURE (roll 1–10):** A brave child. That is all you can see.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Insight (WIS, proficiency if trained) (+1) | WIS | DC 11\n**SUCCESS (roll 11+):** Tam is not just watching for pursuit. He is counting everyone in the column every hour. He knows exactly who is here, who is injured, who is slowing them down. He has been doing his father's job.\n**FAILURE (roll 1–10):** A brave child. That is all you can see."
       }
     ],
     "choices": [

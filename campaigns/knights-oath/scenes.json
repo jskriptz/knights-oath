@@ -13,7 +13,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Perception (WIS, proficiency if trained) (+1) | WIS | DC 10\n**SUCCESS (roll 10+):** The south-facing guards are doubled. Fresh horses in the yard — courier mounts, ridden hard. Near the stables, you catch a fragment: '...pulled back the patrol entirely. Commander's orders.' Someone is consolidating forces. The question is whether they're preparing to move out, or preparing for something to arrive.\n**FAILURE (roll 1-9):** The morning feels ordinary. Later, you'll remember this moment and wonder what you missed.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Perception (WIS, proficiency if trained) (+1) | WIS | DC 10\n**SUCCESS (roll 10+):** The south-facing guards are doubled. Fresh horses in the yard — courier mounts, ridden hard. Near the stables, you catch a fragment: '...pulled back the patrol entirely. Commander's orders.' Someone is consolidating forces. The question is whether they're preparing to move out, or preparing for something to arrive.\n**FAILURE (roll 1-9):** The morning feels ordinary. Later, you'll remember this moment and wonder what you missed."
       }
     ],
     "choices": [
@@ -48,7 +48,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Insight (WIS, proficiency if trained) (+1) | WIS | DC 11\n**SUCCESS (roll 11+):** She doesn't say 'knight' or 'soldier' — she says 'someone important with questions.' Your mother doesn't omit details by accident. Whoever came through the week before she wrote this, she didn't want their title in writing. That changes what 'come home safe' means.\n**FAILURE (roll 1-10):** The worry in the letter is real but you cannot place its source. She has always worried. Perhaps it is nothing new.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Insight (WIS, proficiency if trained) (+1) | WIS | DC 11\n**SUCCESS (roll 11+):** She doesn't say 'knight' or 'soldier' — she says 'someone important with questions.' Your mother doesn't omit details by accident. Whoever came through the week before she wrote this, she didn't want their title in writing. That changes what 'come home safe' means.\n**FAILURE (roll 1-10):** The worry in the letter is real but you cannot place its source. She has always worried. Perhaps it is nothing new."
       }
     ],
     "choices": [
@@ -95,7 +95,7 @@
       },
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Perception (+1) | WIS | DC 12\n**SUCCESS (roll 12+):** There — when he resets after the third form, his left heel lifts a fraction too early. He's been favouring that ankle since the long patrol last month. He hasn't mentioned it. He wouldn't.\n**FAILURE (roll 1-11):** His form is tight this morning. Whatever advantage exists, you don't see it.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Perception (+1) | WIS | DC 12\n**SUCCESS (roll 12+):** There — when he resets after the third form, his left heel lifts a fraction too early. He's been favouring that ankle since the long patrol last month. He hasn't mentioned it. He wouldn't.\n**FAILURE (roll 1-11):** His form is tight this morning. Whatever advantage exists, you don't see it."
       },
       {
         "type": "info",
@@ -157,7 +157,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Religion or History (INT, proficiency if trained) (+0) | INT | DC 12\n**SUCCESS (roll 12+):** You find the commentary passage that explains what Est Sularus actually meant when first written — not abstract honour, but a specific refusal of a corrupt command three centuries ago. The words have teeth. When Aldous asks his question you have the context to answer it well. +1 to your response in this scene.\n**FAILURE (roll 1-11):** The passage is clear but the history behind it is opaque. You know the words. You do not yet fully know what they cost.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Religion or History (INT, proficiency if trained) (+0) | INT | DC 12\n**SUCCESS (roll 12+):** You find the commentary passage that explains what Est Sularus actually meant when first written — not abstract honour, but a specific refusal of a corrupt command three centuries ago. The words have teeth. When Aldous asks his question you have the context to answer it well. +1 to your response in this scene.\n**FAILURE (roll 1-11):** The passage is clear but the history behind it is opaque. You know the words. You do not yet fully know what they cost."
       }
     ],
     "choices": [
@@ -215,7 +215,7 @@
       },
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Insight (+1) | WIS | DC 13\n**SUCCESS (roll 13+):** His eyes flick to your hands before your face. He is watching for the flinch, the clench, the tell that says you cannot take criticism without making it personal. This is not about your sword work. It never was.\n**FAILURE (roll 1-12):** His expression gives nothing. You cannot tell if this is disappointment, assessment, or simply the face he always wears.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Insight (+1) | WIS | DC 13\n**SUCCESS (roll 13+):** His eyes flick to your hands before your face. He is watching for the flinch, the clench, the tell that says you cannot take criticism without making it personal. This is not about your sword work. It never was.\n**FAILURE (roll 1-12):** His expression gives nothing. You cannot tell if this is disappointment, assessment, or simply the face he always wears."
       }
     ],
     "choices": [
@@ -281,7 +281,7 @@
       },
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Insight (WIS, proficiency if trained) (+1) | WIS | DC 12\n**SUCCESS (roll 12+):** She has asked this question before — you can see it in how her pen is already positioned. She is not writing down the answer yet. She is waiting for something specific: the moment a person stops reciting and starts speaking. Answer honestly and she will mark the moment exactly.\n**FAILURE (roll 1-11):** Her expression is professionally neutral. You cannot tell what she is looking for.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Insight (WIS, proficiency if trained) (+1) | WIS | DC 12\n**SUCCESS (roll 12+):** She has asked this question before — you can see it in how her pen is already positioned. She is not writing down the answer yet. She is waiting for something specific: the moment a person stops reciting and starts speaking. Answer honestly and she will mark the moment exactly.\n**FAILURE (roll 1-11):** Her expression is professionally neutral. You cannot tell what she is looking for."
       }
     ],
     "choices": [
@@ -340,7 +340,7 @@
       },
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Insight (WIS, proficiency if trained) (+1) | WIS | DC 10\n**SUCCESS (roll 10+):** He is not just saying what sounds right — he has been awake since before you. His sword forms are running faster than usual, burning off something. Aldric Voss is genuinely frightened of failing the Trials. ROMANCE SPARK Aldric at Advantage if you respond to the fear rather than the bravado.\n**FAILURE (roll 1-9):** He says it easily. You cannot tell if it is practiced or true.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Insight (WIS, proficiency if trained) (+1) | WIS | DC 10\n**SUCCESS (roll 10+):** He is not just saying what sounds right — he has been awake since before you. His sword forms are running faster than usual, burning off something. Aldric Voss is genuinely frightened of failing the Trials. ROMANCE SPARK Aldric at Advantage if you respond to the fear rather than the bravado.\n**FAILURE (roll 1-9):** He says it easily. You cannot tell if it is practiced or true."
       }
     ],
     "choices": [
@@ -437,7 +437,7 @@
       },
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Medicine (+1) | WIS | DC 10\n**SUCCESS (roll 10+):** You remember something from training — pressure on the wrist, slow breathing, a voice pitched low. The old man's trembling eases. When you look up, Mira is watching you with an expression you haven't seen before. Not gratitude. Recognition.\n**FAILURE (roll 1-9):** You do what you can. It helps, a little. Mira takes over smoothly, her hands already knowing what yours were trying to learn.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Medicine (+1) | WIS | DC 10\n**SUCCESS (roll 10+):** You remember something from training — pressure on the wrist, slow breathing, a voice pitched low. The old man's trembling eases. When you look up, Mira is watching you with an expression you haven't seen before. Not gratitude. Recognition.\n**FAILURE (roll 1-9):** You do what you can. It helps, a little. Mira takes over smoothly, her hands already knowing what yours were trying to learn."
       },
       {
         "type": "info",
@@ -531,7 +531,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** History (INT, proficiency if trained) (+3) | INT | DC 11\n**SUCCESS (roll 11+):** You recall a garrison briefing from three weeks ago: there have been refugee reports on the south road for over a month, not just the past few days. Someone suppressed those earlier reports. The 'bandits' may have been there much longer than the official timeline suggests.\n**FAILURE (roll 1-10):** You have no specific knowledge of the south road beyond what Caeron just said.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** History (INT, proficiency if trained) (+3) | INT | DC 11\n**SUCCESS (roll 11+):** You recall a garrison briefing from three weeks ago: there have been refugee reports on the south road for over a month, not just the past few days. Someone suppressed those earlier reports. The 'bandits' may have been there much longer than the official timeline suggests.\n**FAILURE (roll 1-10):** You have no specific knowledge of the south road beyond what Caeron just said."
       },
       {
         "type": "info",
@@ -637,7 +637,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**ROLL REQUIRED:** Athletics (+3) | STR | DC 14\n**SUCCESS (roll 14+):** You find the gap on his third combination — the ankle, just like you noticed. He goes down on one knee, breathing hard, then looks up with something new in his eyes. Not anger. Surprise. He didn't think you had it in you.\n**FAILURE (roll 1-13):** He wins by a blade's width. 'Better than last month,' he says, and you cannot tell if it's praise or pity. But his hand lingers when he pulls you up.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**ROLL REQUIRED:** Athletics (+3) | STR | DC 14\n**SUCCESS (roll 14+):** You find the gap on his third combination — the ankle, just like you noticed. He goes down on one knee, breathing hard, then looks up with something new in his eyes. Not anger. Surprise. He didn't think you had it in you.\n**FAILURE (roll 1-13):** He wins by a blade's width. 'Better than last month,' he says, and you cannot tell if it's praise or pity. But his hand lingers when he pulls you up."
       }
     ],
     "choices": [
@@ -727,7 +727,7 @@
       },
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Insight (WIS, proficiency if trained) (+1) | WIS | DC 14\n**SUCCESS (roll 14+):** He said it to your back because he cannot say it to your face — not yet. That addendum cost him something. He does not give unsolicited assessments. You are the first squire this year he has followed with an additional remark. ROMANCE SPARK Caeron activates at Advantage if you act on this knowledge.\n**FAILURE (roll 1-13):** He speaks to the room. You are not sure if the remark was for you or habit.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Insight (WIS, proficiency if trained) (+1) | WIS | DC 14\n**SUCCESS (roll 14+):** He said it to your back because he cannot say it to your face — not yet. That addendum cost him something. He does not give unsolicited assessments. You are the first squire this year he has followed with an additional remark. ROMANCE SPARK Caeron activates at Advantage if you act on this knowledge.\n**FAILURE (roll 1-13):** He speaks to the room. You are not sure if the remark was for you or habit."
       }
     ],
     "choices": [
@@ -907,7 +907,7 @@
       },
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Insight (WIS, proficiency if trained) (+1) | WIS | DC 13\n**SUCCESS (roll 13+):** He has told this story before — not often, but deliberately. He chose to tell it to you now and not six months ago. Something about how you asked made him think you were ready for it. He is giving you the most important thing he can: evidence that the Measure can become a shield if you let it. This is instruction, not confession.\n**FAILURE (roll 1-12):** It is a heavy story told plainly. You receive it as such.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Insight (WIS, proficiency if trained) (+1) | WIS | DC 13\n**SUCCESS (roll 13+):** He has told this story before — not often, but deliberately. He chose to tell it to you now and not six months ago. Something about how you asked made him think you were ready for it. He is giving you the most important thing he can: evidence that the Measure can become a shield if you let it. This is instruction, not confession.\n**FAILURE (roll 1-12):** It is a heavy story told plainly. You receive it as such."
       }
     ],
     "choices": [
@@ -987,7 +987,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** History (+3) | INT | DC 11\n**SUCCESS (roll 11+):** The old maps showed a ford here — shallow crossing, used by the Ergothian traders before the Cataclysm shifted the riverbed. If it still exists, it cuts half a day off the march. Aldric glances at you when you mention it. He didn't know.\n**FAILURE (roll 1-10):** The terrain ahead is unfamiliar. You'll learn it as you go.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** History (+3) | INT | DC 11\n**SUCCESS (roll 11+):** The old maps showed a ford here — shallow crossing, used by the Ergothian traders before the Cataclysm shifted the riverbed. If it still exists, it cuts half a day off the march. Aldric glances at you when you mention it. He didn't know.\n**FAILURE (roll 1-10):** The terrain ahead is unfamiliar. You'll learn it as you go."
       }
     ],
     "choices": [
@@ -1047,7 +1047,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Investigation (INT, proficiency if trained) (+3) | INT | DC 13\n**SUCCESS (roll 13+):** Thessaly's map has three additional marks she did not explain — small x's, spaced evenly along the south road. Cross-referencing with garrison records: the Dragon Army has made at least two probing passes this month. The refugees are not just fleeing the war. They are fleeing something that has been methodically clearing the area ahead of the main advance. Village by village. The x's are villages that no longer respond to messages.\n**FAILURE (roll 1-12):** The map shows what Thessaly told you. If there is more hidden in it, you cannot find it.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Investigation (INT, proficiency if trained) (+3) | INT | DC 13\n**SUCCESS (roll 13+):** Thessaly's map has three additional marks she did not explain — small x's, spaced evenly along the south road. Cross-referencing with garrison records: the Dragon Army has made at least two probing passes this month. The refugees are not just fleeing the war. They are fleeing something that has been methodically clearing the area ahead of the main advance. Village by village. The x's are villages that no longer respond to messages.\n**FAILURE (roll 1-12):** The map shows what Thessaly told you. If there is more hidden in it, you cannot find it."
       }
     ],
     "choices": [
@@ -1168,7 +1168,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Insight (WIS, proficiency if trained) (+1) | WIS | DC 15\n**SUCCESS (roll 15+):** He is describing a specific incident, not a general philosophy. There is a moment in his past where he made a command decision he still questions — not the same as Aldous's, but adjacent. If you note this and ask carefully in a later scene, he will tell you what it was.\n**FAILURE (roll 1-14):** He is speaking generally. The history behind the words is not visible.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Insight (WIS, proficiency if trained) (+1) | WIS | DC 15\n**SUCCESS (roll 15+):** He is describing a specific incident, not a general philosophy. There is a moment in his past where he made a command decision he still questions — not the same as Aldous's, but adjacent. If you note this and ask carefully in a later scene, he will tell you what it was.\n**FAILURE (roll 1-14):** He is speaking generally. The history behind the words is not visible."
       }
     ],
     "choices": [
@@ -1235,7 +1235,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Perception (WIS, proficiency if trained) (+1) | WIS | DC 10\n**SUCCESS (roll 10+):** At the corner table, partly hidden by the pillar: Lord Caeron is eating alone. He is not reading. He is watching the room — specifically, the squires. Specifically, for slightly longer than the others, you. When your eyes meet he looks down at his plate with the speed of someone who was not expecting to be caught. You file that away.\n**FAILURE (roll 1-9):** The mess hall is busy and loud. You eat quickly and leave.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Perception (WIS, proficiency if trained) (+1) | WIS | DC 10\n**SUCCESS (roll 10+):** At the corner table, partly hidden by the pillar: Lord Caeron is eating alone. He is not reading. He is watching the room — specifically, the squires. Specifically, for slightly longer than the others, you. When your eyes meet he looks down at his plate with the speed of someone who was not expecting to be caught. You file that away.\n**FAILURE (roll 1-9):** The mess hall is busy and loud. You eat quickly and leave."
       },
       {
         "type": "info",
@@ -1292,7 +1292,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Perception (WIS, proficiency if trained) (+1) | WIS | DC 13\n**SUCCESS (roll 13+):** Just before the third hour: a light on the south road. Brief — a lantern uncovered and covered again, the signal pattern used by Solamnic scouts to report all-clear. But the garrison did not send a scout tonight. Someone is using Solamnic signals on the south road and the garrison did not authorise it. This is relevant in Scene 53B.\n**FAILURE (roll 1-12):** The night is dark and clear and empty. Four hours. Nothing to report.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Perception (WIS, proficiency if trained) (+1) | WIS | DC 13\n**SUCCESS (roll 13+):** Just before the third hour: a light on the south road. Brief — a lantern uncovered and covered again, the signal pattern used by Solamnic scouts to report all-clear. But the garrison did not send a scout tonight. Someone is using Solamnic signals on the south road and the garrison did not authorise it. This is relevant in Scene 53B.\n**FAILURE (roll 1-12):** The night is dark and clear and empty. Four hours. Nothing to report."
       },
       {
         "type": "info",
@@ -1341,7 +1341,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Investigation (INT, proficiency if trained) (+0) | INT | DC 11\n**SUCCESS (roll 11+):** While she works, you notice something on the forge wall — a Solamnic Knight's insignia, old, scorched. Not displayed. Set aside. 'My husband's,' she says, without being asked. 'Knight of the Rose. Died at Vingaard. The insignia survived the fire.' She does not say anything else about it. She does not need to. The forge is hot and the hammer falls and someone who loved a Knight of the Rose is still here, maintaining the swords, and has been for a very long time.\n**FAILURE (roll 1-10):** She finishes her work. You learn about sword maintenance. The forge is loud and hot and that is all.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Investigation (INT, proficiency if trained) (+0) | INT | DC 11\n**SUCCESS (roll 11+):** While she works, you notice something on the forge wall — a Solamnic Knight's insignia, old, scorched. Not displayed. Set aside. 'My husband's,' she says, without being asked. 'Knight of the Rose. Died at Vingaard. The insignia survived the fire.' She does not say anything else about it. She does not need to. The forge is hot and the hammer falls and someone who loved a Knight of the Rose is still here, maintaining the swords, and has been for a very long time.\n**FAILURE (roll 1-10):** She finishes her work. You learn about sword maintenance. The forge is loud and hot and that is all."
       },
       {
         "type": "info",
@@ -1649,7 +1649,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**ROLL REQUIRED:** Investigation (+3) | INT | DC 14\n**SUCCESS (roll 14+):** The orders use standard Blue Wing format — but one line is different. The handwriting changes for three words: your height, your hair colour, the scar you got last summer. Someone added that. Someone who has seen you. Someone with access to Dragon Army dispatch protocols. The ink is fresher than the rest.\n**FAILURE (roll 1-13):** The orders are orders. How they knew where to find you remains unclear.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**ROLL REQUIRED:** Investigation (+3) | INT | DC 14\n**SUCCESS (roll 14+):** The orders use standard Blue Wing format — but one line is different. The handwriting changes for three words: your height, your hair colour, the scar you got last summer. Someone added that. Someone who has seen you. Someone with access to Dragon Army dispatch protocols. The ink is fresher than the rest.\n**FAILURE (roll 1-13):** The orders are orders. How they knew where to find you remains unclear."
       }
     ],
     "choices": [
@@ -1690,7 +1690,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**ROLL REQUIRED:** Persuasion (+0) | CHA | DC 13\n**SUCCESS (roll 13+):** Something in your voice makes him look at you properly — not the way he usually does, assessing, comparing, competing. Just looking. 'You mean that,' he says. It is not a question.\n**FAILURE (roll 1-12):** He nods, but his eyes are somewhere else. Wherever his mind went, you did not follow.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**ROLL REQUIRED:** Persuasion (+0) | CHA | DC 13\n**SUCCESS (roll 13+):** Something in your voice makes him look at you properly — not the way he usually does, assessing, comparing, competing. Just looking. 'You mean that,' he says. It is not a question.\n**FAILURE (roll 1-12):** He nods, but his eyes are somewhere else. Wherever his mind went, you did not follow."
       }
     ],
     "choices": [
@@ -1825,7 +1825,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**ROLL REQUIRED:** Perception (+2) | WIS | DC 14\n**SUCCESS (roll 14+):** The checkpoint is manned, but the soldiers are facing the wrong way — watching the village, not the road. They're expecting trouble from inside Vogler, not from travellers. Whatever happened here, the occupation is not going smoothly. You signal the others to spread out before they turn around.\n**FAILURE (roll 1-13):** You come around the bend and they're already looking at you. No time to assess, no time to plan. Just steel.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**ROLL REQUIRED:** Perception (+2) | WIS | DC 14\n**SUCCESS (roll 14+):** The checkpoint is manned, but the soldiers are facing the wrong way — watching the village, not the road. They're expecting trouble from inside Vogler, not from travellers. Whatever happened here, the occupation is not going smoothly. You signal the others to spread out before they turn around.\n**FAILURE (roll 1-13):** You come around the bend and they're already looking at you. No time to assess, no time to plan. Just steel."
       },
       {
         "type": "combat",
@@ -2155,7 +2155,7 @@
       },
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Perception (WIS, proficiency if trained) (+2) | WIS | DC 12\n**SUCCESS (roll 12+):** She has been here for at least an hour — the whetstone marks on the roof edge show she worked on that knife before the sparring started. She was not watching Aldric. She was watching the approach to the courtyard. She is a scout, and she came here to observe something. Possibly you.\n**FAILURE (roll 1-11):** She is sitting on the roof sharpening a knife. That is all you can read.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Perception (WIS, proficiency if trained) (+2) | WIS | DC 12\n**SUCCESS (roll 12+):** She has been here for at least an hour — the whetstone marks on the roof edge show she worked on that knife before the sparring started. She was not watching Aldric. She was watching the approach to the courtyard. She is a scout, and she came here to observe something. Possibly you.\n**FAILURE (roll 1-11):** She is sitting on the roof sharpening a knife. That is all you can read."
       }
     ],
     "choices": [
@@ -2201,7 +2201,7 @@
       },
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Insight (WIS, proficiency if trained) (+1) | WIS | DC 11\n**SUCCESS (roll 11+):** She has been here six months and knows exactly how long it takes Caeron to review each squire's assessment. She timed her appearance in this corridor. She has been looking for a reason to speak to you for longer than this morning. ROMANCE SPARK Vael at Advantage if you acknowledge this.\n**FAILURE (roll 1-10):** She is waiting for her results. The timing seems coincidental.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Insight (WIS, proficiency if trained) (+1) | WIS | DC 11\n**SUCCESS (roll 11+):** She has been here six months and knows exactly how long it takes Caeron to review each squire's assessment. She timed her appearance in this corridor. She has been looking for a reason to speak to you for longer than this morning. ROMANCE SPARK Vael at Advantage if you acknowledge this.\n**FAILURE (roll 1-10):** She is waiting for her results. The timing seems coincidental."
       }
     ],
     "choices": [
@@ -3534,7 +3534,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**OPTIONAL ROLL:** Athletics (+3) | STR | DC 12\n**SUCCESS (roll 12+):** Aldric shows you something — a half-step pivot that turns a block into a counter. 'Ser Hadrian taught me that,' he says. 'Don't tell him I passed it on.' For a moment he looks like someone who had a mentor once, not just a commanding officer.\n**FAILURE (roll 1-11):** Good exercise, but nothing clicks today. Sometimes training is just training.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**OPTIONAL ROLL:** Athletics (+3) | STR | DC 12\n**SUCCESS (roll 12+):** Aldric shows you something — a half-step pivot that turns a block into a counter. 'Ser Hadrian taught me that,' he says. 'Don't tell him I passed it on.' For a moment he looks like someone who had a mentor once, not just a commanding officer.\n**FAILURE (roll 1-11):** Good exercise, but nothing clicks today. Sometimes training is just training."
       }
     ],
     "choices": [
@@ -3881,7 +3881,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**INSIGHT CHECK:** Insight (WIS, proficiency if trained) (+0) | WIS | DC 11\n**SUCCESS (roll 11+):** You catch it — Ser Velthan's eyes, just before he stood. Not dismissive. Not calm. Afraid. And under his bench, half-hidden by his cloak: a packed campaign bag, bedroll cinched tight, rations visible at the top. He's ready to ride. He's been ready.\n**FAILURE (roll 1-10):** The knights' argument seems routine. Senior officers always bicker about intelligence reports. You turn back to your porridge.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**INSIGHT CHECK:** Insight (WIS, proficiency if trained) (+0) | WIS | DC 11\n**SUCCESS (roll 11+):** You catch it — Ser Velthan's eyes, just before he stood. Not dismissive. Not calm. Afraid. And under his bench, half-hidden by his cloak: a packed campaign bag, bedroll cinched tight, rations visible at the top. He's ready to ride. He's been ready.\n**FAILURE (roll 1-10):** The knights' argument seems routine. Senior officers always bicker about intelligence reports. You turn back to your porridge."
       }
     ],
     "choices": [
@@ -3928,7 +3928,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**PERCEPTION CHECK:** Perception (WIS, proficiency if trained) (+0) | WIS | DC 10\n**SUCCESS (roll 10+):** The tear is deliberate — cut, not torn, with something sharp. And there's a thumbtack hole at the top where a second copy was pinned. That one is gone entirely. Someone is removing these.\n**FAILURE (roll 1-9):** The poster is damaged, but you can't tell whether it was deliberate or just the usual wear of a busy corridor.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**PERCEPTION CHECK:** Perception (WIS, proficiency if trained) (+0) | WIS | DC 10\n**SUCCESS (roll 10+):** The tear is deliberate — cut, not torn, with something sharp. And there's a thumbtack hole at the top where a second copy was pinned. That one is gone entirely. Someone is removing these.\n**FAILURE (roll 1-9):** The poster is damaged, but you can't tell whether it was deliberate or just the usual wear of a busy corridor."
       }
     ],
     "choices": [
@@ -3967,7 +3967,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**ATHLETICS CHECK:** Athletics (STR, proficiency if trained) (+0) | STR | DC 12\n**SUCCESS (roll 12+):** The wall holds at your position. You absorb the impact through your legs and push back, and the senior squire opposite you slides half a step. Brennan's eyes find you — a nod, small and hard, worth more than a week of praise. You'll carry that steady stance into your next shield fight.\n**FAILURE (roll 1-11):** The wall buckles. Your foot slips and the senior squire drives through, and for a moment the whole formation staggers sideways because of you. Brennan watches. He says nothing. He writes something on his slate. The silence is worse than any reprimand.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**ATHLETICS CHECK:** Athletics (STR, proficiency if trained) (+0) | STR | DC 12\n**SUCCESS (roll 12+):** The wall holds at your position. You absorb the impact through your legs and push back, and the senior squire opposite you slides half a step. Brennan's eyes find you — a nod, small and hard, worth more than a week of praise. You'll carry that steady stance into your next shield fight.\n**FAILURE (roll 1-11):** The wall buckles. Your foot slips and the senior squire drives through, and for a moment the whole formation staggers sideways because of you. Brennan watches. He says nothing. He writes something on his slate. The silence is worse than any reprimand."
       }
     ],
     "choices": [
@@ -4052,7 +4052,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**ANIMAL HANDLING CHECK:** Animal Handling (WIS, proficiency if trained) (+0) | WIS | DC 11\n**SUCCESS (roll 11+):** You bring Valor to a smooth stop with a word and a shift of weight. She trusts you. You dismount cleanly, reins looped, lance stowed — textbook.\n**FAILURE (roll 1-10):** Valor shies at the loose horse, sidestepping hard, and you lose a stirrup. By the time you have her under control, precious seconds have passed.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**ANIMAL HANDLING CHECK:** Animal Handling (WIS, proficiency if trained) (+0) | WIS | DC 11\n**SUCCESS (roll 11+):** You bring Valor to a smooth stop with a word and a shift of weight. She trusts you. You dismount cleanly, reins looped, lance stowed — textbook.\n**FAILURE (roll 1-10):** Valor shies at the loose horse, sidestepping hard, and you lose a stirrup. By the time you have her under control, precious seconds have passed."
       }
     ],
     "choices": [
@@ -4103,7 +4103,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**RELIGION CHECK:** Religion (INT, proficiency if trained) (+0) | INT | DC 10\n**SUCCESS (roll 10+):** It strikes you between one breath and the next. *My honour is my life.* You'd always heard it as pride — my honour is so great it defines me. But the old Solamnic is conditional, not declarative. If my honour dies, I die. It is not a boast. It is a warning. The knights who wrote those words meant them the way a doctor means *this wound is fatal.* As diagnosis. As fact.\n**FAILURE (roll 1-9):** The words wash over you the way they always do — familiar, steady, comforting. You feel their weight but cannot name it.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**RELIGION CHECK:** Religion (INT, proficiency if trained) (+0) | INT | DC 10\n**SUCCESS (roll 10+):** It strikes you between one breath and the next. *My honour is my life.* You'd always heard it as pride — my honour is so great it defines me. But the old Solamnic is conditional, not declarative. If my honour dies, I die. It is not a boast. It is a warning. The knights who wrote those words meant them the way a doctor means *this wound is fatal.* As diagnosis. As fact.\n**FAILURE (roll 1-9):** The words wash over you the way they always do — familiar, steady, comforting. You feel their weight but cannot name it."
       }
     ],
     "choices": [
@@ -4228,7 +4228,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**INSIGHT CHECK:** Insight (WIS, proficiency if trained) (+0) | WIS | DC 12\n**SUCCESS (roll 12+):** The father's boots are worn through — not at the sole, but at the sides, where leather gives way on rocky ground. Three days' walk from the nearest village would not do that. These boots have crossed hills, fords, broken terrain. This family has been walking for a week or more. They didn't leave a village. They left a place where a village used to be.\n**FAILURE (roll 1-11):** The family looks tired and road-worn, but you cannot read more from their condition. Many travellers look this way after days on the road.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**INSIGHT CHECK:** Insight (WIS, proficiency if trained) (+0) | WIS | DC 12\n**SUCCESS (roll 12+):** The father's boots are worn through — not at the sole, but at the sides, where leather gives way on rocky ground. Three days' walk from the nearest village would not do that. These boots have crossed hills, fords, broken terrain. This family has been walking for a week or more. They didn't leave a village. They left a place where a village used to be.\n**FAILURE (roll 1-11):** The family looks tired and road-worn, but you cannot read more from their condition. Many travellers look this way after days on the road."
       },
       {
         "type": "info",
@@ -4327,7 +4327,7 @@
     "boxes": [
       {
         "type": "roll",
-        "text": "**PERCEPTION CHECK:** Perception (WIS, proficiency if trained) (+0) | WIS | DC 13\n**SUCCESS (roll 13+):** You brace the spyglass against the parapet and steady your breathing. The glow resolves — not one fire but many, spread along a line. A burning town, maybe two. And the line is moving, which means the burning is moving, which means someone is setting the fires as they advance. Three days' march. Maybe two. Whatever is out there is large, organized, and coming this way.\n**FAILURE (roll 1-12):** You can see the glow but cannot judge its distance or nature through the cracked lens. It could be a forest fire. It could be a burning settlement. It could be anything. But Corben's charcoal line does not lie. It is closer tonight than it was last night.\n*No dice? Flip a coin: Heads = pass | Tails = fail*"
+        "text": "**PERCEPTION CHECK:** Perception (WIS, proficiency if trained) (+0) | WIS | DC 13\n**SUCCESS (roll 13+):** You brace the spyglass against the parapet and steady your breathing. The glow resolves — not one fire but many, spread along a line. A burning town, maybe two. And the line is moving, which means the burning is moving, which means someone is setting the fires as they advance. Three days' march. Maybe two. Whatever is out there is large, organized, and coming this way.\n**FAILURE (roll 1-12):** You can see the glow but cannot judge its distance or nature through the cracked lens. It could be a forest fire. It could be a burning settlement. It could be anything. But Corben's charcoal line does not lie. It is closer tonight than it was last night."
       }
     ],
     "choices": [
