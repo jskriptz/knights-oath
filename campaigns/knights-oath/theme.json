@@ -32,17 +32,25 @@
   "loadingScreen": {
     "title": "DRAGONLANCE",
     "subtitle": "THE KNIGHT'S OATH",
-    "version": "v25.12.0",
+    "version": "v25.13.0",
     "stats": "350 Scenes \u2022 9 Companions"
   },
   "heroPortraits": [
-    {"id": "knight_m1", "label": "Knight (Male)", "url": "https://api.dicebear.com/9.x/adventurer/svg?seed=SirKnightMale&backgroundColor=1a2a4a"},
-    {"id": "knight_f1", "label": "Knight (Female)", "url": "https://api.dicebear.com/9.x/adventurer/svg?seed=DameKnightFemale&backgroundColor=1a2a4a"},
-    {"id": "paladin_m1", "label": "Paladin (Male)", "url": "https://api.dicebear.com/9.x/adventurer/svg?seed=HolyPaladinMale&backgroundColor=1a2a4a"},
-    {"id": "paladin_f1", "label": "Paladin (Female)", "url": "https://api.dicebear.com/9.x/adventurer/svg?seed=HolyPaladinFemale&backgroundColor=1a2a4a"},
-    {"id": "warrior_m1", "label": "Warrior (Male)", "url": "https://api.dicebear.com/9.x/adventurer/svg?seed=BattleWarriorMale&backgroundColor=1a2a4a"},
-    {"id": "warrior_f1", "label": "Warrior (Female)", "url": "https://api.dicebear.com/9.x/adventurer/svg?seed=BattleWarriorFemale&backgroundColor=1a2a4a"},
-    {"id": "squire_m1", "label": "Squire (Male)", "url": "https://api.dicebear.com/9.x/adventurer/svg?seed=YoungSquireMale&backgroundColor=1a2a4a"},
-    {"id": "squire_f1", "label": "Squire (Female)", "url": "https://api.dicebear.com/9.x/adventurer/svg?seed=YoungSquireFemale&backgroundColor=1a2a4a"}
+    {"id": "knight_helm", "label": "Knight Helm", "url": "https://game-icons.net/icons/c9a84c/1a2a4a/1x1/lorc/visored-helm.svg"},
+    {"id": "knight_crest", "label": "Crested Helm", "url": "https://game-icons.net/icons/c9a84c/1a2a4a/1x1/lorc/crested-helmet.svg"},
+    {"id": "knight_barbute", "label": "Barbute Helm", "url": "https://game-icons.net/icons/c9a84c/1a2a4a/1x1/lorc/barbute.svg"},
+    {"id": "paladin_light", "label": "Paladin (Light)", "url": "https://game-icons.net/icons/f1c40f/1a2a4a/1x1/lorc/sun.svg"},
+    {"id": "paladin_shield", "label": "Paladin (Shield)", "url": "https://game-icons.net/icons/c9a84c/1a2a4a/1x1/lorc/templar-shield.svg"},
+    {"id": "paladin_holy", "label": "Paladin (Holy)", "url": "https://game-icons.net/icons/f39c12/1a2a4a/1x1/lorc/winged-sword.svg"},
+    {"id": "warrior_sword", "label": "Warrior (Sword)", "url": "https://game-icons.net/icons/c9a84c/1a2a4a/1x1/lorc/crossed-swords.svg"},
+    {"id": "warrior_axe", "label": "Warrior (Axe)", "url": "https://game-icons.net/icons/c9a84c/1a2a4a/1x1/lorc/battle-axe.svg"},
+    {"id": "warrior_hammer", "label": "Warrior (Hammer)", "url": "https://game-icons.net/icons/c9a84c/1a2a4a/1x1/lorc/warhammer.svg"},
+    {"id": "noble_crown", "label": "Noble", "url": "https://game-icons.net/icons/c9a84c/1a2a4a/1x1/lorc/crown.svg"},
+    {"id": "rogue_hood", "label": "Rogue", "url": "https://game-icons.net/icons/5a5a6a/1a2a4a/1x1/lorc/cowled.svg"},
+    {"id": "ranger_bow", "label": "Ranger", "url": "https://game-icons.net/icons/4a8a5a/1a2a4a/1x1/lorc/high-shot.svg"},
+    {"id": "solamnic_rose", "label": "Order of the Rose", "url": "https://game-icons.net/icons/e74c3c/1a2a4a/1x1/lorc/rose.svg"},
+    {"id": "solamnic_sword", "label": "Order of the Sword", "url": "https://game-icons.net/icons/3498db/1a2a4a/1x1/lorc/pointy-sword.svg"},
+    {"id": "solamnic_crown", "label": "Order of the Crown", "url": "https://game-icons.net/icons/f1c40f/1a2a4a/1x1/lorc/laurel-crown.svg"},
+    {"id": "dragon_slayer", "label": "Dragon Slayer", "url": "https://game-icons.net/icons/c9a84c/1a2a4a/1x1/lorc/spiked-dragon-head.svg"}
   ]
 }
