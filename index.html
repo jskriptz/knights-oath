@@ -7473,7 +7473,7 @@ function MapView({gs,sceneId,onClose}){
 }
 
 // ── Save Picker ────────────────────────────────────────
-function SavePicker({onPick,onCancel}){
+function SavePicker({onPick,onCancel,onMenu}){
   const[slots,setSlots]=useState(Array(SAVE_SLOT_COUNT).fill(null));const[loading,setLoading]=useState(true);const[del,setDel]=useState(null);const[importErr,setImportErr]=useState(null);const e=React.createElement;
   useEffect(()=>{loadAllSlots().then(s=>{setSlots(s);setLoading(false)})},[]);
   const handleDel=async(i)=>{await deleteSave(i);const s=[...slots];s[i]=null;setSlots(s);setDel(null)};
@@ -7507,7 +7507,8 @@ function SavePicker({onPick,onCancel}){
     e('div',{style:{marginTop:16,display:'flex',gap:8,flexWrap:'wrap',alignItems:'center'}},
       e('label',{className:'ghost-btn',style:{cursor:'pointer',margin:0}},'Import Save',
         e('input',{type:'file',accept:'.json',onChange:importSave,style:{display:'none'}})),
-      e('button',{className:'ghost-btn',onClick:onCancel},'Cancel')),
+      e('button',{className:'ghost-btn',onClick:onCancel},'Cancel'),
+      onMenu?e('button',{className:'ghost-btn',style:{background:'var(--red)',borderColor:'var(--red)',color:'#fff'},onClick:onMenu},'Menu'):null),
     importErr?e('p',{style:{color:'#e74c3c',fontSize:13,marginTop:8}},importErr):null))}
 
 // ── Scene View ─────────────────────────────────────────
@@ -10281,7 +10282,7 @@ function App(){
         Object.values(gs.romances||{}).filter(v=>v&&v!=='Friend').length>0?e('button',{className:'romance-manage-btn',onClick:()=>{setRomanceManage(true);setSideOpen(false)}},'Manage Romances'):null,e('div',{className:'sidebar-action-row'},e('button',{className:'save-btn',onClick:()=>{setShowSave(true);setSideOpen(false)}},'\u2716 Save'),e('button',{className:'menu-btn settings-btn',onClick:()=>{setShowSettingsPanel(true);setSideOpen(false)}},'\u2699')),saveMsg?e('span',{className:'save-msg'},saveMsg):null,e('button',{className:'menu-btn',onClick:handleMenu},'Menu'))),
     e('button',{className:'save-gear',onClick:()=>setShowSave(true),title:'Save'},'\u2716'),e('button',{className:'settings-gear',onClick:()=>setShowSettingsPanel(true),title:'Settings'},'\u2699'),
     e(SceneView,{scene,onChoice:handleChoice,gs,isEnding:ENDING_SCENES.includes(sceneId),onViewSheet:()=>setShowSheet(true),onViewDmSummary:ENDING_SCENES.includes(sceneId)&&DM_SUMMARY?()=>setShowDmSummary(true):null,onExport:ENDING_SCENES.includes(sceneId)?()=>setShowExportModal(true):null,onBonus:handleBonus,onStateUpdate:handleStateUpdate}),
-    showSave?e(SavePicker,{onPick:handleSavePick,onCancel:()=>setShowSave(false)}):null,confirmModal?e(ConfirmModal,confirmModal):null,showExportModal&&gs?e(ExportCharacterModal,{gs:gs,campaignId:(CAMPAIGN&&CAMPAIGN.id)||'knights-oath',onExport:handleExportCharacter,onClose:()=>setShowExportModal(false)}):null,compPopup?e(CompanionInfo,{name:compPopup.name,romance:compPopup.romance,onClose:()=>setCompPopup(null)}):null,romancePrompt?e(RomancePrompt,{prompt:romancePrompt,gs:gs,onAccept:acceptRomance,onFriend:friendRomance,onDecline:declineRomance}):null,
+    showSave?e(SavePicker,{onPick:handleSavePick,onCancel:()=>setShowSave(false),onMenu:()=>{setShowSave(false);handleMenu()}}):null,confirmModal?e(ConfirmModal,confirmModal):null,showExportModal&&gs?e(ExportCharacterModal,{gs:gs,campaignId:(CAMPAIGN&&CAMPAIGN.id)||'knights-oath',onExport:handleExportCharacter,onClose:()=>setShowExportModal(false)}):null,compPopup?e(CompanionInfo,{name:compPopup.name,romance:compPopup.romance,onClose:()=>setCompPopup(null)}):null,romancePrompt?e(RomancePrompt,{prompt:romancePrompt,gs:gs,onAccept:acceptRomance,onFriend:friendRomance,onDecline:declineRomance}):null,
     romanceManage&&gs?e(RomanceManage,{gs:gs,onClose:()=>setRomanceManage(false),onEnd:(name)=>{setRomanceManage(false);setBreakupTarget(name)},onFriend:manageFriend}):null,
     npcNotify?e(NpcNotification,{notif:npcNotify,onDismiss:dismissNpcNotify}):null,
     breakupTarget&&gs?e(BreakupScene,{name:breakupTarget,gs:gs,onResolve:handleBreakup}):null,
