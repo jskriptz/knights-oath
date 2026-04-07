@@ -1154,9 +1154,6 @@ h2.red{color:var(--red)}
 .camp-btn:hover{background:rgba(74,138,90,.2);border-color:var(--green)}
 .menu-btn{background:none;border:1px solid var(--border);color:var(--text-dim);padding:6px 12px;font-family:'Cinzel',serif;font-size:11px;border-radius:5px;cursor:pointer;transition:all .2s}
 .menu-btn:hover{border-color:var(--text-dim);color:var(--text)}
-.sidebar-action-row{display:flex;gap:6px;width:100%}
-.sidebar-action-row .save-btn{flex:1}
-.sidebar-action-row .settings-btn{width:44px;padding:6px;font-size:16px;flex-shrink:0}
 .save-msg{font-size:12px;color:var(--green);text-align:center;font-style:italic;animation:fadeMsg 2.5s forwards}
 @keyframes fadeMsg{0%{opacity:1}80%{opacity:1}100%{opacity:0}}
 
@@ -1538,8 +1535,6 @@ h2.red{color:var(--red)}
 /* ── Settings Panel ────────────────────────────────────── */
 .settings-gear{position:fixed;top:12px;right:12px;z-index:1000;width:36px;height:36px;background:var(--panel);border:1px solid var(--border);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--gold);transition:all 0.2s;opacity:0.7}
 .settings-gear:hover{opacity:1;border-color:var(--gold);transform:rotate(30deg)}
-.save-gear{position:fixed;top:12px;right:56px;z-index:1000;width:36px;height:36px;background:var(--panel);border:1px solid var(--border);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--gold);transition:all 0.2s;opacity:0.7}
-.save-gear:hover{opacity:1;border-color:var(--gold)}
 .settings-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:1001;display:flex;align-items:center;justify-content:center}
 .settings-panel{background:var(--panel);border:2px solid var(--gold);border-radius:8px;padding:28px 32px;width:380px;max-width:90vw;max-height:80vh;overflow-y:auto}
 .settings-title{font-family:var(--heading);font-size:1.4em;color:var(--gold);margin-bottom:20px;text-align:center;border-bottom:1px solid var(--border);padding-bottom:14px}
@@ -7293,7 +7288,7 @@ function Sidebar({gs,onSave,onMenu,onSettings,saveMsg}){
         e('span',{className:'weight-val'},weight+' / '+cap+' lbs'),
         over?e('span',{className:'weight-warn'},' (-1 AC)'):null);
     })(),
-    e('div',{className:'sidebar-actions'},e('div',{className:'sidebar-action-row'},e('button',{className:'save-btn',onClick:onSave},'\u2716 Save'),e('button',{className:'menu-btn settings-btn',onClick:onSettings},'\u2699')),saveMsg?e('span',{className:'save-msg'},saveMsg):null,e('button',{className:'menu-btn',onClick:onMenu},'Menu')));
+    e('div',{className:'sidebar-actions'},e('button',{className:'save-btn',onClick:onSave},'\u2716 Save'),saveMsg?e('span',{className:'save-msg'},saveMsg):null,e('button',{className:'menu-btn',onClick:onSettings},'\u2699 Settings'),e('button',{className:'menu-btn',onClick:onMenu},'Menu')));
 }
 
 // ── Map System ─────────────────────────────────────────
@@ -10279,8 +10274,8 @@ function App(){
             e('button',{className:'drop-btn',onClick:()=>handleDrop(it,i),title:isAtCamp?'Stash at camp':'Drop (lost forever)'},isAtCamp?'\u21e9':'\u2716'))))):null})(),
       e('div',{className:'sidebar-actions'},e('button',{className:'map-btn',onClick:()=>{setShowMap(true);setSideOpen(false)}},'\u{1F5FA} Map'),e('button',{className:'camp-btn',onClick:()=>{setShowCamp(true);setSideOpen(false)}},'\u26fa Make Camp'),e('button',{className:'sheet-sidebar-btn',onClick:()=>{setShowSheet(true);setSideOpen(false)}},'Character Sheet'),
         ENDING_SCENES.includes(sceneId)&&DM_SUMMARY?e('button',{className:'sheet-sidebar-btn',style:{background:'var(--gold-dim)',color:'var(--bg)'},onClick:()=>{setShowDmSummary(true);setSideOpen(false)}},'DM Summary'):null,
-        Object.values(gs.romances||{}).filter(v=>v&&v!=='Friend').length>0?e('button',{className:'romance-manage-btn',onClick:()=>{setRomanceManage(true);setSideOpen(false)}},'Manage Romances'):null,e('div',{className:'sidebar-action-row'},e('button',{className:'save-btn',onClick:()=>{setShowSave(true);setSideOpen(false)}},'\u2716 Save'),e('button',{className:'menu-btn settings-btn',onClick:()=>{setShowSettingsPanel(true);setSideOpen(false)}},'\u2699')),saveMsg?e('span',{className:'save-msg'},saveMsg):null,e('button',{className:'menu-btn',onClick:handleMenu},'Menu'))),
-    e('button',{className:'save-gear',onClick:()=>setShowSave(true),title:'Save'},'\u2716'),e('button',{className:'settings-gear',onClick:()=>setShowSettingsPanel(true),title:'Settings'},'\u2699'),
+        Object.values(gs.romances||{}).filter(v=>v&&v!=='Friend').length>0?e('button',{className:'romance-manage-btn',onClick:()=>{setRomanceManage(true);setSideOpen(false)}},'Manage Romances'):null,e('button',{className:'save-btn',onClick:()=>{setShowSave(true);setSideOpen(false)}},'\u2716 Save'),saveMsg?e('span',{className:'save-msg'},saveMsg):null,e('button',{className:'menu-btn',onClick:()=>{setShowSettingsPanel(true);setSideOpen(false)}},'\u2699 Settings'),e('button',{className:'menu-btn',onClick:handleMenu},'Menu'))),
+    e('button',{className:'settings-gear',onClick:()=>setShowSettingsPanel(true),title:'Settings'},'\u2699'),
     e(SceneView,{scene,onChoice:handleChoice,gs,isEnding:ENDING_SCENES.includes(sceneId),onViewSheet:()=>setShowSheet(true),onViewDmSummary:ENDING_SCENES.includes(sceneId)&&DM_SUMMARY?()=>setShowDmSummary(true):null,onExport:ENDING_SCENES.includes(sceneId)?()=>setShowExportModal(true):null,onBonus:handleBonus,onStateUpdate:handleStateUpdate}),
     showSave?e(SavePicker,{onPick:handleSavePick,onCancel:()=>setShowSave(false),onMenu:()=>{setShowSave(false);handleMenu()}}):null,confirmModal?e(ConfirmModal,confirmModal):null,showExportModal&&gs?e(ExportCharacterModal,{gs:gs,campaignId:(CAMPAIGN&&CAMPAIGN.id)||'knights-oath',onExport:handleExportCharacter,onClose:()=>setShowExportModal(false)}):null,compPopup?e(CompanionInfo,{name:compPopup.name,romance:compPopup.romance,onClose:()=>setCompPopup(null)}):null,romancePrompt?e(RomancePrompt,{prompt:romancePrompt,gs:gs,onAccept:acceptRomance,onFriend:friendRomance,onDecline:declineRomance}):null,
     romanceManage&&gs?e(RomanceManage,{gs:gs,onClose:()=>setRomanceManage(false),onEnd:(name)=>{setRomanceManage(false);setBreakupTarget(name)},onFriend:manageFriend}):null,
