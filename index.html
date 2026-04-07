@@ -752,8 +752,8 @@ body.high-contrast .box{border-width:2px}body.high-contrast button{border-width:
     font-size:20px;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center}
   .hamburger:hover{border-color:var(--gold-dim);background:rgba(201,168,76,.1)}
 
-  /* Floating buttons below mobile bar */
-  .floating-btns{display:flex;top:64px;right:16px}
+  /* Draggable settings button on mobile */
+  .settings-float{display:flex}
   .settings-gear{display:none}
 
   /* Main content fills screen */
@@ -1536,10 +1536,10 @@ h2.red{color:var(--red)}
   .dm-footer{color:#666!important;border-color:#ccc!important}
 }
 
-/* ── Floating Buttons (mobile) ─────────────────────────── */
-.floating-btns{position:fixed;top:12px;right:12px;display:none;gap:8px;z-index:90}
-.floating-btn{width:40px;height:40px;background:none;border:1px solid var(--border);border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--gold);transition:all 0.2s;opacity:0.8}
-.floating-btn:hover{opacity:1;border-color:var(--gold-dim);background:rgba(201,168,76,.1)}
+/* ── Draggable Settings (mobile) ───────────────────────── */
+.settings-float{position:fixed;display:none;z-index:90;width:48px;height:48px;background:var(--panel);border:2px solid var(--gold-dim);border-radius:50%;cursor:grab;align-items:center;justify-content:center;font-size:22px;color:var(--gold);opacity:0.9;box-shadow:0 2px 12px rgba(0,0,0,.4);touch-action:none;user-select:none}
+.settings-float:active{cursor:grabbing;opacity:1;transform:scale(1.05)}
+.settings-float.dragging{opacity:1;transform:scale(1.1);box-shadow:0 4px 20px rgba(0,0,0,.5)}
 
 /* ── Settings Panel ────────────────────────────────────── */
 .settings-gear{position:fixed;top:12px;right:12px;z-index:90;width:40px;height:40px;background:none;border:1px solid var(--border);border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--gold);transition:all 0.2s;opacity:0.8}
@@ -9529,6 +9529,38 @@ function applyTheme(theme){
   }
 }
 
+// Draggable settings button for mobile
+function DraggableSettings({onOpen}){
+  const btnRef=React.useRef(null);
+  const[pos,setPos]=useState(()=>{
+    const saved=localStorage.getItem('settingsBtnPos');
+    return saved?JSON.parse(saved):{x:window.innerWidth-64,y:80};
+  });
+  const dragRef=React.useRef({startX:0,startY:0,startPosX:0,startPosY:0,moved:false});
+  const handleTouchStart=(ev)=>{
+    const t=ev.touches[0];
+    dragRef.current={startX:t.clientX,startY:t.clientY,startPosX:pos.x,startPosY:pos.y,moved:false};
+    btnRef.current?.classList.add('dragging');
+  };
+  const handleTouchMove=(ev)=>{
+    const t=ev.touches[0];
+    const dx=t.clientX-dragRef.current.startX;
+    const dy=t.clientY-dragRef.current.startY;
+    if(Math.abs(dx)>5||Math.abs(dy)>5)dragRef.current.moved=true;
+    const newX=Math.max(0,Math.min(window.innerWidth-48,dragRef.current.startPosX+dx));
+    const newY=Math.max(0,Math.min(window.innerHeight-48,dragRef.current.startPosY+dy));
+    setPos({x:newX,y:newY});
+  };
+  const handleTouchEnd=()=>{
+    btnRef.current?.classList.remove('dragging');
+    if(!dragRef.current.moved){onOpen();return}
+    localStorage.setItem('settingsBtnPos',JSON.stringify(pos));
+  };
+  return e('button',{ref:btnRef,className:'settings-float',style:{left:pos.x,top:pos.y},
+    onTouchStart:handleTouchStart,onTouchMove:handleTouchMove,onTouchEnd:handleTouchEnd,
+    onClick:()=>{if(!dragRef.current.moved)onOpen()}},'\u2699');
+}
+
 function App(){
   const[phase,setPhase]=useState('cover');const[gs,setGs]=useState(null);const[scene,setScene]=useState(null);const[sceneId,setSceneId]=useState(null);
   const[showSave,setShowSave]=useState(false);const[saveMsg,setSaveMsg]=useState('');const[showSheet,setShowSheet]=useState(false);const[showDmSummary,setShowDmSummary]=useState(false);const[showMap,setShowMap]=useState(false);const[sideOpen,setSideOpen]=useState(false);const[confirmModal,setConfirmModal]=useState(null);const[compPopup,setCompPopup]=useState(null);const[romancePrompt,setRomancePrompt]=useState(null);const[romanceManage,setRomanceManage]=useState(false);const[breakupTarget,setBreakupTarget]=useState(null);const[npcNotify,setNpcNotify]=useState(null);const[romanceCheck,setRomanceCheck]=useState(null);const[spellPrepModal,setSpellPrepModal]=useState(false);const[shortRestModal,setShortRestModal]=useState(false);const[healingPanel,setHealingPanel]=useState(false);const[defeatRecovery,setDefeatRecovery]=useState(null);const[godSignPicker,setGodSignPicker]=useState(null);const[editSlot,setEditSlot]=useState(null);const[showSettingsPanel,setShowSettingsPanel]=useState(false);const[knightingPicker,setKnightingPicker]=useState(null);const[showCamp,setShowCamp]=useState(false);const[showExportModal,setShowExportModal]=useState(false);
@@ -10285,7 +10317,7 @@ function App(){
         ENDING_SCENES.includes(sceneId)&&DM_SUMMARY?e('button',{className:'sheet-sidebar-btn',style:{background:'var(--gold-dim)',color:'var(--bg)'},onClick:()=>{setShowDmSummary(true);setSideOpen(false)}},'DM Summary'):null,
         Object.values(gs.romances||{}).filter(v=>v&&v!=='Friend').length>0?e('button',{className:'romance-manage-btn',onClick:()=>{setRomanceManage(true);setSideOpen(false)}},'Manage Romances'):null,e('button',{className:'save-btn',onClick:()=>{setShowSave(true);setSideOpen(false)}},'\u2716 Save'),saveMsg?e('span',{className:'save-msg'},saveMsg):null,e('button',{className:'menu-btn',onClick:()=>{setShowSettingsPanel(true);setSideOpen(false)}},'\u2699 Settings'),e('button',{className:'menu-btn',onClick:handleMenu},'Menu'))),
     e('button',{className:'settings-gear',onClick:()=>setShowSettingsPanel(true),title:'Settings'},'\u2699'),
-    e('div',{className:'floating-btns'},e('button',{className:'floating-btn',onClick:()=>setShowSettingsPanel(true),title:'Settings'},'\u2699'),e('button',{className:'floating-btn',onClick:()=>setShowSave(true),title:'Save'},'\u2716')),
+    e(DraggableSettings,{onOpen:()=>setShowSettingsPanel(true)}),
     e(SceneView,{scene,onChoice:handleChoice,gs,isEnding:ENDING_SCENES.includes(sceneId),onViewSheet:()=>setShowSheet(true),onViewDmSummary:ENDING_SCENES.includes(sceneId)&&DM_SUMMARY?()=>setShowDmSummary(true):null,onExport:ENDING_SCENES.includes(sceneId)?()=>setShowExportModal(true):null,onBonus:handleBonus,onStateUpdate:handleStateUpdate}),
     showSave?e(SavePicker,{onPick:handleSavePick,onCancel:()=>setShowSave(false),onMenu:()=>{setShowSave(false);handleMenu()}}):null,confirmModal?e(ConfirmModal,confirmModal):null,showExportModal&&gs?e(ExportCharacterModal,{gs:gs,campaignId:(CAMPAIGN&&CAMPAIGN.id)||'knights-oath',onExport:handleExportCharacter,onClose:()=>setShowExportModal(false)}):null,compPopup?e(CompanionInfo,{name:compPopup.name,romance:compPopup.romance,onClose:()=>setCompPopup(null)}):null,romancePrompt?e(RomancePrompt,{prompt:romancePrompt,gs:gs,onAccept:acceptRomance,onFriend:friendRomance,onDecline:declineRomance}):null,
     romanceManage&&gs?e(RomanceManage,{gs:gs,onClose:()=>setRomanceManage(false),onEnd:(name)=>{setRomanceManage(false);setBreakupTarget(name)},onFriend:manageFriend}):null,
