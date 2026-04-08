@@ -48,7 +48,7 @@
     "Mess Kit": "Set up proper camp. Required for cooking rations and long rests in the wild.",
     "Backpack": "Carries your gear. Losing it means losing carrying capacity.",
     "Bedroll": "Comfortable rest. Without it, long rests are less effective.",
-    "Waterskin": "Holds 3 uses of water. Refill at streams or wells.",
+    "Waterskin": "Holds 3 uses of water. Each additional waterskin adds +3 max water. Refill at streams, wells, or camp.",
     "Torch": "Light source. Burns for 1 hour. Essential in dark places.",
     "Rations": "One day's food. Required for travel and long rests.",
     "Dagger": "Backup weapon. Can be thrown. Useful for utility."
@@ -92,7 +92,7 @@
     "Bedroll": 0,
     "Mess Kit": 0,
     "Tinderbox": 0,
-    "Waterskin": 0,
+    "Waterskin": 2,
     "+1 Weapon": 50,
     "+1 Longsword": 50,
     "+1 Armor": 75,
