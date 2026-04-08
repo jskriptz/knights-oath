@@ -3962,19 +3962,46 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
     return null;
   };
 
-  // Record a kill for stats tracking
-  const recordKill=(enemyName,killerName='player')=>{
+  // Record a kill for stats tracking (detailed)
+  const recordKill=(enemyName,killerName='player',weaponUsed=null)=>{
     // Normalize enemy type (strip numbers, adjectives)
     const enemyType=enemyName.replace(/\s*\d+$/,'').replace(/^(Wounded|Injured|Elite|Young|Old)\s+/i,'').trim();
     if(onStateUpdate){
       onStateUpdate(g=>{
-        const ng={...g,kills:{...g.kills||{},player:{...g.kills?.player||{}},companions:{...g.kills?.companions||{}}}};
+        const ng={...g,kills:{
+          ...g.kills||{},
+          player:{...g.kills?.player||{}},
+          companions:{...g.kills?.companions||{}},
+          weapons:{...g.kills?.weapons||{}},
+          scenes:{...g.kills?.scenes||{}},
+          total:(g.kills?.total||0)+1
+        }};
+        // Track by killer
         if(killerName==='player'){
           ng.kills.player[enemyType]=(ng.kills.player[enemyType]||0)+1;
         }else{
           if(!ng.kills.companions[killerName])ng.kills.companions[killerName]={};
           ng.kills.companions[killerName][enemyType]=(ng.kills.companions[killerName][enemyType]||0)+1;
         }
+        // Track by weapon (player only)
+        if(killerName==='player'&&weaponUsed){
+          if(!ng.kills.weapons[weaponUsed])ng.kills.weapons[weaponUsed]={};
+          ng.kills.weapons[weaponUsed][enemyType]=(ng.kills.weapons[weaponUsed][enemyType]||0)+1;
+        }
+        // Track by scene
+        if(sceneId){
+          if(!ng.kills.scenes[sceneId])ng.kills.scenes[sceneId]={};
+          ng.kills.scenes[sceneId][enemyType]=(ng.kills.scenes[sceneId][enemyType]||0)+1;
+        }
+        // Milestone flags
+        const isDraconian=/draconian/i.test(enemyType);
+        const dracoKills=Object.entries(ng.kills.player).filter(([k])=>/draconian/i.test(k)).reduce((s,[,v])=>s+v,0)+
+          Object.values(ng.kills.companions).reduce((s,c)=>s+Object.entries(c).filter(([k])=>/draconian/i.test(k)).reduce((ss,[,v])=>ss+v,0),0);
+        if(!ng.flags)ng.flags={};
+        if(ng.kills.total===1)ng.flags.first_kill=true;
+        if(isDraconian&&!ng.flags.first_draconian_kill)ng.flags.first_draconian_kill=true;
+        if(dracoKills>=10&&!ng.flags.killed_10_draconians)ng.flags.killed_10_draconians=true;
+        if(dracoKills>=25&&!ng.flags.killed_25_draconians)ng.flags.killed_25_draconians=true;
         return ng;
       });
     }
@@ -4122,7 +4149,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
       enemy.hp=Math.max(0,enemy.hp-oaDmg);
       if(enemy.hp<=0){
         enemy.alive=false;
-        recordKill(enemy.name,'player');
+        recordKill(enemy.name,'player',wpn?.name||weapon);
         c.log=[...c.log,{type:'kill',text:'\u26a1 OA: '+enemy.name+' struck down! (d20='+oaRoll+'+'+atkBonus+'='+oaTotal+' \u2714 '+oaDmg+' dmg)',round:c.round}];
         const deathResult=handleDraconianDeath(c,enemy,true);
         c=deathResult.c;
@@ -4345,7 +4372,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
           c.enemies=[...c.enemies];c.enemies[tIdx]={...c.enemies[tIdx],currentHp:Math.max(0,c.enemies[tIdx].currentHp-dmg)};
           if(c.enemies[tIdx].currentHp<=0){
             c.enemies[tIdx].alive=false;
-            recordKill(c.enemies[tIdx].name,'player');
+            recordKill(c.enemies[tIdx].name,'player',gs.weapon);
             // Draconian death trigger
             const deathResult=handleDraconianDeath(c,c.enemies[tIdx],true);
             c=deathResult.c;
@@ -4586,7 +4613,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
             nc.enemies=[...nc.enemies];nc.enemies[tIdx]={...nc.enemies[tIdx],currentHp:Math.max(0,nc.enemies[tIdx].currentHp-dmg)};
             if(nc.enemies[tIdx].currentHp<=0){
               nc.enemies[tIdx].alive=false;
-              recordKill(nc.enemies[tIdx].name,'player');
+              recordKill(nc.enemies[tIdx].name,'player',gs.weapon);
               const deathResult=handleDraconianDeath(nc,nc.enemies[tIdx],true);
               Object.assign(nc,deathResult.c);
               deathResult.log.forEach(l=>nc.log=[...nc.log,l]);
@@ -8467,19 +8494,26 @@ function CharSheet({gs,isEnding,onBack,onEquipChange}){
       )),
 
       // ── Kill Tracker ──
-      (gs.kills&&(Object.keys(gs.kills.player||{}).length||Object.keys(gs.kills.companions||{}).length))?section('KILL TRACKER',(()=>{
-        const pk=gs.kills.player||{};const ck=gs.kills.companions||{};
+      (gs.kills&&(gs.kills.total||Object.keys(gs.kills.player||{}).length))?section('WAR RECORD',(()=>{
+        const pk=gs.kills.player||{};const ck=gs.kills.companions||{};const wk=gs.kills.weapons||{};
         const playerKills=Object.entries(pk).sort((a,b)=>b[1]-a[1]);
         const compKills=Object.entries(ck);
+        const weaponKills=Object.entries(wk).map(([w,kills])=>[w,Object.values(kills).reduce((s,n)=>s+n,0)]).sort((a,b)=>b[1]-a[1]);
         const playerTotal=playerKills.reduce((s,[,n])=>s+n,0);
+        const grandTotal=gs.kills.total||playerTotal+compKills.reduce((s,[,kills])=>s+Object.values(kills).reduce((ss,n)=>ss+n,0),0);
         return e('div',{className:'cs-kills'},
+          e('div',{style:{textAlign:'center',marginBottom:8,fontSize:14,color:'var(--gold-bright)'}},'Total Kills: '+grandTotal),
           e('div',{className:'cs-kills-section'},
-            e('div',{className:'cs-kills-header'},'You ('+playerTotal+' kills)'),
+            e('div',{className:'cs-kills-header'},'Your Kills ('+playerTotal+')'),
             playerKills.length?e('div',{className:'cs-kills-list'},
               playerKills.slice(0,8).map(([type,n])=>e('div',{key:type,className:'cs-kill-row'},e('span',null,type),e('span',null,'×'+n)))
             ):e('div',{className:'cs-empty'},'No kills yet')),
+          weaponKills.length?e('div',{className:'cs-kills-section',style:{marginTop:8}},
+            e('div',{className:'cs-kills-header'},'By Weapon'),
+            e('div',{className:'cs-kills-list'},
+              weaponKills.slice(0,4).map(([wpn,n])=>e('div',{key:wpn,className:'cs-kill-row'},e('span',null,wpn),e('span',null,'×'+n))))):null,
           compKills.length?e('div',{className:'cs-kills-section',style:{marginTop:8}},
-            e('div',{className:'cs-kills-header'},'Companions'),
+            e('div',{className:'cs-kills-header'},'Companion Kills'),
             compKills.map(([name,kills])=>{
               const total=Object.values(kills).reduce((s,n)=>s+n,0);
               return e('div',{key:name,className:'cs-comp-kills'},
