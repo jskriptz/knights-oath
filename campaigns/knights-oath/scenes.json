@@ -644,7 +644,7 @@
       {
         "letter": "A",
         "text": "Let him win. Concede with grace.",
-        "target": "11_MORNING",
+        "target": "12A",
         "points": {
           "CROWN": 1,
           "honour": 1
@@ -655,7 +655,7 @@
       {
         "letter": "B",
         "text": "Take your opening. Win clean.",
-        "target": "11_MORNING",
+        "target": "12B",
         "points": {
           "SWORD": 2,
           "honour": 1
@@ -664,7 +664,7 @@
       {
         "letter": "C",
         "text": "Call it a draw.",
-        "target": "11_MORNING",
+        "target": "12C",
         "points": {
           "ROSE": 1,
           "CROWN": 1
@@ -686,7 +686,7 @@
       {
         "letter": "A",
         "text": "'Thank you, my lord.'",
-        "target": "11_MORNING",
+        "target": "13A",
         "points": {
           "CROWN": 1
         }
@@ -771,7 +771,7 @@
       {
         "letter": "B",
         "text": "Find Aldric and tell him.",
-        "target": "11_MORNING",
+        "target": "15B",
         "points": {
           "ROSE": 1
         }
@@ -800,7 +800,7 @@
       {
         "letter": "A",
         "text": "Yes. An ally who hears everything is valuable.",
-        "target": "11_MORNING",
+        "target": "16A",
         "points": {
           "ROSE": 1
         }
@@ -808,7 +808,7 @@
       {
         "letter": "B",
         "text": "Yes, but you want to read what she writes first.",
-        "target": "11_MORNING",
+        "target": "16B",
         "points": {
           "CROWN": 1
         }
@@ -951,7 +951,7 @@
       {
         "letter": "A",
         "text": "'I will. Thank you.'",
-        "target": "11_AFTERNOON",
+        "target": "21A",
         "points": {
           "ROSE": 1
         },
@@ -960,8 +960,8 @@
       },
       {
         "letter": "B",
-        "text": "Ask her to come as a field medic. 'I am needed here,' she says \u2014 but there is something in her voice that suggests she considered it. 'Come back in one piece.",
-        "target": "11_AFTERNOON",
+        "text": "Ask her to come as a field medic.",
+        "target": "21B",
         "points": {
           "ROSE": 2
         }
@@ -969,7 +969,7 @@
       {
         "letter": "C",
         "text": "Accept efficiently and leave.",
-        "target": "11_AFTERNOON",
+        "target": "21C",
         "points": {
           "CROWN": 1
         }
@@ -1303,7 +1303,7 @@
       {
         "letter": "A",
         "text": "Report the light to Caeron at dawn.",
-        "target": "11_EVENING",
+        "target": "34A",
         "points": {
           "CROWN": 1,
           "ROSE": 1
@@ -1320,7 +1320,7 @@
       {
         "letter": "C",
         "text": "Share it with Sera.",
-        "target": "11_EVENING",
+        "target": "34C",
         "points": {
           "ROSE": 1
         }
@@ -1483,7 +1483,7 @@
     "boxes": [
       {
         "type": "combat",
-        "text": "**COMBAT ENCOUNTER \u2014 THE DETAINED SCOUT**\nOne wounded Baaz breaks free. You fight alone for 2 rounds before Aldric arrives.\n**ENEMIES:** Baaz Draconian: AC 13, HP 14 (wounded), Speed 30 ft.\nEnemy Tactics: It tries to disengage and run. If it escapes (not downed in 3 rounds) the patrol arrives early in Scene 44.\nVictory: The Baaz falls. Its body hardens to stone in its death throes \u2014 you pry your blade free as Aldric arrives at a run. The scout is dead, but now you know the Dragon Army patrols this road.\nRewards: 5 XP.\nFallen (0 HP): Aldric arrives to finish the fight. 1 HP and one exhaustion."
+        "text": "**COMBAT ENCOUNTER \u2014 THE DETAINED SCOUT**\nOne wounded Baaz breaks free. You fight alone for 2 rounds before Aldric arrives.\n**ENEMIES:** Baaz Draconian: AC 14, HP 14 (wounded), Speed 30 ft.\nEnemy Tactics: It tries to disengage and run. If it escapes (not downed in 3 rounds) the patrol arrives early in Scene 44.\nVictory: The Baaz falls. Its body hardens to stone in its death throes \u2014 you pry your blade free as Aldric arrives at a run. The scout is dead, but now you know the Dragon Army patrols this road.\nRewards: 5 XP.\nFallen (0 HP): Aldric arrives to finish the fight. 1 HP and one exhaustion."
       },
       {
         "type": "info",
@@ -1626,7 +1626,7 @@
     "boxes": [
       {
         "type": "combat",
-        "text": "**COMBAT ENCOUNTER \u2014 DRAGON ARMY ASSASSIN SQUAD**\n**ENEMIES:**\n\u2022 Human Soldier x3: AC 14, HP 14 each. Longsword +4 1d8+2. Crossbow +4 1d8+2.\n\u2022 Sivak Draconian (Officer): AC 16, HP 48. Greatsword +6 2d6+4. Speed 40 ft., Fly 60 ft.\n\u2022 Sivak: Shape Steal \u2014 on death by melee, takes the killer's appearance. Commander's Aura: soldiers within 30 ft. get +1 to attacks.\n**IMPORTANT:** Do not kill the Sivak in melee \u2014 it will Shape Steal your appearance. Use ranged attacks or force it to flee.\nVictory: The last soldier falls. The Sivak shrieks, wings beating \u2014 it launches into the sky, fleeing into the dark. On the officer's body you find sealed orders. Your name is on them.\nRewards: 50 XP.\nFallen (0 HP): Aldric holds the Sivak while you are stabilised. 1 HP, one exhaustion."
+        "text": "**COMBAT ENCOUNTER \u2014 DRAGON ARMY ASSASSIN SQUAD**\n**ENEMIES:**\n\u2022 Human Soldier x3: AC 16, HP 11 each. Longsword +3 1d8+1. Crossbow +3 1d8+1.\n\u2022 Sivak Draconian (Officer): AC 15, HP 67. Multiattack (2 attacks). Greatsword +5 2d6+3. Speed 30 ft., Fly 60 ft.\n\u2022 Sivak: Shape Steal \u2014 on death by melee, takes the killer's appearance. Commander's Aura: soldiers within 30 ft. get +1 to attacks.\n**IMPORTANT:** Do not kill the Sivak in melee \u2014 it will Shape Steal your appearance. Use ranged attacks or force it to flee.\nVictory: The last soldier falls. The Sivak shrieks, wings beating \u2014 it launches into the sky, fleeing into the dark. On the officer's body you find sealed orders. Your name is on them.\nRewards: 50 XP.\nFallen (0 HP): Aldric holds the Sivak while you are stabilised. 1 HP, one exhaustion."
       }
     ],
     "choices": [
@@ -1829,7 +1829,7 @@
       },
       {
         "type": "combat",
-        "text": "**COMBAT ENCOUNTER \u2014 THE BRIDGE CHECKPOINT**\n**ENEMIES:**\n\u2022 Human Soldier x4: AC 14, HP 16 each. Longsword +4 1d8+2.\n\u2022 Sergeant (one of the four): HP 22. Bonus action Shout: one ally rerolls a failed attack.\nVictory: The bridge is yours. The sergeant drops his sword and the remaining soldiers scatter. Vogler's gates creak open \u2014 the villagers watched the fight from the walls. You enter as the knight who cleared the road.\nRewards: 30 XP.\nFallen (0 HP): Aldric holds the sergeant. You enter Vogler at 1 HP. Villagers treat your wounds."
+        "text": "**COMBAT ENCOUNTER \u2014 THE BRIDGE CHECKPOINT**\n**ENEMIES:**\n\u2022 Human Soldier x4: AC 16, HP 11 each. Longsword +3 1d8+1.\n\u2022 Sergeant (one of the four): HP 22. Bonus action Shout: one ally rerolls a failed attack.\nVictory: The bridge is yours. The sergeant drops his sword and the remaining soldiers scatter. Vogler's gates creak open \u2014 the villagers watched the fight from the walls. You enter as the knight who cleared the road.\nRewards: 30 XP.\nFallen (0 HP): Aldric holds the sergeant. You enter Vogler at 1 HP. Villagers treat your wounds."
       }
     ],
     "choices": [
@@ -2261,7 +2261,7 @@
       {
         "letter": "S1",
         "text": "Tell him you admire the conviction.",
-        "target": "11_MORNING",
+        "target": "27S1",
         "points": {
           "ROSE": 1
         }
@@ -2269,7 +2269,7 @@
       {
         "letter": "S2",
         "text": "Ask him about his father.",
-        "target": "11_MORNING",
+        "target": "27S2",
         "points": {
           "ROSE": 1
         }

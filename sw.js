@@ -1,5 +1,5 @@
 // Knights Oath Service Worker v1
-const CACHE_NAME = 'knights-oath-v1';
+const CACHE_NAME = 'knights-oath-25.30.0-83c9c339';
 
 // Assets to precache on install (core app only, not campaign data)
 const PRECACHE_ASSETS = [
@@ -62,7 +62,13 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Local assets (index.html, manifest.json): cache-first
+  // HTML files: network-first (always get latest version)
+  if (url.pathname.endsWith('.html') || url.pathname === '/' || url.pathname === '') {
+    event.respondWith(networkFirst(event.request));
+    return;
+  }
+
+  // Other local assets (manifest.json, images): cache-first
   if (url.origin === self.location.origin) {
     event.respondWith(cacheFirst(event.request));
     return;

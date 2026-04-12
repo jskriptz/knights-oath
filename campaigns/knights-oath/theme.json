@@ -32,8 +32,8 @@
   "loadingScreen": {
     "title": "DRAGONLANCE",
     "subtitle": "THE KNIGHT'S OATH",
-    "version": "v25.16.1",
-    "stats": "350 Scenes \u2022 9 Companions"
+    "version": "v25.30.0",
+    "stats": "383 Scenes \u2022 9 Companions"
   },
   "heroPortraits": [
     {"id": "knight_m1", "label": "Knight (Male)", "url": "https://api.dicebear.com/9.x/notionists/svg?seed=SolKnightMale&backgroundColor=1a2a4a"},

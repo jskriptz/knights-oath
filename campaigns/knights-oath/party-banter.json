@@ -741,5 +741,238 @@
       {"speaker": "Aldric", "text": "A tactic."},
       {"speaker": "Sera", "text": "Don't look at me like that. Naming it doesn't mean I approve. It means I understand. Those are different things."}
     ]
+  },
+  {
+    "scene": "3",
+    "requireCompanion": ["Aldric"],
+    "lines": [
+      {"speaker": "Aldric", "text": "The courtyard's quiet. Too quiet."},
+      {"speaker": "Thessaly", "text": "That's because everyone's waiting to see what you'll do."},
+      {"speaker": "Aldric", "text": "Wonderful. No pressure at all."}
+    ]
+  },
+  {
+    "scene": "3",
+    "requireCompanion": ["Vael"],
+    "lines": [
+      {"speaker": "Vael", "text": "I trained here for two years. Every stone has a memory."},
+      {"speaker": "Aldric", "text": "Good memories?"},
+      {"speaker": "Vael", "text": "Useful ones. That's better."}
+    ]
+  },
+  {
+    "scene": "6",
+    "requireCompanion": ["Thessaly"],
+    "lines": [
+      {"speaker": "Thessaly", "text": "A correspondent from the Library. I should be taking notes."},
+      {"speaker": "Aldric", "text": "You're always taking notes."},
+      {"speaker": "Thessaly", "text": "And you're always giving me material. It's a partnership."}
+    ]
+  },
+  {
+    "scene": "6",
+    "requireCompanion": ["Mira"],
+    "lines": [
+      {"speaker": "Mira", "text": "News from the south. The rivers are running strange colors, they say."},
+      {"speaker": "Sera", "text": "What does that mean?"},
+      {"speaker": "Mira", "text": "Nothing good. The land speaks, if you know how to listen."}
+    ]
+  },
+  {
+    "scene": "9",
+    "requireCompanion": ["Mira"],
+    "lines": [
+      {"speaker": "Mira", "text": "This tent smells of yarrow and feverfew. Good signs. The healer knows their craft."},
+      {"speaker": "Aldric", "text": "You can tell that from the smell?"},
+      {"speaker": "Mira", "text": "I can tell many things from smells. For instance, you haven't washed your feet in three days."},
+      {"speaker": "Aldric", "text": "...Fair point."}
+    ]
+  },
+  {
+    "scene": "9",
+    "requireCompanion": ["Sera"],
+    "lines": [
+      {"speaker": "Sera", "text": "Wounded soldiers. Broken weapons. This is what war looks like before the chroniclers clean it up."},
+      {"speaker": "Thessaly", "text": "I don't clean anything up."},
+      {"speaker": "Sera", "text": "Then you're a rare one. Keep it that way."}
+    ]
+  },
+  {
+    "scene": "22",
+    "requireCompanion": ["Aldric"],
+    "lines": [
+      {"speaker": "Aldric", "text": "Becklin's plan is sound. I've studied the terrain — the ambush point is perfect."},
+      {"speaker": "Vael", "text": "You sound almost like an officer."},
+      {"speaker": "Aldric", "text": "Don't remind me. The responsibility is terrifying."},
+      {"speaker": "Vael", "text": "Good. Terror keeps you sharp."}
+    ]
+  },
+  {
+    "scene": "22",
+    "requireCompanion": ["Serath"],
+    "lines": [
+      {"speaker": "Serath", "text": "This ambush plan — it would work on Dragon Army regulars. But not Highlord troops."},
+      {"speaker": "Lysander", "text": "You don't think they're sending their best?"},
+      {"speaker": "Serath", "text": "Not yet. But when they do, we'll know."}
+    ]
+  },
+  {
+    "scene": "26",
+    "requireCompanion": ["Sera"],
+    "lines": [
+      {"speaker": "Sera", "text": "Ambush. Classic pincer formation. Someone read the same manuals we did."},
+      {"speaker": "Aldric", "text": "That's not comforting."},
+      {"speaker": "Sera", "text": "It's not meant to be. It's meant to keep you alive."}
+    ]
+  },
+  {
+    "scene": "26",
+    "requireCompanion": ["Vael"],
+    "lines": [
+      {"speaker": "Vael", "text": "They've cut off our retreat. Clever."},
+      {"speaker": "Thessaly", "text": "Clever? We're trapped!"},
+      {"speaker": "Vael", "text": "Which means we can't retreat. Only advance. Sometimes being trapped is a gift."}
+    ]
+  },
+  {
+    "scene": "36",
+    "requireCompanion": ["Mira"],
+    "lines": [
+      {"speaker": "Mira", "text": "Hold still. This wound needs stitching, not heroics."},
+      {"speaker": "Aldric", "text": "I can manage—"},
+      {"speaker": "Mira", "text": "You can manage to be quiet while I work. That's what you can manage."}
+    ]
+  },
+  {
+    "scene": "36",
+    "requireCompanion": ["Caeron"],
+    "lines": [
+      {"speaker": "Caeron", "text": "Blood on my cloak. My mother would be horrified."},
+      {"speaker": "Sera", "text": "Your mother isn't here."},
+      {"speaker": "Caeron", "text": "No. She isn't. And I find I don't mind as much as I expected."}
+    ]
+  },
+  {
+    "scene": "44",
+    "requireCompanion": ["Thessaly"],
+    "lines": [
+      {"speaker": "Thessaly", "text": "Refugees. Families. Children carrying what's left of their lives."},
+      {"speaker": "Aldric", "text": "We have to help them."},
+      {"speaker": "Thessaly", "text": "We have to win. That's how we help them. Everything else is a kindness we can't afford."},
+      {"speaker": "Aldric", "text": "That's cold."},
+      {"speaker": "Thessaly", "text": "It's true. Those are often the same thing."}
+    ]
+  },
+  {
+    "scene": "44",
+    "requireCompanion": ["Serath"],
+    "lines": [
+      {"speaker": "Serath", "text": "I did this. Not personally, but — the Dragon Army did this. I was part of it."},
+      {"speaker": "Lysander", "text": "And now you're on the other side."},
+      {"speaker": "Serath", "text": "Am I? Some days I'm not sure there are sides. Just people trying to survive what other people did."}
+    ]
+  },
+  {
+    "scene": "51",
+    "requireCompanion": ["Aldric", "Thessaly"],
+    "lines": [
+      {"speaker": "Thessaly", "text": "The column's slowing. Exhaustion or fear — both, probably."},
+      {"speaker": "Aldric", "text": "Should I say something? Give a speech?"},
+      {"speaker": "Thessaly", "text": "No. Walk among them. Let them see you're tired too. That's worth more than words."},
+      {"speaker": "Aldric", "text": "You're full of wisdom today."},
+      {"speaker": "Thessaly", "text": "I read a lot. It rubs off."}
+    ]
+  },
+  {
+    "scene": "51",
+    "requireCompanion": ["Sera"],
+    "lines": [
+      {"speaker": "Sera", "text": "The scouts report clear skies ahead. For once, no ambush."},
+      {"speaker": "Vael", "text": "That's suspicious."},
+      {"speaker": "Sera", "text": "I know. But I'll take suspicious over certain death."}
+    ]
+  },
+  {
+    "scene": "15",
+    "requireCompanion": ["Thessaly"],
+    "lines": [
+      {"speaker": "Thessaly", "text": "Every kingdom falls. It's just a matter of how and when and who remembers."},
+      {"speaker": "Aldric", "text": "That's grim."},
+      {"speaker": "Thessaly", "text": "That's history. Grim is just the honest word for it."}
+    ]
+  },
+  {
+    "scene": "17",
+    "requireCompanion": ["Mira"],
+    "lines": [
+      {"speaker": "Mira", "text": "The herbs here are different. Stronger. The soil must be richer."},
+      {"speaker": "Aldric", "text": "You notice everything, don't you?"},
+      {"speaker": "Mira", "text": "I notice what keeps people alive. Everything else is decoration."}
+    ]
+  },
+  {
+    "scene": "25",
+    "requireCompanion": ["Aldric", "Vael"],
+    "lines": [
+      {"speaker": "Vael", "text": "Your footwork's improved. Still sloppy on the pivot, but improved."},
+      {"speaker": "Aldric", "text": "Did you just compliment me?"},
+      {"speaker": "Vael", "text": "I stated a fact. Don't get emotional about it."}
+    ]
+  },
+  {
+    "scene": "32",
+    "requireCompanion": ["Serath"],
+    "lines": [
+      {"speaker": "Serath", "text": "I know this road. The Dragon Army used it for supply lines."},
+      {"speaker": "Sera", "text": "Anything we should know?"},
+      {"speaker": "Serath", "text": "There's a cache buried two miles east. Food, weapons, gold. If it hasn't been found."},
+      {"speaker": "Sera", "text": "And you're just mentioning this now?"},
+      {"speaker": "Serath", "text": "I wasn't sure I wanted to share it. Now I am."}
+    ]
+  },
+  {
+    "scene": "38",
+    "requireCompanion": ["Caeron"],
+    "lines": [
+      {"speaker": "Caeron", "text": "My family's banner hung in this hall once. I remember the feasts."},
+      {"speaker": "Thessaly", "text": "What happened?"},
+      {"speaker": "Caeron", "text": "Politics. Money. The usual poisons. We lost everything, and I learned that names mean nothing without the strength to back them."}
+    ]
+  },
+  {
+    "scene": "42",
+    "requireCompanion": ["Mira", "Sera"],
+    "lines": [
+      {"speaker": "Mira", "text": "Something's wrong with the water here. I can taste it."},
+      {"speaker": "Sera", "text": "Don't drink then."},
+      {"speaker": "Mira", "text": "I wasn't planning to. But the others don't know. Warn them."}
+    ]
+  },
+  {
+    "scene": "48",
+    "requireCompanion": ["Vael"],
+    "lines": [
+      {"speaker": "Vael", "text": "We've been moving too fast. The column will break apart at this pace."},
+      {"speaker": "Aldric", "text": "We don't have a choice."},
+      {"speaker": "Vael", "text": "There's always a choice. Sometimes all the options are just terrible."}
+    ]
+  },
+  {
+    "scene": "53",
+    "requireCompanion": ["Lysander"],
+    "lines": [
+      {"speaker": "Lysander", "text": "You've changed since we left the Spur. Grown, I think."},
+      {"speaker": "Aldric", "text": "Is that your way of saying I'm doing well?"},
+      {"speaker": "Lysander", "text": "It's my way of saying you're not dead yet. That's the best compliment a soldier gives."}
+    ]
+  },
+  {
+    "scene": "58",
+    "requireCompanion": ["Thessaly"],
+    "lines": [
+      {"speaker": "Thessaly", "text": "The scribes of Palanthas will never believe this. I barely believe it myself."},
+      {"speaker": "Aldric", "text": "Then write it down."},
+      {"speaker": "Thessaly", "text": "I am. Every word. Every death. The truth deserves that much."}
+    ]
   }
 ]
