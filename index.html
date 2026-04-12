@@ -2798,7 +2798,7 @@ const STATUS_EFFECTS={
   },
   // GRAPPLED: Speed becomes 0
   Grappled:{
-    icon:'\ud83e\udd1c',
+    icon:'🤜',
     desc:'Speed is 0. Cannot benefit from bonus to speed.',
     applyText:['is grabbed and held fast!','struggles in a crushing grip!','is caught in a grapple!','cannot break free!'],
     removeText:['breaks free of the grapple!','escapes the hold!','wrenches free!'],
@@ -2837,7 +2837,7 @@ const STATUS_EFFECTS={
   },
   // PETRIFIED: Stone, incapacitated, resistant to all damage, no aging
   Petrified:{
-    icon:'\ud83e\udea8',
+    icon:'🪨',
     desc:'Transformed to stone. Incapacitated. Resistant to all damage.',
     applyText:['turns to stone!','hardens into a statue!','is petrified, frozen in time!'],
     removeText:['stone cracks away, flesh restored!','transforms back from stone!'],
@@ -2906,7 +2906,7 @@ const STATUS_EFFECTS={
   },
   // TURNED: Must flee from source (Channel Divinity)
   Turned:{
-    icon:'\ud83c\udfƒ',
+    icon:'🎃',
     desc:'Must spend turns moving away from source. Cannot take reactions.',
     applyText:['flees in divine terror!','is turned by holy power!','scrambles away from the divine light!'],
     removeText:['overcomes the turning!','is no longer turned.'],
@@ -2941,7 +2941,7 @@ const STATUS_EFFECTS={
   },
   // CONCENTRATING: Must maintain concentration on a spell
   Concentrating:{
-    icon:'\ud83e\udde0',
+    icon:'🧠',
     desc:'Concentrating on a spell. Taking damage requires CON save.',
     applyText:['focuses intently on maintaining the spell.'],
     removeText:['loses concentration!','the spell fades.'],
@@ -2966,7 +2966,7 @@ const STATUS_EFFECTS={
   },
   // HUNTER'S MARKED: Extra damage from ranger
   "Hunter's Mark":{
-    icon:'\ud83c\udfaf',
+    icon:'🎯',
     desc:'Takes extra damage from the ranger who marked them.',
     applyText:['is marked as quarry!','is targeted by the hunter!'],
     removeText:['the mark fades.'],
@@ -2974,7 +2974,7 @@ const STATUS_EFFECTS={
   },
   // FAERIE FIRE: Outlined in light, attacks have advantage
   'Faerie Fire':{
-    icon:'\ud83c\udf1f',
+    icon:'🌟',
     desc:'Outlined in light. Cannot be invisible. Attacks against have advantage.',
     applyText:['is outlined in shimmering light!','glows with faerie fire!'],
     removeText:['the glow fades.'],
@@ -4779,7 +4779,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
       if(dexSave<12){
         const acidDmg=rollDice(4)+rollDice(4);
         c.playerHp=Math.max(0,c.playerHp-acidDmg);
-        log.push({type:'damage',text:'\ud83e\uddea Acid splash! DEX save '+dexSave+' < DC 12 \u2014 '+acidDmg+' acid damage!',round:c.round});
+        log.push({type:'damage',text:'🧪 Acid splash! DEX save '+dexSave+' < DC 12 \u2014 '+acidDmg+' acid damage!',round:c.round});
       }else{
         log.push({type:'info',text:'You leap clear of the acid. (DEX save '+dexSave+' \u2265 DC 12)',round:c.round});
       }
@@ -7608,7 +7608,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
                   const targets=pnpTracker.combatants.filter(t=>t.type!=='enemy'&&t.hp>0);
                   const target=pnpAttackTarget||targets[0]?.name;
                   if(target)rollEnemyAttack(c,target);
-                },title:'Roll attack for '+c.name},'\ud83c\udfb2')
+                },title:'Roll attack for '+c.name},'🎲')
               ):null
             );
           })),
@@ -7757,7 +7757,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
       // Show chosen result
       combat.result==='win'&&isBoarFight&&boarLootChosen?e('div',{className:'box combat',style:{marginTop:'12px'}},
         boarLootChosen==='tusks'?e('p',{style:{fontStyle:'italic',color:'var(--gold)'}},'\u2694 You work the largest tusk free and wrap it in cloth. Heavy, curved, and wickedly sharp. A merchant might know what to do with it.'):
-        e('p',{style:{fontStyle:'italic',color:'var(--gold)'}},'\ud83c\udf39 You leave the tusks where they are. Pell, still pale, catches your eye across the yard and mouths "thank you." That is enough.')):null,
+        e('p',{style:{fontStyle:'italic',color:'var(--gold)'}},'🌹 You leave the tusks where they are. Pell, still pale, catches your eye across the yard and mouths "thank you." That is enough.')):null,
       // Generic post-combat loot choice (humanoid/draconian fights)
       (()=>{
         const NO_LOOT_SCENES=CAMPAIGN_RULES?.noLootScenes||['11_YARD','11','12','64B_WOLVES'];
@@ -7913,8 +7913,8 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
       e('div',{className:'combat-conditions-row'},
         combat.dodging?e('span',{className:'condition-icon',title:'Dodging: attacks against you have disadvantage'},'\u25c7 Dodge'):null,
         combat.hidden?e('span',{className:'condition-icon',title:'Hidden: your next attack has advantage'},'👁 Hidden'):null,
-        combat.coverBonus>0?e('span',{className:'condition-icon',title:'Cover: +'+combat.coverBonus+' AC'},'\ud83e\udea8 Cover +'+combat.coverBonus):null,
-        combat.helpTarget?e('span',{className:'condition-icon',style:{color:'var(--gold)'},title:'Helping: next attack against this enemy has advantage'},'\ud83e\udd1d Help'):null,
+        combat.coverBonus>0?e('span',{className:'condition-icon',title:'Cover: +'+combat.coverBonus+' AC'},'🪨 Cover +'+combat.coverBonus):null,
+        combat.helpTarget?e('span',{className:'condition-icon',style:{color:'var(--gold)'},title:'Helping: next attack against this enemy has advantage'},'🤝 Help'):null,
         combat.blessActive?e('span',{className:'condition-icon bless',title:'Bless: +1d4 to attacks and saves ('+combat.blessRoundsLeft+' rounds)'},'\u2726 Bless'):null,
         combat.shieldOfFaithActive?e('span',{className:'condition-icon bless',title:'Shield of Faith: +2 AC (concentration)'},'🛡 +2 AC'):null,
         combat.concentrating?e('span',{className:'condition-icon conc',title:'Concentrating on '+combat.concentrating.spell},'\u25ce Conc'):null,
@@ -7925,7 +7925,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
         combat.flankingTarget?e('span',{className:'condition-icon',style:{color:'var(--green)'},title:'Flanking: advantage on attacks against this enemy'},(()=>{const en=combat.enemies.find(x=>x.id===combat.flankingTarget);return'\u2694 Flank'+(en?' '+en.name.split(' ')[0]:'')})()):null,
         combat.surprised&&combat.round===1?e('span',{className:'condition-icon',style:{color:'var(--purple)'},title:'Enemies are surprised! They cannot act or take reactions this round.'},'\u26a1 Surprise'):null,
         combat.playerProne?e('span',{className:'condition-icon',style:{color:'var(--red)'},title:'Prone: Your attacks have disadvantage. Melee attacks against you have advantage, ranged have disadvantage. Use bonus action to stand.'},'\u2b07 Prone'):null,
-        combat.rangedAdvantageTarget?e('span',{className:'condition-icon',style:{color:'var(--green)'},title:'Pushed to range: Your next ranged attack against this enemy has advantage'},(()=>{const en=combat.enemies.find(x=>x.id===combat.rangedAdvantageTarget);return'\ud83c\udff9 Ranged Adv'+(en?' vs '+en.name.split(' ')[0]:'')})()
+        combat.rangedAdvantageTarget?e('span',{className:'condition-icon',style:{color:'var(--green)'},title:'Pushed to range: Your next ranged attack against this enemy has advantage'},(()=>{const en=combat.enemies.find(x=>x.id===combat.rangedAdvantageTarget);return'🏹 Ranged Adv'+(en?' vs '+en.name.split(' ')[0]:'')})()
         ):null
       ):null,
     // HP Tracker — Player with conditions
@@ -8031,7 +8031,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
         // Lucky feat: toggle advantage for next attack
         gs.feat==='Lucky'&&combat.luckPoints>0?e('div',{className:'lucky-toggle',style:{marginBottom:'8px',display:'flex',alignItems:'center',gap:'8px'}},
           e('button',{className:'combat-ability-btn'+(combat.luckActive?' selected':''),style:{padding:'4px 12px',fontSize:'12px'},onClick:()=>setCombat(c=>({...c,luckActive:!c.luckActive}))},
-            '\ud83c\udf40 Lucky'+(combat.luckActive?' ON':'')),
+            '🍀 Lucky'+(combat.luckActive?' ON':'')),
           e('span',{style:{fontSize:'11px',color:'var(--text-dim)'}},combat.luckPoints+' point'+(combat.luckPoints===1?'':'s')+' left')
         ):null,
         // Heroic Inspiration: toggle advantage for next attack (from Human: Resourceful or Musician)
@@ -8053,14 +8053,14 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
             combat.unarmed?e('span',{style:{color:'var(--orange)',fontSize:'11px',marginRight:'8px'}},'\u270a Unarmed (1+STR)'):null,
             e('button',{className:'combat-action-btn',onClick:doPlayerDodge},'\u25c7 Dodge'),
             e('button',{className:'combat-action-btn',onClick:doPlayerHide},'👁 Hide'),
-            !combat.coverBonus?e('button',{className:'combat-action-btn',onClick:()=>doTakeCover('half')},'\ud83e\udea8 Half Cover'):null,
-            !combat.coverBonus?e('button',{className:'combat-action-btn',onClick:()=>doTakeCover('three-quarters')},'\ud83e\udea8 3/4 Cover'):null,
+            !combat.coverBonus?e('button',{className:'combat-action-btn',onClick:()=>doTakeCover('half')},'🪨 Half Cover'):null,
+            !combat.coverBonus?e('button',{className:'combat-action-btn',onClick:()=>doTakeCover('three-quarters')},'🪨 3/4 Cover'):null,
             combat.coverBonus>0?e('button',{className:'combat-action-btn',style:{borderColor:'var(--green)'},onClick:doLeaveCover},'\u2714 Leave Cover (+'+combat.coverBonus+' AC)'):null,
             !combat.playerProne?e('button',{className:'combat-action-btn',onClick:doDropProne},'\u2b07 Drop Prone'):null,
             !combat.readyAction?e('button',{className:'combat-action-btn',onClick:()=>setCombat(c=>({...c,readyMode:true}))},'\u23f1 Ready'):null,
             combat.readyAction?e('span',{style:{color:'var(--gold)',fontSize:'11px',marginRight:'8px'}},'\u23f1 Readied: '+combat.readyAction.action):null,
-            combat.companions.length>0&&!helpMode?e('button',{className:'combat-action-btn',onClick:()=>setHelpMode(true)},'\ud83e\udd1d Help'):null,
-            !grappleMode&&(combat.playerPosition?.zone||'front')==='front'?e('button',{className:'combat-action-btn',onClick:()=>setGrappleMode(true)},'\ud83e\udd1c Grapple'):null,
+            combat.companions.length>0&&!helpMode?e('button',{className:'combat-action-btn',onClick:()=>setHelpMode(true)},'🤝 Help'):null,
+            !grappleMode&&(combat.playerPosition?.zone||'front')==='front'?e('button',{className:'combat-action-btn',onClick:()=>setGrappleMode(true)},'🤜 Grapple'):null,
             !shoveMode&&(combat.playerPosition?.zone||'front')==='front'?e('button',{className:'combat-action-btn',onClick:()=>setShoveMode(true)},'👊 Shove'):null,
             gs.cls==='Paladin'&&combat.localSpellSlots<(derived.spellSlotsMax||0)&&!combat.blessActive?
               e('button',{className:'combat-action-btn',onClick:castBless},'\u2726 Cast Bless (conc.)'):null,
@@ -8079,10 +8079,10 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
                 e('button',{key:'vow',className:'combat-action-btn',style:{borderColor:'var(--red)'},onClick:()=>setCombat(c=>({...c,vowTargetMode:true}))},'\u269c Vow of Enmity'):null,
               // Ancients: Nature's Wrath (needs target)
               gs.subclass==='ancients'&&livingEnemies.length>0?
-                e('button',{key:'nature',className:'combat-action-btn',style:{borderColor:'var(--green)'},onClick:()=>setCombat(c=>({...c,naturesWrathMode:true}))},'\ud83c\udf3f Nature\'s Wrath'):null,
+                e('button',{key:'nature',className:'combat-action-btn',style:{borderColor:'var(--green)'},onClick:()=>setCombat(c=>({...c,naturesWrathMode:true}))},'🌿 Nature\'s Wrath'):null,
               // Glory: Peerless Athlete
               gs.subclass==='glory'&&!combat.peerlessAthleteActive?
-                e('button',{key:'peerless',className:'combat-action-btn',onClick:usePeerlessAthlete},'\ud83c\udfc3 Peerless Athlete'):null
+                e('button',{key:'peerless',className:'combat-action-btn',onClick:usePeerlessAthlete},'🏃 Peerless Athlete'):null
             ].filter(Boolean):null,
             // Vow of Enmity target selection
             combat.vowTargetMode?e('div',{className:'combat-heal-targets',style:{marginTop:'8px'}},
@@ -8100,7 +8100,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
             combat.readyMode?e('div',{className:'combat-heal-targets',style:{marginTop:'8px'}},
               e('div',{style:{fontSize:'12px',marginBottom:'4px'}},'Ready an attack. Choose trigger:'),
               e('button',{className:'combat-action-btn',style:{fontSize:'11px'},onClick:()=>doPlayerReady('enemyApproaches','attack')},'\u2694 When enemy approaches'),
-              e('button',{className:'combat-action-btn',style:{fontSize:'11px'},onClick:()=>doPlayerReady('enemyMoves','attack')},'\ud83c\udfc3 When enemy moves'),
+              e('button',{className:'combat-action-btn',style:{fontSize:'11px'},onClick:()=>doPlayerReady('enemyMoves','attack')},'🏃 When enemy moves'),
               e('button',{className:'combat-action-btn',style:{fontSize:'11px'},onClick:()=>doPlayerReady('enemyAttacks','attack')},'🗡 When enemy attacks'),
               e('button',{className:'ghost-btn',style:{fontSize:'11px',padding:'4px 8px'},onClick:()=>setCombat(c=>({...c,readyMode:false}))},'Cancel')
             ):null,
@@ -8129,8 +8129,8 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
             ):null,
             // Psi Warrior abilities
             gs.cls==='Fighter'&&gs.subclass==='psiwarrior'&&combat.psionicDice>0?[
-              e('button',{key:'psi_strike',className:'combat-action-btn',style:{borderColor:'#9966ff'},onClick:usePsionicStrike},'\ud83e\udde0 Psionic Strike (+'+combat.psionicDieSize+'+INT)'),
-              e('button',{key:'psi_move',className:'combat-action-btn',onClick:()=>setCombat(c=>({...c,telekineticMode:true}))},'\ud83e\uddff Telekinetic Move')
+              e('button',{key:'psi_strike',className:'combat-action-btn',style:{borderColor:'#9966ff'},onClick:usePsionicStrike},'🧠 Psionic Strike (+'+combat.psionicDieSize+'+INT)'),
+              e('button',{key:'psi_move',className:'combat-action-btn',onClick:()=>setCombat(c=>({...c,telekineticMode:true}))},'🧿 Telekinetic Move')
             ]:null,
             // Telekinetic target selection
             combat.telekineticMode?e('div',{className:'combat-heal-targets',style:{marginTop:'8px'}},
@@ -8151,10 +8151,10 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
                 if(injured){const idx=nc.companions.findIndex(cp=>cp.name===injured.name);nc.companions=[...nc.companions];nc.companions[idx]={...nc.companions[idx],hp:1,unconscious:false,deathSaves:{success:0,fail:0}};
                   nc.log=[...nc.log,{type:'heal',text:'R'+nc.round+' Bandage: stabilized '+injured.name+' at 1 HP',round:nc.round}]}
                 return nc;});
-            }},'\ud83e\ude79 Bandage (stabilize ally)'):null,
+            }},'🩹 Bandage (stabilize ally)'):null,
             // Healer feat: Battle Medic action
             gs.feat==='Healer'&&!healerMode&&(combat.playerHp<combat.playerMaxHp||combat.companions.some(cp=>cp.alive&&cp.hp<cp.maxHp))?
-              e('button',{className:'combat-action-btn',onClick:()=>setHealerMode(true)},'\ud83e\ude79 Battle Medic (1d4+'+derived.profBonus+')'):null,
+              e('button',{className:'combat-action-btn',onClick:()=>setHealerMode(true)},'🩹 Battle Medic (1d4+'+derived.profBonus+')'):null,
           // Heal target selection
           healMode&&combat.turnPhase==='action'?e('div',{className:'combat-heal-targets',style:{marginTop:'10px'}},
             e('div',{className:'combat-section-header'},healMode==='cureWounds'?'CURE WOUNDS \u2014 Choose Target':'LAY ON HANDS \u2014 Choose Target'),
@@ -8253,7 +8253,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
             e('button',{className:'combat-ability-btn',onClick:()=>setHealMode('layOnHands')},'\u2764 Lay on Hands ('+combat.localLoH+' pool)'):null,
           // Potion
           combat.localPotions>0?
-            e('button',{className:'combat-ability-btn',onClick:usePotion},'\ud83e\uddea Potion ('+combat.localPotions+')'):null,
+            e('button',{className:'combat-ability-btn',onClick:usePotion},'🧪 Potion ('+combat.localPotions+')'):null,
           // Two-Weapon Fighting: Offhand attack (requires light weapon in each hand)
           (()=>{
             const mainWeapon=gs.weapon;const offWeapon=gs.equipment?.offHand;
@@ -11320,7 +11320,7 @@ function ShortRestModal({gs,onDone,hardcoreMode}){
       totalHealed>0&&!forageResult?e('div',{style:{fontSize:13,color:'var(--gold)',margin:'8px 0'}},'Total healed: '+totalHealed+' HP'):null,
       // Action buttons
       e('div',{className:'confirm-btns',style:{marginTop:12,flexWrap:'wrap',gap:8}},
-        !forageResult&&!waterUsed?e('button',{className:'gold-btn',onClick:doForage,disabled:foraging,style:{flex:'1 1 auto'}},'\ud83c\udf3f Forage (Skip Healing)'):null,
+        !forageResult&&!waterUsed?e('button',{className:'gold-btn',onClick:doForage,disabled:foraging,style:{flex:'1 1 auto'}},'🌿 Forage (Skip Healing)'):null,
         !forageResult&&remaining>0&&!atMax&&canHeal?e('button',{className:'gold-btn',onClick:spendHitDie,disabled:rolling||thirsty,style:{flex:'1 1 auto'}},'Spend Hit Die'):null,
         e('button',{className:(forageResult||rolls.length||atMax)?'gold-btn':'ghost-btn',onClick:finish,style:{flex:'1 1 auto'}},forageResult?(forageResult.found?'Take Rations \u2192':'Continue \u2192'):atMax?'Fully Rested \u2192':rolls.length?'Done \u2192':'Skip Rest'))));
 }
@@ -12702,7 +12702,7 @@ function App(){
       e('div',{className:'sidebar-gold'},e('span',{className:'sidebar-gold-icon'},'\u2694'),e('span',{className:'sidebar-gold-val'},(gs.gold||0)),e('span',{className:'sidebar-gold-label'},'STL')),
       // Survival resources
       e('div',{className:'sidebar-survival'},
-        e('div',{className:'survival-row'+(gs.rations<=2?' low':'')},e('span',null,'\ud83c\udf5e'),e('span',null,(gs.rations||0)),e('span',{className:'survival-label'},'Rations')),
+        e('div',{className:'survival-row'+(gs.rations<=2?' low':'')},e('span',null,'🍞'),e('span',null,(gs.rations||0)),e('span',{className:'survival-label'},'Rations')),
         e('div',{className:'survival-row'+((gs.waterskinUses||0)<=1?' low':'')},e('span',null,'💧'),e('span',null,(gs.waterskinUses||0)+'/'+getMaxWater(gs.inventory)),e('span',{className:'survival-label'},'Water')),
         (gs.exhaustion||0)>0?e('div',{className:'survival-row exhausted'},e('span',null,'\u26a0'),e('span',null,gs.exhaustion),e('span',{className:'survival-label'},'Exhaustion')):null),
       // Mount
