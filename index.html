@@ -2759,7 +2759,7 @@ const MASTERY_DESC={Cleave:'On hit, damage another adjacent creature (no ability
 const STATUS_EFFECTS={
   // BLINDED: Can't see, auto-fail sight checks, attacks have disadvantage, attacks against have advantage
   Blinded:{
-    icon:'\ud83d\ude48',
+    icon:'🙈',
     desc:'Cannot see. Attacks have disadvantage. Attacks against have advantage.',
     applyText:['is blinded by searing light!','loses sight as darkness envelops them!','staggers, unable to see!','eyes cloud over with magical blindness!'],
     removeText:['blinks as vision returns.','can see again!','shakes off the blindness.'],
@@ -2771,7 +2771,7 @@ const STATUS_EFFECTS={
   },
   // CHARMED: Can't attack charmer, charmer has advantage on social checks
   Charmed:{
-    icon:'\ud83d\udc95',
+    icon:'💕',
     desc:'Cannot attack the charmer. Charmer has advantage on social checks.',
     applyText:['gazes adoringly at their new friend.','feels a sudden warmth toward you.','lowers their weapon, enchanted.','smiles dreamily, charmed.'],
     removeText:['shakes off the enchantment!','snaps out of the charm!','realizes they were manipulated!'],
@@ -2780,7 +2780,7 @@ const STATUS_EFFECTS={
   },
   // DEAFENED: Can't hear, auto-fail hearing checks
   Deafened:{
-    icon:'\ud83d\udd07',
+    icon:'🔇',
     desc:'Cannot hear. Auto-fails hearing-based checks.',
     applyText:['ears ring with a terrible silence!','hears nothing but muffled noise!','is deafened by the blast!'],
     removeText:['hearing returns to normal.','can hear again.'],
@@ -2788,7 +2788,7 @@ const STATUS_EFFECTS={
   },
   // FRIGHTENED: Disadvantage on checks/attacks while source visible, can't move closer
   Frightened:{
-    icon:'\ud83d\ude28',
+    icon:'😨',
     desc:'Disadvantage on attacks and checks while source visible. Cannot willingly move closer.',
     applyText:['recoils in terror!','trembles with fear!','backs away, eyes wide with dread!','whimpers, paralyzed by fear!','staggers back, face pale with horror!'],
     removeText:['steels their nerve!','overcomes their fear!','shakes off the terror!'],
@@ -2806,7 +2806,7 @@ const STATUS_EFFECTS={
   },
   // INCAPACITATED: Can't take actions or reactions
   Incapacitated:{
-    icon:'\ud83d\udca4',
+    icon:'💤',
     desc:'Cannot take actions, bonus actions, or reactions.',
     applyText:['collapses, unable to act!','is overwhelmed and helpless!','cannot respond!'],
     removeText:['recovers their senses!','can act again!'],
@@ -2815,7 +2815,7 @@ const STATUS_EFFECTS={
   },
   // INVISIBLE: Heavily obscured, advantage on attacks, disadvantage to be hit
   Invisible:{
-    icon:'\ud83d\udc7b',
+    icon:'👻',
     desc:'Cannot be seen. Attacks have advantage. Attacks against have disadvantage.',
     applyText:['fades from sight!','vanishes into thin air!','becomes invisible!'],
     removeText:['shimmers back into view!','becomes visible again!'],
@@ -2879,7 +2879,7 @@ const STATUS_EFFECTS={
   },
   // STUNNED: Incapacitated, can't move, auto-fail STR/DEX saves, attacks have advantage
   Stunned:{
-    icon:'\ud83d\udcab',
+    icon:'💫',
     desc:'Incapacitated. Cannot move. Auto-fails STR/DEX saves. Attacks have advantage.',
     applyText:['is stunned, reeling from the blow!','staggers, dazed and helpless!','cannot think or act, stunned!','stands slack-jawed, stunned!'],
     removeText:['shakes off the stun!','recovers from the daze!','snaps back to awareness!'],
@@ -2891,7 +2891,7 @@ const STATUS_EFFECTS={
   },
   // UNCONSCIOUS: Incapacitated, can't move/speak, unaware, drop held, fall prone, auto-fail STR/DEX, attacks have advantage, melee crits
   Unconscious:{
-    icon:'\ud83d\ude35',
+    icon:'😵',
     desc:'Incapacitated. Unaware. Falls prone. Auto-fails STR/DEX saves. Melee hits are crits.',
     applyText:['collapses unconscious!','crumples to the ground, out cold!','falls unconscious!'],
     removeText:['stirs and awakens!','regains consciousness!','opens their eyes!'],
@@ -2915,7 +2915,7 @@ const STATUS_EFFECTS={
   },
   // GOADED: Disadvantage on attacks against anyone except the goader
   Goaded:{
-    icon:'\ud83d\ude21',
+    icon:'😡',
     desc:'Disadvantage on attacks against targets other than the goader.',
     applyText:['is goaded into focusing on you!','can only see red, fixated on you!','snarls, unable to ignore your challenge!'],
     removeText:['shakes off the taunt.','can target others again.'],
@@ -2923,7 +2923,7 @@ const STATUS_EFFECTS={
   },
   // SAPPED: Disadvantage on next attack (Sap weapon mastery)
   Sapped:{
-    icon:'\ud83d\udca2',
+    icon:'💢',
     desc:'Disadvantage on next attack roll.',
     applyText:['is rattled by the blow!','staggers, off-balance!','reels from the impact!'],
     removeText:['recovers their stance.','shakes it off.'],
@@ -2932,7 +2932,7 @@ const STATUS_EFFECTS={
   },
   // SLOWED: Speed reduced by 10ft
   Slowed:{
-    icon:'\ud83d\udc22',
+    icon:'🐢',
     desc:'Speed reduced by 10 feet.',
     applyText:['is slowed by the heavy blow!','moves sluggishly!','struggles to keep pace!'],
     removeText:['moves freely again.','is no longer slowed.'],
@@ -2958,7 +2958,7 @@ const STATUS_EFFECTS={
   },
   // HEXED: Extra damage from hex caster
   Hexed:{
-    icon:'\ud83d\udd2e',
+    icon:'🔮',
     desc:'Takes extra necrotic damage from the caster.',
     applyText:['is marked by a dark hex!','is cursed with a hex!'],
     removeText:['the hex dissipates.'],
@@ -2992,7 +2992,7 @@ const STATUS_EFFECTS={
   },
   // RAGING: Barbarian rage
   Raging:{
-    icon:'\ud83d\udd25',
+    icon:'🔥',
     desc:'Resistant to B/P/S damage. Bonus damage on STR attacks. Advantage on STR checks/saves.',
     applyText:['erupts in a terrible rage!','roars with fury!'],
     removeText:['the rage subsides.'],
@@ -4790,7 +4790,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
       const baseDmg=rollDice(8)+2;
       if(dexSave<13){
         c.playerHp=Math.max(0,c.playerHp-baseDmg);
-        log.push({type:'damage',text:'\ud83d\udca5 Bone explosion! DEX save '+dexSave+' < DC 13 \u2014 '+baseDmg+' damage!',round:c.round});
+        log.push({type:'damage',text:'💥 Bone explosion! DEX save '+dexSave+' < DC 13 \u2014 '+baseDmg+' damage!',round:c.round});
       }else{
         const halfDmg=Math.floor(baseDmg/2);
         c.playerHp=Math.max(0,c.playerHp-halfDmg);
@@ -4813,7 +4813,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
       const baseDmg=rollDice(8)+rollDice(8)+4;
       if(dexSave<15){
         c.playerHp=Math.max(0,c.playerHp-baseDmg);
-        log.push({type:'damage',text:'\ud83d\udca5 Aurak death throes! DEX save '+dexSave+' < DC 15 \u2014 '+baseDmg+' force damage!',round:c.round});
+        log.push({type:'damage',text:'💥 Aurak death throes! DEX save '+dexSave+' < DC 15 \u2014 '+baseDmg+' force damage!',round:c.round});
       }else{
         const halfDmg=Math.floor(baseDmg/2);
         c.playerHp=Math.max(0,c.playerHp-halfDmg);
@@ -7126,12 +7126,12 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
               }
               // Retrieve dropped weapon after victory
               if(c.result==='win'&&c.droppedWeapon){
-                ng.history=[...(ng.history||[]),'\ud83d\udee0 Retrieved your '+c.droppedWeapon+' from the stone corpse.'];
+                ng.history=[...(ng.history||[]),'🛠 Retrieved your '+c.droppedWeapon+' from the stone corpse.'];
               }
               // Mount takes minor damage on victory (30% chance)
               if(c.result==='win'&&ng.mount&&Math.random()<0.3){const mountDmg=rollDice(6);ng.mount={...ng.mount,hp:ng.mount.hp-mountDmg};
-                if(ng.mount.hp<=0){ng.mount=null;ng.history=[...(ng.history||[]),'\ud83d\udc0e Your mount was killed in the fighting.']}
-                else ng.history=[...(ng.history||[]),'\ud83d\udc0e Your mount took '+mountDmg+' damage in the fighting.']}
+                if(ng.mount.hp<=0){ng.mount=null;ng.history=[...(ng.history||[]),'🐎 Your mount was killed in the fighting.']}
+                else ng.history=[...(ng.history||[]),'🐎 Your mount took '+mountDmg+' damage in the fighting.']}
               if(c.result==='lose'){ng.hp=1;ng.exhaustion=Math.min(10,(ng.exhaustion||0)+1);
                 // Add wound (random stat -1 for 3 combats) and scar
                 const woundStats=['str','dex','con','int','wis','cha'];const wStat=woundStats[Math.floor(Math.random()*6)];
@@ -7144,8 +7144,8 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
                 setTimeout(()=>setDefeatRecovery({wound:newWound,scar:scarText}),400);
                 // Mount takes heavy damage on defeat — 50% chance killed
                 if(ng.mount){const mountDmg=rollDice(10)+rollDice(10);ng.mount={...ng.mount,hp:ng.mount.hp-mountDmg};
-                  if(ng.mount.hp<=0){ng.mount=null;ng.history=[...(ng.history||[]),'\ud83d\udc0e Your mount was killed in the fighting.']}
-                  else ng.history=[...(ng.history||[]),'\ud83d\udc0e Your mount took '+mountDmg+' damage in the fighting.']}
+                  if(ng.mount.hp<=0){ng.mount=null;ng.history=[...(ng.history||[]),'🐎 Your mount was killed in the fighting.']}
+                  else ng.history=[...(ng.history||[]),'🐎 Your mount took '+mountDmg+' damage in the fighting.']}
               }
               const dead=c.companions.filter(cp=>!cp.alive&&!cp.rescued);
               if(dead.length){ng.companions=(g.companions||[]).filter(name=>!dead.some(d=>d.name===name));ng.deadCompanions=[...(g.deadCompanions||[]),...dead.map(d=>({name:d.name,scene:g.history&&g.history.length?g.history[g.history.length-1]:'unknown',cause:'Fell in combat'}))]}
@@ -7912,11 +7912,11 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
     (combat.conditions.length>0||combat.concentrating||combat.blessActive||combat.shieldOfFaithActive||combat.dodging||combat.weaponStuck||combat.readyAction||combat.flankingTarget||(combat.surprised&&combat.round===1)||combat.hidden||combat.coverBonus||combat.playerProne||combat.rangedAdvantageTarget)?
       e('div',{className:'combat-conditions-row'},
         combat.dodging?e('span',{className:'condition-icon',title:'Dodging: attacks against you have disadvantage'},'\u25c7 Dodge'):null,
-        combat.hidden?e('span',{className:'condition-icon',title:'Hidden: your next attack has advantage'},'\ud83d\udc41 Hidden'):null,
+        combat.hidden?e('span',{className:'condition-icon',title:'Hidden: your next attack has advantage'},'👁 Hidden'):null,
         combat.coverBonus>0?e('span',{className:'condition-icon',title:'Cover: +'+combat.coverBonus+' AC'},'\ud83e\udea8 Cover +'+combat.coverBonus):null,
         combat.helpTarget?e('span',{className:'condition-icon',style:{color:'var(--gold)'},title:'Helping: next attack against this enemy has advantage'},'\ud83e\udd1d Help'):null,
         combat.blessActive?e('span',{className:'condition-icon bless',title:'Bless: +1d4 to attacks and saves ('+combat.blessRoundsLeft+' rounds)'},'\u2726 Bless'):null,
-        combat.shieldOfFaithActive?e('span',{className:'condition-icon bless',title:'Shield of Faith: +2 AC (concentration)'},'\ud83d\udee1 +2 AC'):null,
+        combat.shieldOfFaithActive?e('span',{className:'condition-icon bless',title:'Shield of Faith: +2 AC (concentration)'},'🛡 +2 AC'):null,
         combat.concentrating?e('span',{className:'condition-icon conc',title:'Concentrating on '+combat.concentrating.spell},'\u25ce Conc'):null,
         combat.unconscious?e('span',{className:'condition-icon unconscious',title:'Unconscious: making death saves'},'\u2715 KO'):null,
         combat.weaponStuck&&!combat.unarmed?e('span',{className:'condition-icon',style:{color:'var(--red)'},title:'Weapon stuck in Baaz stone corpse! Use action to free it or drop it.'},'\u26d4 Weapon Stuck'):null,
@@ -8048,11 +8048,11 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
               !canTarget(en)?e('span',{className:'range-warning'},' \u2014 out of range'):null))),
           // Other action options
           e('div',{className:'combat-other-actions'},
-            combat.weaponStuck&&!combat.unarmed?e('button',{className:'combat-action-btn',style:{borderColor:'var(--red)',color:'var(--red)'},onClick:freeWeapon},'\ud83d\udee0 Free Weapon (STR DC 11)'):null,
+            combat.weaponStuck&&!combat.unarmed?e('button',{className:'combat-action-btn',style:{borderColor:'var(--red)',color:'var(--red)'},onClick:freeWeapon},'🛠 Free Weapon (STR DC 11)'):null,
             combat.weaponStuck&&!combat.unarmed?e('button',{className:'combat-action-btn',style:{borderColor:'var(--orange)',color:'var(--orange)'},onClick:dropWeapon},'\u270b Drop & Fight Unarmed'):null,
             combat.unarmed?e('span',{style:{color:'var(--orange)',fontSize:'11px',marginRight:'8px'}},'\u270a Unarmed (1+STR)'):null,
             e('button',{className:'combat-action-btn',onClick:doPlayerDodge},'\u25c7 Dodge'),
-            e('button',{className:'combat-action-btn',onClick:doPlayerHide},'\ud83d\udc41 Hide'),
+            e('button',{className:'combat-action-btn',onClick:doPlayerHide},'👁 Hide'),
             !combat.coverBonus?e('button',{className:'combat-action-btn',onClick:()=>doTakeCover('half')},'\ud83e\udea8 Half Cover'):null,
             !combat.coverBonus?e('button',{className:'combat-action-btn',onClick:()=>doTakeCover('three-quarters')},'\ud83e\udea8 3/4 Cover'):null,
             combat.coverBonus>0?e('button',{className:'combat-action-btn',style:{borderColor:'var(--green)'},onClick:doLeaveCover},'\u2714 Leave Cover (+'+combat.coverBonus+' AC)'):null,
@@ -8061,7 +8061,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
             combat.readyAction?e('span',{style:{color:'var(--gold)',fontSize:'11px',marginRight:'8px'}},'\u23f1 Readied: '+combat.readyAction.action):null,
             combat.companions.length>0&&!helpMode?e('button',{className:'combat-action-btn',onClick:()=>setHelpMode(true)},'\ud83e\udd1d Help'):null,
             !grappleMode&&(combat.playerPosition?.zone||'front')==='front'?e('button',{className:'combat-action-btn',onClick:()=>setGrappleMode(true)},'\ud83e\udd1c Grapple'):null,
-            !shoveMode&&(combat.playerPosition?.zone||'front')==='front'?e('button',{className:'combat-action-btn',onClick:()=>setShoveMode(true)},'\ud83d\udc4a Shove'):null,
+            !shoveMode&&(combat.playerPosition?.zone||'front')==='front'?e('button',{className:'combat-action-btn',onClick:()=>setShoveMode(true)},'👊 Shove'):null,
             gs.cls==='Paladin'&&combat.localSpellSlots<(derived.spellSlotsMax||0)&&!combat.blessActive?
               e('button',{className:'combat-action-btn',onClick:castBless},'\u2726 Cast Bless (conc.)'):null,
             gs.cls==='Paladin'&&combat.localSpellSlots<(derived.spellSlotsMax||0)&&!healMode?
@@ -8101,7 +8101,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
               e('div',{style:{fontSize:'12px',marginBottom:'4px'}},'Ready an attack. Choose trigger:'),
               e('button',{className:'combat-action-btn',style:{fontSize:'11px'},onClick:()=>doPlayerReady('enemyApproaches','attack')},'\u2694 When enemy approaches'),
               e('button',{className:'combat-action-btn',style:{fontSize:'11px'},onClick:()=>doPlayerReady('enemyMoves','attack')},'\ud83c\udfc3 When enemy moves'),
-              e('button',{className:'combat-action-btn',style:{fontSize:'11px'},onClick:()=>doPlayerReady('enemyAttacks','attack')},'\ud83d\udde1 When enemy attacks'),
+              e('button',{className:'combat-action-btn',style:{fontSize:'11px'},onClick:()=>doPlayerReady('enemyAttacks','attack')},'🗡 When enemy attacks'),
               e('button',{className:'ghost-btn',style:{fontSize:'11px',padding:'4px 8px'},onClick:()=>setCombat(c=>({...c,readyMode:false}))},'Cancel')
             ):null,
             // === FIGHTER SUBCLASS ABILITIES ===
@@ -8144,7 +8144,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
             ):null,
             // === BARBARIAN RAGE ===
             gs.cls==='Barbarian'&&!combat.raging?
-              e('button',{className:'combat-action-btn',style:{borderColor:'var(--red)',background:'rgba(180,60,60,0.2)'},onClick:enterRage},'\ud83d\udd25 RAGE! (+'+derived.rageDmg+' dmg, resist B/P/S)'):null,
+              e('button',{className:'combat-action-btn',style:{borderColor:'var(--red)',background:'rgba(180,60,60,0.2)'},onClick:enterRage},'🔥 RAGE! (+'+derived.rageDmg+' dmg, resist B/P/S)'):null,
             combat.localBandages>0?e('button',{className:'combat-action-btn',onClick:()=>{
               setCombat(c=>{const nc={...c};nc.localBandages-=1;nc.hasActed=true;nc.turnPhase='bonus';
                 const injured=nc.companions.find(cp=>cp.unconscious&&cp.alive);
@@ -8247,7 +8247,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
             e('button',{className:'combat-ability-btn',onClick:useSecondWind},'\u2764 Second Wind (1d10+'+gs.level+')'):null,
           // Shield of Faith (bonus action, concentration, +2 AC)
           gs.cls==='Paladin'&&!combat.shieldOfFaithActive&&combat.localSpellSlots<(derived.spellSlotsMax||0)&&gs.spells&&gs.spells.level1&&gs.spells.level1.includes('Shield of Faith')?
-            e('button',{className:'combat-ability-btn',onClick:castShieldOfFaith},'\ud83d\udee1 Shield of Faith (+2 AC)'+(combat.concentrating?' \u2014 drops '+combat.concentrating.spell:'')):null,
+            e('button',{className:'combat-ability-btn',onClick:castShieldOfFaith},'🛡 Shield of Faith (+2 AC)'+(combat.concentrating?' \u2014 drops '+combat.concentrating.spell:'')):null,
           // Lay on Hands
           gs.cls==='Paladin'&&combat.localLoH>0&&!healMode?
             e('button',{className:'combat-ability-btn',onClick:()=>setHealMode('layOnHands')},'\u2764 Lay on Hands ('+combat.localLoH+' pool)'):null,
@@ -8375,7 +8375,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
           e('div',{className:'reaction-attack-line'},e('span',{className:'reaction-attack-label'},'Damage:'),e('span',{className:'reaction-attack-val hit'},combat.reactionPending.damage)),
           e('div',{className:'reaction-attack-line'},e('span',{className:'reaction-attack-label'},'With Shield (+5):'),e('span',{className:'reaction-attack-val would-miss'},'AC '+combat.reactionPending.shieldAc+' \u2192 MISS'))),
         e('div',{className:'reaction-btns'},
-          e('button',{className:'reaction-btn reaction-btn-use',onClick:useShieldReaction},'\ud83d\udee1 Cast Shield (1 slot)'),
+          e('button',{className:'reaction-btn reaction-btn-use',onClick:useShieldReaction},'🛡 Cast Shield (1 slot)'),
           e('button',{className:'reaction-btn reaction-btn-pass',onClick:passReaction},'Take the Hit'))
       ):combat.reactionPending.type==='oa'?e(React.Fragment,null,
         e('div',{className:'reaction-title'},'OPPORTUNITY ATTACK'),
@@ -8393,7 +8393,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
           e('div',{className:'reaction-attack-line'},e('span',{className:'reaction-attack-label'},combat.reactionPending.target+' AC:'),e('span',{className:'reaction-attack-val'},combat.reactionPending.ac)),
           e('div',{className:'reaction-attack-line'},e('span',{className:'reaction-attack-label'},'Effect:'),e('span',{className:'reaction-attack-val would-miss'},'Force disadvantage (re-roll attack)'))),
         e('div',{className:'reaction-btns'},
-          e('button',{className:'reaction-btn reaction-btn-use',onClick:useProtectionReaction},'\ud83d\udee1 Use Protection'),
+          e('button',{className:'reaction-btn reaction-btn-use',onClick:useProtectionReaction},'🛡 Use Protection'),
           e('button',{className:'reaction-btn reaction-btn-pass',onClick:passProtectionReaction},'Let it happen'))
       ):combat.reactionPending.type==='interception'?e(React.Fragment,null,
         e('div',{className:'reaction-title'},'INTERCEPTION'),
@@ -8865,7 +8865,7 @@ function ShopBox({text,gs,onStateUpdate}){
         e('div',{style:{display:'flex',gap:'8px'}},
           e('button',{className:'shop-sell-btn',onClick:sellTusks,style:{flex:1}},'Sell Tusks (+ 5 stl)'),
           e('button',{className:'shop-buy-btn',onClick:craftPigSkewer,disabled:localGold<3,style:{flex:1}},'Fashion Pig Skewer (3 stl)'))):null,
-      tuskChoice==='sold'?e('p',{style:{fontStyle:'italic',color:'var(--gold)',margin:'12px 0'}},'\ud83d\udcb0 The merchant weighs the tusk and nods. Five steel, fair and done. (+5 stl)'):null,
+      tuskChoice==='sold'?e('p',{style:{fontStyle:'italic',color:'var(--gold)',margin:'12px 0'}},'💰 The merchant weighs the tusk and nods. Five steel, fair and done. (+5 stl)'):null,
       tuskChoice==='crafted'?e('p',{style:{fontStyle:'italic',color:'var(--gold)',margin:'12px 0'}},'\u2694 The merchant works the tusk into a grip, binding it to your weapon with leather cord. The "Pig Skewer" is born. It is not beautiful. It does not need to be. (+1 Intimidation)'):null,
       // Rare stock
       parsed.rareSection.length>0&&!rareRolled?e('button',{className:'shop-rare-btn',onClick:doRareRoll,disabled:rareRolling},rareRolling?'Rolling...':'RARE STOCK ROLL'):null,
@@ -8881,7 +8881,7 @@ function ShopBox({text,gs,onStateUpdate}){
       ):null,
       // Stables section
       parsed.hasStables&&mountsAvail.length?e('div',{style:{margin:'16px 0',padding:'12px',border:'1px solid rgba(180,160,100,.2)',borderRadius:'6px',background:'rgba(180,160,100,.04)'}},
-        e('h4',{style:{color:'var(--gold)',margin:'0 0 8px',fontFamily:'Cinzel,serif',letterSpacing:1}},'\ud83d\udc0e STABLES'),
+        e('h4',{style:{color:'var(--gold)',margin:'0 0 8px',fontFamily:'Cinzel,serif',letterSpacing:1}},'🐎 STABLES'),
         localMount?e('div',{style:{marginBottom:10}},
           e('div',{style:{display:'flex',alignItems:'center',gap:8,marginBottom:6}},
             e('span',{style:{color:'var(--gold)',fontFamily:'Cinzel,serif'}},localMount.name),
@@ -9607,7 +9607,7 @@ function Sidebar({gs,onSave,onMenu,onSettings,saveMsg}){
     e('div',{className:'sidebar-section'},e('div',{className:'hp-bar-container'},e('div',{className:'hp-bar',style:{width:Math.max(0,(gs.hp/d.maxHp)*100)+'%'}}),e('span',{className:'hp-text'},'HP '+gs.hp+' / '+d.maxHp)),e('div',{className:'xp-bar-container'},e('div',{className:'xp-bar',style:{width:Math.min(100,((gs.xp||0)/[300,900,2700][Math.min(gs.level-1,2)])*100)+'%'}}),e('span',{className:'xp-text'},'XP '+(gs.xp||0)+' / '+[300,900,2700][Math.min(gs.level-1,2)])),e('div',{className:'mini-stats-row'},e('span',null,'AC '+d.ac),e('span',null,'Atk +'+d.attackBonus),e('span',null,'Prof +'+d.profBonus)),
     (d.weaponDurStatus?.penalty||d.armorDurStatus?.penalty)?e('div',{className:'durability-warning',style:{fontSize:'11px',color:'var(--orange)',marginTop:'4px'}},
       d.weaponDurStatus?.penalty?e('span',{style:{marginRight:'8px'}},'\u2694 '+d.weaponDurStatus.status):null,
-      d.armorDurStatus?.penalty?e('span',null,'\ud83d\udee1 '+d.armorDurStatus.status):null
+      d.armorDurStatus?.penalty?e('span',null,'🛡 '+d.armorDurStatus.status):null
     ):null),
     e('div',{className:'stat-chips'},STAT_NAMES.map(k=>e('div',{key:k,className:'stat-chip'},e('span',{className:'chip-label'},k.toUpperCase()),e('span',{className:'chip-val'},gs.stats[k]),e('span',{className:'chip-mod'},modStr(gs.stats[k]))))),
     e('h3',null,'Order Points'),e('div',{className:'order-points'},e('div',{className:'order-badge rose'},e('span',{className:'num'},gs.rose),'Rose'),e('div',{className:'order-badge sword'},e('span',{className:'num'},gs.sword),'Sword'),e('div',{className:'order-badge crown'},e('span',{className:'num'},gs.crown),'Crown')),e('div',{className:'honour-row'},e('span',{className:'honour-label'},'Honour'),e('span',{className:'honour-val'},gs.honour||0)),
@@ -10196,7 +10196,7 @@ function SceneView({scene,onChoice,gs,isEnding,onViewSheet,onViewDmSummary,onExp
   const isTravelScene=scene.title&&/travel|ride|riding|march|road|journey|camp|south|north|bridge|patrol/i.test(scene.title);
   return e('div',{className:'main-content',ref},
     e('div',{className:'scene-header'},e('h1',null,'Scene '+(scene.id.replace(/^\d+_/,''))+(scene.title?' \u2014 '+scene.title:'')),scene.location?e('div',{className:'location'},scene.location):null,
-      gs.mount&&isTravelScene?e('div',{className:'travel-mounted'},'\ud83d\udc0e Mounted on '+gs.mount.name):null),
+      gs.mount&&isTravelScene?e('div',{className:'travel-mounted'},'🐎 Mounted on '+gs.mount.name):null),
     understoodLangs.length?e('div',{className:'language-note'},'You understand '+understoodLangs.join(', ')+'.'):null,
     e('div',{className:'scene-body'},
       visibleProse.map((p,i)=>e('p',{key:'p'+i,dangerouslySetInnerHTML:{__html:fmt(p)}})),
@@ -10649,7 +10649,7 @@ function CharSheet({gs,isEnding,onBack,onEquipChange}){
         row('Proficiency Bonus','+'+d.profBonus),
         row('Experience Points',(gs.xp||0)+' / '+[300,900,2700][Math.min(gs.level-1,2)]+' XP'),
         gs.mount?e('div',{key:'mount',className:'cs-mount-block'},
-          e('div',{className:'cs-mount-name'},'\ud83d\udc0e '+gs.mount.name),
+          e('div',{className:'cs-mount-name'},'🐎 '+gs.mount.name),
           e('div',{className:'cs-mount-stats'},'Speed '+gs.mount.speed+' ft \u2022 HP '+gs.mount.hp+'/'+gs.mount.maxHp+' \u2022 AC '+(gs.mount.ac||10)+(gs.mount.barding?' \u2022 '+gs.mount.barding:''))
         ):null
       ]),
@@ -12703,11 +12703,11 @@ function App(){
       // Survival resources
       e('div',{className:'sidebar-survival'},
         e('div',{className:'survival-row'+(gs.rations<=2?' low':'')},e('span',null,'\ud83c\udf5e'),e('span',null,(gs.rations||0)),e('span',{className:'survival-label'},'Rations')),
-        e('div',{className:'survival-row'+((gs.waterskinUses||0)<=1?' low':'')},e('span',null,'\ud83d\udca7'),e('span',null,(gs.waterskinUses||0)+'/'+getMaxWater(gs.inventory)),e('span',{className:'survival-label'},'Water')),
+        e('div',{className:'survival-row'+((gs.waterskinUses||0)<=1?' low':'')},e('span',null,'💧'),e('span',null,(gs.waterskinUses||0)+'/'+getMaxWater(gs.inventory)),e('span',{className:'survival-label'},'Water')),
         (gs.exhaustion||0)>0?e('div',{className:'survival-row exhausted'},e('span',null,'\u26a0'),e('span',null,gs.exhaustion),e('span',{className:'survival-label'},'Exhaustion')):null),
       // Mount
       gs.mount?e('div',{className:'mount-row'},
-        e('span',{className:'mount-icon'},'\ud83d\udc0e'),
+        e('span',{className:'mount-icon'},'🐎'),
         e('div',{className:'mount-info'},
           e('div',{className:'mount-name'},gs.mount.name),
           e('div',{className:'mount-detail'},'Speed '+gs.mount.speed+' ft \u2022 HP '+gs.mount.hp+'/'+gs.mount.maxHp+(gs.mount.barding?' \u2022 '+gs.mount.barding:''))),
