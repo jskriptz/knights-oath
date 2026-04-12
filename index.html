@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#0e0e18">
 <link rel="manifest" href="manifest.json">
-<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Knight's Oath">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='%230e0e18'/%3E%3Cpath d='M90 22L45 45v68c0 22 45 45 45 45s45-22 45-45V45L90 22z' fill='none' stroke='%23c9a84c' stroke-width='7'/%3E%3Cpath d='M90 52v75M71 90h38' stroke='%23c9a84c' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E">
@@ -12024,6 +12024,7 @@ function applyTheme(theme){
 
 // Draggable settings button for mobile
 function DraggableSettings({onOpen}){
+  const e=React.createElement;
   const btnRef=React.useRef(null);
   const[pos,setPos]=useState(()=>{
     const saved=localStorage.getItem('settingsBtnPos');
