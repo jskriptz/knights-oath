@@ -1866,6 +1866,20 @@ function getMaxWater(inventory){
   const waterskins=(inventory||[]).filter(i=>i.toLowerCase()==='waterskin').length;
   return 3+Math.max(0,waterskins)*3; // First waterskin is in equipment, extras add capacity
 }
+// Add item to inventory with acquisition tracking for campaign swap system
+function addItemWithTracking(gs,itemName,sceneId){
+  if(!gs.inventory)gs.inventory=[];
+  if(!gs.inventory.includes(itemName)){
+    gs.inventory.push(itemName);
+    if(!gs.inventoryMeta)gs.inventoryMeta={};
+    gs.inventoryMeta[itemName]={
+      acquiredAt:(typeof CAMPAIGN!=='undefined'&&CAMPAIGN&&CAMPAIGN.id)||'knights-oath',
+      date:(typeof CAMPAIGN!=='undefined'&&CAMPAIGN&&CAMPAIGN.date)||351,
+      scene:sceneId||'unknown'
+    };
+  }
+  return gs;
+}
 function calcAC(armor,hasShield,dexMod){
   const acs={'None':10+dexMod,'Chain Mail':16,'Scale Mail':Math.min(14+dexMod,16),'Leather Armor':11+dexMod,'Studded Leather':12+dexMod,'Half-Plate':Math.min(15+dexMod,17)};
   return(acs[armor]!=null?acs[armor]:16)+(hasShield?2:0);
@@ -3136,7 +3150,7 @@ function applyKnightingBonus(gs,order,skillChoice){
   if(!ns.knightingSkill)ns.knightingSkill=skillChoice;
   // Add sigil to inventory
   const sigil=ORDER_SIGILS[order];
-  if(sigil&&!ns.inventory.includes(sigil.name))ns.inventory.push(sigil.name);
+  if(sigil)addItemWithTracking(ns,sigil.name,'CEREMONY');
   // Set flags
   ns.flags.knighted=true;
   ns.flags.knightOrder=order;
@@ -3167,7 +3181,7 @@ const ST={
   async del(k){try{if(window.storage){await window.storage.delete(k);return}localStorage.removeItem(k)}catch(e){try{localStorage.removeItem(k)}catch(e2){}}}
 };
 // ── Save System: Character (persistent) + Campaign Progress (per-campaign) ──
-const CHARACTER_FIELDS=['cls','stats','style','feat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','rations','torches','waterskinUses','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount','languages','exhaustion','toolProficiencies','musicianInstruments','heroicInspiration','knightingSkill','portrait','durability','titles','selectedTitle','completedCampaigns','loveInterest','partedCompanions','lastApproval','kills','subclass','maneuvers','superiorityDice','channelDivinityUsed','vowOfEnmityTarget','sacredWeaponActive','classLevels','secondClass','secondSubclass'];
+const CHARACTER_FIELDS=['cls','stats','style','feat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','rations','torches','waterskinUses','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount','languages','exhaustion','toolProficiencies','musicianInstruments','heroicInspiration','knightingSkill','portrait','durability','titles','selectedTitle','completedCampaigns','loveInterest','partedCompanions','lastApproval','kills','subclass','maneuvers','superiorityDice','channelDivinityUsed','vowOfEnmityTarget','sacredWeaponActive','classLevels','secondClass','secondSubclass','inventoryMeta','originalFeats','originalSpells','originalSubclass','originalManeuvers','scaledFrom'];
 const CAMPAIGN_PROGRESS_FIELDS=['history','flags','awardedScenes','completedRolls','companions','romances','romanceDeclined','companionLog','deadCompanions','rose','sword','crown','orderMax','dgTrack','godSigns','hitDiceUsed','secondWindUsed','actionSurgeUsed','spellSlotsUsed','spellSlots2ndUsed','spellSlots3rdUsed','spellSlots4thUsed','spellSlots5thUsed','spellSlots6thUsed','spellSlots7thUsed','spellSlots8thUsed','spellSlots9thUsed','layOnHandsPool','miraHealedThisScene','combatCount','measureTrack','measureOrientation','approval','shortRestsToday','longRestTaken','dayNumber','campStash'];
 
 function splitSave(gs,sceneId){
@@ -3186,10 +3200,104 @@ function mergeSave(character,progress){
 }
 function migrateLegacySave(saveData){
   // Detect old format: has gs but no saveVersion
-  if(!saveData||saveData.saveVersion)return saveData;
-  if(!saveData.gs)return saveData;
-  const{character,progress}=splitSave(saveData.gs,saveData.sceneId);
-  return{saveVersion:2,character,progress,savedAt:saveData.savedAt||new Date().toISOString()}
+  if(!saveData)return saveData;
+  if(!saveData.saveVersion&&saveData.gs){
+    // v1 → v2
+    const{character,progress}=splitSave(saveData.gs,saveData.sceneId);
+    saveData={saveVersion:2,character,progress,savedAt:saveData.savedAt||new Date().toISOString()};
+  }
+  // v2 → v3: add per-campaign progress structure
+  if(saveData.saveVersion===2){
+    const campaignId=saveData.progress?.campaignId||'knights-oath';
+    const inventoryMeta={};
+    (saveData.character?.inventory||[]).forEach(item=>{
+      inventoryMeta[item]={acquiredAt:campaignId,date:351,scene:'migration'};
+    });
+    saveData={
+      saveVersion:3,
+      character:{...saveData.character,inventoryMeta,originalFeats:[],originalSpells:{},originalSubclass:saveData.character?.subclass,originalManeuvers:saveData.character?.maneuvers||[]},
+      currentCampaign:campaignId,
+      campaignProgress:{[campaignId]:saveData.progress},
+      savedAt:saveData.savedAt
+    };
+  }
+  return saveData;
+}
+
+// ── Campaign Swap System ──
+function canEnterCampaign(character,campaign,isNewGamePlus){
+  if(!character||!character.level)return{allowed:true};
+  if(campaign.type==='origin'){
+    if(isNewGamePlus&&campaign.ngPlusAllowed)return{allowed:true,warning:'New Game+ mode: You will keep permanent unlocks but start at level 1.'};
+    if(character.completedCampaigns?.includes(campaign.id))return{allowed:true,warning:'New Game+ available: Restart with permanent unlocks.',ngPlusAvailable:true};
+    return{allowed:false,reason:'Origin campaigns require a new character.'};
+  }
+  const[minLevel,maxLevel]=campaign.levelRange||[1,20];
+  if(character.level<minLevel)return{allowed:false,reason:'This campaign requires level '+minLevel+'+.'};
+  if(character.level>maxLevel)return{allowed:true,warning:'Your level '+character.level+' character will be scaled to level '+maxLevel+'.',scaling:{from:character.level,to:maxLevel}};
+  return{allowed:true};
+}
+function filterInventoryForCampaign(character,targetCampaign){
+  const targetDate=targetCampaign.date||9999;
+  const meta=character.inventoryMeta||{};
+  return(character.inventory||[]).filter(item=>{
+    const itemMeta=meta[item];
+    if(!itemMeta)return true;// Legacy item, keep
+    return itemMeta.date<=targetDate;
+  });
+}
+function filterResourcesForCampaign(character,targetCampaign){
+  const targetDate=targetCampaign.date||9999;
+  const charDate=character.lastCampaignDate||351;
+  if(targetDate<charDate){
+    const sr=targetCampaign.startingResources||{};
+    return{gold:sr.gold||0,bandages:sr.bandages||0,potions:sr.potions||0,greaterPotions:sr.greaterPotions||0,rations:sr.rations||0,torches:sr.torches||0,waterskinUses:sr.waterskinUses||3};
+  }
+  return{gold:character.gold,bandages:character.bandages,potions:character.potions,greaterPotions:character.greaterPotions,rations:character.rations,torches:character.torches,waterskinUses:character.waterskinUses};
+}
+function scaleCharacterToLevel(character,targetLevel,campaign){
+  if(targetLevel>=character.level)return character;
+  const scaled={...character};
+  scaled.scaledFrom={fromLevel:character.level,toLevel:targetLevel};
+  // Store original choices if not already stored
+  if(!scaled.originalFeats||!scaled.originalFeats.length){
+    scaled.originalFeats=scaled.feat?[{level:1,feat:scaled.feat}]:[];
+  }
+  if(!scaled.originalSubclass)scaled.originalSubclass=scaled.subclass;
+  if(!scaled.originalManeuvers)scaled.originalManeuvers=scaled.maneuvers||[];
+  if(!scaled.originalSpells||!Object.keys(scaled.originalSpells).length){
+    scaled.originalSpells={1:scaled.spells};
+  }
+  // Scale level
+  scaled.level=targetLevel;
+  // Scale classLevels proportionally
+  if(scaled.classLevels){
+    const total=Object.values(scaled.classLevels).reduce((a,b)=>a+b,0);
+    if(total>0){
+      const ratio=targetLevel/total;
+      const newLevels={};
+      let assigned=0;
+      const classes=Object.keys(scaled.classLevels);
+      classes.forEach((cls,i)=>{
+        if(i===classes.length-1)newLevels[cls]=targetLevel-assigned;
+        else{const lv=Math.max(1,Math.round(scaled.classLevels[cls]*ratio));newLevels[cls]=lv;assigned+=lv}
+      });
+      scaled.classLevels=newLevels;
+    }
+  }
+  // Remove subclass if below level 3
+  if(targetLevel<3){scaled.subclass=null;scaled.maneuvers=[]}
+  // Recalculate HP (will be done by caller via calcDerived)
+  return scaled;
+}
+function restoreOriginalLevel(character){
+  if(!character.scaledFrom)return character;
+  const restored={...character};
+  restored.level=character.scaledFrom.fromLevel;
+  if(character.originalSubclass)restored.subclass=character.originalSubclass;
+  if(character.originalManeuvers)restored.maneuvers=character.originalManeuvers;
+  delete restored.scaledFrom;
+  return restored;
 }
 
 async function saveGame(slot,gs,sceneId){
@@ -7121,7 +7229,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
                   ng.awardedScenes[sceneKey]=true;
                   if(parsed.rewards.xp){ng.xp=(ng.xp||0)+parsed.rewards.xp;ng.history=[...(ng.history||[]),'\u2728 +'+parsed.rewards.xp+' XP earned']}
                   if(parsed.rewards.gold)ng.gold=(ng.gold||0)+parsed.rewards.gold;
-                  if(parsed.rewards.items&&parsed.rewards.items.length){ng.inventory=[...(ng.inventory||[])];parsed.rewards.items.forEach(item=>{if(!ng.inventory.includes(item))ng.inventory.push(item)})}
+                  if(parsed.rewards.items&&parsed.rewards.items.length){const sceneKey=ng.history&&ng.history.length?ng.history[ng.history.length-1]:'';parsed.rewards.items.forEach(item=>{addItemWithTracking(ng,item,sceneKey)})}
                 }
               }
               // Retrieve dropped weapon after victory
@@ -7635,7 +7743,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
                 ng.awardedScenes[sceneKey]=true;
                 if(parsed.rewards.xp){ng.xp=(ng.xp||0)+parsed.rewards.xp;ng.history=[...(ng.history||[]),'\u2728 +'+parsed.rewards.xp+' XP earned']}
                 if(parsed.rewards.gold)ng.gold=(ng.gold||0)+parsed.rewards.gold;
-                if(parsed.rewards.items&&parsed.rewards.items.length){ng.inventory=[...(ng.inventory||[])];parsed.rewards.items.forEach(item=>{if(!ng.inventory.includes(item))ng.inventory.push(item)})}
+                if(parsed.rewards.items&&parsed.rewards.items.length){const sceneKey=ng.history&&ng.history.length?ng.history[ng.history.length-1]:'';parsed.rewards.items.forEach(item=>{addItemWithTracking(ng,item,sceneKey)})}
               }
             }
             ng.combatCount=(ng.combatCount||0)+1;
@@ -7746,7 +7854,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
             setCombat(c=>({...c,boarLootChosen:'tusks'}));
             if(onStateUpdate)onStateUpdate(g=>{
               const ng={...g,inventory:[...(g.inventory||[])],combatResolved:true};
-              ng.inventory.push('Boar Tusks');
+              addItemWithTracking(ng,'Boar Tusks',sceneId);
               return ng;
             });
           }},e('strong',null,'A) Take the Tusks'),' \u2014 Massive curved tusks, sharp enough to gouge stone. A merchant could fashion these into something useful\u2026 or buy them outright.'),
@@ -7791,7 +7899,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
               if(onStateUpdate)onStateUpdate(g=>{
                 const ng={...g,crown:Math.max(0,(g.crown||0)-1),combatResolved:true,history:[...(g.history||[]),'A stain on your honour.']};
                 if(entry.gold)ng.gold=(ng.gold||0)+entry.gold;
-                if(entry.item){ng.inventory=[...(ng.inventory||[])];ng.inventory.push(entry.item)}
+                if(entry.item){ng.inventory=[...(ng.inventory||[])];addItemWithTracking(ng,entry.item,sceneId)}
                 return ng;
               });
             }},e('strong',null,'A) Search the fallen'),' \u2014 Turn out their pockets and packs. (-1 Crown)'),
@@ -7823,7 +7931,8 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
               if(onStateUpdate)onStateUpdate(g=>{
                 const ng={...g,combatResolved:true,inventory:[...(g.inventory||[])],weapon:'Dawnstrike',armor:'Half-Plate',hasShield:false};
                 ng.inventory=ng.inventory.filter(i=>i!==g.weapon&&i!==g.armor);
-                ng.inventory.push('Dawnstrike','Half-Plate');
+                const scKey=ng.history&&ng.history.length?ng.history[ng.history.length-1]:'';
+                addItemWithTracking(ng,'Dawnstrike',scKey);addItemWithTracking(ng,'Half-Plate',scKey);
                 ng.flags={...(ng.flags||{}),dawnstrike:true};
                 if(ng.equipment)ng.equipment={...ng.equipment,mainHand:'Dawnstrike',armor:'Half-Plate',offHand:null};
                 ng.derived=calcDerived(ng.stats,ng.cls,ng.level,'Half-Plate',false,ng.feat,ng.wounds,ng.exhaustion,ng.durability,ng.style,ng.classLevels);
@@ -7856,7 +7965,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
               setCombat(c=>({...c,wolfLootChosen:{roll,success,pelts,alphaSuccess}}));
               if(onStateUpdate)onStateUpdate(g=>{
                 const ng={...g,combatResolved:true,inventory:[...(g.inventory||[])]};
-                if(success){ng.gold=(ng.gold||0)+(pelts*2);if(alphaSuccess){ng.inventory.push('Alpha Wolf Cloak');ng.gold+=5}}
+                if(success){ng.gold=(ng.gold||0)+(pelts*2);if(alphaSuccess){const scKey=ng.history&&ng.history.length?ng.history[ng.history.length-1]:'';addItemWithTracking(ng,'Alpha Wolf Cloak',scKey);ng.gold+=5}}
                 return ng;
               });
             }},e('strong',null,'A) Skin the wolves'),' \u2014 Survival check (DC 12). No honour cost.'),
@@ -8639,7 +8748,9 @@ function ShopBox({text,gs,onStateUpdate}){
     setLocalInv(inv=>[...inv,item.name]);
     if(onStateUpdate){
       onStateUpdate(g=>{
-        const ng={...g,gold:(g.gold||0)-cost,inventory:[...g.inventory,item.name]};
+        const ng={...g,gold:(g.gold||0)-cost,inventory:[...(g.inventory||[])]};
+        const shopScene=ng.history&&ng.history.length?ng.history[ng.history.length-1]:'shop';
+        addItemWithTracking(ng,item.name,shopScene);
         if(item.name.includes('Bandage'))ng.bandages=(ng.bandages||0)+1;
         if(item.name.includes('Potion of Healing')&&!item.name.includes('Greater'))ng.potions=(ng.potions||0)+1;
         if(item.name.includes('Greater Potion'))ng.greaterPotions=(ng.greaterPotions||0)+1;
@@ -8744,7 +8855,7 @@ function ShopBox({text,gs,onStateUpdate}){
   const buyTack=(item)=>{
     if(localGold<item.cost)return;
     setLocalGold(g=>g-item.cost);setLocalInv(inv=>[...inv,item.name]);
-    if(onStateUpdate)onStateUpdate(g=>({...g,gold:(g.gold||0)-item.cost,inventory:[...g.inventory,item.name]}));
+    if(onStateUpdate)onStateUpdate(g=>{const ng={...g,gold:(g.gold||0)-item.cost,inventory:[...(g.inventory||[])]};const shopScene=ng.history&&ng.history.length?ng.history[ng.history.length-1]:'shop';addItemWithTracking(ng,item.name,shopScene);return ng});
   };
   const buyBarding=(b)=>{
     if(localGold<b.cost||!localMount)return;
@@ -8763,7 +8874,9 @@ function ShopBox({text,gs,onStateUpdate}){
     setLocalInv(inv=>[...inv,item.name]);
     if(onStateUpdate){
       onStateUpdate(g=>{
-        const ng={...g,gold:(g.gold||0)-item.price,inventory:[...g.inventory,item.name]};
+        const ng={...g,gold:(g.gold||0)-item.price,inventory:[...(g.inventory||[])]};
+        const shopScene=ng.history&&ng.history.length?ng.history[ng.history.length-1]:'shop';
+        addItemWithTracking(ng,item.name,shopScene);
         if(item.name.includes('Greater Potion'))ng.greaterPotions=(ng.greaterPotions||0)+1;
         if(item.name.includes('Potion of Healing')&&!item.name.includes('Greater'))ng.potions=(ng.potions||0)+1;
         return ng;
@@ -9011,8 +9124,9 @@ function LootBox({text,gs,onStateUpdate}){
             if(gained.rations)ng.rations=(ng.rations||0)+gained.rations;
             if(gained.bandages)ng.bandages=(ng.bandages||0)+gained.bandages;
             if(gained.potions)ng.potions=(ng.potions||0)+gained.potions;
+            const lootSceneKey=ng.history&&ng.history.length?ng.history[ng.history.length-1]:'';
             for(const item of gained.items){
-              if(!ng.inventory.includes(item))ng.inventory.push(item);
+              addItemWithTracking(ng,item,lootSceneKey);
             }
             return ng;
           });
@@ -9039,7 +9153,8 @@ function LootBox({text,gs,onStateUpdate}){
               const item=QUALITY_ITEMS[Math.floor(Math.random()*QUALITY_ITEMS.length)];
               onStateUpdate(g=>{
                 const ng={...g,inventory:[...(g.inventory||[])]};
-                if(!ng.inventory.includes(item))ng.inventory.push(item);
+                const rareSceneKey=ng.history&&ng.history.length?ng.history[ng.history.length-1]:'';
+                addItemWithTracking(ng,item,rareSceneKey);
                 return ng;
               });
             }
@@ -12208,13 +12323,13 @@ function App(){
           let bundleMatched=false;
           for(const[pattern,expansion] of Object.entries(CAMPAIGN_RULES?.bundleExpansions||{})){
             if(new RegExp(pattern,'i').test(item)){
-              (expansion.items||[]).forEach(bi=>{ns.inventory=[...ns.inventory,bi]});
+              (expansion.items||[]).forEach(bi=>{addItemWithTracking(ns,bi,id)});
               if(expansion.bandages)ns.bandages=(ns.bandages||0)+expansion.bandages;
               if(expansion.log){if(!ns.history)ns.history=[];ns.history.push(expansion.log)}
               bundleMatched=true;break;
             }
           }
-          if(!bundleMatched){if(!ns.inventory.includes(item)){ns.inventory=[...ns.inventory,item];SoundManager.play('pickup')}}else{SoundManager.play('pickup')}
+          if(!bundleMatched){addItemWithTracking(ns,item,id);SoundManager.play('pickup')}else{SoundManager.play('pickup')}
         }
       }
       // Track permanent bonuses from ADD TO KNOWLEDGE or success-granted bonuses  
@@ -12233,7 +12348,7 @@ function App(){
           const mech=mechM?mechM[1].replace(/\*+/g,'').trim().substring(0,200):'';
           const rarity=rareM?rareM[1].trim():'';
           if(!ns.magicItems.some(i=>i.name===name))ns.magicItems=[...ns.magicItems,{name,rarity,mechanics:mech,scene:sceneId}];
-          if(!ns.inventory.includes(name))ns.inventory=[...ns.inventory,name];
+          addItemWithTracking(ns,name,id);
         }
       }
       // Track Measure track (Fighter)
