@@ -3607,9 +3607,9 @@ function SettingsPanel({onClose,onSave,onLoad,gs,onCampaignSwitch}){
         e('div',null,e('div',{className:'settings-label'},'Combat Log'),e('div',{className:'settings-sublabel'},'Detail level for combat messages')),
         e('div',{className:'settings-control'},
           ['minimal','normal','verbose'].map(v=>e('button',{key:v,className:'settings-btn'+(settings.combatLogVerbosity===v?' selected':''),style:settings.combatLogVerbosity===v?{borderColor:'var(--gold)',color:'var(--gold)'}:{},onClick:()=>update('combatLogVerbosity',v)},v.charAt(0).toUpperCase()+v.slice(1))))),
-      // Campaign Switch (only show if completed at least one campaign)
-      (gs?.completedCampaigns?.length>0&&onCampaignSwitch)?e('div',{className:'settings-row',style:{marginTop:16,borderTop:'1px solid var(--border)',paddingTop:16}},
-        e('div',null,e('div',{className:'settings-label'},'Switch Campaign'),e('div',{className:'settings-sublabel'},'Continue your journey in another story')),
+      // Campaign Switch (always available when playing)
+      (gs&&onCampaignSwitch)?e('div',{className:'settings-row',style:{marginTop:16,borderTop:'1px solid var(--border)',paddingTop:16}},
+        e('div',null,e('div',{className:'settings-label'},'Switch Campaign'),e('div',{className:'settings-sublabel'},'Play another campaign or start fresh')),
         e('button',{className:'gold-btn',style:{padding:'8px 16px',fontSize:12},onClick:onCampaignSwitch},'Switch...')):null,
       // Save/Load row
       (onSave||onLoad)?e('div',{style:{marginTop:16,display:'flex',justifyContent:'center',gap:12}},
@@ -3624,37 +3624,41 @@ function SettingsPanel({onClose,onSave,onLoad,gs,onCampaignSwitch}){
 function CampaignSwitchModal({gs,campaignList,currentCampaignId,onSwitch,onClose}){
   const e=React.createElement;
   const[selected,setSelected]=useState(null);
-  const[confirmStep,setConfirmStep]=useState(false);
+  const[step,setStep]=useState('select'); // 'select' | 'mode' | 'save'
+  const[startFresh,setStartFresh]=useState(false);
   // Filter out current campaign and test campaigns
   const available=(campaignList||[]).filter(c=>c.id!==currentCampaignId&&c.type!=='test');
-  // Get validation for selected campaign
-  const validation=selected?canEnterCampaign(gs,{id:selected.id,type:selected.type,levelRange:selected.levelRange,date:selected.date||0},(gs.completedCampaigns||[]).includes(selected.id)):null;
+  // Get validation for selected campaign (only needed for transfer mode)
+  const validation=selected&&!startFresh?canEnterCampaign(gs,{id:selected.id,type:selected.type,levelRange:selected.levelRange,date:selected.date||0},(gs.completedCampaigns||[]).includes(selected.id)):null;
   const playerLevel=gs?.level||1;
   const hasProgressInSelected=selected&&gs?.campaignProgress?.[selected.id];
 
-  const handleConfirm=()=>{
-    if(!selected||!validation?.allowed)return;
+  const handleConfirm=(saveFirst)=>{
+    if(!selected)return;
+    if(!startFresh&&validation&&!validation.allowed)return;
     onSwitch(selected.id,{
-      scaling:validation.scaling,
-      ngPlus:validation.ngPlusAvailable,
-      resume:!!hasProgressInSelected
+      scaling:validation?.scaling,
+      ngPlus:validation?.ngPlusAvailable,
+      resume:!!hasProgressInSelected&&!startFresh,
+      startFresh:startFresh,
+      saveFirst:saveFirst
     });
   };
 
   return e('div',{className:'modal-overlay',onClick:ev=>{if(ev.target===ev.currentTarget)onClose()}},
     e('div',{className:'modal-box',style:{maxWidth:480,maxHeight:'80vh',overflow:'auto'}},
       e('h2',{className:'gold',style:{marginBottom:16}},'SWITCH CAMPAIGN'),
-      !confirmStep?e(React.Fragment,null,
-        e('p',{style:{fontSize:13,color:'var(--text-dim)',marginBottom:16}},'Select a campaign to continue your journey. Your character transfers with timeline-based inventory and level scaling.'),
+      // Step 1: Select campaign
+      step==='select'?e(React.Fragment,null,
+        e('p',{style:{fontSize:13,color:'var(--text-dim)',marginBottom:16}},'Select a campaign to play.'),
         e('div',{style:{display:'flex',flexDirection:'column',gap:8}},
           available.length===0?e('p',{style:{color:'var(--text-dim)',fontStyle:'italic'}},'No other campaigns available.'):
           available.map(c=>{
-            const cv=canEnterCampaign(gs,{id:c.id,type:c.type,levelRange:c.levelRange,date:c.date||0},(gs.completedCampaigns||[]).includes(c.id));
             const hasProgress=gs?.campaignProgress?.[c.id];
             const isSelected=selected?.id===c.id;
-            return e('div',{key:c.id,className:'campaign-switch-option'+(isSelected?' selected':'')+(cv?.allowed?'':' disabled'),
-              style:{padding:12,border:'1px solid '+(isSelected?'var(--gold)':'var(--border)'),borderRadius:6,cursor:cv?.allowed?'pointer':'not-allowed',opacity:cv?.allowed?1:0.5},
-              onClick:()=>cv?.allowed&&setSelected(c)},
+            return e('div',{key:c.id,className:'campaign-switch-option'+(isSelected?' selected':''),
+              style:{padding:12,border:'1px solid '+(isSelected?'var(--gold)':'var(--border)'),borderRadius:6,cursor:'pointer'},
+              onClick:()=>setSelected(c)},
               e('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center'}},
                 e('div',null,
                   e('div',{style:{fontWeight:'bold',color:isSelected?'var(--gold)':'var(--text)'}},c.title),
@@ -3662,28 +3666,33 @@ function CampaignSwitchModal({gs,campaignList,currentCampaignId,onSwitch,onClose
                 e('div',{style:{textAlign:'right',fontSize:11}},
                   e('div',null,'Lv ',c.levelRange?c.levelRange[0]+'-'+c.levelRange[1]:'?'),
                   c.date?e('div',{style:{color:'var(--text-dim)'}},'Year '+c.date):null,
-                  hasProgress?e('div',{style:{color:'var(--gold)'}},'In Progress'):null)),
-              !cv?.allowed?e('div',{style:{fontSize:11,color:'var(--danger,#c44)',marginTop:4}},cv?.reason):null,
-              cv?.warning?e('div',{style:{fontSize:11,color:'var(--gold)',marginTop:4}},cv.warning):null,
-              cv?.scaling?e('div',{style:{fontSize:11,color:'var(--text-dim)',marginTop:4}},'Level will scale: '+playerLevel+' → '+cv.scaling.toLevel):null)})),
+                  hasProgress?e('div',{style:{color:'var(--gold)'}},'In Progress'):null)))})),
         e('div',{style:{marginTop:16,display:'flex',justifyContent:'flex-end',gap:8}},
           e('button',{className:'ghost-btn',onClick:onClose},'Cancel'),
-          e('button',{className:'gold-btn',disabled:!selected||!validation?.allowed,onClick:()=>setConfirmStep(true)},'Continue'))):
-      // Confirm step
-      e(React.Fragment,null,
-        e('p',{style:{marginBottom:12}},'Switch to ',e('strong',null,selected?.title),'?'),
-        validation?.scaling?e('div',{className:'warning-box',style:{background:'rgba(201,168,76,0.1)',border:'1px solid var(--gold)',borderRadius:6,padding:12,marginBottom:12}},
-          e('div',{style:{fontWeight:'bold',marginBottom:4}},'Level Scaling'),
-          e('p',{style:{fontSize:12,margin:0}},'Your level will temporarily scale from ',e('strong',null,playerLevel),' to ',e('strong',null,validation.scaling.toLevel),'. Original abilities will be restored when you return to a higher-level campaign.')):null,
-        hasProgressInSelected?e('div',{style:{background:'rgba(76,168,201,0.1)',border:'1px solid var(--text-dim)',borderRadius:6,padding:12,marginBottom:12}},
-          e('p',{style:{fontSize:12,margin:0}},'You have existing progress in this campaign. You can ',e('strong',null,'resume'),' where you left off.')):null,
-        e('div',{style:{fontSize:12,color:'var(--text-dim)',marginBottom:12}},
-          e('div',null,'• Items acquired after Year '+(selected?.date||'?')+' will be stored'),
-          e('div',null,'• Proficiencies, languages, and masteries always transfer'),
-          e('div',null,'• Spells learned are permanent')),
+          e('button',{className:'gold-btn',disabled:!selected,onClick:()=>setStep('mode')},'Continue'))):
+      // Step 2: Choose mode (Transfer or Start Fresh)
+      step==='mode'?e(React.Fragment,null,
+        e('p',{style:{marginBottom:12}},'How do you want to play ',e('strong',null,selected?.title),'?'),
+        e('div',{style:{display:'flex',flexDirection:'column',gap:12}},
+          e('button',{style:{padding:16,border:'1px solid '+(startFresh?'var(--border)':'var(--gold)'),borderRadius:8,background:startFresh?'transparent':'rgba(201,168,76,0.1)',textAlign:'left',cursor:'pointer'},onClick:()=>setStartFresh(false)},
+            e('div',{style:{fontWeight:'bold',color:startFresh?'var(--text)':'var(--gold)'}},'Transfer ',gs?.name||'Character'),
+            e('div',{style:{fontSize:12,color:'var(--text-dim)',marginTop:4}},'Bring your character with scaled level and timeline-filtered inventory'),
+            validation&&!validation.allowed?e('div',{style:{fontSize:11,color:'var(--danger,#c44)',marginTop:4}},validation.reason):null,
+            validation?.scaling?e('div',{style:{fontSize:11,color:'var(--text-dim)',marginTop:4}},'Level will scale: '+playerLevel+' → '+validation.scaling.toLevel):null),
+          e('button',{style:{padding:16,border:'1px solid '+(startFresh?'var(--gold)':'var(--border)'),borderRadius:8,background:startFresh?'rgba(201,168,76,0.1)':'transparent',textAlign:'left',cursor:'pointer'},onClick:()=>setStartFresh(true)},
+            e('div',{style:{fontWeight:'bold',color:startFresh?'var(--gold)':'var(--text)'}},'Start Fresh'),
+            e('div',{style:{fontSize:12,color:'var(--text-dim)',marginTop:4}},'Create a new character for this campaign'))),
+        e('div',{style:{marginTop:16,display:'flex',justifyContent:'flex-end',gap:8}},
+          e('button',{className:'ghost-btn',onClick:()=>setStep('select')},'Back'),
+          e('button',{className:'gold-btn',disabled:!startFresh&&validation&&!validation.allowed,onClick:()=>setStep('save')},'Continue'))):
+      // Step 3: Save confirmation
+      step==='save'?e(React.Fragment,null,
+        e('p',{style:{marginBottom:12}},'Save your current progress before switching?'),
+        e('p',{style:{fontSize:12,color:'var(--text-dim)',marginBottom:16}},'Your progress in ',e('strong',null,CAMPAIGN?.title||'this campaign'),' will be saved so you can return later.'),
         e('div',{style:{display:'flex',justifyContent:'flex-end',gap:8}},
-          e('button',{className:'ghost-btn',onClick:()=>setConfirmStep(false)},'Back'),
-          e('button',{className:'gold-btn',onClick:handleConfirm},hasProgressInSelected?'Resume Campaign':'Start Campaign')))))}
+          e('button',{className:'ghost-btn',onClick:()=>setStep('mode')},'Back'),
+          e('button',{className:'ghost-btn',onClick:()=>handleConfirm(false)},"Don't Save"),
+          e('button',{className:'gold-btn',onClick:()=>handleConfirm(true)},'Save & Switch'))):null)}
 
 function CompanionInfo({name,romance,onClose}){
   const e=React.createElement;
@@ -12929,9 +12938,27 @@ function App(){
   const handleMenu=()=>{setConfirmModal({msg:'Return to main menu? Unsaved progress will be lost.',onYes:()=>{setPhase('cover');setGs(null);setScene(null);setShowSheet(false);setShowDmSummary(false);setSideOpen(false);setConfirmModal(null)},onNo:()=>setConfirmModal(null)})};
   // Campaign switch handler
   const handleCampaignSwitch=async(targetCampaignId,options)=>{
-    if(!gs||!CAMPAIGN)return;
-    // Save current campaign progress
+    if(!CAMPAIGN)return;
     const currentId=CAMPAIGN.id;
+    // Save current progress if requested
+    if(options.saveFirst&&gs){
+      const{character,progress}=splitSave(gs,sceneId);
+      delete character.derived;
+      if(!character.campaignProgress)character.campaignProgress={};
+      character.campaignProgress[currentId]=progress;
+      const saveData=JSON.stringify({saveVersion:2,character,progress,savedAt:new Date().toISOString()});
+      await ST.set('save-slot-0',saveData).catch(()=>{});
+    }
+    // Handle "Start Fresh" - go to character creation
+    if(options.startFresh){
+      await loadCampaign(targetCampaignId).catch(()=>null);
+      setGs(null);setScene(null);setSceneId(null);
+      setShowCampaignSwitch(false);setShowSettingsPanel(false);
+      setPhase('intro');
+      return;
+    }
+    // Transfer character mode
+    if(!gs)return;
     const{character,progress}=splitSave(gs,sceneId);
     if(!character.campaignProgress)character.campaignProgress={};
     character.campaignProgress[currentId]=progress;
@@ -12960,7 +12987,7 @@ function App(){
       const resumeScene=SCENES[existingProgress.history?.[existingProgress.history.length-1]?.split(':')[0]]||SCENES[CAMPAIGN.startScene];
       setScene(resumeScene);setSceneId(resumeScene?.id||CAMPAIGN.startScene);
     }else{
-      // Start fresh in new campaign
+      // Start fresh in new campaign with transferred character
       const freshProgress={history:[],flags:{},awardedScenes:{},completedRolls:[],companions:[],romances:{},romanceDeclined:{},companionLog:{},deadCompanions:[],rose:0,sword:0,crown:0,orderMax:{rose:0,sword:0,crown:0},dgTrack:0,godSigns:{},hitDiceUsed:0,secondWindUsed:0,actionSurgeUsed:0,spellSlotsUsed:0,layOnHandsPool:0,miraHealedThisScene:false,combatCount:0,measureTrack:0,measureOrientation:null,approval:{}};
       newGs=mergeSave(scaledChar,freshProgress);
       newGs.derived=calcDerived(newGs.stats,newGs.cls,newGs.level,newGs.armor,newGs.hasShield,newGs.feat,newGs.wounds,newGs.exhaustion,newGs.durability,newGs.style,newGs.classLevels);
