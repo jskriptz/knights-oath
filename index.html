@@ -3181,7 +3181,7 @@ const ST={
   async del(k){try{if(window.storage){await window.storage.delete(k);return}localStorage.removeItem(k)}catch(e){try{localStorage.removeItem(k)}catch(e2){}}}
 };
 // ── Save System: Character (persistent) + Campaign Progress (per-campaign) ──
-const CHARACTER_FIELDS=['cls','stats','style','feat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','rations','torches','waterskinUses','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount','languages','exhaustion','toolProficiencies','musicianInstruments','heroicInspiration','knightingSkill','portrait','durability','titles','selectedTitle','completedCampaigns','loveInterest','partedCompanions','lastApproval','kills','subclass','maneuvers','superiorityDice','channelDivinityUsed','vowOfEnmityTarget','sacredWeaponActive','classLevels','secondClass','secondSubclass','inventoryMeta','originalFeats','originalSpells','originalSubclass','originalManeuvers','scaledFrom'];
+const CHARACTER_FIELDS=['cls','stats','style','feat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','rations','torches','waterskinUses','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount','languages','exhaustion','toolProficiencies','musicianInstruments','heroicInspiration','knightingSkill','portrait','durability','titles','selectedTitle','completedCampaigns','loveInterest','partedCompanions','lastApproval','kills','subclass','maneuvers','superiorityDice','channelDivinityUsed','vowOfEnmityTarget','sacredWeaponActive','classLevels','secondClass','secondSubclass','inventoryMeta','originalFeats','originalSpells','originalSubclass','originalManeuvers','scaledFrom','levelSnapshots'];
 const CAMPAIGN_PROGRESS_FIELDS=['history','flags','awardedScenes','completedRolls','companions','romances','romanceDeclined','companionLog','deadCompanions','rose','sword','crown','orderMax','dgTrack','godSigns','hitDiceUsed','secondWindUsed','actionSurgeUsed','spellSlotsUsed','spellSlots2ndUsed','spellSlots3rdUsed','spellSlots4thUsed','spellSlots5thUsed','spellSlots6thUsed','spellSlots7thUsed','spellSlots8thUsed','spellSlots9thUsed','layOnHandsPool','miraHealedThisScene','combatCount','measureTrack','measureOrientation','approval','shortRestsToday','longRestTaken','dayNumber','campStash'];
 
 function splitSave(gs,sceneId){
@@ -3258,44 +3258,98 @@ function filterResourcesForCampaign(character,targetCampaign){
 function scaleCharacterToLevel(character,targetLevel,campaign){
   if(targetLevel>=character.level)return character;
   const scaled={...character};
-  scaled.scaledFrom={fromLevel:character.level,toLevel:targetLevel};
-  // Store original choices if not already stored
-  if(!scaled.originalFeats||!scaled.originalFeats.length){
-    scaled.originalFeats=scaled.feat?[{level:1,feat:scaled.feat}]:[];
-  }
-  if(!scaled.originalSubclass)scaled.originalSubclass=scaled.subclass;
-  if(!scaled.originalManeuvers)scaled.originalManeuvers=scaled.maneuvers||[];
-  if(!scaled.originalSpells||!Object.keys(scaled.originalSpells).length){
-    scaled.originalSpells={1:scaled.spells};
-  }
-  // Scale level
-  scaled.level=targetLevel;
-  // Scale classLevels proportionally
-  if(scaled.classLevels){
-    const total=Object.values(scaled.classLevels).reduce((a,b)=>a+b,0);
-    if(total>0){
-      const ratio=targetLevel/total;
-      const newLevels={};
-      let assigned=0;
-      const classes=Object.keys(scaled.classLevels);
-      classes.forEach((cls,i)=>{
-        if(i===classes.length-1)newLevels[cls]=targetLevel-assigned;
-        else{const lv=Math.max(1,Math.round(scaled.classLevels[cls]*ratio));newLevels[cls]=lv;assigned+=lv}
-      });
-      scaled.classLevels=newLevels;
+  // Store full state for later restoration
+  const fullState={};
+  CHARACTER_FIELDS.forEach(f=>{if(character[f]!==undefined)fullState[f]=JSON.parse(JSON.stringify(character[f]))});
+  scaled.scaledFrom={fromLevel:character.level,toLevel:targetLevel,fullState:fullState};
+  // Check if we have a snapshot for this exact level
+  if(character.levelSnapshots&&character.levelSnapshots[targetLevel]){
+    const snapshot=character.levelSnapshots[targetLevel];
+    // Restore from snapshot but keep permanent unlocks
+    scaled.level=targetLevel;
+    scaled.hp=snapshot.hp||scaled.hp;
+    scaled.classLevels=snapshot.classLevels?{...snapshot.classLevels}:(scaled.classLevels||{});
+    scaled.subclass=snapshot.subclass;
+    scaled.maneuvers=snapshot.maneuvers?[...snapshot.maneuvers]:[];
+    scaled.feat=snapshot.feat;
+    scaled.spells=snapshot.spells?{...snapshot.spells}:scaled.spells;
+    // Keep proficiencies, masteries, languages (permanent)
+  }else{
+    // No snapshot - calculate scaled state
+    scaled.level=targetLevel;
+    // Scale classLevels proportionally
+    if(scaled.classLevels){
+      const total=Object.values(scaled.classLevels).reduce((a,b)=>a+b,0);
+      if(total>0){
+        const ratio=targetLevel/total;
+        const newLevels={};let assigned=0;
+        const classes=Object.keys(scaled.classLevels);
+        classes.forEach((cls,i)=>{
+          if(i===classes.length-1)newLevels[cls]=Math.max(0,targetLevel-assigned);
+          else{const lv=Math.max(0,Math.round(scaled.classLevels[cls]*ratio));newLevels[cls]=lv;assigned+=lv}
+        });
+        scaled.classLevels=newLevels;
+      }
     }
+    // Remove subclass if below level 3
+    if(targetLevel<3){scaled.subclass=null;scaled.maneuvers=[]}
+    // Remove feat if below level 4 (ASI/feat level)
+    if(targetLevel<4)scaled.feat=null;
+    // Cap HP based on scaled level (rough estimate: level * avg hit die + CON)
+    const avgHitDie=scaled.cls==='Wizard'||scaled.cls==='Sorcerer'?4:scaled.cls==='Fighter'||scaled.cls==='Paladin'?6:5;
+    const conMod=Math.floor((scaled.stats?.con||10-10)/2);
+    const estimatedMaxHp=avgHitDie+conMod+(targetLevel-1)*(avgHitDie+conMod);
+    if(scaled.hp>estimatedMaxHp)scaled.hp=estimatedMaxHp;
   }
-  // Remove subclass if below level 3
-  if(targetLevel<3){scaled.subclass=null;scaled.maneuvers=[]}
-  // Recalculate HP (will be done by caller via calcDerived)
   return scaled;
 }
 function restoreOriginalLevel(character){
   if(!character.scaledFrom)return character;
   const restored={...character};
-  restored.level=character.scaledFrom.fromLevel;
-  if(character.originalSubclass)restored.subclass=character.originalSubclass;
-  if(character.originalManeuvers)restored.maneuvers=character.originalManeuvers;
+  const fullState=character.scaledFrom.fullState;
+  if(fullState){
+    // Restore from full state
+    CHARACTER_FIELDS.forEach(f=>{
+      if(fullState[f]!==undefined&&f!=='scaledFrom'&&f!=='levelSnapshots'&&f!=='campaignProgress'){
+        restored[f]=JSON.parse(JSON.stringify(fullState[f]));
+      }
+    });
+    // MERGE newly learned permanent things (spells, proficiencies, languages, masteries)
+    // Spells: merge any new ones learned while scaled
+    if(character.spells&&fullState.spells){
+      const mergedSpells={...fullState.spells};
+      Object.entries(character.spells||{}).forEach(([lvl,spellList])=>{
+        if(!mergedSpells[lvl])mergedSpells[lvl]=[];
+        (spellList||[]).forEach(sp=>{if(!mergedSpells[lvl].includes(sp))mergedSpells[lvl].push(sp)});
+      });
+      restored.spells=mergedSpells;
+    }
+    // Languages: merge
+    if(character.languages&&fullState.languages){
+      const mergedLangs=[...new Set([...(fullState.languages||[]),...(character.languages||[])])];
+      restored.languages=mergedLangs;
+    }
+    // Tool proficiencies: merge
+    if(character.toolProficiencies&&fullState.toolProficiencies){
+      const mergedTools=[...new Set([...(fullState.toolProficiencies||[]),...(character.toolProficiencies||[])])];
+      restored.toolProficiencies=mergedTools;
+    }
+    // Masteries: merge
+    if(character.mastery&&fullState.mastery){
+      const mergedMastery=[...new Set([...(fullState.mastery||[]),...(character.mastery||[])])];
+      restored.mastery=mergedMastery;
+    }
+    // Titles: merge
+    if(character.titles&&fullState.titles){
+      const mergedTitles=[...new Set([...(fullState.titles||[]),...(character.titles||[])])];
+      restored.titles=mergedTitles;
+    }
+  }else{
+    // Fallback: simple restoration
+    restored.level=character.scaledFrom.fromLevel;
+    if(character.originalSubclass)restored.subclass=character.originalSubclass;
+    if(character.originalManeuvers)restored.maneuvers=character.originalManeuvers;
+  }
   delete restored.scaledFrom;
   return restored;
 }
@@ -12494,7 +12548,11 @@ function App(){
       else if(boxFull.includes('whichever god feels right')){ns.awardedScenes[godKey]=true;setTimeout(()=>setGodSignPicker({scene:id,options:null}),400)}
     }}
     s.boxes.filter(b=>b.type==='companion').forEach(b=>{const m=b.text.match(/COMPANION JOINS:\s*(.+?)[\n(*]/);if(m){let nm=m[1].replace(/\*+/g,'').trim();nm=nm.split(/\s+/).map(w=>w.charAt(0).toUpperCase()+w.slice(1).toLowerCase()).join(' ');const canonical=COMPANIONS_ALL.find(c=>c.toLowerCase()===nm.toLowerCase());if(canonical)nm=canonical;if(!ns.companions.includes(nm)){ns.companions=[...ns.companions,nm];if(!ns.companionLog)ns.companionLog={};if(!ns.companionLog[nm])ns.companionLog[nm]=[];ns.companionLog[nm].push('Joined in Scene '+sceneId+(s.title?' — '+s.title:''))}}});
-    s.boxes.filter(b=>b.type==='levelup').forEach(b=>{if(b.text.includes('LEVEL 2')&&ns.level<2){ns.level=2;if(!ns.classLevels)ns.classLevels={[ns.cls]:1};ns.classLevels[ns.cls]=2;ns.derived=calcDerived(ns.stats,ns.cls,2,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels);ns.hp=ns.derived.maxHp;SoundManager.play('levelup')}if(b.text.includes('LEVEL 3')&&ns.level<3){ns.level=3;if(!ns.classLevels)ns.classLevels={[ns.cls]:2};ns.classLevels[ns.cls]=3;ns.derived=calcDerived(ns.stats,ns.cls,3,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels);ns.hp=ns.derived.maxHp;SoundManager.play('levelup');if(!ns.subclass)setTimeout(()=>setSubclassModal(true),500)}});
+    s.boxes.filter(b=>b.type==='levelup').forEach(b=>{
+      // Helper to capture snapshot before level-up
+      const captureSnapshot=(lvl)=>{if(!ns.levelSnapshots)ns.levelSnapshots={};ns.levelSnapshots[lvl]={hp:ns.hp,classLevels:ns.classLevels?{...ns.classLevels}:null,subclass:ns.subclass,maneuvers:ns.maneuvers?[...ns.maneuvers]:[],feat:ns.feat,spells:ns.spells?{...ns.spells}:null}};
+      if(b.text.includes('LEVEL 2')&&ns.level<2){captureSnapshot(1);ns.level=2;if(!ns.classLevels)ns.classLevels={[ns.cls]:1};ns.classLevels[ns.cls]=2;ns.derived=calcDerived(ns.stats,ns.cls,2,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels);ns.hp=ns.derived.maxHp;SoundManager.play('levelup')}
+      if(b.text.includes('LEVEL 3')&&ns.level<3){captureSnapshot(2);ns.level=3;if(!ns.classLevels)ns.classLevels={[ns.cls]:2};ns.classLevels[ns.cls]=3;ns.derived=calcDerived(ns.stats,ns.cls,3,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels);ns.hp=ns.derived.maxHp;SoundManager.play('levelup');if(!ns.subclass)setTimeout(()=>setSubclassModal(true),500)}});
     // Scene-based title grants from titleGrants rules
     const sceneTitleGrants=(CAMPAIGN_RULES?.titleGrants||[]).filter(g=>g.scene===id);
     sceneTitleGrants.forEach(grant=>{
