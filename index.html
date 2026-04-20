@@ -7925,8 +7925,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
         combat.flankingTarget?e('span',{className:'condition-icon',style:{color:'var(--green)'},title:'Flanking: advantage on attacks against this enemy'},(()=>{const en=combat.enemies.find(x=>x.id===combat.flankingTarget);return'\u2694 Flank'+(en?' '+en.name.split(' ')[0]:'')})()):null,
         combat.surprised&&combat.round===1?e('span',{className:'condition-icon',style:{color:'var(--purple)'},title:'Enemies are surprised! They cannot act or take reactions this round.'},'\u26a1 Surprise'):null,
         combat.playerProne?e('span',{className:'condition-icon',style:{color:'var(--red)'},title:'Prone: Your attacks have disadvantage. Melee attacks against you have advantage, ranged have disadvantage. Use bonus action to stand.'},'\u2b07 Prone'):null,
-        combat.rangedAdvantageTarget?e('span',{className:'condition-icon',style:{color:'var(--green)'},title:'Pushed to range: Your next ranged attack against this enemy has advantage'},(()=>{const en=combat.enemies.find(x=>x.id===combat.rangedAdvantageTarget);return'🏹 Ranged Adv'+(en?' vs '+en.name.split(' ')[0]:'')})()
-        ):null
+        combat.rangedAdvantageTarget?e('span',{className:'condition-icon',style:{color:'var(--green)'},title:'Pushed to range: Your next ranged attack against this enemy has advantage'},(()=>{const en=combat.enemies.find(x=>x.id===combat.rangedAdvantageTarget);return'🏹 Ranged Adv'+(en?' vs '+en.name.split(' ')[0]:'')})()):null
       ):null,
     // HP Tracker — Player with conditions
     e('div',{className:'combat-hp-tracker'},
@@ -7973,7 +7972,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
             condIcons.length>0?condIcons.map((cd,j)=>e('span',{key:j,className:'condition-icon enemy',title:cd.name+': '+cd.desc},cd.icon)):null),
           e('div',{className:'combat-hp-bar-bg'},
             e('div',{className:'combat-hp-fill enemy',style:{width:Math.max(0,(en.currentHp/en.maxHp)*100)+'%'}})),
-          e('div',{className:'combat-hp-text'},combat.revealEnemyHp?(en.currentHp+' / '+en.maxHp):'???'))}),
+          e('div',{className:'combat-hp-text'},combat.revealEnemyHp?(en.currentHp+' / '+en.maxHp):'???'))})),
 
     // ── Player Turn ──
     combat.phase==='playerTurn'&&!combat.unconscious?e('div',{className:'combat-turn-panel'},
