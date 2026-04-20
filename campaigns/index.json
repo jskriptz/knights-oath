@@ -6,6 +6,7 @@
       "subtitle": "A Choose Your Own Adventure Prelude",
       "type": "origin",
       "levelRange": [1, 3],
+      "date": 351,
       "setting": "Dragonlance"
     },
     {
@@ -14,6 +15,7 @@
       "subtitle": "Multi-Campaign Loader Verification",
       "type": "test",
       "levelRange": [1, 1],
+      "date": 351,
       "setting": "Test"
     }
   ]
