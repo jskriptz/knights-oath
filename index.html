@@ -2059,7 +2059,7 @@ const SCARS=[
   'A scar on your collarbone, hidden under your tabard. You know it is there.'
 ];
 const WOUND_FLAVOUR={str:'Your muscles ache from the beating. Swinging a blade takes effort it shouldn\u2019t.',dex:'Something in your side catches when you twist. You\u2019re slower than you should be.',con:'You tire easily. The wound sapped something deeper than blood.',int:'Your thoughts are foggy — the blow to your head left its mark.',wis:'Your instincts feel dulled. You keep flinching at shadows.',cha:'The defeat sits behind your eyes. People notice. You carry it like weight.'};
-function fmt(t){if(!t)return'';return t.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>').replace(/-->/g,'\u2192')}
+function fmt(t,name){if(!t)return'';const n=name||'Squire';return t.replace(/\{NAME\}/gi,n).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>').replace(/-->/g,'\u2192')}
 function stripOrder(t){if(!t)return'';return t.replace(/\s*\(\s*[+\-]?\d+\s+(?:ROSE|SWORD|CROWN)(?:\s*,\s*[+\-]?\d+\s+(?:ROSE|SWORD|CROWN))*(?:\s*,\s*[+\-]?\d+\s+XP)?\s*\)/gi,'').replace(/[.\s]*[+\-]\d+\s+(?:ROSE|SWORD|CROWN)(?:\s*,\s*[+\-]?\d+\s*(?:ROSE|SWORD|CROWN))*/gi,'').replace(/\s{2,}/g,' ').trim()}
 
 // Filter lines/paragraphs by class, companion presence, and flags
@@ -3698,8 +3698,8 @@ function RollBox({text,derived,gs,onBonus,rollKey,onRollSave}){
   
   return e('div',{className:'roll-box-wrapper'},
     e('div',{className:'box roll'},
-      parsed.preamble.map((l,i)=>e('p',{key:i,dangerouslySetInnerHTML:{__html:fmt(l)}})),
-      parsed.coinflip?e('p',{className:'coinflip',dangerouslySetInnerHTML:{__html:fmt(parsed.coinflip)}}):null
+      parsed.preamble.map((l,i)=>e('p',{key:i,dangerouslySetInnerHTML:{__html:fmt(l,gs.name)}})),
+      parsed.coinflip?e('p',{className:'coinflip',dangerouslySetInnerHTML:{__html:fmt(parsed.coinflip,gs.name)}}):null
     ),
     parsed.dc?e('div',{className:'dice-area'},
       e('div',{className:'dice-info'},parsed.skill+' \u2022 DC '+parsed.dc+' \u2022 Mod '+(bonus>=0?'+':'')+bonus+(isOptional?' \u2022 Optional':'')+(toolAdvantage?' \u2022 '+toolAdvantage+' (Adv)':'')),
@@ -3741,11 +3741,11 @@ function RollBox({text,derived,gs,onBonus,rollKey,onRollSave}){
     ):null,
     // Outcome text - use prayer result if it exists, otherwise original result
     showOutcome?e('div',{className:'box '+(finalResult.ok?'roll-success':'roll-failure')},
-      (finalResult.ok?parsed.success:parsed.failure).map((l,i)=>e('p',{key:i,dangerouslySetInnerHTML:{__html:fmt(l)}}))
+      (finalResult.ok?parsed.success:parsed.failure).map((l,i)=>e('p',{key:i,dangerouslySetInnerHTML:{__html:fmt(l,gs.name)}}))
     ):null,
     isOptional&&!result?e('button',{className:'skip-roll-btn',onClick:()=>setResult({d20:0,total:0,ok:false,skipped:true})},'Skip this roll'):null,
     result&&result.skipped&&!prayerResult?e('div',{className:'box roll-failure'},
-      parsed.failure.map((l,i)=>e('p',{key:i,dangerouslySetInnerHTML:{__html:fmt(l)}}))
+      parsed.failure.map((l,i)=>e('p',{key:i,dangerouslySetInnerHTML:{__html:fmt(l,gs.name)}}))
     ):null
   );
 }
@@ -7667,7 +7667,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
         parsed.loseOutcome?e('div',{className:'outcome-text'},parsed.loseOutcome):null),
       // After fight
       parsed.afterFight?e('div',{className:'box combat'},
-        parsed.afterFight.split('\n').filter(l=>l.trim()).map((l,i)=>e('p',{key:i,dangerouslySetInnerHTML:{__html:fmt(l)}}))):null);
+        parsed.afterFight.split('\n').filter(l=>l.trim()).map((l,i)=>e('p',{key:i,dangerouslySetInnerHTML:{__html:fmt(l,gs.name)}}))):null);
   }
 
   // ─── Narrative Mode ───
@@ -7737,7 +7737,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
           }},'Continue')):null),
       // After fight text
       combat.result==='win'&&afterLines.length?e('div',{className:'box combat'},
-        afterLines.map((l,i)=>e('p',{key:i,dangerouslySetInnerHTML:{__html:fmt(l)}}))):null,
+        afterLines.map((l,i)=>e('p',{key:i,dangerouslySetInnerHTML:{__html:fmt(l,gs.name)}}))):null,
       // Boar fight loot choices
       combat.result==='win'&&isBoarFight&&!boarLootChosen?e('div',{className:'box combat',style:{marginTop:'12px'}},
         e('p',{style:{fontStyle:'italic',color:'var(--text-dim)'}},'The boar\'s tusks are massive \u2014 each one as long as your forearm and sharp enough to gouge stone. Ser Aldous glances at them. "Trophies or trash, Squire. Your call."'),
@@ -10198,7 +10198,7 @@ function SceneView({scene,onChoice,gs,isEnding,onViewSheet,onViewDmSummary,onExp
       gs.mount&&isTravelScene?e('div',{className:'travel-mounted'},'🐎 Mounted on '+gs.mount.name):null),
     understoodLangs.length?e('div',{className:'language-note'},'You understand '+understoodLangs.join(', ')+'.'):null,
     e('div',{className:'scene-body'},
-      visibleProse.map((p,i)=>e('p',{key:'p'+i,dangerouslySetInnerHTML:{__html:fmt(p)}})),
+      visibleProse.map((p,i)=>e('p',{key:'p'+i,dangerouslySetInnerHTML:{__html:fmt(p,gs.name)}})),
       e(BanterBlock,{sceneId:scene.id,gs:gs}),
       filterBoxes(scene.boxes,gs).map((box,i)=>{
         const txt=filterBoxText(box.text,cls,comps,gs.flags);
@@ -10208,7 +10208,7 @@ function SceneView({scene,onChoice,gs,isEnding,onViewSheet,onViewDmSummary,onExp
         if(box.type==='combat')return e(CombatBox,{key:scene.id+'_c'+i,text:txt,gs:gs,derived:gs.derived,onStateUpdate:onStateUpdate,sceneId:scene.id});
         if(box.type==='shop')return e(ShopBox,{key:scene.id+'_s'+i,text:txt,gs:gs,onStateUpdate:onStateUpdate});
         if(box.type==='loot')return e(LootBox,{key:scene.id+'_l'+i,text:txt,gs:gs,onStateUpdate:onStateUpdate});
-        return e('div',{key:'b'+i,className:'box '+box.type},txt.split('\n').filter(l=>l.trim()).map(l=>l.replace(/\s*Mark 1 tally[^.]*\./gi,'').trim()).filter(l=>l).map((l,j)=>e('p',{key:j,dangerouslySetInnerHTML:{__html:fmt(l)}})));
+        return e('div',{key:'b'+i,className:'box '+box.type},txt.split('\n').filter(l=>l.trim()).map(l=>l.replace(/\s*Mark 1 tally[^.]*\./gi,'').trim()).filter(l=>l).map((l,j)=>e('p',{key:j,dangerouslySetInnerHTML:{__html:fmt(l,gs.name)}})));
       }).filter(Boolean),
       (()=>{const hasCombatBox=scene.boxes&&scene.boxes.some(b=>b.type==='combat');const combatPending=hasCombatBox&&!gs.combatResolved;const detours=getMandatoryDetours(scene.id,gs);const hasDetour=detours.some(d=>d.mandatory)||combatPending;
       return e(React.Fragment,null,
@@ -10216,7 +10216,7 @@ function SceneView({scene,onChoice,gs,isEnding,onViewSheet,onViewDmSummary,onExp
           e('p',{className:'detour-label'},'Before you choose:'),
           detours.map((d,i)=>e('button',{key:i,className:'detour-btn'+(d.mandatory?' mandatory':''),onClick:()=>onChoice({target:d.target,letter:'DETOUR',points:{},text:d.label})},d.label))
         ):null,
-        scene.choices.length?e('div',{className:'choices'+(hasDetour?' greyed':'')},filterChoices(scene.choices,scene.id,gs).map((c,i)=>e('button',{key:i,className:'choice-btn'+(c.conviction?' conviction':'')+(c.romance_spark||c.romance_flame||c.romance_oath?' romance-choice':''),disabled:hasDetour,onClick:()=>{if(!hasDetour)onChoice(c)},tabIndex:hasDetour?-1:0},e('span',{className:'letter'},(i+1)+')'),e('span',{dangerouslySetInnerHTML:{__html:fmt(stripOrder(c.text))}})))):isEnding?null:e('p',{className:'no-choices'},'Look for navigation cues above.'))})(),
+        scene.choices.length?e('div',{className:'choices'+(hasDetour?' greyed':'')},filterChoices(scene.choices,scene.id,gs).map((c,i)=>e('button',{key:i,className:'choice-btn'+(c.conviction?' conviction':'')+(c.romance_spark||c.romance_flame||c.romance_oath?' romance-choice':''),disabled:hasDetour,onClick:()=>{if(!hasDetour)onChoice(c)},tabIndex:hasDetour?-1:0},e('span',{className:'letter'},(i+1)+')'),e('span',{dangerouslySetInnerHTML:{__html:fmt(stripOrder(c.text),gs.name)}})))):isEnding?null:e('p',{className:'no-choices'},'Look for navigation cues above.'))})(),
       isEnding?e(React.Fragment,null,
         EPILOGUES?e(EpilogueBlock,{gs,sceneId:scene.id}):null,
         e('div',{className:'ending-block'},e('div',{className:'divider'}),e('p',{className:'ending-text'},'Your prelude is complete.'),

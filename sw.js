@@ -1,5 +1,5 @@
 // Knights Oath Service Worker v1
-const CACHE_NAME = 'knights-oath-25.30.0-7f35a124';
+const CACHE_NAME = 'knights-oath-25.31.0-c709c7cf';
 
 // Assets to precache on install (core app only, not campaign data)
 const PRECACHE_ASSETS = [

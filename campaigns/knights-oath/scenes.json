@@ -152,7 +152,7 @@
       "*Castle Brightholm \u2014 Chapel Library*",
       "The chapel library is cold and smells of old parchment and tallow and three centuries of people asking difficult questions in a small room. The candles are thin \u2014 the chapel gets last priority for supplies, which says something about how equipment maintenance ranks relative to justice. You find the passage: Est Sularus oth Mithas \u2014 My honour is my life. Three words. Commentaries running to thousands of pages.",
       "An older volume catches your eye \u2014 its margin contains annotations in an ancient script. [LANG:Istaran|*The script is unfamiliar, though the letters resemble old Common.*]'Ante-Cataclysmus, the knights wrote this oath in blood. The Kingpriest called it heresy. They kept it anyway. \u2014 Loremaster Vareth, Temple of Istar, 13 PC.'[/LANG] The book is three hundred years old, from before the gods fell silent.",
-      "You are reading one of them when Ser Aldous sits down without being invited, sets his elbows on the table, looks at you, and says: 'Ask it.' You did not know there was a question visible on your face."
+      "You are reading one of them when Ser Aldous sits down without being invited, sets his elbows on the table, looks at you, and says: 'Ask it, {NAME}.' You did not know there was a question visible on your face."
     ],
     "boxes": [
       {
@@ -487,7 +487,7 @@
     "prose": [
       "*Castle Brightholm \u2014 Chapel Steps*",
       "Aldous laughs. Not the polite laugh of someone managing you \u2014 a genuine one, warm and immediate, with the deep lines around his eyes that come from a lifetime of doing it. 'Every squire worth their salt feels that,' he says. 'The ones who do not are the ones I worry about.' He settles back in his chair with the unhurried quality of someone who is exactly where he intended to be this morning. 'The question,' he says, 'is not whether you feel it. The question is what you do with it. Which brings us to what you are actually afraid of.' He waits. He is good at waiting. You get the sense he has had this conversation a great many times and has learned that the silence does more work than the prompting.",
-      "He sets down the commentary text he was pretending to read and looks at you with the specific attention of someone who has been waiting for this particular conversation since the first week you arrived. 'You are the kind of squire who asks whether they are good enough,' he says. 'That is a more interesting question than the ones most of your cohort are asking. The ones asking it are rarely the ones I end up worried about.'"
+      "He sets down the commentary text he was pretending to read and looks at you with the specific attention of someone who has been waiting for this particular conversation since the first week you arrived. '{NAME}, you are the kind of squire who asks whether they are good enough,' he says. 'That is a more interesting question than the ones most of your cohort are asking. The ones asking it are rarely the ones I end up worried about.'"
     ],
     "boxes": [],
     "choices": [
@@ -1085,7 +1085,7 @@
     "prose": [
       "*Castle Brightholm \u2014 Training Yard*",
       "You train until the light fails. Running forms. Working the gap in your guard that you spotted in Scene 3 and have been quietly furious about ever since. The yard empties around you. The evening bell rings. You keep going.",
-      "There is a particular quality to training when no one is watching \u2014 no evaluation marks, no Caeron with his clipboard, no Aldric to compete with. Just you and the forms and the steady accumulation of marginally better. It is not exciting. It is the point. Aldric finds you packing up. 'You have improved,' he says. From Aldric Voss, this is equivalent to a sonnet."
+      "There is a particular quality to training when no one is watching \u2014 no evaluation marks, no Caeron with his clipboard, no Aldric to compete with. Just you and the forms and the steady accumulation of marginally better. It is not exciting. It is the point. Aldric finds you packing up. '{NAME}, you have improved,' he says. From Aldric Voss, this is equivalent to a sonnet."
     ],
     "boxes": [],
     "choices": [
