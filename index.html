@@ -926,6 +926,13 @@ body.high-contrast .box{border-width:2px}body.high-contrast button{border-width:
 .spell-prep-modal{max-width:520px}.spell-prep-modal .spell-grid{justify-content:center}
 .modal-box h2{font-family:'Cinzel',serif;font-size:18px;margin-bottom:16px}
 
+/* Portrait Lightbox */
+.portrait-lightbox{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.9);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:2000;cursor:pointer;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.portrait-lightbox img{max-width:90vw;max-height:80vh;border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,.5);object-fit:contain}
+.portrait-lightbox-caption{color:var(--gold);font-family:'Cinzel',serif;font-size:18px;margin-top:16px;text-shadow:0 2px 8px rgba(0,0,0,.8)}
+.portrait-lightbox-hint{color:var(--text-dim);font-size:12px;margin-top:8px}
+@media(max-width:768px){.portrait-lightbox img{max-width:95vw;max-height:75vh}.portrait-lightbox-caption{font-size:16px}}
+
 /* Confirm modal */
 .confirm-modal{text-align:center;max-width:360px}
 .confirm-msg{font-size:15px;color:var(--text);margin-bottom:20px;line-height:1.6}
@@ -3693,6 +3700,18 @@ function ModuleSwitchModal({gs,moduleList,currentModuleId,onSwitch,onClose}){
           e('button',{className:'ghost-btn',onClick:()=>setStep('mode')},'Back'),
           e('button',{className:'ghost-btn',onClick:()=>handleConfirm(false)},"Don't Save"),
           e('button',{className:'gold-btn',onClick:()=>handleConfirm(true)},'Save & Switch'))):null))}
+
+function PortraitLightbox({url,name,onClose}){
+  const e=React.createElement;
+  React.useEffect(()=>{
+    const esc=ev=>{if(ev.key==='Escape')onClose()};
+    window.addEventListener('keydown',esc);
+    return()=>window.removeEventListener('keydown',esc);
+  },[onClose]);
+  return e('div',{className:'portrait-lightbox',onClick:onClose},
+    e('img',{src:url,alt:name||'Portrait'}),
+    name?e('div',{className:'portrait-lightbox-caption'},name):null);
+}
 
 function CompanionInfo({name,romance,onClose}){
   const e=React.createElement;
@@ -10627,7 +10646,7 @@ function DmSummary({gs,sceneId,onBack}){
   );
 }
 
-function CharSheet({gs,isEnding,onBack,onEquipChange}){
+function CharSheet({gs,isEnding,onBack,onEquipChange,onPortraitClick}){
   const[csComp,setCSComp]=useState(null);const[csEditSlot,setCsEditSlot]=useState(null);const[csSheet,setCsSheet]=useState(null);const portraitRef=useRef(null);const[showGallery,setShowGallery]=useState(false);
   const handlePortraitUpload=(ev)=>{const file=ev.target.files?.[0];if(!file)return;if(!file.type.startsWith('image/')){alert('Please select an image file');return}const reader=new FileReader();reader.onload=(e)=>{const img=new Image();img.onload=()=>{const maxSize=400;let w=img.width,h=img.height;if(w>maxSize||h>maxSize){if(w>h){h=Math.round(h*(maxSize/w));w=maxSize}else{w=Math.round(w*(maxSize/h));h=maxSize}}const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;const ctx=canvas.getContext('2d');ctx.drawImage(img,0,0,w,h);const dataUrl=canvas.toDataURL('image/jpeg',0.75);onEquipChange({...gs,portrait:dataUrl})};img.src=e.target.result};reader.readAsDataURL(file)};
   const e=React.createElement;const d=gs.derived;
@@ -10726,7 +10745,7 @@ function CharSheet({gs,isEnding,onBack,onEquipChange}){
       e('div',{className:'cs-divider'})),
       // Portrait section
       e('div',{className:'cs-portrait-section'},
-        gs.portrait?e('img',{className:'cs-portrait',src:gs.portrait,alt:'Character portrait'}):
+        gs.portrait?e('img',{className:'cs-portrait',src:gs.portrait,alt:'Character portrait',onClick:()=>onPortraitClick?.({url:gs.portrait,name:gs.name}),style:{cursor:'pointer'}}):
           e('div',{className:'cs-portrait-placeholder',onClick:()=>setShowGallery(!showGallery)},'Click to choose portrait'),
         e('input',{type:'file',accept:'image/*',ref:portraitRef,style:{display:'none'},onChange:handlePortraitUpload}),
         e('div',{style:{display:'flex',gap:4,marginTop:8}},
@@ -10738,7 +10757,7 @@ function CharSheet({gs,isEnding,onBack,onEquipChange}){
 
     // ── Journey Summary (ending only) ──
     isEnding?e('div',{className:'cs-journey-summary'},
-      gs.portrait?e('img',{className:'cs-portrait',src:gs.portrait,alt:'Character portrait',style:{display:'block',margin:'0 auto 16px'}}):null,
+      gs.portrait?e('img',{className:'cs-portrait',src:gs.portrait,alt:'Character portrait',style:{display:'block',margin:'0 auto 16px',cursor:'pointer'},onClick:()=>onPortraitClick?.({url:gs.portrait,name:gs.name})}):null,
       e('h2',{className:'cs-journey-title'},'JOURNEY SUMMARY'),
       e('div',{className:'cs-journey-grid'},
 
@@ -11150,7 +11169,7 @@ function CharSheet({gs,isEnding,onBack,onEquipChange}){
           const approvalLabel=approval<=-3?'Hostile':approval<0?'Cold':approval<3?'Neutral':approval<6?'Warm':'Devoted';
           return e('div',{key:c,className:'cs-companion-card'+(rom?' has-romance':'')},
             e('div',{className:'cs-comp-header'},
-              e('div',{className:'cs-companion-token',title:c},
+              e('div',{className:'cs-companion-token',title:c,onClick:cd?.portrait?()=>onPortraitClick?.({url:cd.portrait,name:c}):null,style:cd?.portrait?{cursor:'pointer'}:{}},
                 cd?.portrait?e('img',{src:cd.portrait,alt:c}):e('span',{className:'initial'},csFirst?.[0]||'?'),
                 rom&&rom!=='Friend'?e('span',{className:'romance-heart'},'\u2661'):null),
               e('span',{className:'cs-comp-name'},c),
@@ -12336,7 +12355,7 @@ function DraggableSettings({onOpen}){
 
 function App(){
   const[phase,setPhase]=useState('cover');const[gs,setGs]=useState(null);const[scene,setScene]=useState(null);const[sceneId,setSceneId]=useState(null);
-  const[showSave,setShowSave]=useState(false);const[saveMsg,setSaveMsg]=useState('');const[showSheet,setShowSheet]=useState(false);const[showDmSummary,setShowDmSummary]=useState(false);const[showMap,setShowMap]=useState(false);const[sideOpen,setSideOpen]=useState(false);const[confirmModal,setConfirmModal]=useState(null);const[compPopup,setCompPopup]=useState(null);const[romancePrompt,setRomancePrompt]=useState(null);const[romanceManage,setRomanceManage]=useState(false);const[breakupTarget,setBreakupTarget]=useState(null);const[npcNotify,setNpcNotify]=useState(null);const[romanceCheck,setRomanceCheck]=useState(null);const[spellPrepModal,setSpellPrepModal]=useState(false);const[shortRestModal,setShortRestModal]=useState(false);const[healingPanel,setHealingPanel]=useState(false);const[defeatRecovery,setDefeatRecovery]=useState(null);const[godSignPicker,setGodSignPicker]=useState(null);const[subclassModal,setSubclassModal]=useState(false);const[editSlot,setEditSlot]=useState(null);const[showSettingsPanel,setShowSettingsPanel]=useState(false);const[knightingPicker,setKnightingPicker]=useState(null);const[showCamp,setShowCamp]=useState(false);const[showExportModal,setShowExportModal]=useState(false);const[showModuleSwitch,setShowModuleSwitch]=useState(false);const[moduleList,setModuleList]=useState([]);
+  const[showSave,setShowSave]=useState(false);const[saveMsg,setSaveMsg]=useState('');const[showSheet,setShowSheet]=useState(false);const[showDmSummary,setShowDmSummary]=useState(false);const[showMap,setShowMap]=useState(false);const[sideOpen,setSideOpen]=useState(false);const[confirmModal,setConfirmModal]=useState(null);const[compPopup,setCompPopup]=useState(null);const[romancePrompt,setRomancePrompt]=useState(null);const[romanceManage,setRomanceManage]=useState(false);const[breakupTarget,setBreakupTarget]=useState(null);const[npcNotify,setNpcNotify]=useState(null);const[romanceCheck,setRomanceCheck]=useState(null);const[spellPrepModal,setSpellPrepModal]=useState(false);const[shortRestModal,setShortRestModal]=useState(false);const[healingPanel,setHealingPanel]=useState(false);const[defeatRecovery,setDefeatRecovery]=useState(null);const[godSignPicker,setGodSignPicker]=useState(null);const[subclassModal,setSubclassModal]=useState(false);const[editSlot,setEditSlot]=useState(null);const[showSettingsPanel,setShowSettingsPanel]=useState(false);const[knightingPicker,setKnightingPicker]=useState(null);const[showCamp,setShowCamp]=useState(false);const[showExportModal,setShowExportModal]=useState(false);const[showModuleSwitch,setShowModuleSwitch]=useState(false);const[moduleList,setModuleList]=useState([]);const[lightbox,setLightbox]=useState(null);
   const[textSize,setTextSize]=useState(()=>localStorage.getItem('textSize')||'normal');
   const[hardcoreMode,setHardcoreMode]=useState(()=>localStorage.getItem('hardcoreMode')==='true');
   // Migrate companion name casing on any active gs
@@ -13037,13 +13056,13 @@ function App(){
   if(phase==='create')return e(CharCreate,{onDone:startGame,onBack:()=>setPhase('intro')});
   if(!gs||!scene)return null;
   if(showDmSummary&&DM_SUMMARY)return e(DmSummary,{gs,sceneId,onBack:()=>setShowDmSummary(false)});
-  if(showSheet)return e(CharSheet,{gs,isEnding:ENDING_SCENES.includes(sceneId),onBack:()=>setShowSheet(false),onEquipChange:(newGs)=>setGs(newGs)});
+  if(showSheet)return e(CharSheet,{gs,isEnding:ENDING_SCENES.includes(sceneId),onBack:()=>setShowSheet(false),onEquipChange:(newGs)=>setGs(newGs),onPortraitClick:setLightbox});
   const d=gs.derived;
   return e('div',{id:'game-container'},
     e('div',{className:'mobile-bar'},e('button',{className:'hamburger',onClick:()=>setSideOpen(!sideOpen)},sideOpen?'\u2715':'\u2630'),e('div',{style:{flex:1,textAlign:'center'}},e('div',{className:'bar-name'},gs.name),e('div',{className:'bar-stats'},e('span',null,'Lv'+gs.level),e('span',null,'HP '+gs.hp+'/'+d.maxHp),e('span',{style:{color:'#e8a0a0'}},'R:'+gs.rose),e('span',{style:{color:'#a0c0e8'}},'S:'+gs.sword),e('span',{style:{color:'#e8d8a0'}},'C:'+gs.crown),e('span',{style:{color:'#c9a84c'}},'\u2694'+(gs.gold||0)))),e('button',{className:'hamburger',onClick:()=>setShowSave(true)},'\u2716')),
     e('div',{className:'sidebar-backdrop'+(sideOpen?' show':''),onClick:()=>setSideOpen(false)}),
     e('div',{className:'sidebar'+(sideOpen?' open':'')},
-      e('div',{className:'char-header'},gs.portrait?e('img',{className:'char-header-portrait',src:gs.portrait,alt:''}):null,e('div',{className:'char-name clickable',onClick:()=>{const n=prompt('Enter new name:',gs.name||'');if(n&&n.trim())handleStateUpdate(g=>({...g,name:n.trim()}))},title:'Click to rename'},gs.name||'Squire'),e('div',{className:'char-class'},formatClassLevel(gs))),
+      e('div',{className:'char-header'},gs.portrait?e('img',{className:'char-header-portrait',src:gs.portrait,alt:'',style:{cursor:'pointer'},onClick:()=>setLightbox({url:gs.portrait,name:gs.name})}):null,e('div',{className:'char-name clickable',onClick:()=>{const n=prompt('Enter new name:',gs.name||'');if(n&&n.trim())handleStateUpdate(g=>({...g,name:n.trim()}))},title:'Click to rename'},gs.name||'Squire'),e('div',{className:'char-class'},formatClassLevel(gs))),
       CAMPAIGN?e('div',{className:'campaign-indicator',style:{background:'rgba(201,168,76,0.1)',border:'1px solid var(--gold-dim)',borderRadius:4,padding:'6px 8px',margin:'8px 0',fontSize:11,textAlign:'center'}},e('div',{style:{color:'var(--gold)',fontWeight:600,letterSpacing:1}},CAMPAIGN.title),e('div',{style:{color:'var(--text-dim)',fontSize:10,marginTop:2}},'Module '+(gs.campaignProgress?.modulesCompleted?.length||0+1)+' of '+((CAMPAIGN.modules?.length)||'?'))):null,
       gs.scaledFrom?e('div',{className:'scaled-indicator',style:{background:'rgba(201,168,76,0.15)',border:'1px solid var(--gold)',borderRadius:4,padding:'4px 8px',margin:'8px 0',fontSize:11,textAlign:'center'},title:'Your level is temporarily scaled for this module. Original abilities restore when you return to a higher-level module.'},'⚖ Scaled: Lv',gs.scaledFrom.fromLevel,' → Lv',gs.scaledFrom.toLevel):null,
       e('div',{className:'sidebar-section'},e('div',{className:'hp-bar-container'},e('div',{className:'hp-bar',style:{width:Math.max(0,(gs.hp/d.maxHp)*100)+'%'}}),e('span',{className:'hp-text'},'HP '+gs.hp+' / '+d.maxHp)),e('div',{className:'xp-bar-container'},e('div',{className:'xp-bar',style:{width:Math.min(100,((gs.xp||0)/[300,900,2700][Math.min(gs.level-1,2)])*100)+'%'}}),e('span',{className:'xp-text'},'XP '+(gs.xp||0)+' / '+[300,900,2700][Math.min(gs.level-1,2)])),e('div',{className:'mini-stats-row'},e('span',null,'AC '+d.ac),e('span',null,'Atk +'+d.attackBonus),e('span',null,'Prof +'+d.profBonus))),
@@ -13176,7 +13195,8 @@ function App(){
     knightingPicker&&gs?e(KnightingSkillPicker,{order:knightingPicker.order,onConfirm:(skillChoice)=>{const ns=applyKnightingBonus(gs,knightingPicker.order,skillChoice);setGs(ns);setKnightingPicker(null)}}):null,
     showSettingsPanel?e(SettingsPanel,{onClose:()=>setShowSettingsPanel(false),onSave:()=>{setShowSettingsPanel(false);setShowSave(true)},onLoad:()=>{setShowSettingsPanel(false);setShowSave(true)},gs:gs,onModuleSwitch:()=>{setShowSettingsPanel(false);setShowModuleSwitch(true)}}):null,
     showModuleSwitch&&gs?e(ModuleSwitchModal,{gs:gs,moduleList:moduleList,currentModuleId:MODULE?.id,onSwitch:handleModuleSwitch,onClose:()=>setShowModuleSwitch(false)}):null,
-    showMap&&gs?e(MapView,{gs:gs,sceneId:sceneId,onClose:()=>setShowMap(false)}):null);
+    showMap&&gs?e(MapView,{gs:gs,sceneId:sceneId,onClose:()=>setShowMap(false)}):null,
+    lightbox?e(PortraitLightbox,{url:lightbox.url,name:lightbox.name,onClose:()=>setLightbox(null)}):null);
 }
 // Attempt to load module from JSON files, then mount
 (async function(){
