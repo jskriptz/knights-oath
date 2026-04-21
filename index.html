@@ -1878,11 +1878,18 @@ function getMaxWater(inventory){
   return 3+Math.max(0,waterskins)*3; // First waterskin is in equipment, extras add capacity
 }
 // Add item to inventory with acquisition tracking for module swap system
+// IMPORTANT: This function now does IMMUTABLE updates to prevent state corruption
 function addItemWithTracking(gs,itemName,sceneId){
+  // Spread inventory to avoid mutating original state
   if(!gs.inventory)gs.inventory=[];
+  else if(!Array.isArray(gs.inventory))gs.inventory=[];
+  else gs.inventory=[...gs.inventory];
+  // Spread inventoryMeta to avoid mutating original state
+  if(!gs.inventoryMeta)gs.inventoryMeta={};
+  else gs.inventoryMeta={...gs.inventoryMeta};
+
   if(!gs.inventory.includes(itemName)){
     gs.inventory.push(itemName);
-    if(!gs.inventoryMeta)gs.inventoryMeta={};
     gs.inventoryMeta[itemName]={
       acquiredAt:(typeof MODULE!=='undefined'&&MODULE&&MODULE.id)||'knights-oath',
       date:(typeof MODULE!=='undefined'&&MODULE&&MODULE.date)||351,
@@ -7385,7 +7392,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
             onStateUpdate(g=>{
               const NO_AUTO_RESOLVE=['11_YARD','11','11_PATROL','26','43','44C','28_CARAVAN','51','53_BREACH','53_SABOTAGE','64B_WOLVES','64E','65','69','70A','70C_SCOUTS','70'];
               const needsLootChoice=c.result==='win'&&NO_AUTO_RESOLVE.includes(sceneId);
-              const ng={...g,hp:Math.max(c.result==='win'?1:0,c.playerHp),spellSlotsUsed:c.localSpellSlots,secondWindUsed:c.localSW,actionSurgeUsed:c.localAS,layOnHandsPool:c.localLoH,potions:c.localPotions,bandages:c.localBandages,combatResolved:needsLootChoice?false:true};
+              const ng={...g,hp:Math.max(c.result==='win'?1:0,c.playerHp),spellSlotsUsed:c.localSpellSlots,secondWindUsed:c.localSW,actionSurgeUsed:c.localAS,layOnHandsPool:c.localLoH,potions:c.localPotions,bandages:c.localBandages,combatResolved:needsLootChoice?false:true,inventory:[...(g.inventory||[])],inventoryMeta:{...(g.inventoryMeta||{})},history:[...(g.history||[])]};
               if(c.result==='win'&&parsed.rewards){
                 const sceneKey=gs.history&&gs.history.length?gs.history[gs.history.length-1]:'';
                 if(!ng.awardedScenes)ng.awardedScenes={};
@@ -7899,15 +7906,14 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
         e('button',{className:'combat-outcome-btn win',onClick:()=>{
           if(onStateUpdate)onStateUpdate(g=>{
             const PP_NO_AUTO=['11_YARD','11','11_PATROL','26','43','44C','28_CARAVAN','51','53_BREACH','53_SABOTAGE','64B_WOLVES','64E','65','69','70A','70C_SCOUTS','70'];
-            const ng={...g,combatResolved:PP_NO_AUTO.includes(sceneId)?false:true};
+            const ng={...g,combatResolved:PP_NO_AUTO.includes(sceneId)?false:true,inventory:[...(g.inventory||[])],inventoryMeta:{...(g.inventoryMeta||{})},history:[...(g.history||[])],awardedScenes:{...(g.awardedScenes||{})}};
             const sceneKey=g.history&&g.history.length?g.history[g.history.length-1]:'';
             if(parsed.rewards){
-              if(!ng.awardedScenes)ng.awardedScenes={};
               if(!ng.awardedScenes[sceneKey]){
                 ng.awardedScenes[sceneKey]=true;
-                if(parsed.rewards.xp){ng.xp=(ng.xp||0)+parsed.rewards.xp;ng.history=[...(ng.history||[]),'\u2728 +'+parsed.rewards.xp+' XP earned']}
+                if(parsed.rewards.xp){ng.xp=(ng.xp||0)+parsed.rewards.xp;ng.history.push('\u2728 +'+parsed.rewards.xp+' XP earned')}
                 if(parsed.rewards.gold)ng.gold=(ng.gold||0)+parsed.rewards.gold;
-                if(parsed.rewards.items&&parsed.rewards.items.length){const sceneKey=ng.history&&ng.history.length?ng.history[ng.history.length-1]:'';parsed.rewards.items.forEach(item=>{addItemWithTracking(ng,item,sceneKey)})}
+                if(parsed.rewards.items&&parsed.rewards.items.length){const sceneKey2=ng.history&&ng.history.length?ng.history[ng.history.length-1]:'';parsed.rewards.items.forEach(item=>{addItemWithTracking(ng,item,sceneKey2)})}
               }
             }
             ng.combatCount=(ng.combatCount||0)+1;
@@ -12878,7 +12884,7 @@ function App(){
     const fixKeys=(obj)=>{if(!obj)return obj;const fixed={};for(const[k,v]of Object.entries(obj)){const canon=COMPANIONS_ALL.find(x=>x.toLowerCase()===k.toLowerCase());fixed[canon||k]=v}return fixed};
     g.romances=fixKeys(g.romances);g.companionLog=fixKeys(g.companionLog||{});g.romanceDeclined=fixKeys(g.romanceDeclined||{});
     g.derived=calcDerived(g.stats,g.cls,g.level,g.armor,g.hasShield,g.feat,g.wounds,g.exhaustion,g.durability,g.style,g.classLevels);setGs(g);const s=SCENES[loadSceneId];if(s){setScene(s);setSceneId(loadSceneId)}setPhase('play')};
-  const handleChoice=(c)=>{SoundManager.play('click');setSideOpen(false);const ns={...gs,romances:{...gs.romances},awardedScenes:{...(gs.awardedScenes||{})}};
+  const handleChoice=(c)=>{SoundManager.play('click');setSideOpen(false);const ns={...gs,romances:{...gs.romances},awardedScenes:{...(gs.awardedScenes||{})},inventory:[...(gs.inventory||[])],inventoryMeta:{...(gs.inventoryMeta||{})},flags:{...(gs.flags||{})},history:[...(gs.history||[])],bonuses:[...(gs.bonuses||[])],magicItems:[...(gs.magicItems||[])]};
     // Only award points if this scene hasn't awarded yet (anti-cycle)
     const scKey=sceneId;
     if(!ns.awardedScenes[scKey]){ns.rose+=(c.points.ROSE||0);ns.sword+=(c.points.SWORD||0);ns.crown+=(c.points.CROWN||0);if(Object.keys(c.points).length)ns.awardedScenes[scKey]=true;
