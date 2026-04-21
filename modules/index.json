@@ -1,0 +1,22 @@
+{
+  "modules": [
+    {
+      "id": "knights-oath",
+      "title": "The Knight's Oath",
+      "subtitle": "A Choose Your Own Adventure Prelude",
+      "type": "origin",
+      "levelRange": [1, 3],
+      "date": 351,
+      "setting": "Dragonlance"
+    },
+    {
+      "id": "test-module",
+      "title": "Test Module",
+      "subtitle": "Multi-Module Loader Verification",
+      "type": "test",
+      "levelRange": [1, 1],
+      "date": 351,
+      "setting": "Test"
+    }
+  ]
+}

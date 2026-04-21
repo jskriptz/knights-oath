@@ -2,7 +2,7 @@
   "id": "knights-oath",
   "name": "Dragonlance: The Knight's Oath",
   "short_name": "Knight's Oath",
-  "description": "Multi-campaign browser RPG set in the Dragonlance universe. D&D 5e 2024 rules.",
+  "description": "Multi-module browser RPG set in the Dragonlance universe. D&D 5e 2024 rules.",
   "start_url": ".",
   "scope": ".",
   "display": "standalone",

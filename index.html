@@ -68,7 +68,7 @@ body.high-contrast{--bg:#000000;--panel:#0a0a0a;--border:#ffffff;--gold:#ffdd00;
 body.high-contrast .box{border-width:2px}body.high-contrast button{border-width:2px}body.high-contrast a{text-decoration:underline}
 /* Map modal */
 .map-modal{max-width:480px;text-align:center;padding:16px}
-.campaign-map{width:100%;max-height:65vh;border:2px solid var(--gold-dim);border-radius:8px;background:linear-gradient(180deg,#1a1a2e 0%,#0e0e18 100%);box-shadow:inset 0 0 20px rgba(0,0,0,0.5)}
+.module-map{width:100%;max-height:65vh;border:2px solid var(--gold-dim);border-radius:8px;background:linear-gradient(180deg,#1a1a2e 0%,#0e0e18 100%);box-shadow:inset 0 0 20px rgba(0,0,0,0.5)}
 .map-location{cursor:default;transition:all .2s}.map-location:hover{opacity:0.9}
 .map-location.current{animation:pulse-glow 2s ease-in-out infinite}
 @keyframes pulse-glow{0%,100%{filter:url(#glow)}50%{filter:url(#glow) brightness(1.2)}}
@@ -87,7 +87,7 @@ body.high-contrast .box{border-width:2px}body.high-contrast button{border-width:
 .map-reset-btn{background:transparent;border:1px solid var(--border);color:var(--text-dim);padding:4px 10px;font-size:10px;border-radius:4px;cursor:pointer}
 .map-reset-btn:hover{border-color:var(--gold-dim);color:var(--gold-dim)}
 .map-container{overflow:hidden;border:2px solid var(--gold-dim);border-radius:8px;background:linear-gradient(180deg,#1a1a2e 0%,#0e0e18 100%)}
-.campaign-map{width:100%;max-height:55vh;transition:transform .1s ease-out;transform-origin:center center}
+.module-map{width:100%;max-height:55vh;transition:transform .1s ease-out;transform-origin:center center}
 .map-location.selected text{fill:var(--gold)!important}
 
 .cover{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg);padding:40px;text-align:center;overflow-y:auto}
@@ -949,7 +949,7 @@ body.high-contrast .box{border-width:2px}body.high-contrast button{border-width:
 .import-char-class{color:var(--text);font-size:14px;margin-top:8px}
 .import-char-love{color:var(--pink);font-size:13px;margin-top:6px}
 .import-char-completed{color:var(--text-dim);font-size:11px;margin-top:8px}
-.import-campaign-opts{display:flex;flex-direction:column;gap:8px}
+.import-module-opts{display:flex;flex-direction:column;gap:8px}
 
 /* Companion sheet modal */
 .companion-sheet-modal{max-width:480px;text-align:left;max-height:85vh;overflow-y:auto}
@@ -1866,15 +1866,15 @@ function getMaxWater(inventory){
   const waterskins=(inventory||[]).filter(i=>i.toLowerCase()==='waterskin').length;
   return 3+Math.max(0,waterskins)*3; // First waterskin is in equipment, extras add capacity
 }
-// Add item to inventory with acquisition tracking for campaign swap system
+// Add item to inventory with acquisition tracking for module swap system
 function addItemWithTracking(gs,itemName,sceneId){
   if(!gs.inventory)gs.inventory=[];
   if(!gs.inventory.includes(itemName)){
     gs.inventory.push(itemName);
     if(!gs.inventoryMeta)gs.inventoryMeta={};
     gs.inventoryMeta[itemName]={
-      acquiredAt:(typeof CAMPAIGN!=='undefined'&&CAMPAIGN&&CAMPAIGN.id)||'knights-oath',
-      date:(typeof CAMPAIGN!=='undefined'&&CAMPAIGN&&CAMPAIGN.date)||351,
+      acquiredAt:(typeof MODULE!=='undefined'&&MODULE&&MODULE.id)||'knights-oath',
+      date:(typeof MODULE!=='undefined'&&MODULE&&MODULE.date)||351,
       scene:sceneId||'unknown'
     };
   }
@@ -3155,7 +3155,7 @@ function applyKnightingBonus(gs,order,skillChoice){
   ns.flags.knighted=true;
   ns.flags.knightOrder=order;
   ns.flags.knightTitle='Ser';
-  // Grant title (persistent across campaigns)
+  // Grant title (persistent across modules)
   const knightTitle='Knight of the '+order;
   if(!ns.titles)ns.titles=[];
   if(!ns.titles.includes(knightTitle))ns.titles.push(knightTitle);
@@ -3180,22 +3180,22 @@ const ST={
   async get(k){try{if(window.storage){const r=await window.storage.get(k);return r?r.value:null}return localStorage.getItem(k)}catch(e){try{return localStorage.getItem(k)}catch(e2){return null}}},
   async del(k){try{if(window.storage){await window.storage.delete(k);return}localStorage.removeItem(k)}catch(e){try{localStorage.removeItem(k)}catch(e2){}}}
 };
-// ── Save System: Character (persistent) + Campaign Progress (per-campaign) ──
-const CHARACTER_FIELDS=['cls','stats','style','feat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','rations','torches','waterskinUses','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount','languages','exhaustion','toolProficiencies','musicianInstruments','heroicInspiration','knightingSkill','portrait','durability','titles','selectedTitle','completedCampaigns','loveInterest','partedCompanions','lastApproval','kills','subclass','maneuvers','superiorityDice','channelDivinityUsed','vowOfEnmityTarget','sacredWeaponActive','classLevels','secondClass','secondSubclass','inventoryMeta','originalFeats','originalSpells','originalSubclass','originalManeuvers','scaledFrom','levelSnapshots'];
-const CAMPAIGN_PROGRESS_FIELDS=['history','flags','awardedScenes','completedRolls','companions','romances','romanceDeclined','companionLog','deadCompanions','rose','sword','crown','orderMax','dgTrack','godSigns','hitDiceUsed','secondWindUsed','actionSurgeUsed','spellSlotsUsed','spellSlots2ndUsed','spellSlots3rdUsed','spellSlots4thUsed','spellSlots5thUsed','spellSlots6thUsed','spellSlots7thUsed','spellSlots8thUsed','spellSlots9thUsed','layOnHandsPool','miraHealedThisScene','combatCount','measureTrack','measureOrientation','approval','shortRestsToday','longRestTaken','dayNumber','campStash'];
+// ── Save System: Character (persistent) + Module Progress (per-module) ──
+const CHARACTER_FIELDS=['cls','stats','style','feat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','rations','torches','waterskinUses','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount','languages','exhaustion','toolProficiencies','musicianInstruments','heroicInspiration','knightingSkill','portrait','durability','titles','selectedTitle','completedModules','loveInterest','partedCompanions','lastApproval','kills','subclass','maneuvers','superiorityDice','channelDivinityUsed','vowOfEnmityTarget','sacredWeaponActive','classLevels','secondClass','secondSubclass','inventoryMeta','originalFeats','originalSpells','originalSubclass','originalManeuvers','scaledFrom','levelSnapshots','currentCampaign','campaignProgress','sagaFlags'];
+const MODULE_PROGRESS_FIELDS=['history','flags','awardedScenes','completedRolls','companions','romances','romanceDeclined','companionLog','deadCompanions','rose','sword','crown','orderMax','dgTrack','godSigns','hitDiceUsed','secondWindUsed','actionSurgeUsed','spellSlotsUsed','spellSlots2ndUsed','spellSlots3rdUsed','spellSlots4thUsed','spellSlots5thUsed','spellSlots6thUsed','spellSlots7thUsed','spellSlots8thUsed','spellSlots9thUsed','layOnHandsPool','miraHealedThisScene','combatCount','measureTrack','measureOrientation','approval','shortRestsToday','longRestTaken','dayNumber','campStash'];
 
 function splitSave(gs,sceneId){
   const character={};const progress={};
   for(const k of CHARACTER_FIELDS){if(k in gs)character[k]=gs[k]}
-  for(const k of CAMPAIGN_PROGRESS_FIELDS){if(k in gs)progress[k]=gs[k]}
+  for(const k of MODULE_PROGRESS_FIELDS){if(k in gs)progress[k]=gs[k]}
   progress.sceneId=sceneId;
-  progress.campaignId=(CAMPAIGN&&CAMPAIGN.id)||'knights-oath';
-  progress.campaignVersion=(CAMPAIGN&&CAMPAIGN.version)||null;
+  progress.moduleId=(MODULE&&MODULE.id)||'knights-oath';
+  progress.moduleVersion=(MODULE&&MODULE.version)||null;
   return{character,progress}
 }
 function mergeSave(character,progress){
   const gs={...character,...progress};
-  delete gs.sceneId;delete gs.campaignId;delete gs.campaignVersion;
+  delete gs.sceneId;delete gs.moduleId;delete gs.moduleVersion;
   return gs
 }
 function migrateLegacySave(saveData){
@@ -3206,39 +3206,39 @@ function migrateLegacySave(saveData){
     const{character,progress}=splitSave(saveData.gs,saveData.sceneId);
     saveData={saveVersion:2,character,progress,savedAt:saveData.savedAt||new Date().toISOString()};
   }
-  // v2 → v3: add per-campaign progress structure
+  // v2 → v3: add per-module progress structure
   if(saveData.saveVersion===2){
-    const campaignId=saveData.progress?.campaignId||'knights-oath';
+    const moduleId=saveData.progress?.moduleId||'knights-oath';
     const inventoryMeta={};
     (saveData.character?.inventory||[]).forEach(item=>{
-      inventoryMeta[item]={acquiredAt:campaignId,date:351,scene:'migration'};
+      inventoryMeta[item]={acquiredAt:moduleId,date:351,scene:'migration'};
     });
     saveData={
       saveVersion:3,
       character:{...saveData.character,inventoryMeta,originalFeats:[],originalSpells:{},originalSubclass:saveData.character?.subclass,originalManeuvers:saveData.character?.maneuvers||[]},
-      currentCampaign:campaignId,
-      campaignProgress:{[campaignId]:saveData.progress},
+      currentModule:moduleId,
+      moduleProgress:{[moduleId]:saveData.progress},
       savedAt:saveData.savedAt
     };
   }
   return saveData;
 }
 
-// ── Campaign Swap System ──
-function canEnterCampaign(character,campaign,isNewGamePlus){
+// ── Module Swap System ──
+function canEnterModule(character,module,isNewGamePlus){
   if(!character||!character.level)return{allowed:true};
-  if(campaign.type==='origin'){
-    if(isNewGamePlus&&campaign.ngPlusAllowed)return{allowed:true,warning:'New Game+ mode: You will keep permanent unlocks but start at level 1.'};
-    if(character.completedCampaigns?.includes(campaign.id))return{allowed:true,warning:'New Game+ available: Restart with permanent unlocks.',ngPlusAvailable:true};
-    return{allowed:false,reason:'Origin campaigns require a new character.'};
+  if(module.type==='origin'){
+    if(isNewGamePlus&&module.ngPlusAllowed)return{allowed:true,warning:'New Game+ mode: You will keep permanent unlocks but start at level 1.'};
+    if(character.completedModules?.includes(module.id))return{allowed:true,warning:'New Game+ available: Restart with permanent unlocks.',ngPlusAvailable:true};
+    return{allowed:false,reason:'Origin modules require a new character.'};
   }
-  const[minLevel,maxLevel]=campaign.levelRange||[1,20];
-  if(character.level<minLevel)return{allowed:false,reason:'This campaign requires level '+minLevel+'+.'};
+  const[minLevel,maxLevel]=module.levelRange||[1,20];
+  if(character.level<minLevel)return{allowed:false,reason:'This module requires level '+minLevel+'+.'};
   if(character.level>maxLevel)return{allowed:true,warning:'Your level '+character.level+' character will be scaled to level '+maxLevel+'.',scaling:{from:character.level,to:maxLevel}};
   return{allowed:true};
 }
-function filterInventoryForCampaign(character,targetCampaign){
-  const targetDate=targetCampaign.date||9999;
+function filterInventoryForModule(character,targetModule){
+  const targetDate=targetModule.date||9999;
   const meta=character.inventoryMeta||{};
   return(character.inventory||[]).filter(item=>{
     const itemMeta=meta[item];
@@ -3246,16 +3246,16 @@ function filterInventoryForCampaign(character,targetCampaign){
     return itemMeta.date<=targetDate;
   });
 }
-function filterResourcesForCampaign(character,targetCampaign){
-  const targetDate=targetCampaign.date||9999;
-  const charDate=character.lastCampaignDate||351;
+function filterResourcesForModule(character,targetModule){
+  const targetDate=targetModule.date||9999;
+  const charDate=character.lastModuleDate||351;
   if(targetDate<charDate){
-    const sr=targetCampaign.startingResources||{};
+    const sr=targetModule.startingResources||{};
     return{gold:sr.gold||0,bandages:sr.bandages||0,potions:sr.potions||0,greaterPotions:sr.greaterPotions||0,rations:sr.rations||0,torches:sr.torches||0,waterskinUses:sr.waterskinUses||3};
   }
   return{gold:character.gold,bandages:character.bandages,potions:character.potions,greaterPotions:character.greaterPotions,rations:character.rations,torches:character.torches,waterskinUses:character.waterskinUses};
 }
-function scaleCharacterToLevel(character,targetLevel,campaign){
+function scaleCharacterToLevel(character,targetLevel,module){
   if(targetLevel>=character.level)return character;
   const scaled={...character};
   // Store full state for later restoration
@@ -3310,7 +3310,7 @@ function restoreOriginalLevel(character){
   if(fullState){
     // Restore from full state
     CHARACTER_FIELDS.forEach(f=>{
-      if(fullState[f]!==undefined&&f!=='scaledFrom'&&f!=='levelSnapshots'&&f!=='campaignProgress'){
+      if(fullState[f]!==undefined&&f!=='scaledFrom'&&f!=='levelSnapshots'&&f!=='moduleProgress'){
         restored[f]=JSON.parse(JSON.stringify(fullState[f]));
       }
     });
@@ -3545,7 +3545,7 @@ const SoundManager={
   }
 };
 
-function SettingsPanel({onClose,onSave,onLoad,gs,onCampaignSwitch}){
+function SettingsPanel({onClose,onSave,onLoad,gs,onModuleSwitch}){
   const[settings,setSettings]=useState(loadSettings);
   const[musicVol,setMusicVol]=useState(()=>AudioController.volume);
   const[musicOn,setMusicOn]=useState(()=>AudioController.enabled);
@@ -3607,10 +3607,10 @@ function SettingsPanel({onClose,onSave,onLoad,gs,onCampaignSwitch}){
         e('div',null,e('div',{className:'settings-label'},'Combat Log'),e('div',{className:'settings-sublabel'},'Detail level for combat messages')),
         e('div',{className:'settings-control'},
           ['minimal','normal','verbose'].map(v=>e('button',{key:v,className:'settings-btn'+(settings.combatLogVerbosity===v?' selected':''),style:settings.combatLogVerbosity===v?{borderColor:'var(--gold)',color:'var(--gold)'}:{},onClick:()=>update('combatLogVerbosity',v)},v.charAt(0).toUpperCase()+v.slice(1))))),
-      // Campaign Switch (always available when playing)
-      (gs&&onCampaignSwitch)?e('div',{className:'settings-row',style:{marginTop:16,borderTop:'1px solid var(--border)',paddingTop:16}},
-        e('div',null,e('div',{className:'settings-label'},'Switch Campaign'),e('div',{className:'settings-sublabel'},'Play another campaign or start fresh')),
-        e('button',{className:'gold-btn',style:{padding:'8px 16px',fontSize:12},onClick:onCampaignSwitch},'Switch...')):null,
+      // Module Switch (always available when playing)
+      (gs&&onModuleSwitch)?e('div',{className:'settings-row',style:{marginTop:16,borderTop:'1px solid var(--border)',paddingTop:16}},
+        e('div',null,e('div',{className:'settings-label'},'Switch Module'),e('div',{className:'settings-sublabel'},'Play another module or start fresh')),
+        e('button',{className:'gold-btn',style:{padding:'8px 16px',fontSize:12},onClick:onModuleSwitch},'Switch...')):null,
       // Save/Load row
       (onSave||onLoad)?e('div',{style:{marginTop:16,display:'flex',justifyContent:'center',gap:12}},
         onSave?e('button',{className:'settings-btn-save',onClick:onSave},'Save Game'):null,
@@ -3620,18 +3620,18 @@ function SettingsPanel({onClose,onSave,onLoad,gs,onCampaignSwitch}){
         e('button',{className:'ghost-btn',style:{padding:'10px 20px',fontSize:12},onClick:()=>{update('textScale',1);update('combatSpeed','normal');update('autoSave',true);update('screenShake',true);update('compactUI',false);update('soundEffects',true);update('theme','dark');update('highContrast',false);update('combatLogVerbosity','normal')}},'Reset Defaults'),
         e('button',{className:'gold-btn',style:{padding:'10px 20px',fontSize:12},onClick:onClose},'Done'))))}
 
-// Campaign Switch Modal — allows switching between campaigns with level scaling and timeline filtering
-function CampaignSwitchModal({gs,campaignList,currentCampaignId,onSwitch,onClose}){
+// Module Switch Modal — allows switching between modules with level scaling and timeline filtering
+function ModuleSwitchModal({gs,moduleList,currentModuleId,onSwitch,onClose}){
   const e=React.createElement;
   const[selected,setSelected]=useState(null);
   const[step,setStep]=useState('select'); // 'select' | 'mode' | 'save'
   const[startFresh,setStartFresh]=useState(false);
-  // Filter out current campaign and test campaigns
-  const available=(campaignList||[]).filter(c=>c.id!==currentCampaignId&&c.type!=='test');
-  // Get validation for selected campaign (only needed for transfer mode)
-  const validation=selected&&!startFresh?canEnterCampaign(gs,{id:selected.id,type:selected.type,levelRange:selected.levelRange,date:selected.date||0},(gs.completedCampaigns||[]).includes(selected.id)):null;
+  // Filter out current module and test modules
+  const available=(moduleList||[]).filter(c=>c.id!==currentModuleId&&c.type!=='test');
+  // Get validation for selected module (only needed for transfer mode)
+  const validation=selected&&!startFresh?canEnterModule(gs,{id:selected.id,type:selected.type,levelRange:selected.levelRange,date:selected.date||0},(gs.completedModules||[]).includes(selected.id)):null;
   const playerLevel=gs?.level||1;
-  const hasProgressInSelected=selected&&gs?.campaignProgress?.[selected.id];
+  const hasProgressInSelected=selected&&gs?.moduleProgress?.[selected.id];
 
   const handleConfirm=(saveFirst)=>{
     if(!selected)return;
@@ -3647,16 +3647,16 @@ function CampaignSwitchModal({gs,campaignList,currentCampaignId,onSwitch,onClose
 
   return e('div',{className:'modal-overlay',onClick:ev=>{if(ev.target===ev.currentTarget)onClose()}},
     e('div',{className:'modal-box',style:{maxWidth:480,maxHeight:'80vh',overflow:'auto'}},
-      e('h2',{className:'gold',style:{marginBottom:16}},'SWITCH CAMPAIGN'),
-      // Step 1: Select campaign
+      e('h2',{className:'gold',style:{marginBottom:16}},'SWITCH MODULE'),
+      // Step 1: Select module
       step==='select'?e(React.Fragment,null,
-        e('p',{style:{fontSize:13,color:'var(--text-dim)',marginBottom:16}},'Select a campaign to play.'),
+        e('p',{style:{fontSize:13,color:'var(--text-dim)',marginBottom:16}},'Select a module to play.'),
         e('div',{style:{display:'flex',flexDirection:'column',gap:8}},
-          available.length===0?e('p',{style:{color:'var(--text-dim)',fontStyle:'italic'}},'No other campaigns available.'):
+          available.length===0?e('p',{style:{color:'var(--text-dim)',fontStyle:'italic'}},'No other modules available.'):
           available.map(c=>{
-            const hasProgress=gs?.campaignProgress?.[c.id];
+            const hasProgress=gs?.moduleProgress?.[c.id];
             const isSelected=selected?.id===c.id;
-            return e('div',{key:c.id,className:'campaign-switch-option'+(isSelected?' selected':''),
+            return e('div',{key:c.id,className:'module-switch-option'+(isSelected?' selected':''),
               style:{padding:12,border:'1px solid '+(isSelected?'var(--gold)':'var(--border)'),borderRadius:6,cursor:'pointer'},
               onClick:()=>setSelected(c)},
               e('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center'}},
@@ -3681,14 +3681,14 @@ function CampaignSwitchModal({gs,campaignList,currentCampaignId,onSwitch,onClose
             validation?.scaling?e('div',{style:{fontSize:11,color:'var(--text-dim)',marginTop:4}},'Level will scale: '+playerLevel+' → '+validation.scaling.toLevel):null),
           e('button',{style:{padding:16,border:'1px solid '+(startFresh?'var(--gold)':'var(--border)'),borderRadius:8,background:startFresh?'rgba(201,168,76,0.1)':'transparent',textAlign:'left',cursor:'pointer'},onClick:()=>setStartFresh(true)},
             e('div',{style:{fontWeight:'bold',color:startFresh?'var(--gold)':'var(--text)'}},'Start Fresh'),
-            e('div',{style:{fontSize:12,color:'var(--text-dim)',marginTop:4}},'Create a new character for this campaign'))),
+            e('div',{style:{fontSize:12,color:'var(--text-dim)',marginTop:4}},'Create a new character for this module'))),
         e('div',{style:{marginTop:16,display:'flex',justifyContent:'flex-end',gap:8}},
           e('button',{className:'ghost-btn',onClick:()=>setStep('select')},'Back'),
           e('button',{className:'gold-btn',disabled:!startFresh&&validation&&!validation.allowed,onClick:()=>setStep('save')},'Continue'))):
       // Step 3: Save confirmation
       step==='save'?e(React.Fragment,null,
         e('p',{style:{marginBottom:12}},'Save your current progress before switching?'),
-        e('p',{style:{fontSize:12,color:'var(--text-dim)',marginBottom:16}},'Your progress in ',e('strong',null,CAMPAIGN?.title||'this campaign'),' will be saved so you can return later.'),
+        e('p',{style:{fontSize:12,color:'var(--text-dim)',marginBottom:16}},'Your progress in ',e('strong',null,MODULE?.title||'this module'),' will be saved so you can return later.'),
         e('div',{style:{display:'flex',justifyContent:'flex-end',gap:8}},
           e('button',{className:'ghost-btn',onClick:()=>setStep('mode')},'Back'),
           e('button',{className:'ghost-btn',onClick:()=>handleConfirm(false)},"Don't Save"),
@@ -7936,7 +7936,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
   if(combat.result){
     const afterLines=parsed.afterFight?parsed.afterFight.split('\n').filter(l=>{const t=l.trim();if(!t)return false;if(/UPDATE YOUR SHEET|Record current HP|Mark any used|Short rest available|Long rest|Recover Second Wind|Recover Action Surge|XP:|^\*\*XP|Pen & Paper|Pen and Paper|Use stat blocks|Run at your table|Skip to AFTER|Narrative Mode|Follow rounds|Roll when prompted|YOUR STATS|COMPANION ACTIONS|choose 1 per|Action A|Action B|Action C|^\|/i.test(t))return false;if(combat.result==='win'&&/^FAILURE:|IF THIS DROPS YOU TO 0 HP|IF MIRA HAS ARRIVED.*stabilize|IF MIRA IS NOT PRESENT|you wake up|garrison watch finishes/i.test(t))return false;if(combat.result==='lose'&&/^VICTORY|^SUCCESS/i.test(t))return false;return true}):[];
     // Boar fight loot choices (scene 11_YARD)
-    const specCombat=CAMPAIGN_RULES?.specialCombat||{};
+    const specCombat=MODULE_RULES?.specialCombat||{};
     const isBoarFight=(specCombat.boarFight||[]).includes(sceneId);
     const boarLootChosen=combat.boarLootChosen;
     return e('div',{className:'combat-wrapper'},
@@ -8000,11 +8000,11 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
         e('p',{style:{fontStyle:'italic',color:'var(--gold)'}},'🌹 You leave the tusks where they are. Pell, still pale, catches your eye across the yard and mouths "thank you." That is enough.')):null,
       // Generic post-combat loot choice (humanoid/draconian fights)
       (()=>{
-        const NO_LOOT_SCENES=CAMPAIGN_RULES?.noLootScenes||['11_YARD','11','12','64B_WOLVES'];
-        const ANIMAL_SCENES=CAMPAIGN_RULES?.animalScenes||['64B_WOLVES'];
+        const NO_LOOT_SCENES=MODULE_RULES?.noLootScenes||['11_YARD','11','12','64B_WOLVES'];
+        const ANIMAL_SCENES=MODULE_RULES?.animalScenes||['64B_WOLVES'];
         const isHumanoid=combat.result==='win'&&!isBoarFight&&!NO_LOOT_SCENES.includes(sceneId);
         const bodyLootChosen=combat.bodyLootChosen;
-        const BODY_LOOT=CAMPAIGN_RULES?.bodyLootTables||{
+        const BODY_LOOT=MODULE_RULES?.bodyLootTables||{
           '11_PATROL':[{min:1,max:5,text:'Nothing useful — broken arrows, spoiled rations.',gold:0},{min:6,max:10,text:'A handful of steel pieces.',gold:3},{min:11,max:14,text:'Steel pieces and a crude poison vial.',gold:5,item:'Goblin Poison Vial'},{min:15,max:17,text:'A stash of coins and a well-made dagger.',gold:8,item:'Goblin-Crafted Dagger'},{min:18,max:19,text:'Coins, a dagger, and a crude map of the garrison perimeter.',gold:10,item:'Garrison Map'},{min:20,max:20,text:'A finely balanced dagger with a serrated edge — not goblin work.',gold:12,item:'+1 Dagger'}],
           '26':[{min:1,max:8,text:'The draconians carry nothing of value. Their gear crumbles with their bodies.',gold:0},{min:9,max:14,text:'A few steel pieces in a belt pouch.',gold:4},{min:15,max:19,text:'Steel pieces and a sealed dispatch pouch.',gold:6,item:'Sealed Dispatch'},{min:20,max:20,text:'The patrol leader carries a masterwork shortsword.',gold:8,item:'Masterwork Shortsword'}],
           '43':[{min:1,max:10,text:'The wounded draconian carries nothing but a broken blade.',gold:0},{min:11,max:17,text:'A patrol sketch tucked into its belt.',gold:0,item:'Dragon Army Patrol Sketch'},{min:18,max:20,text:'The sketch and a small purse of coins.',gold:5,item:'Dragon Army Patrol Sketch'}],
@@ -8703,7 +8703,7 @@ let SELL_PRICES={};
 let UNSELLABLE=/^$/;
 // Junk items — sellable only, price scales with Persuasion
 let JUNK_ITEMS={};
-// Misc items — useful in future campaigns, with tooltips
+// Misc items — useful in future modules, with tooltips
 let MISC_ITEMS={};
 // Enemy portraits for combat tokens
 let ENEMY_PORTRAITS={};
@@ -9349,28 +9349,28 @@ function LootBox({text,gs,onStateUpdate}){
   );
 }
 
-// ── Campaign Select ───────────────────────────────────
-function CampaignSelect({onSelect,onBack}){
-  const[campaigns,setCampaigns]=useState(null);const[loading,setLoading]=useState(true);const[error,setError]=useState(null);
+// ── Module Select ───────────────────────────────────
+function ModuleSelect({onSelect,onBack}){
+  const[modules,setModules]=useState(null);const[loading,setLoading]=useState(true);const[error,setError]=useState(null);
   const e=React.createElement;
   useEffect(()=>{
-    fetch('campaigns/index.json').then(r=>{if(!r.ok)throw new Error('Not found');return r.json()})
-      .then(data=>{setCampaigns(data.campaigns||[]);setLoading(false)})
+    fetch('modules/index.json').then(r=>{if(!r.ok)throw new Error('Not found');return r.json()})
+      .then(data=>{setModules(data.modules||[]);setLoading(false)})
       .catch(err=>{setError(err.message);setLoading(false)})
   },[]);
-  if(loading)return e('div',{className:'cover'},e('p',{className:'dim-italic'},'Loading campaigns...'));
-  if(error||!campaigns||campaigns.length===0){
-    // Single campaign fallback — skip selection
+  if(loading)return e('div',{className:'cover'},e('p',{className:'dim-italic'},'Loading modules...'));
+  if(error||!modules||modules.length===0){
+    // Single module fallback — skip selection
     onSelect('knights-oath');return null
   }
-  if(campaigns.length===1){onSelect(campaigns[0].id);return null}
+  if(modules.length===1){onSelect(modules[0].id);return null}
   return e('div',{className:'cover'},
     e('h1',null,'DRAGONLANCE'),e('div',{className:'divider'}),
-    e('h2',null,'CHOOSE YOUR CAMPAIGN'),
+    e('h2',null,'CHOOSE YOUR MODULE'),
     e('p',{className:'dim-italic'},'Select an adventure to begin or continue.'),
     e('div',{className:'divider'}),
     e('div',{style:{display:'flex',flexDirection:'column',gap:12,width:'100%',maxWidth:400}},
-      campaigns.map(c=>e('button',{key:c.id,className:'gold-btn',style:{padding:'14px 20px',textAlign:'left',display:'flex',flexDirection:'column',gap:4},
+      modules.map(c=>e('button',{key:c.id,className:'gold-btn',style:{padding:'14px 20px',textAlign:'left',display:'flex',flexDirection:'column',gap:4},
         onClick:()=>onSelect(c.id)},
         e('span',{style:{fontSize:15,fontWeight:600}},c.title),
         e('span',{style:{fontSize:11,color:'var(--text-dim)',letterSpacing:1}},
@@ -9387,17 +9387,17 @@ function CoverScreen({onNew,onLoad,onImport}){
   const[slots,setSlots]=useState(Array(SAVE_SLOT_COUNT).fill(null));const[loading,setLoading]=useState(true);const[del,setDel]=useState(null);const[showSettings,setShowSettings]=useState(false);
   const[ready,setReady]=useState(!!window._scenesReady);
   const[installable,setInstallable]=useState(false);
-  const[exportedChar,setExportedChar]=useState(null);const[showImportModal,setShowImportModal]=useState(false);const[availableCampaigns,setAvailableCampaigns]=useState([]);
+  const[exportedChar,setExportedChar]=useState(null);const[showImportModal,setShowImportModal]=useState(false);const[availableModules,setAvailableModules]=useState([]);
   const[uploadError,setUploadError]=useState(null);
   const fileInputRef=useRef(null);
   const isStandalone=window.matchMedia('(display-mode:standalone)').matches||window.navigator.standalone===true;
   useEffect(()=>{loadAllSlots().then(s=>{setSlots(s);setLoading(false)})},[]);
   useEffect(()=>{if(ready)return;const iv=setInterval(()=>{if(window._scenesReady){setReady(true);clearInterval(iv)}},200);return()=>clearInterval(iv)},[ready]);
   useEffect(()=>{if(isStandalone)return;if(window.deferredPrompt){setInstallable(true);return;}const h=()=>setInstallable(true);window.addEventListener('pwainstallready',h);return()=>window.removeEventListener('pwainstallready',h)},[]);
-  // Load exported character and available campaigns
+  // Load exported character and available modules
   useEffect(()=>{
     ST.get('exported_character').then(raw=>{if(raw)try{setExportedChar(JSON.parse(raw))}catch(e){}});
-    fetch('campaigns/index.json').then(r=>r.ok?r.json():null).then(data=>{if(data&&data.campaigns)setAvailableCampaigns(data.campaigns)}).catch(()=>{});
+    fetch('modules/index.json').then(r=>r.ok?r.json():null).then(data=>{if(data?.modules)setAvailableModules(data.modules)}).catch(()=>{});
   },[]);
   const handleInstall=async()=>{if(!window.deferredPrompt)return;window.deferredPrompt.prompt();const{outcome}=await window.deferredPrompt.userChoice;if(outcome==='accepted')setInstallable(false);window.deferredPrompt=null;};
   const handleDel=async(i)=>{await deleteSave(i);const s=[...slots];s[i]=null;setSlots(s);setDel(null)};
@@ -9418,13 +9418,13 @@ function CoverScreen({onNew,onLoad,onImport}){
     ev.target.value='';// Reset so same file can be selected again
   };
   const e=React.createElement;
-  const ls=CAMPAIGN&&CAMPAIGN.loadingScreen||{};
-  const cTitle=ls.title||(CAMPAIGN&&CAMPAIGN.setting)||'DRAGONLANCE';
-  const cSub=ls.subtitle||(CAMPAIGN&&CAMPAIGN.title)||'ADVENTURE';
-  const cTagline=CAMPAIGN&&CAMPAIGN.subtitle||'A Choose Your Own Adventure';
+  const ls=MODULE&&MODULE.loadingScreen||{};
+  const cTitle=ls.title||(MODULE&&MODULE.setting)||'DRAGONLANCE';
+  const cSub=ls.subtitle||(MODULE&&MODULE.title)||'ADVENTURE';
+  const cTagline=MODULE&&MODULE.subtitle||'A Choose Your Own Adventure';
   const cStats=ls.stats||('D&D 2024 Rules \u2022 '+Object.keys(SCENES).length+' Scenes');
-  const cVersion=ls.version||(CAMPAIGN&&CAMPAIGN.version&&'v'+CAMPAIGN.version)||'';
-  const cClasses=(CAMPAIGN&&CAMPAIGN.classes)||['Fighter','Paladin'];
+  const cVersion=ls.version||(MODULE&&MODULE.version&&'v'+MODULE.version)||'';
+  const cClasses=(MODULE&&MODULE.classes)||['Fighter','Paladin'];
   return e('div',{className:'cover'},
     e('h1',null,cTitle),e('div',{className:'divider'}),e('h2',null,cSub),
     e('p',{className:'dim-italic'},cTagline),
@@ -9454,14 +9454,14 @@ function CoverScreen({onNew,onLoad,onImport}){
       e('p',{style:{margin:0}},'Game mechanics reference the D&D 2024 System Reference Document (SRD 5.2), available under the Creative Commons Attribution 4.0 International License (CC BY 4.0).'),
       e('p',{style:{marginTop:12,color:'var(--gold-dim)',letterSpacing:2,fontSize:10}},cVersion)),
     showSettings?e(SettingsPanel,{onClose:()=>setShowSettings(false)}):null,
-    showImportModal&&exportedChar?e(ImportCharacterModal,{exportData:exportedChar,campaigns:availableCampaigns,onImport:(campaignId,char)=>{setShowImportModal(false);onImport(campaignId,char)},onClose:()=>setShowImportModal(false)}):null);
+    showImportModal&&exportedChar?e(ImportCharacterModal,{exportData:exportedChar,modules:availableModules,onImport:(moduleId,char)=>{setShowImportModal(false);onImport(moduleId,char)},onClose:()=>setShowImportModal(false)}):null);
 }
 
 // ── World Introduction ────────────────────────────────
 function WorldIntro({onDone,onSkip,onBack}){
   const[page,setPage]=useState(0);const[fade,setFade]=useState(true);const e=React.createElement;
   const turn=(dir)=>{setFade(false);setTimeout(()=>{setPage(p=>p+dir);setFade(true)},400)};
-  const PAGES=(CAMPAIGN&&CAMPAIGN.intro&&CAMPAIGN.intro.pages)||[{title:'ADVENTURE AWAITS',body:['Your story begins here.']}];
+  const PAGES=(MODULE&&MODULE.intro&&MODULE.intro.pages)||[{title:'ADVENTURE AWAITS',body:['Your story begins here.']}];
   const pg=PAGES[page];
   return e('div',{className:'cover world-intro'},
     e('div',{className:'intro-progress'},PAGES.map((_,i)=>e('div',{key:i,className:'intro-dot'+(i===page?' active':i<page?' done':'')}))),
@@ -9547,7 +9547,7 @@ function CharCreate({onDone,onBack}){
       e('div',{className:'confirm-row'},e('span',null,'Origin Feat'),e('span',null,PRESETS[quickCls].feat)),
       e('div',{className:'confirm-row'},e('span',null,'Weapon'),e('span',null,PRESETS[quickCls].equip.weapon)),
       e('div',{className:'confirm-row'},e('span',null,'Skills'),e('span',null,[...PRESETS[quickCls].classSkills,PRESETS[quickCls].humanSkill].join(', '))),
-      e('div',{className:'confirm-row'},e('span',null,'Languages'),e('span',null,[...((CAMPAIGN&&CAMPAIGN.startingLanguages)||['Common']),PRESETS[quickCls].extraLang].filter(Boolean).join(', '))),
+      e('div',{className:'confirm-row'},e('span',null,'Languages'),e('span',null,[...((MODULE&&MODULE.startingLanguages)||['Common']),PRESETS[quickCls].extraLang].filter(Boolean).join(', '))),
       quickCls==='Paladin'?e('div',{className:'confirm-row'},e('span',null,'Spells'),e('span',null,PRESETS[quickCls].spells.level1.join(', '))):null
     ),
     e('input',{className:'name-input',placeholder:'Enter your name',value:quickName,onChange:ev=>setQuickName(ev.target.value),style:{marginTop:20},autoFocus:true}),
@@ -9591,13 +9591,13 @@ function CharCreate({onDone,onBack}){
       e('button',{className:'gold-btn',onClick:()=>{if(classSkills.length===2&&humanSkill)setStep('0b2')},disabled:classSkills.length!==2||!humanSkill},'Continue')));
 
   // Step 0b2: Language selection (Human gets 1 extra language)
-  const startLangs=(CAMPAIGN&&CAMPAIGN.startingLanguages)||['Common'];
+  const startLangs=(MODULE&&MODULE.startingLanguages)||['Common'];
   const langOptions=(LANGUAGES_DATA&&LANGUAGES_DATA.extraLanguageOptions)||['Elvish','Dwarvish','Gnomish','Draconic','Goblin','Giant','Orc','Halfling'];
-  const recommendedLangs=(LANGUAGES_DATA&&LANGUAGES_DATA.recommendedLanguages&&LANGUAGES_DATA.recommendedLanguages[CAMPAIGN?.id])||{};
+  const recommendedLangs=(LANGUAGES_DATA&&LANGUAGES_DATA.recommendedLanguages&&LANGUAGES_DATA.recommendedLanguages[MODULE?.id])||{};
   if(step==='0b2')return e('div',{className:'cover'},
     e('h2',{className:'gold'},'CHOOSE YOUR EXTRA LANGUAGE'),
     e('p',{className:'dim-italic',style:{fontSize:13,marginBottom:4}},'As a human, you know '+startLangs.join(' and ')+'. Choose one additional language.'),
-    e('p',{className:'dim-italic',style:{fontSize:12,marginBottom:16,color:'var(--blue)'}},'Languages marked with \u2605 are recommended for this campaign.'),
+    e('p',{className:'dim-italic',style:{fontSize:12,marginBottom:16,color:'var(--blue)'}},'Languages marked with \u2605 are recommended for this module.'),
     e('div',{className:'spell-grid',style:{maxWidth:500}},langOptions.filter(l=>!startLangs.includes(l)).map(lang=>{
       const isRec=recommendedLangs[lang];
       const langInfo=LANGUAGES_DATA&&LANGUAGES_DATA.languages&&LANGUAGES_DATA.languages[lang.toLowerCase()];
@@ -9850,6 +9850,11 @@ function Sidebar({gs,onSave,onMenu,onSettings,saveMsg}){
       displayTitle?e('div',{className:'char-title'},displayTitle):null,
       e('div',{className:'char-class'},formatClassLevel(gs))
     ),
+    CAMPAIGN?e('div',{className:'campaign-indicator',style:{background:'rgba(201,168,76,0.1)',border:'1px solid var(--gold-dim)',borderRadius:4,padding:'6px 8px',margin:'8px 0',fontSize:11,textAlign:'center'}},
+      e('div',{style:{color:'var(--gold)',fontWeight:600,letterSpacing:1}},CAMPAIGN.title),
+      e('div',{style:{color:'var(--text-dim)',fontSize:10,marginTop:2}},'Module '+(gs.campaignProgress?.modulesCompleted?.length||0+1)+' of '+((CAMPAIGN.modules?.length)||'?'))
+    ):null,
+    gs.scaledFrom?e('div',{className:'scaled-indicator',style:{background:'rgba(201,168,76,0.15)',border:'1px solid var(--gold)',borderRadius:4,padding:'4px 8px',margin:'8px 0',fontSize:11,textAlign:'center'},title:'Your level is temporarily scaled for this module. Original abilities restore when you return to a higher-level module.'},'\u2696 Scaled: Lv',gs.scaledFrom.fromLevel,' \u2192 Lv',gs.scaledFrom.toLevel):null,
     e('div',{className:'sidebar-section'},e('div',{className:'hp-bar-container'},e('div',{className:'hp-bar',style:{width:Math.max(0,(gs.hp/d.maxHp)*100)+'%'}}),e('span',{className:'hp-text'},'HP '+gs.hp+' / '+d.maxHp)),e('div',{className:'xp-bar-container'},e('div',{className:'xp-bar',style:{width:Math.min(100,((gs.xp||0)/[300,900,2700][Math.min(gs.level-1,2)])*100)+'%'}}),e('span',{className:'xp-text'},'XP '+(gs.xp||0)+' / '+[300,900,2700][Math.min(gs.level-1,2)])),e('div',{className:'mini-stats-row'},e('span',null,'AC '+d.ac),e('span',null,'Atk +'+d.attackBonus),e('span',null,'Prof +'+d.profBonus)),
     (d.weaponDurStatus?.penalty||d.armorDurStatus?.penalty)?e('div',{className:'durability-warning',style:{fontSize:'11px',color:'var(--orange)',marginTop:'4px'}},
       d.weaponDurStatus?.penalty?e('span',{style:{marginRight:'8px'}},'\u2694 '+d.weaponDurStatus.status):null,
@@ -9890,7 +9895,7 @@ function Sidebar({gs,onSave,onMenu,onSettings,saveMsg}){
     ):null,
     // Quest log
     (()=>{
-      const quests=CAMPAIGN_RULES?.questObjectives||[];
+      const quests=MODULE_RULES?.questObjectives||[];
       const history=gs.history||[];
       const visitedScenes=new Set(history.map(h=>(h.match(/^(\w+):/)||[])[1]).filter(Boolean));
       const active=quests.filter(q=>{
@@ -9927,7 +9932,7 @@ const MAP_LOCATIONS={
   'march-camp':{name:'First Camp',x:310,y:125,desc:'Where the column made camp the first night out. The fire felt different here — no walls, no certainty.',icon:'camp',known:false,hiddenName:'Roadside Camp',scenes:['30','31','62D','EV1','BOND_HUB']},
   'palanthas-road':{name:'South Road',x:270,y:170,desc:'The ancient highway south. Each milestone marks another day closer to whatever waits at the end.',icon:'road',known:true,scenes:['32','33','34','35','63','64','65']},
   // Act 3: River & Crossing
-  'road-ambush':{name:'Ambush Site',x:230,y:200,desc:'Where the draconians struck from the treeline. The first real blood of the campaign.',icon:'danger',known:false,hiddenName:'Dangerous Stretch',secret:true,scenes:['36','37','38','39','40','66','66B']},
+  'road-ambush':{name:'Ambush Site',x:230,y:200,desc:'Where the draconians struck from the treeline. The first real blood of the adventure.',icon:'danger',known:false,hiddenName:'Dangerous Stretch',secret:true,scenes:['36','37','38','39','40','66','66B']},
   'river-crossing':{name:'Vingaard Ford',x:195,y:235,desc:'The ancient ford across the Vingaard. Standing stones mark the crossing — older than the Order itself.',icon:'bridge',known:false,hiddenName:'River Crossing',scenes:['41','42','43','44','45','67','68','68B','68C']},
   // Act 4: West Bank & Approach
   'last-camp':{name:'Last Camp',x:155,y:270,desc:'The final night before Vogler. Conversations that felt like goodbyes.',icon:'camp',known:false,hiddenName:'Forest Camp',scenes:['46','47','48','69']},
@@ -10005,7 +10010,7 @@ function MapView({gs,sceneId,onClose}){
         e('button',{className:'map-zoom-btn',onClick:()=>setZoom(z=>Math.max(0.5,z-0.25))},'-'),
         e('button',{className:'map-reset-btn',onClick:resetView},'Reset')),
       e('div',{className:'map-container',onWheel:handleWheel,onMouseDown:handleMouseDown,onMouseMove:handleMouseMove,onMouseUp:handleMouseUp,onMouseLeave:handleMouseUp,onTouchStart:handleTouchStart,onTouchMove:handleTouchMove,onTouchEnd:handleTouchEnd},
-      e('svg',{viewBox:'0 0 440 520',className:'campaign-map',style:{transform:'scale('+zoom+') translate('+pan.x/zoom+'px,'+pan.y/zoom+'px)',cursor:dragging?'grabbing':'grab'}},
+      e('svg',{viewBox:'0 0 440 520',className:'module-map',style:{transform:'scale('+zoom+') translate('+pan.x/zoom+'px,'+pan.y/zoom+'px)',cursor:dragging?'grabbing':'grab'}},
         // Defs for gradients and patterns
         e('defs',null,
           e('linearGradient',{id:'sky',x1:'0%',y1:'0%',x2:'0%',y2:'100%'},e('stop',{offset:'0%',stopColor:'#1a1a2e'}),e('stop',{offset:'100%',stopColor:'#0e0e18'})),
@@ -10164,7 +10169,7 @@ function filterBoxes(boxes, gs) {
 // Determine mandatory detour scenes that must be visited before regular choices
 function getMandatoryDetours(sceneId, gs) {
   if (!gs) return [];
-  const rules = CAMPAIGN_RULES || {};
+  const rules = MODULE_RULES || {};
   const visited = gs.awardedScenes || {};
   const detours = [];
   const comps = gs.companions || [];
@@ -10193,7 +10198,7 @@ function getMandatoryDetours(sceneId, gs) {
 
 function filterChoices(choices, sceneId, gs) {
   if (!gs || !choices) return choices;
-  const rules = CAMPAIGN_RULES || {};
+  const rules = MODULE_RULES || {};
   const comps = gs.companions || [];
   const has = (name) => comps.some(c => c.toLowerCase().includes(name.toLowerCase()));
   const visitedScenes = new Set((gs.history || []).map(h => h.split(':')[0].trim()));
@@ -10385,10 +10390,10 @@ function BanterBlock({sceneId,gs}){
 
 // ── Approval Processing ──
 function processApproval(ns,sceneId,choiceLetter){
-  if(!CAMPAIGN_RULES||!CAMPAIGN_RULES.approvalDeltas)return;
+  if(!MODULE_RULES||!MODULE_RULES.approvalDeltas)return;
   const comps=ns.companions||[];
   if(!ns.approval)ns.approval={};
-  for(const rule of CAMPAIGN_RULES.approvalDeltas){
+  for(const rule of MODULE_RULES.approvalDeltas){
     if(rule.scene!==sceneId)continue;
     if(rule.letter!=='*'&&rule.letter!==choiceLetter)continue;
     for(const[comp,delta]of Object.entries(rule.deltas||{})){
@@ -10501,7 +10506,7 @@ function DmSummary({gs,sceneId,onBack}){
   const e=React.createElement;
   const dm=DM_SUMMARY||{};
   const d=gs.derived||calcDerived(gs.stats,gs.cls,gs.level,gs.armor,gs.hasShield,gs.feat,gs.wounds,gs.exhaustion,gs.durability,gs.style,gs.classLevels);
-  const cTitle=(CAMPAIGN&&CAMPAIGN.title)||'Campaign';
+  const cTitle=(MODULE&&MODULE.title)||'Module';
 
   // Ending info
   const ending=(dm.endings&&dm.endings[sceneId])||{title:sceneId,summary:''};
@@ -10541,7 +10546,7 @@ function DmSummary({gs,sceneId,onBack}){
     e('div',{className:'dm-header'},
       e('h1',null,'DM SUMMARY'),
       e('h2',null,cTitle),
-      e('p',{className:'dm-sub'},'Campaign chronicle and continuation hooks for the Dungeon Master.'),
+      e('p',{className:'dm-sub'},'Module chronicle and continuation hooks for the Dungeon Master.'),
       e('div',{className:'dm-actions'},
         e('button',{className:'gold-btn',onClick:()=>window.print()},'Print / Save PDF'),
         e('button',{className:'ghost-btn',onClick:onBack},'Back'))),
@@ -10592,9 +10597,9 @@ function DmSummary({gs,sceneId,onBack}){
         e('div',{className:'dm-label'},'Divine Signs'),
         e('div',{className:'dm-god-signs'},topGod.map(([g,n])=>e('span',{key:g,className:'dm-god'},g+': '+n)))):null),
 
-    // Section 2: Campaign Chronicle
+    // Section 2: Module Chronicle
     e('div',{className:'dm-section'},
-      e('h3',{className:'dm-section-title'},'CAMPAIGN CHRONICLE'),
+      e('h3',{className:'dm-section-title'},'MODULE CHRONICLE'),
       e('div',{className:'dm-ending'},
         e('div',{className:'dm-ending-title'},'Ending: '+ending.title),
         e('p',null,ending.summary)),
@@ -10610,7 +10615,7 @@ function DmSummary({gs,sceneId,onBack}){
     // Section 3: DM Hooks
     hooks.length?e('div',{className:'dm-section dm-hooks-section'},
       e('h3',{className:'dm-section-title'},'DM HOOKS FOR CONTINUATION'),
-      e('p',{className:'dm-hooks-intro'},'The following story hooks carry forward from this campaign. Use them to shape the next adventure.'),
+      e('p',{className:'dm-hooks-intro'},'The following story hooks carry forward from this module. Use them to shape the next adventure.'),
       hooks.map((h,i)=>e('div',{key:i,className:'dm-hook'},
         e('div',{className:'dm-hook-title'},h.title),
         e('div',{className:'dm-hook-hint'},h.hint)))):null,
@@ -10717,7 +10722,7 @@ function CharSheet({gs,isEnding,onBack,onEquipChange}){
   return e('div',{className:'char-sheet-page'},
     e('div',{className:'cs-header'},e('div',{className:'cs-title-block'},
       e('h1',null,'CHARACTER SHEET'),
-      e('h2',null,(CAMPAIGN?.title||'The Knight\u2019s Oath')+' '+(CAMPAIGN?.version?'v'+CAMPAIGN.version:'')+' \u2022 D&D 2024'),
+      e('h2',null,(MODULE?.title||'The Knight\u2019s Oath')+' '+(MODULE?.version?'v'+MODULE.version:'')+' \u2022 D&D 2024'),
       e('div',{className:'cs-divider'})),
       // Portrait section
       e('div',{className:'cs-portrait-section'},
@@ -11405,7 +11410,7 @@ function SubclassSelect({gs,onSelect}){
           canConfirm?'Confirm '+selSub?.name:'Select a subclass'))));
 }
 
-// Multiclass selection (appears at level 4+ when leveling up in continuation campaigns)
+// Multiclass selection (appears at level 4+ when leveling up in continuation modules)
 function MulticlassSelect({gs,onSelect,onCancel}){
   const e=React.createElement;
   const[selected,setSelected]=useState(null);
@@ -11662,7 +11667,7 @@ function CampModal({gs,sceneId,hardcoreMode,onDone,onCancel}){
   const longTaken=gs.longRestTaken||false;
   const dayNum=gs.dayNumber||1;
   const canShortRest=shortsToday<3;
-  const safeScenes=CAMPAIGN_RULES?.safeRestScenes||[];
+  const safeScenes=MODULE_RULES?.safeRestScenes||[];
   const canLongRest=!longTaken&&(safeScenes.includes(sceneId)||safeScenes.length===0);
   const remaining=d.hitDiceTotal-hdUsed;
   const atMax=hp>=d.maxHp;
@@ -12006,8 +12011,8 @@ function ConfirmModal({msg,onYes,onNo}){
         e('button',{className:'gold-btn confirm-yes',onClick:onYes},'Yes, leave'))));
 }
 
-// Campaign completion export modal
-function ExportCharacterModal({gs,campaignId,onExport,onClose}){
+// Module completion export modal
+function ExportCharacterModal({gs,moduleId,onExport,onClose}){
   const e=React.createElement;
   const[newName,setNewName]=useState(gs.name||'');
   const[selectedLove,setSelectedLove]=useState(null);
@@ -12028,10 +12033,10 @@ function ExportCharacterModal({gs,campaignId,onExport,onClose}){
     for(const k of CHARACTER_FIELDS)if(k in gs)expChar[k]=gs[k];
     expChar.name=newName.trim()||gs.name;
     expChar.loveInterest=selectedLove;
-    if(!expChar.completedCampaigns)expChar.completedCampaigns=[];
-    if(!expChar.completedCampaigns.includes(campaignId))expChar.completedCampaigns.push(campaignId);
+    if(!expChar.completedModules)expChar.completedModules=[];
+    if(!expChar.completedModules.includes(moduleId))expChar.completedModules.push(moduleId);
     expChar.lastApproval=gs.approval||{};
-    return{exportVersion:1,exportedAt:Date.now(),campaignId,character:expChar};
+    return{exportVersion:1,exportedAt:Date.now(),moduleId,character:expChar};
   };
   const handleDownload=()=>{
     const data=buildExportData();
@@ -12044,11 +12049,11 @@ function ExportCharacterModal({gs,campaignId,onExport,onClose}){
     URL.revokeObjectURL(url);
     setDownloaded(true);
   };
-  const cTitle=(CAMPAIGN&&CAMPAIGN.title)||'this campaign';
+  const cTitle=(MODULE&&MODULE.title)||'this module';
   return e('div',{className:'modal-overlay'},
     e('div',{className:'modal-box export-modal'},
-      e('h2',{className:'export-title'},'Campaign Complete'),
-      e('p',{className:'export-desc'},'Your journey through '+cTitle+' is complete. Export your character to continue their story in future campaigns.'),
+      e('h2',{className:'export-title'},'Module Complete'),
+      e('p',{className:'export-desc'},'Your journey through '+cTitle+' is complete. Export your character to continue their story in future modules.'),
       e('div',{className:'export-section'},
         e('label',{className:'export-label'},'Character Name'),
         e('input',{type:'text',className:'export-input',value:newName,onChange:ev=>setNewName(ev.target.value),placeholder:'Enter name'})),
@@ -12065,20 +12070,20 @@ function ExportCharacterModal({gs,campaignId,onExport,onClose}){
         e('button',{className:'gold-btn',onClick:()=>onExport(newName.trim()||gs.name,selectedLove)},'Save & Close'))));
 }
 
-// Import character modal (for continuing to new campaigns)
-function ImportCharacterModal({exportData,campaigns,onImport,onClose}){
+// Import character modal (for continuing to new modules)
+function ImportCharacterModal({exportData,modules,onImport,onClose}){
   const e=React.createElement;
   const char=exportData?.character||{};
-  const[targetCampaign,setTargetCampaign]=useState(null);
-  // Filter to campaigns that accept imports (continuation type or explicit requiresOrigin)
-  const importable=campaigns.filter(c=>c.type==='continuation'||c.requiresOrigin);
-  // Standalone/New Game+ mode: if no continuation campaigns, offer to restart current campaign
-  const isStandalone=!!window.__STANDALONE_CAMPAIGN__||importable.length===0;
-  const currentCampaignId=(CAMPAIGN&&CAMPAIGN.id)||'knights-oath';
-  const currentCampaignTitle=(CAMPAIGN&&CAMPAIGN.title)||'The Knight\'s Oath';
+  const[targetModule,setTargetModule]=useState(null);
+  // Filter to modules that accept imports (continuation type or explicit requiresOrigin)
+  const importable=(modules||[]).filter(c=>c.type==='continuation'||c.requiresOrigin);
+  // Standalone/New Game+ mode: if no continuation modules, offer to restart current module
+  const isStandalone=!!window.__STANDALONE_MODULE__||importable.length===0;
+  const currentModuleId=(MODULE&&MODULE.id)||'knights-oath';
+  const currentModuleTitle=(MODULE&&MODULE.title)||'The Knight\'s Oath';
   // Character summary
   const titleDisplay=char.selectedTitle||(char.titles&&char.titles[0])||null;
-  const completedList=(char.completedCampaigns||[]).join(', ')||'None';
+  const completedList=(char.completedModules||[]).join(', ')||'None';
   return e('div',{className:'modal-overlay'},
     e('div',{className:'modal-box import-modal'},
       e('h2',{className:'export-title'},isStandalone?'New Game+':'Import Character'),
@@ -12089,18 +12094,18 @@ function ImportCharacterModal({exportData,campaigns,onImport,onClose}){
         char.loveInterest?e('div',{className:'import-char-love'},'With: '+char.loveInterest):null,
         e('div',{className:'import-char-completed'},'Completed: '+completedList)),
       e('div',{className:'export-section'},
-        e('label',{className:'export-label'},isStandalone?'Restart Campaign':'Continue in Campaign'),
-        isStandalone?e('div',{className:'import-campaign-opts'},
+        e('label',{className:'export-label'},isStandalone?'Restart Module':'Continue in Module'),
+        isStandalone?e('div',{className:'import-module-opts'},
           e('p',{style:{fontSize:13,color:'var(--text-dim)',marginBottom:8}},'Start a new journey with your experienced character. Your level, equipment, titles, and love interest carry over.'),
           e('label',{className:'export-radio'},
-            e('input',{type:'radio',name:'campaign',checked:targetCampaign===currentCampaignId,onChange:()=>setTargetCampaign(currentCampaignId)}),' '+currentCampaignTitle+' (New Game+)')
-        ):importable.length>0?e('div',{className:'import-campaign-opts'},
+            e('input',{type:'radio',name:'module',checked:targetModule===currentModuleId,onChange:()=>setTargetModule(currentModuleId)}),' '+currentModuleTitle+' (New Game+)')
+        ):importable.length>0?e('div',{className:'import-module-opts'},
           importable.map(c=>e('label',{key:c.id,className:'export-radio'},
-            e('input',{type:'radio',name:'campaign',checked:targetCampaign===c.id,onChange:()=>setTargetCampaign(c.id)}),' '+c.title+' (Lvl '+(c.levelRange?c.levelRange.join('-'):'?')+')'))
-        ):e('p',{className:'dim-italic'},'No continuation campaigns available.')),
+            e('input',{type:'radio',name:'module',checked:targetModule===c.id,onChange:()=>setTargetModule(c.id)}),' '+c.title+' (Lvl '+(c.levelRange?c.levelRange.join('-'):'?')+')'))
+        ):e('p',{className:'dim-italic'},'No continuation modules available.')),
       e('div',{className:'export-btns'},
         e('button',{className:'ghost-btn',onClick:onClose},'Cancel'),
-        e('button',{className:'gold-btn',disabled:!targetCampaign,onClick:()=>onImport(targetCampaign,char)},'Start Campaign'))));
+        e('button',{className:'gold-btn',disabled:!targetModule,onClick:()=>onImport(targetModule,char)},'Start Module'))));
 }
 
 // Knighting ceremony skill choice modal
@@ -12129,9 +12134,11 @@ function KnightingSkillPicker({order,onConfirm}){
         e('button',{className:'gold-btn',onClick:()=>onConfirm(choice),disabled:!choice},'Accept Knighting'))));
 }
 
-// ── Campaign Loader ──
+// ── Module Loader ──
+let MODULE=null;
+let MODULE_RULES=null;
 let CAMPAIGN=null;
-let CAMPAIGN_RULES=null;
+let CAMPAIGN_LIST=[];
 let THEME=null;
 let DM_SUMMARY=null;
 let EPILOGUES=null;
@@ -12140,10 +12147,10 @@ let CLASS_DATA=null;
 let EQUIPMENT_DATA=null;
 let LANGUAGES_DATA=null;
 
-async function loadCampaign(campaignId){
+async function loadModule(moduleId){
   // Standalone build: use embedded data instead of fetching
-  if(window.__STANDALONE_CAMPAIGN__&&window.__STANDALONE_CAMPAIGN__.id===campaignId){
-    const manifest=window.__STANDALONE_CAMPAIGN__;
+  if(window.__STANDALONE_MODULE__&&window.__STANDALONE_MODULE__.id===moduleId){
+    const manifest=window.__STANDALONE_MODULE__;
     const d=window.__STANDALONE_DATA__||{};
     if(d.scenes)SCENES=d.scenes;
     if(d.combatNarration)COMBAT_NARRATION=d.combatNarration;
@@ -12151,7 +12158,7 @@ async function loadCampaign(campaignId){
     if(d.companions){const c=d.companions;if(c.all)COMPANIONS_ALL=c.all;if(c.data)COMPANION_DATA=c.data;if(c.combatStats)COMPANION_COMBAT_STATS=c.combatStats;if(c.fullStats){COMPANION_FULL_STATS=c.fullStats;window.COMPANION_FULL_STATS=c.fullStats}if(c.romanceCompat)ROMANCE_COMPAT=c.romanceCompat;if(c.romanceTooltips)ROMANCE_TOOLTIPS=c.romanceTooltips;if(c.breakupData)BREAKUP_DATA=c.breakupData}
     if(d.sceneEffects){if(d.sceneEffects.sceneEffects)SCENE_EFFECTS=d.sceneEffects.sceneEffects;if(d.sceneEffects.npcBreakups)NPC_BREAKUPS=d.sceneEffects.npcBreakups}
     if(d.shopData){if(d.shopData.sellPrices)SELL_PRICES=d.shopData.sellPrices;if(d.shopData.unsellablePattern)UNSELLABLE=new RegExp(d.shopData.unsellablePattern,'i');if(d.shopData.junkItems)JUNK_ITEMS=d.shopData.junkItems;if(d.shopData.miscItems)MISC_ITEMS=d.shopData.miscItems;if(d.shopData.enemyPortraits)ENEMY_PORTRAITS=d.shopData.enemyPortraits}
-    if(d.rules){CAMPAIGN_RULES=d.rules;if(d.rules.endingScenes)ENDING_SCENES=d.rules.endingScenes;if(d.rules.relationshipCheckScenes)RELATIONSHIP_CHECK_SCENES=d.rules.relationshipCheckScenes;if(d.rules.gods)GODS=d.rules.gods;if(d.rules.godFlavour)GOD_FLAVOUR=d.rules.godFlavour;if(d.rules.presets)PRESETS=d.rules.presets}
+    if(d.rules){MODULE_RULES=d.rules;if(d.rules.endingScenes)ENDING_SCENES=d.rules.endingScenes;if(d.rules.relationshipCheckScenes)RELATIONSHIP_CHECK_SCENES=d.rules.relationshipCheckScenes;if(d.rules.gods)GODS=d.rules.gods;if(d.rules.godFlavour)GOD_FLAVOUR=d.rules.godFlavour;if(d.rules.presets)PRESETS=d.rules.presets}
     if(d.theme){applyTheme(d.theme);if(d.theme.loadingScreen)manifest.loadingScreen=d.theme.loadingScreen}
     if(d.dmSummary)DM_SUMMARY=d.dmSummary;
     if(d.epilogues)EPILOGUES=d.epilogues;
@@ -12161,16 +12168,16 @@ async function loadCampaign(campaignId){
     if(d.classes)CLASS_DATA=d.classes;
     if(d.equipment)EQUIPMENT_DATA=d.equipment;
     if(d.languages)LANGUAGES_DATA=d.languages;
-    CAMPAIGN=manifest;
+    MODULE=manifest;
     if(d.scenesDeferred){setTimeout(()=>{for(const k in d.scenesDeferred)SCENES[k]=d.scenesDeferred[k];window._scenesReady=true},100)}
     else{window._scenesReady=true}
-    console.log('[Campaign] Loaded from standalone build:',manifest.title);
+    console.log('[Module] Loaded from standalone build:',manifest.title);
     return manifest;
   }
-  const base='campaigns/'+campaignId+'/';
+  const base='modules/'+moduleId+'/';
   const bust='?_='+Date.now();
   try{
-    const manifest=await fetch(base+'campaign.json'+bust).then(r=>{if(!r.ok)throw new Error('Campaign not found: '+campaignId);return r.json()});
+    const manifest=await fetch(base+'module.json'+bust).then(r=>{if(!r.ok)throw new Error('Module not found: '+moduleId);return r.json()});
     const files=manifest.files||{};
     // Load all data files in parallel
     const f=file=>file?fetch(base+file+bust).then(r=>r.json()):null;
@@ -12207,7 +12214,7 @@ async function loadCampaign(campaignId){
       if(shop.enemyPortraits){ENEMY_PORTRAITS=shop.enemyPortraits}
     }
     if(rules){
-      CAMPAIGN_RULES=rules;
+      MODULE_RULES=rules;
       if(rules.endingScenes)ENDING_SCENES=rules.endingScenes;
       if(rules.relationshipCheckScenes)RELATIONSHIP_CHECK_SCENES=rules.relationshipCheckScenes;
       if(rules.gods)GODS=rules.gods;
@@ -12224,9 +12231,9 @@ async function loadCampaign(campaignId){
     if(equipment)EQUIPMENT_DATA=equipment;
     if(languages)LANGUAGES_DATA=languages;
 
-    CAMPAIGN=manifest;
+    MODULE=manifest;
 
-    // Update loading screen with campaign info
+    // Update loading screen with module info
     const ls=theme&&theme.loadingScreen||{};
     const ltEl=document.getElementById('loading-title');
     const lnEl=document.getElementById('loading-name');
@@ -12240,17 +12247,43 @@ async function loadCampaign(campaignId){
       setTimeout(()=>{for(const k in scenesDeferred)SCENES[k]=scenesDeferred[k];window._scenesReady=true},100);
     }
 
-    console.log('[Campaign] Loaded: '+manifest.title+' ('+manifest.id+')');
+    console.log('[Module] Loaded: '+manifest.title+' ('+manifest.id+')');
     return manifest;
   }catch(err){
-    console.error('[Campaign] Load failed:',err.message);
+    console.error('[Module] Load failed:',err.message);
     // Show error on loading screen
     const lsEl=document.getElementById('loading-status');
     const lnEl=document.getElementById('loading-name');
     if(lsEl)lsEl.textContent='Error: '+err.message;
     if(lsEl)lsEl.style.color='#c44';
-    if(lnEl)lnEl.textContent='Campaign failed to load';
+    if(lnEl)lnEl.textContent='Module failed to load';
     return null;
+  }
+}
+
+// Load campaign manifest
+async function loadCampaign(campaignId){
+  if(!campaignId)return null;
+  try{
+    const manifest=await fetch('campaigns/'+campaignId+'.json').then(r=>{if(!r.ok)throw new Error('Campaign not found');return r.json()});
+    CAMPAIGN=manifest;
+    console.log('[Campaign] Loaded: '+manifest.title+' ('+manifest.id+')');
+    return manifest;
+  }catch(err){
+    console.warn('[Campaign] Load failed:',err.message);
+    return null;
+  }
+}
+
+// Load campaign registry
+async function loadCampaignList(){
+  try{
+    const data=await fetch('campaigns/index.json').then(r=>r.ok?r.json():null);
+    if(data?.campaigns)CAMPAIGN_LIST=data.campaigns;
+    return CAMPAIGN_LIST;
+  }catch(err){
+    console.warn('[Campaign] Registry load failed');
+    return[];
   }
 }
 
@@ -12260,10 +12293,10 @@ function applyTheme(theme){
   const root=document.documentElement;
   if(theme.cssVars){for(const[k,v]of Object.entries(theme.cssVars))root.style.setProperty(k,v)}
   if(theme.fonts&&theme.fonts.googleFontsUrl){
-    const existing=document.querySelector('link[data-campaign-fonts]');
+    const existing=document.querySelector('link[data-module-fonts]');
     if(existing)existing.remove();
     const link=document.createElement('link');
-    link.rel='stylesheet';link.href=theme.fonts.googleFontsUrl;link.dataset.campaignFonts='true';
+    link.rel='stylesheet';link.href=theme.fonts.googleFontsUrl;link.dataset.moduleFonts='true';
     document.head.appendChild(link);
   }
 }
@@ -12303,7 +12336,7 @@ function DraggableSettings({onOpen}){
 
 function App(){
   const[phase,setPhase]=useState('cover');const[gs,setGs]=useState(null);const[scene,setScene]=useState(null);const[sceneId,setSceneId]=useState(null);
-  const[showSave,setShowSave]=useState(false);const[saveMsg,setSaveMsg]=useState('');const[showSheet,setShowSheet]=useState(false);const[showDmSummary,setShowDmSummary]=useState(false);const[showMap,setShowMap]=useState(false);const[sideOpen,setSideOpen]=useState(false);const[confirmModal,setConfirmModal]=useState(null);const[compPopup,setCompPopup]=useState(null);const[romancePrompt,setRomancePrompt]=useState(null);const[romanceManage,setRomanceManage]=useState(false);const[breakupTarget,setBreakupTarget]=useState(null);const[npcNotify,setNpcNotify]=useState(null);const[romanceCheck,setRomanceCheck]=useState(null);const[spellPrepModal,setSpellPrepModal]=useState(false);const[shortRestModal,setShortRestModal]=useState(false);const[healingPanel,setHealingPanel]=useState(false);const[defeatRecovery,setDefeatRecovery]=useState(null);const[godSignPicker,setGodSignPicker]=useState(null);const[subclassModal,setSubclassModal]=useState(false);const[editSlot,setEditSlot]=useState(null);const[showSettingsPanel,setShowSettingsPanel]=useState(false);const[knightingPicker,setKnightingPicker]=useState(null);const[showCamp,setShowCamp]=useState(false);const[showExportModal,setShowExportModal]=useState(false);const[showCampaignSwitch,setShowCampaignSwitch]=useState(false);const[campaignList,setCampaignList]=useState([]);
+  const[showSave,setShowSave]=useState(false);const[saveMsg,setSaveMsg]=useState('');const[showSheet,setShowSheet]=useState(false);const[showDmSummary,setShowDmSummary]=useState(false);const[showMap,setShowMap]=useState(false);const[sideOpen,setSideOpen]=useState(false);const[confirmModal,setConfirmModal]=useState(null);const[compPopup,setCompPopup]=useState(null);const[romancePrompt,setRomancePrompt]=useState(null);const[romanceManage,setRomanceManage]=useState(false);const[breakupTarget,setBreakupTarget]=useState(null);const[npcNotify,setNpcNotify]=useState(null);const[romanceCheck,setRomanceCheck]=useState(null);const[spellPrepModal,setSpellPrepModal]=useState(false);const[shortRestModal,setShortRestModal]=useState(false);const[healingPanel,setHealingPanel]=useState(false);const[defeatRecovery,setDefeatRecovery]=useState(null);const[godSignPicker,setGodSignPicker]=useState(null);const[subclassModal,setSubclassModal]=useState(false);const[editSlot,setEditSlot]=useState(null);const[showSettingsPanel,setShowSettingsPanel]=useState(false);const[knightingPicker,setKnightingPicker]=useState(null);const[showCamp,setShowCamp]=useState(false);const[showExportModal,setShowExportModal]=useState(false);const[showModuleSwitch,setShowModuleSwitch]=useState(false);const[moduleList,setModuleList]=useState([]);
   const[textSize,setTextSize]=useState(()=>localStorage.getItem('textSize')||'normal');
   const[hardcoreMode,setHardcoreMode]=useState(()=>localStorage.getItem('hardcoreMode')==='true');
   // Migrate companion name casing on any active gs
@@ -12329,10 +12362,10 @@ function App(){
     if(action)window.history.replaceState({},'',window.location.pathname);
   },[]);
 
-  // Load campaign list for campaign switching
+  // Load module list for module switching
   React.useEffect(()=>{
-    if(window.__STANDALONE_DATA__?.campaignIndex){setCampaignList(window.__STANDALONE_DATA__.campaignIndex.campaigns||[]);return}
-    fetch('campaigns/index.json').then(r=>r.ok?r.json():null).then(data=>{if(data?.campaigns)setCampaignList(data.campaigns)}).catch(()=>{});
+    if(window.__STANDALONE_DATA__?.moduleIndex){setModuleList(window.__STANDALONE_DATA__.moduleIndex.modules||[]);return}
+    fetch('modules/index.json').then(r=>r.ok?r.json():null).then(data=>{if(data?.modules)setModuleList(data.modules)}).catch(()=>{});
   },[]);
 
   // Text size persistence
@@ -12415,15 +12448,15 @@ function App(){
       // Mount heals on long rest
       if(ns.mount&&ns.mount.hp<ns.mount.maxHp){ns.mount={...ns.mount,hp:ns.mount.maxHp}}}
     // Travel consumption: consume water when entering travel scenes (hardcore only)
-    const travelScenes=CAMPAIGN_RULES?.travelScenes||[];
+    const travelScenes=MODULE_RULES?.travelScenes||[];
     if(hardcoreMode&&travelScenes.includes(id)&&!ns.awardedScenes['travel_'+id]){
       ns.awardedScenes['travel_'+id]=true;
       // Consume 1 waterskin use during travel (thirst)
       if((ns.waterskinUses||0)>0){ns.waterskinUses=ns.waterskinUses-1;ns.history.push('Used 1 water during march. ('+(ns.waterskinUses)+' left)')}
       else{ns.exhaustion=(ns.exhaustion||0)+1;ns.history.push('No water during march! +1 Exhaustion.')}
     }
-    // Random travel events — check travelEvents from campaign rules
-    const travelEvents=CAMPAIGN_RULES?.travelEvents||[];
+    // Random travel events — check travelEvents from module rules
+    const travelEvents=MODULE_RULES?.travelEvents||[];
     const romanceRank={Spark:1,Flame:2,Oath:3};
     for(const ev of travelEvents){
       if(!ev.triggerScenes?.includes(id))continue;
@@ -12457,9 +12490,9 @@ function App(){
       if(t.includes('ADD TO INVENTORY')||t.includes('ITEM GIVEN')){
         const m=t.match(/(?:ADD TO INVENTORY|ITEM GIVEN)\s*[—–-]\s*(.+?)(?:\*\*|\n)/);
         if(m){const item=m[1].replace(/\*+/g,'').trim();
-          // Expand bundles into their actual contents (from campaign rules or fallback)
+          // Expand bundles into their actual contents (from module rules or fallback)
           let bundleMatched=false;
-          for(const[pattern,expansion] of Object.entries(CAMPAIGN_RULES?.bundleExpansions||{})){
+          for(const[pattern,expansion] of Object.entries(MODULE_RULES?.bundleExpansions||{})){
             if(new RegExp(pattern,'i').test(item)){
               (expansion.items||[]).forEach(bi=>{addItemWithTracking(ns,bi,id)});
               if(expansion.bandages)ns.bandages=(ns.bandages||0)+expansion.bandages;
@@ -12526,7 +12559,7 @@ function App(){
       if(flagMatch){
         ns.flags[flagMatch[1]]=true;
         // Grant title from titleGrants rules
-        const titleGrants=CAMPAIGN_RULES?.titleGrants||[];
+        const titleGrants=MODULE_RULES?.titleGrants||[];
         const grant=titleGrants.find(g=>g.flag===flagMatch[1]);
         if(grant){
           if(!ns.titles)ns.titles=[];
@@ -12563,7 +12596,7 @@ function App(){
       if(b.text.includes('LEVEL 2')&&ns.level<2){captureSnapshot(1);ns.level=2;if(!ns.classLevels)ns.classLevels={[ns.cls]:1};ns.classLevels[ns.cls]=2;ns.derived=calcDerived(ns.stats,ns.cls,2,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels);ns.hp=ns.derived.maxHp;SoundManager.play('levelup')}
       if(b.text.includes('LEVEL 3')&&ns.level<3){captureSnapshot(2);ns.level=3;if(!ns.classLevels)ns.classLevels={[ns.cls]:2};ns.classLevels[ns.cls]=3;ns.derived=calcDerived(ns.stats,ns.cls,3,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels);ns.hp=ns.derived.maxHp;SoundManager.play('levelup');if(!ns.subclass)setTimeout(()=>setSubclassModal(true),500)}});
     // Scene-based title grants from titleGrants rules
-    const sceneTitleGrants=(CAMPAIGN_RULES?.titleGrants||[]).filter(g=>g.scene===id);
+    const sceneTitleGrants=(MODULE_RULES?.titleGrants||[]).filter(g=>g.scene===id);
     sceneTitleGrants.forEach(grant=>{
       if(!ns.titles)ns.titles=[];
       let title=grant.title;
@@ -12577,15 +12610,15 @@ function App(){
     AudioController.playForContext(hasCombat?'combat':hasShop?'shop':'ambient');
     setScene(s);setSceneId(id);setGs(ns);if(shouldAutoSave())saveGame(0,ns,id)};
   const startGame=({cls,stats,style,feat,mastery,name,spells,equip,skilledPicks,crafterTools,musicianInstruments,classSkills,humanSkill,extraLang})=>{const derived=calcDerived(stats,cls,1,equip.armor,equip.hasShield,feat,[],0,null,style);
-    const cRes=(CAMPAIGN&&CAMPAIGN.startingResources)||{};
-    const cInv=(CAMPAIGN&&CAMPAIGN.startingInventory)||['Dagger','Explorer\u2019s Pack'];
-    const cEquip=(CAMPAIGN&&CAMPAIGN.startingEquipment)||{};
+    const cRes=(MODULE&&MODULE.startingResources)||{};
+    const cInv=(MODULE&&MODULE.startingInventory)||['Dagger','Explorer\u2019s Pack'];
+    const cEquip=(MODULE&&MODULE.startingEquipment)||{};
     const startGods={};for(const g of GODS)(startGods[g]=0);
-    const startScene=(CAMPAIGN_RULES&&CAMPAIGN_RULES.startScene)||(CAMPAIGN&&CAMPAIGN.startScene)||'1';
+    const startScene=(MODULE_RULES&&MODULE_RULES.startScene)||(MODULE&&MODULE.startScene)||'1';
     const extraInv=[equip.weapon,equip.armor,equip.hasShield?'Shield':'',...cInv,cEquip.head,cEquip.hands,cEquip.boots].filter(Boolean);
-    const startLangs=(CAMPAIGN&&CAMPAIGN.startingLanguages)||['Common'];
+    const startLangs=(MODULE&&MODULE.startingLanguages)||['Common'];
     const allLangs=[...startLangs];if(extraLang&&!allLangs.includes(extraLang))allLangs.push(extraLang);
-    const state={cls,stats,style,feat,mastery,name:name||'Squire',spells:spells||{cantrips:[],level1:[],alwaysPrepared:[]},weapon:equip.weapon,armor:equip.armor,skilledPicks:skilledPicks||[],classSkills:classSkills||[],humanSkill:humanSkill||null,hasShield:equip.hasShield,level:1,hp:derived.maxHp,derived,xp:0,honour:cRes.honour||5,rose:0,sword:0,crown:0,companions:[],romances:{},godSigns:startGods,dgTrack:'NONE',equipment:buildEquipment(equip.weapon,equip.armor,equip.hasShield),inventory:extraInv,history:[],awardedScenes:{},companionLog:{},romanceDeclined:{},flags:{},bonuses:[],magicItems:[],measureTrack:0,measureOrientation:null,gold:cRes.gold||0,layOnHandsPool:cls==='Paladin'?derived.layOnHandsMax:0,spellSlotsUsed:0,spellSlots2ndUsed:0,spellSlots3rdUsed:0,spellSlots4thUsed:0,spellSlots5thUsed:0,spellSlots6thUsed:0,spellSlots7thUsed:0,spellSlots8thUsed:0,spellSlots9thUsed:0,secondWindUsed:0,actionSurgeUsed:false,bandages:cRes.bandages||0,potions:cRes.potions||0,greaterPotions:cRes.greaterPotions||0,rations:cRes.rations||0,torches:cRes.torches||0,waterskinUses:cRes.waterskinUses||3,miraHealedThisScene:false,completedRolls:{},deadCompanions:[],hitDiceUsed:0,wounds:[],scars:[],combatCount:0,orderMax:{rose:0,sword:0,crown:0},approval:{},kills:{player:{},companions:{}},companionGifts:[],mount:null,languages:allLangs,exhaustion:0,toolProficiencies:crafterTools||[],musicianInstruments:musicianInstruments||[],heroicInspiration:0,subclass:null,maneuvers:[],superiorityDice:0,channelDivinityUsed:0,vowOfEnmityTarget:null,sacredWeaponActive:false,durability:buildDurability(),classLevels:{[cls]:1},secondClass:null,secondSubclass:null};setGs(state);goScene(startScene,state);setPhase('play')};
+    const state={cls,stats,style,feat,mastery,name:name||'Squire',spells:spells||{cantrips:[],level1:[],alwaysPrepared:[]},weapon:equip.weapon,armor:equip.armor,skilledPicks:skilledPicks||[],classSkills:classSkills||[],humanSkill:humanSkill||null,hasShield:equip.hasShield,level:1,hp:derived.maxHp,derived,xp:0,honour:cRes.honour||5,rose:0,sword:0,crown:0,companions:[],romances:{},godSigns:startGods,dgTrack:'NONE',equipment:buildEquipment(equip.weapon,equip.armor,equip.hasShield),inventory:extraInv,history:[],awardedScenes:{},companionLog:{},romanceDeclined:{},flags:{},bonuses:[],magicItems:[],measureTrack:0,measureOrientation:null,gold:cRes.gold||0,layOnHandsPool:cls==='Paladin'?derived.layOnHandsMax:0,spellSlotsUsed:0,spellSlots2ndUsed:0,spellSlots3rdUsed:0,spellSlots4thUsed:0,spellSlots5thUsed:0,spellSlots6thUsed:0,spellSlots7thUsed:0,spellSlots8thUsed:0,spellSlots9thUsed:0,secondWindUsed:0,actionSurgeUsed:false,bandages:cRes.bandages||0,potions:cRes.potions||0,greaterPotions:cRes.greaterPotions||0,rations:cRes.rations||0,torches:cRes.torches||0,waterskinUses:cRes.waterskinUses||3,miraHealedThisScene:false,completedRolls:{},deadCompanions:[],hitDiceUsed:0,wounds:[],scars:[],combatCount:0,orderMax:{rose:0,sword:0,crown:0},approval:{},kills:{player:{},companions:{}},companionGifts:[],mount:null,languages:allLangs,exhaustion:0,toolProficiencies:crafterTools||[],musicianInstruments:musicianInstruments||[],heroicInspiration:0,subclass:null,maneuvers:[],superiorityDice:0,channelDivinityUsed:0,vowOfEnmityTarget:null,sacredWeaponActive:false,durability:buildDurability(),classLevels:{[cls]:1},secondClass:null,secondSubclass:null,currentCampaign:(MODULE&&MODULE.campaignId)||null,campaignProgress:{modulesCompleted:[],currentModule:(MODULE&&MODULE.id)||null},sagaFlags:{}};setGs(state);goScene(startScene,state);setPhase('play')};
   const loadSave=(saveData)=>{
     if(!saveData)return;
     // Handle v2 split format or auto-migrate legacy
@@ -12598,14 +12631,14 @@ function App(){
       g=saveData.gs;loadSceneId=saveData.sceneId;
     }else return;
     // Version mismatch warning
-    if(saveData.saveVersion===2&&saveData.progress.campaignVersion&&CAMPAIGN&&CAMPAIGN.version){
-      if(saveData.progress.campaignVersion!==CAMPAIGN.version){
-        console.warn('[Save] Version mismatch: save='+saveData.progress.campaignVersion+' campaign='+CAMPAIGN.version);
-        g.history=[...(g.history||[]),'[Save was from v'+saveData.progress.campaignVersion+', now running v'+CAMPAIGN.version+']'];
+    if(saveData.saveVersion===2&&saveData.progress.moduleVersion&&MODULE&&MODULE.version){
+      if(saveData.progress.moduleVersion!==MODULE.version){
+        console.warn('[Save] Version mismatch: save='+saveData.progress.moduleVersion+' module='+MODULE.version);
+        g.history=[...(g.history||[]),'[Save was from v'+saveData.progress.moduleVersion+', now running v'+MODULE.version+']'];
       }
     }
     // Field defaults (migration safety)
-    if(!g.inventory)g.inventory=[];if(!g.deadCompanions)g.deadCompanions=[];if(!g.completedRolls)g.completedRolls={};if(!g.awardedScenes)g.awardedScenes={};if(!g.romances)g.romances={};if(!g.flags)g.flags={};if(!g.bonuses)g.bonuses=[];if(!g.magicItems)g.magicItems=[];if(g.hitDiceUsed===undefined)g.hitDiceUsed=0;if(!g.wounds)g.wounds=[];if(!g.scars)g.scars=[];if(g.combatCount===undefined)g.combatCount=0;if(g.xp===undefined)g.xp=0;if(g.honour===undefined)g.honour=5;if(!g.approval)g.approval={};if(!g.companionGifts)g.companionGifts=[];if(!g.orderMax)g.orderMax={rose:Math.max(0,g.rose||0),sword:Math.max(0,g.sword||0),crown:Math.max(0,g.crown||0)};if(g.exhaustion===undefined)g.exhaustion=0;if(g.rations===undefined)g.rations=0;if(g.torches===undefined)g.torches=0;if(!g.toolProficiencies)g.toolProficiencies=[];if(!g.musicianInstruments)g.musicianInstruments=[];if(g.heroicInspiration===undefined)g.heroicInspiration=0;if(g.subclass===undefined)g.subclass=null;if(!g.maneuvers)g.maneuvers=[];if(g.superiorityDice===undefined)g.superiorityDice=0;if(g.channelDivinityUsed===undefined)g.channelDivinityUsed=0;if(g.vowOfEnmityTarget===undefined)g.vowOfEnmityTarget=null;if(g.sacredWeaponActive===undefined)g.sacredWeaponActive=false;if(g.spellSlots2ndUsed===undefined)g.spellSlots2ndUsed=0;if(g.spellSlots3rdUsed===undefined)g.spellSlots3rdUsed=0;if(g.spellSlots4thUsed===undefined)g.spellSlots4thUsed=0;if(g.spellSlots5thUsed===undefined)g.spellSlots5thUsed=0;if(g.spellSlots6thUsed===undefined)g.spellSlots6thUsed=0;if(g.spellSlots7thUsed===undefined)g.spellSlots7thUsed=0;if(g.spellSlots8thUsed===undefined)g.spellSlots8thUsed=0;if(g.spellSlots9thUsed===undefined)g.spellSlots9thUsed=0;
+    if(!g.inventory)g.inventory=[];if(!g.deadCompanions)g.deadCompanions=[];if(!g.completedRolls)g.completedRolls={};if(!g.awardedScenes)g.awardedScenes={};if(!g.romances)g.romances={};if(!g.flags)g.flags={};if(!g.bonuses)g.bonuses=[];if(!g.magicItems)g.magicItems=[];if(g.hitDiceUsed===undefined)g.hitDiceUsed=0;if(!g.wounds)g.wounds=[];if(!g.scars)g.scars=[];if(g.combatCount===undefined)g.combatCount=0;if(g.xp===undefined)g.xp=0;if(g.honour===undefined)g.honour=5;if(!g.approval)g.approval={};if(!g.companionGifts)g.companionGifts=[];if(!g.orderMax)g.orderMax={rose:Math.max(0,g.rose||0),sword:Math.max(0,g.sword||0),crown:Math.max(0,g.crown||0)};if(g.exhaustion===undefined)g.exhaustion=0;if(g.rations===undefined)g.rations=0;if(g.torches===undefined)g.torches=0;if(!g.toolProficiencies)g.toolProficiencies=[];if(!g.musicianInstruments)g.musicianInstruments=[];if(g.heroicInspiration===undefined)g.heroicInspiration=0;if(g.subclass===undefined)g.subclass=null;if(!g.maneuvers)g.maneuvers=[];if(g.superiorityDice===undefined)g.superiorityDice=0;if(g.channelDivinityUsed===undefined)g.channelDivinityUsed=0;if(g.vowOfEnmityTarget===undefined)g.vowOfEnmityTarget=null;if(g.sacredWeaponActive===undefined)g.sacredWeaponActive=false;if(g.spellSlots2ndUsed===undefined)g.spellSlots2ndUsed=0;if(g.spellSlots3rdUsed===undefined)g.spellSlots3rdUsed=0;if(g.spellSlots4thUsed===undefined)g.spellSlots4thUsed=0;if(g.spellSlots5thUsed===undefined)g.spellSlots5thUsed=0;if(g.spellSlots6thUsed===undefined)g.spellSlots6thUsed=0;if(g.spellSlots7thUsed===undefined)g.spellSlots7thUsed=0;if(g.spellSlots8thUsed===undefined)g.spellSlots8thUsed=0;if(g.spellSlots9thUsed===undefined)g.spellSlots9thUsed=0;if(!g.currentCampaign)g.currentCampaign=(MODULE&&MODULE.campaignId)||null;if(!g.campaignProgress)g.campaignProgress={modulesCompleted:[],currentModule:(MODULE&&MODULE.id)||null};if(!g.sagaFlags)g.sagaFlags={};
     if(!g.equipment){g.equipment=buildEquipment(g.weapon,g.armor,g.hasShield);if(!g.inventory.includes('Leather Helm')){g.inventory.push('Leather Helm','Leather Gloves','Leather Boots')}}
     // Migrate companion names to canonical casing
     g.companions=(g.companions||[]).map(c=>{const canon=COMPANIONS_ALL.find(x=>x.toLowerCase()===c.toLowerCase());return canon||c});
@@ -12617,7 +12650,7 @@ function App(){
     const scKey=sceneId;
     if(!ns.awardedScenes[scKey]){ns.rose+=(c.points.ROSE||0);ns.sword+=(c.points.SWORD||0);ns.crown+=(c.points.CROWN||0);if(Object.keys(c.points).length)ns.awardedScenes[scKey]=true;
       // Thematic order point notifications
-      const cOrders=CAMPAIGN&&CAMPAIGN.orders||{};
+      const cOrders=MODULE&&MODULE.orders||{};
       const orderMsg={ROSE:(cOrders.rose&&cOrders.rose.positive)||['Your compassion is noted.'],SWORD:(cOrders.sword&&cOrders.sword.positive)||['Courage in action.'],CROWN:(cOrders.crown&&cOrders.crown.positive)||['A display of discipline.']};
       const negMsg=(cOrders.rose&&cOrders.rose.negative)||['A stain on your honour.'];
       ns.history=[...(ns.history||[])];
@@ -12664,10 +12697,10 @@ function App(){
     if(c.letter==='DETOUR'&&c.target){ns.awardedScenes[c.target+'_visited']=true}
     // Mark scenes with configured prefixes as visited when entering
     const t=c.target||'';
-    for(const pfx of (CAMPAIGN_RULES?.visitedPrefixes||[]))if(t.startsWith(pfx))ns.awardedScenes[t+'_visited']=true;
-    // Set story flags from campaign rules
+    for(const pfx of (MODULE_RULES?.visitedPrefixes||[]))if(t.startsWith(pfx))ns.awardedScenes[t+'_visited']=true;
+    // Set story flags from module rules
     if(!ns.flags)ns.flags={};
-    for(const rule of (CAMPAIGN_RULES?.choiceFlags||[])){
+    for(const rule of (MODULE_RULES?.choiceFlags||[])){
       const rLetters=rule.letters||( rule.letter?[rule.letter]:[]);
       if(rule.scene===sceneId&&(rLetters.includes(c.letter)||rLetters.includes('*'))){
         if(rule.setFlags)Object.assign(ns.flags,rule.setFlags);
@@ -12733,7 +12766,7 @@ function App(){
       }
     }
     // Handle confrontation scenes (from rules.json)
-    const confrontMap=CAMPAIGN_RULES?.confrontationScenes||{};
+    const confrontMap=MODULE_RULES?.confrontationScenes||{};
     const confrontComp=confrontMap[sceneId];
     if(confrontComp){
       if(c.letter==='C'&&ns.companions.includes(confrontComp)){
@@ -12746,11 +12779,11 @@ function App(){
     }
     // Class-conditional target overrides
     let finalTarget=c.target;
-    for(const ov of (CAMPAIGN_RULES?.targetOverrides||[])){
+    for(const ov of (MODULE_RULES?.targetOverrides||[])){
       if(sceneId===ov.scene&&finalTarget===ov.target&&ns.cls===ov.ifClass)finalTarget=ov.redirectTo;
     }
     // Ceremony routing — redirect based on order points (from rules.json)
-    const cRoute=CAMPAIGN_RULES?.ceremonyRouting;
+    const cRoute=MODULE_RULES?.ceremonyRouting;
     if(cRoute&&(cRoute.triggers||[]).includes(finalTarget)){
       const r=ns.rose||0,s=ns.sword||0,cr=ns.crown||0;
       if(r===0&&s===0&&cr===0){finalTarget=cRoute.unproven||finalTarget}
@@ -12861,30 +12894,30 @@ function App(){
     setGs(ns)};
   const handleStateUpdate=(updater)=>{if(!gs)return;const ns=typeof updater==='function'?updater(gs):{...gs,...updater};ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels);setGs(ns)};
   const handleExportCharacter=async(newName,loveInterest)=>{
-    const campaignId=(CAMPAIGN&&CAMPAIGN.id)||'knights-oath';
+    const moduleId=(MODULE&&MODULE.id)||'knights-oath';
     // Build exported character with updated name and love interest
     const expChar={};
     for(const k of CHARACTER_FIELDS)if(k in gs)expChar[k]=gs[k];
     expChar.name=newName;
     expChar.loveInterest=loveInterest;
-    // Track completed campaigns
-    if(!expChar.completedCampaigns)expChar.completedCampaigns=[];
-    if(!expChar.completedCampaigns.includes(campaignId))expChar.completedCampaigns.push(campaignId);
+    // Track completed modules
+    if(!expChar.completedModules)expChar.completedModules=[];
+    if(!expChar.completedModules.includes(moduleId))expChar.completedModules.push(moduleId);
     // Save approval ratings for potential reunion
     expChar.lastApproval=gs.approval||{};
     // Store as exportable character (separate from save slots)
-    const exportData={exportVersion:1,exportedAt:Date.now(),campaignId,character:expChar};
+    const exportData={exportVersion:1,exportedAt:Date.now(),moduleId,character:expChar};
     await ST.set('exported_character',JSON.stringify(exportData));
     setSaveMsg('Character exported!');setTimeout(()=>setSaveMsg(''),2500);
     setShowExportModal(false);
   };
-  const handleImportCharacter=async(campaignId,importedChar)=>{
-    // Check if this is New Game+ (same campaign restart)
-    const currentCampaignId=(CAMPAIGN&&CAMPAIGN.id)||'knights-oath';
-    const isNewGamePlus=campaignId===currentCampaignId&&(importedChar.completedCampaigns||[]).includes(campaignId);
-    // Load the target campaign (no-op if same campaign in standalone)
-    if(!isNewGamePlus||!window.__STANDALONE_CAMPAIGN__)await loadCampaign(campaignId).catch(()=>null);
-    // Check if love interest is available in this campaign
+  const handleImportCharacter=async(moduleId,importedChar)=>{
+    // Check if this is New Game+ (same module restart)
+    const currentModuleId=(MODULE&&MODULE.id)||'knights-oath';
+    const isNewGamePlus=moduleId===currentModuleId&&(importedChar.completedModules||[]).includes(moduleId);
+    // Load the target module (no-op if same module in standalone)
+    if(!isNewGamePlus||!window.__STANDALONE_MODULE__)await loadModule(moduleId).catch(()=>null);
+    // Check if love interest is available in this module
     const loveInterest=importedChar.loveInterest;
     const loveAvailable=loveInterest&&COMPANIONS_ALL.includes(loveInterest);
     // Handle parting if love interest can't join
@@ -12892,7 +12925,7 @@ function App(){
     if(loveInterest&&!loveAvailable){
       // Record the parting
       const partedReason=COMPANION_DATA[loveInterest]?.partedReason||'personal matters require their attention';
-      partedCompanions=[...partedCompanions,{name:loveInterest,partedAt:campaignId,reason:partedReason,partedDate:Date.now(),approval:(importedChar.lastApproval||{})[loveInterest]||0}];
+      partedCompanions=[...partedCompanions,{name:loveInterest,partedAt:moduleId,reason:partedReason,partedDate:Date.now(),approval:(importedChar.lastApproval||{})[loveInterest]||0}];
     }
     // Check for reunion (love interest was parted but is now available)
     const wasParted=partedCompanions.find(p=>p.name===loveInterest);
@@ -12904,17 +12937,17 @@ function App(){
     // Build initial state from imported character
     const derived=calcDerived(importedChar.stats,importedChar.cls,importedChar.level,importedChar.armor,importedChar.hasShield,importedChar.feat,importedChar.wounds||[],importedChar.exhaustion||0,importedChar.durability,importedChar.style,importedChar.classLevels);
     const startGods={};for(const g of GODS)(startGods[g]=0);
-    const startScene=(CAMPAIGN_RULES&&CAMPAIGN_RULES.startScene)||(CAMPAIGN&&CAMPAIGN.startScene)||'1';
+    const startScene=(MODULE_RULES&&MODULE_RULES.startScene)||(MODULE&&MODULE.startScene)||'1';
     // Restore approval for love interest (carried over or from parted record)
     const restoredApproval=loveAvailable?(wasParted?.approval||(importedChar.lastApproval||{})[loveInterest]||0):0;
-    // Merge imported character fields with fresh campaign progress
+    // Merge imported character fields with fresh module progress
     const state={
       ...importedChar,
       partedCompanions,
       derived,hp:derived.maxHp,
-      // Fresh campaign progress fields
+      // Fresh module progress fields
       history:[],flags:{
-        ['origin_'+(importedChar.completedCampaigns||[]).slice(-1)[0]]:true,
+        ['origin_'+(importedChar.completedModules||[]).slice(-1)[0]]:true,
         ...(isReunion?{['reunion_'+loveInterest]:true}:{}),
         ...(loveInterest&&!loveAvailable?{['parted_'+loveInterest]:true}:{}),
         ...(isNewGamePlus?{newGamePlus:true}:{})
@@ -12922,7 +12955,7 @@ function App(){
       awardedScenes:{},completedRolls:{},
       companions:loveAvailable?[loveInterest]:[],
       romances:loveAvailable?{[loveInterest]:'Oath'}:{},romanceDeclined:{},
-      companionLog:loveAvailable?{[loveInterest]:[isReunion?'Reunited after time apart':'Traveled from previous campaign']}:{},
+      companionLog:loveAvailable?{[loveInterest]:[isReunion?'Reunited after time apart':'Traveled from previous module']}:{},
       deadCompanions:[],rose:0,sword:0,crown:0,orderMax:{rose:0,sword:0,crown:0},
       dgTrack:'NONE',godSigns:startGods,
       hitDiceUsed:0,secondWindUsed:0,actionSurgeUsed:false,
@@ -12936,69 +12969,69 @@ function App(){
     setGs(state);goScene(startScene,state);setPhase('play');
   };
   const handleMenu=()=>{setConfirmModal({msg:'Return to main menu? Unsaved progress will be lost.',onYes:()=>{setPhase('cover');setGs(null);setScene(null);setShowSheet(false);setShowDmSummary(false);setSideOpen(false);setConfirmModal(null)},onNo:()=>setConfirmModal(null)})};
-  // Campaign switch handler
-  const handleCampaignSwitch=async(targetCampaignId,options)=>{
-    if(!CAMPAIGN)return;
-    const currentId=CAMPAIGN.id;
+  // Module switch handler
+  const handleModuleSwitch=async(targetModuleId,options)=>{
+    if(!MODULE)return;
+    const currentId=MODULE.id;
     // Save current progress if requested
     if(options.saveFirst&&gs){
       const{character,progress}=splitSave(gs,sceneId);
       delete character.derived;
-      if(!character.campaignProgress)character.campaignProgress={};
-      character.campaignProgress[currentId]=progress;
+      if(!character.moduleProgress)character.moduleProgress={};
+      character.moduleProgress[currentId]=progress;
       const saveData=JSON.stringify({saveVersion:2,character,progress,savedAt:new Date().toISOString()});
       await ST.set('save-slot-0',saveData).catch(()=>{});
     }
     // Handle "Start Fresh" - go to character creation
     if(options.startFresh){
-      await loadCampaign(targetCampaignId).catch(()=>null);
+      await loadModule(targetModuleId).catch(()=>null);
       setGs(null);setScene(null);setSceneId(null);
-      setShowCampaignSwitch(false);setShowSettingsPanel(false);
+      setShowModuleSwitch(false);setShowSettingsPanel(false);
       setPhase('intro');
       return;
     }
     // Transfer character mode
     if(!gs)return;
     const{character,progress}=splitSave(gs,sceneId);
-    if(!character.campaignProgress)character.campaignProgress={};
-    character.campaignProgress[currentId]=progress;
-    // Get target campaign info
-    const targetInfo=campaignList.find(c=>c.id===targetCampaignId);
+    if(!character.moduleProgress)character.moduleProgress={};
+    character.moduleProgress[currentId]=progress;
+    // Get target module info
+    const targetInfo=moduleList.find(c=>c.id===targetModuleId);
     if(!targetInfo)return;
     // Apply level scaling if needed
     let scaledChar={...character};
     if(options.scaling){
       scaledChar=scaleCharacterToLevel(scaledChar,options.scaling.toLevel,targetInfo);
     }else if(scaledChar.scaledFrom){
-      // Restore original level if entering a campaign that supports it
+      // Restore original level if entering a module that supports it
       scaledChar=restoreOriginalLevel(scaledChar);
     }
     // Filter inventory by timeline
-    scaledChar=filterInventoryForCampaign(scaledChar,targetInfo);
-    scaledChar=filterResourcesForCampaign(scaledChar,targetInfo);
-    // Load target campaign
-    await loadCampaign(targetCampaignId).catch(()=>null);
+    scaledChar=filterInventoryForModule(scaledChar,targetInfo);
+    scaledChar=filterResourcesForModule(scaledChar,targetInfo);
+    // Load target module
+    await loadModule(targetModuleId).catch(()=>null);
     // Check for existing progress
-    const existingProgress=scaledChar.campaignProgress?.[targetCampaignId];
+    const existingProgress=scaledChar.moduleProgress?.[targetModuleId];
     let newGs;
     if(existingProgress&&options.resume){
       newGs=mergeSave(scaledChar,existingProgress);
       newGs.derived=calcDerived(newGs.stats,newGs.cls,newGs.level,newGs.armor,newGs.hasShield,newGs.feat,newGs.wounds,newGs.exhaustion,newGs.durability,newGs.style,newGs.classLevels);
-      const resumeScene=SCENES[existingProgress.history?.[existingProgress.history.length-1]?.split(':')[0]]||SCENES[CAMPAIGN.startScene];
-      setScene(resumeScene);setSceneId(resumeScene?.id||CAMPAIGN.startScene);
+      const resumeScene=SCENES[existingProgress.history?.[existingProgress.history.length-1]?.split(':')[0]]||SCENES[MODULE.startScene];
+      setScene(resumeScene);setSceneId(resumeScene?.id||MODULE.startScene);
     }else{
-      // Start fresh in new campaign with transferred character
+      // Start fresh in new module with transferred character
       const freshProgress={history:[],flags:{},awardedScenes:{},completedRolls:[],companions:[],romances:{},romanceDeclined:{},companionLog:{},deadCompanions:[],rose:0,sword:0,crown:0,orderMax:{rose:0,sword:0,crown:0},dgTrack:0,godSigns:{},hitDiceUsed:0,secondWindUsed:0,actionSurgeUsed:0,spellSlotsUsed:0,layOnHandsPool:0,miraHealedThisScene:false,combatCount:0,measureTrack:0,measureOrientation:null,approval:{}};
       newGs=mergeSave(scaledChar,freshProgress);
       newGs.derived=calcDerived(newGs.stats,newGs.cls,newGs.level,newGs.armor,newGs.hasShield,newGs.feat,newGs.wounds,newGs.exhaustion,newGs.durability,newGs.style,newGs.classLevels);
-      const startScene=SCENES[CAMPAIGN.startScene];
-      setScene(startScene);setSceneId(CAMPAIGN.startScene);
+      const startScene=SCENES[MODULE.startScene];
+      setScene(startScene);setSceneId(MODULE.startScene);
     }
-    setGs(newGs);setShowCampaignSwitch(false);setShowSettingsPanel(false);setPhase('play');
+    setGs(newGs);setShowModuleSwitch(false);setShowSettingsPanel(false);setPhase('play');
   };
   const e=React.createElement;
-  if(phase==='campaigns')return e(CampaignSelect,{onSelect:async(id)=>{
-    await loadCampaign(id).catch(()=>null);setPhase('cover')},onBack:()=>setPhase('cover')});
+  if(phase==='modules')return e(ModuleSelect,{onSelect:async(id)=>{
+    await loadModule(id).catch(()=>null);setPhase('cover')},onBack:()=>setPhase('cover')});
   if(phase==='cover')return e(CoverScreen,{onNew:()=>setPhase('intro'),onLoad:loadSave,onImport:handleImportCharacter});
   if(phase==='intro')return e(WorldIntro,{onDone:()=>setPhase('create'),onSkip:()=>setPhase('create'),onBack:()=>setPhase('cover')});
   if(phase==='create')return e(CharCreate,{onDone:startGame,onBack:()=>setPhase('intro')});
@@ -13011,7 +13044,8 @@ function App(){
     e('div',{className:'sidebar-backdrop'+(sideOpen?' show':''),onClick:()=>setSideOpen(false)}),
     e('div',{className:'sidebar'+(sideOpen?' open':'')},
       e('div',{className:'char-header'},gs.portrait?e('img',{className:'char-header-portrait',src:gs.portrait,alt:''}):null,e('div',{className:'char-name clickable',onClick:()=>{const n=prompt('Enter new name:',gs.name||'');if(n&&n.trim())handleStateUpdate(g=>({...g,name:n.trim()}))},title:'Click to rename'},gs.name||'Squire'),e('div',{className:'char-class'},formatClassLevel(gs))),
-      gs.scaledFrom?e('div',{className:'scaled-indicator',style:{background:'rgba(201,168,76,0.15)',border:'1px solid var(--gold)',borderRadius:4,padding:'4px 8px',margin:'8px 0',fontSize:11,textAlign:'center'},title:'Your level is temporarily scaled for this campaign. Original abilities restore when you return to a higher-level campaign.'},'⚖ Scaled: Lv',gs.scaledFrom.fromLevel,' → Lv',gs.scaledFrom.toLevel):null,
+      CAMPAIGN?e('div',{className:'campaign-indicator',style:{background:'rgba(201,168,76,0.1)',border:'1px solid var(--gold-dim)',borderRadius:4,padding:'6px 8px',margin:'8px 0',fontSize:11,textAlign:'center'}},e('div',{style:{color:'var(--gold)',fontWeight:600,letterSpacing:1}},CAMPAIGN.title),e('div',{style:{color:'var(--text-dim)',fontSize:10,marginTop:2}},'Module '+(gs.campaignProgress?.modulesCompleted?.length||0+1)+' of '+((CAMPAIGN.modules?.length)||'?'))):null,
+      gs.scaledFrom?e('div',{className:'scaled-indicator',style:{background:'rgba(201,168,76,0.15)',border:'1px solid var(--gold)',borderRadius:4,padding:'4px 8px',margin:'8px 0',fontSize:11,textAlign:'center'},title:'Your level is temporarily scaled for this module. Original abilities restore when you return to a higher-level module.'},'⚖ Scaled: Lv',gs.scaledFrom.fromLevel,' → Lv',gs.scaledFrom.toLevel):null,
       e('div',{className:'sidebar-section'},e('div',{className:'hp-bar-container'},e('div',{className:'hp-bar',style:{width:Math.max(0,(gs.hp/d.maxHp)*100)+'%'}}),e('span',{className:'hp-text'},'HP '+gs.hp+' / '+d.maxHp)),e('div',{className:'xp-bar-container'},e('div',{className:'xp-bar',style:{width:Math.min(100,((gs.xp||0)/[300,900,2700][Math.min(gs.level-1,2)])*100)+'%'}}),e('span',{className:'xp-text'},'XP '+(gs.xp||0)+' / '+[300,900,2700][Math.min(gs.level-1,2)])),e('div',{className:'mini-stats-row'},e('span',null,'AC '+d.ac),e('span',null,'Atk +'+d.attackBonus),e('span',null,'Prof +'+d.profBonus))),
       e('div',{className:'stat-chips'},STAT_NAMES.map(k=>e('div',{key:k,className:'stat-chip'},e('span',{className:'chip-label'},k.toUpperCase()),e('span',{className:'chip-val'},gs.stats[k]),e('span',{className:'chip-mod'},modStr(gs.stats[k]))))),
       e('h3',null,'Order Points'),e('div',{className:'order-points'},e('div',{className:'order-badge rose'},e('span',{className:'num'},gs.rose),'Rose'),e('div',{className:'order-badge sword'},e('span',{className:'num'},gs.sword),'Sword'),e('div',{className:'order-badge crown'},e('span',{className:'num'},gs.crown),'Crown')),e('div',{className:'honour-row'},e('span',{className:'honour-label'},'Honour'),e('span',{className:'honour-val'},gs.honour||0)),
@@ -13104,7 +13138,7 @@ function App(){
       (()=>{const eqSet=gs.equipment?Object.values(gs.equipment).filter(Boolean):[];
         const remaining=[];const used={};
         (gs.inventory||[]).forEach(it=>{const uKey=it;if(eqSet.includes(it)&&!used[uKey]){used[uKey]=true}else{remaining.push(it)}});
-        const isAtCamp=(CAMPAIGN_RULES?.hubScenes||[]).includes(sceneId);
+        const isAtCamp=(MODULE_RULES?.hubScenes||[]).includes(sceneId);
         const handleDrop=(item,idx)=>{
           const action=isAtCamp?'stash':'drop';
           const msg=isAtCamp?'Stash "'+item+'" at camp?':'Drop "'+item+'"? It will be lost forever.';
@@ -13127,7 +13161,7 @@ function App(){
     e('button',{className:'settings-gear',onClick:()=>setShowSettingsPanel(true),title:'Settings'},'\u2699'),
     e(DraggableSettings,{onOpen:()=>setShowSettingsPanel(true)}),
     e(SceneView,{scene,onChoice:handleChoice,gs,isEnding:ENDING_SCENES.includes(sceneId),onViewSheet:()=>setShowSheet(true),onViewDmSummary:ENDING_SCENES.includes(sceneId)&&DM_SUMMARY?()=>setShowDmSummary(true):null,onExport:ENDING_SCENES.includes(sceneId)?()=>setShowExportModal(true):null,onBonus:handleBonus,onStateUpdate:handleStateUpdate}),
-    showSave?e(SavePicker,{onPick:handleSavePick,onCancel:()=>setShowSave(false),onMenu:()=>{setShowSave(false);handleMenu()}}):null,confirmModal?e(ConfirmModal,confirmModal):null,showExportModal&&gs?e(ExportCharacterModal,{gs:gs,campaignId:(CAMPAIGN&&CAMPAIGN.id)||'knights-oath',onExport:handleExportCharacter,onClose:()=>setShowExportModal(false)}):null,compPopup?e(CompanionInfo,{name:compPopup.name,romance:compPopup.romance,onClose:()=>setCompPopup(null)}):null,romancePrompt?e(RomancePrompt,{prompt:romancePrompt,gs:gs,onAccept:acceptRomance,onFriend:friendRomance,onDecline:declineRomance}):null,
+    showSave?e(SavePicker,{onPick:handleSavePick,onCancel:()=>setShowSave(false),onMenu:()=>{setShowSave(false);handleMenu()}}):null,confirmModal?e(ConfirmModal,confirmModal):null,showExportModal&&gs?e(ExportCharacterModal,{gs:gs,moduleId:(MODULE&&MODULE.id)||'knights-oath',onExport:handleExportCharacter,onClose:()=>setShowExportModal(false)}):null,compPopup?e(CompanionInfo,{name:compPopup.name,romance:compPopup.romance,onClose:()=>setCompPopup(null)}):null,romancePrompt?e(RomancePrompt,{prompt:romancePrompt,gs:gs,onAccept:acceptRomance,onFriend:friendRomance,onDecline:declineRomance}):null,
     romanceManage&&gs?e(RomanceManage,{gs:gs,onClose:()=>setRomanceManage(false),onEnd:(name)=>{setRomanceManage(false);setBreakupTarget(name)},onFriend:manageFriend}):null,
     npcNotify?e(NpcNotification,{notif:npcNotify,onDismiss:dismissNpcNotify}):null,
     breakupTarget&&gs?e(BreakupScene,{name:breakupTarget,gs:gs,onResolve:handleBreakup}):null,
@@ -13140,16 +13174,23 @@ function App(){
     godSignPicker&&gs&&gs.cls==='Paladin'?e(GodSignPicker,{options:godSignPicker.options,onPick:(god)=>{const ns={...gs,godSigns:{...(gs.godSigns||{})}};ns.godSigns[god]=(ns.godSigns[god]||0)+1;setGs(ns);setGodSignPicker(null)}}):null,
     subclassModal&&gs&&gs.level>=3&&!gs.subclass?e(SubclassSelect,{gs:gs,onSelect:(subId,maneuvers)=>{const ns={...gs,subclass:subId,maneuvers:maneuvers||[]};if(subId==='battlemaster')ns.superiorityDice=4;ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels);setGs(ns);setSubclassModal(false)}}):null,
     knightingPicker&&gs?e(KnightingSkillPicker,{order:knightingPicker.order,onConfirm:(skillChoice)=>{const ns=applyKnightingBonus(gs,knightingPicker.order,skillChoice);setGs(ns);setKnightingPicker(null)}}):null,
-    showSettingsPanel?e(SettingsPanel,{onClose:()=>setShowSettingsPanel(false),onSave:()=>{setShowSettingsPanel(false);setShowSave(true)},onLoad:()=>{setShowSettingsPanel(false);setShowSave(true)},gs:gs,onCampaignSwitch:()=>{setShowSettingsPanel(false);setShowCampaignSwitch(true)}}):null,
-    showCampaignSwitch&&gs?e(CampaignSwitchModal,{gs:gs,campaignList:campaignList,currentCampaignId:CAMPAIGN?.id,onSwitch:handleCampaignSwitch,onClose:()=>setShowCampaignSwitch(false)}):null,
+    showSettingsPanel?e(SettingsPanel,{onClose:()=>setShowSettingsPanel(false),onSave:()=>{setShowSettingsPanel(false);setShowSave(true)},onLoad:()=>{setShowSettingsPanel(false);setShowSave(true)},gs:gs,onModuleSwitch:()=>{setShowSettingsPanel(false);setShowModuleSwitch(true)}}):null,
+    showModuleSwitch&&gs?e(ModuleSwitchModal,{gs:gs,moduleList:moduleList,currentModuleId:MODULE?.id,onSwitch:handleModuleSwitch,onClose:()=>setShowModuleSwitch(false)}):null,
     showMap&&gs?e(MapView,{gs:gs,sceneId:sceneId,onClose:()=>setShowMap(false)}):null);
 }
-// Attempt to load campaign from JSON files, then mount
+// Attempt to load module from JSON files, then mount
 (async function(){
-  _ldr(80,'Loading campaign...');
+  _ldr(80,'Loading module...');
   const params=new URLSearchParams(window.location.search);
-  const campaignId=params.get('campaign')||'knights-oath';
-  await loadCampaign(campaignId).catch(()=>null);
+  const moduleId=params.get('module')||'knights-oath';
+  await loadModule(moduleId).catch(()=>null);
+  // Load campaign if module belongs to one
+  if(MODULE&&MODULE.campaignId){
+    _ldr(90,'Loading campaign...');
+    await loadCampaign(MODULE.campaignId).catch(()=>null);
+  }
+  // Load campaign registry for module switching
+  await loadCampaignList().catch(()=>[]);
   _ldr(95,'Mounting...');
   ReactDOM.render(React.createElement(App),document.getElementById('app'));
 })();
@@ -13161,7 +13202,7 @@ requestAnimationFrame(function(){
     if(ls){
       setTimeout(function(){ls.classList.add('fade-out');setTimeout(function(){ls.remove()},600)},200);
     }
-    // Deferred scenes loaded by campaign loader
+    // Deferred scenes loaded by module loader
     window._scenesReady=true;
   },50);
 });

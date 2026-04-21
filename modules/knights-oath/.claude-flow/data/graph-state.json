@@ -1,0 +1,191 @@
+{
+  "version": 1,
+  "updatedAt": 1775244369807,
+  "nodeCount": 18,
+  "nodes": {
+    "mem-MEMORY-project": {
+      "id": "mem-MEMORY-project",
+      "category": "core",
+      "confidence": 0.5,
+      "accessCount": 0,
+      "createdAt": 1775244369798
+    },
+    "mem-MEMORY-feedback": {
+      "id": "mem-MEMORY-feedback",
+      "category": "core",
+      "confidence": 0.5,
+      "accessCount": 0,
+      "createdAt": 1775244369798
+    },
+    "mem-MEMORY-references": {
+      "id": "mem-MEMORY-references",
+      "category": "core",
+      "confidence": 0.5,
+      "accessCount": 0,
+      "createdAt": 1775244369798
+    },
+    "mem-feedback_dynamic_version----": {
+      "id": "mem-feedback_dynamic_version----",
+      "category": "feedback_dynamic_version",
+      "confidence": 0.5,
+      "accessCount": 0,
+      "createdAt": 1775244369798
+    },
+    "mem-feedback_loading_screen----": {
+      "id": "mem-feedback_loading_screen----",
+      "category": "feedback_loading_screen",
+      "confidence": 0.5,
+      "accessCount": 0,
+      "createdAt": 1775244369798
+    },
+    "mem-feedback_scene_transitions----": {
+      "id": "mem-feedback_scene_transitions----",
+      "category": "feedback_scene_transitions",
+      "confidence": 0.5,
+      "accessCount": 0,
+      "createdAt": 1775244369799
+    },
+    "mem-feedback_token_efficiency----": {
+      "id": "mem-feedback_token_efficiency----",
+      "category": "feedback_token_efficiency",
+      "confidence": 0.5,
+      "accessCount": 0,
+      "createdAt": 1775244369800
+    },
+    "mem-feedback_version_bump----": {
+      "id": "mem-feedback_version_bump----",
+      "category": "feedback_version_bump",
+      "confidence": 0.53,
+      "accessCount": 1,
+      "createdAt": 1775244369800
+    },
+    "mem-feedback_versioning----": {
+      "id": "mem-feedback_versioning----",
+      "category": "feedback_versioning",
+      "confidence": 0.5,
+      "accessCount": 0,
+      "createdAt": 1775244369800
+    },
+    "mem-project_architecture----": {
+      "id": "mem-project_architecture----",
+      "category": "project_architecture",
+      "confidence": 0.5,
+      "accessCount": 0,
+      "createdAt": 1775244369801
+    },
+    "mem-project_scene_overhaul----": {
+      "id": "mem-project_scene_overhaul----",
+      "category": "project_scene_overhaul",
+      "confidence": 0.5,
+      "accessCount": 0,
+      "createdAt": 1775244369802
+    },
+    "mem-project_task_backlog----": {
+      "id": "mem-project_task_backlog----",
+      "category": "project_task_backlog",
+      "confidence": 0.53,
+      "accessCount": 1,
+      "createdAt": 1775244369802
+    },
+    "mem-project_task_backlog-completed": {
+      "id": "mem-project_task_backlog-completed",
+      "category": "project_task_backlog",
+      "confidence": 0.5,
+      "accessCount": 0,
+      "createdAt": 1775244369802
+    },
+    "mem-project_task_backlog-large-systems": {
+      "id": "mem-project_task_backlog-large-systems",
+      "category": "project_task_backlog",
+      "confidence": 0.53,
+      "accessCount": 1,
+      "createdAt": 1775244369802
+    },
+    "mem-project_task_backlog-content-design--needs-discussi": {
+      "id": "mem-project_task_backlog-content-design--needs-discussi",
+      "category": "project_task_backlog",
+      "confidence": 0.53,
+      "accessCount": 1,
+      "createdAt": 1775244369802
+    },
+    "mem-project_task_backlog-notes": {
+      "id": "mem-project_task_backlog-notes",
+      "category": "project_task_backlog",
+      "confidence": 0.5,
+      "accessCount": 0,
+      "createdAt": 1775244369802
+    },
+    "mem-project_workflow----": {
+      "id": "mem-project_workflow----",
+      "category": "project_workflow",
+      "confidence": 0.5,
+      "accessCount": 0,
+      "createdAt": 1775244369802
+    },
+    "mem-reference_qmd----": {
+      "id": "mem-reference_qmd----",
+      "category": "reference_qmd",
+      "confidence": 0.53,
+      "accessCount": 1,
+      "createdAt": 1775244369803
+    }
+  },
+  "edges": [
+    {
+      "sourceId": "mem-MEMORY-project",
+      "targetId": "mem-MEMORY-feedback",
+      "type": "temporal",
+      "weight": 0.5
+    },
+    {
+      "sourceId": "mem-MEMORY-feedback",
+      "targetId": "mem-MEMORY-references",
+      "type": "temporal",
+      "weight": 0.5
+    },
+    {
+      "sourceId": "mem-project_task_backlog----",
+      "targetId": "mem-project_task_backlog-completed",
+      "type": "temporal",
+      "weight": 0.5
+    },
+    {
+      "sourceId": "mem-project_task_backlog-completed",
+      "targetId": "mem-project_task_backlog-large-systems",
+      "type": "temporal",
+      "weight": 0.5
+    },
+    {
+      "sourceId": "mem-project_task_backlog-large-systems",
+      "targetId": "mem-project_task_backlog-content-design--needs-discussi",
+      "type": "temporal",
+      "weight": 0.5
+    },
+    {
+      "sourceId": "mem-project_task_backlog-content-design--needs-discussi",
+      "targetId": "mem-project_task_backlog-notes",
+      "type": "temporal",
+      "weight": 0.5
+    }
+  ],
+  "pageRanks": {
+    "mem-MEMORY-project": 0.03604869896284045,
+    "mem-MEMORY-feedback": 0.06669011278016294,
+    "mem-MEMORY-references": 0.09273530213608118,
+    "mem-feedback_dynamic_version----": 0.03604869896284045,
+    "mem-feedback_loading_screen----": 0.03604869896284045,
+    "mem-feedback_scene_transitions----": 0.03604869896284045,
+    "mem-feedback_token_efficiency----": 0.03604869896284045,
+    "mem-feedback_version_bump----": 0.03604869896284045,
+    "mem-feedback_versioning----": 0.03604869896284045,
+    "mem-project_architecture----": 0.03604869896284045,
+    "mem-project_scene_overhaul----": 0.03604869896284045,
+    "mem-project_task_backlog----": 0.03604869896284045,
+    "mem-project_task_backlog-completed": 0.06669011278016294,
+    "mem-project_task_backlog-large-systems": 0.09273530213608118,
+    "mem-project_task_backlog-content-design--needs-discussi": 0.11487362382689759,
+    "mem-project_task_backlog-notes": 0.13369115878652893,
+    "mem-project_workflow----": 0.03604869896284045,
+    "mem-reference_qmd----": 0.03604869896284045
+  }
+}

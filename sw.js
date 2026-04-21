@@ -1,7 +1,7 @@
 // Knights Oath Service Worker v1
-const CACHE_NAME = 'knights-oath-25.35.0-c5b3d267';
+const CACHE_NAME = 'knights-oath-25.37.0-f94a62eb';
 
-// Assets to precache on install (core app only, not campaign data)
+// Assets to precache on install (core app only, not module data)
 const PRECACHE_ASSETS = [
   './',
   './index.html',
@@ -56,8 +56,8 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Campaign JSON: network-first (allow updates, fallback to cache)
-  if (url.pathname.startsWith('/campaigns/') && url.pathname.endsWith('.json')) {
+  // Module JSON: network-first (allow updates, fallback to cache)
+  if (url.pathname.startsWith('/modules/') && url.pathname.endsWith('.json')) {
     event.respondWith(networkFirst(event.request));
     return;
   }
@@ -92,7 +92,7 @@ async function cacheFirst(request) {
   }
 }
 
-// Network-first strategy (for campaign JSON)
+// Network-first strategy (for module JSON)
 async function networkFirst(request) {
   try {
     const response = await fetch(request);

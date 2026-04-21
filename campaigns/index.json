@@ -1,22 +1,11 @@
 {
   "campaigns": [
     {
-      "id": "knights-oath",
-      "title": "The Knight's Oath",
-      "subtitle": "A Choose Your Own Adventure Prelude",
-      "type": "origin",
-      "levelRange": [1, 3],
-      "date": 351,
-      "setting": "Dragonlance"
-    },
-    {
-      "id": "test-campaign",
-      "title": "Test Campaign",
-      "subtitle": "Multi-Campaign Loader Verification",
-      "type": "test",
-      "levelRange": [1, 1],
-      "date": 351,
-      "setting": "Test"
+      "id": "dragonlance-saga",
+      "title": "The Dragonlance Saga",
+      "subtitle": "The War of the Lance",
+      "moduleCount": 1,
+      "status": "active"
     }
   ]
 }

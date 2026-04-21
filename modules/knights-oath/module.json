@@ -1,5 +1,7 @@
 {
   "id": "knights-oath",
+  "campaignId": "dragonlance-saga",
+  "campaignSequence": 1,
   "title": "The Knight's Oath",
   "subtitle": "A Choose Your Own Adventure Prelude",
   "type": "origin",
@@ -12,7 +14,7 @@
   "availableSpecies": ["human"],
   "speciesLocked": true,
   "startingLanguages": ["Common", "Solamnic"],
-  "version": "25.35.0",
+  "version": "25.37.0",
   "startScene": "1",
   "startingInventory": ["Dagger", "Backpack", "Bedroll", "Mess Kit", "Tinderbox", "Waterskin", "Rope (50 ft)", "Solamnic Tabard"],
   "startingEquipment": {

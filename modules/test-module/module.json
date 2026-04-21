@@ -1,9 +1,10 @@
 {
-  "id": "test-campaign",
-  "title": "Test Campaign",
-  "subtitle": "Multi-Campaign Loader Verification",
+  "id": "test-module",
+  "title": "Test Module",
+  "subtitle": "Multi-Module Loader Verification",
   "type": "test",
   "levelRange": [1, 1],
+  "date": 351,
   "setting": "Test",
   "classes": ["Fighter", "Paladin"],
   "species": "Human",
@@ -33,10 +34,10 @@
   "intro": {
     "pages": [
       {
-        "title": "TEST CAMPAIGN",
+        "title": "TEST MODULE",
         "body": [
-          "This is a minimal test campaign to verify the multi-campaign engine works correctly.",
-          "If you can see this, the campaign loader successfully loaded a different campaign.",
+          "This is a minimal test module to verify the multi-module engine works correctly.",
+          "If you can see this, the module loader successfully loaded a different module.",
           "The theme should appear purple instead of gold."
         ]
       }

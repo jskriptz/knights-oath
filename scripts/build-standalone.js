@@ -1,16 +1,16 @@
 #!/usr/bin/env node
-// Build a standalone single-file HTML that embeds one campaign's JSON data
-// Usage: node scripts/build-standalone.js [campaignId] [outputFile]
+// Build a standalone single-file HTML that embeds one module's JSON data
+// Usage: node scripts/build-standalone.js [moduleId] [outputFile]
 // Example: node scripts/build-standalone.js knights-oath dist/knights-oath.html
 
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
-const campaignId = process.argv[2] || 'knights-oath';
-const outputFile = process.argv[3] || `dist/${campaignId}.html`;
+const moduleId = process.argv[2] || 'knights-oath';
+const outputFile = process.argv[3] || `dist/${moduleId}.html`;
 const rootDir = path.resolve(__dirname, '..');
-const campaignDir = path.join(rootDir, 'campaigns', campaignId);
+const moduleDir = path.join(rootDir, 'modules', moduleId);
 
 // Generate build hash for cache busting (short hash of timestamp + random)
 const buildHash = crypto.createHash('md5')
@@ -19,23 +19,23 @@ const buildHash = crypto.createHash('md5')
   .substring(0, 8);
 const buildTimestamp = new Date().toISOString();
 
-// Verify campaign exists
-if (!fs.existsSync(campaignDir)) {
-  console.error(`Campaign not found: ${campaignDir}`);
+// Verify module exists
+if (!fs.existsSync(moduleDir)) {
+  console.error(`Module not found: ${moduleDir}`);
   process.exit(1);
 }
 
 // Read engine
 let html = fs.readFileSync(path.join(rootDir, 'index.html'), 'utf8');
 
-// Read campaign manifest
-const manifest = JSON.parse(fs.readFileSync(path.join(campaignDir, 'campaign.json'), 'utf8'));
+// Read module manifest
+const manifest = JSON.parse(fs.readFileSync(path.join(moduleDir, 'module.json'), 'utf8'));
 const files = manifest.files || {};
 
-// Read all campaign JSON files
+// Read all module JSON files
 const data = {};
 for (const [key, filename] of Object.entries(files)) {
-  const filePath = path.join(campaignDir, filename);
+  const filePath = path.join(moduleDir, filename);
   if (fs.existsSync(filePath)) {
     data[key] = JSON.parse(fs.readFileSync(filePath, 'utf8'));
   }
@@ -44,9 +44,9 @@ for (const [key, filename] of Object.entries(files)) {
 // Build the inline data script that runs before the main script
 const inlineScript = `
 <script>
-// Standalone build: ${manifest.title} (${manifest.id}) — embedded campaign data
+// Standalone build: ${manifest.title} (${manifest.id}) — embedded module data
 // Build: ${buildHash} @ ${buildTimestamp}
-window.__STANDALONE_CAMPAIGN__ = ${JSON.stringify(manifest)};
+window.__STANDALONE_MODULE__ = ${JSON.stringify(manifest)};
 window.__STANDALONE_DATA__ = ${JSON.stringify(data)};
 window.__BUILD_HASH__ = "${buildHash}";
 window.__BUILD_TIME__ = "${buildTimestamp}";
@@ -84,6 +84,6 @@ if (fs.existsSync(swPath)) {
 
 const sizeKB = Math.round(fs.statSync(outPath).size / 1024);
 console.log(`Built: ${outPath} (${sizeKB}KB)`);
-console.log(`Campaign: ${manifest.title} v${manifest.version}`);
+console.log(`Module: ${manifest.title} v${manifest.version}`);
 console.log(`Scenes: ${data.scenes ? Object.keys(data.scenes).length : '?'} + ${data.scenesDeferred ? Object.keys(data.scenesDeferred).length : '?'} deferred`);
 console.log(`Build: ${buildHash}`);

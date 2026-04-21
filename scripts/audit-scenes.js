@@ -7,13 +7,13 @@
 const fs = require('fs');
 const path = require('path');
 
-const CAMPAIGN_DIR = path.join(__dirname, '..', 'campaigns', 'knights-oath');
+const MODULE_DIR = path.join(__dirname, '..', 'modules', 'knights-oath');
 
 // Load all data
-const scenes = JSON.parse(fs.readFileSync(path.join(CAMPAIGN_DIR, 'scenes.json')));
-const scenesDeferred = JSON.parse(fs.readFileSync(path.join(CAMPAIGN_DIR, 'scenes-deferred.json')));
-const rules = JSON.parse(fs.readFileSync(path.join(CAMPAIGN_DIR, 'rules.json')));
-const companions = JSON.parse(fs.readFileSync(path.join(CAMPAIGN_DIR, 'companions.json')));
+const scenes = JSON.parse(fs.readFileSync(path.join(MODULE_DIR, 'scenes.json')));
+const scenesDeferred = JSON.parse(fs.readFileSync(path.join(MODULE_DIR, 'scenes-deferred.json')));
+const rules = JSON.parse(fs.readFileSync(path.join(MODULE_DIR, 'rules.json')));
+const companions = JSON.parse(fs.readFileSync(path.join(MODULE_DIR, 'companions.json')));
 
 const ALL_SCENES = { ...scenes, ...scenesDeferred };
 const SCENE_IDS = new Set(Object.keys(ALL_SCENES));

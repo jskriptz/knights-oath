@@ -1,0 +1,236 @@
+[
+  {
+    "id": "mem-MEMORY-project",
+    "key": "project",
+    "content": "- [project_architecture.md](project_architecture.md) — Single-file HTML/React RPG, ~7100 lines. CLAUDE.md has full map.\n- [project_workflow.md](project_workflow.md) — Source of truth and update workflow (md first, then HTML)\n- [project_scene_overhaul.md](project_scene_overhaul.md) — Major scene restructuring: 70 scene min, hub system, broken fixes, final act rework\n- [project_combat_narrator.md](project_combat_narrator.md) — Dynamic DM narrator for combat, future equipment degradation & scars\n- ",
+    "summary": "Project",
+    "namespace": "core",
+    "type": "semantic",
+    "metadata": {
+      "sourceFile": "/home/carlo/.claude/projects/-home-carlo-projects-knights-oath/memory/MEMORY.md",
+      "bootstrapped": true
+    },
+    "createdAt": 1775244369798
+  },
+  {
+    "id": "mem-MEMORY-feedback",
+    "key": "feedback",
+    "content": "- [feedback_token_efficiency.md](feedback_token_efficiency.md) — Use CLAUDE.md map, avoid redundant exploration, minimize token usage\n- [feedback_scene_transitions.md](feedback_scene_transitions.md) — Write hub/transition scenes with full prose, not just menus\n- [feedback_version_bump.md](feedback_version_bump.md) — Always bump version number before every push\n- [feedback_versioning.md](feedback_versioning.md) — Version scheme: major.medium.small (X.x.x)\n- [feedback_loading_screen.md](feedback_l",
+    "summary": "Feedback",
+    "namespace": "core",
+    "type": "semantic",
+    "metadata": {
+      "sourceFile": "/home/carlo/.claude/projects/-home-carlo-projects-knights-oath/memory/MEMORY.md",
+      "bootstrapped": true
+    },
+    "createdAt": 1775244369798
+  },
+  {
+    "id": "mem-MEMORY-references",
+    "key": "references",
+    "content": "- [reference_qmd.md](reference_qmd.md) — qmd tool installed for token-efficient file access",
+    "summary": "References",
+    "namespace": "core",
+    "type": "semantic",
+    "metadata": {
+      "sourceFile": "/home/carlo/.claude/projects/-home-carlo-projects-knights-oath/memory/MEMORY.md",
+      "bootstrapped": true
+    },
+    "createdAt": 1775244369798
+  },
+  {
+    "id": "mem-feedback_dynamic_version----",
+    "key": "-",
+    "content": "name: Dynamic version numbers\ndescription: All version displays must read from CAMPAIGN data, never hardcoded. Only bump campaign.json + theme.json.\ntype: feedback\n---\n\nVersion numbers must never be hardcoded in the engine. The char sheet header and any other display reads from `CAMPAIGN?.version` dynamically.\n\n**Why:** User found a hardcoded \"v19\" in the character sheet long after the version had moved to v24+. Hardcoded versions rot silently.\n\n**How to apply:** On every version bump, only two ",
+    "summary": "---",
+    "namespace": "feedback_dynamic_version",
+    "type": "semantic",
+    "metadata": {
+      "sourceFile": "/home/carlo/.claude/projects/-home-carlo-projects-knights-oath/memory/feedback_dynamic_version.md",
+      "bootstrapped": true
+    },
+    "createdAt": 1775244369798
+  },
+  {
+    "id": "mem-feedback_loading_screen----",
+    "key": "-",
+    "content": "name: keep-loading-screen-updated\ndescription: Always update the loading screen stats (version, scene count) when pushing changes\ntype: feedback\n---\n\nAlways update the loading screen (`#loading-sub` around line 952) with the current version and scene count before pushing. It shows version, scene count, and companion count.\n\n**Why:** User wants the loading splash to reflect accurate stats so playtesters see correct info immediately.\n\n**How to apply:** When bumping version or adding/removing scene",
+    "summary": "---",
+    "namespace": "feedback_loading_screen",
+    "type": "semantic",
+    "metadata": {
+      "sourceFile": "/home/carlo/.claude/projects/-home-carlo-projects-knights-oath/memory/feedback_loading_screen.md",
+      "bootstrapped": true
+    },
+    "createdAt": 1775244369798
+  },
+  {
+    "id": "mem-feedback_scene_transitions----",
+    "key": "-",
+    "content": "name: natural-scene-transitions\ndescription: User prioritizes natural flow between scenes over mechanical routing fixes\ntype: feedback\n---\n\nWhen restructuring scenes, focus on making transitions feel natural for the player. More scenes will be added to smooth transitions.\n\n**Why:** The user sees this as a storytelling project, not just a graph-fixing exercise. Mechanical \"hub routing\" scenes need atmosphere and narrative purpose.\n\n**How to apply:** When creating hub scenes or transition scenes, ",
+    "summary": "---",
+    "namespace": "feedback_scene_transitions",
+    "type": "semantic",
+    "metadata": {
+      "sourceFile": "/home/carlo/.claude/projects/-home-carlo-projects-knights-oath/memory/feedback_scene_transitions.md",
+      "bootstrapped": true
+    },
+    "createdAt": 1775244369799
+  },
+  {
+    "id": "mem-feedback_token_efficiency----",
+    "key": "-",
+    "content": "name: feedback_token_efficiency\ndescription: User wants minimal token usage — use CLAUDE.md map, avoid redundant exploration, use targeted reads\ntype: feedback\n---\n\nMinimize token usage in sessions by using CLAUDE.md architectural map instead of re-exploring the codebase.\n\n**Why:** User explicitly asked to reduce Claude Code token costs.\n**How to apply:**\n- Read CLAUDE.md first for line ranges instead of grepping/globbing for known structures\n- Use targeted Read with offset/limit instead of read",
+    "summary": "---",
+    "namespace": "feedback_token_efficiency",
+    "type": "semantic",
+    "metadata": {
+      "sourceFile": "/home/carlo/.claude/projects/-home-carlo-projects-knights-oath/memory/feedback_token_efficiency.md",
+      "bootstrapped": true
+    },
+    "createdAt": 1775244369800
+  },
+  {
+    "id": "mem-feedback_version_bump----",
+    "key": "-",
+    "content": "name: always-bump-version\ndescription: Always update the version number on the title screen when pushing changes\ntype: feedback\n---\n\nAlways bump the version number in the CoverScreen footer before every push to GitHub. The version string is in the HTML at the bottom of the CoverScreen component (search for `'v19.`). Also copy to index.html after updating.\n\n**Why:** User wants the deployed version to always reflect the latest changes so playtesters can verify they have the current build.\n\n**How t",
+    "summary": "---",
+    "namespace": "feedback_version_bump",
+    "type": "semantic",
+    "metadata": {
+      "sourceFile": "/home/carlo/.claude/projects/-home-carlo-projects-knights-oath/memory/feedback_version_bump.md",
+      "bootstrapped": true
+    },
+    "createdAt": 1775244369800
+  },
+  {
+    "id": "mem-feedback_versioning----",
+    "key": "-",
+    "content": "name: versioning-scheme\ndescription: Version numbering convention - major.medium.small changes\ntype: feedback\n---\n\nUse semantic-style versioning: vX.x.x where:\n- **X** (major): Large changes (full restructuring, new systems, major overhauls)\n- **x** (medium): Medium changes (routing fixes, new scenes, UI improvements)\n- **x** (small): Small changes (bug fixes, text tweaks, version bumps)\n\n**Why:** User wants version numbers to meaningfully reflect the scope of changes.\n\n**How to apply:** Judge t",
+    "summary": "---",
+    "namespace": "feedback_versioning",
+    "type": "semantic",
+    "metadata": {
+      "sourceFile": "/home/carlo/.claude/projects/-home-carlo-projects-knights-oath/memory/feedback_versioning.md",
+      "bootstrapped": true
+    },
+    "createdAt": 1775244369800
+  },
+  {
+    "id": "mem-project_architecture----",
+    "key": "-",
+    "content": "name: project_architecture\ndescription: Knights Oath is a single-file HTML/React RPG (~7100 lines). No build system. Key sections and line ranges documented in CLAUDE.md.\ntype: project\n---\n\nSingle-file browser RPG: index.html (~7100 lines), React createElement (no JSX), inline CSS+JS.\nD&D 5e 2024 rules, Dragonlance setting. 220+ scenes, 9 companions, 15 combat encounters.\n\n**Why:** Understanding the architecture prevents expensive re-exploration each session.\n**How to apply:** Read CLAUDE.md at ",
+    "summary": "---",
+    "namespace": "project_architecture",
+    "type": "semantic",
+    "metadata": {
+      "sourceFile": "/home/carlo/.claude/projects/-home-carlo-projects-knights-oath/memory/project_architecture.md",
+      "bootstrapped": true
+    },
+    "createdAt": 1775244369801
+  },
+  {
+    "id": "mem-project_scene_overhaul----",
+    "key": "-",
+    "content": "name: scene-overhaul-plan\ndescription: Major scene restructuring initiative - 70 scene minimum, hub system, broken scene fixes, final act rework\ntype: project\n---\n\nUser wants a major overhaul of the scene flow in Knights Oath v19:\n\n1. **Fix broken scenes first** — Scenes 44, 26, 28, 31 don't exist but are referenced. Scene 44 is critical (field exercise dead-end).\n2. **Split Scene 11 into time-gated hubs** — Morning/Afternoon/Evening hubs with minimum-visit gates to prevent 90% content bypass.\n3",
+    "summary": "---",
+    "namespace": "project_scene_overhaul",
+    "type": "semantic",
+    "metadata": {
+      "sourceFile": "/home/carlo/.claude/projects/-home-carlo-projects-knights-oath/memory/project_scene_overhaul.md",
+      "bootstrapped": true
+    },
+    "createdAt": 1775244369802
+  },
+  {
+    "id": "mem-project_task_backlog----",
+    "key": "-",
+    "content": "name: Task Backlog\ndescription: Prioritized list of features and fixes for Knight's Oath - reference when user asks \"what's next?\"\ntype: project\n---",
+    "summary": "---",
+    "namespace": "project_task_backlog",
+    "type": "semantic",
+    "metadata": {
+      "sourceFile": "/home/carlo/.claude/projects/-home-carlo-projects-knights-oath/memory/project_task_backlog.md",
+      "bootstrapped": true
+    },
+    "createdAt": 1775244369802
+  },
+  {
+    "id": "mem-project_task_backlog-completed",
+    "key": "completed",
+    "content": "- [x] **4. Affection bar** — Show companion approval bar in CharSheet (v24.5.24)\n- [x] **16. Mira healing priority** — Heals lowest HP% first, ties: PC > Mira > others (v24.5.24)\n- [x] **17. HP persistence** — Already working correctly (long rest/level up only)\n- [x] **Title system** — Earn/select titles, persist across campaigns (v24.5.19)\n- [x] **Campaign import/export** — JSON file download/upload + localStorage (v24.5.22)\n- [x] **New Game+** — Restart campaign with leveled character in stand",
+    "summary": "Completed",
+    "namespace": "project_task_backlog",
+    "type": "semantic",
+    "metadata": {
+      "sourceFile": "/home/carlo/.claude/projects/-home-carlo-projects-knights-oath/memory/project_task_backlog.md",
+      "bootstrapped": true
+    },
+    "createdAt": 1775244369802
+  },
+  {
+    "id": "mem-project_task_backlog-large-systems",
+    "key": "large-systems",
+    "content": "- [ ] **3. Survival mechanics** — Waterskin uses, rations consumption, foraging/hunting during rests (Survival checks)\n- [ ] **15. Kill tracking** — Track who kills what for weapon stuck mechanic and story flags",
+    "summary": "Large Systems",
+    "namespace": "project_task_backlog",
+    "type": "semantic",
+    "metadata": {
+      "sourceFile": "/home/carlo/.claude/projects/-home-carlo-projects-knights-oath/memory/project_task_backlog.md",
+      "bootstrapped": true
+    },
+    "createdAt": 1775244369802
+  },
+  {
+    "id": "mem-project_task_backlog-content-design--needs-discussi",
+    "key": "content-design-needs-discussion-",
+    "content": "- [ ] **5. Response scenes** — Should show NPC response to action before returning to hub; audit scenes that skip this",
+    "summary": "Content/Design (Needs Discussion)",
+    "namespace": "project_task_backlog",
+    "type": "semantic",
+    "metadata": {
+      "sourceFile": "/home/carlo/.claude/projects/-home-carlo-projects-knights-oath/memory/project_task_backlog.md",
+      "bootstrapped": true
+    },
+    "createdAt": 1775244369802
+  },
+  {
+    "id": "mem-project_task_backlog-notes",
+    "key": "notes",
+    "content": "- User wants to discuss each large item before coding\n- Survival system: discuss how punishing (optional hardcore mode vs always on?)\n- Combat reactions: Shield spell is reaction (not Shield of Faith which is bonus action)",
+    "summary": "Notes",
+    "namespace": "project_task_backlog",
+    "type": "semantic",
+    "metadata": {
+      "sourceFile": "/home/carlo/.claude/projects/-home-carlo-projects-knights-oath/memory/project_task_backlog.md",
+      "bootstrapped": true
+    },
+    "createdAt": 1775244369802
+  },
+  {
+    "id": "mem-project_workflow----",
+    "key": "-",
+    "content": "name: knights-oath-workflow\ndescription: Source of truth and update workflow for the Knights Oath interactive fiction project\ntype: project\n---\n\nSource of truth for the story is `Book1_Knights_Oath_Prelude_v19_COMPLETE.md`. Changes go there first, then get propagated to `Knights_Oath_Interactive_v19.html`.\n\n**Why:** The markdown file is the canonical story content; the HTML is the interactive build derived from it.\n\n**How to apply:** Always edit the markdown first, then update the HTML to match.",
+    "summary": "---",
+    "namespace": "project_workflow",
+    "type": "semantic",
+    "metadata": {
+      "sourceFile": "/home/carlo/.claude/projects/-home-carlo-projects-knights-oath/memory/project_workflow.md",
+      "bootstrapped": true
+    },
+    "createdAt": 1775244369802
+  },
+  {
+    "id": "mem-reference_qmd----",
+    "key": "-",
+    "content": "name: qmd-tool\ndescription: User has qmd installed for token-efficient file access in the knights-oath namespace\ntype: reference\n---\n\n`qmd` is installed and used to save tokens when accessing project files. Namespace: `knights-oath`. Use `qmd ls knights-oath` to list files and qmd commands to read content instead of reading large files directly.",
+    "summary": "---",
+    "namespace": "reference_qmd",
+    "type": "semantic",
+    "metadata": {
+      "sourceFile": "/home/carlo/.claude/projects/-home-carlo-projects-knights-oath/memory/reference_qmd.md",
+      "bootstrapped": true
+    },
+    "createdAt": 1775244369803
+  }
+]

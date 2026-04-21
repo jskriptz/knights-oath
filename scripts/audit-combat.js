@@ -7,13 +7,13 @@
 const fs = require('fs');
 const path = require('path');
 
-const CAMPAIGN_DIR = path.join(__dirname, '..', 'campaigns', 'knights-oath');
+const MODULE_DIR = path.join(__dirname, '..', 'modules', 'knights-oath');
 
-const scenes = JSON.parse(fs.readFileSync(path.join(CAMPAIGN_DIR, 'scenes.json')));
-const scenesDeferred = JSON.parse(fs.readFileSync(path.join(CAMPAIGN_DIR, 'scenes-deferred.json')));
-const combatNarration = JSON.parse(fs.readFileSync(path.join(CAMPAIGN_DIR, 'combat-narration.json')));
-const combatOutcomes = JSON.parse(fs.readFileSync(path.join(CAMPAIGN_DIR, 'combat-outcomes.json')));
-const rules = JSON.parse(fs.readFileSync(path.join(CAMPAIGN_DIR, 'rules.json')));
+const scenes = JSON.parse(fs.readFileSync(path.join(MODULE_DIR, 'scenes.json')));
+const scenesDeferred = JSON.parse(fs.readFileSync(path.join(MODULE_DIR, 'scenes-deferred.json')));
+const combatNarration = JSON.parse(fs.readFileSync(path.join(MODULE_DIR, 'combat-narration.json')));
+const combatOutcomes = JSON.parse(fs.readFileSync(path.join(MODULE_DIR, 'combat-outcomes.json')));
+const rules = JSON.parse(fs.readFileSync(path.join(MODULE_DIR, 'rules.json')));
 
 const ALL_SCENES = { ...scenes, ...scenesDeferred };
 

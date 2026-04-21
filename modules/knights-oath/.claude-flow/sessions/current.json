@@ -1,0 +1,18 @@
+{
+  "id": "session-1775244369793",
+  "startedAt": "2026-04-03T19:26:09.793Z",
+  "cwd": "/home/carlo/projects/knights-oath/campaigns/knights-oath",
+  "context": {
+    "lastMatchedPatterns": [
+      "mem-project_task_backlog-content-design--needs-discussi",
+      "mem-project_task_backlog-notes"
+    ]
+  },
+  "metrics": {
+    "edits": 8,
+    "commands": 0,
+    "tasks": 0,
+    "errors": 0
+  },
+  "updatedAt": "2026-04-08T02:41:03.173Z"
+}

@@ -1,0 +1,29 @@
+{
+  "id": "dragonlance-saga",
+  "title": "The Dragonlance Saga",
+  "subtitle": "The War of the Lance",
+  "description": "From humble beginnings to the fate of Krynn. Follow the heroes as they discover the return of the Dark Queen and fight to save their world.",
+  "setting": "Dragonlance",
+  "timeline": {
+    "start": 351,
+    "end": 353
+  },
+  "origins": [
+    {
+      "id": "knights-oath",
+      "classes": ["Fighter", "Paladin"],
+      "description": "Begin as a Solamnic squire seeking to prove your worth"
+    }
+  ],
+  "modules": [
+    {
+      "id": "knights-oath",
+      "sequence": 1,
+      "type": "origin",
+      "levelRange": [1, 3],
+      "required": true
+    }
+  ],
+  "sagaFlags": [],
+  "version": "1.0.0"
+}
