@@ -1869,6 +1869,9 @@ _ldr(85,'Building adventure...');
 const{useState,useEffect,useRef}=React;
 function mod(s){return Math.floor((s-10)/2)}
 function modStr(s){const m=mod(s);return m>=0?'+'+m:''+m}
+// Saga flags: check both module flags and campaign-wide saga flags
+function hasFlag(gs,flagName){return(gs?.flags?.[flagName])||(gs?.sagaFlags?.[flagName])||false}
+function setFlag(gs,flagName,isSaga=false){const ns={...gs};if(isSaga){ns.sagaFlags={...(ns.sagaFlags||{}),[flagName]:true}}else{ns.flags={...(ns.flags||{}),[flagName]:true}}return ns}
 function getMaxWater(inventory){
   // Base 3 water + 3 per additional waterskin
   const waterskins=(inventory||[]).filter(i=>i.toLowerCase()==='waterskin').length;
@@ -3636,10 +3639,15 @@ function ModuleSwitchModal({gs,moduleList,currentModuleId,onSwitch,onClose}){
   const[startFresh,setStartFresh]=useState(false);
   // Filter out current module and test modules
   const available=(moduleList||[]).filter(c=>c.id!==currentModuleId&&c.type!=='test');
+  // Campaign lock: check if character is locked to a campaign
+  const playerCampaign=gs?.currentCampaign||null;
+  const campaignComplete=gs?.campaignProgress?.complete||false;
+  const isSameCampaign=(mod)=>!playerCampaign||mod.campaignId===playerCampaign||campaignComplete;
   // Get validation for selected module (only needed for transfer mode)
   const validation=selected&&!startFresh?canEnterModule(gs,{id:selected.id,type:selected.type,levelRange:selected.levelRange,date:selected.date||0},(gs.completedModules||[]).includes(selected.id)):null;
   const playerLevel=gs?.level||1;
   const hasProgressInSelected=selected&&gs?.moduleProgress?.[selected.id];
+  const campaignLocked=selected&&!startFresh&&!isSameCampaign(selected);
 
   const handleConfirm=(saveFirst)=>{
     if(!selected)return;
@@ -3664,13 +3672,16 @@ function ModuleSwitchModal({gs,moduleList,currentModuleId,onSwitch,onClose}){
           available.map(c=>{
             const hasProgress=gs?.moduleProgress?.[c.id];
             const isSelected=selected?.id===c.id;
+            const sameCampaign=isSameCampaign(c);
+            const campaignName=c.campaignId?CAMPAIGN_LIST.find(cp=>cp.id===c.campaignId)?.title||c.campaignId:null;
             return e('div',{key:c.id,className:'module-switch-option'+(isSelected?' selected':''),
               style:{padding:12,border:'1px solid '+(isSelected?'var(--gold)':'var(--border)'),borderRadius:6,cursor:'pointer'},
               onClick:()=>setSelected(c)},
               e('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center'}},
                 e('div',null,
                   e('div',{style:{fontWeight:'bold',color:isSelected?'var(--gold)':'var(--text)'}},c.title),
-                  e('div',{style:{fontSize:11,color:'var(--text-dim)'}},c.subtitle||c.type)),
+                  e('div',{style:{fontSize:11,color:'var(--text-dim)'}},c.subtitle||c.type),
+                  campaignName?e('div',{style:{fontSize:10,color:sameCampaign?'var(--green)':'var(--orange)',marginTop:2}},sameCampaign?'\u2714 '+campaignName:'\u26a0 '+campaignName):null),
                 e('div',{style:{textAlign:'right',fontSize:11}},
                   e('div',null,'Lv ',c.levelRange?c.levelRange[0]+'-'+c.levelRange[1]:'?'),
                   c.date?e('div',{style:{color:'var(--text-dim)'}},'Year '+c.date):null,
@@ -3682,17 +3693,18 @@ function ModuleSwitchModal({gs,moduleList,currentModuleId,onSwitch,onClose}){
       step==='mode'?e(React.Fragment,null,
         e('p',{style:{marginBottom:12}},'How do you want to play ',e('strong',null,selected?.title),'?'),
         e('div',{style:{display:'flex',flexDirection:'column',gap:12}},
-          e('button',{style:{padding:16,border:'1px solid '+(startFresh?'var(--border)':'var(--gold)'),borderRadius:8,background:startFresh?'transparent':'rgba(201,168,76,0.1)',textAlign:'left',cursor:'pointer'},onClick:()=>setStartFresh(false)},
-            e('div',{style:{fontWeight:'bold',color:startFresh?'var(--text)':'var(--gold)'}},'Transfer ',gs?.name||'Character'),
+          e('button',{style:{padding:16,border:'1px solid '+(startFresh||campaignLocked?'var(--border)':'var(--gold)'),borderRadius:8,background:startFresh||campaignLocked?'transparent':'rgba(201,168,76,0.1)',textAlign:'left',cursor:campaignLocked?'not-allowed':'pointer',opacity:campaignLocked?0.6:1},onClick:()=>{if(!campaignLocked)setStartFresh(false)},disabled:campaignLocked},
+            e('div',{style:{fontWeight:'bold',color:startFresh||campaignLocked?'var(--text)':'var(--gold)'}},'Transfer ',gs?.name||'Character'),
             e('div',{style:{fontSize:12,color:'var(--text-dim)',marginTop:4}},'Bring your character with scaled level and timeline-filtered inventory'),
-            validation&&!validation.allowed?e('div',{style:{fontSize:11,color:'var(--danger,#c44)',marginTop:4}},validation.reason):null,
-            validation?.scaling?e('div',{style:{fontSize:11,color:'var(--text-dim)',marginTop:4}},'Level will scale: '+playerLevel+' → '+validation.scaling.toLevel):null),
+            campaignLocked?e('div',{style:{fontSize:11,color:'var(--orange)',marginTop:4}},'\u26a0 Character is locked to '+CAMPAIGN?.title+'. Complete the saga to unlock cross-campaign transfer.'):null,
+            validation&&!validation.allowed&&!campaignLocked?e('div',{style:{fontSize:11,color:'var(--danger,#c44)',marginTop:4}},validation.reason):null,
+            validation?.scaling&&!campaignLocked?e('div',{style:{fontSize:11,color:'var(--text-dim)',marginTop:4}},'Level will scale: '+playerLevel+' → '+validation.scaling.toLevel):null),
           e('button',{style:{padding:16,border:'1px solid '+(startFresh?'var(--gold)':'var(--border)'),borderRadius:8,background:startFresh?'rgba(201,168,76,0.1)':'transparent',textAlign:'left',cursor:'pointer'},onClick:()=>setStartFresh(true)},
             e('div',{style:{fontWeight:'bold',color:startFresh?'var(--gold)':'var(--text)'}},'Start Fresh'),
             e('div',{style:{fontSize:12,color:'var(--text-dim)',marginTop:4}},'Create a new character for this module'))),
         e('div',{style:{marginTop:16,display:'flex',justifyContent:'flex-end',gap:8}},
           e('button',{className:'ghost-btn',onClick:()=>setStep('select')},'Back'),
-          e('button',{className:'gold-btn',disabled:!startFresh&&validation&&!validation.allowed,onClick:()=>setStep('save')},'Continue'))):
+          e('button',{className:'gold-btn',disabled:!startFresh&&(campaignLocked||(validation&&!validation.allowed)),onClick:()=>setStep('save')},'Continue'))):
       // Step 3: Save confirmation
       step==='save'?e(React.Fragment,null,
         e('p',{style:{marginBottom:12}},'Save your current progress before switching?'),
@@ -10272,7 +10284,7 @@ function filterChoices(choices, sceneId, gs) {
       if (!matchLetter && !matchTarget) continue;
       if (f.hideIfClass && gs.cls === f.hideIfClass) return null;
       if (f.requireFlag) {
-        const val = flags[f.requireFlag];
+        const val = flags[f.requireFlag] || (gs.sagaFlags||{})[f.requireFlag];
         const ok = f.requireFlagValue ? val === f.requireFlagValue : !!val;
         if (!ok) {
           if (f.disabledText) return {...c, text: c.text + f.disabledText, _disabled: true};
@@ -10392,9 +10404,9 @@ function BanterBlock({sceneId,gs}){
     if(b.scene!==sceneId)return false;
     if(b.requireCompanion&&!b.requireCompanion.every(c=>comps.some(p=>p.includes(c))))return false;
     if(b.requireClass&&b.requireClass!==gs.cls)return false;
-    if(b.requireFlag&&!(gs.flags&&gs.flags[b.requireFlag]))return false;
+    if(b.requireFlag&&!hasFlag(gs,b.requireFlag))return false;
     if(b.requireRomance&&!b.requireRomance.some(c=>gs.romances&&gs.romances[c]))return false;
-    if(b.excludeFlag&&gs.flags&&gs.flags[b.excludeFlag])return false;
+    if(b.excludeFlag&&hasFlag(gs,b.excludeFlag))return false;
     return true;
   });
   if(!matching.length)return null;
@@ -10500,7 +10512,7 @@ function SceneView({scene,onChoice,gs,isEnding,onViewSheet,onViewDmSummary,onExp
 // ── Character Sheet ────────────────────────────────────
 // ── DM Summary ────────────────────────────────────────
 function evaluateDmCondition(cond,gs,sceneId){
-  if(cond.ifFlag){const has=gs.flags&&gs.flags[cond.ifFlag];if(cond.negate?has:!has)return false}
+  if(cond.ifFlag){const has=hasFlag(gs,cond.ifFlag);if(cond.negate?has:!has)return false}
   if(cond.ifClass&&gs.cls!==cond.ifClass)return false;
   if(cond.ifDgTrack&&gs.dgTrack!==cond.ifDgTrack)return false;
   if(cond.ifOrderMax){const vals={rose:gs.rose||0,sword:gs.sword||0,crown:gs.crown||0};const max=Object.entries(vals).sort((a,b)=>b[1]-a[1])[0];if(max[0]!==cond.ifOrderMax)return false;if(cond.ifOrderMin&&max[1]<cond.ifOrderMin)return false}
@@ -12056,6 +12068,16 @@ function ExportCharacterModal({gs,moduleId,onExport,onClose}){
     expChar.loveInterest=selectedLove;
     if(!expChar.completedModules)expChar.completedModules=[];
     if(!expChar.completedModules.includes(moduleId))expChar.completedModules.push(moduleId);
+    // Check campaign completion
+    if(CAMPAIGN&&expChar.currentCampaign===CAMPAIGN.id){
+      const campaignModuleIds=(CAMPAIGN.modules||[]).map(m=>m.id);
+      const allComplete=campaignModuleIds.every(mid=>expChar.completedModules.includes(mid));
+      if(allComplete){
+        if(!expChar.campaignProgress)expChar.campaignProgress={};
+        expChar.campaignProgress.complete=true;
+        expChar.campaignProgress.completedAt=Date.now();
+      }
+    }
     expChar.lastApproval=gs.approval||{};
     return{exportVersion:1,exportedAt:Date.now(),moduleId,character:expChar};
   };
@@ -12575,10 +12597,10 @@ function App(){
           ns.mount={name:mName,speed:mData?.speed||60,carry:mData?.carry||480,hp:mData?.hp||19,maxHp:mData?.hp||19,barding:null}}
       }
       if(t.includes('MOUNT LOST')||t.includes('HORSE KILLED')||t.includes('HORSE LOST')||t.includes('MOUNT KILLED'))ns.mount=null;
-      // Parse [SET_FLAG:xxx] tags in box text
+      // Parse [SET_FLAG:xxx] and [SET_SAGA_FLAG:xxx] tags in box text
       const flagMatch=t.match(/\[SET_FLAG:(\w+)\]/);
       if(flagMatch){
-        ns.flags[flagMatch[1]]=true;
+        ns.flags={...(ns.flags||{}),[flagMatch[1]]:true};
         // Grant title from titleGrants rules
         const titleGrants=MODULE_RULES?.titleGrants||[];
         const grant=titleGrants.find(g=>g.flag===flagMatch[1]);
@@ -12590,6 +12612,10 @@ function App(){
           if(!ns.titles.includes(title))ns.titles.push(title);
           if(!ns.selectedTitle)ns.selectedTitle=title;
         }
+      }
+      const sagaFlagMatch=t.match(/\[SET_SAGA_FLAG:(\w+)\]/);
+      if(sagaFlagMatch){
+        ns.sagaFlags={...(ns.sagaFlags||{}),[sagaFlagMatch[1]]:true};
       }
     });
     // Knighting ceremony trigger — check if entering a CEREMONY_DUBBING scene
@@ -12721,10 +12747,12 @@ function App(){
     for(const pfx of (MODULE_RULES?.visitedPrefixes||[]))if(t.startsWith(pfx))ns.awardedScenes[t+'_visited']=true;
     // Set story flags from module rules
     if(!ns.flags)ns.flags={};
+    if(!ns.sagaFlags)ns.sagaFlags={};
     for(const rule of (MODULE_RULES?.choiceFlags||[])){
       const rLetters=rule.letters||( rule.letter?[rule.letter]:[]);
       if(rule.scene===sceneId&&(rLetters.includes(c.letter)||rLetters.includes('*'))){
         if(rule.setFlags)Object.assign(ns.flags,rule.setFlags);
+        if(rule.setSagaFlags)Object.assign(ns.sagaFlags,rule.setSagaFlags);
         if(rule.addItems){for(const item of rule.addItems){if(!ns.inventory.includes(item))ns.inventory=[...ns.inventory,item]}}
         if(rule.addBonuses){if(!ns.bonuses)ns.bonuses=[];ns.bonuses.push(...rule.addBonuses)}
       }
@@ -12924,6 +12952,16 @@ function App(){
     // Track completed modules
     if(!expChar.completedModules)expChar.completedModules=[];
     if(!expChar.completedModules.includes(moduleId))expChar.completedModules.push(moduleId);
+    // Check campaign completion
+    if(CAMPAIGN&&expChar.currentCampaign===CAMPAIGN.id){
+      const campaignModuleIds=(CAMPAIGN.modules||[]).map(m=>m.id);
+      const allComplete=campaignModuleIds.every(mid=>expChar.completedModules.includes(mid));
+      if(allComplete){
+        if(!expChar.campaignProgress)expChar.campaignProgress={};
+        expChar.campaignProgress.complete=true;
+        expChar.campaignProgress.completedAt=Date.now();
+      }
+    }
     // Save approval ratings for potential reunion
     expChar.lastApproval=gs.approval||{};
     // Store as exportable character (separate from save slots)
