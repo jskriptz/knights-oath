@@ -32,7 +32,7 @@
   "loadingScreen": {
     "title": "DRAGONLANCE",
     "subtitle": "THE KNIGHT'S OATH",
-    "version": "v25.42.0",
+    "version": "v25.43.0",
     "stats": "383 Scenes \u2022 9 Companions"
   },
   "heroPortraits": [
@@ -41,10 +41,25 @@
     {"id": "squire_m3", "label": "Squire III", "url": "assets/images/portraits/Squire_Male_3.png"},
     {"id": "squire_m4", "label": "Squire IV", "url": "assets/images/portraits/Squire_Male_4.png"},
     {"id": "squire_m5", "label": "Squire V", "url": "assets/images/portraits/Squire_Male_5.png"},
+    {"id": "squire_m6", "label": "Squire VI", "url": "assets/images/portraits/Squire_Male_6.png"},
+    {"id": "squire_m7", "label": "Squire VII", "url": "assets/images/portraits/Squire_Male_7.png"},
+    {"id": "squire_m8", "label": "Squire VIII", "url": "assets/images/portraits/Squire_Male_8.png"},
+    {"id": "squire_m9", "label": "Squire IX", "url": "assets/images/portraits/Squire_Male_9.png"},
+    {"id": "squire_m10", "label": "Squire X", "url": "assets/images/portraits/Squire_Male_10.png"},
+    {"id": "squire_m12", "label": "Squire XII", "url": "assets/images/portraits/Squire_Male_12.png"},
+    {"id": "squire_m13", "label": "Squire XIII", "url": "assets/images/portraits/Squire_Male_13.png"},
     {"id": "squire_f1", "label": "Squire I", "url": "assets/images/portraits/Squire_Female_1.png"},
     {"id": "squire_f2", "label": "Squire II", "url": "assets/images/portraits/Squire_Female_2.png"},
     {"id": "squire_f3", "label": "Squire III", "url": "assets/images/portraits/Squire_Female_3.png"},
     {"id": "squire_f4", "label": "Squire IV", "url": "assets/images/portraits/Squire_Female_4.png"},
-    {"id": "squire_f5", "label": "Squire V", "url": "assets/images/portraits/Squire_Female_5.png"}
+    {"id": "squire_f5", "label": "Squire V", "url": "assets/images/portraits/Squire_Female_5.png"},
+    {"id": "squire_f6", "label": "Squire VI", "url": "assets/images/portraits/Squire_Female_6.png"},
+    {"id": "squire_f7", "label": "Squire VII", "url": "assets/images/portraits/Squire_Female_7.png"},
+    {"id": "squire_f8", "label": "Squire VIII", "url": "assets/images/portraits/Squire_Female_8.png"},
+    {"id": "squire_f9", "label": "Squire IX", "url": "assets/images/portraits/Squire_Female_9.png"},
+    {"id": "squire_f10", "label": "Squire X", "url": "assets/images/portraits/Squire_Female_10.png"},
+    {"id": "squire_f11", "label": "Squire XI", "url": "assets/images/portraits/Squire_Female_11.png"},
+    {"id": "squire_f12", "label": "Squire XII", "url": "assets/images/portraits/Squire_Female_12.png"},
+    {"id": "squire_f13", "label": "Squire XIII", "url": "assets/images/portraits/Squire_Female_13.png"}
   ]
 }
