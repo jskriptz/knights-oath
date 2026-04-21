@@ -9192,6 +9192,191 @@ function ShopBox({text,gs,onStateUpdate}){
       ):null));
 }
 
+// ── Magic Shop Box ──────────────────────────────────────
+function parseMagicShopBox(text){
+  const lines=text.split('\n');
+  let shopName='Arcane Emporium';
+  let shopType='magic';
+  let maxRarity='rare';
+  for(const line of lines){
+    const nm=line.match(/MAGIC\s*SHOP[:\s]+(.+)/i);if(nm)shopName=nm[1].trim();
+    const ty=line.match(/type[:\s]+(\w+)/i);if(ty)shopType=ty[1].toLowerCase();
+    const mr=line.match(/max[:\s]+(\w+)/i);if(mr)maxRarity=mr[1].toLowerCase();
+  }
+  return{shopName,shopType,maxRarity};
+}
+
+function MagicShopBox({text,gs,onStateUpdate}){
+  const e=React.createElement;
+  const parsed=React.useMemo(()=>parseMagicShopBox(text),[text]);
+  const[tab,setTab]=useState('scrolls');
+  const[localGold,setLocalGold]=useState(gs.gold||0);
+  const[localInv,setLocalInv]=useState(gs.inventory||[]);
+  const[bought,setBought]=useState({});
+  const[learnedSpells,setLearnedSpells]=useState([]);
+  const[rarityFilter,setRarityFilter]=useState('all');
+  const[levelFilter,setLevelFilter]=useState(0);
+
+  const rarityOrder={common:1,uncommon:2,rare:3,'very rare':4,legendary:5};
+  const maxRarityNum=rarityOrder[parsed.maxRarity]||3;
+
+  const scrolls=React.useMemo(()=>{
+    if(!EQUIPMENT_DATA?.scrolls)return[];
+    return EQUIPMENT_DATA.scrolls.filter(s=>{
+      const rNum=rarityOrder[s.rarity]||1;
+      if(rNum>maxRarityNum)return false;
+      if(rarityFilter!=='all'&&s.rarity!==rarityFilter)return false;
+      if(levelFilter>0&&s.level!==levelFilter)return false;
+      return true;
+    });
+  },[rarityFilter,levelFilter,maxRarityNum]);
+
+  const trinkets=React.useMemo(()=>{
+    if(!EQUIPMENT_DATA?.magicTrinkets)return[];
+    return EQUIPMENT_DATA.magicTrinkets.filter(t=>{
+      const rNum=rarityOrder[t.rarity]||1;
+      if(rNum>maxRarityNum)return false;
+      if(rarityFilter!=='all'&&t.rarity!==rarityFilter)return false;
+      return true;
+    });
+  },[rarityFilter,maxRarityNum]);
+
+  const spellLearning=EQUIPMENT_DATA?.spellLearning||{costPerLevel:50,hoursPerLevel:2,classRestriction:'Wizard'};
+  const canLearnSpells=gs.cls==='Wizard'||(gs.classLevels&&gs.classLevels.Wizard>0);
+  const knownSpells=gs.spells||[];
+
+  const buyItem=(item,isScroll)=>{
+    const price=item.buyPrice;
+    if(localGold<price)return;
+    setLocalGold(g=>g-price);
+    setBought(b=>({...b,[item.name]:(b[item.name]||0)+1}));
+    setLocalInv(inv=>[...inv,item.name]);
+    if(onStateUpdate){
+      onStateUpdate(g=>{
+        const ng={...g,gold:(g.gold||0)-price,inventory:[...(g.inventory||[])]};
+        const shopScene=ng.history&&ng.history.length?ng.history[ng.history.length-1]:'magic-shop';
+        addItemWithTracking(ng,item.name,shopScene);
+        return ng;
+      });
+    }
+  };
+
+  const learnSpell=(scroll)=>{
+    if(!canLearnSpells)return;
+    const cost=scroll.level*spellLearning.costPerLevel;
+    if(localGold<cost)return;
+    if(knownSpells.includes(scroll.spell))return;
+    if(!localInv.includes(scroll.name))return;
+    setLocalGold(g=>g-cost);
+    setLearnedSpells(ls=>[...ls,scroll.spell]);
+    setLocalInv(inv=>{const a=[...inv];const idx=a.indexOf(scroll.name);if(idx>=0)a.splice(idx,1);return a});
+    if(onStateUpdate){
+      onStateUpdate(g=>{
+        const ng={...g,gold:(g.gold||0)-cost,inventory:[...g.inventory],spells:[...(g.spells||[])]};
+        const idx=ng.inventory.indexOf(scroll.name);if(idx>=0)ng.inventory.splice(idx,1);
+        if(!ng.spells.includes(scroll.spell))ng.spells.push(scroll.spell);
+        return ng;
+      });
+    }
+  };
+
+  const getRarityColor=(r)=>({common:'var(--text)',uncommon:'var(--green)',rare:'var(--blue)','very rare':'var(--purple)',legendary:'var(--gold)'}[r]||'var(--text)');
+
+  const tabStyle=(t)=>({padding:'8px 16px',background:tab===t?'var(--gold)':'transparent',color:tab===t?'var(--bg)':'var(--gold)',border:'1px solid var(--gold)',cursor:'pointer',fontFamily:'Cinzel,serif',fontSize:'12px'});
+
+  return e('div',{className:'shop-wrapper'},
+    e('div',{className:'box shop'},
+      e('div',{className:'shop-header'},
+        e('span',null,'✨ '+parsed.shopName),
+        e('span',{className:'shop-gold'},localGold+' stl')),
+      // Tabs
+      e('div',{style:{display:'flex',gap:'0',marginBottom:'12px',borderBottom:'1px solid var(--gold-dim)'}},
+        e('button',{style:tabStyle('scrolls'),onClick:()=>setTab('scrolls')},'Spell Scrolls'),
+        e('button',{style:tabStyle('trinkets'),onClick:()=>setTab('trinkets')},'Magic Items'),
+        canLearnSpells?e('button',{style:tabStyle('learn'),onClick:()=>setTab('learn')},'Learn Spells'):null),
+      // Filters
+      e('div',{style:{display:'flex',gap:'12px',marginBottom:'12px',fontSize:'12px'}},
+        e('label',{style:{color:'var(--text-dim)'}},
+          'Rarity: ',
+          e('select',{value:rarityFilter,onChange:ev=>setRarityFilter(ev.target.value),style:{background:'var(--panel)',color:'var(--text)',border:'1px solid var(--border)',padding:'4px'}},
+            e('option',{value:'all'},'All'),
+            e('option',{value:'common'},'Common'),
+            e('option',{value:'uncommon'},'Uncommon'),
+            e('option',{value:'rare'},'Rare'),
+            maxRarityNum>=4?e('option',{value:'very rare'},'Very Rare'):null,
+            maxRarityNum>=5?e('option',{value:'legendary'},'Legendary'):null)),
+        tab==='scrolls'?e('label',{style:{color:'var(--text-dim)'}},
+          'Level: ',
+          e('select',{value:levelFilter,onChange:ev=>setLevelFilter(parseInt(ev.target.value)),style:{background:'var(--panel)',color:'var(--text)',border:'1px solid var(--border)',padding:'4px'}},
+            e('option',{value:0},'All'),
+            [1,2,3,4,5,6,7,8,9].map(l=>e('option',{key:l,value:l},'Level '+l)))):null),
+      // Scrolls tab
+      tab==='scrolls'?e('div',null,
+        scrolls.length===0?e('p',{style:{color:'var(--text-dim)',fontStyle:'italic'}},'No scrolls match your filters.'):
+        e('table',{className:'shop-table'},
+          e('thead',null,e('tr',null,e('th',null,'SCROLL'),e('th',null,'LVL'),e('th',null,'PRICE'),e('th',{style:{width:'40%'}},'EFFECT'),e('th',null,''))),
+          e('tbody',null,scrolls.map((s,i)=>{
+            const qty=bought[s.name]||0;
+            const owned=localInv.filter(x=>x===s.name).length;
+            return e('tr',{key:i},
+              e('td',{style:{color:getRarityColor(s.rarity)}},s.spell),
+              e('td',{style:{textAlign:'center'}},s.level),
+              e('td',null,s.buyPrice+' stl'),
+              e('td',{style:{fontSize:'11px',color:'var(--text-dim)'}},s.desc),
+              e('td',null,e('button',{className:'shop-buy-btn'+(qty>0?' bought':''),onClick:()=>buyItem(s,true),disabled:localGold<s.buyPrice},owned>0?'Buy ('+owned+')':'Buy')));
+          })))
+      ):null,
+      // Trinkets tab
+      tab==='trinkets'?e('div',null,
+        trinkets.length===0?e('p',{style:{color:'var(--text-dim)',fontStyle:'italic'}},'No items match your filters.'):
+        e('table',{className:'shop-table'},
+          e('thead',null,e('tr',null,e('th',null,'ITEM'),e('th',null,'PRICE'),e('th',null,'ATTUNE'),e('th',{style:{width:'40%'}},'EFFECT'),e('th',null,''))),
+          e('tbody',null,trinkets.map((t,i)=>{
+            const qty=bought[t.name]||0;
+            const attText=t.attunement===true?'Yes':t.attunement===false?'No':t.attunement;
+            return e('tr',{key:i},
+              e('td',{style:{color:getRarityColor(t.rarity)}},t.name),
+              e('td',null,t.buyPrice+' stl'),
+              e('td',{style:{fontSize:'11px',textAlign:'center'}},attText),
+              e('td',{style:{fontSize:'11px',color:'var(--text-dim)'}},t.desc),
+              e('td',null,e('button',{className:'shop-buy-btn'+(qty>0?' bought':''),onClick:()=>buyItem(t,false),disabled:localGold<t.buyPrice},qty>0?'Buy ('+qty+')':'Buy')));
+          })))
+      ):null,
+      // Learn spells tab (Wizard only)
+      tab==='learn'&&canLearnSpells?e('div',null,
+        e('div',{style:{background:'rgba(100,150,200,0.1)',border:'1px solid var(--blue)',borderRadius:'6px',padding:'12px',marginBottom:'12px'}},
+          e('h4',{style:{color:'var(--blue)',margin:'0 0 8px',fontFamily:'Cinzel,serif'}},'📖 Spell Learning (D&D 5e 2024)'),
+          e('p',{style:{fontSize:'12px',color:'var(--text-dim)',margin:0}},
+            'Copy spells from scrolls to your spellbook. Cost: ',e('strong',null,spellLearning.costPerLevel+' gp × spell level'),'. Time: '+spellLearning.hoursPerLevel+' hours per level. The scroll is consumed.')),
+        (()=>{
+          const ownedScrolls=localInv.filter(it=>it.startsWith('Scroll of ')).map(name=>{
+            return EQUIPMENT_DATA?.scrolls?.find(s=>s.name===name);
+          }).filter(Boolean);
+          if(ownedScrolls.length===0)return e('p',{style:{color:'var(--text-dim)',fontStyle:'italic'}},'You have no spell scrolls to learn from. Buy scrolls first.');
+          return e('table',{className:'shop-table'},
+            e('thead',null,e('tr',null,e('th',null,'SPELL'),e('th',null,'LVL'),e('th',null,'COST'),e('th',null,'STATUS'),e('th',null,''))),
+            e('tbody',null,ownedScrolls.map((s,i)=>{
+              const cost=s.level*spellLearning.costPerLevel;
+              const alreadyKnown=[...knownSpells,...learnedSpells].includes(s.spell);
+              return e('tr',{key:i},
+                e('td',null,s.spell),
+                e('td',{style:{textAlign:'center'}},s.level),
+                e('td',null,cost+' stl'),
+                e('td',{style:{color:alreadyKnown?'var(--green)':'var(--text-dim)'}},alreadyKnown?'✓ Known':'Not learned'),
+                e('td',null,alreadyKnown?null:e('button',{className:'shop-buy-btn',onClick:()=>learnSpell(s),disabled:localGold<cost},'Learn')));
+            })));
+        })()
+      ):null,
+      // Footer
+      e('div',{style:{marginTop:'16px',padding:'12px',background:'rgba(0,0,0,0.2)',borderRadius:'4px',fontSize:'11px',color:'var(--text-dim)'}},
+        e('p',{style:{margin:0}},'💡 ',e('strong',null,'Rarity Guide'),': ',
+          e('span',{style:{color:getRarityColor('common')}},'Common'),', ',
+          e('span',{style:{color:getRarityColor('uncommon')}},'Uncommon'),', ',
+          e('span',{style:{color:getRarityColor('rare')}},'Rare'),', ',
+          e('span',{style:{color:getRarityColor('very rare')}},'Very Rare'),', ',
+          e('span',{style:{color:getRarityColor('legendary')}},'Legendary')))));
+}
+
 // ── Loot Box ──────────────────────────────────────────
 function parseLootBox(text){
   const lines=text.split('\n');
@@ -10491,6 +10676,7 @@ function SceneView({scene,onChoice,gs,isEnding,onViewSheet,onViewDmSummary,onExp
         if(box.type==='roll')return e(RollBox,{key:scene.id+'_r'+i,rollKey:scene.id+'_r'+i,text:txt,derived:gs.derived,gs:gs,onBonus:onBonus,onRollSave:onStateUpdate});
         if(box.type==='combat')return e(CombatBox,{key:scene.id+'_c'+i,text:txt,gs:gs,derived:gs.derived,onStateUpdate:onStateUpdate,sceneId:scene.id});
         if(box.type==='shop')return e(ShopBox,{key:scene.id+'_s'+i,text:txt,gs:gs,onStateUpdate:onStateUpdate});
+        if(box.type==='magic')return e(MagicShopBox,{key:scene.id+'_m'+i,text:txt,gs:gs,onStateUpdate:onStateUpdate});
         if(box.type==='loot')return e(LootBox,{key:scene.id+'_l'+i,text:txt,gs:gs,onStateUpdate:onStateUpdate});
         return e('div',{key:'b'+i,className:'box '+box.type},txt.split('\n').filter(l=>l.trim()).map(l=>l.replace(/\s*Mark 1 tally[^.]*\./gi,'').trim()).filter(l=>l).map((l,j)=>e('p',{key:j,dangerouslySetInnerHTML:{__html:fmt(l,gs.name)}})));
       }).filter(Boolean),
