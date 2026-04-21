@@ -347,7 +347,7 @@
       {
         "letter": "A",
         "text": "Tell him you are nervous too.",
-        "target": "3",
+        "target": "12",
         "points": {
           "ROSE": 1
         }
@@ -355,7 +355,7 @@
       {
         "letter": "B",
         "text": "'Then we will both pass anyway.'",
-        "target": "3",
+        "target": "12",
         "points": {
           "SWORD": 1
         }
