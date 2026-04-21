@@ -10647,8 +10647,8 @@ function DmSummary({gs,sceneId,onBack}){
   );
 }
 
-function CharSheet({gs,isEnding,onBack,onEquipChange,onPortraitClick}){
-  const[csComp,setCSComp]=useState(null);const[csEditSlot,setCsEditSlot]=useState(null);const[csSheet,setCsSheet]=useState(null);const portraitRef=useRef(null);const[showGallery,setShowGallery]=useState(false);
+function CharSheet({gs,isEnding,onBack,onEquipChange}){
+  const[csComp,setCSComp]=useState(null);const[csEditSlot,setCsEditSlot]=useState(null);const[csSheet,setCsSheet]=useState(null);const portraitRef=useRef(null);const[showGallery,setShowGallery]=useState(false);const[lightbox,setLightbox]=useState(null);
   const handlePortraitUpload=(ev)=>{const file=ev.target.files?.[0];if(!file)return;if(!file.type.startsWith('image/')){alert('Please select an image file');return}const reader=new FileReader();reader.onload=(e)=>{const img=new Image();img.onload=()=>{const maxSize=400;let w=img.width,h=img.height;if(w>maxSize||h>maxSize){if(w>h){h=Math.round(h*(maxSize/w));w=maxSize}else{w=Math.round(w*(maxSize/h));h=maxSize}}const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;const ctx=canvas.getContext('2d');ctx.drawImage(img,0,0,w,h);const dataUrl=canvas.toDataURL('image/jpeg',0.75);onEquipChange({...gs,portrait:dataUrl})};img.src=e.target.result};reader.readAsDataURL(file)};
   const e=React.createElement;const d=gs.derived;
   const order=getOrder(gs.rose,gs.sword,gs.crown);const bg=getBackground();const sp=gs.spells||{};
@@ -10746,7 +10746,7 @@ function CharSheet({gs,isEnding,onBack,onEquipChange,onPortraitClick}){
       e('div',{className:'cs-divider'})),
       // Portrait section
       e('div',{className:'cs-portrait-section'},
-        gs.portrait?e('img',{className:'cs-portrait',src:gs.portrait,alt:'Character portrait',onClick:()=>onPortraitClick?.({url:gs.portrait,name:gs.name}),style:{cursor:'pointer'}}):
+        gs.portrait?e('img',{className:'cs-portrait',src:gs.portrait,alt:'Character portrait',onClick:()=>setLightbox({url:gs.portrait,name:gs.name}),style:{cursor:'pointer'}}):
           e('div',{className:'cs-portrait-placeholder',onClick:()=>setShowGallery(!showGallery)},'Click to choose portrait'),
         e('input',{type:'file',accept:'image/*',ref:portraitRef,style:{display:'none'},onChange:handlePortraitUpload}),
         e('div',{style:{display:'flex',gap:4,marginTop:8}},
@@ -10758,7 +10758,7 @@ function CharSheet({gs,isEnding,onBack,onEquipChange,onPortraitClick}){
 
     // ── Journey Summary (ending only) ──
     isEnding?e('div',{className:'cs-journey-summary'},
-      gs.portrait?e('img',{className:'cs-portrait',src:gs.portrait,alt:'Character portrait',style:{display:'block',margin:'0 auto 16px',cursor:'pointer'},onClick:()=>onPortraitClick?.({url:gs.portrait,name:gs.name})}):null,
+      gs.portrait?e('img',{className:'cs-portrait',src:gs.portrait,alt:'Character portrait',style:{display:'block',margin:'0 auto 16px',cursor:'pointer'},onClick:()=>setLightbox({url:gs.portrait,name:gs.name})}):null,
       e('h2',{className:'cs-journey-title'},'JOURNEY SUMMARY'),
       e('div',{className:'cs-journey-grid'},
 
@@ -11170,7 +11170,7 @@ function CharSheet({gs,isEnding,onBack,onEquipChange,onPortraitClick}){
           const approvalLabel=approval<=-3?'Hostile':approval<0?'Cold':approval<3?'Neutral':approval<6?'Warm':'Devoted';
           return e('div',{key:c,className:'cs-companion-card'+(rom?' has-romance':'')},
             e('div',{className:'cs-comp-header'},
-              e('div',{className:'cs-companion-token',title:c,onClick:cd?.portrait?()=>onPortraitClick?.({url:cd.portrait,name:c}):null,style:cd?.portrait?{cursor:'pointer'}:{}},
+              e('div',{className:'cs-companion-token',title:c,onClick:cd?.portrait?()=>setLightbox({url:cd.portrait,name:c}):null,style:cd?.portrait?{cursor:'pointer'}:{}},
                 cd?.portrait?e('img',{src:cd.portrait,alt:c}):e('span',{className:'initial'},csFirst?.[0]||'?'),
                 rom&&rom!=='Friend'?e('span',{className:'romance-heart'},'\u2661'):null),
               e('span',{className:'cs-comp-name'},c),
@@ -11203,7 +11203,8 @@ function CharSheet({gs,isEnding,onBack,onEquipChange,onPortraitClick}){
     csSheet?e(CompanionSheet,{name:csSheet,onClose:()=>setCsSheet(null)}):null,
     e('div',{className:'cs-actions no-print'},
       e('button',{className:'gold-btn cs-action-btn',onClick:()=>window.print()},'Print Character Sheet'),
-      e('button',{className:'ghost-btn cs-action-btn',onClick:onBack},'\u2190 Back'))
+      e('button',{className:'ghost-btn cs-action-btn',onClick:onBack},'\u2190 Back')),
+    lightbox?e(PortraitLightbox,{url:lightbox.url,name:lightbox.name,onClose:()=>setLightbox(null)}):null
   );
 }
 
@@ -13057,7 +13058,7 @@ function App(){
   if(phase==='create')return e(CharCreate,{onDone:startGame,onBack:()=>setPhase('intro')});
   if(!gs||!scene)return null;
   if(showDmSummary&&DM_SUMMARY)return e(DmSummary,{gs,sceneId,onBack:()=>setShowDmSummary(false)});
-  if(showSheet)return e(CharSheet,{gs,isEnding:ENDING_SCENES.includes(sceneId),onBack:()=>setShowSheet(false),onEquipChange:(newGs)=>setGs(newGs),onPortraitClick:setLightbox});
+  if(showSheet)return e(CharSheet,{gs,isEnding:ENDING_SCENES.includes(sceneId),onBack:()=>setShowSheet(false),onEquipChange:(newGs)=>setGs(newGs)});
   const d=gs.derived;
   return e('div',{id:'game-container'},
     e('div',{className:'mobile-bar'},e('button',{className:'hamburger',onClick:()=>setSideOpen(!sideOpen)},sideOpen?'\u2715':'\u2630'),e('div',{style:{flex:1,textAlign:'center'}},e('div',{className:'bar-name'},gs.name),e('div',{className:'bar-stats'},e('span',null,'Lv'+gs.level),e('span',null,'HP '+gs.hp+'/'+d.maxHp),e('span',{style:{color:'#e8a0a0'}},'R:'+gs.rose),e('span',{style:{color:'#a0c0e8'}},'S:'+gs.sword),e('span',{style:{color:'#e8d8a0'}},'C:'+gs.crown),e('span',{style:{color:'#c9a84c'}},'\u2694'+(gs.gold||0)))),e('button',{className:'hamburger',onClick:()=>setShowSave(true)},'\u2716')),
