@@ -30,7 +30,11 @@
     "Bren": "assets/images/notable npcs/Bren.png",
     "Ser Hadrian": "assets/images/notable npcs/Ser_Hadrian.png",
     "Hadrian": "assets/images/notable npcs/Ser_Hadrian.png",
-    "Aldric": "assets/images/companions/Aldric_Voss.png"
+    "Aldric": "assets/images/companions/Aldric_Voss.png",
+    "Dire Wolf": "assets/images/enemies/Dire_Wolves.png",
+    "Wolf": "assets/images/enemies/Dire_Wolves.png",
+    "Dire Wolf Alpha": "assets/images/enemies/Dire_Wolves_Alpha.png",
+    "Alpha": "assets/images/enemies/Dire_Wolves_Alpha.png"
   },
   "junkItems": {
     "Signal Horn": { "base": 1, "tip": "Decorative only. Sell it." },

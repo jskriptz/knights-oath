@@ -36,17 +36,15 @@
     "stats": "383 Scenes \u2022 9 Companions"
   },
   "heroPortraits": [
-    {"id": "knight_m1", "label": "Knight (Male)", "url": "https://api.dicebear.com/9.x/notionists/svg?seed=SolKnightMale&backgroundColor=1a2a4a"},
-    {"id": "knight_f1", "label": "Knight (Female)", "url": "https://api.dicebear.com/9.x/notionists/svg?seed=SolKnightFemale&backgroundColor=1a2a4a"},
-    {"id": "knight_m2", "label": "Veteran Knight", "url": "https://api.dicebear.com/9.x/notionists/svg?seed=VeteranKnight&backgroundColor=1a2a4a"},
-    {"id": "paladin_m1", "label": "Paladin (Male)", "url": "https://api.dicebear.com/9.x/notionists/svg?seed=HolyPaladinM&backgroundColor=1a2a4a"},
-    {"id": "paladin_f1", "label": "Paladin (Female)", "url": "https://api.dicebear.com/9.x/notionists/svg?seed=HolyPaladinF&backgroundColor=1a2a4a"},
-    {"id": "paladin_m2", "label": "Crusader", "url": "https://api.dicebear.com/9.x/notionists/svg?seed=CrusaderHoly&backgroundColor=1a2a4a"},
-    {"id": "warrior_m1", "label": "Warrior (Male)", "url": "https://api.dicebear.com/9.x/notionists/svg?seed=BattleWarriorM&backgroundColor=1a2a4a"},
-    {"id": "warrior_f1", "label": "Warrior (Female)", "url": "https://api.dicebear.com/9.x/notionists/svg?seed=BattleWarriorF&backgroundColor=1a2a4a"},
-    {"id": "squire_m1", "label": "Squire (Male)", "url": "https://api.dicebear.com/9.x/notionists/svg?seed=YoungSquireM&backgroundColor=1a2a4a"},
-    {"id": "squire_f1", "label": "Squire (Female)", "url": "https://api.dicebear.com/9.x/notionists/svg?seed=YoungSquireF&backgroundColor=1a2a4a"},
-    {"id": "noble_m1", "label": "Noble (Male)", "url": "https://api.dicebear.com/9.x/notionists/svg?seed=NobleLord&backgroundColor=1a2a4a"},
-    {"id": "noble_f1", "label": "Noble (Female)", "url": "https://api.dicebear.com/9.x/notionists/svg?seed=NobleLady&backgroundColor=1a2a4a"}
+    {"id": "squire_m1", "label": "Squire I", "url": "assets/images/portraits/Squire_Male_1.png"},
+    {"id": "squire_m2", "label": "Squire II", "url": "assets/images/portraits/Squire_Male_2.png"},
+    {"id": "squire_m3", "label": "Squire III", "url": "assets/images/portraits/Squire_Male_3.png"},
+    {"id": "squire_m4", "label": "Squire IV", "url": "assets/images/portraits/Squire_Male_4.png"},
+    {"id": "squire_m5", "label": "Squire V", "url": "assets/images/portraits/Squire_Male_5.png"},
+    {"id": "squire_f1", "label": "Squire I", "url": "assets/images/portraits/Squire_Female_1.png"},
+    {"id": "squire_f2", "label": "Squire II", "url": "assets/images/portraits/Squire_Female_2.png"},
+    {"id": "squire_f3", "label": "Squire III", "url": "assets/images/portraits/Squire_Female_3.png"},
+    {"id": "squire_f4", "label": "Squire IV", "url": "assets/images/portraits/Squire_Female_4.png"},
+    {"id": "squire_f5", "label": "Squire V", "url": "assets/images/portraits/Squire_Female_5.png"}
   ]
 }
