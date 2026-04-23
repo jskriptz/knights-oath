@@ -9668,7 +9668,7 @@ function ModuleSelect({onSelect,onBack}){
 }
 
 // ── Cover ──────────────────────────────────────────────
-function CoverScreen({onNew,onLoad,onImport}){
+function CoverScreen({onNew,onLoad,onImport,onSwitchModule}){
   const[slots,setSlots]=useState(Array(SAVE_SLOT_COUNT).fill(null));const[loading,setLoading]=useState(true);const[del,setDel]=useState(null);const[showSettings,setShowSettings]=useState(false);
   const[ready,setReady]=useState(!!window._scenesReady);
   const[installable,setInstallable]=useState(false);
@@ -9724,6 +9724,7 @@ function CoverScreen({onNew,onLoad,onImport}){
     uploadError?e('div',{style:{color:'var(--red)',fontSize:12,marginBottom:8}},uploadError):null,
     installable&&e('button',{className:'ghost-btn',onClick:handleInstall,style:{marginBottom:8,fontSize:12}},'INSTALL APP'),
     e('button',{className:'ghost-btn',onClick:()=>setShowSettings(true),style:{marginBottom:8,fontSize:12}},'\u2699 SETTINGS'),
+    onSwitchModule?e('button',{className:'ghost-btn',onClick:onSwitchModule,style:{marginBottom:8,fontSize:12}},'\u21c4 SWITCH MODULE'):null,
     e('div',{style:{fontSize:11,letterSpacing:2,color:ready?'#6a8a6a':'#8a7a5a',marginBottom:16,transition:'color .5s'}},ready?'\u2714 READY':'LOADING SCENES\u2026'),
     !loading?e('div',{className:'save-slots'},e('h3',{className:'slots-title'},'SAVED GAMES'),
       slots.map((slot,i)=>{
@@ -13364,7 +13365,7 @@ function App(){
   const e=React.createElement;
   if(phase==='modules')return e(ModuleSelect,{onSelect:async(id)=>{
     await loadModule(id).catch(()=>null);setPhase('cover')},onBack:()=>setPhase('cover')});
-  if(phase==='cover')return e(CoverScreen,{onNew:()=>setPhase('intro'),onLoad:loadSave,onImport:handleImportCharacter});
+  if(phase==='cover')return e(CoverScreen,{onNew:()=>setPhase('intro'),onLoad:loadSave,onImport:handleImportCharacter,onSwitchModule:()=>setPhase('modules')});
   if(phase==='intro')return e(WorldIntro,{onDone:()=>setPhase('create'),onSkip:()=>setPhase('create'),onBack:()=>setPhase('cover')});
   if(phase==='create')return e(CharCreate,{onDone:startGame,onBack:()=>setPhase('intro')});
   if(!gs||!scene)return null;
