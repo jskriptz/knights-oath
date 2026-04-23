@@ -12847,6 +12847,25 @@ function App(){
     const hasCombat=s.boxes.some(b=>b.type==='combat');
     const hasShop=s.boxes.some(b=>b.type==='shop');
     AudioController.playForContext(hasCombat?'combat':hasShop?'shop':'ambient');
+    // Campaign completion detection: mark module complete when reaching ending scene
+    if(ENDING_SCENES.includes(id)){
+      if(!ns.campaignProgress)ns.campaignProgress={modulesCompleted:[],currentModule:MODULE?.id,complete:false};
+      const moduleId=MODULE?.id;
+      if(moduleId&&!ns.campaignProgress.modulesCompleted.includes(moduleId)){
+        ns.campaignProgress.modulesCompleted=[...ns.campaignProgress.modulesCompleted,moduleId];
+      }
+      // Check if all campaign modules are complete
+      if(CAMPAIGN&&CAMPAIGN.modules){
+        const allComplete=CAMPAIGN.modules.every(m=>ns.campaignProgress.modulesCompleted.includes(m.id));
+        if(allComplete&&!ns.campaignProgress.complete){
+          ns.campaignProgress.complete=true;
+          ns.history=[...(ns.history||[]),'🏆 The '+CAMPAIGN.title+' saga is complete!'];
+        }
+      }
+      // Add module to completedModules for character export
+      if(!ns.completedModules)ns.completedModules=[];
+      if(moduleId&&!ns.completedModules.includes(moduleId))ns.completedModules=[...ns.completedModules,moduleId];
+    }
     setScene(s);setSceneId(id);setGs(ns);if(shouldAutoSave())saveGame(0,ns,id)};
   const startGame=({cls,stats,style,feat,mastery,name,spells,equip,skilledPicks,crafterTools,musicianInstruments,classSkills,humanSkill,extraLang})=>{const derived=calcDerived(stats,cls,1,equip.armor,equip.hasShield,feat,[],0,null,style);
     const cRes=(MODULE&&MODULE.startingResources)||{};
