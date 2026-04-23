@@ -1,0 +1,339 @@
+{
+  "languages": {
+    "common": {
+      "name": "Common",
+      "script": "Common",
+      "speakers": "Humans, most species",
+      "desc": "The trade tongue of Ansalon, understood in every civilised land."
+    },
+    "solamnic": {
+      "name": "Solamnic",
+      "script": "Common",
+      "speakers": "Knights of Solamnia, Solamnic nobility",
+      "desc": "The formal language of the Solamnic knighthood, used in the Oath and Measure. Archaic phrases mark official decrees and ancient texts.",
+      "phrases": {
+        "Est Sularus oth Mithas": "My honour is my life",
+        "Solanthus valar": "In Solamnia's name",
+        "Kiri oth Paladine": "By Paladine's light",
+        "Uth matar, uth khas": "To death, to glory",
+        "Vinas eth Solamnus": "Vinas founded Solamnia (invocation of the founder)",
+        "Sturm eth valoris": "Stand with valour",
+        "Khas oth Mesura": "Honour the Measure",
+        "Est kiri, est sularus": "With light, with honour",
+        "Oth matar venari": "Until death takes me",
+        "Paladine valoreth": "Paladine watch over (blessing)"
+      }
+    },
+    "elvish": {
+      "name": "Elvish",
+      "script": "Elvish",
+      "speakers": "Elves (Silvanesti, Qualinesti, Kagonesti)",
+      "desc": "The melodic tongue of the elves. Silvanesti speak a more formal dialect; Qualinesti is slightly more accessible to outsiders.",
+      "phrases": {
+        "Qualinost anarani": "The sun rises over Qualinost (greeting)",
+        "Silvanesti eth'alar": "Silvanesti endures (formal blessing)",
+        "Aelas'quinar": "Starlight guide you (farewell)",
+        "Thalion eth sarana": "The forest remembers",
+        "Kith-Kanan valoreth": "Kith-Kanan's blessing upon you",
+        "Anari solan'thas": "Dawn comes after darkness",
+        "Quinar eth'alas": "The stars weep (lament)",
+        "Silvanos eth'alar turath": "By Silvanos, founder of our people",
+        "Tanis'ara melath": "Half-blood of two worlds (term for half-elves)",
+        "Karas'thel anarani": "The dragon shadow falls (warning)",
+        "E'li shonath": "In E'li's light (Qualinesti blessing)",
+        "Sar-thelas kagonar": "Wild ones of the forest (Kagonesti)"
+      }
+    },
+    "dwarvish": {
+      "name": "Dwarvish",
+      "script": "Dwarvish",
+      "speakers": "Dwarves (Hylar, Neidar, Theiwar, Daergar, Klar, Aghar)",
+      "desc": "A rumbling, consonant-heavy language carved into stone as often as spoken. Clan dialects vary but are mutually intelligible.",
+      "phrases": {
+        "Thorbardin khaz": "Thorbardin stands (affirmation)",
+        "Reorx dunnarak": "Reorx forged it true (praise for craftsmanship)",
+        "Khaz-dum baraz": "Stone and steel endure",
+        "Thane khazak": "By the Thane's word",
+        "Groth Neidar": "Hill dwarf (term, sometimes derogatory)",
+        "Hylar valorakh": "High dwarf honour",
+        "Kazak-thul murad": "The mountain holds secrets",
+        "Daergar eth'khor": "Dark dwarf (warning)",
+        "Aghar skrag": "Gully dwarf filth (insult)",
+        "Khaz-modan reorakh": "May Reorx strengthen your arm",
+        "Dum-baraz thul": "The deep roads call",
+        "Derkin valorakh eth": "Derkin's courage lives on"
+      }
+    },
+    "gnomish": {
+      "name": "Gnomish",
+      "script": "Dwarvish",
+      "speakers": "Gnomes of Mount Nevermind",
+      "desc": "An incredibly fast, technical language. Gnomes speak in run-on sentences that can last minutes. Names are generations-long stories.",
+      "phrases": {
+        "Nevermindtechnologicalinnovation": "Hello (abbreviated greeting)",
+        "Gearsprocket-steamwheel-pressurevalve": "The machine works!",
+        "Explosionunintendedbutdataacquired": "A successful experiment",
+        "Catapult-counterweight-trajectory-miscalculation": "Something went wrong",
+        "Lifequest-assignment-pending": "What is your purpose?",
+        "Gnomeflingermark-seven-improved": "Watch this!",
+        "Committee-approval-subcommittee-review-pending": "It's complicated",
+        "Mount-Nevermind-engineering-guild-certified": "This is quality work",
+        "Steampower-cogwheel-rotation-optimal": "Everything is fine",
+        "Tinkergnome-ancestral-innovation-continues": "I honour my ancestors"
+      }
+    },
+    "draconic": {
+      "name": "Draconic",
+      "script": "Draconic",
+      "speakers": "Dragons, dragonborn, Dragon Highlords",
+      "desc": "The ancient tongue of dragons — harsh, sibilant, and powerful. Dragon Army commanders use it for orders they wish to keep secret.",
+      "phrases": {
+        "Ssissrath vex": "Kneel before me",
+        "Thaxiss kazarath": "By Takhisis's will",
+        "Draak-khan vorthiss": "Dragon Highlord commands",
+        "Ssareth vulkaan": "Fire consumes all",
+        "Korthax ssilith": "Death from above",
+        "Verminaard kazak": "Lord Verminaard's word",
+        "Ssilith-naar vex": "Submit or burn",
+        "Khisanth voreth": "The black wing descends",
+        "Pyross eth'naar": "Flame Lord's fury",
+        "Takhisis rex valoreth": "The Dark Queen rises",
+        "Draak-naar solakh": "Dragons rule the sky",
+        "Sivak kazarath": "Sivak draconian, at your command",
+        "Kapak ssilith": "Kapak strikes (assassination order)",
+        "Baaz-thral vex": "Baaz troops, advance"
+      }
+    },
+    "goblin": {
+      "name": "Goblin",
+      "script": "Dwarvish",
+      "speakers": "Goblins, hobgoblins, bugbears",
+      "desc": "A guttural language with many words for ambush, cowardice, and cruelty. The Dragon Armies use goblin troops as fodder.",
+      "phrases": {
+        "Grish'nak vult": "Kill them all",
+        "Skrag-naar": "Worthless scum (insult)",
+        "Hob'grak kazul": "Hobgoblin captain says",
+        "Bug-thrak grish": "Bugbear smash!",
+        "Draak-naar grik": "Dragon Army pays well",
+        "Grik-skar groth": "Ambush ready",
+        "Skrag vult naar": "Run away! (retreat)",
+        "Thrak-nak grik": "Take their things",
+        "Gob-skar eth": "Goblin knows",
+        "Hob-thrak kazul": "The big ones command",
+        "Grish eth skar": "Blood for the taking",
+        "Nak-nak groth": "Night raid begins"
+      }
+    },
+    "giant": {
+      "name": "Giant",
+      "script": "Dwarvish",
+      "speakers": "Giants, ogres, some trolls",
+      "desc": "A booming language suited to creatures of great size. Ogre dialects are cruder but comprehensible.",
+      "phrases": {
+        "THOG SMASH": "I will destroy you (ogre)",
+        "Blode-khan commands": "The ogre chieftain orders",
+        "Kern-thog strong": "Kern (Eastern ogre region) is mighty",
+        "Small-meat runs": "The humans flee",
+        "Ogre-thane speaks": "The ogre lord has spoken",
+        "Mountain-blood flows": "We are of the mountains",
+        "Troll-kin hungers": "The trolls need feeding",
+        "Irda-betrayers": "The cursed beautiful ones (Irda)",
+        "Stone-fist crushes": "Victory is certain",
+        "Draak-serve good": "Serving dragons is profitable",
+        "Old-kingdom remembers": "We remember when ogres ruled",
+        "CRUSH BONES": "Attack! (battle cry)"
+      }
+    },
+    "orc": {
+      "name": "Orc",
+      "script": "Dwarvish",
+      "speakers": "Orcs, half-orcs",
+      "desc": "A harsh, guttural language focused on warfare, raiding, and survival."
+    },
+    "halfling": {
+      "name": "Halfling",
+      "script": "Common",
+      "speakers": "Halflings, kender (loosely)",
+      "desc": "A warm, homey language. Kender speak a rapid, excitable dialect that borrows freely from every tongue they encounter."
+    },
+    "celestial": {
+      "name": "Celestial",
+      "script": "Celestial",
+      "speakers": "Angels, divine servants, clerics (rare)",
+      "desc": "The language of the gods' messengers. On Krynn, it has not been heard in three hundred years — until now.",
+      "phrases": {
+        "Paladine eth'solarus": "Paladine, Lord of Light",
+        "Mishakal eth'sanar": "Mishakal the Healer blesses you",
+        "Kiri-Jolith valoreth": "Kiri-Jolith grants courage",
+        "Majere eth'silentum": "Majere speaks in stillness",
+        "Branchala eth'cantus": "Branchala's song fills the air",
+        "Habbakuk eth'maris": "Habbakuk rules the waters",
+        "Solinari luminar": "Solinari shines (white moon blessing)",
+        "Divinius returneth": "The gods have returned",
+        "Sanctus benedictum": "Holy blessing upon you",
+        "Lux aeterna": "Eternal light",
+        "Nox terminat": "Darkness ends",
+        "Animae salvar": "Soul is saved"
+      }
+    },
+    "infernal": {
+      "name": "Infernal",
+      "script": "Infernal",
+      "speakers": "Devils, fiends, Takhisis cultists",
+      "desc": "The language of the Nine Hells. Contracts written in Infernal are said to be binding beyond death.",
+      "phrases": {
+        "Takhisis-eth-dominar": "Takhisis dominates all",
+        "Nuitari obscurath": "Nuitari darkens (black moon blessing)",
+        "Chemosh-mortis-rex": "Chemosh, Lord of the Dead",
+        "Sargonnas-eth-vengar": "Sargonnas demands vengeance",
+        "Morgion-pestileth": "Morgion's plague spreads",
+        "Hiddukel-contractum": "Hiddukel's bargain (binding deal)",
+        "Zeboim-tempestath": "Zeboim's storm rages",
+        "Darkness-eternal-binds": "The pact is sealed",
+        "Five-heads-rise": "The Dark Queen awakens",
+        "Dragon-queen-commands": "Takhisis has spoken",
+        "Soul-forfeit": "Your soul is claimed",
+        "Temple-of-Neraka": "The dark heart of the empire"
+      }
+    },
+    "abyssal": {
+      "name": "Abyssal",
+      "script": "Infernal",
+      "speakers": "Demons, chaotic fiends",
+      "desc": "A maddening tongue that shifts meaning with every utterance. Few mortals can speak it without losing something of themselves."
+    },
+    "primordial": {
+      "name": "Primordial",
+      "script": "Dwarvish",
+      "speakers": "Elementals",
+      "desc": "The root language of the elemental planes. Dialects include Aquan, Auran, Ignan, and Terran."
+    },
+    "sylvan": {
+      "name": "Sylvan",
+      "script": "Elvish",
+      "speakers": "Fey creatures, dryads, satyrs",
+      "desc": "The language of the Feywild and its creatures. In Krynn, the Kagonesti elves understand it."
+    },
+    "undercommon": {
+      "name": "Undercommon",
+      "script": "Elvish",
+      "speakers": "Underdark denizens",
+      "desc": "A trade pidgin of the deep places, blending Elvish, Dwarvish, and darker tongues."
+    },
+    "nerakan": {
+      "name": "Nerakan",
+      "script": "Common",
+      "speakers": "Dragon Army soldiers, Neraka citizens",
+      "desc": "The official language of the Dragon Empire. A blend of Common with Draconic loan-words for military terms.",
+      "phrases": {
+        "Thax-gloreth": "Glory to Takhisis",
+        "Draak-wing marches": "The Dragon Army advances",
+        "Highlord-kazak": "By the Highlord's command",
+        "Neraka ascendant": "Neraka rises",
+        "Wing-thral reporting": "Squadron reports",
+        "Soth-naar": "Death knight approaches (warning)",
+        "Solam-grish": "Solamnic dogs (slur)",
+        "Verminaard-eth-gloreth": "Verminaard's glory",
+        "Red Wing, Black Wing": "Unit designations",
+        "Draak-thral victorious": "Dragon victory",
+        "Kapak-ssilith ready": "Assassins deployed",
+        "Sivak-thral infiltrating": "Infiltrators in position"
+      }
+    },
+    "istaran": {
+      "name": "Istaran",
+      "script": "Common",
+      "speakers": "Scholars, pre-Cataclysm texts",
+      "desc": "The ancient scholarly language of Istar. Dead since the Cataclysm, but preserved in old texts and temple inscriptions.",
+      "phrases": {
+        "Istar glorium magnificat": "Istar the glorious and magnificent",
+        "Kingpriest ascendeth": "The Kingpriest ascends (pre-Cataclysm blessing)",
+        "Paladin-eth-luminar": "By Paladine's divine light",
+        "Cataclysmus terminat": "The Cataclysm ended all",
+        "Templum magnificat": "The temple stands in glory",
+        "Sacerdos veritas": "The priest speaks truth",
+        "Hereticus condemnar": "The heretic is condemned",
+        "Divinius rex": "Divine kingship",
+        "Ante-Cataclysmus": "Before the fall",
+        "Istar-eth-mare sanguinus": "Istar beneath the Blood Sea",
+        "Beldinas proclamar": "Beldinas proclaimed (the last Kingpriest)",
+        "Tempus antiquus": "The ancient times"
+      }
+    },
+    "kharolian": {
+      "name": "Kharolian",
+      "script": "Common",
+      "speakers": "Plainspeople, Que-Shu, Que-Kiri tribes",
+      "desc": "The language of the Abanasinian plains tribes. Rich in nature imagery and oral tradition.",
+      "phrases": {
+        "Que-Shu anara": "The Que-Shu greet you",
+        "Chieftain's-fire burns": "The tribe is strong",
+        "Wind-speaks truth": "The omens are clear",
+        "Goldmoon-blessing": "May Goldmoon's peace be with you",
+        "Riverwind-walks": "A true warrior travels",
+        "Que-Kiri hunts": "The hunt begins",
+        "Blue-crystal-staff": "The goddess's sign (sacred)",
+        "Plains-mother watches": "The spirits protect us",
+        "Mishakal returns": "Healing has come back to the world",
+        "Fire-rings gather": "The tribes meet in council",
+        "Storm-rider comes": "A hero approaches",
+        "Old-gods-wake": "The true gods return"
+      }
+    },
+    "ergot": {
+      "name": "Ergot",
+      "script": "Common",
+      "speakers": "Ergothians, sailors",
+      "desc": "The language of Ergoth, once a great empire. Now a merchant tongue with many nautical terms."
+    },
+    "kenderspeak": {
+      "name": "Kenderspeak",
+      "script": "Common",
+      "speakers": "Kender",
+      "desc": "Not technically a language, but kender speak so rapidly and tangentially that outsiders often can't follow. Includes many 'borrowed' words.",
+      "phrases": {
+        "Oh that's interesting have you seen this before it reminds me of": "(greeting, sort of)",
+        "I found this it must have fallen into my pouch somehow": "I didn't steal it",
+        "Tasslehoff would have loved this": "This is exciting (reference to famous kender)",
+        "Uncle Trapspringer always said": "Let me tell you a story",
+        "Is that a DRAGON oh wow it's beautiful can I touch it": "Dragon sighting",
+        "The map says go this way but this way looks more fun": "I'm getting us lost",
+        "Afflicted": "A kender who has learned fear (grave insult)",
+        "Handler-what a useful thing": "Nice weapon/tool (admiring)",
+        "Borrowed-for-safekeeping": "Definitely not stealing",
+        "Kendermore-born and wandered": "Proper kender introduction",
+        "Ooh shiny": "(universal kender exclamation)"
+      }
+    },
+    "thieves_cant": {
+      "name": "Thieves' Cant",
+      "script": "None (verbal/gestural)",
+      "speakers": "Rogues, criminals, guild members",
+      "desc": "A secret code of slang, gestures, and double-meanings used by thieves' guilds across Ansalon."
+    }
+  },
+  "languagesByScript": {
+    "Common": ["Common", "Solamnic", "Halfling", "Nerakan", "Istaran", "Kharolian", "Ergot", "Kenderspeak"],
+    "Elvish": ["Elvish", "Sylvan", "Undercommon"],
+    "Dwarvish": ["Dwarvish", "Gnomish", "Goblin", "Giant", "Orc", "Primordial"],
+    "Draconic": ["Draconic"],
+    "Celestial": ["Celestial"],
+    "Infernal": ["Infernal", "Abyssal"]
+  },
+  "campaignStartingLanguages": {
+    "knights-oath": ["Common", "Solamnic"]
+  },
+  "extraLanguageOptions": [
+    "Elvish", "Dwarvish", "Gnomish", "Draconic", "Goblin", "Giant", "Orc",
+    "Halfling", "Celestial", "Infernal", "Abyssal", "Primordial", "Sylvan"
+  ],
+  "recommendedLanguages": {
+    "knights-oath": {
+      "Elvish": "Qualinesti refugees and Silvanesti scouts appear throughout the campaign",
+      "Draconic": "Dragon Army officers and draconians use this to give orders",
+      "Goblin": "Dragon Army fodder troops speak this; useful for interrogations",
+      "Nerakan": "The official language of the Dragon Empire; understand enemy communications",
+      "Dwarvish": "Neidar hill dwarves may be encountered; Thorbardin trade goods bear inscriptions"
+    }
+  }
+}

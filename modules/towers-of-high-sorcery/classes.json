@@ -1,0 +1,175 @@
+{
+  "classes": {
+    "Wizard": {
+      "name": "Wizard",
+      "hitDie": 6,
+      "primaryAbility": "Intelligence",
+      "savingThrows": ["Intelligence", "Wisdom"],
+      "armorProficiencies": [],
+      "weaponProficiencies": ["Daggers", "Darts", "Slings", "Quarterstaffs", "Light Crossbows"],
+      "skillChoices": {
+        "choose": 2,
+        "from": ["Arcana", "History", "Insight", "Investigation", "Medicine", "Religion"]
+      },
+      "startingEquipment": [
+        "Spellbook",
+        "Component Pouch",
+        "Dagger",
+        "Scholar's Pack"
+      ],
+      "spellcasting": {
+        "ability": "Intelligence",
+        "spellsKnown": "All spells in spellbook (prepare INT mod + level)",
+        "cantripsKnown": [3, 3, 3, 4, 4, 4, 4, 4, 4, 5],
+        "spellSlots": {
+          "1": [2, 3, 4, 4, 4, 4, 4, 4, 4, 4],
+          "2": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3],
+          "3": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3]
+        }
+      },
+      "features": {
+        "1": [
+          {
+            "name": "Spellcasting",
+            "description": "You can cast wizard spells. Intelligence is your spellcasting ability."
+          },
+          {
+            "name": "Arcane Recovery",
+            "description": "Once per day during a short rest, you can recover spell slots with a combined level equal to half your wizard level (rounded up)."
+          }
+        ],
+        "2": [
+          {
+            "name": "Arcane Tradition",
+            "description": "Choose a school of magic: Abjuration, Conjuration, Divination, Enchantment, Evocation, Illusion, Necromancy, or Transmutation."
+          }
+        ],
+        "3": []
+      },
+      "arcaneSchools": {
+        "Abjuration": {
+          "name": "School of Abjuration",
+          "feature": "Arcane Ward",
+          "description": "When you cast an abjuration spell, you create a protective ward. The ward has HP equal to twice your wizard level + INT modifier."
+        },
+        "Conjuration": {
+          "name": "School of Conjuration",
+          "feature": "Minor Conjuration",
+          "description": "You can use an action to conjure an inanimate object in your hand or on the ground. The object is visibly magical and vanishes after 1 hour."
+        },
+        "Divination": {
+          "name": "School of Divination",
+          "feature": "Portent",
+          "description": "When you finish a long rest, roll two d20s and record the numbers. You can replace any attack roll, saving throw, or ability check made by you or a creature that you can see with one of these foretelling rolls."
+        },
+        "Enchantment": {
+          "name": "School of Enchantment",
+          "feature": "Hypnotic Gaze",
+          "description": "As an action, choose one creature within 5 feet. If it fails a Wisdom save, it is charmed until the end of your next turn."
+        },
+        "Evocation": {
+          "name": "School of Evocation",
+          "feature": "Sculpt Spells",
+          "description": "When you cast an evocation spell that affects other creatures, you can choose a number of them equal to 1 + the spell's level. Those creatures automatically succeed on their saving throws and take no damage."
+        },
+        "Illusion": {
+          "name": "School of Illusion",
+          "feature": "Improved Minor Illusion",
+          "description": "You learn the Minor Illusion cantrip. When you cast it, you can create both a sound and an image with a single casting."
+        },
+        "Necromancy": {
+          "name": "School of Necromancy",
+          "feature": "Grim Harvest",
+          "description": "When you kill a creature with a spell of 1st level or higher, you regain HP equal to twice the spell's level (three times if Necromancy)."
+        },
+        "Transmutation": {
+          "name": "School of Transmutation",
+          "feature": "Minor Alchemy",
+          "description": "You can temporarily alter the physical properties of one nonmagical object, changing it from one substance to another."
+        }
+      }
+    },
+    "Sorcerer": {
+      "name": "Sorcerer",
+      "hitDie": 6,
+      "primaryAbility": "Charisma",
+      "savingThrows": ["Constitution", "Charisma"],
+      "armorProficiencies": [],
+      "weaponProficiencies": ["Daggers", "Darts", "Slings", "Quarterstaffs", "Light Crossbows"],
+      "skillChoices": {
+        "choose": 2,
+        "from": ["Arcana", "Deception", "Insight", "Intimidation", "Persuasion", "Religion"]
+      },
+      "startingEquipment": [
+        "Arcane Focus",
+        "Component Pouch",
+        "Dagger",
+        "Explorer's Pack"
+      ],
+      "spellcasting": {
+        "ability": "Charisma",
+        "spellsKnown": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+        "cantripsKnown": [4, 4, 4, 5, 5, 5, 5, 5, 5, 6],
+        "spellSlots": {
+          "1": [2, 3, 4, 4, 4, 4, 4, 4, 4, 4],
+          "2": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3],
+          "3": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3]
+        }
+      },
+      "features": {
+        "1": [
+          {
+            "name": "Spellcasting",
+            "description": "You can cast sorcerer spells. Charisma is your spellcasting ability."
+          },
+          {
+            "name": "Sorcerous Origin",
+            "description": "Choose the source of your innate magic: Draconic Bloodline, Wild Magic, or other origin."
+          }
+        ],
+        "2": [
+          {
+            "name": "Font of Magic",
+            "description": "You have sorcery points equal to your sorcerer level. You can use these to create spell slots or fuel Metamagic."
+          }
+        ],
+        "3": [
+          {
+            "name": "Metamagic",
+            "description": "Choose two Metamagic options. You can use only one Metamagic option on a spell when you cast it."
+          }
+        ]
+      },
+      "sorcerousOrigins": {
+        "Draconic Bloodline": {
+          "name": "Draconic Bloodline",
+          "description": "Your innate magic comes from draconic ancestry. Choose a dragon type; you gain resistance to that damage type and bonus HP.",
+          "feature": "Draconic Resilience",
+          "featureDescription": "Your HP maximum increases by 1 for each sorcerer level. Your unarmored AC equals 13 + DEX modifier."
+        },
+        "Wild Magic": {
+          "name": "Wild Magic",
+          "description": "Your magic is volatile and unpredictable, surging with chaotic energy.",
+          "feature": "Wild Magic Surge",
+          "featureDescription": "When you cast a spell of 1st level or higher, the DM can have you roll a d20. On a 1, roll on the Wild Magic Surge table."
+        },
+        "Lunar Sorcery": {
+          "name": "Lunar Sorcery",
+          "description": "Your magic is tied to the moons of Krynn — Solinari, Lunitari, and Nuitari.",
+          "feature": "Moon Phase",
+          "featureDescription": "You can attune to one of the three moons, gaining benefits based on which moon is dominant."
+        }
+      },
+      "metamagic": [
+        {"name": "Careful Spell", "cost": 1, "description": "Allies auto-succeed on saves against your spells"},
+        {"name": "Distant Spell", "cost": 1, "description": "Double the range of a spell"},
+        {"name": "Empowered Spell", "cost": 1, "description": "Reroll damage dice equal to CHA mod"},
+        {"name": "Extended Spell", "cost": 1, "description": "Double the duration of a spell"},
+        {"name": "Heightened Spell", "cost": 3, "description": "One target has disadvantage on first save"},
+        {"name": "Quickened Spell", "cost": 2, "description": "Cast a spell as a bonus action"},
+        {"name": "Subtle Spell", "cost": 1, "description": "Cast without verbal or somatic components"},
+        {"name": "Twinned Spell", "cost": "spell level", "description": "Target a second creature with a single-target spell"}
+      ]
+    }
+  }
+}

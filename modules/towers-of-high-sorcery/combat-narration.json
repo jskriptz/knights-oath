@@ -1,0 +1,62 @@
+{
+  "32": {
+    "intro": [
+      "The checkpoint erupts into chaos. Six soldiers, a corporal shouting orders, and thirty feet of open ground between you and freedom. Torven draws his staff. Nasha moves to flank. The road is narrow here."
+    ],
+    "rounds": [
+      "Crossbow bolts whistle past. The corporal is directing fire toward the obvious mage — you.",
+      "The timber frame groans as the barrier shudders under magical assault. You need to clear a path.",
+      "Magic crackles. Steel flashes. Someone is shouting orders that no one is following anymore.",
+      "The corporal falls back toward the command tent, bellowing for reinforcements.",
+      "Fire and lightning answer steel. The magic in your hands is warm and certain."
+    ],
+    "victory": [
+      "The checkpoint falls silent. On the other side, Torven is breathing hard with a cut on his forearm. He looks at how you fought. Nods once."
+    ]
+  },
+  "38": {
+    "intro": [
+      "A Dragon Army hunting party emerges from the trees. Four soldiers and a Sivak Draconian — not a patrol, a specialist unit. They have been tracking you since the checkpoint. The Sivak is looking at you specifically. The Tower waits beyond the trees."
+    ],
+    "rounds": [
+      "The Sivak's wings spread. It is faster than it has any right to be.",
+      "Soldiers spread to cut off your retreat. The Tower watches, patient and unreachable.",
+      "Lightning and fire answer the Sivak's charge. The creature's scales smoke but it does not stop.",
+      "The draconian closes distance with terrifying speed. Its claws leave furrows in the air.",
+      "One soldier falls. The Sivak presses the advantage, seeking to grab and fly."
+    ],
+    "victory": [
+      "The Sivak dissolves into mist — the Tower's doing, perhaps, or the forest's. The surviving soldiers flee toward the treeline. The forest does not permit what the forest does not permit."
+    ]
+  },
+  "46": {
+    "intro": [
+      "The reflection steps out of the mirror — not you, exactly: taller, colder, wearing robes that shift between colours. It holds power in its hands the way you are still learning to hold. It looks at you with your eyes. It raises one hand."
+    ],
+    "rounds": [
+      "It mirrors your movements with a delay that feels like mockery.",
+      "The construct does not speak. It does not need to. It knows you.",
+      "Your spells strike the construct — but some reflect back. Choose your attacks carefully.",
+      "Cracks spread across its surface. It is weakening — but so are you.",
+      "The construct wavers, its form becoming translucent at the edges."
+    ],
+    "victory": [
+      "The construct shatters. The mirror is empty — no reflection at all now. A door opens that was not there before. You have faced yourself. You have won."
+    ]
+  },
+  "49": {
+    "intro": [
+      "Three spectral guardians materialise between you and the platforms. Translucent, silent, carrying weapons that are completely real. Both figures are in danger. The clock is running."
+    ],
+    "rounds": [
+      "The spectral blades pass through your defences like they are not there.",
+      "They do not retreat. They do not speak. They exist only to delay.",
+      "Time is running out. You must break through — now.",
+      "The guardians reform almost as fast as you destroy them.",
+      "One path. Choose it. Fight for it."
+    ],
+    "victory": [
+      "You reach the platform in time. The spectral guardians dissolve when you touch the person you saved. The Trial chamber goes quiet. You chose. You fought. You won."
+    ]
+  }
+}

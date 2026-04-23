@@ -1,0 +1,71 @@
+{
+  "banter": [
+    {
+      "id": "lyra_road_1",
+      "scene": "22",
+      "participants": ["Lyra Ashfen"],
+      "trigger": "scene_enter",
+      "lines": [
+        {"speaker": "Lyra Ashfen", "text": "'Do you think it hurts? The Trials?'"},
+        {"speaker": "PC", "options": [
+          {"text": "'Probably. Most worthwhile things do.'", "approval": {"Lyra Ashfen": 1}},
+          {"text": "'I try not to think about it.'", "approval": {}},
+          {"text": "'We'll find out together.'", "approval": {"Lyra Ashfen": 1}}
+        ]}
+      ]
+    },
+    {
+      "id": "zinnia_spellbook",
+      "scene": "22",
+      "participants": ["Zinnia Quickfingers"],
+      "trigger": "scene_enter",
+      "lines": [
+        {"speaker": "Zinnia Quickfingers", "text": "'I borrowed your second-best spellbook. I wanted you to know that.'"},
+        {"speaker": "PC", "options": [
+          {"text": "'I noticed. You can keep looking at it.'", "approval": {"Zinnia Quickfingers": 2}},
+          {"text": "'Please give it back.'", "approval": {"Zinnia Quickfingers": -1}},
+          {"text": "'How do you know which one is second-best?'", "approval": {"Zinnia Quickfingers": 1}}
+        ]}
+      ]
+    },
+    {
+      "id": "torven_trials",
+      "scene": "28",
+      "participants": ["Torven Ashfall"],
+      "trigger": "scene_enter",
+      "lines": [
+        {"speaker": "Torven Ashfall", "text": "'The Trials are not what you expect. They never are.'"},
+        {"speaker": "Lyra Ashfen", "text": "'That's not helpful.'"},
+        {"speaker": "Torven Ashfall", "text": "'No. But it's true.'"}
+      ]
+    },
+    {
+      "id": "nasha_coin",
+      "scene": "35",
+      "participants": ["Nasha Vren"],
+      "trigger": "scene_enter",
+      "lines": [
+        {"speaker": "Nasha Vren", "text": "*The coin flickers across her knuckles.* 'Ask me what I'm thinking.'"},
+        {"speaker": "PC", "options": [
+          {"text": "'What are you thinking?'", "approval": {"Nasha Vren": 1}},
+          {"text": "'I suspect I already know.'", "approval": {"Nasha Vren": 2}},
+          {"text": "'Some other time.'", "approval": {}}
+        ]}
+      ]
+    },
+    {
+      "id": "thessaly_notes",
+      "scene": "38",
+      "participants": ["Thessaly Brightwater"],
+      "trigger": "scene_enter",
+      "lines": [
+        {"speaker": "Thessaly Brightwater", "text": "'I've been taking notes. About you. About all of this.'"},
+        {"speaker": "PC", "options": [
+          {"text": "'I know. I've seen you writing.'", "approval": {"Thessaly Brightwater": 1}},
+          {"text": "'What do the notes say?'", "approval": {"Thessaly Brightwater": 1}},
+          {"text": "'Some stories should stay private.'", "approval": {"Thessaly Brightwater": -1}}
+        ]}
+      ]
+    }
+  ]
+}

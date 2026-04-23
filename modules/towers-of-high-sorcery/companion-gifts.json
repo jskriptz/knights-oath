@@ -1,0 +1,45 @@
+{
+  "gifts": {
+    "Lyra Ashfen": {
+      "item": "Lyra's Shared Spellbook",
+      "description": "A spellbook containing spells you developed together. +1 to Arcana checks.",
+      "skill": "arcana"
+    },
+    "Elara Moss": {
+      "item": "Elara's Keepsake",
+      "description": "A small cloth bundle with something sewn into it. Advantage on one saving throw per long rest.",
+      "skill": null,
+      "special": "advantage_save_1"
+    },
+    "Torven Ashfall": {
+      "item": "Red Robe Signet",
+      "description": "Torven's personal signet. Advantage on social checks with Conclave members.",
+      "skill": "persuasion"
+    },
+    "Nasha Vren": {
+      "item": "Nasha's Coin",
+      "description": "The coin she always carried. +1 to Investigation checks.",
+      "skill": "investigation"
+    },
+    "Thessaly Brightwater": {
+      "item": "Press Credential",
+      "description": "A war correspondent's credential. +1 to Insight checks.",
+      "skill": "insight"
+    },
+    "Commander Serath": {
+      "item": "Dragon Army Insignia",
+      "description": "Serath's old insignia, reversed. +1 to Intimidation checks.",
+      "skill": "intimidation"
+    },
+    "Zinnia Quickfingers": {
+      "item": "Zinnia's Lucky Find",
+      "description": "Something she 'found' that turned out to be exactly what you needed. +1 to Sleight of Hand checks.",
+      "skill": "sleightOfHand"
+    },
+    "The Guardian": {
+      "item": "Guardian's Memory",
+      "description": "A small piece of Tower stone that glows faintly in darkness. +1 to History checks about magic.",
+      "skill": "history"
+    }
+  }
+}

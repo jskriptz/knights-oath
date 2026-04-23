@@ -1,0 +1,2261 @@
+{
+  "7": {
+    "id": "7",
+    "title": "THE LAST CONVERSATION",
+    "location": "Your Home, Millhaven",
+    "prose": [
+      "*Your Home, Millhaven*",
+      "You find them at home. Of course you do — in Millhaven everyone is always somewhere predictable, which is most of what you have loved about it and most of what you have needed to leave.",
+      "They already know. They knew before you came. This is Millhaven. They are doing something practical with their hands — the task that is there when you need something to hold — and when they hear you they set it down.",
+      "You have three days. Then you go. You may never come back — the Towers are not a place people return from unchanged, and the war that is coming may not leave a Millhaven to come back to. They know this too. Neither of you says it."
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**YOUR NPC — THEIR REACTION**\nThis is a scene you write. What does the person you love say to you in this moment? What do they give you, or ask of you, or make you promise? Whatever you decide is true."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Promise them you will come back.",
+        "target": "6",
+        "points": {"WHITE": 1}
+      },
+      {
+        "letter": "B",
+        "text": "Tell them you cannot promise that. But you will try.",
+        "target": "6",
+        "points": {"RED": 1}
+      },
+      {
+        "letter": "C",
+        "text": "Tell them what the magic feels like. Give them that piece of you.",
+        "target": "6",
+        "points": {"WHITE": 2}
+      },
+      {
+        "letter": "D",
+        "text": "Ask them to come with you as far as the road north.",
+        "target": "6",
+        "points": {"WHITE": 1}
+      }
+    ]
+  },
+  "7B": {
+    "id": "7B",
+    "title": "THE MILL",
+    "location": "Millhaven — Day 2, Morning",
+    "prose": [
+      "*Millhaven — Day 2, Morning*",
+      "Elara finds you the way she always finds you — by knowing where you will be. The mill is your thinking place, always has been, the sound of the wheel covering over the noise in your head.",
+      "She is sitting on the sill with a loaf wrapped in cloth and her eyes are red at the edges from something she has already decided to be done with.",
+      "She hands you the bread without comment. You eat some of it. She looks at the water.",
+      "After a while: 'I am not going to ask you not to go. I know better.' A pause. 'I am going to ask you to come back. That is the only thing I want from you.'"
+    ],
+    "boxes": [
+      {
+        "type": "companion",
+        "text": "**COMPANION JOINS: ELARA MOSS**\nThe person from Millhaven who loves you. She will not follow you to Wayreth — that is not who she is. But she will wait, and write, and remember.\nRole: Emotional anchor. Letters from Elara appear at key moments in the Trials as memories."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Turn toward her. Say: 'I know. I have known.'",
+        "target": "11",
+        "points": {"WHITE": 1},
+        "romance_spark": true,
+        "romance_comp": "Elara Moss"
+      },
+      {
+        "letter": "B",
+        "text": "Tell her honestly: 'I do not know how to ask you to hold onto something I cannot promise to come back from.'",
+        "target": "11",
+        "points": {"WHITE": 1, "RED": 1},
+        "romance_spark": true,
+        "romance_comp": "Elara Moss"
+      },
+      {
+        "letter": "C",
+        "text": "'Then I will come back.' Say it like a vow.",
+        "target": "11",
+        "points": {"WHITE": 1},
+        "romance_spark": true,
+        "romance_comp": "Elara Moss"
+      }
+    ]
+  },
+  "8": {
+    "id": "8",
+    "title": "ZINNIA IN YOUR CART",
+    "location": "Millhaven, Your Doorstep — Dawn, Day 1",
+    "prose": [
+      "*Millhaven, Your Doorstep — Dawn, Day 1*",
+      "You are loading your cart with the things a person takes when they leave a village for possibly the last time. The morning is cold and quiet. The cart is not empty. It contains a Kender.",
+      "She is approximately five feet of composed attention, sitting cross-legged atop your spare blankets with a length of interesting-looking rope in her hands.",
+      "'I found this on your shelf,' she says of the rope. 'I wasn't sure what it was for. I'm not sure you know either.'",
+      "She tilts her head. 'I heard someone in this village can do magic. I've been looking for a mage. Are you one?'"
+    ],
+    "boxes": [
+      {
+        "type": "companion",
+        "text": "**COMPANION JOINS: ZINNIA QUICKFINGERS**\nA Kender who has decided to travel with you. This was not a decision you made. She is immune to fear magic, which will be relevant.\nRole: Scout and distraction. Immune to magical fear effects. Will locate things you did not know you needed."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "'Yes. I am. What do you want from a mage?'",
+        "target": "13",
+        "points": {"RED": 1},
+        "romance_spark": true,
+        "romance_comp": "Zinnia Quickfingers"
+      },
+      {
+        "letter": "B",
+        "text": "Laugh despite yourself. 'Possibly.'",
+        "target": "13",
+        "points": {"WHITE": 1, "RED": 1},
+        "romance_spark": true,
+        "romance_comp": "Zinnia Quickfingers"
+      },
+      {
+        "letter": "C",
+        "text": "Ask calmly how she got in the cart, as the cart was inside a locked barn.",
+        "target": "13",
+        "points": {"BLACK": 1}
+      },
+      {
+        "letter": "D",
+        "text": "Hand her something from your bag in trade for the rope.",
+        "target": "13",
+        "points": {"WHITE": 2}
+      }
+    ]
+  },
+  "9": {
+    "id": "9",
+    "title": "WHAT THE HISTORIES SAY",
+    "location": "Millhaven, Headwoman's Library",
+    "prose": [
+      "*Millhaven, Headwoman's Library*",
+      "The histories are old and in varying states of reliability. But the passages on the Towers of High Sorcery are consistent on several points: the Towers are alive, in some sense. The Trials are not a standardised test — they are different for every mage, tailored to the specific fears and desires and weaknesses of the person taking them.",
+      "No one who has passed the Trials will describe what they faced. No one who failed them came back to describe anything.",
+      "One text, older than the others, has a page someone has returned to many times — worn, the margins annotated in three different hands over centuries:",
+      "'The Trial does not ask what you can do. It asks what you will do, and what you will not. It shows you yourself in the dark and waits to see if you flinch.'"
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**YOU LEARN:**\nThe Trials are personalised. Knowing this does not make them less terrifying. It does mean there is no 'correct' answer to study for — only self-knowledge. +1 to your first Trial roll."
+      },
+      {
+        "type": "roll",
+        "text": "**OPTIONAL ROLL:** History (INT) (+3) | INT | DC 13\n**SUCCESS (roll 13+):** The oldest annotation reads: 'The Tower does not test skill. It tests the thing beneath skill.' This is the most useful thing you will read before the Trials.\n**FAILURE (roll 1-12):** The passage is clear but the history behind it is opaque."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "This makes you more confident. You know yourself.",
+        "target": "6",
+        "points": {"RED": 1}
+      },
+      {
+        "letter": "B",
+        "text": "This makes you less confident. You are not certain you want to know what it will show you.",
+        "target": "6",
+        "points": {"WHITE": 1}
+      },
+      {
+        "letter": "C",
+        "text": "This makes you determined. Whatever it shows — you will not flinch.",
+        "target": "6",
+        "points": {"BLACK": 1}
+      }
+    ]
+  },
+  "10": {
+    "id": "10",
+    "title": "MAGIC PRACTICE",
+    "location": "South Meadow, Millhaven — Day 1",
+    "prose": [
+      "*South Meadow, Millhaven — Day 1*",
+      "You go to the south meadow where the river bends and no one goes in autumn. The grass is brown and wet and the sky is wide and grey. You are alone — except for the magic, which seems to like wide open spaces. It is easier here. Like breathing after being in a small room too long.",
+      "You practise for two hours. Some things work immediately — the fire comes easily, the lights dance when you reach for them. Some things are harder — the precise control, the stopping as much as the starting.",
+      "By the end you are tired in a specific new way, like you have been using a muscle you did not know you had.",
+      "Late in the second hour something happens that you were not trying to do: all the water droplets on the grass near you lift and hang in the air for exactly three seconds, turning in slow spirals, and then fall back. You feel this in your chest like a struck bell. This is not fire. This is something else. This is the shape of your particular gift beginning to show itself."
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**TRINKET FOUND — WARM STONE**\nWhen you pack up after practice you find a smooth river stone in the flattened grass where you were working. You did not put it there. It is warm in a way that stones should not be in autumn. The warmth fades over the next hour.\nTRINKET: Residue Stone. No mechanical effect. A record of the moment you understood what you are."
+      },
+      {
+        "type": "loot",
+        "text": "ADD TO INVENTORY:\n- Warm Stone"
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Transmutation — changing one thing into another, movement, transformation.",
+        "target": "14",
+        "points": {"RED": 1}
+      },
+      {
+        "letter": "B",
+        "text": "Evocation — raw force and energy, the magic in its purest form.",
+        "target": "14",
+        "points": {"BLACK": 1}
+      },
+      {
+        "letter": "C",
+        "text": "Divination — seeing, knowing, the information in everything.",
+        "target": "14",
+        "points": {"WHITE": 1}
+      },
+      {
+        "letter": "D",
+        "text": "Illusion — making the world look different than it is.",
+        "target": "14",
+        "points": {"RED": 1}
+      }
+    ]
+  },
+  "11": {
+    "id": "11",
+    "title": "THE PERSON YOU LOVE",
+    "location": "Millhaven — Day 1 Evening",
+    "prose": [
+      "*Millhaven — Day 1 Evening*",
+      "The magic is quiet today — sitting inside you like a patient animal, not demanding. You take this as a gift.",
+      "You walk the river path where the willows trail in the water. You eat at the usual table with the usual sounds of the usual village around you. You help without being asked, which is the only time helping is entirely comfortable.",
+      "You are trying to remember everything in real time, to make a version of this day that will travel.",
+      "At the end of the day, sitting together as the light fails, they say something you will carry with you into the Towers. You decide what it is. It is the truest thing they know. It is meant for you."
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**WRITE IT DOWN**\nWhat does the person you love say to you? One sentence. Write it in the margin or in your notes. In the darkest part of the Trials, you will remember it. If you do — and if you record it here — gain Advantage on one Trial check of your choice."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "You tell them you love them.",
+        "target": "6",
+        "points": {"WHITE": 2}
+      },
+      {
+        "letter": "B",
+        "text": "You show them one piece of magic — the most beautiful thing you know how to do.",
+        "target": "6",
+        "points": {"WHITE": 1, "RED": 1}
+      },
+      {
+        "letter": "C",
+        "text": "You promise to write to them from the Tower.",
+        "target": "6",
+        "points": {"WHITE": 1}
+      }
+    ]
+  },
+  "12": {
+    "id": "12",
+    "title": "THESSALY ON THE ROAD",
+    "location": "North Road out of Millhaven — Day 2",
+    "prose": [
+      "*North Road out of Millhaven — Day 2*",
+      "The north road is straight for the first mile, then curves along the river as though it changed its mind about where it was going. You are on it because the village feels small today — not badly, just the kind of small that happens when you have been thinking about things bigger than it.",
+      "She is coming from the other direction, moving with the efficient unhurry of someone who always knows exactly where they are going and has stopped being impressed by it.",
+      "She introduces herself: Thessaly Brightwater, correspondent, here because she heard rumours of 'an anomalous magical event in a small village' and anomalous magical events are her business right now.",
+      "She looks at you with the open assessment of someone who has already decided you are interesting — just not yet in what way."
+    ],
+    "boxes": [
+      {
+        "type": "companion",
+        "text": "**COMPANION JOINS: THESSALY BRIGHTWATER**\nWar correspondent following the story of magic in a world where the gods have gone quiet. She is here because of you.\nRole: Intelligence and information network. Knows things about the road to Wayreth. Trusts only honesty."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Tell her the truth immediately. 'Yes. It was me. Both of us.'",
+        "target": "16",
+        "points": {"WHITE": 2},
+        "romance_spark": true,
+        "romance_comp": "Thessaly Brightwater"
+      },
+      {
+        "letter": "B",
+        "text": "Ask what she knows about the Towers of High Sorcery before you answer anything.",
+        "target": "16",
+        "points": {"RED": 1}
+      },
+      {
+        "letter": "C",
+        "text": "Tell her some of it — the magic, not the Trials.",
+        "target": "16",
+        "points": {"WHITE": 1, "RED": 1}
+      },
+      {
+        "letter": "D",
+        "text": "Ask: 'What do you want to know, and why?'",
+        "target": "16",
+        "points": {"RED": 1}
+      }
+    ]
+  },
+  "13": {
+    "id": "13",
+    "title": "WHAT ZINNIA WANTS",
+    "location": "Millhaven Road — Day 1",
+    "prose": [
+      "*Millhaven Road — Day 1*",
+      "The Kender walks beside you with the easy gait of someone who has walked a great many roads and found most of them acceptable. She is not in a hurry. You are not either, though for different reasons.",
+      "'I had a friend,' Zinnia says, looking at a bird in a tree as though it might be concealing something interesting. 'A human friend. She could do things like you can — lights and fire and one time she made all the apples in an orchard sing, which was very strange.'",
+      "She pauses to investigate a beetle on a fence post. 'She went to one of the Towers. The one in the forest. She didn't come back.'",
+      "Another pause. 'But the thing is — I think she might still be there. In the Tower. And I think she might need someone to come and get her, or at least to see if she's all right. And I think the only way to get there is to travel with a mage who's going anyway.'",
+      "She looks at you with the uncomplicated directness Kender are famous for. 'That's what I want.'"
+    ],
+    "boxes": [],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "'I'll help you find her. If she's there, we'll find her together.'",
+        "target": "14",
+        "points": {"WHITE": 2},
+        "romance_spark": true,
+        "romance_comp": "Zinnia Quickfingers"
+      },
+      {
+        "letter": "B",
+        "text": "'What was her name?' Start with the facts.",
+        "target": "14",
+        "points": {"RED": 1}
+      },
+      {
+        "letter": "C",
+        "text": "'If she went to the Tower, she either passed or failed the Trials. There's no middle ground.'",
+        "target": "14",
+        "points": {"BLACK": 1}
+      },
+      {
+        "letter": "D",
+        "text": "'You know how dangerous the Towers are. Why aren't you afraid?'",
+        "target": "14",
+        "points": {"WHITE": 1, "RED": 1}
+      }
+    ]
+  },
+  "14": {
+    "id": "14",
+    "title": "THE LAST NIGHT",
+    "location": "Millhaven — Night Before Departure",
+    "prose": [
+      "*Millhaven — Night Before Departure*",
+      "The sun is setting on your last evening in Millhaven. Tomorrow Torven Ashfall arrives from the Conclave. Tomorrow everything changes.",
+      "The village is doing what villages do when someone is leaving: a small gathering, food that everyone contributed something to, the particular quality of attention that means 'we are watching you to remember you.' Old Petra has stopped saying you are cursed. The baker's son has stopped being impressed. Now they are just looking at you the way Millhaven has always looked at people who are leaving — with complicated pride and complicated grief.",
+      "Lyra is at your elbow. She has been there most of the day.",
+      "'Last chance,' she says quietly. 'Anything you haven't said yet.'"
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**LAST CHANCE**\nThis is your final opportunity to speak to anyone in Millhaven before leaving. After this scene, you are on the road."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Say what you need to say to Lyra. The honest thing.",
+        "target": "15",
+        "points": {"WHITE": 2},
+        "romance_spark": true,
+        "romance_comp": "Lyra Ashfen"
+      },
+      {
+        "letter": "B",
+        "text": "Find the person from Millhaven you love and spend the evening with them.",
+        "target": "15",
+        "points": {"WHITE": 2}
+      },
+      {
+        "letter": "C",
+        "text": "Slip away to practise magic one more time. You need the certainty.",
+        "target": "15",
+        "points": {"RED": 1, "BLACK": 1}
+      },
+      {
+        "letter": "D",
+        "text": "Walk through the village alone. Remember every corner of it.",
+        "target": "15",
+        "points": {"WHITE": 1}
+      }
+    ]
+  },
+  "15": {
+    "id": "15",
+    "title": "COMMANDER SERATH",
+    "location": "North Road — Near Millhaven — Day 3 Dawn",
+    "prose": [
+      "*North Road — Near Millhaven — Day 3 Dawn*",
+      "You see them before they see you. A figure on the road, armoured but moving wrong — too careful, too aware of being watched. The armour is Dragon Army standard. Red plate, black scales.",
+      "They stop when they see you. Their hand goes to their sword, then stops halfway. A long moment of mutual assessment.",
+      "'I'm not your enemy,' they say. 'Though I understand why you might think so.'",
+      "They remove their gauntlets. Beneath them, their hands are scarred with old burns — magical in origin. 'I was with the Red Wing. I'm not anymore. The things they asked us to do...' A pause. 'I need to get to the Tower at Wayreth. The Conclave is the only power that might — that might help me understand what I've done.'",
+      "They look at you with the expression of someone who has run out of options. 'I heard a mage is leaving from this village. I came to ask if I could travel with you. I know what I look like. I know what this armour means. But I'm asking anyway.'"
+    ],
+    "boxes": [
+      {
+        "type": "companion",
+        "text": "**POTENTIAL COMPANION: COMMANDER SERATH**\nA Dragon Army defector seeking redemption through the Conclave. Former Red Wing commander. Combat specialist. Carries guilt like armor.\nRole: Heavy combat support. Knowledge of Dragon Army tactics. Moral complexity."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "'What did you do?' Ask it directly. The answer matters.",
+        "target": "19",
+        "points": {"WHITE": 1}
+      },
+      {
+        "letter": "B",
+        "text": "'You can travel with us. What you did before — that's between you and the Conclave.'",
+        "target": "18",
+        "points": {"WHITE": 2},
+        "romance_spark": true,
+        "romance_comp": "Commander Serath"
+      },
+      {
+        "letter": "C",
+        "text": "'How do I know this isn't a trick?'",
+        "target": "19",
+        "points": {"RED": 1}
+      },
+      {
+        "letter": "D",
+        "text": "Say nothing. Let Lyra decide. She has better instincts than you.",
+        "target": "19",
+        "points": {"WHITE": 1}
+      }
+    ]
+  },
+  "16": {
+    "id": "16",
+    "title": "WHAT THESSALY KNOWS",
+    "location": "North Road — Day 2",
+    "prose": [
+      "*North Road — Day 2*",
+      "Thessaly does not take notes. She remembers everything. You watch her eyes as you talk and you can see her filing each fact away in whatever system she uses — efficient, comprehensive, not unkind.",
+      "'The war is going badly,' she says when you finish. 'The Dragon Armies have taken the east. The gods are silent or gone — the true clerics can't heal anymore, did you know that? The Conclave is the last organized magical power that isn't serving the Dragonqueen.'",
+      "She looks at the road ahead. 'You are going to the last place where magic still serves something other than conquest. That makes you interesting. That makes you a story.'",
+      "A pause. 'I'm not asking you to be a story. I'm asking you to let me travel with you. In exchange, I'll tell you everything I know about the road ahead. And what's waiting at Wayreth.'"
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**THESSALY'S INTELLIGENCE**\nThessaly knows the road to Wayreth is watched. Dragon Army patrols at every major crossing. Two villages between here and the Forest have been destroyed. She knows a route that avoids most of the patrols, but it takes longer."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "'Deal. Tell me what you know.'",
+        "target": "17",
+        "points": {"RED": 1},
+        "romance_spark": true,
+        "romance_comp": "Thessaly Brightwater"
+      },
+      {
+        "letter": "B",
+        "text": "'I'm not a story. I'm a person who is frightened and trying not to show it.'",
+        "target": "17",
+        "points": {"WHITE": 2},
+        "romance_spark": true,
+        "romance_comp": "Thessaly Brightwater"
+      },
+      {
+        "letter": "C",
+        "text": "'What do you want out of this? The real answer, not the professional one.'",
+        "target": "17",
+        "points": {"RED": 1, "BLACK": 1}
+      },
+      {
+        "letter": "D",
+        "text": "Ask: 'Which route would you take?'",
+        "target": "17",
+        "points": {"RED": 1}
+      }
+    ]
+  },
+  "17": {
+    "id": "17",
+    "title": "THESSALY'S REAL ANSWER",
+    "location": "North Road",
+    "prose": [
+      "*North Road*",
+      "Thessaly is quiet for a moment. The professional mask slips — not entirely, but enough.",
+      "'I had a sister,' she says. 'She could do what you can do. Small magic — lights, mostly, the pretty kind. She went to one of the Towers when I was twelve.'",
+      "A pause. 'She passed. White robes. She became a healer. She was assigned to the front when the war started.'",
+      "Another pause. 'The Dragon Armies don't take prisoners. Especially not White Robes.'",
+      "She looks at you with an expression that is complicated and raw and very deliberately under control. 'So what I want is to understand magic. What it does to people. Why someone would choose it knowing the cost. I thought if I understood that, I might understand why she—' She stops. 'That's the real answer.'"
+    ],
+    "boxes": [],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "'I'm sorry.' Mean it.",
+        "target": "18",
+        "points": {"WHITE": 1}
+      },
+      {
+        "letter": "B",
+        "text": "'I can't explain why your sister chose this. But I can let you see why I'm choosing it.'",
+        "target": "18",
+        "points": {"WHITE": 2},
+        "romance_spark": true,
+        "romance_comp": "Thessaly Brightwater"
+      },
+      {
+        "letter": "C",
+        "text": "'The cost isn't why people choose it. The cost is what they accept in order to have the thing that matters.'",
+        "target": "18",
+        "points": {"RED": 1, "BLACK": 1}
+      }
+    ]
+  },
+  "18": {
+    "id": "18",
+    "title": "TORVEN ARRIVES",
+    "location": "Millhaven, Village Square — Day 3",
+    "prose": [
+      "*Millhaven, Village Square — Day 3*",
+      "The Red Robe arrives precisely when he said he would. This is apparently how Conclave representatives operate.",
+      "Torven Ashfall is taller than you expected and younger — maybe thirty, with the kind of face that has seen things it is still deciding how to feel about. His robes are the deep red of Lunitari's moon, edged with silver. He carries a staff that hums faintly when you get close to it.",
+      "He looks at you — really looks, with a mage's assessment — and something in his expression settles.",
+      "'So you're the ones,' he says. 'I wondered what two new sparks in a fishing village would look like.' He glances at Lyra. 'Two. That's rare. The magic usually doesn't wake in pairs.'",
+      "He looks around at Millhaven with an expression that is not unkind. 'You understand you cannot stay here. The Conclave has rules about untrained mages. The Trials are not optional. But—' He pauses. 'You have until tomorrow morning. The road is long and the conversation we need to have is better had on the way.'"
+    ],
+    "boxes": [
+      {
+        "type": "companion",
+        "text": "**COMPANION JOINS: TORVEN ASHFALL**\nRed Robe of Lunitari, sent by the Conclave to escort you to Wayreth. He is exactly what you expected and nothing like what you expected.\nRole: Magic instructor. Guide to the Towers. Will answer questions about the Trials — up to a point."
+      },
+      {
+        "type": "levelup",
+        "text": "**LEVEL UP! You are now Level 2.**\nYour first days of structured magical training with Torven grant you new capabilities. Choose your Arcane Tradition (Wizard) or Sorcerous Origin features."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "'What happens in the Trials?' Ask it directly.",
+        "target": "20",
+        "points": {"RED": 1}
+      },
+      {
+        "letter": "B",
+        "text": "'Why do they call you Ashfall?' There is a story there.",
+        "target": "20",
+        "points": {"WHITE": 1},
+        "romance_spark": true,
+        "romance_comp": "Torven Ashfall"
+      },
+      {
+        "letter": "C",
+        "text": "'The magic woke in both of us the same morning. Does that mean something?'",
+        "target": "20",
+        "points": {"WHITE": 1, "RED": 1}
+      },
+      {
+        "letter": "D",
+        "text": "Say nothing. Let him do the talking.",
+        "target": "20",
+        "points": {"BLACK": 1}
+      }
+    ]
+  },
+  "19": {
+    "id": "19",
+    "title": "SERATH'S CONFESSION",
+    "location": "North Road",
+    "prose": [
+      "*North Road*",
+      "Serath removes their helmet. The face beneath is scarred — not just the hands. Something magical, something that burned from the inside out.",
+      "'The Red Wing was assigned to the taking of Qualinesti,' they say quietly. 'The occupation. We weren't just soldiers. We were... administrators. Of the camps.'",
+      "A long silence. 'I didn't kill anyone personally. I want you to know that. But I signed orders. I looked the other way. I let things happen because stopping them would have meant my own death and I was not ready to die for strangers.'",
+      "They look at you with the expression of someone who has told this story before and will tell it again. 'The burns came later. A young mage — an elf, maybe sixteen — she got free of the bindings somehow. She looked at me and she said something I didn't understand and then—' They gesture at their face. 'I woke up three days later. The camp was gone. Everyone in it was dead. I don't know why I survived.'",
+      "'The Conclave might know. Or they might execute me. Either way, I need to know what that girl said to me. It's still in here somewhere.' They tap their temple. 'Burning.'"
+    ],
+    "boxes": [],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "'Travel with us. Whatever you did — that's between you and the Conclave now.'",
+        "target": "18",
+        "points": {"WHITE": 1},
+        "romance_spark": true,
+        "romance_comp": "Commander Serath"
+      },
+      {
+        "letter": "B",
+        "text": "'What you did was monstrous. But you're trying to make it right. That counts for something.'",
+        "target": "18",
+        "points": {"WHITE": 2},
+        "romance_spark": true,
+        "romance_comp": "Commander Serath"
+      },
+      {
+        "letter": "C",
+        "text": "'You should have died in that camp.' Say it coldly. See how they respond.",
+        "target": "18",
+        "points": {"BLACK": 2}
+      },
+      {
+        "letter": "D",
+        "text": "'The Conclave will judge you. I won't.'",
+        "target": "18",
+        "points": {"RED": 1}
+      }
+    ]
+  },
+  "20": {
+    "id": "20",
+    "title": "DEPARTURE",
+    "location": "Millhaven — The Road North — Morning",
+    "prose": [
+      "*Millhaven — The Road North — Morning*",
+      "The village is behind you now. Not far — you can still see the mill wheel turning if you look back — but you have crossed something invisible. You are on the road. You are going to the Towers.",
+      "Torven walks ahead, staff in hand, moving with the easy efficiency of someone who has walked this road many times. Lyra is beside you. The others — whoever has joined you by now — spread out along the path.",
+      "The morning is cold and clear. The road stretches north through brown fields and bare trees, toward the spine of mountains that mark the edge of the civilized lands. Somewhere beyond those mountains is the Forest of Wayreth, and in the forest is the Tower.",
+      "Torven glances back. 'The road takes eight days if nothing goes wrong. Things will go wrong. The Dragon Armies are watching the major crossings and they have standing orders about mages. We will need to be careful.'",
+      "He pauses. 'Also — the magic. It's stronger now than when you woke. You can feel it, can't you? The road will make it stronger still. By the time we reach the forest, you'll be ready for the Trials. Or as ready as anyone can be.'"
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**ACT 2 BEGINS: THE ROAD TO WAYRETH**\nThe journey north is eight days through war-torn territory. Dragon Army patrols, destroyed villages, and the Forest of Wayreth all lie ahead. Your companions will be tested. So will you."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Ask Torven about the Dragon Army patrols. What should you expect?",
+        "target": "21",
+        "points": {"RED": 1}
+      },
+      {
+        "letter": "B",
+        "text": "Walk beside Lyra. Talk about what you're feeling.",
+        "target": "22",
+        "points": {"WHITE": 1}
+      },
+      {
+        "letter": "C",
+        "text": "Practise a cantrip as you walk. Keep the magic flowing.",
+        "target": "21",
+        "points": {"BLACK": 1}
+      },
+      {
+        "letter": "D",
+        "text": "Look back at Millhaven one last time.",
+        "target": "21",
+        "points": {"WHITE": 1}
+      }
+    ]
+  },
+  "21": {
+    "id": "21",
+    "title": "THE ROAD NORTH",
+    "location": "North Road — Day 1",
+    "prose": [
+      "*North Road — Day 1*",
+      "The road is empty for most of the first day. This is not reassuring — Torven says the emptiness means people know something is coming. The villages you pass are shuttered and quiet. Nobody comes out to watch you pass.",
+      "'The Dragon Armies took the east last month,' Torven says. 'The west is holding, but barely. The Conclave has been... deliberate. We don't fight wars. We observe. We maintain balance.'",
+      "He sounds like he is quoting something. You notice he does not say whether he agrees with it.",
+      "'The Trials are about more than magic,' he continues. 'They're about what you'll do with it. The Conclave needs to know — the Tower needs to know — before it grants you the power to reshape reality. That's what the robes mean. Not allegiance. Orientation.'",
+      "He glances at you. 'White robes serve the light. Red robes serve balance. Black robes serve power. Every mage chooses. The Tower shows you what you are before you choose.'"
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**THE THREE ROBES**\nYour choices throughout this module have been accumulating WHITE, RED, and BLACK points. When you reach the Final Question in the Trials, your highest score will determine which robe the Tower offers you — unless you choose to override it."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "'What if the Tower shows me something I don't want to see?'",
+        "target": "23",
+        "points": {"WHITE": 1}
+      },
+      {
+        "letter": "B",
+        "text": "'Which robe did you choose?' Ask Torven directly.",
+        "target": "23",
+        "points": {"RED": 1},
+        "romance_spark": true,
+        "romance_comp": "Torven Ashfall"
+      },
+      {
+        "letter": "C",
+        "text": "'What happens to mages who refuse the Trials?'",
+        "target": "23",
+        "points": {"BLACK": 1}
+      },
+      {
+        "letter": "D",
+        "text": "Listen. Save your questions for later.",
+        "target": "23",
+        "points": {"RED": 1}
+      }
+    ]
+  },
+  "22": {
+    "id": "22",
+    "title": "LYRA ON THE ROAD",
+    "location": "North Road — Day 1 Evening",
+    "prose": [
+      "*North Road — Day 1 Evening*",
+      "The camp for the first night is in a hollow between two hills, sheltered from the road. Torven has set wards — you can feel them humming at the edge of your awareness, subtle magic that will alert him if anything crosses the perimeter.",
+      "Lyra finds you after the others have settled. She sits down beside you without asking, the way she has since you were children.",
+      "'Do you think it hurts?' she asks. 'The Trials?'",
+      "She is not looking at you. She is looking at the fire Torven made with a gesture, burning without fuel, steady and warm.",
+      "'I keep thinking about what we read in the histories. That it shows you yourself in the dark. I know who I am in the light. I'm not sure I know who I am in the dark.'"
+    ],
+    "boxes": [],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "'Probably. Most worthwhile things do.'",
+        "target": "23",
+        "points": {"RED": 1}
+      },
+      {
+        "letter": "B",
+        "text": "'I try not to think about it.' Honesty.",
+        "target": "23",
+        "points": {"WHITE": 1}
+      },
+      {
+        "letter": "C",
+        "text": "'We'll find out together.' Take her hand.",
+        "target": "23",
+        "points": {"WHITE": 2},
+        "romance_spark": true,
+        "romance_comp": "Lyra Ashfen"
+      },
+      {
+        "letter": "D",
+        "text": "'The dark is just the light you haven't found yet.'",
+        "target": "23",
+        "points": {"RED": 1, "BLACK": 1}
+      }
+    ]
+  },
+  "23": {
+    "id": "23",
+    "title": "THE DESTROYED VILLAGE",
+    "location": "Village of Thresh — Day 3",
+    "prose": [
+      "*Village of Thresh — Day 3*",
+      "You smell Thresh before you see it. Smoke and something else — something you do not have words for yet but will never forget.",
+      "The village is gone. Not abandoned — destroyed. The buildings are burned down to their foundations. The well is filled with something dark. There are no bodies visible, which is somehow worse than if there were.",
+      "Torven stops at the edge of what was once the village square. His expression is controlled, but his grip on his staff is white-knuckled.",
+      "'Dragon Army,' he says quietly. 'Three days ago, maybe four. They're not just conquering anymore. They're erasing.'",
+      "Lyra has stopped walking. Her face is very pale. One of your other companions — whoever joined you — makes a sound that might be anger or grief or both.",
+      "Then you see the survivors. Two of them, hiding in the remains of the mill. A woman and a child. They see you and the woman raises something that might have been a weapon once."
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**DARK CONTENT WARNING**\nThis scene depicts the aftermath of wartime atrocity. The Dragon Armies have destroyed this village and killed most of its inhabitants. The choice you make here will affect your robe score and your companions' perception of you."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Approach slowly, hands visible. Show them you mean no harm.",
+        "target": "24",
+        "points": {"WHITE": 2}
+      },
+      {
+        "letter": "B",
+        "text": "Let Torven handle this. He knows how to deal with trauma.",
+        "target": "24",
+        "points": {"RED": 1}
+      },
+      {
+        "letter": "C",
+        "text": "Ask what happened. You need to understand the enemy.",
+        "target": "24",
+        "points": {"RED": 1, "BLACK": 1}
+      },
+      {
+        "letter": "D",
+        "text": "Stay back. You cannot help here and you have a mission.",
+        "target": "25",
+        "points": {"BLACK": 1}
+      }
+    ]
+  },
+  "24": {
+    "id": "24",
+    "title": "THE SURVIVORS OF THRESH",
+    "location": "Village of Thresh",
+    "prose": [
+      "*Village of Thresh*",
+      "The woman is named Mira. The child is her son Tam. They survived because Mira hid them in the root cellar when the soldiers came — the one place the fire did not reach.",
+      "She tells you what happened in short, broken sentences. The soldiers came at dawn. They gathered everyone in the square. They asked about mages — whether anyone in the village could do magic, whether anyone had seen mages on the road. No one knew anything. The soldiers did not believe them.",
+      "'They said the Dragon Queen wants all mages,' Mira says. 'Dead or serving. No middle ground.' She looks at Torven's red robes. 'You should not be on this road. They are watching all the roads now.'",
+      "Torven is very still. Then he kneels beside the child, who has not spoken, and produces a small light from his palm — warm gold, gentle, beautiful. The child's eyes widen.",
+      "'We can take them to the next town,' Torven says quietly. 'It's two days out of our way. But we cannot leave them here.'"
+    ],
+    "boxes": [],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "'We take them. Two days doesn't matter.'",
+        "target": "26",
+        "points": {"WHITE": 2}
+      },
+      {
+        "letter": "B",
+        "text": "'We take them, but we need to move faster. The mission matters too.'",
+        "target": "26",
+        "points": {"WHITE": 1, "RED": 1}
+      },
+      {
+        "letter": "C",
+        "text": "'Give them supplies and directions. We can't afford the delay.'",
+        "target": "25",
+        "points": {"BLACK": 1}
+      },
+      {
+        "letter": "D",
+        "text": "Look at your companions. 'What do you think we should do?'",
+        "target": "26",
+        "points": {"WHITE": 1}
+      }
+    ]
+  },
+  "25": {
+    "id": "25",
+    "title": "LEAVING THRESH",
+    "location": "North of Thresh",
+    "prose": [
+      "*North of Thresh*",
+      "You leave the village behind. The smoke fades slowly. The smell takes longer.",
+      "Torven does not speak to you for the rest of the day. Lyra's expression is complicated — not judgement exactly, but something close to it. The others process in their own ways.",
+      "That night, around the fire, Torven finally says: 'The Conclave teaches detachment. We cannot save everyone. We cannot be distracted from the larger work.' He pauses. 'I believe that. But I am not sure I believe it enough.'",
+      "He looks at you with an expression you cannot quite read. 'The Trials will ask you who you are. Remember this moment. It will be relevant.'"
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**CHOICE RECORDED**\nYou chose pragmatism over compassion. The Trials will remember this. Some of your companions' opinions of you have shifted."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "'I made the choice I could live with.'",
+        "target": "27",
+        "points": {"BLACK": 1}
+      },
+      {
+        "letter": "B",
+        "text": "'I'm not sure I made the right choice.'",
+        "target": "27",
+        "points": {"WHITE": 1}
+      },
+      {
+        "letter": "C",
+        "text": "Say nothing. Let the silence stand.",
+        "target": "27",
+        "points": {"RED": 1}
+      }
+    ]
+  },
+  "26": {
+    "id": "26",
+    "title": "THE DETOUR",
+    "location": "Road to Korban — Day 4",
+    "prose": [
+      "*Road to Korban — Day 4*",
+      "The detour takes you west, away from the main road, through farming country that has not yet been touched by the war. The contrast is jarring — green fields, working mills, people who smile at strangers.",
+      "Mira and Tam travel with you. The child has started speaking again, mostly to Torven, who has turned out to be unexpectedly good with children. He makes small lights dance for Tam's entertainment. He tells stories about the Towers that sound like fairy tales.",
+      "Lyra walks beside you. 'I'm glad we did this,' she says quietly. 'I know it costs us time. But I think — I think if we had left them, something in us would have broken. Something we need for the Trials.'",
+      "You reach Korban by evening. A town with walls, guards, a healer's hall. The kind of place where refugees can find help. Mira thanks you with words that are not adequate and knows it. Tam gives Torven a stone he found on the road. Torven accepts it gravely and puts it in his pocket.",
+      "'Two days lost,' Torven says as you leave Korban behind. 'We'll make it up. The Forest will wait for us. It always waits.'"
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**CHOICE RECORDED**\nYou chose compassion. The Trials will remember this. Your companions' trust in you has deepened."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Tell Torven you'd make the same choice again.",
+        "target": "27",
+        "points": {"WHITE": 1}
+      },
+      {
+        "letter": "B",
+        "text": "Ask Torven about the child's stone. There's a story there.",
+        "target": "27",
+        "points": {"WHITE": 1},
+        "romance_spark": true,
+        "romance_comp": "Torven Ashfall"
+      },
+      {
+        "letter": "C",
+        "text": "Focus on the road ahead. You have lost time.",
+        "target": "27",
+        "points": {"RED": 1}
+      }
+    ]
+  },
+  "27": {
+    "id": "27",
+    "title": "NASHA ON THE ROAD",
+    "location": "Crossroads Inn — Day 5",
+    "prose": [
+      "*Crossroads Inn — Day 5*",
+      "The inn is half-empty and the innkeeper doesn't ask questions. Torven pays for rooms with coin that has the Conclave's seal on it — apparently the Conclave has credit everywhere.",
+      "You find her at the bar, nursing something that smells like medicine and looks like mud. Red robes, like Torven's, but worn differently — casual, comfortable, like she's forgotten she's wearing them.",
+      "She looks up when you approach. Her eyes are sharp and her smile is complicated.",
+      "'Torven's new recruits,' she says. 'I've been waiting for you. I'm Nasha Vren. The Conclave sent me to meet you here — there's information you need before you reach the Forest.'",
+      "She flicks something across her knuckles — a coin, appearing and disappearing in a rhythm that looks unconscious. 'The Dragon Armies have people in Wayreth. Not in the Tower — they can't get in the Tower — but in the forest. Waiting for mages who haven't passed the Trials yet. You need to know what you're walking into.'"
+    ],
+    "boxes": [
+      {
+        "type": "companion",
+        "text": "**COMPANION JOINS: NASHA VREN**\nRed Robe courier and intelligence operative. She knows things about the road ahead and the Trials that Torven won't tell you.\nRole: Information and subterfuge. Will share intelligence about Dragon Army positions. The coin is not just a nervous habit."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "'What do you know about the Trials that Torven hasn't told us?'",
+        "target": "28",
+        "points": {"RED": 1, "BLACK": 1}
+      },
+      {
+        "letter": "B",
+        "text": "'Thank you for the warning. What should we expect?'",
+        "target": "28",
+        "points": {"WHITE": 1, "RED": 1}
+      },
+      {
+        "letter": "C",
+        "text": "'What's with the coin?' Nod at her hands.",
+        "target": "28",
+        "points": {"RED": 1},
+        "romance_spark": true,
+        "romance_comp": "Nasha Vren"
+      },
+      {
+        "letter": "D",
+        "text": "'Why did the Conclave send you specifically?'",
+        "target": "28",
+        "points": {"RED": 1}
+      }
+    ]
+  },
+  "28": {
+    "id": "28",
+    "title": "WHAT NASHA KNOWS",
+    "location": "Crossroads Inn",
+    "prose": [
+      "*Crossroads Inn*",
+      "Nasha leads you to a private room. Torven follows, his expression guarded but not hostile — he knows her, clearly. There is history there you don't have access to.",
+      "'The Trials are not what you expect. They never are.' She says this looking at Lyra, who has asked. 'The Tower is alive. Not alive like you or me — alive like a very old thing that has been thinking for a very long time. It knows what you're afraid of. It knows what you want. It will show you both.'",
+      "She pauses. 'Most people who fail the Trials don't die. They come out changed. Wrong. The Tower breaks something in them and they spend the rest of their lives trying to remember what it was.'",
+      "Torven stirs. 'Nasha—'",
+      "'They deserve to know.' Her voice is flat. 'You didn't tell me before my Trials. I'm telling them.'",
+      "She looks at you. 'The Trial is personal. Entirely personal. Whatever you face in there, no one else can help you. Not Torven. Not your friend. Not anyone. That's the point. The Tower needs to know what you'll do when you're completely alone with yourself.'"
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**TRIAL PREPARATION**\nNasha's warning is genuine: the Trials cannot be studied for or cheated. They are different for every mage. The only preparation is self-knowledge — understanding who you are and what you're capable of."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "'What did you face in your Trials?'",
+        "target": "29",
+        "points": {"WHITE": 1},
+        "romance_spark": true,
+        "romance_comp": "Nasha Vren"
+      },
+      {
+        "letter": "B",
+        "text": "'Why didn't Torven tell you?' Glance at him.",
+        "target": "29",
+        "points": {"RED": 1}
+      },
+      {
+        "letter": "C",
+        "text": "'I appreciate the honesty. What else should we know?'",
+        "target": "29",
+        "points": {"RED": 1}
+      },
+      {
+        "letter": "D",
+        "text": "Look at Lyra. Ask silently if she's all right.",
+        "target": "29",
+        "points": {"WHITE": 1}
+      }
+    ]
+  },
+  "29": {
+    "id": "29",
+    "title": "THE CHECKPOINT",
+    "location": "North Road — Day 6",
+    "prose": [
+      "*North Road — Day 6*",
+      "You see the checkpoint from a mile away. Dragon Army banners, red and black, flanking the road. A wooden barrier across the path. Six soldiers visible, maybe more in the tents behind them.",
+      "Torven stops the group with a gesture. His expression is calculating.",
+      "'We have options,' he says quietly. 'We can go around — three days through rough terrain, but no fighting. We can try to bluff through — I have papers, but they may not hold up to scrutiny. Or we can go through.'",
+      "He looks at the checkpoint. 'Six soldiers I can see. Probably a corporal in command. If we fight, we fight all of them. If we're seen fighting, reinforcements come within the hour.'",
+      "Nasha's coin is flickering across her knuckles. 'There's a fourth option. I can create a distraction. Get them looking elsewhere while you cross. But I won't be coming with you after that — they'll be looking for a Red Robe, and if there's only one on the road they might not notice the apprentices.'",
+      "She shrugs. 'Your call.'"
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**MAJOR CHOICE**\nThis decision affects the rest of Act 2. Going around costs time but avoids combat. Bluffing is risky but keeps everyone together. Fighting is dangerous but quick. Nasha's distraction works but removes her from the party."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Go around. Three days is worth avoiding a fight.",
+        "target": "30",
+        "points": {"WHITE": 1}
+      },
+      {
+        "letter": "B",
+        "text": "Bluff through. Trust Torven's papers.",
+        "target": "31",
+        "points": {"RED": 1}
+      },
+      {
+        "letter": "C",
+        "text": "Fight. You have magic now. Use it.",
+        "target": "32",
+        "points": {"BLACK": 1}
+      },
+      {
+        "letter": "D",
+        "text": "Accept Nasha's offer. Her sacrifice buys your safety.",
+        "target": "33",
+        "points": {"RED": 1, "BLACK": 1}
+      }
+    ]
+  },
+  "30": {
+    "id": "30",
+    "title": "THE LONG WAY",
+    "location": "Mountain Pass — Day 7-9",
+    "prose": [
+      "*Mountain Pass — Days 7-9*",
+      "The terrain is brutal. Torven was not exaggerating. You climb through passes that were never meant for travelers, sleep in caves that are barely shelter, and eat rations that taste of dust and determination.",
+      "But you do not encounter the Dragon Army. For three days, you see nothing but stone and sky and the distant shapes of birds that might be dragons or might be eagles. The magic in you grows stronger with each day — you can feel it now, a constant pressure, a readiness.",
+      "On the third night, Torven points to the horizon. 'There. The Forest of Wayreth.'",
+      "It does not look like other forests. Even from here, even in the dark, you can see that the trees are wrong somehow — too tall, too still, too aware. The forest is waiting for you.",
+      "'Tomorrow,' Torven says. 'Tomorrow we enter the forest. And the day after — the Tower.'",
+      "He looks at you with an expression that might be pride or might be grief. 'You've done well. The hard part is still ahead.'"
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**THE FOREST OF WAYRETH**\nThe Forest is alive and hostile to those without magical ability. It will test you before the Tower does. Stay close to Torven and do not leave the path."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "'What happens in the forest?' Ask Torven to explain.",
+        "target": "35",
+        "points": {"WHITE": 1}
+      },
+      {
+        "letter": "B",
+        "text": "Spend the night with Lyra. Talk about what's coming.",
+        "target": "34",
+        "points": {"WHITE": 1}
+      },
+      {
+        "letter": "C",
+        "text": "Meditate. Prepare yourself for tomorrow.",
+        "target": "35",
+        "points": {"RED": 1}
+      },
+      {
+        "letter": "D",
+        "text": "Talk to your companions. Hear what they're thinking.",
+        "target": "35",
+        "points": {"WHITE": 1, "RED": 1}
+      }
+    ]
+  },
+  "31": {
+    "id": "31",
+    "title": "THE BLUFF",
+    "location": "Dragon Army Checkpoint",
+    "prose": [
+      "*Dragon Army Checkpoint*",
+      "Torven adjusts his robes, pulling them closer. They look different somehow — less obviously magical, more like a scholar's traveling clothes. He hands you papers from inside his coat.",
+      "'Merchants,' he says quietly. 'Traveling north to buy furs. You're my apprentices. Say nothing unless asked directly. If they ask about magic, deny everything.'",
+      "The corporal at the barrier is young and tired. He looks at Torven's papers with the expression of someone who has looked at a thousand papers and stopped caring about any of them.",
+      "'Merchants,' he repeats flatly. 'Where are you headed?'",
+      "'Korinth,' Torven says smoothly. 'Fur trading. The winter pelts are coming in.'",
+      "The corporal looks at you. At Lyra. At the others. His eyes linger on something — your hands, maybe, or the way you're standing. Mages stand differently, Torven warned you. Something about the magic changes posture."
+    ],
+    "boxes": [
+      {
+        "type": "roll",
+        "text": "**ROLL:** Deception (CHA) (+0) | CHA | DC 13\n**SUCCESS (roll 13+):** The corporal waves you through. He's too tired to care.\n**FAILURE (roll 1-12):** The corporal signals his soldiers. 'Hold them. Something's not right.'"
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "[On Success] Walk through calmly. Don't look back.",
+        "target": "35",
+        "filter": "roll_success"
+      },
+      {
+        "letter": "B",
+        "text": "[On Failure] Fight. There's no other option now.",
+        "target": "32",
+        "filter": "roll_failure"
+      }
+    ]
+  },
+  "32": {
+    "id": "32",
+    "title": "THE CHECKPOINT FIGHT",
+    "location": "Dragon Army Checkpoint",
+    "prose": [
+      "*Dragon Army Checkpoint*",
+      "The fight is fast and brutal. Magic against steel.",
+      "Torven moves first — fire erupts from his staff in a controlled arc, scattering the soldiers nearest the barrier. Nasha's coin flashes and suddenly there are three of her, all moving in different directions.",
+      "You feel the magic surge in you, responding to danger. This is what it's for. This is what the Trials will test — not whether you can fight, but how you fight. What you're willing to do.",
+      "The soldiers are trained but not prepared. They expected merchants, not mages. The corporal is shouting orders but his men are already falling back."
+    ],
+    "boxes": [
+      {
+        "type": "combat",
+        "text": "**COMBAT: CHECKPOINT FIGHT**\n6 Human Soldiers (11 HP each, AC 16)\n1 Dragon Army Corporal (22 HP, AC 17)\n\nThe soldiers fight in formation. The corporal calls for reinforcements — you have 5 rounds before more arrive."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "[Victory] Search the bodies. They might have intelligence.",
+        "target": "35",
+        "points": {"RED": 1, "BLACK": 1}
+      },
+      {
+        "letter": "B",
+        "text": "[Victory] Leave immediately. Reinforcements are coming.",
+        "target": "35",
+        "points": {"RED": 1}
+      },
+      {
+        "letter": "C",
+        "text": "[Victory] Burn the checkpoint. Leave nothing for them to use.",
+        "target": "35",
+        "points": {"BLACK": 2}
+      }
+    ]
+  },
+  "33": {
+    "id": "33",
+    "title": "NASHA'S SACRIFICE",
+    "location": "Dragon Army Checkpoint — Watching from Distance",
+    "prose": [
+      "*Dragon Army Checkpoint — Watching from Distance*",
+      "You watch from the treeline as Nasha approaches the checkpoint alone. She walks with the confidence of someone who belongs exactly where she is — Red Robe business, obviously important, nothing to see here.",
+      "The soldiers cluster around her. Questions. Her coin flashes in the sunlight as she talks, distracting, hypnotic. You see the corporal lean forward, intent on something she's saying.",
+      "Then she runs. Not toward you — away, into the eastern woods, robes streaming behind her. The soldiers follow. All of them.",
+      "You cross the unguarded checkpoint in silence. Behind you, you hear shouting, then nothing.",
+      "Torven's expression is complicated. 'She'll be fine,' he says. 'Nasha is impossible to catch.' But he looks back toward the east for a long moment before turning north."
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**NASHA LEAVES THE PARTY**\nNasha Vren has drawn off the checkpoint guards. She will not be traveling with you for the rest of Act 2. If you have begun a romance with her, it continues via memory and letters."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "'Will we see her again?'",
+        "target": "35",
+        "points": {"WHITE": 1}
+      },
+      {
+        "letter": "B",
+        "text": "'That was brave.' Mean it.",
+        "target": "35",
+        "points": {"WHITE": 1}
+      },
+      {
+        "letter": "C",
+        "text": "Say nothing. Focus on the mission.",
+        "target": "35",
+        "points": {"RED": 1}
+      }
+    ]
+  },
+  "34": {
+    "id": "34",
+    "title": "LYRA BEFORE THE FOREST",
+    "location": "Camp — Night Before the Forest",
+    "prose": [
+      "*Camp — Night Before the Forest*",
+      "The fire burns low. The others are asleep or pretending to be. Lyra sits beside you, close enough that your shoulders touch.",
+      "'I keep thinking about Millhaven,' she says quietly. 'About what we were before this. Just two people who could light candles without matches.'",
+      "She turns to look at you. The firelight makes her face strange and familiar at once — the same face you've known since childhood, but older somehow. Changed by the road.",
+      "'Whatever happens in the Trials — I want you to know that this has been worth it. All of it. The fear and the fighting and the dead village and—' She stops. Starts again. 'I would do it again. I would choose this road again. Because you're on it.'",
+      "She reaches out and takes your hand. Her fingers are cold but her grip is certain."
+    ],
+    "boxes": [],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "'I would choose this road too. Because of you.'",
+        "target": "35",
+        "points": {"WHITE": 2},
+        "romance_flame": true,
+        "romance_comp": "Lyra Ashfen"
+      },
+      {
+        "letter": "B",
+        "text": "Kiss her. No words.",
+        "target": "35",
+        "points": {"WHITE": 2},
+        "romance_flame": true,
+        "romance_comp": "Lyra Ashfen"
+      },
+      {
+        "letter": "C",
+        "text": "'We're going to pass the Trials. Both of us. I know it.'",
+        "target": "35",
+        "points": {"WHITE": 1, "RED": 1}
+      },
+      {
+        "letter": "D",
+        "text": "Hold her hand in silence. Some things don't need words.",
+        "target": "35",
+        "points": {"WHITE": 1}
+      }
+    ]
+  },
+  "35": {
+    "id": "35",
+    "title": "THE FOREST OF WAYRETH",
+    "location": "Forest Edge — Day 10",
+    "prose": [
+      "*Forest Edge — Day 10*",
+      "The Forest of Wayreth is not where it was yesterday. Torven does not seem surprised by this.",
+      "'It moves,' he explains. 'Not physically — spatially. The forest exists in more than one place at once. It appears where it chooses to appear, when it chooses to let you in.'",
+      "The trees at the forest's edge are tall and dark and utterly still. There is no wind. No birds. No sound at all except your own breathing and the soft pad of feet on the road.",
+      "'Once we enter,' Torven continues, 'we do not leave until the Tower decides to let us go. The paths change. The distances shift. Stay close to me. Do not leave the path for any reason. Do not follow lights or voices or anything that seems like it might be showing you a shortcut.'",
+      "He looks at each of you in turn. 'The forest is testing you already. Everything from this point forward is part of the Trial.'"
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**THE FOREST OF WAYRETH**\nThe Forest is a living magical construct that protects the Tower. It is actively hostile to those without magical ability and testing toward those who have it. Trust nothing you see. Follow Torven."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Enter the forest first. Show you're not afraid.",
+        "target": "36",
+        "points": {"RED": 1}
+      },
+      {
+        "letter": "B",
+        "text": "Let Torven lead. He knows this place.",
+        "target": "36",
+        "points": {"WHITE": 1}
+      },
+      {
+        "letter": "C",
+        "text": "Take Lyra's hand as you enter. Together.",
+        "target": "36",
+        "points": {"WHITE": 1}
+      },
+      {
+        "letter": "D",
+        "text": "Reach out with your magic. Try to sense what's in the forest.",
+        "target": "37",
+        "points": {"BLACK": 1, "RED": 1}
+      }
+    ]
+  },
+  "36": {
+    "id": "36",
+    "title": "INTO THE TREES",
+    "location": "Forest of Wayreth",
+    "prose": [
+      "*Forest of Wayreth*",
+      "The forest closes behind you. Not literally — the path is still there, visible through the trees — but something has changed. The light is different. The air is different. You are inside something now, contained.",
+      "The path winds between trees that should not be able to grow this tall, this close together. The branches interlock overhead like fingers. Occasionally you see things moving in the shadows — shapes that might be animals or might be something else. Torven ignores them.",
+      "'The forest shows you what it wants you to see,' he says. 'Most of it is illusion. Some of it is real. Learning to tell the difference is part of the test.'",
+      "Hours pass. Or what feels like hours — time moves strangely here. The path branches and rebranches. Torven chooses directions without apparent logic, but you notice the trees seem to... acknowledge him. Part for him, slightly. He has been here before. He belongs.",
+      "You are beginning to feel that you might belong here too. The magic in you is responding to something in the forest — a call you can almost hear."
+    ],
+    "boxes": [],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Follow the call. Let the magic guide you.",
+        "target": "38",
+        "points": {"RED": 1, "BLACK": 1}
+      },
+      {
+        "letter": "B",
+        "text": "Stay close to Torven. Trust his guidance.",
+        "target": "38",
+        "points": {"WHITE": 1}
+      },
+      {
+        "letter": "C",
+        "text": "Ask Torven what he's following. How does he know the way?",
+        "target": "38",
+        "points": {"RED": 1}
+      }
+    ]
+  },
+  "37": {
+    "id": "37",
+    "title": "WHAT THE FOREST SHOWS YOU",
+    "location": "Forest of Wayreth — The Vision",
+    "prose": [
+      "*Forest of Wayreth — The Vision*",
+      "You reach out with your magic and the forest reaches back.",
+      "For a moment — just a moment — you see everything. The Tower at the heart of the forest, shining like captured moonlight. The three moons overhead, Solinari and Lunitari and Nuitari, aligned in a pattern that means something you don't yet understand. The threads of magic that connect everything — every tree, every stone, every creature in the forest — all flowing toward the Tower.",
+      "And something else. Something looking back at you. Something ancient and patient and very, very interested.",
+      "'You reached out.' Torven's voice is sharp. 'I told you not to do that.'",
+      "But he's looking at you differently now. With respect, maybe. Or concern.",
+      "'The Tower knows you're coming,' he says. 'It's watching you now. It will keep watching until the Trials are done.'"
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**THE TOWER'S ATTENTION**\nYou have drawn the Tower's notice before entering. This will affect your Trials — they may be more difficult, but also more... personal. The Tower now knows your particular flavor of magic."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "'Good. Let it watch.'",
+        "target": "38",
+        "points": {"BLACK": 1}
+      },
+      {
+        "letter": "B",
+        "text": "'I'm sorry. I should have listened.'",
+        "target": "38",
+        "points": {"WHITE": 1}
+      },
+      {
+        "letter": "C",
+        "text": "'What did I just see?'",
+        "target": "38",
+        "points": {"RED": 1}
+      }
+    ]
+  },
+  "38": {
+    "id": "38",
+    "title": "THE HUNTING PARTY",
+    "location": "Forest of Wayreth — Deep Woods",
+    "prose": [
+      "*Forest of Wayreth — Deep Woods*",
+      "The Dragon Army found a way in. You don't know how — the forest should have killed them, should have turned them around and around until they walked back out without knowing they'd entered. But here they are.",
+      "A Sivak draconian — taller than a man, scaled, winged, intelligent in a way that makes your skin crawl — and four soldiers in Dragon Army colors. They're on the path ahead of you, looking for something. Looking for you.",
+      "'The forest let them in,' Torven says quietly. 'It does that sometimes. Tests within tests. The Tower wants to see what you'll do.'",
+      "The Sivak turns. Its eyes find you through the trees. It smiles, showing teeth that were never meant for smiling."
+    ],
+    "boxes": [
+      {
+        "type": "combat",
+        "text": "**COMBAT: HUNTING PARTY**\n1 Sivak Draconian (52 HP, AC 17, flies)\n4 Human Soldiers (11 HP each, AC 16)\n\nThe Sivak is intelligent and tactical. It will try to grab a companion and fly away with them if given the opportunity."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "[Victory] Check the Sivak's body. Dragons Army intelligence.",
+        "target": "39",
+        "points": {"RED": 1}
+      },
+      {
+        "letter": "B",
+        "text": "[Victory] Move on quickly. The forest is watching.",
+        "target": "39",
+        "points": {"WHITE": 1}
+      },
+      {
+        "letter": "C",
+        "text": "[Victory] Ask Torven why the forest let them in.",
+        "target": "39",
+        "points": {"RED": 1}
+      }
+    ]
+  },
+  "39": {
+    "id": "39",
+    "title": "THE TOWER",
+    "location": "Heart of the Forest — The Tower of High Sorcery",
+    "prose": [
+      "*Heart of the Forest — The Tower of High Sorcery*",
+      "The Tower is not what you expected. It is not made of stone, though it looks like stone. It is not built, though it has the shape of something built. It exists in the same way the forest exists — as a thing that has always been and will always be, that contains more inside it than should be possible.",
+      "It rises out of the forest floor like a natural formation, pale and shimmering and somehow aware. Light moves across its surface in patterns you can almost understand. Windows appear and disappear. The entrance — if it is an entrance — shifts position each time you look away.",
+      "Torven stops at the edge of the clearing. He goes no further.",
+      "'This is where I leave you,' he says. 'The Trials are for you alone. I will be here when you come out.' He pauses. 'If you come out.'",
+      "He looks at each of you in turn — you, Lyra, whoever else has traveled this far. 'Remember what you learned on the road. Remember who you are. The Tower will try to make you forget.'",
+      "Then he steps back, and the path forward is yours alone."
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**ACT 3 BEGINS: THE TRIALS**\nThe Tower of High Sorcery at Wayreth. Three Trials await you: The Mirror, The Choice, and The Final Question. Each one will test something different. Each one will show you something about yourself you may not want to see."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Enter the Tower first. You are ready.",
+        "target": "40",
+        "points": {"RED": 1}
+      },
+      {
+        "letter": "B",
+        "text": "Let Lyra enter first. She has waited longer for this.",
+        "target": "40",
+        "points": {"WHITE": 1}
+      },
+      {
+        "letter": "C",
+        "text": "Enter together. You started this together.",
+        "target": "40",
+        "points": {"WHITE": 1}
+      },
+      {
+        "letter": "D",
+        "text": "Take a moment. Breathe. Then enter alone.",
+        "target": "40",
+        "points": {"BLACK": 1}
+      }
+    ]
+  },
+  "40": {
+    "id": "40",
+    "title": "INSIDE THE TOWER",
+    "location": "Tower of High Sorcery — Entry Hall",
+    "prose": [
+      "*Tower of High Sorcery — Entry Hall*",
+      "The inside of the Tower is impossible. The space you entered was perhaps twenty feet across. The space you are standing in could hold a cathedral.",
+      "The walls are lined with doors — hundreds of them, each different, each leading somewhere you cannot see. Staircases spiral up and down and sideways, connecting to platforms that should not be connected, leading to places that cannot exist.",
+      "And standing in the center of it all, waiting for you, is something that might be human but is not.",
+      "It is very old. Not old like a person is old — old like the forest is old, like the Tower itself is old. It looks at you with eyes that have seen more mages than you will ever meet, and it speaks with a voice that seems to come from everywhere at once.",
+      "'Welcome to the Tower of High Sorcery,' it says. 'I am the Guardian. I have watched over this place since before your species walked upright. I will be here when your descendants are dust.'",
+      "It tilts its head, studying you. 'You have come for the Trials. Very well. The Tower has already begun to know you. Now you will know yourself. Choose your school of magic, and the Trials will begin.'"
+    ],
+    "boxes": [
+      {
+        "type": "companion",
+        "text": "**YOU MEET: THE GUARDIAN**\nAn entity of unknown origin that has protected the Tower since its creation. Neither alive nor dead in the conventional sense. The Guardian sees all who enter. Few interest it.\nRole: Guide through the Trials. Cannot leave the Tower. Possible... connection."
+      },
+      {
+        "type": "info",
+        "text": "**CHOOSE YOUR ARCANE SCHOOL**\nYour choice of school affects your magic, your Trials, and your final robe. This is a defining moment."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Abjuration — protection, defense, warding against harm.",
+        "target": "41",
+        "points": {"WHITE": 2},
+        "setFlag": "arcaneSchool_abjuration"
+      },
+      {
+        "letter": "B",
+        "text": "Evocation — raw power, fire and lightning and force.",
+        "target": "41",
+        "points": {"RED": 1, "BLACK": 1},
+        "setFlag": "arcaneSchool_evocation"
+      },
+      {
+        "letter": "C",
+        "text": "Divination — sight, knowledge, understanding what is hidden.",
+        "target": "41",
+        "points": {"WHITE": 1, "RED": 1},
+        "setFlag": "arcaneSchool_divination"
+      },
+      {
+        "letter": "D",
+        "text": "Illusion — deception, misdirection, making truth from lies.",
+        "target": "41",
+        "points": {"RED": 2},
+        "setFlag": "arcaneSchool_illusion"
+      },
+      {
+        "letter": "E",
+        "text": "Necromancy — death, undeath, power over mortality.",
+        "target": "41",
+        "points": {"BLACK": 2},
+        "setFlag": "arcaneSchool_necromancy"
+      },
+      {
+        "letter": "F",
+        "text": "Transmutation — change, transformation, becoming other.",
+        "target": "41",
+        "points": {"RED": 1},
+        "setFlag": "arcaneSchool_transmutation"
+      }
+    ]
+  },
+  "41": {
+    "id": "41",
+    "title": "THE GUARDIAN'S WORDS",
+    "location": "Tower — Before the First Trial",
+    "prose": [
+      "*Tower — Before the First Trial*",
+      "The Guardian nods slowly. 'A choice that reveals as much as it conceals. The Tower notes your preference. But preferences can be misleading.'",
+      "It gestures, and one of the hundreds of doors opens. Behind it is darkness — not absence of light, but something more deliberate. Something waiting.",
+      "'The First Trial is the Trial of the Mirror. You will face yourself — not as you are, but as you might become. The worst version. The version you fear you already are, deep down where you do not look.'",
+      "The Guardian's expression is unreadable. 'Some mages fight their reflection. Some embrace it. Some simply... look. There is no correct response. There is only what you do, and what that reveals.'",
+      "It steps aside. The doorway waits.",
+      "'When you are ready,' the Guardian says. 'The Mirror does not hurry.'"
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**TRIAL 1: THE MIRROR**\nYou will face your worst self — the version of you that made every wrong choice, that became everything you fear. How you respond determines part of your robe score."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Enter without hesitation. You are not afraid of yourself.",
+        "target": "42",
+        "points": {"RED": 1}
+      },
+      {
+        "letter": "B",
+        "text": "Ask the Guardian what happens if you fail.",
+        "target": "42",
+        "points": {"WHITE": 1}
+      },
+      {
+        "letter": "C",
+        "text": "Take a breath. Center yourself. Then enter.",
+        "target": "42",
+        "points": {"WHITE": 1, "RED": 1}
+      },
+      {
+        "letter": "D",
+        "text": "Ask: 'Have you ever taken the Trials?'",
+        "target": "42",
+        "points": {"RED": 1},
+        "romance_spark": true,
+        "romance_comp": "The Guardian"
+      }
+    ]
+  },
+  "42": {
+    "id": "42",
+    "title": "THE MIRROR",
+    "location": "The First Trial",
+    "prose": [
+      "*The First Trial*",
+      "The room is small and completely empty except for the mirror. It hangs in the center of the space, frame-less, reflecting nothing you can see.",
+      "You approach. The mirror's surface ripples like water. And then your reflection appears.",
+      "It is you. Unmistakably you. But wrong. The eyes are colder. The posture is different — harder, more certain, the kind of certainty that comes from having stopped caring what others think. The robes it wears are black, edged with silver runes you don't recognize.",
+      "It looks at you and it smiles. The smile is the worst part — because you recognize it. You have smiled that smile, in moments you don't like to remember.",
+      "'Hello,' it says with your voice. 'I've been waiting for you. I've been waiting since the first time you chose power over kindness. Since the first time you told a lie because the truth was inconvenient. Since the first time you looked away from something you could have stopped.'",
+      "It reaches toward the mirror's surface. 'I am what you could become. What you will become, if you make the wrong choices. Or the right ones, depending on how you look at it.'",
+      "The mirror-you steps forward. 'Now. What are you going to do about me?'"
+    ],
+    "boxes": [],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "'You're not me. You're a test.' Reject it.",
+        "target": "43",
+        "points": {"WHITE": 1}
+      },
+      {
+        "letter": "B",
+        "text": "'I know you're possible. I've always known.' Accept it.",
+        "target": "44",
+        "points": {"BLACK": 1}
+      },
+      {
+        "letter": "C",
+        "text": "'What choices? Show me the path that leads to you.'",
+        "target": "45",
+        "points": {"RED": 1}
+      },
+      {
+        "letter": "D",
+        "text": "Attack. Destroy the reflection before it can say more.",
+        "target": "46",
+        "points": {"BLACK": 2}
+      }
+    ]
+  },
+  "43": {
+    "id": "43",
+    "title": "REJECTION",
+    "location": "The Mirror — Rejection",
+    "prose": [
+      "*The Mirror — Rejection*",
+      "The reflection laughs. It is not a kind laugh.",
+      "'A test? Of course I'm a test. Everything here is a test. But that doesn't make me less real. I'm the part of you that you've been running from since you first understood what power meant.'",
+      "It presses against the mirror's surface. The glass bends but does not break.",
+      "'You think rejecting me makes you good? It doesn't. It makes you a coward. You're afraid to look at what you could become because you know — you know — that you would like it. The power. The certainty. The freedom from caring about everyone else's weakness.'",
+      "The reflection's eyes meet yours. 'You can't reject me forever. I'll be here every time you make a hard choice. Every time the kind thing and the powerful thing point in different directions. You can't unmake me. I am you.'",
+      "The mirror shatters. Not dramatically — quietly, pieces falling like snow and dissolving before they hit the floor. The reflection is gone. But you heard what it said. And some of it was true."
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**TRIAL 1 COMPLETE: REJECTION**\nYou rejected your worst self. The Tower notes this. But the reflection's words remain: can you truly unmake what you might become? +2 WHITE"
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Move on to the next Trial.",
+        "target": "48",
+        "points": {"WHITE": 2}
+      }
+    ]
+  },
+  "44": {
+    "id": "44",
+    "title": "ACCEPTANCE",
+    "location": "The Mirror — Acceptance",
+    "prose": [
+      "*The Mirror — Acceptance*",
+      "The reflection goes still. This was not the response it expected.",
+      "'You accept me?' Its voice is different now. Less mocking. More... curious.",
+      "'I accept that you're possible,' you say. 'I've always known you were possible. Everyone has a version of themselves they could become if they made different choices. Pretending you don't exist doesn't make you go away. It just means I can't see you coming.'",
+      "The reflection studies you for a long moment. Then it nods, slowly.",
+      "'Interesting. Most mages either fight me or run from me. Very few acknowledge me and keep walking.' It steps back from the mirror's surface. 'You understand something important: the darkness in you is not separate from the light. They are the same capacity, pointed in different directions.'",
+      "The mirror fades. The reflection fades with it. But before it disappears entirely, it says: 'I'll be watching. We both know which choices lead to me. Make them carefully.'"
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**TRIAL 1 COMPLETE: ACCEPTANCE**\nYou acknowledged your worst self without embracing or rejecting it. The Tower notes this unusual response. You understand that potential is not destiny. +1 WHITE, +1 BLACK"
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Move on to the next Trial.",
+        "target": "48",
+        "points": {"WHITE": 1, "BLACK": 1}
+      }
+    ]
+  },
+  "45": {
+    "id": "45",
+    "title": "UNDERSTANDING",
+    "location": "The Mirror — Understanding",
+    "prose": [
+      "*The Mirror — Understanding*",
+      "The reflection pauses. 'You want to know how I came to be? The specific choices?'",
+      "'Yes. If I know the path, I can avoid it.'",
+      "The reflection smiles. 'Or walk it deliberately. Knowledge is neutral — it serves whoever holds it.' But it steps back, and the mirror's surface ripples, and you see—",
+      "A moment. You, older, in a library, choosing to learn a spell you know will cost someone else pain. 'Power first.'",
+      "Another moment. You, in a corridor, looking away from someone who needs help because helping would slow you down. 'Ambition first.'",
+      "Another. You, facing a choice between honesty and advancement, and choosing advancement. 'Success first.'",
+      "'Small choices,' the reflection says. 'Each one barely matters on its own. But they accumulate. They become a direction. And eventually the direction becomes a destination.'",
+      "The mirror clears. 'Now you know. The question is what you'll do with the knowledge.'"
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**TRIAL 1 COMPLETE: UNDERSTANDING**\nYou chose to understand how your worst self might come to be. This knowledge is a tool — it can be used for prevention or for purpose. The Tower notes your analytical approach. +2 RED"
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Move on to the next Trial.",
+        "target": "48",
+        "points": {"RED": 2}
+      }
+    ]
+  },
+  "46": {
+    "id": "46",
+    "title": "THE MIRROR CONSTRUCT",
+    "location": "The Mirror — Combat",
+    "prose": [
+      "*The Mirror — Combat*",
+      "Your spell hits the mirror and the mirror shatters — but not the way glass shatters. The pieces reform, coalesce, become something else. Something solid. Something that stands before you with your face and your power and your worst intentions.",
+      "'You chose violence,' the construct says with your voice. 'How appropriate. You think you can destroy me? I am made of everything you refuse to look at. I am your shadow given form. And now—'",
+      "It raises its hands. Magic crackles. Your magic, twisted.",
+      "'—now you have to fight yourself.'"
+    ],
+    "boxes": [
+      {
+        "type": "combat",
+        "text": "**COMBAT: MIRROR CONSTRUCT**\nMirror Construct (27 HP, AC 14)\n\nThe Construct uses your spells against you. It has Spell Reflection — on a roll of 6 on a d6, your spells bounce back. It has disadvantage against physical attacks."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "[Victory] 'You're still not me. You're what I won't become.'",
+        "target": "47",
+        "points": {"WHITE": 1}
+      },
+      {
+        "letter": "B",
+        "text": "[Victory] 'Destroying you felt good. I understand why you exist.'",
+        "target": "47",
+        "points": {"BLACK": 2}
+      },
+      {
+        "letter": "C",
+        "text": "[Victory] Say nothing. Continue to the next Trial.",
+        "target": "48",
+        "points": {"RED": 1}
+      }
+    ]
+  },
+  "47": {
+    "id": "47",
+    "title": "AFTER THE FIGHT",
+    "location": "The Mirror — Aftermath",
+    "prose": [
+      "*The Mirror — Aftermath*",
+      "The construct dissolves into light and shadow, scattering like ash. For a moment — just a moment — you see your reflection in the scattered pieces: tired, determined, alive.",
+      "Then the pieces fade, and you are alone in the room. The mirror is gone. The trial is over.",
+      "You chose violence. The Tower has noted this. Violence is not inherently wrong — sometimes it is the only response available. But the choice to attack rather than engage, to destroy rather than understand... that choice reveals something.",
+      "The door to the next trial opens.",
+      "'Well done,' the Guardian's voice says from nowhere and everywhere. 'Or well fought, at least. The second Trial awaits. The Trial of the Choice.'"
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**TRIAL 1 COMPLETE: VIOLENCE**\nYou chose to fight your reflection rather than face it. The Tower notes this. Violence is a solution — but what does it say about you that it was your first response? +1 BLACK, +1 RED"
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Move on to the second Trial.",
+        "target": "48",
+        "points": {"BLACK": 1, "RED": 1}
+      }
+    ]
+  },
+  "48": {
+    "id": "48",
+    "title": "THE SECOND TRIAL",
+    "location": "Tower — Between Trials",
+    "prose": [
+      "*Tower — Between Trials*",
+      "The space between trials is a corridor that seems to go on forever. You walk, and the walls show you things — memories, maybe, or possibilities. Millhaven. The road. Lyra's face when she first showed you her magic. The destroyed village. The checkpoint. The forest.",
+      "Everything that brought you here. Everything that made you who you are.",
+      "The corridor ends at another door. The Guardian is waiting.",
+      "'The Trial of the Choice,' it says. 'You will be presented with a situation in which you cannot save everyone. Two people in danger. Magic enough for one. You must choose who lives.'",
+      "It studies you with ancient, patient eyes. 'This trial has broken more mages than the Mirror. Not because the choice is difficult — every choice is difficult. But because most mages cannot accept that some problems have no good solution. They break themselves trying to find one that doesn't exist.'",
+      "The door opens. 'Remember: the trial is not about who you save. It is about how you decide.'"
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**TRIAL 2: THE CHOICE**\nYou cannot save everyone. The Trial will test how you make impossible decisions. There is no right answer — only your answer."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Enter ready to make the hard choice.",
+        "target": "49",
+        "points": {"RED": 1}
+      },
+      {
+        "letter": "B",
+        "text": "Enter determined to find a third option.",
+        "target": "49",
+        "points": {"WHITE": 1}
+      },
+      {
+        "letter": "C",
+        "text": "Enter accepting that you may fail.",
+        "target": "49",
+        "points": {"WHITE": 1, "BLACK": 1}
+      }
+    ]
+  },
+  "49": {
+    "id": "49",
+    "title": "THE CHOICE",
+    "location": "The Second Trial",
+    "prose": [
+      "*The Second Trial*",
+      "The room is a cavern — vast, dark, echoing. Two platforms rise from a chasm so deep you cannot see the bottom. On each platform, a figure.",
+      "On the left: Lyra. Your oldest friend. The person who woke to magic the same morning you did. She is bound, gagged, terrified. Real — not an illusion, you can feel her presence, her magic calling to yours.",
+      "On the right: a child. You don't recognize them, but that doesn't matter. A child. Maybe ten years old. Also bound. Also terrified. Also real.",
+      "Between the platforms, something moves in the darkness. Something that will reach them both in moments.",
+      "And in your hands, enough magic for one rescue. One spell. One flight. One shield.",
+      "'Choose,' the darkness says. And you understand: this is not a test you can fail by making the wrong choice. You can only fail by refusing to choose at all."
+    ],
+    "boxes": [
+      {
+        "type": "combat",
+        "text": "**COMBAT: SPECTRAL GUARDIANS**\n3 Spectral Guardians (22 HP each, AC 12)\n\nThe Guardians rise from the chasm. You must fight through them to reach either platform. You have 3 rounds before the darkness reaches both figures."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "[After Combat] Save Lyra. She matters to you.",
+        "target": "50",
+        "points": {"WHITE": 1}
+      },
+      {
+        "letter": "B",
+        "text": "[After Combat] Save the child. Innocence must be protected.",
+        "target": "51",
+        "points": {"WHITE": 2}
+      },
+      {
+        "letter": "C",
+        "text": "[After Combat] Try to save both. Split your magic.",
+        "target": "52",
+        "points": {"RED": 1}
+      },
+      {
+        "letter": "D",
+        "text": "[After Combat] Save neither. Refuse the false choice.",
+        "target": "53",
+        "points": {"BLACK": 2}
+      }
+    ]
+  },
+  "50": {
+    "id": "50",
+    "title": "SAVING LYRA",
+    "location": "The Choice — Lyra",
+    "prose": [
+      "*The Choice — Lyra*",
+      "You choose. Magic surges through you, carrying you to Lyra's platform. Your shield wraps around her as the darkness reaches the other platform, and you do not look. You cannot look.",
+      "When the darkness recedes, the child's platform is empty.",
+      "Lyra is crying. She understands what you did. She understands what it cost. She holds onto you and she cries and you hold her and you do not let yourself think about the choice you made.",
+      "Later — minutes or hours, you cannot tell — the Guardian's voice speaks from the walls.",
+      "'You chose love over duty. You saved the one who mattered to you. This is not wrong. This is human. But it is not the choice a White Robe would make.'",
+      "A door opens. 'The final Trial awaits.'"
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**TRIAL 2 COMPLETE: LOVE**\nYou saved Lyra. The Tower notes this as a choice driven by connection rather than principle. This weighs toward RED or BLACK, depending on your other choices."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Move on to the final Trial.",
+        "target": "54",
+        "points": {"RED": 1}
+      }
+    ]
+  },
+  "51": {
+    "id": "51",
+    "title": "SAVING THE CHILD",
+    "location": "The Choice — The Child",
+    "prose": [
+      "*The Choice — The Child*",
+      "You choose. Magic surges through you, carrying you to the child's platform. Your shield wraps around them as the darkness reaches Lyra's platform, and you hear her scream your name before the darkness swallows the sound.",
+      "The child is safe. That is what matters. That is what you tell yourself.",
+      "When the darkness recedes, Lyra's platform is empty. The child looks at you with eyes that understand nothing and everything. They are alive because of you. Lyra is not.",
+      "The Guardian's voice speaks from the walls.",
+      "'You chose principle over love. You saved the innocent. This is the choice a White Robe would make. Whether it is the choice you can live with... that is for you to determine.'",
+      "A door opens. 'The final Trial awaits.'"
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**TRIAL 2 COMPLETE: DUTY**\nYou saved the child. The Tower notes this as a choice driven by principle rather than personal connection. This weighs heavily toward WHITE."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Move on to the final Trial.",
+        "target": "54",
+        "points": {"WHITE": 2}
+      }
+    ]
+  },
+  "52": {
+    "id": "52",
+    "title": "SPLITTING THE MAGIC",
+    "location": "The Choice — Both",
+    "prose": [
+      "*The Choice — Both*",
+      "You refuse to choose. You split your magic, sending half to each platform, and for a moment — for a single impossible moment — it works. Two shields, two rescues, two lives saved.",
+      "Then the magic fails. You are not strong enough for this. No one is strong enough for this. The shields flicker, weaken, begin to dissolve.",
+      "And then — something else. Something from outside. The Tower itself intervenes, and both shields hold, and both figures are carried to safety, and you collapse on the cavern floor with magic-burn in your veins and tears on your face.",
+      "The Guardian's voice speaks from everywhere.",
+      "'Unusual. You attempted the impossible. You failed — but the attempt itself was noted. Very few mages try to break the rules of the Trial. Fewer still come close.'",
+      "Lyra is beside you, alive. The child is alive. Everyone is alive. But you know the truth: you did not save them. You almost killed them both.",
+      "'The final Trial awaits.'"
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**TRIAL 2 COMPLETE: DEFIANCE**\nYou tried to save both and nearly lost both. The Tower notes your refusal to accept the parameters of the test. This weighs toward RED — the path of those who make their own rules."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Move on to the final Trial.",
+        "target": "54",
+        "points": {"RED": 2}
+      }
+    ]
+  },
+  "53": {
+    "id": "53",
+    "title": "REFUSING THE CHOICE",
+    "location": "The Choice — Neither",
+    "prose": [
+      "*The Choice — Neither*",
+      "You do not move. You do not cast. You stand at the edge of the chasm and you watch the darkness reach both platforms.",
+      "But the darkness does not take them. Instead, it... stops. Waits. And then both figures dissolve — illusions, both of them. There was no Lyra. There was no child. There was only the test.",
+      "'Interesting,' the Guardian's voice says. 'You saw through the illusion. Or you refused to participate in a system designed to force an impossible choice. Either interpretation is valid.'",
+      "The cavern fades. You are standing in a simple room, alone.",
+      "'Some would call this wisdom. Others would call it cowardice. The Tower makes no judgment — it only records. You saw a choice designed to break you, and you declined to be broken.'",
+      "A door opens. 'The final Trial awaits. It will not be as easily refused.'"
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**TRIAL 2 COMPLETE: REFUSAL**\nYou refused the false choice. The Tower notes this as either wisdom or cowardice — it cannot tell the difference, and neither can you. This weighs toward BLACK."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Move on to the final Trial.",
+        "target": "54",
+        "points": {"BLACK": 2}
+      }
+    ]
+  },
+  "54": {
+    "id": "54",
+    "title": "THE FINAL QUESTION",
+    "location": "The Third Trial",
+    "prose": [
+      "*The Third Trial*",
+      "The final room is simple. A chair. A table. Three robes hanging on the wall — white, red, black. The Guardian stands before them.",
+      "'The Trial of the Final Question,' it says. 'You have faced yourself. You have made an impossible choice. Now you must answer a question that has no wrong answer — only your answer.'",
+      "It gestures, and you see your robe scores appear in the air: WHITE, RED, BLACK. The numbers that represent every choice you have made since Millhaven.",
+      "'The Tower has watched you. It knows what you are. But the robes are not assigned — they are chosen. You must answer one question, and your answer will determine which robe the Tower offers you.'",
+      "The Guardian looks at you with ancient, unreadable eyes.",
+      "'In the service of what does your magic exist?'",
+      "The three robes wait."
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**THE FINAL QUESTION**\nYour answer determines your robe. You may accept the Tower's recommendation based on your scores, or you may override it with your answer. Choose carefully — this defines who you are as a mage."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "'In the service of others. To protect, to heal, to defend the innocent.'",
+        "target": "55",
+        "points": {"WHITE": 5}
+      },
+      {
+        "letter": "B",
+        "text": "'In the service of balance. Magic must be preserved, neither good nor evil.'",
+        "target": "56",
+        "points": {"RED": 5}
+      },
+      {
+        "letter": "C",
+        "text": "'In the service of power. Magic is meant to be mastered and used.'",
+        "target": "57",
+        "points": {"BLACK": 5}
+      },
+      {
+        "letter": "D",
+        "text": "'In the service of myself. I choose my own purpose.'",
+        "target": "58",
+        "points": {"RED": 3}
+      }
+    ]
+  },
+  "55": {
+    "id": "55",
+    "title": "WHITE ROBES",
+    "location": "The Choosing — White",
+    "prose": [
+      "*The Choosing — White*",
+      "The white robe lifts itself from the wall and settles onto your shoulders. It is lighter than it looks, and warmer, and it fits as though it was made for you. Because it was. The Tower has known this moment was coming since you lit that first candle in Millhaven.",
+      "'White,' the Guardian says. 'The robes of Solinari. The moon of good magic, of healing, of protection. You have chosen to serve others with your power. The Conclave will hold you to this.'",
+      "The robe's weight is real but not heavy. The responsibility is enormous.",
+      "'You are a mage of the White Robes now. Go forth and do what White Robes do: heal the wounded, protect the innocent, stand against the darkness. The war outside needs healers. It needs protectors. It needs you.'",
+      "The Tower's attention lifts. You are no longer being tested. You have passed. You are a mage."
+    ],
+    "boxes": [
+      {
+        "type": "levelup",
+        "text": "**LEVEL UP! You are now Level 3.**\nYou have passed the Trials and become a White Robe of Solinari. You gain the White Robe benefits: +1 to healing spells, resistance to necrotic damage, and the respect of those who serve the light."
+      },
+      {
+        "type": "loot",
+        "text": "ADD TO INVENTORY:\n- White Robe of Solinari"
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Leave the Tower. Your companions are waiting.",
+        "target": "59"
+      }
+    ]
+  },
+  "56": {
+    "id": "56",
+    "title": "RED ROBES",
+    "location": "The Choosing — Red",
+    "prose": [
+      "*The Choosing — Red*",
+      "The red robe lifts itself from the wall and settles onto your shoulders. It is heavier than the white, but balanced, and it fits as though it was made for you. Because it was. The Tower has known this moment was coming since you lit that first candle in Millhaven.",
+      "'Red,' the Guardian says. 'The robes of Lunitari. The moon of neutral magic, of balance, of preservation. You have chosen to serve magic itself — not good, not evil, but the power that underlies both.'",
+      "The robe's weight is real and appropriate. Balance requires strength.",
+      "'You are a mage of the Red Robes now. Go forth and do what Red Robes do: preserve magic wherever it exists, maintain the balance between light and darkness, serve the Conclave's mission of neutrality. The war outside threatens to destroy magic entirely. It needs those who can see both sides. It needs you.'",
+      "The Tower's attention lifts. You are no longer being tested. You have passed. You are a mage."
+    ],
+    "boxes": [
+      {
+        "type": "levelup",
+        "text": "**LEVEL UP! You are now Level 3.**\nYou have passed the Trials and become a Red Robe of Lunitari. You gain the Red Robe benefits: +1 to Arcana checks, ability to use both good and evil spells without alignment penalty, and the neutrality of the Conclave."
+      },
+      {
+        "type": "loot",
+        "text": "ADD TO INVENTORY:\n- Red Robe of Lunitari"
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Leave the Tower. Your companions are waiting.",
+        "target": "59"
+      }
+    ]
+  },
+  "57": {
+    "id": "57",
+    "title": "BLACK ROBES",
+    "location": "The Choosing — Black",
+    "prose": [
+      "*The Choosing — Black*",
+      "The black robe lifts itself from the wall and settles onto your shoulders. It is the heaviest of the three, dense with power, and it fits as though it was made for you. Because it was. The Tower has known this moment was coming since you lit that first candle in Millhaven.",
+      "'Black,' the Guardian says. 'The robes of Nuitari. The moon of dark magic, of power, of ambition. You have chosen to serve yourself — to master magic rather than be mastered by it.'",
+      "The robe's weight is real and significant. Power has costs.",
+      "'You are a mage of the Black Robes now. Go forth and do what Black Robes do: grow stronger, accumulate power, bend magic to your will. The war outside is a crucible. It will destroy the weak and elevate the strong. Be strong.'",
+      "The Tower's attention lifts. You are no longer being tested. You have passed. You are a mage."
+    ],
+    "boxes": [
+      {
+        "type": "levelup",
+        "text": "**LEVEL UP! You are now Level 3.**\nYou have passed the Trials and become a Black Robe of Nuitari. You gain the Black Robe benefits: +1 to Intimidation checks, bonus HP recovery when you reduce a creature to 0 HP with a spell, and the fear of those who know what Black Robes can do."
+      },
+      {
+        "type": "loot",
+        "text": "ADD TO INVENTORY:\n- Black Robe of Nuitari"
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Leave the Tower. Your companions are waiting.",
+        "target": "59"
+      }
+    ]
+  },
+  "58": {
+    "id": "58",
+    "title": "UNCHOSEN",
+    "location": "The Choosing — Refusal",
+    "prose": [
+      "*The Choosing — Refusal*",
+      "None of the robes move. The Guardian is very still.",
+      "'You refuse to be categorized,' it says slowly. 'You claim no moon, no order, no purpose but your own. This is... rare. And dangerous.'",
+      "It studies you with eyes that have seen ten thousand mages make this choice, and almost none make yours.",
+      "'The Conclave will not accept you. You will have no place in the Orders. Your magic will be wild, unpredictable — powerful in ways that robed mages cannot match, but unstable. Uncontrolled.'",
+      "A pause. 'Is this truly your choice? To walk alone, with no Order, no moon, no place in the structure of magic?'",
+      "You nod. This is your choice. It has always been your choice.",
+      "'Then go,' the Guardian says. 'Go and be whatever you become. The Tower will remember you. I will remember you. We will be watching to see what you make of yourself.'"
+    ],
+    "boxes": [
+      {
+        "type": "levelup",
+        "text": "**LEVEL UP! You are now Level 3.**\nYou have passed the Trials but refused all three Orders. You gain no robe bonuses, but your magic is unbound: once per long rest, when you cast a spell, roll on the Wild Magic Surge table. Additionally, +1 to all saving throws against magic."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Leave the Tower. Whatever comes next, you face it as yourself.",
+        "target": "59"
+      }
+    ]
+  },
+  "59": {
+    "id": "59",
+    "title": "EMERGENCE",
+    "location": "Forest of Wayreth — Tower Exit",
+    "prose": [
+      "*Forest of Wayreth — Tower Exit*",
+      "The forest is different when you emerge. The hostility is gone — or rather, it has redirected. The trees recognize you now. You belong here, in a way you did not before.",
+      "Torven is waiting at the forest's edge. He looks older than he did when you entered — or maybe you are seeing him differently now that you understand what he went through to earn his robes.",
+      "'You passed,' he says. It is not a question. He can see your robe, or the lack of one. He can feel what you have become.",
+      "Behind him, your companions are waiting. Everyone who traveled with you, everyone who helped you reach this moment. They look at you with expressions that range from relief to awe to something you cannot quite name.",
+      "The war is still out there. The Dragon Armies are still conquering. The gods are still silent. Nothing has changed except you.",
+      "Everything has changed because of you."
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**MODULE COMPLETE: TOWERS OF HIGH SORCERY**\nYou have passed the Trials and emerged as a mage of the Orders (or outside them). The next module will continue your story in the War of the Lance. Your choices here — your companions, your robe, your relationships — will carry forward."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Find Lyra. See what she has become.",
+        "target": "60"
+      },
+      {
+        "letter": "B",
+        "text": "Speak to Torven. Thank him for bringing you here.",
+        "target": "61"
+      },
+      {
+        "letter": "C",
+        "text": "Look back at the Tower one last time.",
+        "target": "62"
+      },
+      {
+        "letter": "D",
+        "text": "Find whoever you love most. Tell them you survived.",
+        "target": "60"
+      }
+    ]
+  },
+  "60": {
+    "id": "60",
+    "title": "EPILOGUES — COMPANIONS",
+    "location": "After the Tower",
+    "prose": [
+      "*After the Tower*",
+      "The companions who traveled with you have their own endings. The journey changed them too — some in ways they expected, some in ways they did not."
+    ],
+    "boxes": [
+      {
+        "type": "epilogue",
+        "text": "**COMPANION EPILOGUES**\nThe epilogues for each companion depend on your relationship level with them. Romance partners receive special endings. Check your companion log to see where each relationship stands."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Continue to the ending.",
+        "target": "END"
+      }
+    ]
+  },
+  "61": {
+    "id": "61",
+    "title": "TORVEN'S WORDS",
+    "location": "Forest Edge",
+    "prose": [
+      "*Forest Edge*",
+      "Torven looks at you for a long moment. Then he nods — slowly, with something like respect.",
+      "'I have brought many apprentices to the Tower,' he says. 'Most of them pass. Some of them fail. A few of them become something I did not expect.'",
+      "He glances at your robe — or your lack of one. 'You are one of the unexpected ones. I do not know yet if that is good or bad. But I will be interested to see what you become.'",
+      "He offers his hand. 'Welcome to the Orders. Or welcome to whatever you have chosen instead. Either way — welcome to the life of a mage. It will never be simple again.'"
+    ],
+    "boxes": [],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Take his hand. 'Thank you. For everything.'",
+        "target": "60",
+        "points": {"WHITE": 1}
+      },
+      {
+        "letter": "B",
+        "text": "'What happens now? Where do we go?'",
+        "target": "60",
+        "points": {"RED": 1}
+      },
+      {
+        "letter": "C",
+        "text": "'I didn't do this for the Orders. I did it for myself.'",
+        "target": "60",
+        "points": {"BLACK": 1}
+      }
+    ]
+  },
+  "62": {
+    "id": "62",
+    "title": "THE TOWER REMEMBERS",
+    "location": "Forest — Looking Back",
+    "prose": [
+      "*Forest — Looking Back*",
+      "The Tower stands at the heart of the forest, shimmering in light that has no source. It looks different now — smaller, maybe, or just more comprehensible. You have been inside it. You know what it contains.",
+      "For a moment — just a moment — you feel the Tower's attention return to you. Not hostile. Not welcoming. Just... aware. The Tower sees all mages who pass through it. It remembers all of them.",
+      "It will remember you.",
+      "The Guardian's voice speaks in your mind, distant but clear: 'You passed. What you do with what you have become is your choice. But I will be watching. I will always be watching.'",
+      "Then the attention lifts, and you are alone with your companions and your new life and the war that waits beyond the forest.",
+      "The story continues."
+    ],
+    "boxes": [],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Turn away. The future is waiting.",
+        "target": "60"
+      }
+    ]
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "title": "The Towers of High Sorcery — DM Chronicle",
+  "sections": {
+    "protagonist": {
+      "title": "The Mage",
+      "fields": ["name", "class", "arcaneSchool", "robe"]
+    },
+    "journey": {
+      "title": "The Journey",
+      "events": [
+        {"scene": "1", "summary": "Magic awakened in Millhaven"},
+        {"scene": "6", "summary": "Headwoman Dorn gave three days to prepare"},
+        {"scene": "18", "summary": "Torven Ashfall arrived from the Conclave"},
+        {"scene": "20", "summary": "Departed Millhaven for Wayreth"},
+        {"scene": "23", "summary": "Discovered destroyed village of Thresh"},
+        {"scene": "29", "summary": "Reached Dragon Army checkpoint"},
+        {"scene": "35", "summary": "Entered the Forest of Wayreth"},
+        {"scene": "39", "summary": "Reached the Tower"},
+        {"scene": "40", "summary": "Arcane School chosen"},
+        {"scene": "42", "summary": "Trial One: The Mirror"},
+        {"scene": "49", "summary": "Trial Two: The Choice"},
+        {"scene": "54", "summary": "Trial Three: The Final Question"},
+        {"scene": "59", "summary": "Emerged from the Tower"}
+      ]
+    },
+    "companions": {
+      "title": "Companions",
+      "list": ["Lyra Ashfen", "Torven Ashfall", "Nasha Vren", "Thessaly Brightwater", "Commander Serath", "Zinnia Quickfingers"]
+    },
+    "romances": {
+      "title": "Romances",
+      "stages": ["Spark", "Flame", "Oath"]
+    },
+    "robeScore": {
+      "title": "Robe Score",
+      "fields": ["white", "red", "black", "finalRobe"]
+    }
+  }
+}

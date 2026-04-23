@@ -9572,37 +9572,99 @@ function LootBox({text,gs,onStateUpdate}){
   );
 }
 
-// ── Module Select ───────────────────────────────────
+// ── Module Select (with Campaign Selection) ─────────────
 function ModuleSelect({onSelect,onBack}){
-  const[modules,setModules]=useState(null);const[loading,setLoading]=useState(true);const[error,setError]=useState(null);
+  const[campaigns,setCampaigns]=useState(null);
+  const[selectedCampaign,setSelectedCampaign]=useState(null);
+  const[campaignData,setCampaignData]=useState(null);
+  const[loading,setLoading]=useState(true);
+  const[error,setError]=useState(null);
   const e=React.createElement;
+
+  // Load campaigns index
   useEffect(()=>{
-    fetch('modules/index.json').then(r=>{if(!r.ok)throw new Error('Not found');return r.json()})
-      .then(data=>{setModules(data.modules||[]);setLoading(false)})
-      .catch(err=>{setError(err.message);setLoading(false)})
+    fetch('campaigns/index.json').then(r=>{if(!r.ok)throw new Error('Not found');return r.json()})
+      .then(data=>{
+        const active=(data.campaigns||[]).filter(c=>c.status==='active');
+        setCampaigns(active);
+        // Auto-select if only one campaign
+        if(active.length===1)setSelectedCampaign(active[0]);
+        setLoading(false);
+      })
+      .catch(()=>{
+        // Fallback to modules/index.json if no campaigns
+        fetch('modules/index.json').then(r=>r.ok?r.json():null)
+          .then(data=>{if(data?.modules?.length)onSelect(data.modules[0].id);else onSelect('knights-oath')})
+          .catch(()=>onSelect('knights-oath'));
+      })
   },[]);
-  if(loading)return e('div',{className:'cover'},e('p',{className:'dim-italic'},'Loading modules...'));
-  if(error||!modules||modules.length===0){
-    // Single module fallback — skip selection
-    onSelect('knights-oath');return null
+
+  // Load selected campaign data
+  useEffect(()=>{
+    if(!selectedCampaign)return;
+    fetch('campaigns/'+selectedCampaign.id+'.json').then(r=>{if(!r.ok)throw new Error('Not found');return r.json()})
+      .then(data=>setCampaignData(data))
+      .catch(()=>setError('Could not load campaign'));
+  },[selectedCampaign]);
+
+  if(loading)return e('div',{className:'cover'},e('p',{className:'dim-italic'},'Loading campaigns...'));
+  if(error)return e('div',{className:'cover'},e('p',{style:{color:'var(--red)'}},error),e('button',{className:'ghost-btn',onClick:onBack},'BACK'));
+
+  // Campaign selection screen
+  if(!selectedCampaign&&campaigns&&campaigns.length>1){
+    return e('div',{className:'cover'},
+      e('h1',null,'TALES ENGINE'),e('div',{className:'divider'}),
+      e('h2',null,'CHOOSE YOUR SAGA'),
+      e('p',{className:'dim-italic'},'Select a campaign to begin your adventure.'),
+      e('div',{className:'divider'}),
+      e('div',{style:{display:'flex',flexDirection:'column',gap:12,width:'100%',maxWidth:400}},
+        campaigns.map(c=>e('button',{key:c.id,className:'gold-btn',style:{padding:'14px 20px',textAlign:'left',display:'flex',flexDirection:'column',gap:4},
+          onClick:()=>setSelectedCampaign(c)},
+          e('span',{style:{fontSize:15,fontWeight:600}},c.title),
+          e('span',{style:{fontSize:11,color:'var(--text-dim)',letterSpacing:1}},c.subtitle||'Campaign')
+        ))
+      ),
+      e('div',{className:'divider',style:{marginTop:16}}),
+      e('button',{className:'ghost-btn',onClick:onBack,style:{fontSize:11}},'BACK')
+    )
   }
-  if(modules.length===1){onSelect(modules[0].id);return null}
-  return e('div',{className:'cover'},
-    e('h1',null,'DRAGONLANCE'),e('div',{className:'divider'}),
-    e('h2',null,'CHOOSE YOUR MODULE'),
-    e('p',{className:'dim-italic'},'Select an adventure to begin or continue.'),
-    e('div',{className:'divider'}),
-    e('div',{style:{display:'flex',flexDirection:'column',gap:12,width:'100%',maxWidth:400}},
-      modules.map(c=>e('button',{key:c.id,className:'gold-btn',style:{padding:'14px 20px',textAlign:'left',display:'flex',flexDirection:'column',gap:4},
-        onClick:()=>onSelect(c.id)},
-        e('span',{style:{fontSize:15,fontWeight:600}},c.title),
-        e('span',{style:{fontSize:11,color:'var(--text-dim)',letterSpacing:1}},
-          (c.type==='origin'?'Origin':'Continuation')+' \u2022 Levels '+(c.levelRange?c.levelRange.join('-'):'?'))
-      ))
-    ),
-    e('div',{className:'divider',style:{marginTop:16}}),
-    e('button',{className:'ghost-btn',onClick:onBack,style:{fontSize:11}},'BACK')
-  )
+
+  // Origin selection screen (within selected campaign)
+  if(selectedCampaign&&campaignData){
+    const origins=campaignData.origins||[];
+    // Auto-select if only one origin
+    if(origins.length===1){onSelect(origins[0].id);return null}
+    // Map origin IDs to display titles
+    const originTitles={'knights-oath':'The Knight\'s Oath','towers-of-high-sorcery':'The Towers of High Sorcery'};
+    return e('div',{className:'cover'},
+      e('h1',null,campaignData.setting||'DRAGONLANCE'),e('div',{className:'divider'}),
+      e('h2',null,'CHOOSE YOUR PATH'),
+      e('p',{className:'dim-italic'},campaignData.title),
+      e('div',{className:'divider'}),
+      e('div',{style:{display:'flex',flexDirection:'column',gap:16,width:'100%',maxWidth:440}},
+        origins.map(o=>e('button',{key:o.id,className:'gold-btn',style:{padding:'16px 20px',textAlign:'left',display:'flex',flexDirection:'column',gap:6},
+          onClick:()=>onSelect(o.id)},
+          e('span',{style:{fontSize:15,fontWeight:600}},originTitles[o.id]||o.id),
+          e('span',{style:{fontSize:12,color:'var(--text)',lineHeight:1.4}},o.description||'Begin your journey'),
+          e('div',{style:{display:'flex',gap:8,marginTop:4}},
+            (o.classes||[]).map(cls=>e('span',{key:cls,style:{fontSize:10,padding:'2px 8px',background:'rgba(201,168,76,0.2)',borderRadius:3,color:'var(--gold)'}},cls))
+          )
+        ))
+      ),
+      e('div',{className:'divider',style:{marginTop:16}}),
+      campaigns&&campaigns.length>1?
+        e('button',{className:'ghost-btn',onClick:()=>{setSelectedCampaign(null);setCampaignData(null)},style:{fontSize:11}},'BACK TO CAMPAIGNS'):
+        e('button',{className:'ghost-btn',onClick:onBack,style:{fontSize:11}},'BACK')
+    )
+  }
+
+  // Loading campaign data
+  if(selectedCampaign&&!campaignData){
+    return e('div',{className:'cover'},e('p',{className:'dim-italic'},'Loading '+selectedCampaign.title+'...'))
+  }
+
+  // Fallback
+  onSelect('knights-oath');return null
 }
 
 // ── Cover ──────────────────────────────────────────────

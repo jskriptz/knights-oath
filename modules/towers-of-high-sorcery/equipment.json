@@ -1,0 +1,209 @@
+{
+  "weapons": {
+    "simple_melee": [
+      {"name": "Dagger", "dmg": "1d4 pierce", "props": "Finesse, Light, Thrown (20/60)", "mastery": "Nick", "weight": 1, "cost": 2, "costUnit": "gp", "type": "simple", "category": "melee"},
+      {"name": "Quarterstaff", "dmg": "1d6 bludg", "props": "Versatile (1d8)", "mastery": "Topple", "weight": 4, "cost": 2, "costUnit": "sp", "type": "simple", "category": "melee"}
+    ],
+    "simple_ranged": [
+      {"name": "Dart", "dmg": "1d4 pierce", "props": "Finesse, Thrown (20/60)", "mastery": "Vex", "weight": 0.25, "cost": 5, "costUnit": "cp", "type": "simple", "category": "ranged"},
+      {"name": "Light Crossbow", "dmg": "1d8 pierce", "props": "Ammo (80/320), Loading, Two-Handed", "mastery": "Slow", "weight": 5, "cost": 25, "costUnit": "gp", "type": "simple", "category": "ranged"},
+      {"name": "Sling", "dmg": "1d4 bludg", "props": "Ammo (30/120)", "mastery": "Slow", "weight": 0, "cost": 1, "costUnit": "sp", "type": "simple", "category": "ranged"}
+    ]
+  },
+  "ammunition": [
+    {"name": "Bolts (20)", "cost": 1, "costUnit": "gp", "weight": 1.5},
+    {"name": "Bullets, Sling (20)", "cost": 4, "costUnit": "cp", "weight": 1.5}
+  ],
+  "armor": {
+    "light": [
+      {"name": "Traveler's Clothes", "ac": "10 + DEX", "acBase": 10, "maxDex": null, "stealthDis": false, "strReq": 0, "weight": 4, "cost": 2, "costUnit": "gp", "note": "No armor proficiency required"}
+    ],
+    "robes": [
+      {"name": "Apprentice's Robe", "ac": "10 + DEX", "acBase": 10, "maxDex": null, "stealthDis": false, "strReq": 0, "weight": 4, "cost": 5, "costUnit": "gp", "desc": "Simple gray robe worn by those who have not yet taken the Test."},
+      {"name": "White Robe", "ac": "10 + DEX", "acBase": 10, "maxDex": null, "stealthDis": false, "strReq": 0, "weight": 4, "cost": 50, "costUnit": "gp", "desc": "The white robes of a mage devoted to Solinari. +1 to saves vs. necromancy spells."},
+      {"name": "Red Robe", "ac": "10 + DEX", "acBase": 10, "maxDex": null, "stealthDis": false, "strReq": 0, "weight": 4, "cost": 50, "costUnit": "gp", "desc": "The red robes of a mage devoted to Lunitari. +1 to Arcana checks."},
+      {"name": "Black Robe", "ac": "10 + DEX", "acBase": 10, "maxDex": null, "stealthDis": false, "strReq": 0, "weight": 4, "cost": 50, "costUnit": "gp", "desc": "The black robes of a mage devoted to Nuitari. +1 to Intimidation checks."}
+    ]
+  },
+  "arcaneFoci": [
+    {"name": "Arcane Focus (Crystal)", "cost": 10, "costUnit": "gp", "weight": 1, "desc": "A crystal orb that serves as a spellcasting focus."},
+    {"name": "Arcane Focus (Orb)", "cost": 20, "costUnit": "gp", "weight": 3, "desc": "A glass orb that glows faintly when held."},
+    {"name": "Arcane Focus (Rod)", "cost": 10, "costUnit": "gp", "weight": 2, "desc": "A short rod inscribed with arcane symbols."},
+    {"name": "Arcane Focus (Staff)", "cost": 5, "costUnit": "gp", "weight": 4, "desc": "A wooden staff capped with crystal or metal."},
+    {"name": "Arcane Focus (Wand)", "cost": 10, "costUnit": "gp", "weight": 1, "desc": "A slender wand of wood or bone."},
+    {"name": "Component Pouch", "cost": 25, "costUnit": "gp", "weight": 2, "desc": "A leather belt pouch containing spell components."},
+    {"name": "Spellbook", "cost": 50, "costUnit": "gp", "weight": 3, "desc": "A leather-bound tome with 100 pages of blank vellum."}
+  ],
+  "adventuringGear": [
+    {"name": "Backpack", "cost": 2, "costUnit": "gp", "weight": 5, "cat": "container"},
+    {"name": "Bandage", "cost": 1, "costUnit": "sp", "weight": 0, "cat": "consumable", "desc": "Stabilize a creature at 0 HP without a Medicine check."},
+    {"name": "Bedroll", "cost": 1, "costUnit": "gp", "weight": 7, "cat": "camping"},
+    {"name": "Blanket", "cost": 5, "costUnit": "sp", "weight": 3, "cat": "camping"},
+    {"name": "Book", "cost": 25, "costUnit": "gp", "weight": 5, "cat": "tool"},
+    {"name": "Candle", "cost": 1, "costUnit": "cp", "weight": 0, "cat": "light", "desc": "Bright light 5 ft, dim light 5 ft more. Burns for 1 hour."},
+    {"name": "Case, Map or Scroll", "cost": 1, "costUnit": "gp", "weight": 1, "cat": "container"},
+    {"name": "Hooded Lantern", "cost": 5, "costUnit": "gp", "weight": 2, "cat": "light", "desc": "Bright light 30 ft, dim 30 ft more. Burns 6 hrs on 1 pint of oil."},
+    {"name": "Ink (1 ounce)", "cost": 10, "costUnit": "gp", "weight": 0, "cat": "writing"},
+    {"name": "Ink Pen", "cost": 2, "costUnit": "cp", "weight": 0, "cat": "writing"},
+    {"name": "Lamp", "cost": 5, "costUnit": "sp", "weight": 1, "cat": "light"},
+    {"name": "Oil (flask)", "cost": 1, "costUnit": "sp", "weight": 1, "cat": "consumable"},
+    {"name": "Paper (sheet)", "cost": 2, "costUnit": "sp", "weight": 0, "cat": "writing"},
+    {"name": "Parchment (sheet)", "cost": 1, "costUnit": "sp", "weight": 0, "cat": "writing"},
+    {"name": "Pouch", "cost": 5, "costUnit": "sp", "weight": 1, "cat": "container"},
+    {"name": "Rations (1 day)", "cost": 5, "costUnit": "sp", "weight": 2, "cat": "consumable"},
+    {"name": "Robe", "cost": 1, "costUnit": "gp", "weight": 4, "cat": "clothing"},
+    {"name": "Rope, Hempen (50 ft)", "cost": 1, "costUnit": "gp", "weight": 10, "cat": "tool"},
+    {"name": "Scholar's Pack", "cost": 40, "costUnit": "gp", "weight": 22, "cat": "pack", "contents": "Backpack, Book, Ink, Ink Pen, Lamp, Oil (10), Paper (10), Parchment (10), Tinderbox"},
+    {"name": "Sealing Wax", "cost": 5, "costUnit": "sp", "weight": 0, "cat": "writing"},
+    {"name": "Spell Scroll (Cantrip)", "cost": 30, "costUnit": "gp", "weight": 0, "cat": "consumable"},
+    {"name": "Spell Scroll (1st Level)", "cost": 50, "costUnit": "gp", "weight": 0, "cat": "consumable"},
+    {"name": "Tinderbox", "cost": 5, "costUnit": "sp", "weight": 1, "cat": "tool"},
+    {"name": "Torch", "cost": 1, "costUnit": "cp", "weight": 1, "cat": "light"},
+    {"name": "Traveler's Clothes", "cost": 2, "costUnit": "gp", "weight": 4, "cat": "clothing"},
+    {"name": "Waterskin", "cost": 2, "costUnit": "sp", "weight": 5, "cat": "container"}
+  ],
+  "potions": [
+    {"name": "Potion of Healing", "cost": 50, "costUnit": "gp", "weight": 0.5, "rarity": "common", "desc": "Regain 2d4+2 HP.", "heal": "2d4+2"},
+    {"name": "Potion of Greater Healing", "cost": 150, "costUnit": "gp", "weight": 0.5, "rarity": "uncommon", "desc": "Regain 4d4+4 HP.", "heal": "4d4+4"},
+    {"name": "Potion of Mana", "cost": 100, "costUnit": "gp", "weight": 0.5, "rarity": "uncommon", "desc": "Recover one expended 1st-level spell slot."},
+    {"name": "Potion of Greater Mana", "cost": 300, "costUnit": "gp", "weight": 0.5, "rarity": "rare", "desc": "Recover one expended spell slot of 2nd level or lower."},
+    {"name": "Potion of Fire Resistance", "cost": 250, "costUnit": "gp", "weight": 0.5, "rarity": "uncommon", "desc": "Resistance to Fire damage for 1 hour."},
+    {"name": "Antitoxin", "cost": 50, "costUnit": "gp", "weight": 0, "rarity": "common", "desc": "Advantage on saves vs. poison for 1 hour."}
+  ],
+  "spellComponents": [
+    {"name": "Bat Guano", "cost": 1, "costUnit": "sp", "weight": 0, "desc": "Material component for Fireball."},
+    {"name": "Sulfur", "cost": 1, "costUnit": "sp", "weight": 0, "desc": "Material component for Fireball."},
+    {"name": "Fleece", "cost": 5, "costUnit": "cp", "weight": 0, "desc": "Material component for Minor Illusion."},
+    {"name": "Phosphorescent Moss", "cost": 5, "costUnit": "sp", "weight": 0, "desc": "Material component for Light."},
+    {"name": "Copper Wire", "cost": 1, "costUnit": "cp", "weight": 0, "desc": "Material component for Message."},
+    {"name": "Pearl (100 gp)", "cost": 100, "costUnit": "gp", "weight": 0, "desc": "Material component for Identify."},
+    {"name": "Owl Feather", "cost": 5, "costUnit": "sp", "weight": 0, "desc": "Material component for various divination spells."},
+    {"name": "Charcoal", "cost": 1, "costUnit": "cp", "weight": 0, "desc": "Material component for Find Familiar."},
+    {"name": "Incense", "cost": 5, "costUnit": "sp", "weight": 0, "desc": "Material component for Find Familiar."},
+    {"name": "Herbs", "cost": 1, "costUnit": "sp", "weight": 0, "desc": "Material component for Find Familiar."}
+  ],
+  "magicItems": [
+    {"name": "Wand of Magic Detection", "rarity": "uncommon", "attunement": false, "charges": 3, "desc": "Expend 1 charge to cast Detect Magic. Regains 1d3 charges at dawn."},
+    {"name": "Hat of Wizardry", "rarity": "common", "attunement": true, "desc": "While wearing this hat, you can use it as a spellcasting focus. Once per long rest, try to cast a cantrip you don't know (DC 10 Arcana check)."},
+    {"name": "Cloak of Protection", "rarity": "uncommon", "attunement": true, "desc": "+1 bonus to AC and saving throws."},
+    {"name": "Ring of Spell Storing", "rarity": "rare", "attunement": true, "desc": "Store up to 5 levels worth of spells. Any creature can cast stored spells."},
+    {"name": "Staff of the Adder", "rarity": "uncommon", "attunement": true, "desc": "Use bonus action to animate staff head as venomous snake. Melee spell attack, 1d6 pierce + DC 15 CON save or 3d6 poison."},
+    {"name": "Amulet of Proof Against Detection", "rarity": "uncommon", "attunement": true, "desc": "You are hidden from divination magic. Can't be targeted by such magic or perceived through magical scrying."},
+    {"name": "Pearl of Power", "rarity": "uncommon", "attunement": true, "desc": "Once per dawn, recover one expended spell slot of 3rd level or lower."},
+    {"name": "Robe of Useful Items", "rarity": "uncommon", "attunement": false, "desc": "Detach patches to create items: dagger, lantern, mirror, pole, rope, sack."}
+  ],
+  "enemies": [
+    {
+      "name": "Human Soldier",
+      "ac": 16,
+      "hp": 11,
+      "init": 1,
+      "speed": 30,
+      "str": 14, "dex": 12, "con": 12, "int": 10, "wis": 11, "cha": 10,
+      "saves": {},
+      "skills": {"athletics": 4},
+      "attacks": [
+        {"name": "Longsword", "hit": 4, "dmg": "1d8+2", "type": "slashing"}
+      ],
+      "xp": 25,
+      "cr": "1/8"
+    },
+    {
+      "name": "Dragon Army Corporal",
+      "ac": 17,
+      "hp": 22,
+      "init": 2,
+      "speed": 30,
+      "str": 15, "dex": 14, "con": 14, "int": 11, "wis": 12, "cha": 12,
+      "saves": {"str": 4, "con": 4},
+      "skills": {"athletics": 4, "intimidation": 3},
+      "attacks": [
+        {"name": "Longsword", "hit": 4, "dmg": "1d8+2", "type": "slashing"},
+        {"name": "Javelin", "hit": 4, "dmg": "1d6+2", "type": "piercing", "range": "30/120"}
+      ],
+      "xp": 100,
+      "cr": "1/2"
+    },
+    {
+      "name": "Sivak Draconian",
+      "ac": 17,
+      "hp": 52,
+      "init": 2,
+      "speed": "30 ft, fly 60 ft",
+      "str": 18, "dex": 14, "con": 16, "int": 10, "wis": 12, "cha": 12,
+      "saves": {"str": 6, "con": 5},
+      "skills": {"athletics": 6, "perception": 3},
+      "attacks": [
+        {"name": "Multiattack", "desc": "Two claw attacks or one claw and one bite"},
+        {"name": "Claw", "hit": 6, "dmg": "1d8+4", "type": "slashing"},
+        {"name": "Bite", "hit": 6, "dmg": "1d6+4", "type": "piercing"}
+      ],
+      "traits": [
+        {"name": "Death Throes", "desc": "When killed, a Sivak assumes the form of the creature that killed it (if Medium or smaller humanoid) for 3 days, then crumbles to powder."},
+        {"name": "Glide", "desc": "Can glide 60 feet without losing altitude."}
+      ],
+      "xp": 700,
+      "cr": "3"
+    },
+    {
+      "name": "Mirror Construct",
+      "ac": 14,
+      "hp": 27,
+      "init": 3,
+      "speed": 30,
+      "str": 12, "dex": 16, "con": 12, "int": 14, "wis": 14, "cha": 10,
+      "saves": {},
+      "skills": {"arcana": 4},
+      "attacks": [
+        {"name": "Mirror Strike", "hit": 5, "dmg": "2d6+3", "type": "psychic"}
+      ],
+      "traits": [
+        {"name": "Spell Reflection", "desc": "When targeted by a spell, roll d6. On 6, spell is reflected back at caster."},
+        {"name": "Your Worst Self", "desc": "Creature has disadvantage on the first attack roll against the construct each turn (it's hard to strike your own reflection)."}
+      ],
+      "xp": 450,
+      "cr": "2"
+    },
+    {
+      "name": "Spectral Guardian",
+      "ac": 12,
+      "hp": 22,
+      "init": 1,
+      "speed": "0 ft, fly 40 ft (hover)",
+      "str": 7, "dex": 13, "con": 10, "int": 10, "wis": 12, "cha": 14,
+      "saves": {},
+      "skills": {},
+      "resistances": ["acid", "cold", "fire", "lightning", "thunder", "nonmagical bludgeoning/piercing/slashing"],
+      "immunities": ["necrotic", "poison"],
+      "conditionImmunities": ["charmed", "exhaustion", "grappled", "paralyzed", "petrified", "poisoned", "prone", "restrained"],
+      "attacks": [
+        {"name": "Withering Touch", "hit": 4, "dmg": "2d6+2", "type": "necrotic"}
+      ],
+      "traits": [
+        {"name": "Incorporeal Movement", "desc": "Can move through other creatures and objects as if difficult terrain. Takes 1d10 force damage if ending turn inside an object."},
+        {"name": "Bound to Tower", "desc": "Cannot leave the Tower of High Sorcery."}
+      ],
+      "xp": 200,
+      "cr": "1"
+    },
+    {
+      "name": "The Unresolved Thing",
+      "ac": 15,
+      "hp": 45,
+      "init": 2,
+      "speed": 30,
+      "str": 16, "dex": 14, "con": 16, "int": 12, "wis": 14, "cha": 8,
+      "saves": {"wis": 4},
+      "skills": {},
+      "attacks": [
+        {"name": "Manifestation", "hit": 5, "dmg": "2d8+3", "type": "psychic", "desc": "This attack takes a form unique to the target — a person they failed, a choice they regret."}
+      ],
+      "traits": [
+        {"name": "Born of Regret", "desc": "The Unresolved Thing is formed from the target's deepest regret. It knows their secrets."},
+        {"name": "Second Chance", "desc": "If the target speaks the truth of what they regret, the Thing hesitates (loses its next turn)."}
+      ],
+      "xp": 700,
+      "cr": "3"
+    }
+  ]
+}

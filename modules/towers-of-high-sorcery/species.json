@@ -1,0 +1,86 @@
+{
+  "species": {
+    "human": {
+      "name": "Human",
+      "description": "Humans are the most common species in Ansalon, adaptable and ambitious.",
+      "traits": {
+        "abilityScoreIncrease": "Choose any +2 and +1, or +1 to three different abilities",
+        "size": "Medium",
+        "speed": 30,
+        "languages": ["Common", "one additional language"],
+        "features": [
+          {
+            "name": "Resourceful",
+            "description": "You gain proficiency in one skill of your choice."
+          },
+          {
+            "name": "Skillful",
+            "description": "You gain proficiency with one tool of your choice."
+          },
+          {
+            "name": "Versatile",
+            "description": "You gain an additional feat at 1st level."
+          }
+        ]
+      },
+      "bonusSkill": true,
+      "portrait": "Human"
+    },
+    "half-elf": {
+      "name": "Half-Elf",
+      "description": "Half-elves combine human ambition with elven grace, often feeling at home in neither world.",
+      "traits": {
+        "abilityScoreIncrease": "+2 Charisma, +1 to two other abilities",
+        "size": "Medium",
+        "speed": 30,
+        "languages": ["Common", "Elvish"],
+        "features": [
+          {
+            "name": "Darkvision",
+            "description": "You can see in dim light within 60 feet as if it were bright light."
+          },
+          {
+            "name": "Fey Ancestry",
+            "description": "You have advantage on saving throws against being charmed, and magic can't put you to sleep."
+          },
+          {
+            "name": "Skill Versatility",
+            "description": "You gain proficiency in two skills of your choice."
+          }
+        ]
+      },
+      "bonusSkill": false,
+      "portrait": "HalfElf"
+    },
+    "elf": {
+      "name": "Elf (Silvanesti/Qualinesti)",
+      "description": "Elves of Krynn are an ancient people, divided between the proud Silvanesti and the friendlier Qualinesti.",
+      "traits": {
+        "abilityScoreIncrease": "+2 Dexterity, +1 Intelligence",
+        "size": "Medium",
+        "speed": 30,
+        "languages": ["Common", "Elvish"],
+        "features": [
+          {
+            "name": "Darkvision",
+            "description": "You can see in dim light within 60 feet as if it were bright light."
+          },
+          {
+            "name": "Keen Senses",
+            "description": "You have proficiency in the Perception skill."
+          },
+          {
+            "name": "Fey Ancestry",
+            "description": "You have advantage on saving throws against being charmed, and magic can't put you to sleep."
+          },
+          {
+            "name": "Trance",
+            "description": "Elves don't need to sleep. Instead, they meditate deeply for 4 hours a day."
+          }
+        ]
+      },
+      "bonusSkill": false,
+      "portrait": "Elf"
+    }
+  }
+}

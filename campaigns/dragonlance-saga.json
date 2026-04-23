@@ -13,6 +13,11 @@
       "id": "knights-oath",
       "classes": ["Fighter", "Paladin"],
       "description": "Begin as a Solamnic squire seeking to prove your worth"
+    },
+    {
+      "id": "towers-of-high-sorcery",
+      "classes": ["Wizard", "Sorcerer"],
+      "description": "Begin as an apprentice mage journeying to face the Trials"
     }
   ],
   "modules": [
@@ -21,7 +26,14 @@
       "sequence": 1,
       "type": "origin",
       "levelRange": [1, 3],
-      "required": true
+      "required": false
+    },
+    {
+      "id": "towers-of-high-sorcery",
+      "sequence": 1,
+      "type": "origin",
+      "levelRange": [1, 3],
+      "required": false
     }
   ],
   "sagaFlags": [],

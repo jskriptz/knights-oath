@@ -1,0 +1,45 @@
+{
+  "32": {
+    "victory": {
+      "flawless": "The checkpoint is behind you. Not a scratch. Nasha looks impressed, which is rare.",
+      "standard": "Through. You are bloodied but alive. The road north is open.",
+      "pyrrhic": "You made it. Barely. Torven is already moving to stabilise your wounds."
+    },
+    "defeat": {
+      "pc": "Too many. Too fast. The world spins and goes dark. You wake on the other side — Torven and Nasha got you through, but you do not remember how.",
+      "companion": {
+        "Lyra Ashfen": "Lyra falls. 'No!' The word tears from your throat. Torven is already moving, magic gathering in his hands."
+      }
+    }
+  },
+  "38": {
+    "victory": {
+      "flawless": "The Sivak crashes to the ground. The soldiers scatter. The Tower accepts you.",
+      "standard": "You reach the Tower grounds. Wounds and exhaustion, but alive. The Trials await.",
+      "pyrrhic": "Lyra half-carries you to the Tower's edge. You enter badly wounded and barely conscious."
+    },
+    "defeat": {
+      "pc": "The Sivak's claws find you. The world goes white. You wake at the Tower's entrance — the others got you there. The Trials await. Ready or not."
+    }
+  },
+  "46": {
+    "victory": {
+      "flawless": "The reflection shatters. You do not flinch. The door opens.",
+      "standard": "It took everything you had. But you are standing. The door is open.",
+      "pyrrhic": "You won. Barely. The door is there. You go through."
+    },
+    "defeat": {
+      "pc": "The construct touches your face and everything goes white. You wake in the Trial corridor having seen exactly what the Trial wanted to show you, whether you wanted to see it or not."
+    }
+  },
+  "49": {
+    "victory": {
+      "flawless": "Through them in seconds. The person you chose is safe. The Trial is passed.",
+      "standard": "You reach them in time. The spectral guardians dissolve. They are safe.",
+      "pyrrhic": "Close. Too close. But they are alive. You are alive. That is enough."
+    },
+    "defeat": {
+      "pc": "You took too long. The person you chose falls. You arrive as the darkness finishes its work. You survived. They did not."
+    }
+  }
+}

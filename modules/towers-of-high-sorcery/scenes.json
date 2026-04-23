@@ -1,0 +1,271 @@
+{
+  "1": {
+    "id": "1",
+    "title": "THE LAST NORMAL MORNING",
+    "location": "Millhaven Village",
+    "prose": [
+      "*Millhaven Village — Dawn*",
+      "The village wakes up the way it always does: slowly, with complaining. The miller's dog barks at nothing. Old Petra hangs washing that will be rained on before noon. The smell of bread from the baker's comes across on the wind and someone's chickens are loose again and the river is high this week from the autumn rains.",
+      "You have been awake since before the birds. This is how it has been for a week — sleeping badly, waking to a feeling like something is pressing at the inside of your skull, a pressure that builds and releases and builds again. You have not told anyone. You know what it is. You have known for a long time. Your mother's grandmother, they say, had the gift. It skips generations. Apparently it has decided not to skip yours.",
+      "This morning, sitting up in your narrow bed, you reach out — not physically, but with the thing inside you that has no name yet — and the candle on your windowsill lights itself.",
+      "The flame is blue for a half-second before it settles to yellow. It is very small. It is the most significant thing that has ever happened in this room. Your hands are shaking slightly. You feel extraordinarily awake."
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**MAGIC AWAKENS**\nThe flame is blue for a half-second before it settles to yellow. It is very small. It is the most significant thing that has ever happened in this room."
+      },
+      {
+        "type": "roll",
+        "text": "**OPTIONAL ROLL:** Arcana (INT) (+3) | INT | DC 10\n**SUCCESS (roll 10+):** The pressure behind your eyes has been building for nine days — you now recognise it as spell pressure. Understanding this means you can direct it rather than waiting for it to find its own way out. +1 to your first Arcana check in Scene 10.\n**FAILURE (roll 1-9):** The candles lit. You do not know why. You know only that it came from you."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Blow the candle out immediately. No one can know. Not yet.",
+        "target": "2",
+        "points": {"WHITE": 1}
+      },
+      {
+        "letter": "B",
+        "text": "Leave it burning. You have been hiding this for years and you are done hiding.",
+        "target": "2",
+        "points": {"RED": 1}
+      },
+      {
+        "letter": "C",
+        "text": "Touch the flame. See if it burns you. You need to understand what this is.",
+        "target": "2",
+        "points": {"BLACK": 1}
+      },
+      {
+        "letter": "D",
+        "text": "Go wake Lyra. She is the only one you trust with this.",
+        "target": "3",
+        "points": {"WHITE": 1}
+      }
+    ]
+  },
+  "2": {
+    "id": "2",
+    "title": "THE FIELDS",
+    "location": "Millhaven, South Field",
+    "prose": [
+      "*Millhaven, South Field — Morning*",
+      "The harvest is in. The fields are brown and quiet. You find yourself here without quite deciding to come — walking helps, when the pressure builds. The sky is the grey-white of early autumn and the river smells of cold and mud.",
+      "You are not alone. Lyra Ashfen is sitting on the stone wall at the field's edge, facing away from the village, hands in her lap. You have known her since you were seven years old. You know the exact set of her shoulders when something is wrong. They are wrong now.",
+      "She does not turn around when you approach. She says, quietly: 'It happened to you too, didn't it.'",
+      "It is not a question. She holds up her right hand. The streak of white in her hair was not there yesterday."
+    ],
+    "boxes": [
+      {
+        "type": "companion",
+        "text": "**COMPANION JOINS: LYRA ASHFEN**\nYour oldest friend. Magic awoke in you both on the same morning. She is frightened and trying very hard not to show it.\nRole: Combat support (Utility/Illusion spells). Emotional anchor. Possible love interest."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Sit beside her. Say: 'Yes. Last night.' Tell her everything.",
+        "target": "4",
+        "points": {"WHITE": 2},
+        "romance_spark": true,
+        "romance_comp": "Lyra Ashfen"
+      },
+      {
+        "letter": "B",
+        "text": "Say: 'I'm not frightened.' (You are.) 'Are you?'",
+        "target": "4",
+        "points": {"RED": 1}
+      },
+      {
+        "letter": "C",
+        "text": "Ask: 'How long?' Her answer is three months.",
+        "target": "4",
+        "points": {"WHITE": 1, "BLACK": 1}
+      },
+      {
+        "letter": "D",
+        "text": "Say nothing. Sit down. Let the silence be the answer.",
+        "target": "4",
+        "points": {"RED": 1}
+      }
+    ]
+  },
+  "3": {
+    "id": "3",
+    "title": "THE TRUTH IN THE DARK",
+    "location": "Your Home, Millhaven",
+    "prose": [
+      "*Your Home, Millhaven — Pre-dawn*",
+      "Lyra is asleep when you knock — or she was, a moment ago. She answers the door with the alertness of someone who has been lying awake in the dark anyway. She takes one look at your face, steps aside, and puts the kettle on without a word.",
+      "You sit across from her at the kitchen table in the grey pre-dawn, and you tell her about the candle. She listens without interrupting.",
+      "When you finish she is quiet for a moment, then she holds up her own hand. A small bright point appears in her palm — white-gold, like a captured star — and then she closes her fist and it is gone.",
+      "'Three months,' she says quietly. 'I thought I was going mad.'"
+    ],
+    "boxes": [
+      {
+        "type": "companion",
+        "text": "**COMPANION JOINS: LYRA ASHFEN**\nYour oldest friend. Magic awoke in her three months before you. She has been waiting for you.\nRole: Combat support (Utility/Illusion spells). Emotional anchor. Possible love interest."
+      },
+      {
+        "type": "roll",
+        "text": "**OPTIONAL ROLL:** Insight (WIS) (+1) | WIS | DC 10\n**SUCCESS (roll 10+):** She has been hiding this for three months. Not from cowardice — she was waiting for you specifically. She did not want to be the only one. She is relieved.\n**FAILURE (roll 1-9):** She has magic. She has had it longer than you."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "'What do we do?' Practical. She needs practical.",
+        "target": "5",
+        "points": {"WHITE": 1}
+      },
+      {
+        "letter": "B",
+        "text": "'Are you afraid?' The real question, the one that matters.",
+        "target": "5",
+        "points": {"RED": 1},
+        "romance_spark": true,
+        "romance_comp": "Lyra Ashfen"
+      },
+      {
+        "letter": "C",
+        "text": "'I'm glad it's you too.'",
+        "target": "5",
+        "points": {"WHITE": 2},
+        "romance_spark": true,
+        "romance_comp": "Lyra Ashfen"
+      }
+    ]
+  },
+  "4": {
+    "id": "4",
+    "title": "THE VILLAGE KNOWS",
+    "location": "Millhaven, Market Square",
+    "prose": [
+      "*Millhaven, Market Square — Midday*",
+      "You did not tell anyone. Lyra did not tell anyone. Millhaven found out anyway, because Millhaven always does. It was probably the miller's dog — it has been following you around since yesterday with a reverence that is frankly embarrassing for both of you. Or possibly it was when the apples in the market rearranged themselves. You are not entirely certain you did that.",
+      "The village's reactions are various. Old Petra thinks you are cursed and says so at volume. The baker's son, who is twelve, thinks you are the best thing to happen to Millhaven since the river festival.",
+      "The village headwoman — a practical woman named Dorn who has governed Millhaven for twenty years with minimum drama — asks you to come to her house this afternoon. Her expression gives nothing away."
+    ],
+    "boxes": [
+      {
+        "type": "roll",
+        "text": "**OPTIONAL ROLL:** Persuasion (CHA) (+0) | CHA | DC 11\n**SUCCESS (roll 11+):** You speak to the most frightened cluster first. You do not argue. You describe what the magic feels like from the inside: pressure, then release, then cold. The specificity settles something in them. +1 WHITE, crowd partially calmed.\n**FAILURE (roll 1-10):** Your explanation does not land. The fear has already set."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Go to Headwoman Dorn immediately. She sent for you and you respect her enough to come.",
+        "target": "6",
+        "points": {"WHITE": 1, "RED": 1}
+      },
+      {
+        "letter": "B",
+        "text": "Find the person you love first. Their reaction matters more than the headwoman's.",
+        "target": "7B",
+        "points": {"WHITE": 2}
+      },
+      {
+        "letter": "C",
+        "text": "Go back to your house. You need an hour to think before you speak to anyone.",
+        "target": "8",
+        "points": {"BLACK": 1}
+      },
+      {
+        "letter": "D",
+        "text": "Go find Lyra. You are not doing this alone.",
+        "target": "6",
+        "points": {"WHITE": 1}
+      }
+    ]
+  },
+  "5": {
+    "id": "5",
+    "title": "WHAT HAPPENS IN THE KITCHEN",
+    "location": "Lyra's Home, Millhaven",
+    "prose": [
+      "*Lyra's Home, Millhaven*",
+      "The kitchen at two in the morning has a different quality from the kitchen at any other time. Smaller, somehow. The fire banked to coals. The window showing nothing but darkness and your own reflections, ghostly and close together in the glass.",
+      "The tea is too strong and both of you drink it anyway — the ritual of the tea is more important than the tea. You have made it this way since you were children. Lyra wraps her hands around the cup the same way she always has. Everything is very ordinary. Everything is completely changed.",
+      "Then Lyra says: 'They'll send for someone from the Conclave. That's what happens. Mages don't stay in villages — they go to the Towers. You know that.'",
+      "A silence. 'I've been reading about it. In the histories.'",
+      "Another silence. 'There are Trials.' She says the last two words with the careful precision of someone who has been sitting with them for three months and has not yet made peace with them."
+    ],
+    "boxes": [],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "'Then we'll pass them.' You say this with more confidence than you feel.",
+        "target": "6",
+        "points": {"RED": 1}
+      },
+      {
+        "letter": "B",
+        "text": "'Tell me what you found in the histories.' Knowledge is how you deal with fear.",
+        "target": "9",
+        "points": {"WHITE": 1, "BLACK": 1}
+      },
+      {
+        "letter": "C",
+        "text": "'What if we just... didn't go?' You ask it quietly. Just to name the option.",
+        "target": "9",
+        "points": {"BLACK": 1}
+      },
+      {
+        "letter": "D",
+        "text": "Take her hand across the table. No words.",
+        "target": "6",
+        "points": {"WHITE": 2},
+        "romance_spark": true,
+        "romance_comp": "Lyra Ashfen"
+      }
+    ]
+  },
+  "6": {
+    "id": "6",
+    "title": "HEADWOMAN DORN",
+    "location": "Millhaven, Headwoman's House",
+    "prose": [
+      "*Millhaven, Headwoman's House*",
+      "Dorn has been headwoman of Millhaven for twenty years. She has handled floods, a cattle plague, two famines, one attempted land-grab by a neighbouring lord, and the year everyone's preserves went off for no discernible reason. She is not frightened by magic. She is, however, practical about it.",
+      "She gives you tea. She sits across from you. She looks at you for a long moment with the expression of someone running a complex calculation.",
+      "Then: 'The Conclave will hear about this within a week. They always do. Someone will come for you, and for Lyra if she has it too, and you will go to the Towers. That is how this works.'",
+      "She pauses. 'I have sent a message already. Not to speed it up — to give you time to prepare. Three days before a representative arrives. Use them.'"
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**THREE DAYS**\nYou have three days in Millhaven before Torven Ashfall arrives. These scenes cover those three days. Each one matters. Use this time to deepen relationships, practise magic, and say the things you might not have another chance to say."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Use Day 1 to practise magic somewhere private. You need to understand what you can do.",
+        "target": "10",
+        "points": {"RED": 1, "BLACK": 1}
+      },
+      {
+        "letter": "B",
+        "text": "Use Day 1 to spend time with the person you love most in Millhaven.",
+        "target": "7",
+        "points": {"WHITE": 2}
+      },
+      {
+        "letter": "C",
+        "text": "Use Day 1 to research the Towers. Dorn's small library has something.",
+        "target": "9",
+        "points": {"WHITE": 1, "RED": 1}
+      },
+      {
+        "letter": "D",
+        "text": "Use Day 1 with Lyra. Work on this together.",
+        "target": "12",
+        "points": {"WHITE": 1}
+      }
+    ]
+  }
+}

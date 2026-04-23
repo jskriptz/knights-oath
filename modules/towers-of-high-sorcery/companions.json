@@ -1,0 +1,143 @@
+{
+  "companions": ["Lyra Ashfen", "Elara Moss", "Torven Ashfall", "Nasha Vren", "Thessaly Brightwater", "Commander Serath", "Zinnia Quickfingers", "The Guardian"],
+  "data": {
+    "Lyra Ashfen": {
+      "name": "Lyra Ashfen",
+      "species": "Human",
+      "class": "Wizard",
+      "role": "Fellow apprentice",
+      "description": "Dark freckled skin, close-cropped natural hair with a streak of white that appeared the first time she cast a spell. Ink-stained fingers. Laughs too loud and does not apologise for it.",
+      "personality": "Ambitious, competitive, deeply kind underneath. Has been hiding her magic longer than you. Terrified of the Trials but would die before admitting it. Argues constantly — it is how she thinks.",
+      "firstScene": "2",
+      "romance": true,
+      "giftItem": "Lyra's Spellbook",
+      "portrait": "assets/images/portraits/Lyra_Ashfen.png"
+    },
+    "Elara Moss": {
+      "name": "Elara Moss",
+      "species": "Human",
+      "class": "Commoner",
+      "role": "Miller's daughter",
+      "description": "Dark gold hair always coming loose from whatever she tied it in. Ink on her fingers from the ledger books she keeps for her father's mill. Laughs often, loudly, without covering her mouth.",
+      "personality": "Warm, practical, deeply rooted. She has never wanted to leave Millhaven and has been honest about this her whole life. She loves you in the uncomplicated way of someone who has known you forever.",
+      "firstScene": "7B",
+      "romance": true,
+      "condition": "Cannot continue into main campaign in person — Elara stays in Millhaven. But she can be a reason you survive.",
+      "portrait": "assets/images/portraits/Elara_Moss.png"
+    },
+    "Torven Ashfall": {
+      "name": "Torven Ashfall",
+      "species": "Half-Elf",
+      "class": "Wizard (Red Robe)",
+      "role": "Conclave escort",
+      "description": "Mid-30s, lean, copper-red hair he ties back carelessly. An actual red robe, worn like a comfortable jacket. A scar across his palm from his own Trials. Smells faintly of woodsmoke and magic.",
+      "personality": "Sardonic, experienced, genuinely fond of people who surprise him. Has seen everything and treats it all lightly — except magic, which he treats with deep respect.",
+      "firstScene": "18",
+      "romance": true,
+      "portrait": "assets/images/portraits/Torven_Ashfall.png"
+    },
+    "Nasha Vren": {
+      "name": "Nasha Vren",
+      "species": "Human",
+      "class": "Wizard (Red Robe)",
+      "role": "Conclave courier",
+      "description": "Bronze skin, cropped dark hair, always slightly overdressed for whatever she is doing. Scars on her left forearm from a Trial that went badly three years ago. Carries a silver coin she flips when she is thinking.",
+      "personality": "Irreverent about almost everything except magic, which she takes seriously to the point of reverence. Uses humour as armour and knows it. Extremely good at her job.",
+      "firstScene": "22B",
+      "romance": true,
+      "portrait": "assets/images/portraits/Nasha_Vren.png"
+    },
+    "Thessaly Brightwater": {
+      "name": "Thessaly Brightwater",
+      "species": "Half-Elf",
+      "class": "Expert",
+      "role": "War correspondent",
+      "description": "Sharp eyes, copper hair, ink-stained notebook, a silver locket she never opens. Arrived in Millhaven following rumours of unusual events.",
+      "personality": "Witty, curious, emotionally guarded. She has heard rumours that a mage emerged from Millhaven and she followed the story.",
+      "firstScene": "12",
+      "romance": true,
+      "shared": true,
+      "portrait": "assets/images/portraits/Thessaly_Brightwater.png"
+    },
+    "Commander Serath": {
+      "name": "Commander Serath",
+      "species": "Human",
+      "class": "Fighter",
+      "role": "Dragon Army defector",
+      "description": "They arrive in Millhaven as a supposed merchant, clearly military, clearly hiding something. They are heading to Wayreth, same as you.",
+      "personality": "Careful, observant, carrying enormous guilt. They are wary and precise.",
+      "firstScene": "15",
+      "romance": true,
+      "shared": true,
+      "portrait": "assets/images/portraits/Commander_Serath.png"
+    },
+    "Zinnia Quickfingers": {
+      "name": "Zinnia Quickfingers",
+      "species": "Kender",
+      "class": "Rogue",
+      "role": "Uninvited passenger",
+      "description": "Approximately four-foot-eight of composed attention, sitting cross-legged atop your spare blankets with a length of interesting-looking rope in her hands.",
+      "personality": "Fearless, warm, chaotic. Completely immune to the fear magic that permeates the road to Wayreth. She does not understand why everyone is so tense.",
+      "firstScene": "8",
+      "romance": true,
+      "shared": true,
+      "portrait": "assets/images/portraits/Zinnia_Quickfingers.png"
+    },
+    "The Guardian": {
+      "name": "The Guardian",
+      "species": "Unknown",
+      "class": "Tower Guardian",
+      "role": "Entity of the Towers",
+      "description": "Height shifts. Eyes are the colour of the moon that is fullest tonight. Wears armour that has been repaired so many times it is more repair than original. Voice is very quiet.",
+      "personality": "Ancient. Patient. Has watched a thousand Trials and forgotten most of them. Is surprised to find you interesting. Has not been surprised in centuries.",
+      "firstScene": "50",
+      "romance": true,
+      "condition": "Only available after Scene 48. Cannot exist outside the Towers.",
+      "portrait": "assets/images/portraits/The_Guardian.png"
+    }
+  },
+  "combatStats": {
+    "Lyra Ashfen": {
+      "hp": 8,
+      "maxHp": 8,
+      "ac": 12,
+      "attacks": [
+        {"name": "Fire Bolt", "bonus": 5, "damage": "1d10", "damageType": "fire", "range": "120 ft."}
+      ],
+      "spells": ["Fire Bolt", "Minor Illusion", "Magic Missile"],
+      "special": "Casts one spell per round independently"
+    },
+    "Torven Ashfall": {
+      "hp": 28,
+      "maxHp": 28,
+      "ac": 14,
+      "attacks": [
+        {"name": "Quarterstaff", "bonus": 4, "damage": "1d6+1", "damageType": "bludgeoning"},
+        {"name": "Scorching Ray", "bonus": 6, "damage": "2d6", "damageType": "fire", "range": "120 ft."}
+      ],
+      "spells": ["Fire Bolt", "Shield", "Scorching Ray", "Counterspell"],
+      "special": "Red Robe — will use Counterspell to protect you"
+    },
+    "Nasha Vren": {
+      "hp": 22,
+      "maxHp": 22,
+      "ac": 13,
+      "attacks": [
+        {"name": "Dagger", "bonus": 5, "damage": "1d4+2", "damageType": "piercing"},
+        {"name": "Fire Bolt", "bonus": 5, "damage": "1d10", "damageType": "fire", "range": "120 ft."}
+      ],
+      "spells": ["Fire Bolt", "Shield", "Misty Step"],
+      "special": "Courier training — high mobility"
+    },
+    "Zinnia Quickfingers": {
+      "hp": 18,
+      "maxHp": 18,
+      "ac": 15,
+      "attacks": [
+        {"name": "Shortsword", "bonus": 5, "damage": "1d6+3", "damageType": "piercing"},
+        {"name": "Shortbow", "bonus": 5, "damage": "1d6+3", "damageType": "piercing", "range": "80/320 ft."}
+      ],
+      "special": "Immune to fear effects. Sneak Attack +2d6 with advantage."
+    }
+  }
+}

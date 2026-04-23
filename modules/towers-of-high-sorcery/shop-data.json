@@ -1,0 +1,11 @@
+{
+  "sellPrices": {
+    "Dagger": 1,
+    "Quarterstaff": 0,
+    "Component Pouch": 10,
+    "Spellbook": 25,
+    "Warm Stone": 0
+  },
+  "unsellable": ["Spellbook", "Warm Stone", "Lyra's Gift", "Elara's Gift", "Guardian's Token"],
+  "shopScenes": []
+}

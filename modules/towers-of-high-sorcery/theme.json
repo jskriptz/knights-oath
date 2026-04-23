@@ -1,0 +1,44 @@
+{
+  "music": {
+    "title": "https://archive.org/download/medieval-instrumental-background-music/The%20Britons.mp3",
+    "ambient": "https://archive.org/download/medieval-instrumental-background-music/Nordic%20Wist.mp3",
+    "combat": "https://archive.org/download/medieval-instrumental-background-music/Cold%20Journey.mp3",
+    "tavern": "https://archive.org/download/medieval-instrumental-background-music/Dancing%20at%20the%20Inn.mp3",
+    "victory": "https://archive.org/download/medieval-instrumental-background-music/Celebration.mp3",
+    "defeat": "https://archive.org/download/medieval-instrumental-background-music/Painting%20Room.mp3"
+  },
+  "cssVars": {
+    "--bg": "#0a0a14",
+    "--panel": "#12122a",
+    "--border": "#2a2a50",
+    "--gold": "#9a7acc",
+    "--gold-dim": "#6a4a9c",
+    "--gold-bright": "#c0a0f0",
+    "--text": "#d4d0e4",
+    "--text-dim": "#7a7688",
+    "--text-bright": "#f0ebff",
+    "--blue": "#4a6ab5",
+    "--green": "#4a8a6a",
+    "--red": "#9a4a4a",
+    "--purple": "#8a5aaa",
+    "--orange": "#9a7a4a",
+    "--pink": "#9a5a8a"
+  },
+  "fonts": {
+    "heading": "Cinzel",
+    "body": "Crimson Text",
+    "googleFontsUrl": "https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+  },
+  "loadingScreen": {
+    "title": "DRAGONLANCE",
+    "subtitle": "THE TOWERS OF HIGH SORCERY",
+    "version": "v1.0.1",
+    "stats": "63 Scenes • 8 Companions"
+  },
+  "heroPortraits": [
+    {"id": "mage_m1", "label": "Apprentice I", "url": "assets/images/portraits/Mage_Male_1.png"},
+    {"id": "mage_m2", "label": "Apprentice II", "url": "assets/images/portraits/Mage_Male_2.png"},
+    {"id": "mage_f1", "label": "Apprentice I", "url": "assets/images/portraits/Mage_Female_1.png"},
+    {"id": "mage_f2", "label": "Apprentice II", "url": "assets/images/portraits/Mage_Female_2.png"}
+  ]
+}

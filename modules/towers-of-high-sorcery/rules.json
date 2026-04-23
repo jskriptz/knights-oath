@@ -1,0 +1,91 @@
+{
+  "startScene": "1",
+  "endingScenes": ["60"],
+  "hubScenes": [],
+  "exemptTargets": [],
+  "noLootScenes": ["42", "46", "49"],
+  "choiceFilters": {},
+  "choiceFlags": {
+    "1": {
+      "A": { "setFlags": ["candle_hidden"] },
+      "B": { "setFlags": ["candle_shown"] },
+      "C": { "setFlags": ["candle_touched"] },
+      "D": { "setFlags": ["told_lyra_first"] }
+    },
+    "40": {
+      "A": { "setFlags": ["arcaneSchool_abjuration"] },
+      "B": { "setFlags": ["arcaneSchool_evocation"] },
+      "C": { "setFlags": ["arcaneSchool_divination"] },
+      "D": { "setFlags": ["arcaneSchool_illusion"] },
+      "E": { "setFlags": ["arcaneSchool_necromancy"] },
+      "F": { "setFlags": ["arcaneSchool_transmutation"] }
+    },
+    "55": {
+      "A": { "setFlags": ["robe_white"], "addItems": ["White Robe of Solinari"] }
+    },
+    "56": {
+      "A": { "setFlags": ["robe_red"], "addItems": ["Red Robe of Lunitari"] }
+    },
+    "57": {
+      "A": { "setFlags": ["robe_black"], "addItems": ["Black Robe of Nuitari"] }
+    },
+    "58": {
+      "A": { "setFlags": ["robe_unchosen"] }
+    }
+  },
+  "targetOverrides": {},
+  "classTargetGates": {},
+  "robeGates": {},
+  "companionChoiceGates": {},
+  "mandatoryDetours": [],
+  "approvalDeltas": {
+    "2": { "A": { "Lyra Ashfen": 2 }, "C": { "Lyra Ashfen": 1 } },
+    "3": { "B": { "Lyra Ashfen": 1 }, "C": { "Lyra Ashfen": 2 } },
+    "5": { "D": { "Lyra Ashfen": 2 } },
+    "7B": { "A": { "Elara Moss": 1 }, "B": { "Elara Moss": 2 }, "C": { "Elara Moss": 2 } },
+    "8": { "A": { "Zinnia Quickfingers": 1 }, "B": { "Zinnia Quickfingers": 2 }, "D": { "Zinnia Quickfingers": 2 } },
+    "12": { "A": { "Thessaly Brightwater": 2 }, "C": { "Thessaly Brightwater": 1 } },
+    "13": { "A": { "Zinnia Quickfingers": 2 }, "D": { "Zinnia Quickfingers": 1 } },
+    "14": { "A": { "Lyra Ashfen": 2 } },
+    "15": { "B": { "Commander Serath": 1 } },
+    "16": { "A": { "Thessaly Brightwater": 2 }, "B": { "Thessaly Brightwater": 2 } },
+    "17": { "B": { "Thessaly Brightwater": 2 } },
+    "18": { "B": { "Torven Ashfall": 1 } },
+    "19": { "A": { "Commander Serath": 1 }, "B": { "Commander Serath": 2 }, "C": { "Commander Serath": -2 } },
+    "22": { "C": { "Lyra Ashfen": 2 } },
+    "24": { "A": { "Lyra Ashfen": 1, "Torven Ashfall": 1 } },
+    "26": { "B": { "Torven Ashfall": 1 } },
+    "27": { "C": { "Nasha Vren": 1 } },
+    "28": { "A": { "Nasha Vren": 2 } },
+    "34": { "A": { "Lyra Ashfen": 3 }, "B": { "Lyra Ashfen": 3 } },
+    "41": { "D": { "The Guardian": 1 } }
+  },
+  "specialCombat": {
+    "trialCombat": ["46", "49"],
+    "checkpointFight": ["32"],
+    "huntingParty": ["38"]
+  },
+  "bundleExpansions": {},
+  "robeScoring": {
+    "enabled": true,
+    "pointTypes": ["WHITE", "RED", "BLACK"],
+    "finalScene": "54"
+  },
+  "sharedCompanions": {
+    "thessaly": {
+      "companionName": "Thessaly Brightwater",
+      "sagaFlag": "thessaly_met",
+      "romanceFlags": ["thessaly_spark", "thessaly_flame", "thessaly_oath"]
+    },
+    "serath": {
+      "companionName": "Commander Serath",
+      "sagaFlag": "serath_met",
+      "romanceFlags": ["serath_spark", "serath_flame", "serath_oath"]
+    },
+    "zinnia": {
+      "companionName": "Zinnia Quickfingers",
+      "sagaFlag": "zinnia_met",
+      "romanceFlags": ["zinnia_spark", "zinnia_flame", "zinnia_oath"]
+    }
+  }
+}

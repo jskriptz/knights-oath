@@ -1,0 +1,50 @@
+{
+  "Lyra Ashfen": {
+    "oath": "The forest releases you and she is there — your oldest friend, wearing robes of {ROBE_COLOR}. She looks different. She has been somewhere the Trials took her and she came back changed and she is still her. She says your name. Then: 'I thought about you in the second Trial. When I had to choose.' You pull her close.",
+    "flame": "Lyra emerges from the Tower an hour after you. Her robes are {ROBE_COLOR}. She finds you immediately. 'We made it,' she says, and there is so much in those three words.",
+    "spark": "Lyra passed her Trials. She wears {ROBE_COLOR} robes now. Something has changed between you, but you are not certain yet what it is.",
+    "none": "Lyra is a mage now, like you. Your paths continue forward, parallel but separate."
+  },
+  "Elara Moss": {
+    "oath": "She is not at the forest's edge. You did not expect her to be. But at the first waystation there is a letter. 'I came as far as I could. I wanted to see the road you took. I love you. Find me there when you are finished.'",
+    "flame": "A letter waits at the waystation. Her handwriting. 'I am going home. Write to me. I will be waiting.'",
+    "spark": "You carry the memory of Millhaven with you. Elara is part of that memory now.",
+    "none": "Millhaven is behind you. The road ahead is what matters."
+  },
+  "Torven Ashfall": {
+    "oath": "He meets you at the forest's edge and does not stop at arm's length. He cups the back of your head with one hand and kisses you. 'I intend to be insufferable about this,' he says. 'Fair warning.'",
+    "flame": "Torven is waiting. His expression when he sees your robes is complicated and warm. 'Well done,' he says, and means everything.",
+    "spark": "Torven nods approval when you emerge. There is something unfinished between you.",
+    "none": "Torven shakes your hand formally. Your journey together is complete."
+  },
+  "Nasha Vren": {
+    "oath": "She crosses to you and her hand comes up to your jaw. 'You are one of the things that makes that version of me less possible. I thought you should know that.' Then she kisses you — direct and deliberate.",
+    "flame": "Nasha hands you her coin. 'Something to remember me by,' she says, 'when you are famous.'",
+    "spark": "Nasha's coin appears and disappears across her knuckles as she watches you emerge. 'Not bad,' she says. From Nasha, this is high praise.",
+    "none": "Nasha is already on the road when you emerge. Courier business waits for no one."
+  },
+  "Thessaly Brightwater": {
+    "oath": "She has been writing since you went in. When she sees you, the notebook stays in her bag. 'I came here for the story,' she says. 'I am staying for something else.' She takes your face in both hands and kisses you.",
+    "flame": "Thessaly's pen is already moving, recording your emergence. 'The story is better with you in it,' she says. 'It always was.'",
+    "spark": "Thessaly is watching, notebook open. Your story has become hers to tell.",
+    "none": "Thessaly waves from a distance, already working on her next lead."
+  },
+  "Commander Serath": {
+    "oath": "They look at your robe. Something resolves in their face. 'If you'll have me — I'm on your side. Whatever side that is.'",
+    "flame": "Serath is waiting with the others. Their relief is visible only if you know where to look.",
+    "spark": "Serath watches you emerge. There is history between you now — unfinished, but real.",
+    "none": "Serath left before dawn. A note: 'The road calls. Perhaps we will meet again.'"
+  },
+  "Zinnia Quickfingers": {
+    "oath": "She hits you at approximately chest height, arms around you. 'I am going to go everywhere you go until you tell me not to, and even then probably a bit further.'",
+    "flame": "Zinnia is there, obviously. She was always going to be there. She has your second-best spellbook.",
+    "spark": "Zinnia waves enthusiastically from atop a wagon that was not there when you entered.",
+    "none": "Zinnia has found something interesting in the forest. She will catch up. Probably."
+  },
+  "The Guardian": {
+    "oath": "They stand at the forest's edge — as far as they can come. 'You are the twelfth,' they say. 'I wanted you to know that before you go, because you will not be coming back for a long time.'",
+    "flame": "The Guardian watches from just inside the treeline. They cannot come further. But they are there.",
+    "spark": "You feel the Guardian's attention as you leave — ancient, patient, interested.",
+    "none": "The Tower is behind you. The Guardian remains."
+  }
+}

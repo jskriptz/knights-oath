@@ -1,0 +1,27 @@
+{
+  "companionDepartures": {
+    "47": {
+      "Lyra Ashfen": {
+        "condition": "always",
+        "reason": "You must face the Trials alone. Lyra takes a different door.",
+        "temporary": true
+      }
+    },
+    "62": {
+      "The Guardian": {
+        "condition": "always",
+        "reason": "The Guardian cannot leave the Tower.",
+        "temporary": false
+      }
+    }
+  },
+  "companionReturns": {
+    "61": {
+      "Lyra Ashfen": {
+        "condition": "lyra_survived",
+        "prose": "She is there. She made it. Different now, but there."
+      }
+    }
+  },
+  "npcBreakups": {}
+}

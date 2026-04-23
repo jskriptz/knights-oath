@@ -1,0 +1,119 @@
+{
+  "id": "towers-of-high-sorcery",
+  "campaignId": "dragonlance-saga",
+  "campaignSequence": 1,
+  "title": "The Towers of High Sorcery",
+  "subtitle": "A Choose Your Own Adventure Prelude",
+  "type": "origin",
+  "levelRange": [1, 3],
+  "date": 351,
+  "ngPlusAllowed": true,
+  "setting": "Dragonlance",
+  "classes": ["Wizard", "Sorcerer"],
+  "species": "Human",
+  "availableSpecies": ["human", "half-elf", "elf"],
+  "speciesLocked": false,
+  "startingLanguages": ["Common"],
+  "version": "1.0.1",
+  "startScene": "1",
+  "startingInventory": ["Spellbook", "Component Pouch", "Dagger", "Scholar's Pack", "Traveller's Clothes"],
+  "startingEquipment": {
+    "hands": null,
+    "boots": "Traveller's Boots",
+    "tabard": null
+  },
+  "startingResources": {
+    "bandages": 0,
+    "potions": 0,
+    "greaterPotions": 0,
+    "gold": 5,
+    "honour": 0,
+    "rations": 5,
+    "torches": 5,
+    "waterskinUses": 3
+  },
+  "robes": {
+    "white": {
+      "name": "White",
+      "moon": "Solinari",
+      "positive": ["The light guides you.", "Solinari approves.", "A merciful choice."],
+      "negative": ["The White Moon dims.", "This is not the path of light.", "Consider your oath."]
+    },
+    "red": {
+      "name": "Red",
+      "moon": "Lunitari",
+      "positive": ["Balance maintained.", "Lunitari watches.", "True to yourself."],
+      "negative": ["The balance shifts.", "This choice lacks nuance.", "Red demands honesty."]
+    },
+    "black": {
+      "name": "Black",
+      "moon": "Nuitari",
+      "positive": ["Power acknowledged.", "Nuitari approves.", "Ambition recognized."],
+      "negative": ["The dark moon fades.", "Power requires commitment.", "Do not hesitate."]
+    }
+  },
+  "intro": {
+    "pages": [
+      {
+        "title": "THE THREE MOONS OF MAGIC",
+        "body": [
+          "Magic chose you before you chose it. Now the three Moons of Magic demand their due.",
+          "Solinari, the white moon, governs magic in service of good — order, protection, the preservation of life. White Robes are the most trusted and the most constrained.",
+          "Lunitari, the red moon, governs magic in service of balance — neither good nor evil, but self-determined. Red Robes walk the knife's edge and call it freedom.",
+          "Nuitari, the black moon invisible to non-mages, governs magic in service of will — power for power's sake, unashamed of ambition. Black Robes are the most feared and the most misunderstood.",
+          "Only the Trials will reveal which calls to you — and whether you survive long enough to answer."
+        ]
+      },
+      {
+        "title": "THE TOWERS OF HIGH SORCERY",
+        "body": [
+          "Once there were five Towers of High Sorcery, bastions of arcane knowledge scattered across Ansalon. The Cataclysm and the centuries that followed destroyed or corrupted most of them.",
+          "Only the Tower of Wayreth remains — hidden in a forest that moves, protected by magic older than the Kingpriests, home to the Conclave that governs all wizards.",
+          "Every mage who wishes to practice magic openly must journey to Wayreth and face the Trials of High Sorcery. The Trials are not a test of skill. They are a test of self.",
+          "Some who enter do not return. Those who do emerge changed, bearing robes of white, red, or black — their allegiance to a moon declared, their nature revealed.",
+          "The Conclave does not create mages. It recognizes what they already are."
+        ]
+      },
+      {
+        "title": "MILLHAVEN",
+        "body": [
+          "You are from Millhaven, a small farming and fishing village three days north of Vogler. Nothing remarkable has ever happened here. You have lived here your whole life.",
+          "Your mother's grandmother, they say, had the gift. It skips generations. Apparently it has decided not to skip yours.",
+          "For a week now you have slept badly, waking to a pressure behind your eyes that builds and releases and builds again. You know what it is. You have known for a long time.",
+          "This morning, the candle on your windowsill lights itself.",
+          "You are about to ruin everything ordinary about this place. You are about to become a mage."
+        ]
+      },
+      {
+        "title": "THE TRIALS AWAIT",
+        "body": [
+          "As a Wizard, you will master the ancient art of prepared magic — spellbooks, arcane traditions, the patient accumulation of knowledge. Intelligence is your power.",
+          "As a Sorcerer, you will channel innate magic that flows through your blood — spontaneous, powerful, shaped by will rather than study. Charisma is your power.",
+          "Either way, the road to Wayreth is long and the Dragon Armies are moving. The Conclave will send an escort. The Forest will decide when to let you in.",
+          "The Trials will show you who you are.",
+          "Magic chose you. Now you must choose what kind of mage you will become."
+        ]
+      }
+    ]
+  },
+  "importRequires": null,
+  "files": {
+    "scenes": "scenes.json",
+    "scenesDeferred": "scenes-deferred.json",
+    "combatNarration": "combat-narration.json",
+    "combatOutcomes": "combat-outcomes.json",
+    "companions": "companions.json",
+    "sceneEffects": "scene-effects.json",
+    "shopData": "shop-data.json",
+    "rules": "rules.json",
+    "theme": "theme.json",
+    "dmSummary": "dm-summary.json",
+    "epilogues": "epilogues.json",
+    "partyBanter": "party-banter.json",
+    "companionGifts": "companion-gifts.json",
+    "species": "species.json",
+    "classes": "classes.json",
+    "equipment": "equipment.json",
+    "languages": "languages.json"
+  }
+}
