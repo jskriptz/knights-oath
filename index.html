@@ -9573,7 +9573,7 @@ function LootBox({text,gs,onStateUpdate}){
 }
 
 // ── Module Select (with Campaign Selection) ─────────────
-function ModuleSelect({onSelect,onBack}){
+function ModuleSelect({onSelect,onBack,forceSelection}){
   const[campaigns,setCampaigns]=useState(null);
   const[selectedCampaign,setSelectedCampaign]=useState(null);
   const[campaignData,setCampaignData]=useState(null);
@@ -9587,8 +9587,8 @@ function ModuleSelect({onSelect,onBack}){
       .then(data=>{
         const active=(data.campaigns||[]).filter(c=>c.status==='active');
         setCampaigns(active);
-        // Auto-select if only one campaign
-        if(active.length===1)setSelectedCampaign(active[0]);
+        // Auto-select if only one campaign (unless forceSelection)
+        if(active.length===1&&!forceSelection)setSelectedCampaign(active[0]);
         setLoading(false);
       })
       .catch(()=>{
@@ -9632,8 +9632,8 @@ function ModuleSelect({onSelect,onBack}){
   // Origin selection screen (within selected campaign)
   if(selectedCampaign&&campaignData){
     const origins=campaignData.origins||[];
-    // Auto-select if only one origin
-    if(origins.length===1){onSelect(origins[0].id);return null}
+    // Auto-select if only one origin (unless forceSelection)
+    if(origins.length===1&&!forceSelection){onSelect(origins[0].id);return null}
     // Map origin IDs to display titles
     const originTitles={'knights-oath':'The Knight\'s Oath','towers-of-high-sorcery':'The Towers of High Sorcery'};
     return e('div',{className:'cover'},
@@ -9729,7 +9729,9 @@ function CoverScreen({onNew,onLoad,onImport,onSwitchModule}){
     !loading?e('div',{className:'save-slots'},e('h3',{className:'slots-title'},'SAVED GAMES'),
       slots.map((slot,i)=>{
         if(!slot)return e('div',{key:i,className:'save-slot empty'},e('span',{className:'slot-label'},'Slot '+(i+1)),e('span',{className:'slot-empty-text'},'\u2014 Empty \u2014'));
-        const g=slot.saveVersion===2?slot.character:slot.gs;const sid=slot.saveVersion===2?slot.progress.sceneId:slot.sceneId;if(!g)return e('div',{key:i,className:'save-slot empty'},e('span',{className:'slot-label'},'Slot '+(i+1)),e('span',{className:'slot-empty-text'},'\u2014 Corrupted \u2014'));return e('div',{key:i,className:'save-slot filled'},
+        const g=slot.saveVersion>=2?slot.character:slot.gs;
+        const sid=slot.saveVersion===3?slot.moduleProgress?.[slot.currentModule]?.sceneId:(slot.saveVersion===2?slot.progress?.sceneId:slot.sceneId);
+        if(!g)return e('div',{key:i,className:'save-slot empty'},e('span',{className:'slot-label'},'Slot '+(i+1)),e('span',{className:'slot-empty-text'},'\u2014 Corrupted \u2014'));return e('div',{key:i,className:'save-slot filled'},
           e('div',{className:'slot-info',onClick:()=>onLoad(slot)},e('div',{className:'slot-name'},g.name||'Squire'),e('div',{className:'slot-details'},formatClassLevel(g,true)+' \u2022 Scene '+sid),e('div',{className:'slot-date'},fmtDate(slot.savedAt))),
           del===i?e('div',{className:'slot-confirm'},e('span',null,'Delete?'),e('button',{className:'slot-yes',onClick:()=>handleDel(i)},'Yes'),e('button',{className:'slot-no',onClick:()=>setDel(null)},'No')):e('button',{className:'slot-delete',onClick:()=>setDel(i)},'\u00d7'))
       })):e('p',{className:'dim-italic',style:{fontSize:13}},'Loading...'),
@@ -12634,7 +12636,7 @@ function DraggableSettings({onOpen}){
 
 function App(){
   const[phase,setPhase]=useState('cover');const[gs,setGs]=useState(null);const[scene,setScene]=useState(null);const[sceneId,setSceneId]=useState(null);
-  const[showSave,setShowSave]=useState(false);const[saveMsg,setSaveMsg]=useState('');const[showSheet,setShowSheet]=useState(false);const[showDmSummary,setShowDmSummary]=useState(false);const[showMap,setShowMap]=useState(false);const[sideOpen,setSideOpen]=useState(false);const[confirmModal,setConfirmModal]=useState(null);const[compPopup,setCompPopup]=useState(null);const[romancePrompt,setRomancePrompt]=useState(null);const[romanceManage,setRomanceManage]=useState(false);const[breakupTarget,setBreakupTarget]=useState(null);const[npcNotify,setNpcNotify]=useState(null);const[romanceCheck,setRomanceCheck]=useState(null);const[spellPrepModal,setSpellPrepModal]=useState(false);const[shortRestModal,setShortRestModal]=useState(false);const[healingPanel,setHealingPanel]=useState(false);const[defeatRecovery,setDefeatRecovery]=useState(null);const[godSignPicker,setGodSignPicker]=useState(null);const[subclassModal,setSubclassModal]=useState(false);const[editSlot,setEditSlot]=useState(null);const[showSettingsPanel,setShowSettingsPanel]=useState(false);const[knightingPicker,setKnightingPicker]=useState(null);const[showCamp,setShowCamp]=useState(false);const[showExportModal,setShowExportModal]=useState(false);const[showModuleSwitch,setShowModuleSwitch]=useState(false);const[moduleList,setModuleList]=useState([]);const[lightbox,setLightbox]=useState(null);
+  const[showSave,setShowSave]=useState(false);const[saveMsg,setSaveMsg]=useState('');const[showSheet,setShowSheet]=useState(false);const[showDmSummary,setShowDmSummary]=useState(false);const[showMap,setShowMap]=useState(false);const[sideOpen,setSideOpen]=useState(false);const[confirmModal,setConfirmModal]=useState(null);const[compPopup,setCompPopup]=useState(null);const[romancePrompt,setRomancePrompt]=useState(null);const[romanceManage,setRomanceManage]=useState(false);const[breakupTarget,setBreakupTarget]=useState(null);const[npcNotify,setNpcNotify]=useState(null);const[romanceCheck,setRomanceCheck]=useState(null);const[spellPrepModal,setSpellPrepModal]=useState(false);const[shortRestModal,setShortRestModal]=useState(false);const[healingPanel,setHealingPanel]=useState(false);const[defeatRecovery,setDefeatRecovery]=useState(null);const[godSignPicker,setGodSignPicker]=useState(null);const[subclassModal,setSubclassModal]=useState(false);const[editSlot,setEditSlot]=useState(null);const[showSettingsPanel,setShowSettingsPanel]=useState(false);const[knightingPicker,setKnightingPicker]=useState(null);const[showCamp,setShowCamp]=useState(false);const[showExportModal,setShowExportModal]=useState(false);const[showModuleSwitch,setShowModuleSwitch]=useState(false);const[moduleList,setModuleList]=useState([]);const[lightbox,setLightbox]=useState(null);const[switchingModule,setSwitchingModule]=useState(false);
   const[textSize,setTextSize]=useState(()=>localStorage.getItem('textSize')||'normal');
   const[hardcoreMode,setHardcoreMode]=useState(()=>localStorage.getItem('hardcoreMode')==='true');
   // Migrate companion name casing on any active gs
@@ -13364,8 +13366,8 @@ function App(){
   };
   const e=React.createElement;
   if(phase==='modules')return e(ModuleSelect,{onSelect:async(id)=>{
-    await loadModule(id).catch(()=>null);setPhase('cover')},onBack:()=>setPhase('cover')});
-  if(phase==='cover')return e(CoverScreen,{onNew:()=>setPhase('intro'),onLoad:loadSave,onImport:handleImportCharacter,onSwitchModule:()=>setPhase('modules')});
+    setSwitchingModule(false);await loadModule(id).catch(()=>null);setPhase('cover')},onBack:()=>{setSwitchingModule(false);setPhase('cover')},forceSelection:switchingModule});
+  if(phase==='cover')return e(CoverScreen,{onNew:()=>setPhase('intro'),onLoad:loadSave,onImport:handleImportCharacter,onSwitchModule:()=>{setSwitchingModule(true);setPhase('modules')}});
   if(phase==='intro')return e(WorldIntro,{onDone:()=>setPhase('create'),onSkip:()=>setPhase('create'),onBack:()=>setPhase('cover')});
   if(phase==='create')return e(CharCreate,{onDone:startGame,onBack:()=>setPhase('intro')});
   if(!gs||!scene)return null;
