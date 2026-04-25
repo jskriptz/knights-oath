@@ -4,82 +4,107 @@
       "name": "Human",
       "description": "Humans are the most common species in Ansalon, adaptable and ambitious.",
       "traits": {
-        "abilityScoreIncrease": "Choose any +2 and +1, or +1 to three different abilities",
         "size": "Medium",
         "speed": 30,
-        "languages": ["Common", "one additional language"],
+        "darkvision": 0,
+        "languages": ["Common"],
+        "extraLanguages": 1,
         "features": [
           {
             "name": "Resourceful",
-            "description": "You gain proficiency in one skill of your choice."
+            "description": "You gain proficiency in one skill of your choice.",
+            "mechanical": "bonusSkill",
+            "count": 1
           },
           {
             "name": "Skillful",
-            "description": "You gain proficiency with one tool of your choice."
+            "description": "You gain proficiency with one tool of your choice.",
+            "mechanical": "bonusTool",
+            "count": 1
           },
           {
             "name": "Versatile",
-            "description": "You gain an additional feat at 1st level."
+            "description": "You gain an Origin feat of your choice.",
+            "mechanical": "bonusFeat",
+            "count": 1
           }
         ]
       },
       "bonusSkill": true,
+      "bonusTool": true,
+      "bonusFeat": true,
       "portrait": "Human"
     },
     "half-elf": {
       "name": "Half-Elf",
       "description": "Half-elves combine human ambition with elven grace, often feeling at home in neither world.",
       "traits": {
-        "abilityScoreIncrease": "+2 Charisma, +1 to two other abilities",
         "size": "Medium",
         "speed": 30,
+        "darkvision": 60,
         "languages": ["Common", "Elvish"],
+        "extraLanguages": 0,
         "features": [
           {
             "name": "Darkvision",
-            "description": "You can see in dim light within 60 feet as if it were bright light."
+            "description": "You can see in dim light within 60 feet as if it were bright light, and in darkness as if it were dim light.",
+            "mechanical": "darkvision",
+            "range": 60
           },
           {
             "name": "Fey Ancestry",
-            "description": "You have advantage on saving throws against being charmed, and magic can't put you to sleep."
+            "description": "You have advantage on saving throws against being charmed, and magic can't put you to sleep.",
+            "mechanical": "feyAncestry"
           },
           {
             "name": "Skill Versatility",
-            "description": "You gain proficiency in two skills of your choice."
+            "description": "You gain proficiency in two skills of your choice.",
+            "mechanical": "bonusSkill",
+            "count": 2
           }
         ]
       },
-      "bonusSkill": false,
+      "bonusSkill": true,
+      "bonusSkillCount": 2,
+      "feyAncestry": true,
       "portrait": "HalfElf"
     },
     "elf": {
       "name": "Elf (Silvanesti/Qualinesti)",
       "description": "Elves of Krynn are an ancient people, divided between the proud Silvanesti and the friendlier Qualinesti.",
       "traits": {
-        "abilityScoreIncrease": "+2 Dexterity, +1 Intelligence",
         "size": "Medium",
         "speed": 30,
+        "darkvision": 60,
         "languages": ["Common", "Elvish"],
+        "extraLanguages": 0,
         "features": [
           {
             "name": "Darkvision",
-            "description": "You can see in dim light within 60 feet as if it were bright light."
+            "description": "You can see in dim light within 60 feet as if it were bright light, and in darkness as if it were dim light.",
+            "mechanical": "darkvision",
+            "range": 60
           },
           {
             "name": "Keen Senses",
-            "description": "You have proficiency in the Perception skill."
+            "description": "You have proficiency in the Perception skill.",
+            "mechanical": "grantSkill",
+            "skill": "Perception"
           },
           {
             "name": "Fey Ancestry",
-            "description": "You have advantage on saving throws against being charmed, and magic can't put you to sleep."
+            "description": "You have advantage on saving throws against being charmed, and magic can't put you to sleep.",
+            "mechanical": "feyAncestry"
           },
           {
             "name": "Trance",
-            "description": "Elves don't need to sleep. Instead, they meditate deeply for 4 hours a day."
+            "description": "Elves don't need to sleep. Instead, they meditate deeply for 4 hours a day.",
+            "mechanical": "trance"
           }
         ]
       },
-      "bonusSkill": false,
+      "grantedSkills": ["Perception"],
+      "feyAncestry": true,
       "portrait": "Elf"
     }
   }

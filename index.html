@@ -3199,7 +3199,7 @@ const ST={
   async del(k){try{if(window.storage){await window.storage.delete(k);return}localStorage.removeItem(k)}catch(e){try{localStorage.removeItem(k)}catch(e2){}}}
 };
 // ── Save System: Character (persistent) + Module Progress (per-module) ──
-const CHARACTER_FIELDS=['cls','stats','style','feat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','rations','torches','waterskinUses','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount','languages','exhaustion','toolProficiencies','musicianInstruments','heroicInspiration','knightingSkill','portrait','durability','titles','selectedTitle','completedModules','loveInterest','partedCompanions','lastApproval','kills','subclass','maneuvers','superiorityDice','channelDivinityUsed','vowOfEnmityTarget','sacredWeaponActive','classLevels','secondClass','secondSubclass','inventoryMeta','originalFeats','originalSpells','originalSubclass','originalManeuvers','scaledFrom','levelSnapshots','currentCampaign','campaignProgress','sagaFlags','species'];
+const CHARACTER_FIELDS=['cls','stats','style','feat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','rations','torches','waterskinUses','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount','languages','exhaustion','toolProficiencies','musicianInstruments','heroicInspiration','knightingSkill','portrait','durability','titles','selectedTitle','completedModules','loveInterest','partedCompanions','lastApproval','kills','subclass','maneuvers','superiorityDice','channelDivinityUsed','vowOfEnmityTarget','sacredWeaponActive','classLevels','secondClass','secondSubclass','inventoryMeta','originalFeats','originalSpells','originalSubclass','originalManeuvers','scaledFrom','levelSnapshots','currentCampaign','campaignProgress','sagaFlags','species','speciesTraits'];
 const MODULE_PROGRESS_FIELDS=['history','flags','awardedScenes','completedRolls','companions','romances','romanceDeclined','companionLog','deadCompanions','rose','sword','crown','orderMax','dgTrack','godSigns','hitDiceUsed','secondWindUsed','actionSurgeUsed','spellSlotsUsed','spellSlots2ndUsed','spellSlots3rdUsed','spellSlots4thUsed','spellSlots5thUsed','spellSlots6thUsed','spellSlots7thUsed','spellSlots8thUsed','spellSlots9thUsed','layOnHandsPool','miraHealedThisScene','combatCount','measureTrack','measureOrientation','approval','shortRestsToday','longRestTaken','dayNumber','campStash'];
 
 function splitSave(gs,sceneId){
@@ -9781,7 +9781,7 @@ function CharCreate({onDone,onBack}){
   // Caster cantrips and spells (Wizard/Sorcerer)
   const[casterCantrips,setCasterCantrips]=useState([]);
   const[casterSpells,setCasterSpells]=useState([]);
-  const[style,setStyle]=useState(null);const[mastery,setMastery]=useState([]);const[weapon,setWeapon]=useState('Longsword');const[skilledPicks,setSkilledPicks]=useState([]);const[crafterTools,setCrafterTools]=useState([]);const[musicianInstruments,setMusicianInstruments]=useState([]);const[classSkills,setClassSkills]=useState([]);const[humanSkill,setHumanSkill]=useState(null);const[extraLang,setExtraLang]=useState(null);const[armor,setArmor]=useState('Chain Mail');const[hasShield,setHasShield]=useState(true);
+  const[style,setStyle]=useState(null);const[mastery,setMastery]=useState([]);const[weapon,setWeapon]=useState('Longsword');const[skilledPicks,setSkilledPicks]=useState([]);const[crafterTools,setCrafterTools]=useState([]);const[musicianInstruments,setMusicianInstruments]=useState([]);const[classSkills,setClassSkills]=useState([]);const[humanSkill,setHumanSkill]=useState(null);const[speciesSkills,setSpeciesSkills]=useState([]);const[extraLang,setExtraLang]=useState(null);const[armor,setArmor]=useState('Chain Mail');const[hasShield,setHasShield]=useState(true);
   const[name,setName]=useState('');const[errs,setErrs]=useState({});const[quickCls,setQuickCls]=useState(null);const[quickName,setQuickName]=useState('');
   // Stat generation method
   const[statMethod,setStatMethod]=useState(null); // 'standard','pointbuy','roll'
@@ -9917,31 +9917,38 @@ function CharCreate({onDone,onBack}){
 
   // Step 1: Standard Array
 
-  // Step 0b: Class skill proficiencies + Species bonus skill (if applicable)
+  // Step 0b: Class skill proficiencies + Species bonus skills (if applicable)
   const WIZARD_SKILLS=['Arcana','History','Insight','Investigation','Medicine','Religion'];
   const SORCERER_SKILLS=['Arcana','Deception','Insight','Intimidation','Persuasion','Religion'];
   const classSkillList=(CLASS_DATA?.classes?.[cls]?.skillChoices?.from)||(cls==='Fighter'?FIGHTER_SKILLS:cls==='Paladin'?PALADIN_SKILLS:cls==='Wizard'?WIZARD_SKILLS:cls==='Sorcerer'?SORCERER_SKILLS:[]);
   const speciesData=SPECIES_DATA?.species?.[species];
-  const hasBonusSkill=speciesData?.bonusSkill===true||(species==='human'&&!speciesData);
+  const bonusSkillCount=speciesData?.bonusSkillCount||((speciesData?.bonusSkill||species==='human')?1:0);
+  const grantedSkills=speciesData?.grantedSkills||[];
   const speciesName=speciesData?.name||'Human';
-  const step0bComplete=classSkills.length===2&&(hasBonusSkill?humanSkill:true);
+  const bonusTraitName=species==='half-elf'?'Skill Versatility':speciesName+' Resourceful';
+  const step0bComplete=classSkills.length===2&&(bonusSkillCount>0?speciesSkills.length>=bonusSkillCount:true);
+  const toggleSpeciesSkill=(sk)=>{
+    if(speciesSkills.includes(sk))setSpeciesSkills(speciesSkills.filter(x=>x!==sk));
+    else if(speciesSkills.length<bonusSkillCount)setSpeciesSkills([...speciesSkills,sk]);
+  };
   if(step==='0b')return e('div',{className:'cover'},
     e('h2',{className:'gold'},cls.toUpperCase()+' \u2014 SKILL PROFICIENCIES'),
-    e('p',{className:'dim-italic',style:{fontSize:13}},'Choose 2 class skill proficiencies'+(hasBonusSkill?', then 1 bonus skill from '+speciesName+' Resourceful trait.':'.')),
+    e('p',{className:'dim-italic',style:{fontSize:13}},'Choose 2 class skill proficiencies'+(bonusSkillCount>0?', then '+bonusSkillCount+' bonus skill'+(bonusSkillCount>1?'s':'')+' from '+bonusTraitName+'.':'.')+(grantedSkills.length?' You gain '+grantedSkills.join(', ')+' from '+speciesName+'.':'')),
     e('h3',{className:'spell-section-title'},'Class Skills (choose 2)'),
     e('div',{className:'spell-grid'},classSkillList.map(sk=>e('button',{key:sk,
-      className:'spell-btn'+(classSkills.includes(sk)?' selected':''),
-      onClick:()=>{if(classSkills.includes(sk))setClassSkills(classSkills.filter(x=>x!==sk));else if(classSkills.length<2)setClassSkills([...classSkills,sk])}
-    },sk))),
-    hasBonusSkill?e('h3',{className:'spell-section-title',style:{marginTop:16}},speciesName+' Resourceful (choose 1 from any)'):null,
-    hasBonusSkill?e('div',{className:'spell-grid'},ALL_SKILLS.filter(sk=>!classSkills.includes(sk.name)).map(sk=>e('button',{key:sk.name,
-      className:'spell-btn'+(humanSkill===sk.name?' selected':''),
-      onClick:()=>setHumanSkill(sk.name)
+      className:'spell-btn'+(classSkills.includes(sk)?' selected':'')+(grantedSkills.includes(sk)?' granted':''),
+      onClick:()=>{if(grantedSkills.includes(sk))return;if(classSkills.includes(sk))setClassSkills(classSkills.filter(x=>x!==sk));else if(classSkills.length<2)setClassSkills([...classSkills,sk])}
+    },sk+(grantedSkills.includes(sk)?' (granted)':'')))),
+    bonusSkillCount>0?e('h3',{className:'spell-section-title',style:{marginTop:16}},bonusTraitName+' (choose '+bonusSkillCount+' from any)'):null,
+    bonusSkillCount>0?e('div',{className:'spell-grid'},ALL_SKILLS.filter(sk=>!classSkills.includes(sk.name)&&!grantedSkills.includes(sk.name)).map(sk=>e('button',{key:sk.name,
+      className:'spell-btn'+(speciesSkills.includes(sk.name)?' selected':''),
+      onClick:()=>toggleSpeciesSkill(sk.name)
     },sk.name+' ('+sk.stat+')'))):null,
-    e('p',{style:{fontSize:13,color:step0bComplete?'#6adb6a':'#8a8578',marginTop:8}},classSkills.length+'/2 class'+(hasBonusSkill?' + '+(humanSkill?'1':'0')+'/1 bonus':'')),
+    grantedSkills.length?e('p',{style:{fontSize:12,color:'var(--green)',marginTop:4}},'Granted: '+grantedSkills.join(', ')):null,
+    e('p',{style:{fontSize:13,color:step0bComplete?'#6adb6a':'#8a8578',marginTop:8}},classSkills.length+'/2 class'+(bonusSkillCount>0?' + '+speciesSkills.length+'/'+bonusSkillCount+' bonus':'')),
     e('div',{className:'btn-row',style:{marginTop:16}},
       e('button',{className:'ghost-btn',onClick:()=>needsSpeciesStep?setStep('0a'):setStep(0)},'\u2190 Back'),
-      e('button',{className:'gold-btn',onClick:()=>{if(step0bComplete)setStep('0b2')},disabled:!step0bComplete},'Continue')));
+      e('button',{className:'gold-btn',onClick:()=>{if(step0bComplete){setHumanSkill(speciesSkills[0]||null);setStep('0b2')}},disabled:!step0bComplete},'Continue')));
 
   // Step 0b2: Language selection (Human gets 1 extra language)
   const startLangs=(MODULE&&MODULE.startingLanguages)||['Common'];
@@ -10243,7 +10250,12 @@ function CharCreate({onDone,onBack}){
       ):null),
     e('div',{className:'divider'}),
     e('div',{className:'btn-row'},e('button',{className:'ghost-btn',onClick:()=>setStep(isCaster?'3c':'3b')},'\u2190 Back'),
-      e('button',{className:'gold-btn',onClick:()=>onDone({cls,species:species||'human',stats:finalStats,style:isCaster?null:style,feat,mastery:isCaster?[]:mastery,name,spells:allSpells,equip:{weapon:casterWeapon,armor:casterArmor,hasShield:casterShield},skilledPicks,crafterTools,musicianInstruments,classSkills,humanSkill,extraLang})},'Begin Adventure')));
+      e('button',{className:'gold-btn',onClick:()=>{
+        const spData=SPECIES_DATA?.species?.[species];
+        const allSkills=[...classSkills,...speciesSkills,...(spData?.grantedSkills||[])];
+        const speciesTraits={darkvision:spData?.traits?.darkvision||0,feyAncestry:!!spData?.feyAncestry,speed:spData?.traits?.speed||30};
+        onDone({cls,species:species||'human',speciesTraits,stats:finalStats,style:isCaster?null:style,feat,mastery:isCaster?[]:mastery,name,spells:allSpells,equip:{weapon:casterWeapon,armor:casterArmor,hasShield:casterShield},skilledPicks,crafterTools,musicianInstruments,classSkills:allSkills,humanSkill:speciesSkills[0]||null,extraLang})
+      }},'Begin Adventure')));
 }
 
 // ── Sidebar ────────────────────────────────────────────
@@ -11295,6 +11307,8 @@ function CharSheet({gs,isEnding,onBack,onEquipChange}){
       section('IDENTITY',[
         row('Name',gs.name||'Squire'),
         row('Species',SPECIES_DATA?.species?.[gs.species]?.name||gs.species||MODULE?.species||'Human'),
+        (gs.speciesTraits?.darkvision>0)?row('Darkvision',gs.speciesTraits.darkvision+' ft'):null,
+        row('Speed',(gs.speciesTraits?.speed||30)+' ft'),
         row('Class & Level',formatClassLevel(gs)),
         row('Background',bg.name),
         e('p',{key:'bn',className:'cs-note'},bg.reason),
