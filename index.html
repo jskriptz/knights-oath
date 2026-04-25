@@ -9587,8 +9587,8 @@ function ModuleSelect({onSelect,onBack,forceSelection}){
       .then(data=>{
         const active=(data.campaigns||[]).filter(c=>c.status==='active');
         setCampaigns(active);
-        // Auto-select if only one campaign (unless forceSelection)
-        if(active.length===1&&!forceSelection)setSelectedCampaign(active[0]);
+        // Auto-select if only one campaign (always - forceSelection only affects origin)
+        if(active.length===1)setSelectedCampaign(active[0]);
         setLoading(false);
       })
       .catch(()=>{
