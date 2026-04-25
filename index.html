@@ -3199,7 +3199,7 @@ const ST={
   async del(k){try{if(window.storage){await window.storage.delete(k);return}localStorage.removeItem(k)}catch(e){try{localStorage.removeItem(k)}catch(e2){}}}
 };
 // ── Save System: Character (persistent) + Module Progress (per-module) ──
-const CHARACTER_FIELDS=['cls','stats','style','feat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','rations','torches','waterskinUses','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount','languages','exhaustion','toolProficiencies','musicianInstruments','heroicInspiration','knightingSkill','portrait','durability','titles','selectedTitle','completedModules','loveInterest','partedCompanions','lastApproval','kills','subclass','maneuvers','superiorityDice','channelDivinityUsed','vowOfEnmityTarget','sacredWeaponActive','classLevels','secondClass','secondSubclass','inventoryMeta','originalFeats','originalSpells','originalSubclass','originalManeuvers','scaledFrom','levelSnapshots','currentCampaign','campaignProgress','sagaFlags','species','speciesTraits'];
+const CHARACTER_FIELDS=['cls','stats','style','feat','bonusFeat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','rations','torches','waterskinUses','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount','languages','exhaustion','toolProficiencies','musicianInstruments','heroicInspiration','knightingSkill','portrait','durability','titles','selectedTitle','completedModules','loveInterest','partedCompanions','lastApproval','kills','subclass','maneuvers','superiorityDice','channelDivinityUsed','vowOfEnmityTarget','sacredWeaponActive','classLevels','secondClass','secondSubclass','inventoryMeta','originalFeats','originalSpells','originalSubclass','originalManeuvers','scaledFrom','levelSnapshots','currentCampaign','campaignProgress','sagaFlags','species','speciesTraits'];
 const MODULE_PROGRESS_FIELDS=['history','flags','awardedScenes','completedRolls','companions','romances','romanceDeclined','companionLog','deadCompanions','rose','sword','crown','orderMax','dgTrack','godSigns','hitDiceUsed','secondWindUsed','actionSurgeUsed','spellSlotsUsed','spellSlots2ndUsed','spellSlots3rdUsed','spellSlots4thUsed','spellSlots5thUsed','spellSlots6thUsed','spellSlots7thUsed','spellSlots8thUsed','spellSlots9thUsed','layOnHandsPool','miraHealedThisScene','combatCount','measureTrack','measureOrientation','approval','shortRestsToday','longRestTaken','dayNumber','campStash'];
 
 function splitSave(gs,sceneId){
@@ -9781,7 +9781,7 @@ function CharCreate({onDone,onBack}){
   // Caster cantrips and spells (Wizard/Sorcerer)
   const[casterCantrips,setCasterCantrips]=useState([]);
   const[casterSpells,setCasterSpells]=useState([]);
-  const[style,setStyle]=useState(null);const[mastery,setMastery]=useState([]);const[weapon,setWeapon]=useState('Longsword');const[skilledPicks,setSkilledPicks]=useState([]);const[crafterTools,setCrafterTools]=useState([]);const[musicianInstruments,setMusicianInstruments]=useState([]);const[classSkills,setClassSkills]=useState([]);const[humanSkill,setHumanSkill]=useState(null);const[speciesSkills,setSpeciesSkills]=useState([]);const[extraLang,setExtraLang]=useState(null);const[armor,setArmor]=useState('Chain Mail');const[hasShield,setHasShield]=useState(true);
+  const[style,setStyle]=useState(null);const[mastery,setMastery]=useState([]);const[weapon,setWeapon]=useState('Longsword');const[skilledPicks,setSkilledPicks]=useState([]);const[crafterTools,setCrafterTools]=useState([]);const[musicianInstruments,setMusicianInstruments]=useState([]);const[classSkills,setClassSkills]=useState([]);const[humanSkill,setHumanSkill]=useState(null);const[speciesSkills,setSpeciesSkills]=useState([]);const[selectedTool,setSelectedTool]=useState(null);const[bonusFeat,setBonusFeat]=useState(null);const[extraLang,setExtraLang]=useState(null);const[armor,setArmor]=useState('Chain Mail');const[hasShield,setHasShield]=useState(true);
   const[name,setName]=useState('');const[errs,setErrs]=useState({});const[quickCls,setQuickCls]=useState(null);const[quickName,setQuickName]=useState('');
   // Stat generation method
   const[statMethod,setStatMethod]=useState(null); // 'standard','pointbuy','roll'
@@ -9973,7 +9973,22 @@ function CharCreate({onDone,onBack}){
     e('p',{style:{fontSize:13,color:extraLang?'#6adb6a':'#8a8578',marginTop:12}},'Languages: '+startLangs.join(', ')+(extraLang?', '+extraLang:'')),
     e('div',{className:'btn-row',style:{marginTop:16}},
       e('button',{className:'ghost-btn',onClick:()=>setStep('0b')},'\u2190 Back'),
-      e('button',{className:'gold-btn',onClick:()=>{if(extraLang)setStep('0c')},disabled:!extraLang},'Continue')));
+      e('button',{className:'gold-btn',onClick:()=>{if(extraLang)setStep(speciesData?.bonusTool?'0b3':'0c')},disabled:!extraLang},'Continue')));
+
+  // Step 0b3: Tool proficiency selection (Human Skillful trait)
+  const TOOL_OPTIONS=['Alchemist\'s Supplies','Brewer\'s Supplies','Calligrapher\'s Supplies','Carpenter\'s Tools','Cartographer\'s Tools','Cobbler\'s Tools','Cook\'s Utensils','Glassblower\'s Tools','Jeweler\'s Tools','Leatherworker\'s Tools','Mason\'s Tools','Painter\'s Supplies','Potter\'s Tools','Smith\'s Tools','Tinker\'s Tools','Weaver\'s Tools','Woodcarver\'s Tools','Thieves\' Tools','Navigator\'s Tools','Herbalism Kit','Poisoner\'s Kit','Forgery Kit','Disguise Kit'];
+  if(step==='0b3')return e('div',{className:'cover'},
+    e('h2',{className:'gold'},'HUMAN SKILLFUL'),
+    e('p',{className:'dim-italic',style:{fontSize:13}},'As a human, you gain proficiency with one tool of your choice.'),
+    e('div',{className:'divider'}),
+    e('div',{className:'spell-grid',style:{maxWidth:600}},TOOL_OPTIONS.map(tool=>e('button',{key:tool,
+      className:'spell-btn'+(selectedTool===tool?' selected':''),
+      onClick:()=>setSelectedTool(tool)
+    },tool))),
+    e('p',{style:{fontSize:13,color:selectedTool?'#6adb6a':'#8a8578',marginTop:12}},'Tool: '+(selectedTool||'None selected')),
+    e('div',{className:'btn-row',style:{marginTop:16}},
+      e('button',{className:'ghost-btn',onClick:()=>setStep('0b2')},'\u2190 Back'),
+      e('button',{className:'gold-btn',onClick:()=>{if(selectedTool)setStep('0c')},disabled:!selectedTool},'Continue')));
 
   // Step 0c: Stat generation method picker
   if(step==='0c')return e('div',{className:'cover'},
@@ -10071,7 +10086,7 @@ function CharCreate({onDone,onBack}){
     e('p',{className:'dim-italic',style:{fontSize:13}},'Human Versatile trait: choose one Origin Feat.'),
     e('div',{className:'feat-options'},ORIGIN_FEATS.map(f=>e('button',{key:f.name,className:'style-btn'+(feat===f.name?' selected':''),onClick:()=>{setFeat(f.name);setMiCantrips([]);setMiSpell(null)}},e('strong',null,f.name),e('span',null,f.desc)))),
     e('div',{className:'btn-row',style:{marginTop:16}},e('button',{className:'ghost-btn',onClick:()=>setStep(statMethod==='pointbuy'?'1pb':statMethod==='roll'?'1roll':1)},'\u2190 Back'),
-      e('button',{className:'gold-btn',onClick:()=>{if(!feat){setErrs({feat:'Choose a feat'});return}setErrs({});const nextStep=hasMiSpells?'2b':feat==='Skilled'?'2d':feat==='Crafter'?'2e':feat==='Musician'?'2f':cls==='Paladin'?'2c':(cls==='Wizard'||cls==='Sorcerer')?'2g':3;setStep(nextStep)},disabled:!feat},'Continue')));
+      e('button',{className:'gold-btn',onClick:()=>{if(!feat){setErrs({feat:'Choose a feat'});return}setErrs({});const nextStep=hasMiSpells?'2b':feat==='Skilled'?'2d':feat==='Crafter'?'2e':feat==='Musician'?'2f':cls==='Paladin'?'2c':(cls==='Wizard'||cls==='Sorcerer')?'2g':hasBonusFeatStep?'2bonus':3;setStep(nextStep)},disabled:!feat},'Continue')));
 
   // Step 2b: Magic Initiate spell selection
   if(step==='2b'&&miList)return e('div',{className:'cover'},
@@ -10082,7 +10097,7 @@ function CharCreate({onDone,onBack}){
     e('h3',{className:'spell-section-title'},'1st Level Spell (choose 1)'),
     e('div',{className:'spell-grid'},miList.level1.map(sp=>e(SpellButton,{key:sp,name:sp,selected:miSpell===sp,onClick:()=>setMiSpell(sp)}))),
     e('div',{className:'btn-row',style:{marginTop:16}},e('button',{className:'ghost-btn',onClick:()=>setStep(2)},'\u2190 Back'),
-      e('button',{className:'gold-btn',onClick:()=>{if(miCantrips.length===2&&miSpell){const nextStep=feat==='Skilled'?'2d':feat==='Crafter'?'2e':feat==='Musician'?'2f':cls==='Paladin'?'2c':(cls==='Wizard'||cls==='Sorcerer')?'2g':3;setStep(nextStep)}},disabled:miCantrips.length!==2||!miSpell},'Continue')));
+      e('button',{className:'gold-btn',onClick:()=>{if(miCantrips.length===2&&miSpell){const nextStep=feat==='Skilled'?'2d':feat==='Crafter'?'2e':feat==='Musician'?'2f':cls==='Paladin'?'2c':(cls==='Wizard'||cls==='Sorcerer')?'2g':hasBonusFeatStep?'2bonus':3;setStep(nextStep)}},disabled:miCantrips.length!==2||!miSpell},'Continue')));
 
 
   // Step 2d: Skilled - pick 3 skill proficiencies
@@ -10096,7 +10111,7 @@ function CharCreate({onDone,onBack}){
     e('p',{style:{fontSize:13,color:skilledPicks.length===3?'#6adb6a':'#8a8578',marginTop:8}},skilledPicks.length+'/3 selected'),
     e('div',{className:'btn-row',style:{marginTop:16}},
       e('button',{className:'ghost-btn',onClick:()=>setStep(2)},'\u2190 Back'),
-      e('button',{className:'gold-btn',onClick:()=>{if(skilledPicks.length===3)setStep(cls==='Paladin'?'2c':(cls==='Wizard'||cls==='Sorcerer')?'2g':3)},disabled:skilledPicks.length!==3},'Continue')));
+      e('button',{className:'gold-btn',onClick:()=>{if(skilledPicks.length===3)setStep(cls==='Paladin'?'2c':(cls==='Wizard'||cls==='Sorcerer')?'2g':hasBonusFeatStep?'2bonus':3)},disabled:skilledPicks.length!==3},'Continue')));
 
   // Step 2e: Crafter - pick 3 tool proficiencies
   if(step==='2e')return e('div',{className:'cover'},
@@ -10109,7 +10124,7 @@ function CharCreate({onDone,onBack}){
     e('p',{style:{fontSize:13,color:crafterTools.length===3?'#6adb6a':'#8a8578',marginTop:8}},crafterTools.length+'/3 selected'),
     e('div',{className:'btn-row',style:{marginTop:16}},
       e('button',{className:'ghost-btn',onClick:()=>setStep(2)},'\u2190 Back'),
-      e('button',{className:'gold-btn',onClick:()=>{if(crafterTools.length===3)setStep(cls==='Paladin'?'2c':(cls==='Wizard'||cls==='Sorcerer')?'2g':3)},disabled:crafterTools.length!==3},'Continue')));
+      e('button',{className:'gold-btn',onClick:()=>{if(crafterTools.length===3)setStep(cls==='Paladin'?'2c':(cls==='Wizard'||cls==='Sorcerer')?'2g':hasBonusFeatStep?'2bonus':3)},disabled:crafterTools.length!==3},'Continue')));
 
   // Step 2f: Musician - pick 3 instrument proficiencies
   if(step==='2f')return e('div',{className:'cover'},
@@ -10122,7 +10137,7 @@ function CharCreate({onDone,onBack}){
     e('p',{style:{fontSize:13,color:musicianInstruments.length===3?'#6adb6a':'#8a8578',marginTop:8}},musicianInstruments.length+'/3 selected'),
     e('div',{className:'btn-row',style:{marginTop:16}},
       e('button',{className:'ghost-btn',onClick:()=>setStep(2)},'\u2190 Back'),
-      e('button',{className:'gold-btn',onClick:()=>{if(musicianInstruments.length===3)setStep(cls==='Paladin'?'2c':(cls==='Wizard'||cls==='Sorcerer')?'2g':3)},disabled:musicianInstruments.length!==3},'Continue')));
+      e('button',{className:'gold-btn',onClick:()=>{if(musicianInstruments.length===3)setStep(cls==='Paladin'?'2c':(cls==='Wizard'||cls==='Sorcerer')?'2g':hasBonusFeatStep?'2bonus':3)},disabled:musicianInstruments.length!==3},'Continue')));
 
   // Step 2c: Paladin prepared spells
   if(step==='2c')return e('div',{className:'cover'},
@@ -10131,7 +10146,7 @@ function CharCreate({onDone,onBack}){
     e('p',{className:'dim-italic',style:{fontSize:12,color:'#8b7332'}},'Paladin\u2019s Smite is always prepared and does not count against this limit.'),
     e('div',{className:'spell-grid'},SPELL_LISTS.paladin.level1.map(sp=>e(SpellButton,{key:sp,name:sp,selected:palSpells.includes(sp),onClick:()=>{if(palSpells.includes(sp))setPalSpells(palSpells.filter(x=>x!==sp));else if(palSpells.length<palPrepCount)setPalSpells([...palSpells,sp])}}))),
     e('div',{className:'btn-row',style:{marginTop:16}},e('button',{className:'ghost-btn',onClick:()=>{const prevStep=feat==='Skilled'?'2d':feat==='Crafter'?'2e':feat==='Musician'?'2f':(hasMiSpells?'2b':2);setStep(prevStep)}},'\u2190 Back'),
-      e('button',{className:'gold-btn',onClick:()=>{if(palSpells.length===palPrepCount)setStep(3)},disabled:palSpells.length!==palPrepCount},'Continue')));
+      e('button',{className:'gold-btn',onClick:()=>{if(palSpells.length===palPrepCount)setStep(hasBonusFeatStep?'2bonus':3)},disabled:palSpells.length!==palPrepCount},'Continue')));
 
   // Step 2g: Caster cantrip selection (Wizard/Sorcerer)
   const isCaster=cls==='Wizard'||cls==='Sorcerer';
@@ -10157,7 +10172,18 @@ function CharCreate({onDone,onBack}){
     e('p',{style:{fontSize:13,color:casterSpells.length===spellCount?'#6adb6a':'#8a8578',marginTop:12}},casterSpells.length+'/'+spellCount+' spells selected'),
     e('div',{className:'btn-row',style:{marginTop:16}},
       e('button',{className:'ghost-btn',onClick:()=>setStep('2g')},'\u2190 Back'),
-      e('button',{className:'gold-btn',onClick:()=>{if(casterSpells.length===spellCount)setStep('3c')},disabled:casterSpells.length!==spellCount},'Continue')));
+      e('button',{className:'gold-btn',onClick:()=>{if(casterSpells.length===spellCount)setStep(hasBonusFeatStep?'2bonus':'3c')},disabled:casterSpells.length!==spellCount},'Continue')));
+
+  // Step 2bonus: Human Versatile - bonus Origin Feat
+  const hasBonusFeatStep=speciesData?.bonusFeat===true;
+  const availableBonusFeats=ORIGIN_FEATS.filter(f=>f.name!==feat); // Can't pick same feat twice
+  if(step==='2bonus')return e('div',{className:'cover'},
+    e('h2',{className:'gold'},'HUMAN VERSATILE \u2014 BONUS FEAT'),
+    e('p',{className:'dim-italic',style:{fontSize:13}},'As a human, you gain an additional Origin Feat of your choice.'),
+    e('div',{className:'feat-options'},availableBonusFeats.map(f=>e('button',{key:f.name,className:'style-btn'+(bonusFeat===f.name?' selected':''),onClick:()=>setBonusFeat(f.name)},e('strong',null,f.name),e('span',null,f.desc)))),
+    e('div',{className:'btn-row',style:{marginTop:16}},
+      e('button',{className:'ghost-btn',onClick:()=>setStep(isCaster?'2h':'2c')},'\u2190 Back'),
+      e('button',{className:'gold-btn',onClick:()=>{if(bonusFeat)setStep(isCaster?'3c':3)},disabled:!bonusFeat},'Continue')));
 
   // Step 3c: Caster equipment + name (no fighting style/mastery)
   if(step==='3c'&&isCaster)return e('div',{className:'cover'},
@@ -10254,7 +10280,9 @@ function CharCreate({onDone,onBack}){
         const spData=SPECIES_DATA?.species?.[species];
         const allSkills=[...classSkills,...speciesSkills,...(spData?.grantedSkills||[])];
         const speciesTraits={darkvision:spData?.traits?.darkvision||0,feyAncestry:!!spData?.feyAncestry,speed:spData?.traits?.speed||30};
-        onDone({cls,species:species||'human',speciesTraits,stats:finalStats,style:isCaster?null:style,feat,mastery:isCaster?[]:mastery,name,spells:allSpells,equip:{weapon:casterWeapon,armor:casterArmor,hasShield:casterShield},skilledPicks,crafterTools,musicianInstruments,classSkills:allSkills,humanSkill:speciesSkills[0]||null,extraLang})
+        const allFeats=[feat,bonusFeat].filter(Boolean);
+        const tools=selectedTool?[selectedTool]:[];
+        onDone({cls,species:species||'human',speciesTraits,stats:finalStats,style:isCaster?null:style,feat:allFeats[0],bonusFeat:allFeats[1]||null,mastery:isCaster?[]:mastery,name,spells:allSpells,equip:{weapon:casterWeapon,armor:casterArmor,hasShield:casterShield},skilledPicks,crafterTools,musicianInstruments,classSkills:allSkills,humanSkill:speciesSkills[0]||null,extraLang,toolProficiencies:tools})
       }},'Begin Adventure')));
 }
 
