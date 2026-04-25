@@ -4,7 +4,7 @@
   "hubScenes": [],
   "exemptTargets": [],
   "noLootScenes": ["42", "46", "49"],
-  "choiceFilters": {},
+  "choiceFilters": [],
   "choiceFlags": {
     "1": {
       "A": { "setFlags": ["candle_hidden"] },
@@ -34,9 +34,9 @@
     }
   },
   "targetOverrides": {},
-  "classTargetGates": {},
+  "classTargetGates": [],
   "robeGates": {},
-  "companionChoiceGates": {},
+  "companionChoiceGates": [],
   "mandatoryDetours": [],
   "approvalDeltas": {
     "2": { "A": { "Lyra Ashfen": 2 }, "C": { "Lyra Ashfen": 1 } },
