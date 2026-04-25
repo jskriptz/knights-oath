@@ -92,7 +92,7 @@
     "Wizard": {
       "cls": "Wizard",
       "stats": {"str":8,"dex":14,"con":13,"int":16,"wis":12,"cha":10},
-      "feat": "Magic Initiate (Wizard)",
+      "feat": "Alert",
       "style": null,
       "classSkills": ["Arcana", "Investigation"],
       "humanSkill": "Insight",

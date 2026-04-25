@@ -1900,7 +1900,7 @@ function addItemWithTracking(gs,itemName,sceneId){
 }
 function calcAC(armor,hasShield,dexMod){
   const acs={'None':10+dexMod,'Chain Mail':16,'Scale Mail':Math.min(14+dexMod,16),'Leather Armor':11+dexMod,'Studded Leather':12+dexMod,'Half-Plate':Math.min(15+dexMod,17)};
-  return(acs[armor]!=null?acs[armor]:16)+(hasShield?2:0);
+  return(acs[armor||'None']||10+dexMod)+(hasShield?2:0);
 }
 function calcDerived(stats,cls,lvl,armor,hasShield,feat,wounds,exhaustion,durability,style,classLevels){
   const ws=wounds||[];const woundPenalty=(stat)=>ws.filter(w=>w.stat===stat&&w.combatsLeft>0).length;
@@ -9862,7 +9862,11 @@ function CharCreate({onDone,onBack}){
   const getPresetSummary=(p)=>{
     if(!p)return'';
     const parts=[];
-    if(p.stats){const primary=p.cls==='Wizard'?'INT':p.cls==='Sorcerer'?'CHA':p.cls==='Paladin'?'STR/CHA':'STR';parts.push(primary+' '+(p.stats.int||p.stats.cha||p.stats.str))}
+    if(p.stats){
+      const primary=p.cls==='Wizard'?'INT':p.cls==='Sorcerer'?'CHA':p.cls==='Paladin'?'STR/CHA':'STR';
+      const val=p.cls==='Wizard'?p.stats.int:p.cls==='Sorcerer'?p.stats.cha:p.cls==='Paladin'?p.stats.str:p.stats.str;
+      parts.push(primary+' '+val);
+    }
     if(p.style)parts.push(p.style);
     if(p.feat)parts.push(p.feat);
     if(p.equip?.weapon)parts.push(p.equip.weapon);
@@ -9889,7 +9893,9 @@ function CharCreate({onDone,onBack}){
   // Step 1: Standard Array
 
   // Step 0b: Class skill proficiencies + Human Skillful
-  const classSkillList=(CLASS_DATA?.classes?.[cls]?.skillChoices?.from)||(cls==='Fighter'?FIGHTER_SKILLS:cls==='Paladin'?PALADIN_SKILLS:[]);
+  const WIZARD_SKILLS=['Arcana','History','Insight','Investigation','Medicine','Religion'];
+  const SORCERER_SKILLS=['Arcana','Deception','Insight','Intimidation','Persuasion','Religion'];
+  const classSkillList=(CLASS_DATA?.classes?.[cls]?.skillChoices?.from)||(cls==='Fighter'?FIGHTER_SKILLS:cls==='Paladin'?PALADIN_SKILLS:cls==='Wizard'?WIZARD_SKILLS:cls==='Sorcerer'?SORCERER_SKILLS:[]);
   if(step==='0b')return e('div',{className:'cover'},
     e('h2',{className:'gold'},cls.toUpperCase()+' \u2014 SKILL PROFICIENCIES'),
     e('p',{className:'dim-italic',style:{fontSize:13}},'Choose 2 class skill proficiencies, then 1 bonus skill from Human Skillful trait.'),
