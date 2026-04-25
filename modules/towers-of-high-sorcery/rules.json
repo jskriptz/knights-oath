@@ -87,5 +87,31 @@
       "sagaFlag": "zinnia_met",
       "romanceFlags": ["zinnia_spark", "zinnia_flame", "zinnia_oath"]
     }
+  },
+  "presets": {
+    "Wizard": {
+      "cls": "Wizard",
+      "stats": {"str":8,"dex":14,"con":13,"int":16,"wis":12,"cha":10},
+      "feat": "Magic Initiate (Wizard)",
+      "style": null,
+      "classSkills": ["Arcana", "Investigation"],
+      "humanSkill": "Insight",
+      "extraLang": "Draconic",
+      "equip": {"weapon": "Quarterstaff", "armor": null, "shield": false},
+      "cantrips": ["Fire Bolt", "Light", "Mage Hand"],
+      "spells": {"level1": ["Magic Missile", "Shield", "Detect Magic", "Mage Armor", "Sleep", "Identify"]}
+    },
+    "Sorcerer": {
+      "cls": "Sorcerer",
+      "stats": {"str":8,"dex":14,"con":14,"int":10,"wis":12,"cha":16},
+      "feat": "Lucky",
+      "style": null,
+      "classSkills": ["Arcana", "Persuasion"],
+      "humanSkill": "Insight",
+      "extraLang": "Draconic",
+      "equip": {"weapon": "Dagger", "armor": null, "shield": false},
+      "cantrips": ["Fire Bolt", "Light", "Mage Hand", "Prestidigitation"],
+      "spells": {"level1": ["Magic Missile", "Shield"]}
+    }
   }
 }

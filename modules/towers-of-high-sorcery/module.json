@@ -14,7 +14,7 @@
   "availableSpecies": ["human", "half-elf", "elf"],
   "speciesLocked": false,
   "startingLanguages": ["Common"],
-  "version": "1.0.2",
+  "version": "1.1.0",
   "startScene": "1",
   "startingInventory": ["Spellbook", "Component Pouch", "Dagger", "Scholar's Pack", "Traveller's Clothes"],
   "startingEquipment": {

@@ -9812,10 +9812,10 @@ function CharCreate({onDone,onBack}){
   };
   const rollAvailable=()=>{const used=Object.values(rollAssign).filter(v=>v!==null);const pool=rolls.filter(r=>r!==null).map(r=>r.total);for(const u of used){const idx=pool.indexOf(u);if(idx>=0)pool.splice(idx,1)}return pool.sort((a,b)=>b-a)};
   const e=React.createElement;
-  const defs={Fighter:{str:16,dex:12,con:14,int:10,wis:12,cha:10},Paladin:{str:16,dex:10,con:13,int:10,wis:14,cha:14}};
+  const defs={Fighter:{str:16,dex:12,con:14,int:10,wis:12,cha:10},Paladin:{str:16,dex:10,con:13,int:10,wis:14,cha:14},Wizard:{str:8,dex:14,con:13,int:16,wis:12,cha:10},Sorcerer:{str:8,dex:14,con:14,int:10,wis:12,cha:16}};
   const getFinal=()=>{const f={};for(const k of STAT_NAMES)f[k]=(assign[k]||10)+(bonus2===k?2:0)+(bonus1===k?1:0);return f};
   const availableScores=()=>{const used=Object.values(assign).filter(v=>v!==null);const pool=[...STD_ARRAY];for(const u of used){const idx=pool.indexOf(u);if(idx>=0)pool.splice(idx,1)}return pool.sort((a,b)=>b-a)};
-  const validateStats=()=>{const er={};const used=Object.values(assign).filter(v=>v!==null);if(used.length<6)er.general='Assign all 6 scores';if(statMethod==='standard'&&new Set(used).size<used.length)er.general='Each score used once';if(!bonus2)er.bonus2='Choose +2';if(!bonus1)er.bonus1='Choose +1';if(bonus2&&bonus1&&bonus2===bonus1)er.bonus1='Must be different';setErrs(er);return!Object.keys(er).length};const getWarnings=()=>{const w=[];const f=getFinal();if(cls==='Fighter'&&f.str<13&&f.dex<13)w.push('STR or DEX 13+ recommended');if(cls==='Fighter'&&f.con<13)w.push('CON 13+ recommended');if(cls==='Paladin'&&f.str<13)w.push('STR 13+ recommended');if(cls==='Paladin'&&f.cha<13)w.push('CHA 13+ recommended');return w};
+  const validateStats=()=>{const er={};const used=Object.values(assign).filter(v=>v!==null);if(used.length<6)er.general='Assign all 6 scores';if(statMethod==='standard'&&new Set(used).size<used.length)er.general='Each score used once';if(!bonus2)er.bonus2='Choose +2';if(!bonus1)er.bonus1='Choose +1';if(bonus2&&bonus1&&bonus2===bonus1)er.bonus1='Must be different';setErrs(er);return!Object.keys(er).length};const getWarnings=()=>{const w=[];const f=getFinal();if(cls==='Fighter'&&f.str<13&&f.dex<13)w.push('STR or DEX 13+ recommended');if(cls==='Fighter'&&f.con<13)w.push('CON 13+ recommended');if(cls==='Paladin'&&f.str<13)w.push('STR 13+ recommended');if(cls==='Paladin'&&f.cha<13)w.push('CHA 13+ recommended');if(cls==='Wizard'&&f.int<13)w.push('INT 13+ recommended');if(cls==='Sorcerer'&&f.cha<13)w.push('CHA 13+ recommended');return w};
 
   const featObj=ORIGIN_FEATS.find(f=>f.name===feat);
   const hasMiSpells=featObj&&featObj.spells;
@@ -9824,42 +9824,69 @@ function CharCreate({onDone,onBack}){
   const palPrepCount=cls==='Paladin'?Math.max(1,mod(finalStats.cha)+1):0;
 
   // Step 0: Class
-  if(step==='quick')return e('div',{className:'cover'},
+  if(step==='quick'){
+    const qp=PRESETS[quickCls]||{};
+    const isCaster=quickCls==='Wizard'||quickCls==='Sorcerer'||quickCls==='Paladin';
+    return e('div',{className:'cover'},
     e('h2',{className:'gold'},'QUICK START \u2014 '+quickCls.toUpperCase()),
-    e('p',{className:'dim-italic',style:{fontSize:13}},'Pre-built '+quickCls+' with recommended stats, style, and equipment.'),
+    e('p',{className:'dim-italic',style:{fontSize:13}},'Pre-built '+quickCls+' with recommended stats'+(qp.style?', style,':',')+' and equipment.'),
     e('div',{className:'divider'}),
     e('div',{className:'confirm-sheet'},
       e('div',{className:'confirm-row'},e('span',null,'Class'),e('span',{className:'gold'},quickCls)),
-      e('div',{className:'confirm-row'},e('span',null,'Stats'),e('span',null,Object.entries(PRESETS[quickCls].stats).map(([k,v])=>k.toUpperCase()+' '+v).join(', '))),
-      e('div',{className:'confirm-row'},e('span',null,'Fighting Style'),e('span',null,PRESETS[quickCls].style)),
-      e('div',{className:'confirm-row'},e('span',null,'Origin Feat'),e('span',null,PRESETS[quickCls].feat)),
-      e('div',{className:'confirm-row'},e('span',null,'Weapon'),e('span',null,PRESETS[quickCls].equip.weapon)),
-      e('div',{className:'confirm-row'},e('span',null,'Skills'),e('span',null,[...PRESETS[quickCls].classSkills,PRESETS[quickCls].humanSkill].join(', '))),
-      e('div',{className:'confirm-row'},e('span',null,'Languages'),e('span',null,[...((MODULE&&MODULE.startingLanguages)||['Common']),PRESETS[quickCls].extraLang].filter(Boolean).join(', '))),
-      quickCls==='Paladin'?e('div',{className:'confirm-row'},e('span',null,'Spells'),e('span',null,PRESETS[quickCls].spells.level1.join(', '))):null
+      e('div',{className:'confirm-row'},e('span',null,'Stats'),e('span',null,Object.entries(qp.stats||{}).map(([k,v])=>k.toUpperCase()+' '+v).join(', '))),
+      qp.style?e('div',{className:'confirm-row'},e('span',null,'Fighting Style'),e('span',null,qp.style)):null,
+      e('div',{className:'confirm-row'},e('span',null,'Origin Feat'),e('span',null,qp.feat||'None')),
+      e('div',{className:'confirm-row'},e('span',null,'Weapon'),e('span',null,qp.equip?.weapon||'None')),
+      e('div',{className:'confirm-row'},e('span',null,'Skills'),e('span',null,[...(qp.classSkills||[]),qp.humanSkill].filter(Boolean).join(', '))),
+      e('div',{className:'confirm-row'},e('span',null,'Languages'),e('span',null,[...((MODULE&&MODULE.startingLanguages)||['Common']),qp.extraLang].filter(Boolean).join(', '))),
+      qp.cantrips?.length?e('div',{className:'confirm-row'},e('span',null,'Cantrips'),e('span',null,qp.cantrips.join(', '))):null,
+      qp.spells?.level1?.length?e('div',{className:'confirm-row'},e('span',null,'Spells'),e('span',null,qp.spells.level1.join(', '))):null
     ),
     e('input',{className:'name-input',placeholder:'Enter your name',value:quickName,onChange:ev=>setQuickName(ev.target.value),style:{marginTop:20},autoFocus:true}),
     e('div',{className:'btn-row',style:{marginTop:16}},
       e('button',{className:'ghost-btn',onClick:()=>setStep(0)},'\u2190 Back'),
-      e('button',{className:'gold-btn',onClick:()=>{const p={...PRESETS[quickCls]};onDone({...p,name:quickName||'Squire'})},disabled:false},'Begin Adventure')));
+      e('button',{className:'gold-btn',onClick:()=>{const p={...qp};onDone({...p,name:quickName||'Apprentice'})},disabled:false},'Begin Adventure')));
+  }
 
-  if(step===0)return e('div',{className:'cover'},e('h2',{className:'gold'},'CHOOSE YOUR PATH'),e('p',{className:'dim-italic',style:{fontSize:13}},'D&D 2024 Rules \u2022 Human (Solamnic)'),e('div',{className:'divider'}),
+  // Dynamic class data for display
+  const CLASS_DISPLAY={
+    Fighter:{tagline:'Martial mastery. Weapon Mastery at Lv1.',features:'Second Wind (PB/LR) \u2022 Action Surge \u2022 Tactical Mind'},
+    Paladin:{tagline:'Divine oath. Spellcasting at Lv1.',features:'Lay on Hands \u2022 Paladin\u2019s Smite \u2022 Channel Divinity'},
+    Wizard:{tagline:'Arcane scholar. Prepared spellcasting.',features:'Spellcasting \u2022 Arcane Recovery \u2022 Arcane Tradition'},
+    Sorcerer:{tagline:'Innate magic. Spontaneous spellcasting.',features:'Spellcasting \u2022 Sorcerous Origin \u2022 Font of Magic'}
+  };
+  const availClasses=(MODULE&&MODULE.classes)||['Fighter','Paladin'];
+  const getPresetSummary=(p)=>{
+    if(!p)return'';
+    const parts=[];
+    if(p.stats){const primary=p.cls==='Wizard'?'INT':p.cls==='Sorcerer'?'CHA':p.cls==='Paladin'?'STR/CHA':'STR';parts.push(primary+' '+(p.stats.int||p.stats.cha||p.stats.str))}
+    if(p.style)parts.push(p.style);
+    if(p.feat)parts.push(p.feat);
+    if(p.equip?.weapon)parts.push(p.equip.weapon);
+    if(p.cantrips?.length)parts.push(p.cantrips.slice(0,2).join(', '));
+    return parts.join(' \u2022 ');
+  };
+  if(step===0)return e('div',{className:'cover'},e('h2',{className:'gold'},'CHOOSE YOUR PATH'),e('p',{className:'dim-italic',style:{fontSize:13}},'D&D 2024 Rules \u2022 '+(MODULE?.species||'Human')),e('div',{className:'divider'}),
     e('h3',{className:'spell-section-title'},'CUSTOM CHARACTER'),
     e('div',{className:'class-choice'},
-    e('button',{className:'class-btn',onClick:()=>{setCls('Fighter');setClassSkills([]);setStep('0b')}},'FIGHTER',e('small',null,'Martial mastery. Weapon Mastery at Lv1.'),e('small',null,'Second Wind (PB/LR) \u2022 Action Surge \u2022 Tactical Mind')),
-    e('button',{className:'class-btn',onClick:()=>{setCls('Paladin');setClassSkills([]);setStep('0b')}},'PALADIN',e('small',null,'Divine oath. Spellcasting at Lv1.'),e('small',null,'Lay on Hands \u2022 Paladin\u2019s Smite \u2022 Channel Divinity'))),
-    e('div',{className:'divider',style:{marginTop:24}}),
-    e('h3',{className:'spell-section-title'},'QUICK START'),
-    e('p',{className:'dim-italic',style:{fontSize:12}},'Pre-built character. Just enter a name.'),
-    e('div',{className:'class-choice quick-choice'},
-      e('button',{className:'class-btn quick',onClick:()=>{setQuickCls('Fighter');setStep('quick')}},'FIGHTER',e('small',null,'STR 16 \u2022 Great Weapon Fighting \u2022 Savage Attacker \u2022 Greatsword')),
-      e('button',{className:'class-btn quick',onClick:()=>{setQuickCls('Paladin');setStep('quick')}},'PALADIN',e('small',null,'STR 16 CHA 15 \u2022 Defense \u2022 Tough \u2022 Bless & Shield of Faith'))),
+      availClasses.map(clsName=>e('button',{key:clsName,className:'class-btn',onClick:()=>{setCls(clsName);setClassSkills([]);setStep('0b')}},
+        clsName.toUpperCase(),
+        e('small',null,CLASS_DISPLAY[clsName]?.tagline||''),
+        e('small',null,CLASS_DISPLAY[clsName]?.features||'')))),
+    Object.keys(PRESETS).length>0?e('div',null,
+      e('div',{className:'divider',style:{marginTop:24}}),
+      e('h3',{className:'spell-section-title'},'QUICK START'),
+      e('p',{className:'dim-italic',style:{fontSize:12}},'Pre-built character. Just enter a name.'),
+      e('div',{className:'class-choice quick-choice'},
+        Object.keys(PRESETS).filter(k=>availClasses.includes(k)).map(clsName=>e('button',{key:clsName,className:'class-btn quick',onClick:()=>{setQuickCls(clsName);setStep('quick')}},
+          clsName.toUpperCase(),
+          e('small',null,getPresetSummary(PRESETS[clsName])))))):null,
     e('div',{className:'btn-row',style:{marginTop:24}},e('button',{className:'ghost-btn',onClick:onBack},'\u2190 Back')));
 
   // Step 1: Standard Array
 
   // Step 0b: Class skill proficiencies + Human Skillful
-  const classSkillList=cls==='Fighter'?FIGHTER_SKILLS:PALADIN_SKILLS;
+  const classSkillList=(CLASS_DATA?.classes?.[cls]?.skillChoices?.from)||(cls==='Fighter'?FIGHTER_SKILLS:cls==='Paladin'?PALADIN_SKILLS:[]);
   if(step==='0b')return e('div',{className:'cover'},
     e('h2',{className:'gold'},cls.toUpperCase()+' \u2014 SKILL PROFICIENCIES'),
     e('p',{className:'dim-italic',style:{fontSize:13}},'Choose 2 class skill proficiencies, then 1 bonus skill from Human Skillful trait.'),
