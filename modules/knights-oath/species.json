@@ -2,73 +2,66 @@
   "species": {
     "human": {
       "name": "Human",
-      "desc": "Humans are the most adaptable and ambitious people among the common species. Whatever drives them, humans are the innovators, the achievers, and the pioneers of the worlds.",
-      "size": "Medium",
-      "speed": 30,
-      "darkvision": 0,
-      "languages": [
-        "Common"
-      ],
-      "extraLanguages": 1,
-      "resistances": [],
-      "hpBonus": 0,
-      "traits": [
-        {
-          "name": "Resourceful",
-          "desc": "You gain Heroic Inspiration whenever you finish a Long Rest.",
-          "type": "passive",
-          "mechanical": "heroicInspirationOnLR"
-        },
-        {
-          "name": "Skillful",
-          "desc": "You gain proficiency in one skill of your choice.",
-          "type": "charCreate",
-          "mechanical": "bonusSkill",
-          "count": 1
-        },
-        {
-          "name": "Versatile",
-          "desc": "You gain an Origin feat of your choice.",
-          "type": "charCreate",
-          "mechanical": "originFeat"
-        }
-      ],
-      "subraces": null
+      "description": "Humans are the most adaptable and ambitious people among the common species. Whatever drives them, humans are the innovators, the achievers, and the pioneers of the worlds.",
+      "traits": {
+        "size": "Medium",
+        "speed": 30,
+        "darkvision": 0,
+        "languages": [
+          "Common"
+        ],
+        "extraLanguages": 1,
+        "resistances": [],
+        "features": [
+          {
+            "name": "Resourceful",
+            "description": "You gain Heroic Inspiration whenever you finish a Long Rest."
+          },
+          {
+            "name": "Skillful",
+            "description": "You gain proficiency in one skill of your choice."
+          },
+          {
+            "name": "Versatile",
+            "description": "You gain an Origin feat of your choice."
+          }
+        ]
+      },
+      "bonusSkill": true,
+      "bonusTool": true,
+      "bonusFeat": true
     },
     "elf": {
       "name": "Elf",
-      "desc": "Elves belong to a people of otherworldly grace, with keen senses and deep reverence for nature, art, and magic. They are at home in the forests and towers of Krynn.",
-      "size": "Medium",
-      "speed": 30,
-      "darkvision": 60,
-      "languages": [
-        "Common",
-        "Elvish"
-      ],
-      "extraLanguages": 0,
-      "resistances": [],
-      "hpBonus": 0,
-      "traits": [
-        {
-          "name": "Keen Senses",
-          "desc": "You have proficiency in the Perception skill.",
-          "type": "passive",
-          "mechanical": "skillProf",
-          "skill": "Perception"
-        },
-        {
-          "name": "Fey Ancestry",
-          "desc": "You have Advantage on saving throws you make to avoid or end the Charmed condition.",
-          "type": "passive",
-          "mechanical": "saveAdv",
-          "condition": "charmed"
-        },
-        {
-          "name": "Trance",
-          "desc": "You don't need to sleep, and magic can't put you to sleep. You can finish a Long Rest in 4 hours if you spend those hours in a trancelike meditation.",
-          "type": "passive",
-          "mechanical": "trance"
-        }
+      "description": "Elves belong to a people of otherworldly grace, with keen senses and deep reverence for nature, art, and magic. They are at home in the forests and towers of Krynn.",
+      "traits": {
+        "size": "Medium",
+        "speed": 30,
+        "darkvision": 60,
+        "languages": [
+          "Common",
+          "Elvish"
+        ],
+        "extraLanguages": 0,
+        "resistances": [],
+        "features": [
+          {
+            "name": "Keen Senses",
+            "description": "You have proficiency in the Perception skill."
+          },
+          {
+            "name": "Fey Ancestry",
+            "description": "You have Advantage on saving throws you make to avoid or end the Charmed condition."
+          },
+          {
+            "name": "Trance",
+            "description": "You don't need to sleep, and magic can't put you to sleep. You can finish a Long Rest in 4 hours if you spend those hours in a trancelike meditation."
+          }
+        ]
+      },
+      "feyAncestry": true,
+      "grantedSkills": [
+        "Perception"
       ],
       "subraces": {
         "high_elf": {
@@ -160,111 +153,89 @@
     },
     "dwarf": {
       "name": "Dwarf",
-      "desc": "Dwarves are solid and enduring like the mountains they love. They are a race of skilled miners, smiths, and warriors. In Krynn, the Neidar (hill dwarves) and Hylar (mountain dwarves) are the most common clans.",
-      "size": "Medium",
-      "speed": 25,
-      "darkvision": 60,
-      "languages": [
-        "Common",
-        "Dwarvish"
-      ],
-      "extraLanguages": 0,
-      "resistances": [
-        "poison"
-      ],
-      "hpBonus": 1,
-      "traits": [
-        {
-          "name": "Dwarven Resilience",
-          "desc": "You have Resistance to Poison damage. You have Advantage on saving throws you make to avoid or end the Poisoned condition.",
-          "type": "passive",
-          "mechanical": "saveAdv",
-          "condition": "poisoned"
-        },
-        {
-          "name": "Dwarven Toughness",
-          "desc": "Your Hit Point maximum increases by 1, and it increases by 1 again whenever you gain a level.",
-          "type": "passive",
-          "mechanical": "hpPerLevel",
-          "value": 1
-        },
-        {
-          "name": "Stonecunning",
-          "desc": "As a Bonus Action, you gain Tremorsense with a range of 60 feet for 10 minutes. You can use this Bonus Action a number of times equal to your Proficiency Bonus, regaining all uses on a Long Rest.",
-          "type": "active",
-          "mechanical": "stonecunning"
-        }
-      ],
-      "subraces": null
+      "description": "Dwarves are solid and enduring like the mountains they love. They are a race of skilled miners, smiths, and warriors. In Krynn, the Neidar (hill dwarves) and Hylar (mountain dwarves) are the most common clans.",
+      "traits": {
+        "size": "Medium",
+        "speed": 25,
+        "darkvision": 60,
+        "languages": [
+          "Common",
+          "Dwarvish"
+        ],
+        "extraLanguages": 0,
+        "resistances": [
+          "poison"
+        ],
+        "features": [
+          {
+            "name": "Dwarven Resilience",
+            "description": "You have Resistance to Poison damage. You have Advantage on saving throws you make to avoid or end the Poisoned condition."
+          },
+          {
+            "name": "Dwarven Toughness",
+            "description": "Your Hit Point maximum increases by 1, and it increases by 1 again whenever you gain a level."
+          },
+          {
+            "name": "Stonecunning",
+            "description": "As a Bonus Action, you gain Tremorsense with a range of 60 feet for 10 minutes. You can use this Bonus Action a number of times equal to your Proficiency Bonus, regaining all uses on a Long Rest."
+          }
+        ]
+      },
+      "hpBonus": 1
     },
     "halfling": {
       "name": "Halfling",
-      "desc": "The diminutive halflings survive in a world full of larger creatures by avoiding notice or, failing that, avoiding offense. In Krynn, halflings are rare but resourceful wanderers.",
-      "size": "Small",
-      "speed": 25,
-      "darkvision": 0,
-      "languages": [
-        "Common",
-        "Halfling"
-      ],
-      "extraLanguages": 0,
-      "resistances": [],
-      "hpBonus": 0,
-      "traits": [
-        {
-          "name": "Brave",
-          "desc": "You have Advantage on saving throws you make to avoid or end the Frightened condition.",
-          "type": "passive",
-          "mechanical": "saveAdv",
-          "condition": "frightened"
-        },
-        {
-          "name": "Halfling Nimbleness",
-          "desc": "You can move through the space of any creature that is a size larger than you.",
-          "type": "passive",
-          "mechanical": "nimbleness"
-        },
-        {
-          "name": "Lucky",
-          "desc": "When you roll a 1 on the d20 for a D20 Test, you can reroll the die, and you must use the new roll.",
-          "type": "passive",
-          "mechanical": "lucky"
-        },
-        {
-          "name": "Naturally Stealthy",
-          "desc": "You can attempt to hide even when you are obscured only by a creature that is at least one size larger than you.",
-          "type": "passive",
-          "mechanical": "naturallyStealthy"
-        }
-      ],
-      "subraces": null
+      "description": "The diminutive halflings survive in a world full of larger creatures by avoiding notice or, failing that, avoiding offense. In Krynn, halflings are rare but resourceful wanderers.",
+      "traits": {
+        "size": "Small",
+        "speed": 25,
+        "darkvision": 0,
+        "languages": [
+          "Common",
+          "Halfling"
+        ],
+        "extraLanguages": 0,
+        "resistances": [],
+        "features": [
+          {
+            "name": "Brave",
+            "description": "You have Advantage on saving throws you make to avoid or end the Frightened condition."
+          },
+          {
+            "name": "Halfling Nimbleness",
+            "description": "You can move through the space of any creature that is a size larger than you."
+          },
+          {
+            "name": "Lucky",
+            "description": "When you roll a 1 on the d20 for a D20 Test, you can reroll the die, and you must use the new roll."
+          },
+          {
+            "name": "Naturally Stealthy",
+            "description": "You can attempt to hide even when you are obscured only by a creature that is at least one size larger than you."
+          }
+        ]
+      }
     },
     "gnome": {
       "name": "Gnome",
-      "desc": "Gnomes are magical folk created by gods of the Feywild. In Krynn, the tinker gnomes of Mount Nevermind are famous for their elaborate (and frequently explosive) inventions.",
-      "size": "Small",
-      "speed": 25,
-      "darkvision": 60,
-      "languages": [
-        "Common",
-        "Gnomish"
-      ],
-      "extraLanguages": 0,
-      "resistances": [],
-      "hpBonus": 0,
-      "traits": [
-        {
-          "name": "Gnome Cunning",
-          "desc": "You have Advantage on Intelligence, Wisdom, and Charisma saving throws.",
-          "type": "passive",
-          "mechanical": "saveAdvAbilities",
-          "abilities": [
-            "int",
-            "wis",
-            "cha"
-          ]
-        }
-      ],
+      "description": "Gnomes are magical folk created by gods of the Feywild. In Krynn, the tinker gnomes of Mount Nevermind are famous for their elaborate (and frequently explosive) inventions.",
+      "traits": {
+        "size": "Small",
+        "speed": 25,
+        "darkvision": 60,
+        "languages": [
+          "Common",
+          "Gnomish"
+        ],
+        "extraLanguages": 0,
+        "resistances": [],
+        "features": [
+          {
+            "name": "Gnome Cunning",
+            "description": "You have Advantage on Intelligence, Wisdom, and Charisma saving throws."
+          }
+        ]
+      },
       "subraces": {
         "forest_gnome": {
           "name": "Forest Gnome",
@@ -313,32 +284,28 @@
     },
     "goliath": {
       "name": "Goliath",
-      "desc": "Goliaths are towering, competitive folk born of mountains. Though rare on Krynn, some wander from lands beyond the known map of Ansalon.",
-      "size": "Medium",
-      "speed": 35,
-      "darkvision": 0,
-      "languages": [
-        "Common",
-        "Giant"
-      ],
-      "extraLanguages": 0,
-      "resistances": [],
-      "hpBonus": 0,
-      "traits": [
-        {
-          "name": "Large Form",
-          "desc": "Starting at 5th level, you can change your size to Large as a Bonus Action (PB times per Long Rest). While Large, you have Advantage on Strength checks and your speed increases by 10.",
-          "type": "active",
-          "mechanical": "largeForm",
-          "minLevel": 5
-        },
-        {
-          "name": "Powerful Build",
-          "desc": "You have Advantage on any saving throw you make to end the Grappled condition. You also count as one size larger for determining carrying capacity.",
-          "type": "passive",
-          "mechanical": "powerfulBuild"
-        }
-      ],
+      "description": "Goliaths are towering, competitive folk born of mountains. Though rare on Krynn, some wander from lands beyond the known map of Ansalon.",
+      "traits": {
+        "size": "Medium",
+        "speed": 35,
+        "darkvision": 0,
+        "languages": [
+          "Common",
+          "Giant"
+        ],
+        "extraLanguages": 0,
+        "resistances": [],
+        "features": [
+          {
+            "name": "Large Form",
+            "description": "Starting at 5th level, you can change your size to Large as a Bonus Action (PB times per Long Rest). While Large, you have Advantage on Strength checks and your speed increases by 10."
+          },
+          {
+            "name": "Powerful Build",
+            "description": "You have Advantage on any saving throw you make to end the Grappled condition. You also count as one size larger for determining carrying capacity."
+          }
+        ]
+      },
       "giantAncestry": {
         "desc": "Choose one of the following Giant Ancestry options. You can use the chosen ability a number of times equal to your Proficiency Bonus, regaining all uses on a Long Rest.",
         "options": {
@@ -384,54 +351,47 @@
             "type": "thunder"
           }
         }
-      },
-      "subraces": null
+      }
     },
     "orc": {
       "name": "Orc",
-      "desc": "Orcs trace their creation to Gruumsh, but many have broken free of his influence. On Krynn, orcs are savage raiders from the borderlands, though not all follow the path of destruction.",
-      "size": "Medium",
-      "speed": 30,
-      "darkvision": 60,
-      "languages": [
-        "Common",
-        "Orc"
-      ],
-      "extraLanguages": 0,
-      "resistances": [],
-      "hpBonus": 0,
-      "traits": [
-        {
-          "name": "Adrenaline Rush",
-          "desc": "You can take the Dash action as a Bonus Action. When you do, you gain a number of Temporary Hit Points equal to your Proficiency Bonus. You can use this a number of times equal to your Proficiency Bonus, regaining all uses on a Short or Long Rest.",
-          "type": "active",
-          "mechanical": "adrenalineRush",
-          "recharge": "shortRest"
-        },
-        {
-          "name": "Relentless Endurance",
-          "desc": "When you are reduced to 0 Hit Points but not killed outright, you can drop to 1 Hit Point instead. Once you use this trait, you can't do so again until you finish a Long Rest.",
-          "type": "active",
-          "mechanical": "relentlessEndurance",
-          "uses": 1,
-          "recharge": "longRest"
-        }
-      ],
-      "subraces": null
+      "description": "Orcs trace their creation to Gruumsh, but many have broken free of his influence. On Krynn, orcs are savage raiders from the borderlands, though not all follow the path of destruction.",
+      "traits": {
+        "size": "Medium",
+        "speed": 30,
+        "darkvision": 60,
+        "languages": [
+          "Common",
+          "Orc"
+        ],
+        "extraLanguages": 0,
+        "resistances": [],
+        "features": [
+          {
+            "name": "Adrenaline Rush",
+            "description": "You can take the Dash action as a Bonus Action. When you do, you gain a number of Temporary Hit Points equal to your Proficiency Bonus. You can use this a number of times equal to your Proficiency Bonus, regaining all uses on a Short or Long Rest."
+          },
+          {
+            "name": "Relentless Endurance",
+            "description": "When you are reduced to 0 Hit Points but not killed outright, you can drop to 1 Hit Point instead. Once you use this trait, you can't do so again until you finish a Long Rest."
+          }
+        ]
+      }
     },
     "tiefling": {
       "name": "Tiefling",
-      "desc": "Tieflings are derived from fiendish heritage. On Krynn, they are vanishingly rare and often mistaken for agents of the Dragon Armies or dark magic.",
-      "size": "Medium",
-      "speed": 30,
-      "darkvision": 60,
-      "languages": [
-        "Common"
-      ],
-      "extraLanguages": 1,
-      "resistances": [],
-      "hpBonus": 0,
-      "traits": [],
+      "description": "Tieflings are derived from fiendish heritage. On Krynn, they are vanishingly rare and often mistaken for agents of the Dragon Armies or dark magic.",
+      "traits": {
+        "size": "Medium",
+        "speed": 30,
+        "darkvision": 60,
+        "languages": [
+          "Common"
+        ],
+        "extraLanguages": 1,
+        "resistances": [],
+        "features": []
+      },
       "fiendishLegacy": {
         "desc": "Choose one of the following Fiendish Legacy options. You gain the listed resistance and spells.",
         "options": {
@@ -517,31 +477,28 @@
             "stat": "cha"
           }
         }
-      },
-      "subraces": null
+      }
     },
     "dragonborn": {
       "name": "Dragonborn",
-      "desc": "Dragonborn carry the blood of ancient dragons. On Krynn, their existence would be extraordinary — a living echo of the dragonkind that shapes the fate of the world.",
-      "size": "Medium",
-      "speed": 30,
-      "darkvision": 60,
-      "languages": [
-        "Common",
-        "Draconic"
-      ],
-      "extraLanguages": 0,
-      "resistances": [],
-      "hpBonus": 0,
-      "traits": [
-        {
-          "name": "Draconic Flight",
-          "desc": "Starting at 5th level, you can sprout spectral wings as a Bonus Action. You gain flying speed equal to your walking speed for 10 minutes (PB times per Long Rest).",
-          "type": "active",
-          "mechanical": "draconicFlight",
-          "minLevel": 5
-        }
-      ],
+      "description": "Dragonborn carry the blood of ancient dragons. On Krynn, their existence would be extraordinary — a living echo of the dragonkind that shapes the fate of the world.",
+      "traits": {
+        "size": "Medium",
+        "speed": 30,
+        "darkvision": 60,
+        "languages": [
+          "Common",
+          "Draconic"
+        ],
+        "extraLanguages": 0,
+        "resistances": [],
+        "features": [
+          {
+            "name": "Draconic Flight",
+            "description": "Starting at 5th level, you can sprout spectral wings as a Bonus Action. You gain flying speed equal to your walking speed for 10 minutes (PB times per Long Rest)."
+          }
+        ]
+      },
       "draconicAncestry": {
         "desc": "Choose one type of dragon. Your Breath Weapon and Damage Resistance are determined by the dragon type.",
         "options": {
@@ -626,51 +583,39 @@
           },
           "recharge": "longRest"
         }
-      },
-      "subraces": null
+      }
     },
     "aasimar": {
       "name": "Aasimar",
-      "desc": "Aasimar are beings touched by celestial power. On Krynn, where the gods have been absent for three centuries, an aasimar's existence would be a profound sign of divine return.",
-      "size": "Medium",
-      "speed": 30,
-      "darkvision": 60,
-      "languages": [
-        "Common",
-        "Celestial"
-      ],
-      "extraLanguages": 0,
-      "resistances": [
-        "radiant",
-        "necrotic"
-      ],
-      "hpBonus": 0,
-      "traits": [
-        {
-          "name": "Celestial Resistance",
-          "desc": "You have Resistance to Necrotic damage and Radiant damage.",
-          "type": "passive",
-          "mechanical": "resistance"
-        },
-        {
-          "name": "Healing Hands",
-          "desc": "As a Magic action, you touch a creature and roll a number of d4s equal to your Proficiency Bonus. The creature regains a number of Hit Points equal to the total rolled. Once you use this trait, you can't use it again until you finish a Long Rest.",
-          "type": "active",
-          "mechanical": "healingHands",
-          "dice": "d4",
-          "diceCount": "profBonus",
-          "uses": 1,
-          "recharge": "longRest"
-        },
-        {
-          "name": "Light Bearer",
-          "desc": "You know the Light cantrip. Charisma is your spellcasting ability for it.",
-          "type": "passive",
-          "mechanical": "speciesCantrip",
-          "cantrip": "Light",
-          "stat": "cha"
-        }
-      ],
+      "description": "Aasimar are beings touched by celestial power. On Krynn, where the gods have been absent for three centuries, an aasimar's existence would be a profound sign of divine return.",
+      "traits": {
+        "size": "Medium",
+        "speed": 30,
+        "darkvision": 60,
+        "languages": [
+          "Common",
+          "Celestial"
+        ],
+        "extraLanguages": 0,
+        "resistances": [
+          "radiant",
+          "necrotic"
+        ],
+        "features": [
+          {
+            "name": "Celestial Resistance",
+            "description": "You have Resistance to Necrotic damage and Radiant damage."
+          },
+          {
+            "name": "Healing Hands",
+            "description": "As a Magic action, you touch a creature and roll a number of d4s equal to your Proficiency Bonus. The creature regains a number of Hit Points equal to the total rolled. Once you use this trait, you can't use it again until you finish a Long Rest."
+          },
+          {
+            "name": "Light Bearer",
+            "description": "You know the Light cantrip. Charisma is your spellcasting ability for it."
+          }
+        ]
+      },
       "celestialRevelation": {
         "desc": "At 3rd level, choose one of the following Celestial Revelation options. As a Bonus Action, you can unleash your celestial form for 1 minute (PB times per Long Rest). While transformed, you deal extra Radiant or Necrotic damage once per turn equal to your Proficiency Bonus.",
         "minLevel": 3,
@@ -694,8 +639,7 @@
             "range": 10
           }
         }
-      },
-      "subraces": null
+      }
     }
   }
 }
