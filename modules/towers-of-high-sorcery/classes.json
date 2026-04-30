@@ -20,72 +20,281 @@
       "spellcasting": {
         "ability": "Intelligence",
         "spellsKnown": "All spells in spellbook (prepare INT mod + level)",
-        "cantripsKnown": [3, 3, 3, 4, 4, 4, 4, 4, 4, 5],
+        "cantripsKnown": [3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
         "spellSlots": {
-          "1": [2, 3, 4, 4, 4, 4, 4, 4, 4, 4],
-          "2": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3],
-          "3": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3]
+          "1": [2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+          "2": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+          "3": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+          "4": [0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+          "5": [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3],
+          "6": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2],
+          "7": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2],
+          "8": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+          "9": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1]
         }
       },
       "features": {
         "1": [
           {
             "name": "Spellcasting",
-            "description": "You can cast wizard spells. Intelligence is your spellcasting ability."
+            "description": "You can cast wizard spells. Intelligence is your spellcasting ability. You prepare spells from your spellbook equal to INT modifier + wizard level (minimum 1)."
           },
           {
             "name": "Arcane Recovery",
-            "description": "Once per day during a short rest, you can recover spell slots with a combined level equal to half your wizard level (rounded up)."
+            "description": "Once per day during a short rest, you can recover spell slots with a combined level equal to half your wizard level (rounded up). None of the slots can be 6th level or higher."
+          },
+          {
+            "name": "Ritual Casting",
+            "description": "You can cast a wizard spell as a ritual if that spell has the ritual tag and you have the spell in your spellbook. You don't need to have the spell prepared."
           }
         ],
         "2": [
           {
             "name": "Arcane Tradition",
-            "description": "Choose a school of magic: Abjuration, Conjuration, Divination, Enchantment, Evocation, Illusion, Necromancy, or Transmutation."
+            "description": "Choose a school of magic: Abjuration, Conjuration, Divination, Enchantment, Evocation, Illusion, Necromancy, or Transmutation. You gain features at levels 2, 6, 10, and 14."
           }
         ],
-        "3": []
+        "3": [],
+        "4": [
+          {
+            "name": "Ability Score Improvement",
+            "description": "Increase one ability score by 2, or two ability scores by 1 each. Alternatively, you can take a feat."
+          },
+          {
+            "name": "Cantrip Formulas",
+            "description": "You can replace one wizard cantrip you know with another from the wizard spell list whenever you finish a long rest."
+          }
+        ],
+        "5": [],
+        "6": [
+          {
+            "name": "Arcane Tradition Feature",
+            "description": "You gain a feature from your chosen Arcane Tradition."
+          }
+        ],
+        "7": [],
+        "8": [
+          {
+            "name": "Ability Score Improvement",
+            "description": "Increase one ability score by 2, or two ability scores by 1 each. Alternatively, you can take a feat."
+          }
+        ],
+        "9": [],
+        "10": [
+          {
+            "name": "Arcane Tradition Feature",
+            "description": "You gain a feature from your chosen Arcane Tradition."
+          }
+        ],
+        "11": [],
+        "12": [
+          {
+            "name": "Ability Score Improvement",
+            "description": "Increase one ability score by 2, or two ability scores by 1 each. Alternatively, you can take a feat."
+          }
+        ],
+        "13": [],
+        "14": [
+          {
+            "name": "Arcane Tradition Feature",
+            "description": "You gain a feature from your chosen Arcane Tradition."
+          }
+        ],
+        "15": [],
+        "16": [
+          {
+            "name": "Ability Score Improvement",
+            "description": "Increase one ability score by 2, or two ability scores by 1 each. Alternatively, you can take a feat."
+          }
+        ],
+        "17": [],
+        "18": [
+          {
+            "name": "Spell Mastery",
+            "description": "Choose a 1st-level wizard spell and a 2nd-level wizard spell that are in your spellbook. You can cast those spells at their lowest level without expending a spell slot. You must have them prepared. You can change one or both spells when you finish a long rest."
+          }
+        ],
+        "19": [
+          {
+            "name": "Ability Score Improvement",
+            "description": "Increase one ability score by 2, or two ability scores by 1 each. Alternatively, you can take a feat."
+          }
+        ],
+        "20": [
+          {
+            "name": "Signature Spells",
+            "description": "Choose two 3rd-level wizard spells in your spellbook as signature spells. You always have them prepared and can cast each once at 3rd level without expending a spell slot. You regain this ability after a short or long rest."
+          }
+        ]
       },
       "arcaneSchools": {
         "Abjuration": {
           "name": "School of Abjuration",
-          "feature": "Arcane Ward",
-          "description": "When you cast an abjuration spell, you create a protective ward. The ward has HP equal to twice your wizard level + INT modifier."
+          "features": {
+            "2": {
+              "name": "Arcane Ward",
+              "description": "When you cast an abjuration spell of 1st level or higher, you create a magical ward. The ward has HP equal to twice your wizard level + INT modifier. When you take damage, the ward takes the damage instead. When the ward drops to 0 HP, you take any remaining damage. Casting an abjuration spell while the ward is active restores HP to it equal to twice the spell's level."
+            },
+            "6": {
+              "name": "Projected Ward",
+              "description": "When a creature you can see within 30 feet takes damage, you can use your reaction to cause your Arcane Ward to absorb that damage instead. If the ward's HP drops to 0, the creature takes any remaining damage."
+            },
+            "10": {
+              "name": "Improved Abjuration",
+              "description": "When you cast an abjuration spell that requires you to make an ability check (such as Counterspell or Dispel Magic), add your proficiency bonus to that check."
+            },
+            "14": {
+              "name": "Spell Resistance",
+              "description": "You have advantage on saving throws against spells. You have resistance against the damage of spells."
+            }
+          }
         },
         "Conjuration": {
           "name": "School of Conjuration",
-          "feature": "Minor Conjuration",
-          "description": "You can use an action to conjure an inanimate object in your hand or on the ground. The object is visibly magical and vanishes after 1 hour."
+          "features": {
+            "2": {
+              "name": "Minor Conjuration",
+              "description": "As an action, you can conjure an inanimate object in your hand or on the ground in an unoccupied space within 10 feet. The object can be no larger than 3 feet on a side and weigh no more than 10 pounds. It must be a form of a nonmagical object you have seen. The object is visibly magical, radiating dim light out to 5 feet. It vanishes after 1 hour, when you use this feature again, or if it deals or takes any damage."
+            },
+            "6": {
+              "name": "Benign Transposition",
+              "description": "You can use your action to teleport up to 30 feet to an unoccupied space you can see. Alternatively, you can teleport to a space occupied by a Small or Medium willing creature; you both teleport, swapping places. Once you use this feature, you can't do so again until you finish a long rest or cast a conjuration spell of 1st level or higher."
+            },
+            "10": {
+              "name": "Focused Conjuration",
+              "description": "While you are concentrating on a conjuration spell, your concentration can't be broken as a result of taking damage."
+            },
+            "14": {
+              "name": "Durable Summons",
+              "description": "Any creature you summon or create with a conjuration spell has 30 temporary hit points."
+            }
+          }
         },
         "Divination": {
           "name": "School of Divination",
-          "feature": "Portent",
-          "description": "When you finish a long rest, roll two d20s and record the numbers. You can replace any attack roll, saving throw, or ability check made by you or a creature that you can see with one of these foretelling rolls."
+          "features": {
+            "2": {
+              "name": "Portent",
+              "description": "When you finish a long rest, roll two d20s and record the numbers rolled. You can replace any attack roll, saving throw, or ability check made by you or a creature that you can see with one of these foretelling rolls. You must choose to do so before the roll. Each foretelling roll can be used only once. You lose any unused rolls when you finish a long rest."
+            },
+            "6": {
+              "name": "Expert Divination",
+              "description": "Casting divination spells comes easily. When you cast a divination spell of 2nd level or higher using a spell slot, you regain one expended spell slot. The slot must be of a level lower than the spell you cast and no higher than 5th level."
+            },
+            "10": {
+              "name": "The Third Eye",
+              "description": "You can use your action to increase your powers of perception. Choose one benefit, which lasts until you are incapacitated or finish a short or long rest: Darkvision (60 ft), Ethereal Sight (see into the Ethereal Plane 60 ft), Greater Comprehension (read any language), or See Invisibility (see invisible creatures and objects within 10 ft)."
+            },
+            "14": {
+              "name": "Greater Portent",
+              "description": "The visions in your dreams intensify. You roll three d20s for your Portent feature, rather than two."
+            }
+          }
         },
         "Enchantment": {
           "name": "School of Enchantment",
-          "feature": "Hypnotic Gaze",
-          "description": "As an action, choose one creature within 5 feet. If it fails a Wisdom save, it is charmed until the end of your next turn."
+          "features": {
+            "2": {
+              "name": "Hypnotic Gaze",
+              "description": "As an action, choose one creature you can see within 5 feet. If it can see or hear you, it must succeed on a Wisdom saving throw or be charmed by you until the end of your next turn. The charmed creature's speed drops to 0 and is incapacitated. On subsequent turns, you can use your action to maintain this effect, extending its duration. The effect ends if you move more than 5 feet away, if the creature can't see or hear you, or if the creature takes damage."
+            },
+            "6": {
+              "name": "Instinctive Charm",
+              "description": "When a creature you can see within 30 feet makes an attack roll against you, you can use your reaction to divert the attack if another creature is within the attack's range. The attacker must make a Wisdom save. On a failed save, the attacker must target the creature closest to it (not you or itself). If multiple creatures are closest, the attacker chooses. On a success, you can't use this feature against that attacker again until you finish a long rest. Creatures immune to being charmed are immune to this effect."
+            },
+            "10": {
+              "name": "Split Enchantment",
+              "description": "When you cast an enchantment spell of 1st level or higher that targets only one creature, you can have it target a second creature."
+            },
+            "14": {
+              "name": "Alter Memories",
+              "description": "When you cast an enchantment spell to charm one or more creatures, you can alter one creature's understanding so it remains unaware of being charmed. Additionally, once before the spell expires, you can use your action to make the charmed creature forget some of the time it was charmed. The creature must succeed on an Intelligence save or lose a number of hours of its memories equal to 1 + your Charisma modifier (minimum 1)."
+            }
+          }
         },
         "Evocation": {
           "name": "School of Evocation",
-          "feature": "Sculpt Spells",
-          "description": "When you cast an evocation spell that affects other creatures, you can choose a number of them equal to 1 + the spell's level. Those creatures automatically succeed on their saving throws and take no damage."
+          "features": {
+            "2": {
+              "name": "Sculpt Spells",
+              "description": "When you cast an evocation spell that affects other creatures you can see, you can choose a number of them equal to 1 + the spell's level. Those creatures automatically succeed on their saving throws against the spell and take no damage if they would normally take half damage on a successful save."
+            },
+            "6": {
+              "name": "Potent Cantrip",
+              "description": "Your damaging cantrips affect even creatures that avoid the brunt of the effect. When a creature succeeds on a saving throw against your cantrip, the creature takes half the cantrip's damage (if any) but suffers no additional effect from the cantrip."
+            },
+            "10": {
+              "name": "Empowered Evocation",
+              "description": "You can add your Intelligence modifier to one damage roll of any wizard evocation spell you cast."
+            },
+            "14": {
+              "name": "Overchannel",
+              "description": "When you cast a wizard spell of 1st through 5th level that deals damage, you can deal maximum damage with that spell. The first time you do so, you suffer no adverse effect. If you use this feature again before you finish a long rest, you take 2d12 necrotic damage per spell level immediately after casting. Each additional use before a long rest increases the damage by 1d12 per level."
+            }
+          }
         },
         "Illusion": {
           "name": "School of Illusion",
-          "feature": "Improved Minor Illusion",
-          "description": "You learn the Minor Illusion cantrip. When you cast it, you can create both a sound and an image with a single casting."
+          "features": {
+            "2": {
+              "name": "Improved Minor Illusion",
+              "description": "You learn the Minor Illusion cantrip. If you already know it, you learn a different wizard cantrip of your choice. When you cast Minor Illusion, you can create both a sound and an image with a single casting of the spell."
+            },
+            "6": {
+              "name": "Malleable Illusions",
+              "description": "When you cast an illusion spell that has a duration of 1 minute or longer, you can use your action to change the nature of that illusion (using the spell's normal parameters) provided you can see the illusion."
+            },
+            "10": {
+              "name": "Illusory Self",
+              "description": "When a creature makes an attack roll against you, you can use your reaction to interpose an illusory duplicate between the attacker and yourself. The attack automatically misses you. Once you use this feature, you can't use it again until you finish a short or long rest."
+            },
+            "14": {
+              "name": "Illusory Reality",
+              "description": "When you cast an illusion spell of 1st level or higher, you can choose one inanimate, nonmagical object that is part of the illusion and make that object real. You can do this on your turn as a bonus action while the spell is ongoing. The object remains real for 1 minute and can't deal damage or otherwise directly harm anyone."
+            }
+          }
         },
         "Necromancy": {
           "name": "School of Necromancy",
-          "feature": "Grim Harvest",
-          "description": "When you kill a creature with a spell of 1st level or higher, you regain HP equal to twice the spell's level (three times if Necromancy)."
+          "features": {
+            "2": {
+              "name": "Grim Harvest",
+              "description": "When you kill one or more creatures with a spell of 1st level or higher, you regain HP equal to twice the spell's level, or three times if the spell belongs to the School of Necromancy. You don't gain this benefit for killing constructs or undead."
+            },
+            "6": {
+              "name": "Undead Thralls",
+              "description": "You add the Animate Dead spell to your spellbook if it's not there already. When you cast Animate Dead, you can target one additional corpse or pile of bones, creating another zombie or skeleton. Whenever you create an undead using a necromancy spell, it has additional benefits: its HP maximum is increased by an amount equal to your wizard level, and it adds your proficiency bonus to its weapon damage rolls."
+            },
+            "10": {
+              "name": "Inured to Undeath",
+              "description": "You have resistance to necrotic damage, and your HP maximum can't be reduced. You have spent so much time dealing with undead and the forces that animate them that you have become inured to some of their worst effects."
+            },
+            "14": {
+              "name": "Command Undead",
+              "description": "As an action, you can choose one undead you can see within 60 feet. It must make a Charisma save against your wizard spell save DC. If it succeeds, you can't use this feature on it again. If it fails, it becomes friendly to you and obeys your commands until you use this feature again. Intelligent undead (INT 8+) make the save with advantage. If it fails by 5 or more, the undead obeys without needing your concentration."
+            }
+          }
         },
         "Transmutation": {
           "name": "School of Transmutation",
-          "feature": "Minor Alchemy",
-          "description": "You can temporarily alter the physical properties of one nonmagical object, changing it from one substance to another."
+          "features": {
+            "2": {
+              "name": "Minor Alchemy",
+              "description": "You can temporarily alter the physical properties of one nonmagical object, changing it from one substance into another: wood to stone, lead to silver, etc. Using special alchemical tools, you can transform a 1-foot cube of material in 10 minutes. The transformation lasts 1 hour or until you lose concentration. The material reverts if you use this ability again."
+            },
+            "6": {
+              "name": "Transmuter's Stone",
+              "description": "You can create a transmuter's stone that stores transmutation magic (8 hours). You or another creature can benefit from the stone while bearing it. Choose the benefit: darkvision 60 ft, +10 ft speed, Constitution save proficiency, or resistance to acid/cold/fire/lightning/thunder damage (your choice). You can change the benefit whenever you cast a transmutation spell of 1st level or higher."
+            },
+            "10": {
+              "name": "Shapechanger",
+              "description": "You add the Polymorph spell to your spellbook if it's not there already. You can cast Polymorph without expending a spell slot. When you do so, you can target only yourself and transform into a beast whose CR is 1 or lower. Once you cast Polymorph in this way, you can't do so again until you finish a short or long rest."
+            },
+            "14": {
+              "name": "Master Transmuter",
+              "description": "You can use your action to consume the reserve of transmutation magic in your transmuter's stone for one of the following effects: Major Transformation (transmute a nonmagical object no larger than 5-foot cube into another), Panacea (remove all curses, diseases, and poisons from a creature and restore all HP), Restore Life (cast Raise Dead without a spell slot or needing components), or Restore Youth (reduce a creature's apparent age by 3d10 years, minimum 13)."
+            }
+          }
         }
       }
     },
@@ -108,67 +317,234 @@
       ],
       "spellcasting": {
         "ability": "Charisma",
-        "spellsKnown": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-        "cantripsKnown": [4, 4, 4, 5, 5, 5, 5, 5, 5, 6],
+        "spellsKnown": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 12, 13, 13, 14, 14, 15, 15, 15, 15],
+        "cantripsKnown": [4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6],
         "spellSlots": {
-          "1": [2, 3, 4, 4, 4, 4, 4, 4, 4, 4],
-          "2": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3],
-          "3": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3]
+          "1": [2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+          "2": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+          "3": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+          "4": [0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+          "5": [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3],
+          "6": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2],
+          "7": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2],
+          "8": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+          "9": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1]
         }
+      },
+      "sorceryPointConversion": {
+        "slotToPoints": {"1": 1, "2": 2, "3": 3, "4": 4, "5": 5},
+        "pointsToSlot": {"2": 1, "3": 2, "5": 3, "6": 4, "7": 5}
       },
       "features": {
         "1": [
           {
             "name": "Spellcasting",
-            "description": "You can cast sorcerer spells. Charisma is your spellcasting ability."
+            "description": "You can cast sorcerer spells. Charisma is your spellcasting ability. You know a limited number of spells and can swap one when you level up."
           },
           {
             "name": "Sorcerous Origin",
-            "description": "Choose the source of your innate magic: Draconic Bloodline, Wild Magic, or other origin."
+            "description": "Choose the source of your innate magic: Draconic Bloodline, Wild Magic, or Lunar Sorcery. You gain features at levels 1, 6, 14, and 18."
           }
         ],
         "2": [
           {
             "name": "Font of Magic",
-            "description": "You have sorcery points equal to your sorcerer level. You can use these to create spell slots or fuel Metamagic."
+            "description": "You have sorcery points equal to your sorcerer level. You can use these to create spell slots (bonus action) or convert spell slots back to points (also bonus action). Created slots vanish at the end of a long rest."
           }
         ],
         "3": [
           {
             "name": "Metamagic",
-            "description": "Choose two Metamagic options. You can use only one Metamagic option on a spell when you cast it."
+            "description": "You gain two Metamagic options of your choice. You can use only one Metamagic option on a spell when you cast it, unless otherwise noted. You learn additional options at 10th and 17th level."
+          }
+        ],
+        "4": [
+          {
+            "name": "Ability Score Improvement",
+            "description": "Increase one ability score by 2, or two ability scores by 1 each. Alternatively, you can take a feat."
+          }
+        ],
+        "5": [
+          {
+            "name": "Magical Guidance",
+            "description": "When you make an ability check that fails, you can spend 1 sorcery point to reroll the d20, and you must use the new roll. This can turn a failure into a success."
+          }
+        ],
+        "6": [
+          {
+            "name": "Sorcerous Origin Feature",
+            "description": "You gain a feature from your chosen Sorcerous Origin."
+          }
+        ],
+        "7": [],
+        "8": [
+          {
+            "name": "Ability Score Improvement",
+            "description": "Increase one ability score by 2, or two ability scores by 1 each. Alternatively, you can take a feat."
+          }
+        ],
+        "9": [],
+        "10": [
+          {
+            "name": "Metamagic",
+            "description": "You learn one additional Metamagic option of your choice."
+          }
+        ],
+        "11": [],
+        "12": [
+          {
+            "name": "Ability Score Improvement",
+            "description": "Increase one ability score by 2, or two ability scores by 1 each. Alternatively, you can take a feat."
+          }
+        ],
+        "13": [],
+        "14": [
+          {
+            "name": "Sorcerous Origin Feature",
+            "description": "You gain a feature from your chosen Sorcerous Origin."
+          }
+        ],
+        "15": [],
+        "16": [
+          {
+            "name": "Ability Score Improvement",
+            "description": "Increase one ability score by 2, or two ability scores by 1 each. Alternatively, you can take a feat."
+          }
+        ],
+        "17": [
+          {
+            "name": "Metamagic",
+            "description": "You learn one additional Metamagic option of your choice."
+          }
+        ],
+        "18": [
+          {
+            "name": "Sorcerous Origin Feature",
+            "description": "You gain a feature from your chosen Sorcerous Origin."
+          }
+        ],
+        "19": [
+          {
+            "name": "Ability Score Improvement",
+            "description": "Increase one ability score by 2, or two ability scores by 1 each. Alternatively, you can take a feat."
+          }
+        ],
+        "20": [
+          {
+            "name": "Sorcerous Restoration",
+            "description": "You regain 4 expended sorcery points whenever you finish a short rest."
           }
         ]
       },
       "sorcerousOrigins": {
         "Draconic Bloodline": {
           "name": "Draconic Bloodline",
-          "description": "Your innate magic comes from draconic ancestry. Choose a dragon type; you gain resistance to that damage type and bonus HP.",
-          "feature": "Draconic Resilience",
-          "featureDescription": "Your HP maximum increases by 1 for each sorcerer level. Your unarmored AC equals 13 + DEX modifier."
+          "description": "Your innate magic comes from draconic ancestry. Choose a dragon type to determine your damage affinity.",
+          "dragonTypes": {
+            "Black": "Acid",
+            "Blue": "Lightning",
+            "Brass": "Fire",
+            "Bronze": "Lightning",
+            "Copper": "Acid",
+            "Gold": "Fire",
+            "Green": "Poison",
+            "Red": "Fire",
+            "Silver": "Cold",
+            "White": "Cold"
+          },
+          "features": {
+            "1": {
+              "name": "Draconic Resilience",
+              "description": "Your HP maximum increases by 1 for each sorcerer level. Additionally, when you aren't wearing armor, your AC equals 13 + your Dexterity modifier."
+            },
+            "6": {
+              "name": "Elemental Affinity",
+              "description": "When you cast a spell that deals damage of the type associated with your draconic ancestry, you can add your Charisma modifier to one damage roll of that spell. Also, you can spend 1 sorcery point to gain resistance to that damage type for 1 hour."
+            },
+            "14": {
+              "name": "Dragon Wings",
+              "description": "You gain the ability to sprout a pair of dragon wings from your back, gaining a flying speed equal to your current speed. You can create these wings as a bonus action on your turn. They last until you dismiss them as a bonus action on your turn. You can't manifest your wings while wearing armor unless the armor is made to accommodate them."
+            },
+            "18": {
+              "name": "Draconic Presence",
+              "description": "As an action, you can spend 5 sorcery points to draw on your draconic power and exude an aura of awe or fear (your choice) to a distance of 60 feet. Hostile creatures must make a Wisdom save or become charmed (awe) or frightened (fear) of you for 1 minute. A creature can repeat the save at the end of each of its turns, ending the effect on itself on a success."
+            }
+          }
         },
         "Wild Magic": {
           "name": "Wild Magic",
-          "description": "Your magic is volatile and unpredictable, surging with chaotic energy.",
-          "feature": "Wild Magic Surge",
-          "featureDescription": "When you cast a spell of 1st level or higher, the DM can have you roll a d20. On a 1, roll on the Wild Magic Surge table."
+          "description": "Your magic is volatile and unpredictable, surging with chaotic energy from the raw forces of creation.",
+          "features": {
+            "1": {
+              "name": "Wild Magic Surge",
+              "description": "Immediately after you cast a sorcerer spell of 1st level or higher, the DM can have you roll a d20. If you roll a 1, roll on the Wild Magic Surge table to create a magical effect. If that effect is a spell, it is too wild to be affected by your Metamagic, and if it normally requires concentration, it doesn't require concentration in this case."
+            },
+            "1b": {
+              "name": "Tides of Chaos",
+              "description": "You can manipulate the forces of chance and chaos to gain advantage on one attack roll, ability check, or saving throw. Once you do so, you must finish a long rest before you can use this feature again. Any time before then, the DM can have you roll on the Wild Magic Surge table immediately after you cast a sorcerer spell of 1st level or higher. You then regain the use of this feature."
+            },
+            "6": {
+              "name": "Bend Luck",
+              "description": "When another creature you can see makes an attack roll, an ability check, or a saving throw, you can use your reaction and spend 2 sorcery points to roll 1d4 and apply the number rolled as a bonus or penalty (your choice) to the creature's roll. You can do so after the creature rolls but before any effects of the roll occur."
+            },
+            "14": {
+              "name": "Controlled Chaos",
+              "description": "You gain a modicum of control over the surges of your wild magic. Whenever you roll on the Wild Magic Surge table, you can roll twice and use either number."
+            },
+            "18": {
+              "name": "Spell Bombardment",
+              "description": "When you roll damage for a spell and roll the highest number possible on any of the dice, choose one of those dice, roll it again and add that roll to the damage. You can use this feature only once per turn."
+            }
+          }
         },
         "Lunar Sorcery": {
           "name": "Lunar Sorcery",
-          "description": "Your magic is tied to the moons of Krynn — Solinari, Lunitari, and Nuitari.",
-          "feature": "Moon Phase",
-          "featureDescription": "You can attune to one of the three moons, gaining benefits based on which moon is dominant."
+          "description": "Your magic is tied to the three moons of Krynn. The white moon Solinari governs protective magic, the red moon Lunitari governs transformative magic, and the black moon Nuitari governs destructive magic.",
+          "moonPhases": {
+            "Solinari": {
+              "spells": ["Shield", "Lesser Restoration", "Dispel Magic", "Death Ward", "Greater Restoration"],
+              "effect": "+1 AC or save bonus while attuned"
+            },
+            "Lunitari": {
+              "spells": ["Color Spray", "Alter Self", "Phantom Steed", "Hallucinatory Terrain", "Mislead"],
+              "effect": "Advantage on Stealth and Deception while attuned"
+            },
+            "Nuitari": {
+              "spells": ["Ray of Sickness", "Blindness/Deafness", "Vampiric Touch", "Confusion", "Hold Monster"],
+              "effect": "+1 to spell attack rolls and save DCs while attuned"
+            }
+          },
+          "features": {
+            "1": {
+              "name": "Moon Fire",
+              "description": "You learn the Sacred Flame cantrip. When you cast it, you can target a number of creatures equal to your Charisma modifier (minimum 1) that are within 5 feet of each other. Additionally, when you finish a long rest, you can attune to one of the three moons, gaining access to additional spells based on your sorcerer level."
+            },
+            "6": {
+              "name": "Lunar Boons",
+              "description": "Each lunar phase grants you a boon. Solinari grants you or a creature you touch resistance to radiant and necrotic damage for 1 hour. Lunitari lets you become invisible until the start of your next turn as a bonus action. Nuitari grants your spells that deal damage an extra 1d6 radiant or necrotic damage (your choice) to one target."
+            },
+            "14": {
+              "name": "Waxing and Waning",
+              "description": "You can shift to a different moon phase as a bonus action, and you can do this a number of times equal to your proficiency bonus. You regain all expended uses when you finish a long rest. When you shift phases, you or one creature within 30 feet of you gains temporary HP equal to your sorcerer level."
+            },
+            "18": {
+              "name": "Lunar Phenomenon",
+              "description": "As a bonus action, you can tap into a special power of your current lunar phase: Solinari grants you and allies within 30 feet resistance to all damage for 1 round, Lunitari lets you and creatures you choose within 30 feet become invisible until the end of your next turn, and Nuitari lets you deal 3d10 radiant or necrotic damage to creatures you choose within 30 feet. Once you use this feature, you can't do so again until you finish a long rest."
+            }
+          }
         }
       },
       "metamagic": [
-        {"name": "Careful Spell", "cost": 1, "description": "Allies auto-succeed on saves against your spells"},
-        {"name": "Distant Spell", "cost": 1, "description": "Double the range of a spell"},
-        {"name": "Empowered Spell", "cost": 1, "description": "Reroll damage dice equal to CHA mod"},
-        {"name": "Extended Spell", "cost": 1, "description": "Double the duration of a spell"},
-        {"name": "Heightened Spell", "cost": 3, "description": "One target has disadvantage on first save"},
-        {"name": "Quickened Spell", "cost": 2, "description": "Cast a spell as a bonus action"},
-        {"name": "Subtle Spell", "cost": 1, "description": "Cast without verbal or somatic components"},
-        {"name": "Twinned Spell", "cost": "spell level", "description": "Target a second creature with a single-target spell"}
+        {"name": "Careful Spell", "cost": 1, "description": "When you cast a spell that forces other creatures to make a saving throw, you can protect some of those creatures from the spell's full force. Choose a number of creatures up to your Charisma modifier (minimum 1). A chosen creature automatically succeeds on its saving throw against the spell."},
+        {"name": "Distant Spell", "cost": 1, "description": "When you cast a spell that has a range of 5 feet or greater, you can double the range of the spell. When you cast a spell that has a range of touch, you can make the range of the spell 30 feet."},
+        {"name": "Empowered Spell", "cost": 1, "description": "When you roll damage for a spell, you can reroll a number of the damage dice up to your Charisma modifier (minimum 1). You must use the new rolls. You can use Empowered Spell even if you have already used a different Metamagic option during the casting of the spell."},
+        {"name": "Extended Spell", "cost": 1, "description": "When you cast a spell that has a duration of 1 minute or longer, you can double its duration, to a maximum duration of 24 hours."},
+        {"name": "Heightened Spell", "cost": 3, "description": "When you cast a spell that forces a creature to make a saving throw, you can spend 3 sorcery points to give one target of the spell disadvantage on its first saving throw against the spell."},
+        {"name": "Quickened Spell", "cost": 2, "description": "When you cast a spell that has a casting time of 1 action, you can change the casting time to 1 bonus action for this casting."},
+        {"name": "Seeking Spell", "cost": 2, "description": "If you make an attack roll for a spell and miss, you can spend 2 sorcery points to reroll the d20, and you must use the new roll. You can use Seeking Spell even if you have already used a different Metamagic option during the casting of the spell."},
+        {"name": "Subtle Spell", "cost": 1, "description": "When you cast a spell, you can cast it without any somatic or verbal components."},
+        {"name": "Transmuted Spell", "cost": 1, "description": "When you cast a spell that deals a type of damage from the following list, you can change that damage type to one of the other listed types: acid, cold, fire, lightning, poison, thunder."},
+        {"name": "Twinned Spell", "cost": "spell level (1 minimum)", "description": "When you cast a spell that targets only one creature and doesn't have a range of self, you can spend sorcery points equal to the spell's level (1 for cantrips) to target a second creature in range with the same spell."}
       ]
     }
   }

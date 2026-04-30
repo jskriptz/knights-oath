@@ -1902,7 +1902,7 @@ function calcAC(armor,hasShield,dexMod){
   const acs={'None':10+dexMod,'Chain Mail':16,'Scale Mail':Math.min(14+dexMod,16),'Leather Armor':11+dexMod,'Studded Leather':12+dexMod,'Half-Plate':Math.min(15+dexMod,17)};
   return(acs[armor||'None']||10+dexMod)+(hasShield?2:0);
 }
-function calcDerived(stats,cls,lvl,armor,hasShield,feat,wounds,exhaustion,durability,style,classLevels){
+function calcDerived(stats,cls,lvl,armor,hasShield,feat,wounds,exhaustion,durability,style,classLevels,subclass){
   const ws=wounds||[];const woundPenalty=(stat)=>ws.filter(w=>w.stat===stat&&w.combatsLeft>0).length;
   const exh=Math.min(Math.max(exhaustion||0,0),10);
   const d={};d.profBonus=lvl>=5?3:2;
@@ -1923,7 +1923,9 @@ function calcDerived(stats,cls,lvl,armor,hasShield,feat,wounds,exhaustion,durabi
   d.armorDurStatus=getDurabilityStatus(armorDur);
   // Defense fighting style: +1 AC while wearing armor
   const defenseBonus=(style==='Defense'&&armor&&armor!=='None')?1:0;
-  d.ac=calcAC(armor||'Chain Mail',hasShield!==false,d.dexMod)-d.armorDurStatus.penalty+defenseBonus;
+  // Draconic Resilience: 13 + DEX when unarmored (instead of 10 + DEX)
+  const draconicAC=(cls==='Sorcerer'&&subclass==='draconic'&&(!armor||armor==='None'))?3:0;
+  d.ac=calcAC(armor||'Chain Mail',hasShield!==false,d.dexMod)-d.armorDurStatus.penalty+defenseBonus+draconicAC;
 
   // Hit Die — use CLASS_DATA if available, else default by known class
   const classInfo=CLASS_DATA?.classes?.[cls]||null;
@@ -1933,7 +1935,10 @@ function calcDerived(stats,cls,lvl,armor,hasShield,feat,wounds,exhaustion,durabi
   const startHp=classInfo?classInfo.startingHp:d.hitDie;
   const perLvl=classInfo?classInfo.hpPerLevel:(Math.floor(d.hitDie/2)+1);
   d.maxHp=startHp+d.conMod;for(let i=2;i<=lvl;i++)d.maxHp+=perLvl+d.conMod;
-  if(feat==='Tough')d.maxHp+=lvl*2;d.maxHp=Math.max(d.maxHp,1);
+  if(feat==='Tough')d.maxHp+=lvl*2;
+  // Draconic Resilience: +1 HP per sorcerer level
+  if(cls==='Sorcerer'&&subclass==='draconic')d.maxHp+=lvl;
+  d.maxHp=Math.max(d.maxHp,1);
 
   // Attack bonus — STR-based for melee classes, DEX for finesse/ranged classes (minus weapon durability penalty)
   const primaryMelee=cls==='Rogue'||cls==='Monk'||cls==='Ranger';
@@ -2015,7 +2020,7 @@ function calcDerived(stats,cls,lvl,armor,hasShield,feat,wounds,exhaustion,durabi
     d.spellSlots7th=slots[6];d.spellSlots7thMax=slots[6];
     d.spellSlots8th=slots[7];d.spellSlots8thMax=slots[7];
     d.spellSlots9th=slots[8];d.spellSlots9thMax=slots[8];
-    d.cantripsKnown=classInfo?.spellcasting?.cantrips?.[lvl-1]||(lvl>=10?5:lvl>=4?4:3);
+    d.cantripsKnown=classInfo?.spellcasting?.cantripsKnown?.[lvl-1]||(lvl>=10?5:lvl>=4?4:3);
     const castMod=cls==='Wizard'?d.intMod:cls==='Bard'||cls==='Sorcerer'?d.chaMod:cls==='Druid'?d.wisMod:cls==='Cleric'?d.wisMod:d.chaMod;
     d.preparedSpells=cls==='Bard'||cls==='Sorcerer'?lvl+3:Math.max(1,castMod+lvl);
   } else if(HALF_CASTERS.includes(cls)){
@@ -2072,6 +2077,18 @@ function calcDerived(stats,cls,lvl,armor,hasShield,feat,wounds,exhaustion,durabi
   // Cleric resources (uses Cleric level for multiclass)
   const clericLvl=isMulticlass?(d.classLevels.Cleric||0):(cls==='Cleric'?lvl:0);
   if(clericLvl>0){d.channelDivinity=d.profBonus}
+  // Sorcerer resources (uses Sorcerer level for multiclass)
+  const sorcererLvl=isMulticlass?(d.classLevels.Sorcerer||0):(cls==='Sorcerer'?lvl:0);
+  if(sorcererLvl>0){
+    d.sorceryPoints=sorcererLvl>=2?sorcererLvl:0;
+    d.sorceryPointsMax=d.sorceryPoints;
+    d.metamagicCount=sorcererLvl>=17?4:sorcererLvl>=10?3:sorcererLvl>=3?2:0;
+  }
+  // Wizard resources (uses Wizard level for multiclass)
+  const wizardLvl=isMulticlass?(d.classLevels.Wizard||0):(cls==='Wizard'?lvl:0);
+  if(wizardLvl>0){
+    d.arcaneRecovery=Math.ceil(wizardLvl/2); // Spell slot levels recoverable
+  }
 
   d.hitDiceTotal=lvl;
   return d;
@@ -2429,7 +2446,7 @@ function equipItem(gs,itemName,slotOverride){
   eq[slot]=itemName;
   const ns={...gs,equipment:eq};
   syncEquipToState(ns);
-  ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels);
+  ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels,ns.subclass);
   SoundManager.play('equip');
   return ns;
 }
@@ -2439,7 +2456,7 @@ function unequipItem(gs,slotId){
   eq[slotId]=null;
   const ns={...gs,equipment:eq};
   syncEquipToState(ns);
-  ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels);
+  ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels,ns.subclass);
   return ns;
 }
 function isLightWeapon(name){const w=WEAPONS_WITH_MASTERY.find(x=>x.name===name);return w&&/Light/i.test(w.props)}
@@ -3179,7 +3196,7 @@ function applyKnightingBonus(gs,order,skillChoice){
   if(!ns.titles.includes(knightTitle))ns.titles.push(knightTitle);
   if(!ns.selectedTitle)ns.selectedTitle=knightTitle;
   // Recalc derived
-  ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels);
+  ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels,ns.subclass);
   return ns;
 }
 
@@ -3199,7 +3216,7 @@ const ST={
   async del(k){try{if(window.storage){await window.storage.delete(k);return}localStorage.removeItem(k)}catch(e){try{localStorage.removeItem(k)}catch(e2){}}}
 };
 // ── Save System: Character (persistent) + Module Progress (per-module) ──
-const CHARACTER_FIELDS=['cls','stats','style','feat','bonusFeat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','rations','torches','waterskinUses','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount','languages','exhaustion','toolProficiencies','musicianInstruments','heroicInspiration','knightingSkill','portrait','durability','titles','selectedTitle','completedModules','loveInterest','partedCompanions','lastApproval','kills','subclass','maneuvers','superiorityDice','channelDivinityUsed','vowOfEnmityTarget','sacredWeaponActive','classLevels','secondClass','secondSubclass','inventoryMeta','originalFeats','originalSpells','originalSubclass','originalManeuvers','scaledFrom','levelSnapshots','currentCampaign','campaignProgress','sagaFlags','species','speciesTraits'];
+const CHARACTER_FIELDS=['cls','stats','style','feat','bonusFeat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','rations','torches','waterskinUses','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount','languages','exhaustion','toolProficiencies','musicianInstruments','heroicInspiration','knightingSkill','portrait','durability','titles','selectedTitle','completedModules','loveInterest','partedCompanions','lastApproval','kills','subclass','metamagic','maneuvers','superiorityDice','channelDivinityUsed','vowOfEnmityTarget','sacredWeaponActive','classLevels','secondClass','secondSubclass','inventoryMeta','originalFeats','originalSpells','originalSubclass','originalManeuvers','scaledFrom','levelSnapshots','currentCampaign','campaignProgress','sagaFlags','species','speciesTraits'];
 const MODULE_PROGRESS_FIELDS=['history','flags','awardedScenes','completedRolls','companions','romances','romanceDeclined','companionLog','deadCompanions','rose','sword','crown','orderMax','dgTrack','godSigns','hitDiceUsed','secondWindUsed','actionSurgeUsed','spellSlotsUsed','spellSlots2ndUsed','spellSlots3rdUsed','spellSlots4thUsed','spellSlots5thUsed','spellSlots6thUsed','spellSlots7thUsed','spellSlots8thUsed','spellSlots9thUsed','layOnHandsPool','miraHealedThisScene','combatCount','measureTrack','measureOrientation','approval','shortRestsToday','longRestTaken','dayNumber','campStash'];
 
 function splitSave(gs,sceneId){
@@ -5628,7 +5645,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
             }else if(onStateUpdate){
               onStateUpdate(g=>{
                 const ng=degradeEquipment(g,'mainHand');
-                ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds,ng.exhaustion,ng.durability,ng.style,ng.classLevels);
+                ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds,ng.exhaustion,ng.durability,ng.style,ng.classLevels,ng.subclass);
                 return ng;
               });
               logMsg+=' [FUMBLE: weapon damaged!]';
@@ -7419,7 +7436,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
                 const usedScars=(ng.scars||[]).map(s=>s.text);const availScars=SCARS.filter(s=>!usedScars.includes(s));
                 const scarText=availScars.length>0?availScars[Math.floor(Math.random()*availScars.length)]:SCARS[Math.floor(Math.random()*SCARS.length)];
                 ng.scars=[...(ng.scars||[]),{text:scarText,scene:newWound.scene}];
-                ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds,ng.exhaustion,ng.durability,ng.style,ng.classLevels);
+                ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds,ng.exhaustion,ng.durability,ng.style,ng.classLevels,ng.subclass);
                 setTimeout(()=>setDefeatRecovery({wound:newWound,scar:scarText}),400);
                 // Mount takes heavy damage on defeat — 50% chance killed
                 if(ng.mount){const mountDmg=rollDice(10)+rollDice(10);ng.mount={...ng.mount,hp:ng.mount.hp-mountDmg};
@@ -7431,7 +7448,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
               if(c.civilianRescued&&c.result==='win'){ng.xp=(ng.xp||0)+10;ng.rose=(ng.rose||0)+2;ng.flags={...(ng.flags||{}),civilianRescued:true}}
               // Tick down wound timers on combat completion (victory heals; defeat adds new wound above)
               ng.combatCount=(ng.combatCount||0)+1;
-              if(c.result==='win'&&ng.wounds&&ng.wounds.length){ng.wounds=ng.wounds.map(w=>({...w,combatsLeft:Math.max(0,w.combatsLeft-1)})).filter(w=>w.combatsLeft>0);ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds,ng.exhaustion,ng.durability,ng.style,ng.classLevels)}
+              if(c.result==='win'&&ng.wounds&&ng.wounds.length){ng.wounds=ng.wounds.map(w=>({...w,combatsLeft:Math.max(0,w.combatsLeft-1)})).filter(w=>w.combatsLeft>0);ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds,ng.exhaustion,ng.durability,ng.style,ng.classLevels,ng.subclass)}
               return ng;
             });
           }
@@ -7699,13 +7716,18 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
                 logEntries.push('Stunning blow! CON save '+save+' vs DC '+dc+' \u2718 '+result.narrative);
               }
             }
-            // Dragon Breath: Frightened on fail (WIS save)
+            // Dragon Breath: Frightened on fail (WIS save) \u2014 Fey Ancestry grants advantage
             if(/dragon|drake/i.test(eName)&&c.round===1&&!hasCondition({conditions:c.conditions},'Frightened')){
-              const dc=14;const save=rollDice(20)+derived.wisMod;
+              const dc=14;
+              const hasFeyAncestry=gs.speciesTraits?.feyAncestry;
+              let save=rollDice(20)+derived.wisMod;
+              if(hasFeyAncestry){const save2=rollDice(20)+derived.wisMod;save=Math.max(save,save2)}
               if(save<dc){
                 const result=applyCondition({name:'You',conditions:c.conditions||[]},'Frightened',2);
                 c.conditions=result.target.conditions;
-                logEntries.push('Frightful Presence! WIS save '+save+' vs DC '+dc+' \u2718 '+result.narrative);
+                logEntries.push('Frightful Presence! WIS save '+save+(hasFeyAncestry?' (adv)':'')+' vs DC '+dc+' \u2718 '+result.narrative);
+              }else if(hasFeyAncestry){
+                logEntries.push('Frightful Presence resisted! WIS save '+save+' (adv from Fey Ancestry) vs DC '+dc+' \u2714');
               }
             }
 
@@ -7713,7 +7735,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
               const enemyRef=enemy; // capture for closure
               onStateUpdate(g=>{
                 const ng=degradeEquipment(g,'armor',1,enemyRef);
-                ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds,ng.exhaustion,ng.durability,ng.style,ng.classLevels);
+                ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds,ng.exhaustion,ng.durability,ng.style,ng.classLevels,ng.subclass);
                 return ng;
               });
             }
@@ -7917,7 +7939,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
               }
             }
             ng.combatCount=(ng.combatCount||0)+1;
-            if(ng.wounds&&ng.wounds.length){ng.wounds=ng.wounds.map(w=>({...w,combatsLeft:Math.max(0,w.combatsLeft-1)})).filter(w=>w.combatsLeft>0);ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds,ng.exhaustion,ng.durability,ng.style,ng.classLevels)}
+            if(ng.wounds&&ng.wounds.length){ng.wounds=ng.wounds.map(w=>({...w,combatsLeft:Math.max(0,w.combatsLeft-1)})).filter(w=>w.combatsLeft>0);ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds,ng.exhaustion,ng.durability,ng.style,ng.classLevels,ng.subclass)}
             return ng;
           });
           setCombat({result:'win',log:[{type:'result',text:'Victory (pen & paper)',round:0}],phase:'over'});
@@ -7936,7 +7958,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
             const weaponDmg=2+Math.floor(Math.random()*3);const armorDmg=1+Math.floor(Math.random()*3);
             if(ng.weapon&&ng.weapon!=='Unarmed'){const tmp=degradeEquipment(ng,'mainHand',weaponDmg);ng.durability=tmp.durability}
             if(ng.armor&&ng.armor!=='None'){const tmp=degradeEquipment(ng,'armor',armorDmg);ng.durability=tmp.durability}
-            ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds,ng.exhaustion,ng.durability,ng.style,ng.classLevels);
+            ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds,ng.exhaustion,ng.durability,ng.style,ng.classLevels,ng.subclass);
             setTimeout(()=>setDefeatRecovery({wound:newWound,scar:scarText,weaponDmg,armorDmg}),400);
             return ng;
           });
@@ -8105,7 +8127,7 @@ function CombatBox({text,gs,derived,onStateUpdate,sceneId}){
                 addItemWithTracking(ng,'Dawnstrike',scKey);addItemWithTracking(ng,'Half-Plate',scKey);
                 ng.flags={...(ng.flags||{}),dawnstrike:true};
                 if(ng.equipment)ng.equipment={...ng.equipment,mainHand:'Dawnstrike',armor:'Half-Plate',offHand:null};
-                ng.derived=calcDerived(ng.stats,ng.cls,ng.level,'Half-Plate',false,ng.feat,ng.wounds,ng.exhaustion,ng.durability,ng.style,ng.classLevels);
+                ng.derived=calcDerived(ng.stats,ng.cls,ng.level,'Half-Plate',false,ng.feat,ng.wounds,ng.exhaustion,ng.durability,ng.style,ng.classLevels,ng.subclass);
                 return ng;
               });
             }},e('strong',null,'A) Accept Dawnstrike and the Half-Plate'),' \u2014 A greatsword of legend and the armour of a true knight.'),
@@ -8924,7 +8946,7 @@ function ShopBox({text,gs,onStateUpdate}){
         if(item.name.includes('Bandage'))ng.bandages=(ng.bandages||0)+1;
         if(item.name.includes('Potion of Healing')&&!item.name.includes('Greater'))ng.potions=(ng.potions||0)+1;
         if(item.name.includes('Greater Potion'))ng.greaterPotions=(ng.greaterPotions||0)+1;
-        if(item.name==='Shield'&&!ng.hasShield){ng.hasShield=true;if(ng.equipment)ng.equipment={...ng.equipment,offHand:'Shield'};ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,true,ng.feat,ng.wounds,ng.exhaustion,ng.durability,ng.style,ng.classLevels)}
+        if(item.name==='Shield'&&!ng.hasShield){ng.hasShield=true;if(ng.equipment)ng.equipment={...ng.equipment,offHand:'Shield'};ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,true,ng.feat,ng.wounds,ng.exhaustion,ng.durability,ng.style,ng.classLevels,ng.subclass)}
         return ng;
       });
     }
@@ -8951,8 +8973,8 @@ function ShopBox({text,gs,onStateUpdate}){
         if(itemName.includes('Potion of Healing')&&!itemName.includes('Greater'))ng.potions=Math.max(0,(ng.potions||0)-1);
         if(itemName.includes('Greater Potion'))ng.greaterPotions=Math.max(0,(ng.greaterPotions||0)-1);
         // Unequip from equipment slots if selling an equipped item
-        if(ng.equipment){const eq={...ng.equipment};let changed=false;for(const[k,v]of Object.entries(eq)){if(v===itemName&&!ng.inventory.includes(itemName)){eq[k]=null;changed=true;break}}if(changed){ng.equipment=eq;syncEquipToState(ng);ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds,ng.exhaustion,ng.durability,ng.style,ng.classLevels)}}
-        if(itemName==='Shield'&&ng.hasShield&&!ng.inventory.includes('Shield')){ng.hasShield=false;if(ng.equipment)ng.equipment={...ng.equipment,offHand:null};ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,false,ng.feat,ng.wounds,ng.exhaustion,ng.durability,ng.style,ng.classLevels)}
+        if(ng.equipment){const eq={...ng.equipment};let changed=false;for(const[k,v]of Object.entries(eq)){if(v===itemName&&!ng.inventory.includes(itemName)){eq[k]=null;changed=true;break}}if(changed){ng.equipment=eq;syncEquipToState(ng);ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds,ng.exhaustion,ng.durability,ng.style,ng.classLevels,ng.subclass)}}
+        if(itemName==='Shield'&&ng.hasShield&&!ng.inventory.includes('Shield')){ng.hasShield=false;if(ng.equipment)ng.equipment={...ng.equipment,offHand:null};ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,false,ng.feat,ng.wounds,ng.exhaustion,ng.durability,ng.style,ng.classLevels,ng.subclass)}
         return ng;
       });
     }
@@ -9117,7 +9139,7 @@ function ShopBox({text,gs,onStateUpdate}){
                   if(onStateUpdate)onStateUpdate(g=>{
                     const ng=repairEquipment(g,'mainHand');
                     ng.gold=(ng.gold||0)-weaponCost;
-                    ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds,ng.exhaustion,ng.durability,ng.style,ng.classLevels);
+                    ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds,ng.exhaustion,ng.durability,ng.style,ng.classLevels,ng.subclass);
                     return ng;
                   });
                 },disabled:localGold<weaponCost},'Repair'))
@@ -9132,7 +9154,7 @@ function ShopBox({text,gs,onStateUpdate}){
                   if(onStateUpdate)onStateUpdate(g=>{
                     const ng=repairEquipment(g,'armor');
                     ng.gold=(ng.gold||0)-armorCost;
-                    ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds,ng.exhaustion,ng.durability,ng.style,ng.classLevels);
+                    ng.derived=calcDerived(ng.stats,ng.cls,ng.level,ng.armor,ng.hasShield,ng.feat,ng.wounds,ng.exhaustion,ng.durability,ng.style,ng.classLevels,ng.subclass);
                     return ng;
                   });
                 },disabled:localGold<armorCost},'Repair'))
@@ -9769,7 +9791,7 @@ function WorldIntro({onDone,onSkip,onBack}){
 
 // ── Character Creation ─────────────────────────────────
 function CharCreate({onDone,onBack}){
-  const[step,setStep]=useState(0);const[cls,setCls]=useState(null);const[species,setSpecies]=useState(null);
+  const[step,setStep]=useState(0);const[cls,setCls]=useState(null);const[species,setSpecies]=useState(null);const[subclass,setSubclass]=useState(null);const[metamagic,setMetamagic]=useState([]);
   const[assign,setAssign]=useState({str:null,dex:null,con:null,int:null,wis:null,cha:null});
   const[bonus2,setBonus2]=useState(null);const[bonus1,setBonus1]=useState(null);
   const[feat,setFeat]=useState(null);
@@ -9879,7 +9901,7 @@ function CharCreate({onDone,onBack}){
   if(step===0)return e('div',{className:'cover'},e('h2',{className:'gold'},'CHOOSE YOUR PATH'),e('p',{className:'dim-italic',style:{fontSize:13}},'D&D 2024 Rules \u2022 '+(MODULE?.species||'Human')),e('div',{className:'divider'}),
     e('h3',{className:'spell-section-title'},'CUSTOM CHARACTER'),
     e('div',{className:'class-choice'},
-      availClasses.map(clsName=>e('button',{key:clsName,className:'class-btn',onClick:()=>{setCls(clsName);setClassSkills([]);if(needsSpeciesStep){setStep('0a')}else{setSpecies(availSpecies[0]);setStep('0b')}}},
+      availClasses.map(clsName=>e('button',{key:clsName,className:'class-btn',onClick:()=>{setCls(clsName);setClassSkills([]);setSubclass(null);setMetamagic([]);if(clsName==='Sorcerer'){setStep('0origin')}else if(needsSpeciesStep){setStep('0a')}else{setSpecies(availSpecies[0]);setStep('0b')}}},
         clsName.toUpperCase(),
         e('small',null,CLASS_DISPLAY[clsName]?.tagline||''),
         e('small',null,CLASS_DISPLAY[clsName]?.features||'')))),
@@ -9892,6 +9914,28 @@ function CharCreate({onDone,onBack}){
           clsName.toUpperCase(),
           e('small',null,getPresetSummary(PRESETS[clsName])))))):null,
     e('div',{className:'btn-row',style:{marginTop:24}},e('button',{className:'ghost-btn',onClick:onBack},'\u2190 Back')));
+
+  // Step 0origin: Sorcerer origin selection (at level 1)
+  if(step==='0origin'){
+    const origins=SUBCLASSES.Sorcerer||[];
+    return e('div',{className:'cover'},
+      e('h2',{className:'gold'},'SORCEROUS ORIGIN'),
+      e('p',{className:'dim-italic',style:{fontSize:13}},'Choose the source of your innate magical power.'),
+      e('div',{className:'divider'}),
+      e('div',{className:'subclass-options',style:{display:'flex',flexDirection:'column',gap:12}},
+        origins.map(orig=>e('button',{key:orig.id,
+          className:'style-btn'+(subclass===orig.id?' selected':''),
+          style:{textAlign:'left',padding:'12px 16px'},
+          onClick:()=>setSubclass(orig.id)},
+          e('strong',null,orig.name),
+          e('span',{style:{display:'block',fontSize:12,opacity:.8,marginTop:4}},orig.desc),
+          e('div',{style:{fontSize:11,color:'var(--gold)',marginTop:6}},
+            (orig.features.level3||[]).slice(0,2).map((f,i)=>e('div',{key:i},'\u2022 '+f)))))),
+      e('div',{className:'btn-row',style:{marginTop:24}},
+        e('button',{className:'ghost-btn',onClick:()=>{setSubclass(null);setStep(0)}},'\u2190 Back'),
+        e('button',{className:'gold-btn',disabled:!subclass,onClick:()=>{if(needsSpeciesStep){setStep('0a')}else{setSpecies(availSpecies[0]);setStep('0b')}}},
+          subclass?'Continue':'Select an Origin')));
+  }
 
   // Step 0a: Species selection (only if multiple species available)
   if(step==='0a'){
@@ -9912,7 +9956,7 @@ function CharCreate({onDone,onBack}){
             e('small',null,sp.features.slice(0,2).map(f=>f.name).join(' \u2022 ')||sp.desc.slice(0,40)+'...'));
         })),
       e('div',{className:'btn-row',style:{marginTop:24}},
-        e('button',{className:'ghost-btn',onClick:()=>setStep(0)},'\u2190 Back')));
+        e('button',{className:'ghost-btn',onClick:()=>cls==='Sorcerer'?setStep('0origin'):setStep(0)},'\u2190 Back')));
   }
 
   // Step 1: Standard Array
@@ -9947,8 +9991,8 @@ function CharCreate({onDone,onBack}){
     grantedSkills.length?e('p',{style:{fontSize:12,color:'var(--green)',marginTop:4}},'Granted: '+grantedSkills.join(', ')):null,
     e('p',{style:{fontSize:13,color:step0bComplete?'#6adb6a':'#8a8578',marginTop:8}},classSkills.length+'/2 class'+(bonusSkillCount>0?' + '+speciesSkills.length+'/'+bonusSkillCount+' bonus':'')),
     e('div',{className:'btn-row',style:{marginTop:16}},
-      e('button',{className:'ghost-btn',onClick:()=>needsSpeciesStep?setStep('0a'):setStep(0)},'\u2190 Back'),
-      e('button',{className:'gold-btn',onClick:()=>{if(step0bComplete){setHumanSkill(speciesSkills[0]||null);setStep('0b2')}},disabled:!step0bComplete},'Continue')));
+      e('button',{className:'ghost-btn',onClick:()=>{if(needsSpeciesStep)setStep('0a');else if(cls==='Sorcerer')setStep('0origin');else setStep(0)}},'\u2190 Back'),
+      e('button',{className:'gold-btn',onClick:()=>{if(step0bComplete){setHumanSkill(speciesSkills[0]||null);const hasExtraLang=(speciesData?.traits?.extraLanguages||0)>0;const hasBonusTool=!!speciesData?.bonusTool;if(hasExtraLang)setStep('0b2');else if(hasBonusTool)setStep('0b3');else setStep('0c')}},disabled:!step0bComplete},'Continue')));
 
   // Step 0b2: Language selection (Human gets 1 extra language)
   const startLangs=(MODULE&&MODULE.startingLanguages)||['Common'];
@@ -10244,7 +10288,7 @@ function CharCreate({onDone,onBack}){
   const casterArmor=isCaster?null:armor;
   const casterShield=isCaster?false:hasShield;
   const casterWeapon=isCaster?(cls==='Wizard'?'Quarterstaff':'Dagger'):weapon;
-  const d=calcDerived(finalStats,cls,1,casterArmor,casterShield,feat,[],0,null,style);
+  const d=calcDerived(finalStats,cls,1,casterArmor,casterShield,feat,[],0,null,style,null,null);
   const allSpells={
     cantrips:[...miCantrips,...casterCantrips],
     level1:[...(miSpell?[miSpell]:[]),...palSpells,...casterSpells],
@@ -10282,7 +10326,7 @@ function CharCreate({onDone,onBack}){
         const speciesTraits={darkvision:spData?.traits?.darkvision||0,feyAncestry:!!spData?.feyAncestry,speed:spData?.traits?.speed||30};
         const allFeats=[feat,bonusFeat].filter(Boolean);
         const tools=selectedTool?[selectedTool]:[];
-        onDone({cls,species:species||'human',speciesTraits,stats:finalStats,style:isCaster?null:style,feat:allFeats[0],bonusFeat:allFeats[1]||null,mastery:isCaster?[]:mastery,name,spells:allSpells,equip:{weapon:casterWeapon,armor:casterArmor,hasShield:casterShield},skilledPicks,crafterTools,musicianInstruments,classSkills:allSkills,humanSkill:speciesSkills[0]||null,extraLang,toolProficiencies:tools})
+        onDone({cls,species:species||'human',speciesTraits,stats:finalStats,style:isCaster?null:style,feat:allFeats[0],bonusFeat:allFeats[1]||null,mastery:isCaster?[]:mastery,name,spells:allSpells,equip:{weapon:casterWeapon,armor:casterArmor,hasShield:casterShield},skilledPicks,crafterTools,musicianInstruments,classSkills:allSkills,humanSkill:speciesSkills[0]||null,extraLang,toolProficiencies:tools,subclass:subclass||null,metamagic:metamagic||[]})
       }},'Begin Adventure')));
 }
 
@@ -10953,7 +10997,7 @@ function evaluateDmCondition(cond,gs,sceneId){
 function DmSummary({gs,sceneId,onBack}){
   const e=React.createElement;
   const dm=DM_SUMMARY||{};
-  const d=gs.derived||calcDerived(gs.stats,gs.cls,gs.level,gs.armor,gs.hasShield,gs.feat,gs.wounds,gs.exhaustion,gs.durability,gs.style,gs.classLevels);
+  const d=gs.derived||calcDerived(gs.stats,gs.cls,gs.level,gs.armor,gs.hasShield,gs.feat,gs.wounds,gs.exhaustion,gs.durability,gs.style,gs.classLevels,gs.subclass);
   const cTitle=(MODULE&&MODULE.title)||'Module';
 
   // Ending info
@@ -11845,7 +11889,7 @@ function SubclassSelect({gs,onSelect}){
   return e('div',{className:'modal-overlay'},
     e('div',{className:'modal-box',style:{maxWidth:520}},
       e('h2',{className:'gold'},'CHOOSE YOUR PATH'),
-      e('p',{style:{fontSize:13,color:'var(--text-dim)',marginBottom:16}},'At level 3, you choose a '+gs.cls+' subclass that defines your specialization.'),
+      e('p',{style:{fontSize:13,color:'var(--text-dim)',marginBottom:16}},'At level '+(gs.cls==='Wizard'?'2':gs.cls==='Sorcerer'?'1':'3')+', you choose '+(['a','e','i','o','u'].includes(gs.cls[0].toLowerCase())?'an ':'a ')+gs.cls+' '+(gs.cls==='Wizard'?'Arcane Tradition':gs.cls==='Sorcerer'?'Sorcerous Origin':'subclass')+' that defines your specialization.'),
       e('div',{className:'subclass-options',style:{display:'flex',flexDirection:'column',gap:12}},
         subclasses.map(sub=>e('button',{key:sub.id,
           className:'style-btn'+(selected===sub.id?' selected':''),
@@ -11867,6 +11911,145 @@ function SubclassSelect({gs,onSelect}){
       e('div',{className:'btn-row',style:{marginTop:20}},
         e('button',{className:'gold-btn',disabled:!canConfirm,onClick:()=>onSelect(selected,maneuvers)},
           canConfirm?'Confirm '+selSub?.name:'Select a subclass'))));
+}
+
+// Metamagic selection for Sorcerers (level 3, 10, 17)
+function MetamagicSelect({gs,onSelect}){
+  const e=React.createElement;
+  const[selected,setSelected]=useState([...(gs.metamagic||[])]);
+  const level=gs.level||3;
+  const maxPicks=level>=17?4:level>=10?3:2;
+  const existingCount=(gs.metamagic||[]).length;
+  const newPicks=maxPicks-existingCount;
+  const metamagicOptions=CLASS_DATA?.classes?.Sorcerer?.metamagic||[
+    {name:'Careful Spell',cost:1,description:'Allies auto-succeed on saves against your spells'},
+    {name:'Distant Spell',cost:1,description:'Double the range of a spell'},
+    {name:'Empowered Spell',cost:1,description:'Reroll damage dice equal to CHA mod'},
+    {name:'Extended Spell',cost:1,description:'Double the duration of a spell'},
+    {name:'Heightened Spell',cost:3,description:'One target has disadvantage on first save'},
+    {name:'Quickened Spell',cost:2,description:'Cast a spell as a bonus action'},
+    {name:'Seeking Spell',cost:2,description:'Reroll missed spell attack roll'},
+    {name:'Subtle Spell',cost:1,description:'Cast without verbal or somatic components'},
+    {name:'Transmuted Spell',cost:1,description:'Change damage type to acid/cold/fire/lightning/poison/thunder'},
+    {name:'Twinned Spell',cost:'level',description:'Target a second creature with a single-target spell'}
+  ];
+  const canConfirm=selected.length===maxPicks;
+  const toggle=(name)=>{
+    if(gs.metamagic?.includes(name))return; // Can't deselect existing
+    if(selected.includes(name))setSelected(selected.filter(x=>x!==name));
+    else if(selected.length<maxPicks)setSelected([...selected,name]);
+  };
+  return e('div',{className:'modal-overlay'},
+    e('div',{className:'modal-box',style:{maxWidth:560}},
+      e('h2',{className:'gold'},'METAMAGIC'),
+      e('p',{style:{fontSize:13,color:'var(--text-dim)',marginBottom:16}},
+        level>=10?'Choose '+newPicks+' additional Metamagic option'+(newPicks>1?'s':'')+'.':
+        'Choose '+newPicks+' Metamagic options. Use sorcery points to modify your spells.'),
+      e('div',{className:'metamagic-options',style:{display:'flex',flexDirection:'column',gap:8}},
+        metamagicOptions.map(m=>{
+          const isExisting=gs.metamagic?.includes(m.name);
+          const isSelected=selected.includes(m.name);
+          return e('button',{key:m.name,
+            className:'style-btn'+(isSelected?' selected':'')+(isExisting?' locked':''),
+            style:{textAlign:'left',padding:'10px 14px',opacity:isExisting?.6:1},
+            disabled:isExisting,
+            onClick:()=>toggle(m.name)},
+            e('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center'}},
+              e('strong',null,m.name),
+              e('span',{style:{fontSize:11,color:'var(--gold)'}},typeof m.cost==='number'?m.cost+' SP':'Spell Level SP')),
+            e('span',{style:{display:'block',fontSize:12,opacity:.8,marginTop:2}},m.description));
+        })),
+      e('p',{style:{fontSize:12,color:canConfirm?'#6adb6a':'#8a8578',marginTop:12}},selected.length+'/'+maxPicks+' selected'),
+      e('div',{className:'btn-row',style:{marginTop:16}},
+        e('button',{className:'gold-btn',disabled:!canConfirm,onClick:()=>onSelect(selected)},
+          canConfirm?'Confirm Metamagic':'Select '+newPicks+' option'+(newPicks>1?'s':'')))));
+}
+
+// ASI/Feat selection (levels 4, 8, 12, 16, 19)
+function ASISelect({gs,onSelect}){
+  const e=React.createElement;
+  const[mode,setMode]=useState(null); // 'asi' or 'feat'
+  const[stat1,setStat1]=useState(null);
+  const[stat2,setStat2]=useState(null);
+  const[feat,setFeat]=useState(null);
+  const stats=['str','dex','con','int','wis','cha'];
+  const statNames={str:'Strength',dex:'Dexterity',con:'Constitution',int:'Intelligence',wis:'Wisdom',cha:'Charisma'};
+  // Available feats (excluding origin feats and already taken)
+  const takenFeats=[gs.feat,gs.bonusFeat].filter(Boolean);
+  const availFeats=ORIGIN_FEATS.filter(f=>!takenFeats.includes(f.name)&&!f.origin);
+  const canConfirmASI=stat1&&(stat2||stat1===stat2);
+  const canConfirmFeat=feat!==null;
+  const canConfirm=mode==='asi'?canConfirmASI:canConfirmFeat;
+
+  if(!mode){
+    return e('div',{className:'modal-overlay'},
+      e('div',{className:'modal-box',style:{maxWidth:420}},
+        e('h2',{className:'gold'},'ABILITY SCORE IMPROVEMENT'),
+        e('p',{style:{fontSize:13,color:'var(--text-dim)',marginBottom:16}},'Level '+gs.level+': Choose to increase your abilities or take a feat.'),
+        e('div',{style:{display:'flex',flexDirection:'column',gap:12}},
+          e('button',{className:'style-btn',onClick:()=>setMode('asi')},
+            e('strong',null,'Ability Score Increase'),
+            e('span',{style:{display:'block',fontSize:12,opacity:.8,marginTop:4}},'+2 to one ability, or +1 to two abilities')),
+          e('button',{className:'style-btn',onClick:()=>setMode('feat')},
+            e('strong',null,'Feat'),
+            e('span',{style:{display:'block',fontSize:12,opacity:.8,marginTop:4}},'Gain a new feat instead of ability increases')))));
+  }
+
+  if(mode==='asi'){
+    return e('div',{className:'modal-overlay'},
+      e('div',{className:'modal-box',style:{maxWidth:480}},
+        e('h2',{className:'gold'},'ABILITY SCORE INCREASE'),
+        e('p',{style:{fontSize:13,color:'var(--text-dim)',marginBottom:16}},'Increase one ability by 2, or two abilities by 1 each. (Max 20)'),
+        e('div',{className:'asi-grid',style:{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:8}},
+          stats.map(s=>{
+            const current=gs.stats[s]+(stat1===s?1:0)+(stat2===s?1:0);
+            const canSelect=current<20;
+            const is1=stat1===s;const is2=stat2===s;
+            return e('button',{key:s,
+              className:'style-btn'+(is1||is2?' selected':''),
+              style:{padding:'12px',textAlign:'center',opacity:canSelect?1:.5},
+              disabled:!canSelect,
+              onClick:()=>{
+                if(is1){setStat1(null)}
+                else if(is2){setStat2(null)}
+                else if(!stat1){setStat1(s)}
+                else if(!stat2&&stat1!==s){setStat2(s)}
+                else if(!stat2&&stat1===s){setStat1(s);setStat2(s)} // +2 to same stat
+              }},
+              e('div',{style:{fontWeight:'bold'}},statNames[s]),
+              e('div',{style:{fontSize:14}},gs.stats[s]+(is1||is2?' → '+(current):'')));
+          })),
+        e('p',{style:{fontSize:12,color:'var(--text-dim)',marginTop:12}},
+          stat1&&stat2&&stat1===stat2?'+2 '+statNames[stat1]:
+          stat1&&stat2?'+1 '+statNames[stat1]+', +1 '+statNames[stat2]:
+          stat1?'+1 '+statNames[stat1]+' (click again for +2, or select another)':
+          'Select ability scores to increase'),
+        e('div',{className:'btn-row',style:{marginTop:16}},
+          e('button',{className:'ghost-btn',onClick:()=>setMode(null)},'← Back'),
+          e('button',{className:'gold-btn',disabled:!canConfirmASI,onClick:()=>{
+            const newStats={...gs.stats};
+            if(stat1)newStats[stat1]=Math.min(20,newStats[stat1]+(stat1===stat2?2:1));
+            if(stat2&&stat2!==stat1)newStats[stat2]=Math.min(20,newStats[stat2]+1);
+            onSelect({type:'asi',stats:newStats});
+          }},'Confirm'))));
+  }
+
+  if(mode==='feat'){
+    return e('div',{className:'modal-overlay'},
+      e('div',{className:'modal-box',style:{maxWidth:520}},
+        e('h2',{className:'gold'},'CHOOSE A FEAT'),
+        e('p',{style:{fontSize:13,color:'var(--text-dim)',marginBottom:16}},'Feats provide special abilities and bonuses.'),
+        e('div',{className:'feat-options',style:{display:'flex',flexDirection:'column',gap:8,maxHeight:350,overflowY:'auto'}},
+          availFeats.map(f=>e('button',{key:f.name,
+            className:'style-btn'+(feat===f.name?' selected':''),
+            style:{textAlign:'left',padding:'10px 14px'},
+            onClick:()=>setFeat(f.name)},
+            e('strong',null,f.name),
+            e('span',{style:{display:'block',fontSize:12,opacity:.8,marginTop:2}},f.desc)))),
+        e('div',{className:'btn-row',style:{marginTop:16}},
+          e('button',{className:'ghost-btn',onClick:()=>setMode(null)},'← Back'),
+          e('button',{className:'gold-btn',disabled:!canConfirmFeat,onClick:()=>onSelect({type:'feat',feat})},'Confirm'))));
+  }
 }
 
 // Multiclass selection (appears at level 4+ when leveling up in continuation modules)
@@ -12805,7 +12988,7 @@ function DraggableSettings({onOpen}){
 
 function App(){
   const[phase,setPhase]=useState('cover');const[gs,setGs]=useState(null);const[scene,setScene]=useState(null);const[sceneId,setSceneId]=useState(null);
-  const[showSave,setShowSave]=useState(false);const[saveMsg,setSaveMsg]=useState('');const[showSheet,setShowSheet]=useState(false);const[showDmSummary,setShowDmSummary]=useState(false);const[showMap,setShowMap]=useState(false);const[sideOpen,setSideOpen]=useState(false);const[confirmModal,setConfirmModal]=useState(null);const[compPopup,setCompPopup]=useState(null);const[romancePrompt,setRomancePrompt]=useState(null);const[romanceManage,setRomanceManage]=useState(false);const[breakupTarget,setBreakupTarget]=useState(null);const[npcNotify,setNpcNotify]=useState(null);const[romanceCheck,setRomanceCheck]=useState(null);const[spellPrepModal,setSpellPrepModal]=useState(false);const[shortRestModal,setShortRestModal]=useState(false);const[healingPanel,setHealingPanel]=useState(false);const[defeatRecovery,setDefeatRecovery]=useState(null);const[godSignPicker,setGodSignPicker]=useState(null);const[subclassModal,setSubclassModal]=useState(false);const[editSlot,setEditSlot]=useState(null);const[showSettingsPanel,setShowSettingsPanel]=useState(false);const[knightingPicker,setKnightingPicker]=useState(null);const[showCamp,setShowCamp]=useState(false);const[showExportModal,setShowExportModal]=useState(false);const[showModuleSwitch,setShowModuleSwitch]=useState(false);const[moduleList,setModuleList]=useState([]);const[lightbox,setLightbox]=useState(null);const[switchingModule,setSwitchingModule]=useState(false);
+  const[showSave,setShowSave]=useState(false);const[saveMsg,setSaveMsg]=useState('');const[showSheet,setShowSheet]=useState(false);const[showDmSummary,setShowDmSummary]=useState(false);const[showMap,setShowMap]=useState(false);const[sideOpen,setSideOpen]=useState(false);const[confirmModal,setConfirmModal]=useState(null);const[compPopup,setCompPopup]=useState(null);const[romancePrompt,setRomancePrompt]=useState(null);const[romanceManage,setRomanceManage]=useState(false);const[breakupTarget,setBreakupTarget]=useState(null);const[npcNotify,setNpcNotify]=useState(null);const[romanceCheck,setRomanceCheck]=useState(null);const[spellPrepModal,setSpellPrepModal]=useState(false);const[shortRestModal,setShortRestModal]=useState(false);const[healingPanel,setHealingPanel]=useState(false);const[defeatRecovery,setDefeatRecovery]=useState(null);const[godSignPicker,setGodSignPicker]=useState(null);const[subclassModal,setSubclassModal]=useState(false);const[metamagicModal,setMetamagicModal]=useState(false);const[asiModal,setAsiModal]=useState(false);const[editSlot,setEditSlot]=useState(null);const[showSettingsPanel,setShowSettingsPanel]=useState(false);const[knightingPicker,setKnightingPicker]=useState(null);const[showCamp,setShowCamp]=useState(false);const[showExportModal,setShowExportModal]=useState(false);const[showModuleSwitch,setShowModuleSwitch]=useState(false);const[moduleList,setModuleList]=useState([]);const[lightbox,setLightbox]=useState(null);const[switchingModule,setSwitchingModule]=useState(false);
   const[textSize,setTextSize]=useState(()=>localStorage.getItem('textSize')||'normal');
   const[hardcoreMode,setHardcoreMode]=useState(()=>localStorage.getItem('hardcoreMode')==='true');
   // Migrate companion name casing on any active gs
@@ -13066,8 +13249,8 @@ function App(){
     s.boxes.filter(b=>b.type==='levelup').forEach(b=>{
       // Helper to capture snapshot before level-up
       const captureSnapshot=(lvl)=>{if(!ns.levelSnapshots)ns.levelSnapshots={};ns.levelSnapshots[lvl]={hp:ns.hp,classLevels:ns.classLevels?{...ns.classLevels}:null,subclass:ns.subclass,maneuvers:ns.maneuvers?[...ns.maneuvers]:[],feat:ns.feat,spells:ns.spells?{...ns.spells}:null}};
-      if(b.text.includes('LEVEL 2')&&ns.level<2){captureSnapshot(1);ns.level=2;if(!ns.classLevels)ns.classLevels={[ns.cls]:1};ns.classLevels[ns.cls]=2;ns.derived=calcDerived(ns.stats,ns.cls,2,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels);ns.hp=ns.derived.maxHp;SoundManager.play('levelup')}
-      if(b.text.includes('LEVEL 3')&&ns.level<3){captureSnapshot(2);ns.level=3;if(!ns.classLevels)ns.classLevels={[ns.cls]:2};ns.classLevels[ns.cls]=3;ns.derived=calcDerived(ns.stats,ns.cls,3,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels);ns.hp=ns.derived.maxHp;SoundManager.play('levelup');if(!ns.subclass)setTimeout(()=>setSubclassModal(true),500)}});
+      if(b.text.includes('LEVEL 2')&&ns.level<2){captureSnapshot(1);ns.level=2;if(!ns.classLevels)ns.classLevels={[ns.cls]:1};ns.classLevels[ns.cls]=2;ns.derived=calcDerived(ns.stats,ns.cls,2,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels,ns.subclass);ns.hp=ns.derived.maxHp;SoundManager.play('levelup');if(ns.cls==='Wizard'&&!ns.subclass)setTimeout(()=>setSubclassModal(true),500)}
+      if(b.text.includes('LEVEL 3')&&ns.level<3){captureSnapshot(2);ns.level=3;if(!ns.classLevels)ns.classLevels={[ns.cls]:2};ns.classLevels[ns.cls]=3;ns.derived=calcDerived(ns.stats,ns.cls,3,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels,ns.subclass);ns.hp=ns.derived.maxHp;SoundManager.play('levelup');if(ns.cls==='Sorcerer'&&(!ns.metamagic||ns.metamagic.length===0))setTimeout(()=>setMetamagicModal(true),500);else if(!ns.subclass)setTimeout(()=>setSubclassModal(true),500)}});
     // Scene-based title grants from titleGrants rules
     const sceneTitleGrants=(MODULE_RULES?.titleGrants||[]).filter(g=>g.scene===id);
     sceneTitleGrants.forEach(grant=>{
@@ -13101,7 +13284,7 @@ function App(){
       if(moduleId&&!ns.completedModules.includes(moduleId))ns.completedModules=[...ns.completedModules,moduleId];
     }
     setScene(s);setSceneId(id);setGs(ns);if(shouldAutoSave())saveGame(0,ns,id)};
-  const startGame=({cls,stats,style,feat,mastery,name,spells,equip,skilledPicks,crafterTools,musicianInstruments,classSkills,humanSkill,extraLang})=>{const derived=calcDerived(stats,cls,1,equip.armor,equip.hasShield,feat,[],0,null,style);
+  const startGame=({cls,stats,style,feat,mastery,name,spells,equip,skilledPicks,crafterTools,musicianInstruments,classSkills,humanSkill,extraLang,subclass,metamagic})=>{const derived=calcDerived(stats,cls,1,equip.armor,equip.hasShield,feat,[],0,null,style,null,subclass||null);
     const cRes=(MODULE&&MODULE.startingResources)||{};
     const cInv=(MODULE&&MODULE.startingInventory)||['Dagger','Explorer\u2019s Pack'];
     const cEquip=(MODULE&&MODULE.startingEquipment)||{};
@@ -13110,7 +13293,7 @@ function App(){
     const extraInv=[equip.weapon,equip.armor,equip.hasShield?'Shield':'',...cInv,cEquip.head,cEquip.hands,cEquip.boots].filter(Boolean);
     const startLangs=(MODULE&&MODULE.startingLanguages)||['Common'];
     const allLangs=[...startLangs];if(extraLang&&!allLangs.includes(extraLang))allLangs.push(extraLang);
-    const state={cls,stats,style,feat,mastery,name:name||'Squire',spells:spells||{cantrips:[],level1:[],alwaysPrepared:[]},weapon:equip.weapon,armor:equip.armor,skilledPicks:skilledPicks||[],classSkills:classSkills||[],humanSkill:humanSkill||null,hasShield:equip.hasShield,level:1,hp:derived.maxHp,derived,xp:0,honour:cRes.honour||5,rose:0,sword:0,crown:0,companions:[],romances:{},godSigns:startGods,dgTrack:'NONE',equipment:buildEquipment(equip.weapon,equip.armor,equip.hasShield),inventory:extraInv,history:[],awardedScenes:{},companionLog:{},romanceDeclined:{},flags:{},bonuses:[],magicItems:[],measureTrack:0,measureOrientation:null,gold:cRes.gold||0,layOnHandsPool:cls==='Paladin'?derived.layOnHandsMax:0,spellSlotsUsed:0,spellSlots2ndUsed:0,spellSlots3rdUsed:0,spellSlots4thUsed:0,spellSlots5thUsed:0,spellSlots6thUsed:0,spellSlots7thUsed:0,spellSlots8thUsed:0,spellSlots9thUsed:0,secondWindUsed:0,actionSurgeUsed:false,bandages:cRes.bandages||0,potions:cRes.potions||0,greaterPotions:cRes.greaterPotions||0,rations:cRes.rations||0,torches:cRes.torches||0,waterskinUses:cRes.waterskinUses||3,miraHealedThisScene:false,completedRolls:{},deadCompanions:[],hitDiceUsed:0,wounds:[],scars:[],combatCount:0,orderMax:{rose:0,sword:0,crown:0},approval:{},kills:{player:{},companions:{}},companionGifts:[],mount:null,languages:allLangs,exhaustion:0,toolProficiencies:crafterTools||[],musicianInstruments:musicianInstruments||[],heroicInspiration:0,subclass:null,maneuvers:[],superiorityDice:0,channelDivinityUsed:0,vowOfEnmityTarget:null,sacredWeaponActive:false,durability:buildDurability(),classLevels:{[cls]:1},secondClass:null,secondSubclass:null,currentCampaign:(MODULE&&MODULE.campaignId)||null,campaignProgress:{modulesCompleted:[],currentModule:(MODULE&&MODULE.id)||null},sagaFlags:{}};setGs(state);goScene(startScene,state);setPhase('play')};
+    const state={cls,stats,style,feat,mastery,name:name||'Squire',spells:spells||{cantrips:[],level1:[],alwaysPrepared:[]},weapon:equip.weapon,armor:equip.armor,skilledPicks:skilledPicks||[],classSkills:classSkills||[],humanSkill:humanSkill||null,hasShield:equip.hasShield,level:1,hp:derived.maxHp,derived,xp:0,honour:cRes.honour||5,rose:0,sword:0,crown:0,companions:[],romances:{},godSigns:startGods,dgTrack:'NONE',equipment:buildEquipment(equip.weapon,equip.armor,equip.hasShield),inventory:extraInv,history:[],awardedScenes:{},companionLog:{},romanceDeclined:{},flags:{},bonuses:[],magicItems:[],measureTrack:0,measureOrientation:null,gold:cRes.gold||0,layOnHandsPool:cls==='Paladin'?derived.layOnHandsMax:0,spellSlotsUsed:0,spellSlots2ndUsed:0,spellSlots3rdUsed:0,spellSlots4thUsed:0,spellSlots5thUsed:0,spellSlots6thUsed:0,spellSlots7thUsed:0,spellSlots8thUsed:0,spellSlots9thUsed:0,secondWindUsed:0,actionSurgeUsed:false,bandages:cRes.bandages||0,potions:cRes.potions||0,greaterPotions:cRes.greaterPotions||0,rations:cRes.rations||0,torches:cRes.torches||0,waterskinUses:cRes.waterskinUses||3,miraHealedThisScene:false,completedRolls:{},deadCompanions:[],hitDiceUsed:0,wounds:[],scars:[],combatCount:0,orderMax:{rose:0,sword:0,crown:0},approval:{},kills:{player:{},companions:{}},companionGifts:[],mount:null,languages:allLangs,exhaustion:0,toolProficiencies:crafterTools||[],musicianInstruments:musicianInstruments||[],heroicInspiration:0,subclass:subclass||null,metamagic:metamagic||[],maneuvers:[],superiorityDice:0,channelDivinityUsed:0,vowOfEnmityTarget:null,sacredWeaponActive:false,durability:buildDurability(),classLevels:{[cls]:1},secondClass:null,secondSubclass:null,currentCampaign:(MODULE&&MODULE.campaignId)||null,campaignProgress:{modulesCompleted:[],currentModule:(MODULE&&MODULE.id)||null},sagaFlags:{}};setGs(state);goScene(startScene,state);setPhase('play')};
   const loadSave=(saveData)=>{
     if(!saveData)return;
     // Handle v2 split format or auto-migrate legacy
@@ -13136,7 +13319,7 @@ function App(){
     g.companions=(g.companions||[]).map(c=>{const canon=COMPANIONS_ALL.find(x=>x.toLowerCase()===c.toLowerCase());return canon||c});
     const fixKeys=(obj)=>{if(!obj)return obj;const fixed={};for(const[k,v]of Object.entries(obj)){const canon=COMPANIONS_ALL.find(x=>x.toLowerCase()===k.toLowerCase());fixed[canon||k]=v}return fixed};
     g.romances=fixKeys(g.romances);g.companionLog=fixKeys(g.companionLog||{});g.romanceDeclined=fixKeys(g.romanceDeclined||{});
-    g.derived=calcDerived(g.stats,g.cls,g.level,g.armor,g.hasShield,g.feat,g.wounds,g.exhaustion,g.durability,g.style,g.classLevels);setGs(g);const s=SCENES[loadSceneId];if(s){setScene(s);setSceneId(loadSceneId)}setPhase('play')};
+    g.derived=calcDerived(g.stats,g.cls,g.level,g.armor,g.hasShield,g.feat,g.wounds,g.exhaustion,g.durability,g.style,g.classLevels,g.subclass);setGs(g);const s=SCENES[loadSceneId];if(s){setScene(s);setSceneId(loadSceneId)}setPhase('play')};
   const handleChoice=(c)=>{SoundManager.play('click');setSideOpen(false);const ns={...gs,romances:{...gs.romances},awardedScenes:{...(gs.awardedScenes||{})},inventory:[...(gs.inventory||[])],inventoryMeta:{...(gs.inventoryMeta||{})},flags:{...(gs.flags||{})},history:[...(gs.history||[])],bonuses:[...(gs.bonuses||[])],magicItems:[...(gs.magicItems||[])]};
     // Only award points if this scene hasn't awarded yet (anti-cycle)
     const scKey=sceneId;
@@ -13343,7 +13526,7 @@ function App(){
     if(npcNotify&&npcNotify.type==='gift'&&npcNotify.gift){
       const ns={...gs,companionGifts:[...(gs.companionGifts||[]),npcNotify.comp],bonuses:[...(gs.bonuses||[])]};
       ns.bonuses.push({source:npcNotify.comp.split(' ')[0]+"'s Gift",skill:npcNotify.gift.skill,value:1});
-      ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels);
+      ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels,ns.subclass);
       if(!ns.companionLog)ns.companionLog={};
       if(!ns.companionLog[npcNotify.comp])ns.companionLog[npcNotify.comp]=[];
       ns.companionLog[npcNotify.comp].push('Gift: +1 '+npcNotify.gift.skill);
@@ -13386,7 +13569,7 @@ function App(){
       }
     }
     setGs(ns)};
-  const handleStateUpdate=(updater)=>{if(!gs)return;const ns=typeof updater==='function'?updater(gs):{...gs,...updater};ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels);setGs(ns)};
+  const handleStateUpdate=(updater)=>{if(!gs)return;const ns=typeof updater==='function'?updater(gs):{...gs,...updater};ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels,ns.subclass);setGs(ns)};
   const handleExportCharacter=async(newName,loveInterest)=>{
     const moduleId=(MODULE&&MODULE.id)||'knights-oath';
     // Build exported character with updated name and love interest
@@ -13439,7 +13622,7 @@ function App(){
       partedCompanions=partedCompanions.filter(p=>p.name!==loveInterest);
     }
     // Build initial state from imported character
-    const derived=calcDerived(importedChar.stats,importedChar.cls,importedChar.level,importedChar.armor,importedChar.hasShield,importedChar.feat,importedChar.wounds||[],importedChar.exhaustion||0,importedChar.durability,importedChar.style,importedChar.classLevels);
+    const derived=calcDerived(importedChar.stats,importedChar.cls,importedChar.level,importedChar.armor,importedChar.hasShield,importedChar.feat,importedChar.wounds||[],importedChar.exhaustion||0,importedChar.durability,importedChar.style,importedChar.classLevels,importedChar.subclass);
     const startGods={};for(const g of GODS)(startGods[g]=0);
     const startScene=(MODULE_RULES&&MODULE_RULES.startScene)||(MODULE&&MODULE.startScene)||'1';
     // Restore approval for love interest (carried over or from parted record)
@@ -13520,14 +13703,14 @@ function App(){
     let newGs;
     if(existingProgress&&options.resume){
       newGs=mergeSave(scaledChar,existingProgress);
-      newGs.derived=calcDerived(newGs.stats,newGs.cls,newGs.level,newGs.armor,newGs.hasShield,newGs.feat,newGs.wounds,newGs.exhaustion,newGs.durability,newGs.style,newGs.classLevels);
+      newGs.derived=calcDerived(newGs.stats,newGs.cls,newGs.level,newGs.armor,newGs.hasShield,newGs.feat,newGs.wounds,newGs.exhaustion,newGs.durability,newGs.style,newGs.classLevels,newGs.subclass);
       const resumeScene=SCENES[existingProgress.history?.[existingProgress.history.length-1]?.split(':')[0]]||SCENES[MODULE.startScene];
       setScene(resumeScene);setSceneId(resumeScene?.id||MODULE.startScene);
     }else{
       // Start fresh in new module with transferred character
       const freshProgress={history:[],flags:{},awardedScenes:{},completedRolls:[],companions:[],romances:{},romanceDeclined:{},companionLog:{},deadCompanions:[],rose:0,sword:0,crown:0,orderMax:{rose:0,sword:0,crown:0},dgTrack:0,godSigns:{},hitDiceUsed:0,secondWindUsed:0,actionSurgeUsed:0,spellSlotsUsed:0,layOnHandsPool:0,miraHealedThisScene:false,combatCount:0,measureTrack:0,measureOrientation:null,approval:{}};
       newGs=mergeSave(scaledChar,freshProgress);
-      newGs.derived=calcDerived(newGs.stats,newGs.cls,newGs.level,newGs.armor,newGs.hasShield,newGs.feat,newGs.wounds,newGs.exhaustion,newGs.durability,newGs.style,newGs.classLevels);
+      newGs.derived=calcDerived(newGs.stats,newGs.cls,newGs.level,newGs.armor,newGs.hasShield,newGs.feat,newGs.wounds,newGs.exhaustion,newGs.durability,newGs.style,newGs.classLevels,newGs.subclass);
       const startScene=SCENES[MODULE.startScene];
       setScene(startScene);setSceneId(MODULE.startScene);
     }
@@ -13670,13 +13853,15 @@ function App(){
     npcNotify?e(NpcNotification,{notif:npcNotify,onDismiss:dismissNpcNotify}):null,
     breakupTarget&&gs?e(BreakupScene,{name:breakupTarget,gs:gs,onResolve:handleBreakup}):null,
     romanceCheck?e(RelationshipCheck,{check:romanceCheck,gs:gs,onResolve:resolveRelationship}):null,
-    spellPrepModal&&gs&&['Paladin','Cleric','Druid','Wizard','Bard','Sorcerer'].includes(gs.cls)?e(SpellPrepModal,{gs:gs,onConfirm:(spells)=>{const ns={...gs,spells:{...gs.spells,...spells}};ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels);setGs(ns);setSpellPrepModal(false)},onKeep:()=>setSpellPrepModal(false)}):null,
-    shortRestModal&&gs?e(ShortRestModal,{gs:gs,hardcoreMode:hardcoreMode,onDone:(result)=>{const ns={...gs,hp:result.hp,hitDiceUsed:result.hitDiceUsed,waterskinUses:result.waterskinUses,exhaustion:result.exhaustion,rations:(gs.rations||0)+(result.rationsFound||0)};ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels);setGs(ns);setShortRestModal(false)}}):null,
-    showCamp&&gs?e(CampModal,{gs:gs,sceneId:sceneId,hardcoreMode:hardcoreMode,onDone:(result)=>{const ns={...gs,...result};ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels);setGs(ns);setShowCamp(false)},onCancel:()=>setShowCamp(false)}):null,
+    spellPrepModal&&gs&&['Paladin','Cleric','Druid','Wizard','Bard','Sorcerer'].includes(gs.cls)?e(SpellPrepModal,{gs:gs,onConfirm:(spells)=>{const ns={...gs,spells:{...gs.spells,...spells}};ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels,ns.subclass);setGs(ns);setSpellPrepModal(false)},onKeep:()=>setSpellPrepModal(false)}):null,
+    shortRestModal&&gs?e(ShortRestModal,{gs:gs,hardcoreMode:hardcoreMode,onDone:(result)=>{const ns={...gs,hp:result.hp,hitDiceUsed:result.hitDiceUsed,waterskinUses:result.waterskinUses,exhaustion:result.exhaustion,rations:(gs.rations||0)+(result.rationsFound||0)};ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels,ns.subclass);setGs(ns);setShortRestModal(false)}}):null,
+    showCamp&&gs?e(CampModal,{gs:gs,sceneId:sceneId,hardcoreMode:hardcoreMode,onDone:(result)=>{const ns={...gs,...result};ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels,ns.subclass);setGs(ns);setShowCamp(false)},onCancel:()=>setShowCamp(false)}):null,
     healingPanel&&gs?e(HealingPanel,{gs:gs,onUpdate:(upd)=>{const ns={...gs,...upd};setGs(ns)},onClose:()=>setHealingPanel(false)}):null,
     defeatRecovery&&gs?e(DefeatRecoveryModal,{gs:gs,wound:defeatRecovery.wound,scar:defeatRecovery.scar,weaponDmg:defeatRecovery.weaponDmg,armorDmg:defeatRecovery.armorDmg,onContinue:()=>setDefeatRecovery(null)}):null,
     godSignPicker&&gs&&gs.cls==='Paladin'?e(GodSignPicker,{options:godSignPicker.options,onPick:(god)=>{const ns={...gs,godSigns:{...(gs.godSigns||{})}};ns.godSigns[god]=(ns.godSigns[god]||0)+1;setGs(ns);setGodSignPicker(null)}}):null,
-    subclassModal&&gs&&gs.level>=3&&!gs.subclass?e(SubclassSelect,{gs:gs,onSelect:(subId,maneuvers)=>{const ns={...gs,subclass:subId,maneuvers:maneuvers||[]};if(subId==='battlemaster')ns.superiorityDice=4;ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels);setGs(ns);setSubclassModal(false)}}):null,
+    subclassModal&&gs&&((gs.cls==='Wizard'&&gs.level>=2)||(gs.cls!=='Wizard'&&gs.level>=3))&&!gs.subclass?e(SubclassSelect,{gs:gs,onSelect:(subId,maneuvers)=>{const ns={...gs,subclass:subId,maneuvers:maneuvers||[]};if(subId==='battlemaster')ns.superiorityDice=4;ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels,subId);setGs(ns);setSubclassModal(false)}}):null,
+    metamagicModal&&gs&&gs.cls==='Sorcerer'?e(MetamagicSelect,{gs:gs,onSelect:(picks)=>{const ns={...gs,metamagic:picks};setGs(ns);setMetamagicModal(false)}}):null,
+    asiModal&&gs?e(ASISelect,{gs:gs,onSelect:(result)=>{const ns={...gs};if(result.type==='asi'){ns.stats=result.stats;ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels,ns.subclass)}else if(result.type==='feat'){if(!ns.bonusFeat)ns.bonusFeat=result.feat;else ns.feat=ns.feat+', '+result.feat}setGs(ns);setAsiModal(false)}}):null,
     knightingPicker&&gs?e(KnightingSkillPicker,{order:knightingPicker.order,onConfirm:(skillChoice)=>{const ns=applyKnightingBonus(gs,knightingPicker.order,skillChoice);setGs(ns);setKnightingPicker(null)}}):null,
     showSettingsPanel?e(SettingsPanel,{onClose:()=>setShowSettingsPanel(false),onSave:()=>{setShowSettingsPanel(false);setShowSave(true)},onLoad:()=>{setShowSettingsPanel(false);setShowSave(true)},gs:gs,onModuleSwitch:()=>{setShowSettingsPanel(false);setShowModuleSwitch(true)}}):null,
     showModuleSwitch&&gs?e(ModuleSwitchModal,{gs:gs,moduleList:moduleList,currentModuleId:MODULE?.id,onSwitch:handleModuleSwitch,onClose:()=>setShowModuleSwitch(false)}):null,
