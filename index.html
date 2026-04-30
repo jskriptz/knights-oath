@@ -9992,7 +9992,7 @@ function CharCreate({onDone,onBack}){
     e('p',{style:{fontSize:13,color:step0bComplete?'#6adb6a':'#8a8578',marginTop:8}},classSkills.length+'/2 class'+(bonusSkillCount>0?' + '+speciesSkills.length+'/'+bonusSkillCount+' bonus':'')),
     e('div',{className:'btn-row',style:{marginTop:16}},
       e('button',{className:'ghost-btn',onClick:()=>{if(needsSpeciesStep)setStep('0a');else if(cls==='Sorcerer')setStep('0origin');else setStep(0)}},'\u2190 Back'),
-      e('button',{className:'gold-btn',onClick:()=>{if(step0bComplete){setHumanSkill(speciesSkills[0]||null);const hasExtraLang=(speciesData?.traits?.extraLanguages||0)>0;const hasBonusTool=!!speciesData?.bonusTool;if(hasExtraLang)setStep('0b2');else if(hasBonusTool)setStep('0b3');else setStep('0c')}},disabled:!step0bComplete},'Continue')));
+      e('button',{className:'gold-btn',onClick:()=>{if(step0bComplete){setHumanSkill(speciesSkills[0]||null);const hasExtraLang=(speciesData?.traits?.extraLanguages||speciesData?.extraLanguages||0)>0;const hasBonusTool=speciesData?.bonusTool||(Array.isArray(speciesData?.traits)&&speciesData.traits.some(t=>t.mechanical==='bonusTool'));if(hasExtraLang)setStep('0b2');else if(hasBonusTool)setStep('0b3');else setStep('0c')}},disabled:!step0bComplete},'Continue')));
 
   // Step 0b2: Language selection (Human gets 1 extra language)
   const startLangs=(MODULE&&MODULE.startingLanguages)||['Common'];
@@ -10017,7 +10017,7 @@ function CharCreate({onDone,onBack}){
     e('p',{style:{fontSize:13,color:extraLang?'#6adb6a':'#8a8578',marginTop:12}},'Languages: '+startLangs.join(', ')+(extraLang?', '+extraLang:'')),
     e('div',{className:'btn-row',style:{marginTop:16}},
       e('button',{className:'ghost-btn',onClick:()=>setStep('0b')},'\u2190 Back'),
-      e('button',{className:'gold-btn',onClick:()=>{if(extraLang)setStep(speciesData?.bonusTool?'0b3':'0c')},disabled:!extraLang},'Continue')));
+      e('button',{className:'gold-btn',onClick:()=>{if(extraLang){const hasTool=speciesData?.bonusTool||(Array.isArray(speciesData?.traits)&&speciesData.traits.some(t=>t.mechanical==='bonusTool'));setStep(hasTool?'0b3':'0c')}},disabled:!extraLang},'Continue')));
 
   // Step 0b3: Tool proficiency selection (Human Skillful trait)
   const TOOL_OPTIONS=['Alchemist\'s Supplies','Brewer\'s Supplies','Calligrapher\'s Supplies','Carpenter\'s Tools','Cartographer\'s Tools','Cobbler\'s Tools','Cook\'s Utensils','Glassblower\'s Tools','Jeweler\'s Tools','Leatherworker\'s Tools','Mason\'s Tools','Painter\'s Supplies','Potter\'s Tools','Smith\'s Tools','Tinker\'s Tools','Weaver\'s Tools','Woodcarver\'s Tools','Thieves\' Tools','Navigator\'s Tools','Herbalism Kit','Poisoner\'s Kit','Forgery Kit','Disguise Kit'];
