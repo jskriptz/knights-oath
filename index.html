@@ -10326,7 +10326,7 @@ function CharCreate({onDone,onBack}){
         const speciesTraits={darkvision:spData?.traits?.darkvision||0,feyAncestry:!!spData?.feyAncestry,speed:spData?.traits?.speed||30};
         const allFeats=[feat,bonusFeat].filter(Boolean);
         const tools=selectedTool?[selectedTool]:[];
-        onDone({cls,species:species||'human',speciesTraits,stats:finalStats,style:isCaster?null:style,feat:allFeats[0],bonusFeat:allFeats[1]||null,mastery:isCaster?[]:mastery,name,spells:allSpells,equip:{weapon:casterWeapon,armor:casterArmor,hasShield:casterShield},skilledPicks,crafterTools,musicianInstruments,classSkills:allSkills,humanSkill:speciesSkills[0]||null,extraLang,toolProficiencies:tools,subclass:subclass||null,metamagic:metamagic||[],learnedSpellCount:cls==='Sorcerer'?casterSpells.length:0})
+        onDone({cls,species:species||'human',speciesTraits,stats:finalStats,style:isCaster?null:style,feat:allFeats[0],bonusFeat:allFeats[1]||null,mastery:isCaster?[]:mastery,name,spells:allSpells,equip:{weapon:casterWeapon,armor:casterArmor,hasShield:casterShield},skilledPicks,crafterTools,musicianInstruments,classSkills:allSkills,humanSkill:speciesSkills[0]||null,extraLang,toolProficiencies:tools,subclass:subclass||null,metamagic:metamagic||[],learnedSpellCount:['Sorcerer','Wizard','Bard','Warlock','Ranger'].includes(cls)?casterSpells.length:0})
       }},'Begin Adventure')));
 }
 
@@ -12052,27 +12052,46 @@ function ASISelect({gs,onSelect}){
   }
 }
 
-// Sorcerer spell learning on level-up
-function SorcererSpellLearn({gs,onSelect}){
+// Caster spell learning on level-up (Sorcerer, Wizard, Bard, Warlock, Ranger)
+function CasterSpellLearn({gs,onSelect}){
   const e=React.createElement;
-  const[selected,setSelected]=useState(null);
+  const[selected,setSelected]=useState([]);
   const[swapOut,setSwapOut]=useState(null);
+  const[swapIn,setSwapIn]=useState(null);
   const[mode,setMode]=useState('learn'); // 'learn' or 'swap'
   const level=gs.level||1;
-  // Sorcerer spells known by level: 2 at L1, +1 per level up to 15 at L20
-  const spellsKnownByLevel=[2,3,4,5,6,7,8,9,10,11,12,12,13,13,14,14,15,15,15,15];
-  const maxKnown=spellsKnownByLevel[level-1]||15;
-  const currentKnown=[...(gs.spells?.level1||[]),...(gs.spells?.level2||[]),...(gs.spells?.level3||[]),...(gs.spells?.level4||[]),...(gs.spells?.level5||[])];
-  // Only count spells learned through level-up, not bonus spells from scrolls/events
-  const learnedCount=gs.learnedSpellCount||0;
-  const needsNewSpell=learnedCount<maxKnown;
-  // Max spell level by sorcerer level
-  const maxSpellLevel=level>=17?9:level>=15?8:level>=13?7:level>=11?6:level>=9?5:level>=7?4:level>=5?3:level>=3?2:1;
-  // Get available spells from SPELL_LISTS
-  const sorcererSpells=SPELL_LISTS?.sorcerer||SPELL_LISTS?.Sorcerer||[];
-  const availableSpells=sorcererSpells.filter(s=>s.level>0&&s.level<=maxSpellLevel&&!currentKnown.includes(s.spell));
+  const cls=gs.cls;
 
-  if(mode==='swap'&&currentKnown.length>0){
+  // Class-specific spell learning rules
+  const SPELL_PROGRESSION={
+    Sorcerer:{spellsPerLevel:[2,3,4,5,6,7,8,9,10,11,12,12,13,13,14,14,15,15,15,15],newPerLevel:1,canSwap:true,list:'sorcerer'},
+    Wizard:{spellsPerLevel:[6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44],newPerLevel:2,canSwap:false,list:'wizard'},
+    Bard:{spellsPerLevel:[4,5,6,7,8,9,10,11,12,14,15,15,16,18,19,19,20,22,22,22],newPerLevel:1,canSwap:true,list:'bard'},
+    Warlock:{spellsPerLevel:[2,3,4,5,6,7,8,9,10,10,11,11,12,12,13,13,14,14,15,15],newPerLevel:1,canSwap:true,list:'warlock'},
+    Ranger:{spellsPerLevel:[0,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11],newPerLevel:1,canSwap:true,list:'ranger'}
+  };
+  const prog=SPELL_PROGRESSION[cls]||SPELL_PROGRESSION.Sorcerer;
+  const maxKnown=prog.spellsPerLevel[level-1]||15;
+  const spellsToLearn=prog.newPerLevel;
+  const canSwap=prog.canSwap;
+  const spellListKey=prog.list;
+
+  const currentKnown=[...(gs.spells?.level1||[]),...(gs.spells?.level2||[]),...(gs.spells?.level3||[]),...(gs.spells?.level4||[]),...(gs.spells?.level5||[]),...(gs.spells?.level6||[]),...(gs.spells?.level7||[]),...(gs.spells?.level8||[]),...(gs.spells?.level9||[])];
+  const learnedCount=gs.learnedSpellCount||0;
+  const needsNewSpells=learnedCount<maxKnown;
+  const spellsNeeded=Math.min(spellsToLearn,maxKnown-learnedCount);
+
+  // Max spell level by full caster level (Wizard/Sorcerer/Bard)
+  const maxSpellLevel=level>=17?9:level>=15?8:level>=13?7:level>=11?6:level>=9?5:level>=7?4:level>=5?3:level>=3?2:1;
+  const classSpells=SPELL_LISTS?.[spellListKey]||SPELL_LISTS?.[spellListKey.charAt(0).toUpperCase()+spellListKey.slice(1)]||[];
+  const availableSpells=classSpells.filter(s=>s.level>0&&s.level<=maxSpellLevel&&!currentKnown.includes(s.spell)&&!selected.includes(s.spell));
+
+  const toggle=(spell)=>{
+    if(selected.includes(spell))setSelected(selected.filter(x=>x!==spell));
+    else if(selected.length<spellsNeeded)setSelected([...selected,spell]);
+  };
+
+  if(mode==='swap'&&canSwap&&currentKnown.length>0){
     return e('div',{className:'modal-overlay'},
       e('div',{className:'modal-box',style:{maxWidth:520}},
         e('h2',{className:'gold'},'SWAP A SPELL'),
@@ -12083,34 +12102,41 @@ function SorcererSpellLearn({gs,onSelect}){
         swapOut?e('div',null,
           e('h3',{className:'spell-section-title'},'Learn instead:'),
           e('div',{className:'spell-grid',style:{maxHeight:200,overflowY:'auto'}},
-            availableSpells.map(s=>e('button',{key:s.spell,className:'spell-btn'+(selected===s.spell?' selected':''),onClick:()=>setSelected(s.spell)},
+            availableSpells.map(s=>e('button',{key:s.spell,className:'spell-btn'+(swapIn===s.spell?' selected':''),onClick:()=>setSwapIn(s.spell)},
               s.spell,e('small',{style:{marginLeft:6,opacity:.7}},'L'+s.level))))):null,
         e('div',{className:'btn-row',style:{marginTop:16}},
-          e('button',{className:'ghost-btn',onClick:()=>{setMode('learn');setSwapOut(null);setSelected(null)}},'← Back'),
-          e('button',{className:'gold-btn',disabled:!swapOut||!selected,onClick:()=>onSelect({swap:{from:swapOut,to:selected}})},'Confirm Swap'))));
+          e('button',{className:'ghost-btn',onClick:()=>{setMode('learn');setSwapOut(null);setSwapIn(null)}},'← Back'),
+          e('button',{className:'gold-btn',disabled:!swapOut||!swapIn,onClick:()=>onSelect({swap:{from:swapOut,to:swapIn},learn:selected})},'Confirm Swap'))));
   }
+
+  const title=cls==='Wizard'?'ADD TO SPELLBOOK':'LEARN NEW SPELL'+(spellsNeeded>1?'S':'');
+  const desc=cls==='Wizard'?
+    'Level '+level+': Add '+spellsNeeded+' new wizard spell'+(spellsNeeded>1?'s':'')+' to your spellbook.':
+    needsNewSpells?'Level '+level+': Choose '+spellsNeeded+' new '+cls.toLowerCase()+' spell'+(spellsNeeded>1?'s':'')+'.':
+    'You know the maximum spells for your level.'+(canSwap?' You may swap one spell for another.':'');
 
   return e('div',{className:'modal-overlay'},
     e('div',{className:'modal-box',style:{maxWidth:560}},
-      e('h2',{className:'gold'},'LEARN NEW SPELL'),
-      e('p',{style:{fontSize:13,color:'var(--text-dim)',marginBottom:12}},
-        needsNewSpell?'Level '+level+': Choose a new sorcerer spell (up to level '+maxSpellLevel+').':
-        'You know the maximum spells for your level. You may swap one spell for another.'),
-      needsNewSpell?e('div',null,
+      e('h2',{className:'gold'},title),
+      e('p',{style:{fontSize:13,color:'var(--text-dim)',marginBottom:12}},desc),
+      needsNewSpells?e('div',null,
         e('div',{className:'spell-grid',style:{maxHeight:300,overflowY:'auto'}},
           [1,2,3,4,5,6,7,8,9].filter(l=>l<=maxSpellLevel).map(lvl=>{
             const lvlSpells=availableSpells.filter(s=>s.level===lvl);
             return lvlSpells.length?e('div',{key:lvl},
               e('h4',{style:{color:'var(--gold)',margin:'12px 0 6px',fontSize:12}},'Level '+lvl+' Spells'),
-              e('div',{className:'spell-grid'},lvlSpells.map(s=>e('button',{key:s.spell,className:'spell-btn'+(selected===s.spell?' selected':''),onClick:()=>setSelected(s.spell)},s.spell)))):null;
+              e('div',{className:'spell-grid'},lvlSpells.map(s=>e('button',{key:s.spell,className:'spell-btn'+(selected.includes(s.spell)?' selected':''),onClick:()=>toggle(s.spell)},s.spell)))):null;
           })),
+        e('p',{style:{fontSize:12,color:selected.length===spellsNeeded?'#6adb6a':'#8a8578',marginTop:8}},selected.length+'/'+spellsNeeded+' selected'),
         e('div',{className:'btn-row',style:{marginTop:16}},
-          e('button',{className:'ghost-btn',onClick:()=>setMode('swap')},'Swap Instead'),
-          e('button',{className:'gold-btn',disabled:!selected,onClick:()=>onSelect({learn:selected})},'Learn Spell'))):
+          canSwap?e('button',{className:'ghost-btn',onClick:()=>setMode('swap')},'Swap Instead'):null,
+          e('button',{className:'gold-btn',disabled:selected.length!==spellsNeeded,onClick:()=>onSelect({learn:selected})},'Confirm'))):
       e('div',{className:'btn-row',style:{marginTop:16}},
-        e('button',{className:'gold-btn',onClick:()=>setMode('swap')},'Swap a Spell'),
+        canSwap?e('button',{className:'gold-btn',onClick:()=>setMode('swap')},'Swap a Spell'):null,
         e('button',{className:'ghost-btn',onClick:()=>onSelect(null)},'Skip'))));
 }
+// Legacy alias
+const SorcererSpellLearn=CasterSpellLearn;
 
 // Multiclass selection (appears at level 4+ when leveling up in continuation modules)
 function MulticlassSelect({gs,onSelect,onCancel}){
@@ -13317,7 +13343,7 @@ function App(){
         if(b.text.includes('LEVEL '+lvl)&&ns.level<lvl){captureSnapshot(lvl-1);ns.level=lvl;if(!ns.classLevels)ns.classLevels={[ns.cls]:lvl-1};ns.classLevels[ns.cls]=lvl;ns.derived=calcDerived(ns.stats,ns.cls,lvl,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels,ns.subclass);ns.hp=ns.derived.maxHp;SoundManager.play('levelup');
           if(ns.cls==='Sorcerer'&&SORC_META_LEVELS.includes(lvl))setTimeout(()=>setMetamagicModal(true),500);
           else if(ASI_LEVELS.includes(lvl))setTimeout(()=>setAsiModal(true),500);
-          if(ns.cls==='Sorcerer')setTimeout(()=>setSorcSpellModal(true),600);
+          if(['Sorcerer','Wizard','Bard','Warlock','Ranger'].includes(ns.cls))setTimeout(()=>setSorcSpellModal(true),600);
         }
       }});
     // Scene-based title grants from titleGrants rules
@@ -13931,7 +13957,7 @@ function App(){
     subclassModal&&gs&&((gs.cls==='Wizard'&&gs.level>=2)||(gs.cls!=='Wizard'&&gs.level>=3))&&!gs.subclass?e(SubclassSelect,{gs:gs,onSelect:(subId,maneuvers)=>{const ns={...gs,subclass:subId,maneuvers:maneuvers||[]};if(subId==='battlemaster')ns.superiorityDice=4;ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels,subId);setGs(ns);setSubclassModal(false)}}):null,
     metamagicModal&&gs&&gs.cls==='Sorcerer'?e(MetamagicSelect,{gs:gs,onSelect:(picks)=>{const ns={...gs,metamagic:picks};setGs(ns);setMetamagicModal(false)}}):null,
     asiModal&&gs?e(ASISelect,{gs:gs,onSelect:(result)=>{const ns={...gs};if(result.type==='asi'){ns.stats=result.stats;ns.derived=calcDerived(ns.stats,ns.cls,ns.level,ns.armor,ns.hasShield,ns.feat,ns.wounds,ns.exhaustion,ns.durability,ns.style,ns.classLevels,ns.subclass)}else if(result.type==='feat'){if(!ns.bonusFeat)ns.bonusFeat=result.feat;else ns.feat=ns.feat+', '+result.feat}setGs(ns);setAsiModal(false)}}):null,
-    sorcSpellModal&&gs&&gs.cls==='Sorcerer'?e(SorcererSpellLearn,{gs:gs,onSelect:(result)=>{if(!result){setSorcSpellModal(false);return}const ns={...gs};if(result.learn){const lvl=SPELL_LISTS?.sorcerer?.find(s=>s.spell===result.learn)?.level||1;const key='level'+lvl;if(!ns.spells)ns.spells={};if(!ns.spells[key])ns.spells[key]=[];ns.spells[key]=[...ns.spells[key],result.learn];ns.learnedSpellCount=(ns.learnedSpellCount||0)+1}if(result.swap){const fromLvl=Object.keys(ns.spells||{}).find(k=>ns.spells[k]?.includes(result.swap.from));if(fromLvl)ns.spells[fromLvl]=ns.spells[fromLvl].filter(s=>s!==result.swap.from);const toLvl=SPELL_LISTS?.sorcerer?.find(s=>s.spell===result.swap.to)?.level||1;const toKey='level'+toLvl;if(!ns.spells[toKey])ns.spells[toKey]=[];ns.spells[toKey]=[...ns.spells[toKey],result.swap.to]}setGs(ns);setSorcSpellModal(false)}}):null,
+    sorcSpellModal&&gs&&['Sorcerer','Wizard','Bard','Warlock','Ranger'].includes(gs.cls)?e(CasterSpellLearn,{gs:gs,onSelect:(result)=>{if(!result){setSorcSpellModal(false);return}const ns={...gs};const listKey=gs.cls.toLowerCase();const spellList=SPELL_LISTS?.[listKey]||SPELL_LISTS?.[gs.cls]||[];if(result.learn&&result.learn.length){result.learn.forEach(spell=>{const lvl=spellList.find(s=>s.spell===spell)?.level||1;const key='level'+lvl;if(!ns.spells)ns.spells={};if(!ns.spells[key])ns.spells[key]=[];if(!ns.spells[key].includes(spell))ns.spells[key]=[...ns.spells[key],spell]});ns.learnedSpellCount=(ns.learnedSpellCount||0)+result.learn.length}if(result.swap){const fromLvl=Object.keys(ns.spells||{}).find(k=>ns.spells[k]?.includes(result.swap.from));if(fromLvl)ns.spells[fromLvl]=ns.spells[fromLvl].filter(s=>s!==result.swap.from);const toLvl=spellList.find(s=>s.spell===result.swap.to)?.level||1;const toKey='level'+toLvl;if(!ns.spells[toKey])ns.spells[toKey]=[];ns.spells[toKey]=[...ns.spells[toKey],result.swap.to]}setGs(ns);setSorcSpellModal(false)}}):null,
     knightingPicker&&gs?e(KnightingSkillPicker,{order:knightingPicker.order,onConfirm:(skillChoice)=>{const ns=applyKnightingBonus(gs,knightingPicker.order,skillChoice);setGs(ns);setKnightingPicker(null)}}):null,
     showSettingsPanel?e(SettingsPanel,{onClose:()=>setShowSettingsPanel(false),onSave:()=>{setShowSettingsPanel(false);setShowSave(true)},onLoad:()=>{setShowSettingsPanel(false);setShowSave(true)},gs:gs,onModuleSwitch:()=>{setShowSettingsPanel(false);setShowModuleSwitch(true)}}):null,
     showModuleSwitch&&gs?e(ModuleSwitchModal,{gs:gs,moduleList:moduleList,currentModuleId:MODULE?.id,onSwitch:handleModuleSwitch,onClose:()=>setShowModuleSwitch(false)}):null,
