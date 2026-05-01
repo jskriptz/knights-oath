@@ -19,7 +19,7 @@ modules/knights-oath/
   combat-outcomes.json              — per-scene victory/defeat variants
   companions.json                   — companion data, combat stats, romance
   companion-gifts.json              — skill gifts at max approval
-  party-banter.json                 — 69 scene-triggered dialogue entries
+  party-banter.json                 — 106 scene-triggered dialogue entries
   scene-effects.json                — companion departures, NPC breakups
   shop-data.json                    — sell prices, unsellable pattern
   rules.json                        — declarative scene logic (filters, flags, gates)
@@ -98,7 +98,7 @@ dist/knights-oath.html              — standalone build with embedded module da
 
 ### Game State (gs object)
 **Character fields** (persistent across modules):
-`cls, stats, style, feat, mastery, name, spells, weapon, armor, hasShield, equipment, inventory, inventoryMeta, level, hp, xp, honour, gold, bandages, potions, greaterPotions, wounds, scars, bonuses, magicItems, skilledPicks, classSkills, humanSkill, companionGifts, completedModules, titles, selectedTitle, levelSnapshots, scaledFrom`
+`cls, stats, style, feat, mastery, name, spells, weapon, armor, hasShield, equipment, inventory, inventoryMeta, level, hp, xp, honour, gold, bandages, potions, greaterPotions, wounds, scars, bonuses, magicItems, skilledPicks, classSkills, humanSkill, companionGifts, completedModules, titles, selectedTitle, levelSnapshots, scaledFrom, currentCampaign, campaignProgress, sagaFlags, species, speciesTraits, learnedSpellCount`
 
 **Module progress fields** (per-module):
 `history, flags, awardedScenes, completedRolls, companions, romances, romanceDeclined, companionLog, deadCompanions, rose, sword, crown, orderMax, dgTrack, godSigns, hitDiceUsed, secondWindUsed, actionSurgeUsed, spellSlotsUsed, layOnHandsPool, miraHealedThisScene, combatCount, measureTrack, measureOrientation, approval`
@@ -161,6 +161,12 @@ Key sections in rules.json that drive engine behavior:
 - Module rules: always access via `MODULE_RULES?.property` (may be null before load)
 - Data format: `choiceFlags` use `letters: ["A"]` (array), `choiceFilters` use `letter: "A"` or `letters: ["A","B"]`
 - Item tracking: use `addItemWithTracking(gs, itemName, sceneId)` for timeline-aware inventory
+
+## Performance Optimizations
+- `calcDerived` is memoized with 50-entry LRU cache (avoids recalculating unchanged stats)
+- Auto-save is debounced (500ms) to prevent localStorage thrashing
+- Heavy components wrapped in React.memo: `CombatBoxMemo`, `CharSheetMemo`, `SceneViewMemo`
+- CSS vars for spacing/radius/shadow: `--gap-sm/md/lg`, `--radius`, `--radius-lg`, `--shadow`
 
 ## Android Workflow
 After editing any web files (index.html, sw.js, manifest.json) or module JSON:
