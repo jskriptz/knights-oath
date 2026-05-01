@@ -3692,9 +3692,10 @@ function ModuleSwitchModal({gs,moduleList,currentModuleId,onSwitch,onClose}){
   // Filter out current module and test modules
   const available=(moduleList||[]).filter(c=>c.id!==currentModuleId&&c.type!=='test');
   // Campaign lock: check if character is locked to a campaign
+  // Allow transfer if: no player campaign, no target campaign (standalone), same campaign, or campaign complete
   const playerCampaign=gs?.currentCampaign||null;
   const campaignComplete=gs?.campaignProgress?.complete||false;
-  const isSameCampaign=(mod)=>!playerCampaign||mod.campaignId===playerCampaign||campaignComplete;
+  const isSameCampaign=(mod)=>!playerCampaign||!mod.campaignId||mod.campaignId===playerCampaign||campaignComplete;
   // Get validation for selected module (only needed for transfer mode)
   const validation=selected&&!startFresh?canEnterModule(gs,{id:selected.id,type:selected.type,levelRange:selected.levelRange,date:selected.date||0},(gs.completedModules||[]).includes(selected.id)):null;
   const playerLevel=gs?.level||1;
