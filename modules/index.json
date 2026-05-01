@@ -8,6 +8,7 @@
       "levelRange": [1, 3],
       "date": 351,
       "setting": "Dragonlance",
+      "campaignId": "dragonlance-saga",
       "classes": ["Fighter", "Paladin"]
     },
     {
@@ -18,6 +19,7 @@
       "levelRange": [1, 3],
       "date": 351,
       "setting": "Dragonlance",
+      "campaignId": "dragonlance-saga",
       "classes": ["Wizard", "Sorcerer"]
     },
     {
