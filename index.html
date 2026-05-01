@@ -48,7 +48,7 @@
 <style>
 /* Fonts loaded via async link tag in head */
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#0e0e18;--panel:#16162a;--border:#252540;--gold:#c9a84c;--gold-dim:#b8a04a;--gold-bright:#e8c860;--text:#d4cfc4;--text-dim:#a09a8e;--text-bright:#f0ebe0;--blue:#5a8ac8;--green:#5a9a6a;--red:#a84a4a;--purple:#8a6aaa;--orange:#b88a4a;--pink:#a85a7a}
+:root{--bg:#0e0e18;--panel:#16162a;--border:#252540;--gold:#c9a84c;--gold-dim:#b8a04a;--gold-bright:#e8c860;--text:#d4cfc4;--text-dim:#a09a8e;--text-bright:#f0ebe0;--blue:#5a8ac8;--green:#5a9a6a;--red:#a84a4a;--purple:#8a6aaa;--orange:#b88a4a;--pink:#a85a7a;--gap-sm:8px;--gap-md:12px;--gap-lg:16px;--radius:6px;--radius-lg:8px;--shadow:0 4px 12px rgba(0,0,0,0.4)}
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Crimson Text',Georgia,serif;font-size:calc(17px * var(--text-scale,1));line-height:1.7}
 /* Accessibility: focus indicators */
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
@@ -1872,6 +1872,17 @@ function modStr(s){const m=mod(s);return m>=0?'+'+m:''+m}
 // Saga flags: check both module flags and campaign-wide saga flags
 function hasFlag(gs,flagName){return(gs?.flags?.[flagName])||(gs?.sagaFlags?.[flagName])||false}
 function setFlag(gs,flagName,isSaga=false){const ns={...gs};if(isSaga){ns.sagaFlags={...(ns.sagaFlags||{}),[flagName]:true}}else{ns.flags={...(ns.flags||{}),[flagName]:true}}return ns}
+
+// ── Performance Utilities ──
+// Debounce: delay execution until no calls for `delay` ms
+function debounce(fn,delay){let timer;return(...args)=>{clearTimeout(timer);timer=setTimeout(()=>fn(...args),delay)}}
+// Memoization cache for calcDerived — avoids recalculating same stats
+const _calcDerivedCache=new Map();
+const _DERIVED_CACHE_MAX=50;
+function _calcDerivedKey(stats,cls,lvl,armor,hasShield,feat,wounds,exhaustion,durability,style,classLevels,subclass){
+  return JSON.stringify([stats,cls,lvl,armor,hasShield,feat,wounds?.length||0,exhaustion,durability,style,classLevels,subclass]);
+}
+
 function getMaxWater(inventory){
   // Base 3 water + 3 per additional waterskin
   const waterskins=(inventory||[]).filter(i=>i.toLowerCase()==='waterskin').length;
@@ -1902,7 +1913,7 @@ function calcAC(armor,hasShield,dexMod){
   const acs={'None':10+dexMod,'Chain Mail':16,'Scale Mail':Math.min(14+dexMod,16),'Leather Armor':11+dexMod,'Studded Leather':12+dexMod,'Half-Plate':Math.min(15+dexMod,17)};
   return(acs[armor||'None']||10+dexMod)+(hasShield?2:0);
 }
-function calcDerived(stats,cls,lvl,armor,hasShield,feat,wounds,exhaustion,durability,style,classLevels,subclass){
+function _calcDerivedCore(stats,cls,lvl,armor,hasShield,feat,wounds,exhaustion,durability,style,classLevels,subclass){
   const ws=wounds||[];const woundPenalty=(stat)=>ws.filter(w=>w.stat===stat&&w.combatsLeft>0).length;
   const exh=Math.min(Math.max(exhaustion||0,0),10);
   const d={};d.profBonus=lvl>=5?3:2;
@@ -2092,6 +2103,15 @@ function calcDerived(stats,cls,lvl,armor,hasShield,feat,wounds,exhaustion,durabi
 
   d.hitDiceTotal=lvl;
   return d;
+}
+// Memoized wrapper for calcDerived — caches results to avoid recalculation
+function calcDerived(stats,cls,lvl,armor,hasShield,feat,wounds,exhaustion,durability,style,classLevels,subclass){
+  const key=_calcDerivedKey(stats,cls,lvl,armor,hasShield,feat,wounds,exhaustion,durability,style,classLevels,subclass);
+  if(_calcDerivedCache.has(key))return _calcDerivedCache.get(key);
+  const result=_calcDerivedCore(stats,cls,lvl,armor,hasShield,feat,wounds,exhaustion,durability,style,classLevels,subclass);
+  if(_calcDerivedCache.size>=_DERIVED_CACHE_MAX){const first=_calcDerivedCache.keys().next().value;_calcDerivedCache.delete(first)}
+  _calcDerivedCache.set(key,result);
+  return result;
 }
 function getBonus(der,skill){const m={Athletics:'strMod',Acrobatics:'dexMod',Stealth:'dexMod',Investigation:'intMod',History:'intMod',Religion:'intMod',Arcana:'intMod',Insight:'wisMod',Perception:'wisMod',Medicine:'wisMod',Survival:'wisMod',Persuasion:'chaMod',Intimidation:'chaMod',Deception:'chaMod',Performance:'chaMod',Composure:'wisMod',STR:'strMod',DEX:'dexMod',CON:'conMod',INT:'intMod',WIS:'wisMod',CHA:'chaMod'};return der[m[skill]||'wisMod']||0}
 // Combat wound and scar data
@@ -3218,6 +3238,12 @@ const ST={
 // ── Save System: Character (persistent) + Module Progress (per-module) ──
 const CHARACTER_FIELDS=['cls','stats','style','feat','bonusFeat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','rations','torches','waterskinUses','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount','languages','exhaustion','toolProficiencies','musicianInstruments','heroicInspiration','knightingSkill','portrait','durability','titles','selectedTitle','completedModules','loveInterest','partedCompanions','lastApproval','kills','subclass','metamagic','maneuvers','superiorityDice','channelDivinityUsed','vowOfEnmityTarget','sacredWeaponActive','classLevels','secondClass','secondSubclass','inventoryMeta','originalFeats','originalSpells','originalSubclass','originalManeuvers','scaledFrom','levelSnapshots','currentCampaign','campaignProgress','sagaFlags','species','speciesTraits','learnedSpellCount'];
 const MODULE_PROGRESS_FIELDS=['history','flags','awardedScenes','completedRolls','companions','romances','romanceDeclined','companionLog','deadCompanions','rose','sword','crown','orderMax','dgTrack','godSigns','hitDiceUsed','secondWindUsed','actionSurgeUsed','spellSlotsUsed','spellSlots2ndUsed','spellSlots3rdUsed','spellSlots4thUsed','spellSlots5thUsed','spellSlots6thUsed','spellSlots7thUsed','spellSlots8thUsed','spellSlots9thUsed','layOnHandsPool','miraHealedThisScene','combatCount','measureTrack','measureOrientation','approval','shortRestsToday','longRestTaken','dayNumber','campStash'];
+// Semantic groupings for targeted operations (reference only — main arrays are source of truth)
+const CHAR_FIELDS_CORE=['cls','stats','style','feat','bonusFeat','mastery','name','level','hp','xp'];
+const CHAR_FIELDS_COMBAT=['weapon','armor','hasShield','equipment','wounds','scars','durability','kills'];
+const CHAR_FIELDS_INVENTORY=['inventory','inventoryMeta','gold','bandages','potions','greaterPotions','rations','torches','waterskinUses','magicItems','bonuses'];
+const CHAR_FIELDS_SPELLS=['spells','subclass','metamagic','learnedSpellCount'];
+const CHAR_FIELDS_CAMPAIGN=['completedModules','currentCampaign','campaignProgress','sagaFlags','scaledFrom','levelSnapshots'];
 
 function splitSave(gs,sceneId){
   const character={};const progress={};
@@ -3400,6 +3426,8 @@ async function saveGame(slot,gs,sceneId){
     return true
   }catch(e){return false}
 }
+// Debounced auto-save: prevents localStorage thrashing during rapid state changes
+const debouncedAutoSave=debounce((gs,sceneId)=>saveGame(0,gs,sceneId),500);
 const SAVE_SLOT_COUNT=6;
 async function loadAllSlots(){
   const s=Array(SAVE_SLOT_COUNT).fill(null);
@@ -10948,7 +10976,7 @@ function SceneView({scene,onChoice,gs,isEnding,onViewSheet,onViewDmSummary,onExp
         if(!txt||!txt.trim())return null;
         // Use RollBox for roll-type boxes
         if(box.type==='roll')return e(RollBox,{key:scene.id+'_r'+i,rollKey:scene.id+'_r'+i,text:txt,derived:gs.derived,gs:gs,onBonus:onBonus,onRollSave:onStateUpdate});
-        if(box.type==='combat')return e(CombatBox,{key:scene.id+'_c'+i,text:txt,gs:gs,derived:gs.derived,onStateUpdate:onStateUpdate,sceneId:scene.id});
+        if(box.type==='combat')return e(CombatBoxMemo,{key:scene.id+'_c'+i,text:txt,gs:gs,derived:gs.derived,onStateUpdate:onStateUpdate,sceneId:scene.id});
         if(box.type==='shop')return e(ShopBox,{key:scene.id+'_s'+i,text:txt,gs:gs,onStateUpdate:onStateUpdate});
         if(box.type==='magic')return e(MagicShopBox,{key:scene.id+'_m'+i,text:txt,gs:gs,onStateUpdate:onStateUpdate});
         if(box.type==='loot')return e(LootBox,{key:scene.id+'_l'+i,text:txt,gs:gs,onStateUpdate:onStateUpdate});
@@ -13072,6 +13100,12 @@ function DraggableSettings({onOpen}){
     onClick:()=>{if(!dragRef.current.moved)onOpen()}},'\u2699');
 }
 
+// \u2500\u2500 Memoized Components: Prevent unnecessary re-renders \u2500\u2500
+const CombatBoxMemo=React.memo(CombatBox);
+const CharSheetMemo=React.memo(CharSheet);
+const SceneViewMemo=React.memo(SceneView,(prev,next)=>
+  prev.scene?.id===next.scene?.id&&prev.gs===next.gs&&prev.isEnding===next.isEnding);
+
 function App(){
   const[phase,setPhase]=useState('cover');const[gs,setGs]=useState(null);const[scene,setScene]=useState(null);const[sceneId,setSceneId]=useState(null);
   const[showSave,setShowSave]=useState(false);const[saveMsg,setSaveMsg]=useState('');const[showSheet,setShowSheet]=useState(false);const[showDmSummary,setShowDmSummary]=useState(false);const[showMap,setShowMap]=useState(false);const[sideOpen,setSideOpen]=useState(false);const[confirmModal,setConfirmModal]=useState(null);const[compPopup,setCompPopup]=useState(null);const[romancePrompt,setRomancePrompt]=useState(null);const[romanceManage,setRomanceManage]=useState(false);const[breakupTarget,setBreakupTarget]=useState(null);const[npcNotify,setNpcNotify]=useState(null);const[romanceCheck,setRomanceCheck]=useState(null);const[spellPrepModal,setSpellPrepModal]=useState(false);const[shortRestModal,setShortRestModal]=useState(false);const[healingPanel,setHealingPanel]=useState(false);const[defeatRecovery,setDefeatRecovery]=useState(null);const[godSignPicker,setGodSignPicker]=useState(null);const[subclassModal,setSubclassModal]=useState(false);const[metamagicModal,setMetamagicModal]=useState(false);const[asiModal,setAsiModal]=useState(false);const[sorcSpellModal,setSorcSpellModal]=useState(false);const[editSlot,setEditSlot]=useState(null);const[showSettingsPanel,setShowSettingsPanel]=useState(false);const[knightingPicker,setKnightingPicker]=useState(null);const[showCamp,setShowCamp]=useState(false);const[showExportModal,setShowExportModal]=useState(false);const[showModuleSwitch,setShowModuleSwitch]=useState(false);const[moduleList,setModuleList]=useState([]);const[lightbox,setLightbox]=useState(null);const[switchingModule,setSwitchingModule]=useState(false);
@@ -13378,7 +13412,7 @@ function App(){
       if(!ns.completedModules)ns.completedModules=[];
       if(moduleId&&!ns.completedModules.includes(moduleId))ns.completedModules=[...ns.completedModules,moduleId];
     }
-    setScene(s);setSceneId(id);setGs(ns);if(shouldAutoSave())saveGame(0,ns,id)};
+    setScene(s);setSceneId(id);setGs(ns);if(shouldAutoSave())debouncedAutoSave(ns,id)};
   const startGame=({cls,stats,style,feat,mastery,name,spells,equip,skilledPicks,crafterTools,musicianInstruments,classSkills,humanSkill,extraLang,subclass,metamagic})=>{const derived=calcDerived(stats,cls,1,equip.armor,equip.hasShield,feat,[],0,null,style,null,subclass||null);
     const cRes=(MODULE&&MODULE.startingResources)||{};
     const cInv=(MODULE&&MODULE.startingInventory)||['Dagger','Explorer\u2019s Pack'];
@@ -13819,7 +13853,7 @@ function App(){
   if(phase==='create')return e(CharCreate,{onDone:startGame,onBack:()=>setPhase('intro')});
   if(!gs||!scene)return null;
   if(showDmSummary&&DM_SUMMARY)return e(DmSummary,{gs,sceneId,onBack:()=>setShowDmSummary(false)});
-  if(showSheet)return e(CharSheet,{gs,isEnding:ENDING_SCENES.includes(sceneId),onBack:()=>setShowSheet(false),onEquipChange:(newGs)=>setGs(newGs)});
+  if(showSheet)return e(CharSheetMemo,{gs,isEnding:ENDING_SCENES.includes(sceneId),onBack:()=>setShowSheet(false),onEquipChange:(newGs)=>setGs(newGs)});
   const d=gs.derived;
   return e('div',{id:'game-container'},
     e('div',{className:'mobile-bar'},e('button',{className:'hamburger',onClick:()=>setSideOpen(!sideOpen)},sideOpen?'\u2715':'\u2630'),e('div',{style:{flex:1,textAlign:'center'}},e('div',{className:'bar-name'},gs.name),e('div',{className:'bar-stats'},e('span',null,'Lv'+gs.level),e('span',null,'HP '+gs.hp+'/'+d.maxHp),e('span',{style:{color:'#e8a0a0'}},'R:'+gs.rose),e('span',{style:{color:'#a0c0e8'}},'S:'+gs.sword),e('span',{style:{color:'#e8d8a0'}},'C:'+gs.crown),e('span',{style:{color:'#c9a84c'}},'\u2694'+(gs.gold||0)))),e('button',{className:'hamburger',onClick:()=>setShowSave(true)},'\u2716')),
@@ -13942,7 +13976,7 @@ function App(){
         Object.values(gs.romances||{}).filter(v=>v&&v!=='Friend').length>0?e('button',{className:'romance-manage-btn',onClick:()=>{setRomanceManage(true);setSideOpen(false)}},'Manage Romances'):null,e('button',{className:'save-btn',onClick:()=>{setShowSave(true);setSideOpen(false)}},'\u2716 Save'),saveMsg?e('span',{className:'save-msg'},saveMsg):null,e('button',{className:'menu-btn',onClick:()=>{setShowSettingsPanel(true);setSideOpen(false)}},'\u2699 Settings'),e('button',{className:'menu-btn',onClick:handleMenu},'Menu'))),
     e('button',{className:'settings-gear',onClick:()=>setShowSettingsPanel(true),title:'Settings'},'\u2699'),
     e(DraggableSettings,{onOpen:()=>setShowSettingsPanel(true)}),
-    e(SceneView,{scene,onChoice:handleChoice,gs,isEnding:ENDING_SCENES.includes(sceneId),onViewSheet:()=>setShowSheet(true),onViewDmSummary:ENDING_SCENES.includes(sceneId)&&DM_SUMMARY?()=>setShowDmSummary(true):null,onExport:ENDING_SCENES.includes(sceneId)?()=>setShowExportModal(true):null,onBonus:handleBonus,onStateUpdate:handleStateUpdate}),
+    e(SceneViewMemo,{scene,onChoice:handleChoice,gs,isEnding:ENDING_SCENES.includes(sceneId),onViewSheet:()=>setShowSheet(true),onViewDmSummary:ENDING_SCENES.includes(sceneId)&&DM_SUMMARY?()=>setShowDmSummary(true):null,onExport:ENDING_SCENES.includes(sceneId)?()=>setShowExportModal(true):null,onBonus:handleBonus,onStateUpdate:handleStateUpdate}),
     showSave?e(SavePicker,{onPick:handleSavePick,onCancel:()=>setShowSave(false),onMenu:()=>{setShowSave(false);handleMenu()}}):null,confirmModal?e(ConfirmModal,confirmModal):null,showExportModal&&gs?e(ExportCharacterModal,{gs:gs,moduleId:(MODULE&&MODULE.id)||'knights-oath',onExport:handleExportCharacter,onClose:()=>setShowExportModal(false)}):null,compPopup?e(CompanionInfo,{name:compPopup.name,romance:compPopup.romance,onClose:()=>setCompPopup(null)}):null,romancePrompt?e(RomancePrompt,{prompt:romancePrompt,gs:gs,onAccept:acceptRomance,onFriend:friendRomance,onDecline:declineRomance}):null,
     romanceManage&&gs?e(RomanceManage,{gs:gs,onClose:()=>setRomanceManage(false),onEnd:(name)=>{setRomanceManage(false);setBreakupTarget(name)},onFriend:manageFriend}):null,
     npcNotify?e(NpcNotification,{notif:npcNotify,onDismiss:dismissNpcNotify}):null,

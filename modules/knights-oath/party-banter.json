@@ -725,7 +725,7 @@
     ]
   },
   {
-    "scene": "BV4",
+    "scene": "BV3",
     "requireCompanion": ["Lysander"],
     "lines": [
       {"speaker": "Lysander", "text": "Survivors. Good. That means there's something left to save."},
@@ -734,7 +734,7 @@
     ]
   },
   {
-    "scene": "BV5",
+    "scene": "BV3",
     "requireCompanion": ["Sera"],
     "lines": [
       {"speaker": "Sera", "text": "I've seen this before. Villages burned to force refugees south. It's a tactic."},
@@ -920,7 +920,7 @@
     ]
   },
   {
-    "scene": "32",
+    "scene": "31",
     "requireCompanion": ["Serath"],
     "lines": [
       {"speaker": "Serath", "text": "I know this road. The Dragon Army used it for supply lines."},
@@ -967,7 +967,7 @@
     ]
   },
   {
-    "scene": "58",
+    "scene": "57",
     "requireCompanion": ["Thessaly"],
     "lines": [
       {"speaker": "Thessaly", "text": "The scribes of Palanthas will never believe this. I barely believe it myself."},
