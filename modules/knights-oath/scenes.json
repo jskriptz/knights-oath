@@ -636,6 +636,10 @@
     ],
     "boxes": [
       {
+        "type": "companion",
+        "text": "**COMPANION JOINS: ALDRIC VOSS**\nKnight-squire, rival, possible love interest. Joins as sparring partner from this scene.\nRole: Combat ally: +1 to your attack rolls when fighting side by side."
+      },
+      {
         "type": "roll",
         "text": "**ROLL REQUIRED:** Athletics (+3) | STR | DC 14\n**SUCCESS (roll 14+):** You find the gap on his third combination \u2014 the ankle, just like you noticed. He goes down on one knee, breathing hard, then looks up with something new in his eyes. Not anger. Surprise. He didn't think you had it in you.\n**FAILURE (roll 1-13):** He wins by a blade's width. 'Better than last month,' he says, and you cannot tell if it's praise or pity. But his hand lingers when he pulls you up."
       }
