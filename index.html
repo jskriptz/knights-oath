@@ -9877,6 +9877,12 @@ function CharCreate({onDone,onBack}){
   const finalStats=getFinal();
   const palPrepCount=cls==='Paladin'?Math.max(1,mod(finalStats.cha)+1):0;
 
+  // Module species/class config (must be before quick start)
+  const availClasses=(MODULE&&MODULE.classes)||['Fighter','Paladin'];
+  const availSpecies=(MODULE&&MODULE.availableSpecies)||['human'];
+  const speciesLocked=MODULE?.speciesLocked!==false||availSpecies.length===1;
+  const needsSpeciesStep=!speciesLocked&&availSpecies.length>1;
+
   // Step 0: Class
   if(step==='quick'){
     const qp=PRESETS[quickCls]||{};
@@ -9909,10 +9915,6 @@ function CharCreate({onDone,onBack}){
     Wizard:{tagline:'Arcane scholar. Prepared spellcasting.',features:'Spellcasting \u2022 Arcane Recovery \u2022 Arcane Tradition'},
     Sorcerer:{tagline:'Innate magic. Spontaneous spellcasting.',features:'Spellcasting \u2022 Sorcerous Origin \u2022 Font of Magic'}
   };
-  const availClasses=(MODULE&&MODULE.classes)||['Fighter','Paladin'];
-  const availSpecies=(MODULE&&MODULE.availableSpecies)||['human'];
-  const speciesLocked=MODULE?.speciesLocked!==false||availSpecies.length===1;
-  const needsSpeciesStep=!speciesLocked&&availSpecies.length>1;
   const getPresetSummary=(p)=>{
     if(!p)return'';
     const parts=[];
