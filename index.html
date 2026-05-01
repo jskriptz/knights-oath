@@ -13015,6 +13015,10 @@ async function loadModule(moduleId){
     }
 
     console.log('[Module] Loaded: '+manifest.title+' ('+manifest.id+')');
+    // Validation warnings for module authors
+    if(manifest.campaignId&&!manifest.campaignSequence)console.warn('[Module] Has campaignId but no campaignSequence — may affect ordering');
+    if(!manifest.levelRange)console.warn('[Module] Missing levelRange — module switching may not work correctly');
+    if(!manifest.date)console.warn('[Module] Missing date — timeline inventory filtering disabled');
     return manifest;
   }catch(err){
     console.error('[Module] Load failed:',err.message);
@@ -13137,8 +13141,16 @@ function App(){
 
   // Load module list for module switching
   React.useEffect(()=>{
-    if(window.__STANDALONE_DATA__?.moduleIndex){setModuleList(window.__STANDALONE_DATA__.moduleIndex.modules||[]);return}
-    fetch('modules/index.json').then(r=>r.ok?r.json():null).then(data=>{if(data?.modules)setModuleList(data.modules)}).catch(()=>{});
+    const validateModuleList=(modules)=>{
+      modules.forEach(m=>{
+        if(!m.id)console.error('[ModuleIndex] Module missing id:',m);
+        if(!m.levelRange)console.warn('[ModuleIndex] '+m.id+' missing levelRange');
+        if(m.setting&&!m.campaignId)console.info('[ModuleIndex] '+m.id+' has setting but no campaignId (standalone module)');
+      });
+      return modules;
+    };
+    if(window.__STANDALONE_DATA__?.moduleIndex){setModuleList(validateModuleList(window.__STANDALONE_DATA__.moduleIndex.modules||[]));return}
+    fetch('modules/index.json').then(r=>r.ok?r.json():null).then(data=>{if(data?.modules)setModuleList(validateModuleList(data.modules))}).catch(()=>{});
   },[]);
 
   // Text size persistence

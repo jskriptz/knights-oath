@@ -168,6 +168,56 @@ Key sections in rules.json that drive engine behavior:
 - Heavy components wrapped in React.memo: `CombatBoxMemo`, `CharSheetMemo`, `SceneViewMemo`
 - CSS vars for spacing/radius/shadow: `--gap-sm/md/lg`, `--radius`, `--radius-lg`, `--shadow`
 
+## Adding New Campaigns & Modules
+
+### Campaign Lock Rules
+- Character's `currentCampaign` is set from `MODULE.campaignId` during character creation
+- Transfer between modules requires: same campaign OR target has no campaignId OR campaign complete
+- "Start Fresh" always works regardless of campaign lock
+
+### Creating a New Campaign
+1. Create `campaigns/<campaign-id>.json`:
+```json
+{
+  "id": "my-campaign",
+  "title": "My Campaign Title",
+  "modules": [
+    {"id": "module-1", "sequence": 1, "type": "origin", "levelRange": [1,3]},
+    {"id": "module-2", "sequence": 2, "type": "continuation", "levelRange": [3,5]}
+  ]
+}
+```
+2. Add to `campaigns/index.json`:
+```json
+{"campaigns": [{"id": "my-campaign", "title": "My Campaign Title", "status": "active"}]}
+```
+
+### Creating a New Module
+1. Create `modules/<module-id>/module.json` with required fields:
+```json
+{
+  "id": "module-id",           // REQUIRED: must match folder name
+  "title": "Module Title",     // REQUIRED: display name
+  "campaignId": "campaign-id", // Set to join campaign, omit for standalone
+  "campaignSequence": 1,       // Order within campaign
+  "levelRange": [1, 3],        // REQUIRED: [min, max] for level scaling
+  "date": 351,                 // REQUIRED: timeline year for inventory filtering
+  "type": "origin",            // "origin" (start here) or "continuation"
+  "classes": ["Fighter"],      // Allowed classes for origin modules
+  "files": { ... }             // Data file references
+}
+```
+2. Add to `modules/index.json` with SAME fields (campaignId, levelRange, date)
+
+### Standalone Module (No Campaign Lock)
+Omit `campaignId` from both module.json and modules/index.json. Characters can transfer freely.
+
+### Console Warnings
+The engine logs warnings for common misconfigurations:
+- Module has campaignId but no campaignSequence
+- Module missing levelRange (breaks module switching)
+- Module missing date (breaks timeline inventory filtering)
+
 ## Android Workflow
 After editing any web files (index.html, sw.js, manifest.json) or module JSON:
 1. Run: `npm run sync`
