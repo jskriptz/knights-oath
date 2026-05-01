@@ -1,5 +1,5 @@
 // Knights Oath Service Worker v1
-const CACHE_NAME = 'knights-oath-25.57.1-7d5c5fe8';
+const CACHE_NAME = 'knights-oath-25.57.2-14ef186e';
 
 // Assets to precache on install (core app only, not module data)
 const PRECACHE_ASSETS = [
@@ -10,13 +10,19 @@ const PRECACHE_ASSETS = [
   'https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js'
 ];
 
-// Install: precache core assets
+// Install: precache core assets (don't auto-skipWaiting, let page control it)
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => cache.addAll(PRECACHE_ASSETS))
-      .then(() => self.skipWaiting())
   );
+});
+
+// Listen for skip waiting message from page
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
 
 // Activate: clean up old caches

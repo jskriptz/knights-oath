@@ -1552,6 +1552,9 @@ h2.red{color:var(--red)}
 /* ── Settings Panel ────────────────────────────────────── */
 .settings-gear{position:fixed;top:12px;right:12px;z-index:90;width:40px;height:40px;background:none;border:1px solid var(--border);border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--gold);transition:all 0.2s;opacity:0.8}
 .settings-gear:hover{opacity:1;border-color:var(--gold-dim);background:rgba(201,168,76,.1)}
+.update-btn{position:fixed;top:12px;right:60px;z-index:90;height:40px;padding:0 14px;background:var(--green);border:none;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;font-family:'Cinzel',serif;color:#fff;transition:all 0.2s;animation:pulse-update 2s infinite}
+.update-btn:hover{background:#5aa06a;transform:scale(1.05)}
+@keyframes pulse-update{0%,100%{box-shadow:0 0 0 0 rgba(74,138,90,.6)}50%{box-shadow:0 0 0 8px rgba(74,138,90,0)}}
 .settings-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:1001;display:flex;align-items:center;justify-content:center}
 .settings-panel{background:var(--panel);border:2px solid var(--gold);border-radius:8px;padding:28px 32px;width:380px;max-width:90vw;max-height:80vh;overflow-y:auto}
 .settings-title{font-family:var(--heading);font-size:1.4em;color:var(--gold);margin-bottom:20px;text-align:center;border-bottom:1px solid var(--border);padding-bottom:14px}
@@ -13118,6 +13121,35 @@ function App(){
   const[showSave,setShowSave]=useState(false);const[saveMsg,setSaveMsg]=useState('');const[showSheet,setShowSheet]=useState(false);const[showDmSummary,setShowDmSummary]=useState(false);const[showMap,setShowMap]=useState(false);const[sideOpen,setSideOpen]=useState(false);const[confirmModal,setConfirmModal]=useState(null);const[compPopup,setCompPopup]=useState(null);const[romancePrompt,setRomancePrompt]=useState(null);const[romanceManage,setRomanceManage]=useState(false);const[breakupTarget,setBreakupTarget]=useState(null);const[npcNotify,setNpcNotify]=useState(null);const[romanceCheck,setRomanceCheck]=useState(null);const[spellPrepModal,setSpellPrepModal]=useState(false);const[shortRestModal,setShortRestModal]=useState(false);const[healingPanel,setHealingPanel]=useState(false);const[defeatRecovery,setDefeatRecovery]=useState(null);const[godSignPicker,setGodSignPicker]=useState(null);const[subclassModal,setSubclassModal]=useState(false);const[metamagicModal,setMetamagicModal]=useState(false);const[asiModal,setAsiModal]=useState(false);const[sorcSpellModal,setSorcSpellModal]=useState(false);const[editSlot,setEditSlot]=useState(null);const[showSettingsPanel,setShowSettingsPanel]=useState(false);const[knightingPicker,setKnightingPicker]=useState(null);const[showCamp,setShowCamp]=useState(false);const[showExportModal,setShowExportModal]=useState(false);const[showModuleSwitch,setShowModuleSwitch]=useState(false);const[moduleList,setModuleList]=useState([]);const[lightbox,setLightbox]=useState(null);const[switchingModule,setSwitchingModule]=useState(false);
   const[textSize,setTextSize]=useState(()=>localStorage.getItem('textSize')||'normal');
   const[hardcoreMode,setHardcoreMode]=useState(()=>localStorage.getItem('hardcoreMode')==='true');
+  const[updateAvailable,setUpdateAvailable]=useState(false);
+  const[waitingSW,setWaitingSW]=useState(null);
+
+  // Service Worker update detection
+  React.useEffect(()=>{
+    if(!('serviceWorker' in navigator))return;
+    const handleUpdate=(reg)=>{
+      if(reg.waiting){setWaitingSW(reg.waiting);setUpdateAvailable(true)}
+    };
+    navigator.serviceWorker.ready.then(reg=>{
+      if(reg.waiting){setWaitingSW(reg.waiting);setUpdateAvailable(true)}
+      reg.addEventListener('updatefound',()=>{
+        const newSW=reg.installing;
+        if(newSW){
+          newSW.addEventListener('statechange',()=>{
+            if(newSW.state==='installed'&&navigator.serviceWorker.controller){
+              setWaitingSW(newSW);setUpdateAvailable(true);
+            }
+          });
+        }
+      });
+    });
+    navigator.serviceWorker.addEventListener('controllerchange',()=>window.location.reload());
+  },[]);
+
+  const applyUpdate=()=>{
+    if(waitingSW){waitingSW.postMessage({type:'SKIP_WAITING'})}
+  };
+
   // Migrate companion name casing on any active gs
   React.useEffect(()=>{
     if(!gs||!gs.companions)return;
@@ -13989,6 +14021,7 @@ function App(){
       e('div',{className:'sidebar-actions'},e('button',{className:'map-btn',onClick:()=>{setShowMap(true);setSideOpen(false)}},'\u{1F5FA} Map'),e('button',{className:'camp-btn',onClick:()=>{setShowCamp(true);setSideOpen(false)}},'\u26fa Make Camp'),e('button',{className:'sheet-sidebar-btn',onClick:()=>{setShowSheet(true);setSideOpen(false)}},'Character Sheet'),
         ENDING_SCENES.includes(sceneId)&&DM_SUMMARY?e('button',{className:'sheet-sidebar-btn',style:{background:'var(--gold-dim)',color:'var(--bg)'},onClick:()=>{setShowDmSummary(true);setSideOpen(false)}},'DM Summary'):null,
         Object.values(gs.romances||{}).filter(v=>v&&v!=='Friend').length>0?e('button',{className:'romance-manage-btn',onClick:()=>{setRomanceManage(true);setSideOpen(false)}},'Manage Romances'):null,e('button',{className:'save-btn',onClick:()=>{setShowSave(true);setSideOpen(false)}},'\u2716 Save'),saveMsg?e('span',{className:'save-msg'},saveMsg):null,e('button',{className:'menu-btn',onClick:()=>{setShowSettingsPanel(true);setSideOpen(false)}},'\u2699 Settings'),e('button',{className:'menu-btn',onClick:handleMenu},'Menu'))),
+    updateAvailable?e('button',{className:'update-btn',onClick:applyUpdate,title:'Update available! Click to refresh'},'\u21bb Update'):null,
     e('button',{className:'settings-gear',onClick:()=>setShowSettingsPanel(true),title:'Settings'},'\u2699'),
     e(DraggableSettings,{onOpen:()=>setShowSettingsPanel(true)}),
     e(SceneViewMemo,{scene,onChoice:handleChoice,gs,isEnding:ENDING_SCENES.includes(sceneId),onViewSheet:()=>setShowSheet(true),onViewDmSummary:ENDING_SCENES.includes(sceneId)&&DM_SUMMARY?()=>setShowDmSummary(true):null,onExport:ENDING_SCENES.includes(sceneId)?()=>setShowExportModal(true):null,onBonus:handleBonus,onStateUpdate:handleStateUpdate}),
