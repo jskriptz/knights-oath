@@ -13168,6 +13168,8 @@ function App(){
   const[updateAvailable,setUpdateAvailable]=useState(false);
   const[waitingSW,setWaitingSW]=useState(null);
   const[pendingCompanionJoin,setPendingCompanionJoin]=useState(null);
+  const[pendingNavigation,setPendingNavigation]=useState(null);
+  const[sceneCompanionPending,setSceneCompanionPending]=useState(null);
 
   // Service Worker update detection
   React.useEffect(()=>{
@@ -13260,7 +13262,9 @@ function App(){
       setGs(cleanState);
       setNpcNotify({...notif,sceneAfter:id});
       return;
-    }const s=SCENES[id];if(!s){console.warn('Scene not loaded yet:',id);setTimeout(()=>goScene(id,state),200);return}const ns={...state,history:[...state.history,s.id+': '+s.title]};
+    }const s=SCENES[id];if(!s){console.warn('Scene not loaded yet:',id);setTimeout(()=>goScene(id,state),200);return}
+    setSceneCompanionPending(null);// Clear any pending companion from previous scene
+    const ns={...state,history:[...state.history,s.id+': '+s.title]};
     ns.miraHealedThisScene=false;ns.combatResolved=false;
     // Disgrace check — only triggers if an order was earned (>0) and has since dropped to 0
     const oMax=ns.orderMax||{rose:0,sword:0,crown:0};
@@ -13465,8 +13469,8 @@ function App(){
         // Critical companions auto-join
         ns.companions=[...ns.companions,nm];if(!ns.companionLog)ns.companionLog={};if(!ns.companionLog[nm])ns.companionLog[nm]=[];ns.companionLog[nm].push('Joined in Scene '+id+(s.title?' — '+s.title:''));
       }else{
-        // Non-critical: queue for prompt (only first one this scene)
-        setTimeout(()=>setPendingCompanionJoin({name:nm,role:role,sceneId:id,sceneTitle:s.title}),300);
+        // Non-critical: store for prompt when user makes next choice
+        setSceneCompanionPending({name:nm,role:role,sceneId:id,sceneTitle:s.title});
       }
     }}});
     s.boxes.filter(b=>b.type==='levelup').forEach(b=>{
@@ -13716,6 +13720,14 @@ function App(){
       if(returnTo&&SCENES[returnTo]){finalTarget=returnTo}
       else{const hist=ns.history||[];for(let i=hist.length-1;i>=0;i--){const prevId=hist[i].split(':')[0].trim();if(!prevId.startsWith('TEMPT_')&&!prevId.startsWith('DEPTH_')&&!prevId.startsWith('DIVINE_')&&!prevId.startsWith('RETURN')&&SCENES[prevId]){finalTarget=prevId;break}}}
     }
+    // Check for pending companion join before navigating
+    if(sceneCompanionPending){
+      setPendingNavigation({target:finalTarget,gs:ns});
+      setPendingCompanionJoin(sceneCompanionPending);
+      setSceneCompanionPending(null);
+      setGs(ns);
+      return;
+    }
     if(finalTarget&&SCENES[finalTarget])goScene(finalTarget,ns);else setGs(ns)};
   const handleSavePick=async(slot)=>{await saveGame(slot,gs,sceneId);setShowSave(false);setSaveMsg('Saved!');setTimeout(()=>setSaveMsg(''),2500)};
   const resolveRelationship=(action,names,picked)=>{
@@ -13788,8 +13800,8 @@ function App(){
   const acceptRomance=(p)=>{if(!p||!gs)return;const ns={...gs,romances:{...gs.romances},companionLog:{...(gs.companionLog||{})}};ns.romances[p.comp]=p.stage;if(!ns.companionLog[p.comp])ns.companionLog[p.comp]=[];ns.companionLog[p.comp].push('Romance '+p.stage+' \u2014 Scene '+p.sceneId);setGs(ns);setRomancePrompt(null)};
   const friendRomance=(p)=>{if(!p||!gs)return;const ns={...gs,romances:{...gs.romances},companionLog:{...(gs.companionLog||{})},romanceDeclined:{...(gs.romanceDeclined||{})}};const wasFriend=gs.romances[p.comp]==='Friend';ns.romances[p.comp]='Friend';if(wasFriend)ns.romanceDeclined[p.comp]=true;if(!ns.companionLog[p.comp])ns.companionLog[p.comp]=[];ns.companionLog[p.comp].push(wasFriend?'Confirmed friendship (final) \u2014 Scene '+p.sceneId:'Chose friendship \u2014 Scene '+p.sceneId);setGs(ns);setRomancePrompt(null)};
   const declineRomance=(p)=>{if(!p||!gs)return;const ns={...gs,romanceDeclined:{...(gs.romanceDeclined||{})}};ns.romanceDeclined[p.comp]=true;setGs(ns);setRomancePrompt(null)};
-  const acceptCompanionJoin=(c)=>{if(!c||!gs)return;const ns={...gs,companions:[...(gs.companions||[])],companionLog:{...(gs.companionLog||{})}};if(!ns.companions.includes(c.name)){ns.companions.push(c.name);if(!ns.companionLog[c.name])ns.companionLog[c.name]=[];ns.companionLog[c.name].push('Joined in Scene '+c.sceneId+(c.sceneTitle?' — '+c.sceneTitle:''))}setGs(ns);setPendingCompanionJoin(null)};
-  const declineCompanionJoin=(c)=>{if(!c||!gs)return;const ns={...gs,declinedCompanions:[...(gs.declinedCompanions||[])]};if(!ns.declinedCompanions.includes(c.name))ns.declinedCompanions.push(c.name);setGs(ns);setPendingCompanionJoin(null)};
+  const acceptCompanionJoin=(c)=>{if(!c)return;const base=pendingNavigation?.gs||gs;if(!base)return;const ns={...base,companions:[...(base.companions||[])],companionLog:{...(base.companionLog||{})}};if(!ns.companions.includes(c.name)){ns.companions.push(c.name);if(!ns.companionLog[c.name])ns.companionLog[c.name]=[];ns.companionLog[c.name].push('Joined in Scene '+c.sceneId+(c.sceneTitle?' — '+c.sceneTitle:''))}setPendingCompanionJoin(null);if(pendingNavigation?.target&&SCENES[pendingNavigation.target]){const nav=pendingNavigation;setPendingNavigation(null);goScene(nav.target,ns)}else{setGs(ns);setPendingNavigation(null)}};
+  const declineCompanionJoin=(c)=>{if(!c)return;const base=pendingNavigation?.gs||gs;if(!base)return;const ns={...base,declinedCompanions:[...(base.declinedCompanions||[])]};if(!ns.declinedCompanions.includes(c.name))ns.declinedCompanions.push(c.name);setPendingCompanionJoin(null);if(pendingNavigation?.target&&SCENES[pendingNavigation.target]){const nav=pendingNavigation;setPendingNavigation(null);goScene(nav.target,ns)}else{setGs(ns);setPendingNavigation(null)}};
   const handleBonus=(bonus)=>{if(!gs||!bonus)return;const ns={...gs,bonuses:[...(gs.bonuses||[])]};
     if(!ns.bonuses.some(b=>b.name===bonus.name)){ns.bonuses.push(bonus)}
     // Romance bonus: actually advance romance track for the named companion
