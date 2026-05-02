@@ -1088,6 +1088,19 @@ body.high-contrast .box{border-width:2px}body.high-contrast button{border-width:
 .romance-decline{opacity:.6}
 .romance-decline:hover{opacity:1}
 
+/* Companion join modal */
+.companion-join{text-align:center;max-width:340px}
+.companion-join-portrait{width:100px;height:100px;border-radius:50%;border:3px solid var(--gold);object-fit:cover;object-position:top;margin:0 auto 12px;display:block;box-shadow:0 4px 16px rgba(0,0,0,.4)}
+.companion-join-name{font-family:'Cinzel',serif;font-size:18px;color:var(--gold);margin-bottom:4px}
+.companion-join-subtitle{font-size:12px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px}
+.companion-join-desc{font-size:13px;color:var(--text);line-height:1.5;margin-bottom:16px;font-style:italic;padding:0 8px}
+.companion-join-btns{display:flex;gap:12px;justify-content:center}
+.companion-join-btns button{min-width:100px;padding:10px 20px}
+.companion-join-accept{background:var(--green)!important;border:none!important;color:#fff!important}
+.companion-join-accept:hover{background:#5aa06a!important}
+.companion-join-decline{opacity:.7}
+.companion-join-decline:hover{opacity:1}
+
 /* Romance manage button in sidebar */
 .romance-manage-btn{background:rgba(173,20,87,.1);border:1px solid rgba(173,20,87,.25);color:var(--pink);padding:6px 12px;font-family:'Cinzel',serif;font-size:11px;border-radius:5px;cursor:pointer;transition:all .2s;width:100%;letter-spacing:.5px}
 .romance-manage-btn:hover{background:rgba(173,20,87,.2);border-color:var(--pink)}
@@ -3239,7 +3252,7 @@ const ST={
   async del(k){try{if(window.storage){await window.storage.delete(k);return}localStorage.removeItem(k)}catch(e){try{localStorage.removeItem(k)}catch(e2){}}}
 };
 // ── Save System: Character (persistent) + Module Progress (per-module) ──
-const CHARACTER_FIELDS=['cls','stats','style','feat','bonusFeat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','rations','torches','waterskinUses','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount','languages','exhaustion','toolProficiencies','musicianInstruments','heroicInspiration','knightingSkill','portrait','durability','titles','selectedTitle','completedModules','loveInterest','partedCompanions','lastApproval','kills','subclass','metamagic','maneuvers','superiorityDice','channelDivinityUsed','vowOfEnmityTarget','sacredWeaponActive','classLevels','secondClass','secondSubclass','inventoryMeta','originalFeats','originalSpells','originalSubclass','originalManeuvers','scaledFrom','levelSnapshots','currentCampaign','campaignProgress','sagaFlags','species','speciesTraits','learnedSpellCount'];
+const CHARACTER_FIELDS=['cls','stats','style','feat','bonusFeat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','rations','torches','waterskinUses','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount','languages','exhaustion','toolProficiencies','musicianInstruments','heroicInspiration','knightingSkill','portrait','durability','titles','selectedTitle','completedModules','loveInterest','partedCompanions','lastApproval','kills','subclass','metamagic','maneuvers','superiorityDice','channelDivinityUsed','vowOfEnmityTarget','sacredWeaponActive','classLevels','secondClass','secondSubclass','inventoryMeta','originalFeats','originalSpells','originalSubclass','originalManeuvers','scaledFrom','levelSnapshots','currentCampaign','campaignProgress','sagaFlags','species','speciesTraits','learnedSpellCount','declinedCompanions'];
 const MODULE_PROGRESS_FIELDS=['history','flags','awardedScenes','completedRolls','companions','romances','romanceDeclined','companionLog','deadCompanions','rose','sword','crown','orderMax','dgTrack','godSigns','hitDiceUsed','secondWindUsed','actionSurgeUsed','spellSlotsUsed','spellSlots2ndUsed','spellSlots3rdUsed','spellSlots4thUsed','spellSlots5thUsed','spellSlots6thUsed','spellSlots7thUsed','spellSlots8thUsed','spellSlots9thUsed','layOnHandsPool','miraHealedThisScene','combatCount','measureTrack','measureOrientation','approval','shortRestsToday','longRestTaken','dayNumber','campStash'];
 // Semantic groupings for targeted operations (reference only — main arrays are source of truth)
 const CHAR_FIELDS_CORE=['cls','stats','style','feat','bonusFeat','mastery','name','level','hp','xp'];
@@ -11879,6 +11892,24 @@ function RelationshipCheck({check,gs,onResolve}){
         e('button',{className:'ghost-btn',onClick:()=>onResolve('none',names)},'Step back from both'))));
 }
 
+function CompanionJoinModal({companion,onAccept,onDecline}){
+  const e=React.createElement;
+  if(!companion)return null;
+  const cd=findCompanion(companion.name);
+  const portrait=cd?.portrait||null;
+  const desc=companion.role||cd?.desc||'A potential ally.';
+  return e('div',{className:'modal-overlay'},
+    e('div',{className:'modal-box companion-join'},
+      portrait?e('img',{className:'companion-join-portrait',src:portrait,alt:companion.name}):
+        e('div',{className:'companion-join-portrait',style:{background:'var(--panel)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:32,color:'var(--gold)'}},companion.name.charAt(0)),
+      e('div',{className:'companion-join-name'},companion.name),
+      e('div',{className:'companion-join-subtitle'},'wants to join your party'),
+      e('div',{className:'companion-join-desc'},'"'+desc+'"'),
+      e('div',{className:'companion-join-btns'},
+        e('button',{className:'ghost-btn companion-join-decline',onClick:onDecline},'Decline'),
+        e('button',{className:'gold-btn companion-join-accept',onClick:onAccept},'Accept'))));
+}
+
 function RomancePrompt({prompt,gs,onAccept,onFriend,onDecline}){
   const e=React.createElement;
   if(!prompt)return null;
@@ -13136,6 +13167,7 @@ function App(){
   const[hardcoreMode,setHardcoreMode]=useState(()=>localStorage.getItem('hardcoreMode')==='true');
   const[updateAvailable,setUpdateAvailable]=useState(false);
   const[waitingSW,setWaitingSW]=useState(null);
+  const[pendingCompanionJoin,setPendingCompanionJoin]=useState(null);
 
   // Service Worker update detection
   React.useEffect(()=>{
@@ -13425,7 +13457,18 @@ function App(){
       // "whichever god feels right" triggers a full picker
       else if(boxFull.includes('whichever god feels right')){ns.awardedScenes[godKey]=true;setTimeout(()=>setGodSignPicker({scene:id,options:null}),400)}
     }}
-    s.boxes.filter(b=>b.type==='companion').forEach(b=>{const m=b.text.match(/COMPANION JOINS:\s*(.+?)[\n(*]/);if(m){let nm=m[1].replace(/\*+/g,'').trim();nm=nm.split(/\s+/).map(w=>w.charAt(0).toUpperCase()+w.slice(1).toLowerCase()).join(' ');const canonical=COMPANIONS_ALL.find(c=>c.toLowerCase()===nm.toLowerCase());if(canonical)nm=canonical;if(!ns.companions.includes(nm)){ns.companions=[...ns.companions,nm];if(!ns.companionLog)ns.companionLog={};if(!ns.companionLog[nm])ns.companionLog[nm]=[];ns.companionLog[nm].push('Joined in Scene '+sceneId+(s.title?' — '+s.title:''))}}});
+    // Process companion boxes - critical ones auto-join, others show prompt
+    s.boxes.filter(b=>b.type==='companion').forEach(b=>{const m=b.text.match(/COMPANION JOINS:\s*(.+?)[\n(*]/);if(m){let nm=m[1].replace(/\*+/g,'').trim();nm=nm.split(/\s+/).map(w=>w.charAt(0).toUpperCase()+w.slice(1).toLowerCase()).join(' ');const canonical=COMPANIONS_ALL.find(c=>c.toLowerCase()===nm.toLowerCase());if(canonical)nm=canonical;if(!ns.companions.includes(nm)&&!(ns.declinedCompanions||[]).includes(nm)){
+      // Extract role from companion box text
+      const roleMatch=b.text.match(/Role:\s*(.+?)(?:\n|$)/);const role=roleMatch?roleMatch[1].trim():null;
+      if(b.critical){
+        // Critical companions auto-join
+        ns.companions=[...ns.companions,nm];if(!ns.companionLog)ns.companionLog={};if(!ns.companionLog[nm])ns.companionLog[nm]=[];ns.companionLog[nm].push('Joined in Scene '+id+(s.title?' — '+s.title:''));
+      }else{
+        // Non-critical: queue for prompt (only first one this scene)
+        setTimeout(()=>setPendingCompanionJoin({name:nm,role:role,sceneId:id,sceneTitle:s.title}),300);
+      }
+    }}});
     s.boxes.filter(b=>b.type==='levelup').forEach(b=>{
       // Helper to capture snapshot before level-up
       const captureSnapshot=(lvl)=>{if(!ns.levelSnapshots)ns.levelSnapshots={};ns.levelSnapshots[lvl]={hp:ns.hp,classLevels:ns.classLevels?{...ns.classLevels}:null,subclass:ns.subclass,maneuvers:ns.maneuvers?[...ns.maneuvers]:[],feat:ns.feat,spells:ns.spells?{...ns.spells}:null}};
@@ -13502,7 +13545,7 @@ function App(){
       }
     }
     // Field defaults (migration safety)
-    if(!g.inventory)g.inventory=[];if(!g.deadCompanions)g.deadCompanions=[];if(!g.completedRolls)g.completedRolls={};if(!g.awardedScenes)g.awardedScenes={};if(!g.romances)g.romances={};if(!g.flags)g.flags={};if(!g.bonuses)g.bonuses=[];if(!g.magicItems)g.magicItems=[];if(g.hitDiceUsed===undefined)g.hitDiceUsed=0;if(!g.wounds)g.wounds=[];if(!g.scars)g.scars=[];if(g.combatCount===undefined)g.combatCount=0;if(g.xp===undefined)g.xp=0;if(g.honour===undefined)g.honour=5;if(!g.approval)g.approval={};if(!g.companionGifts)g.companionGifts=[];if(!g.orderMax)g.orderMax={rose:Math.max(0,g.rose||0),sword:Math.max(0,g.sword||0),crown:Math.max(0,g.crown||0)};if(g.exhaustion===undefined)g.exhaustion=0;if(g.rations===undefined)g.rations=0;if(g.torches===undefined)g.torches=0;if(!g.toolProficiencies)g.toolProficiencies=[];if(!g.musicianInstruments)g.musicianInstruments=[];if(g.heroicInspiration===undefined)g.heroicInspiration=0;if(g.subclass===undefined)g.subclass=null;if(!g.maneuvers)g.maneuvers=[];if(g.superiorityDice===undefined)g.superiorityDice=0;if(g.channelDivinityUsed===undefined)g.channelDivinityUsed=0;if(g.vowOfEnmityTarget===undefined)g.vowOfEnmityTarget=null;if(g.sacredWeaponActive===undefined)g.sacredWeaponActive=false;if(g.spellSlots2ndUsed===undefined)g.spellSlots2ndUsed=0;if(g.spellSlots3rdUsed===undefined)g.spellSlots3rdUsed=0;if(g.spellSlots4thUsed===undefined)g.spellSlots4thUsed=0;if(g.spellSlots5thUsed===undefined)g.spellSlots5thUsed=0;if(g.spellSlots6thUsed===undefined)g.spellSlots6thUsed=0;if(g.spellSlots7thUsed===undefined)g.spellSlots7thUsed=0;if(g.spellSlots8thUsed===undefined)g.spellSlots8thUsed=0;if(g.spellSlots9thUsed===undefined)g.spellSlots9thUsed=0;if(!g.currentCampaign)g.currentCampaign=(MODULE&&MODULE.campaignId)||null;if(!g.campaignProgress)g.campaignProgress={modulesCompleted:[],currentModule:(MODULE&&MODULE.id)||null};if(!g.sagaFlags)g.sagaFlags={};if(!g.species)g.species=(MODULE&&MODULE.species)||'human';if(!g.speciesTraits)g.speciesTraits={darkvision:0,feyAncestry:false,speed:30};if(g.bonusFeat===undefined)g.bonusFeat=null;if(g.learnedSpellCount===undefined)g.learnedSpellCount=0;
+    if(!g.inventory)g.inventory=[];if(!g.deadCompanions)g.deadCompanions=[];if(!g.completedRolls)g.completedRolls={};if(!g.awardedScenes)g.awardedScenes={};if(!g.romances)g.romances={};if(!g.flags)g.flags={};if(!g.bonuses)g.bonuses=[];if(!g.magicItems)g.magicItems=[];if(g.hitDiceUsed===undefined)g.hitDiceUsed=0;if(!g.wounds)g.wounds=[];if(!g.scars)g.scars=[];if(g.combatCount===undefined)g.combatCount=0;if(g.xp===undefined)g.xp=0;if(g.honour===undefined)g.honour=5;if(!g.approval)g.approval={};if(!g.companionGifts)g.companionGifts=[];if(!g.orderMax)g.orderMax={rose:Math.max(0,g.rose||0),sword:Math.max(0,g.sword||0),crown:Math.max(0,g.crown||0)};if(g.exhaustion===undefined)g.exhaustion=0;if(g.rations===undefined)g.rations=0;if(g.torches===undefined)g.torches=0;if(!g.toolProficiencies)g.toolProficiencies=[];if(!g.musicianInstruments)g.musicianInstruments=[];if(g.heroicInspiration===undefined)g.heroicInspiration=0;if(g.subclass===undefined)g.subclass=null;if(!g.maneuvers)g.maneuvers=[];if(g.superiorityDice===undefined)g.superiorityDice=0;if(g.channelDivinityUsed===undefined)g.channelDivinityUsed=0;if(g.vowOfEnmityTarget===undefined)g.vowOfEnmityTarget=null;if(g.sacredWeaponActive===undefined)g.sacredWeaponActive=false;if(g.spellSlots2ndUsed===undefined)g.spellSlots2ndUsed=0;if(g.spellSlots3rdUsed===undefined)g.spellSlots3rdUsed=0;if(g.spellSlots4thUsed===undefined)g.spellSlots4thUsed=0;if(g.spellSlots5thUsed===undefined)g.spellSlots5thUsed=0;if(g.spellSlots6thUsed===undefined)g.spellSlots6thUsed=0;if(g.spellSlots7thUsed===undefined)g.spellSlots7thUsed=0;if(g.spellSlots8thUsed===undefined)g.spellSlots8thUsed=0;if(g.spellSlots9thUsed===undefined)g.spellSlots9thUsed=0;if(!g.currentCampaign)g.currentCampaign=(MODULE&&MODULE.campaignId)||null;if(!g.campaignProgress)g.campaignProgress={modulesCompleted:[],currentModule:(MODULE&&MODULE.id)||null};if(!g.sagaFlags)g.sagaFlags={};if(!g.species)g.species=(MODULE&&MODULE.species)||'human';if(!g.speciesTraits)g.speciesTraits={darkvision:0,feyAncestry:false,speed:30};if(g.bonusFeat===undefined)g.bonusFeat=null;if(g.learnedSpellCount===undefined)g.learnedSpellCount=0;if(!g.declinedCompanions)g.declinedCompanions=[];
     if(!g.equipment){g.equipment=buildEquipment(g.weapon,g.armor,g.hasShield);if(!g.inventory.includes('Leather Helm')){g.inventory.push('Leather Helm','Leather Gloves','Leather Boots')}}
     // Migrate companion names to canonical casing
     g.companions=(g.companions||[]).map(c=>{const canon=COMPANIONS_ALL.find(x=>x.toLowerCase()===c.toLowerCase());return canon||c});
@@ -13745,6 +13788,8 @@ function App(){
   const acceptRomance=(p)=>{if(!p||!gs)return;const ns={...gs,romances:{...gs.romances},companionLog:{...(gs.companionLog||{})}};ns.romances[p.comp]=p.stage;if(!ns.companionLog[p.comp])ns.companionLog[p.comp]=[];ns.companionLog[p.comp].push('Romance '+p.stage+' \u2014 Scene '+p.sceneId);setGs(ns);setRomancePrompt(null)};
   const friendRomance=(p)=>{if(!p||!gs)return;const ns={...gs,romances:{...gs.romances},companionLog:{...(gs.companionLog||{})},romanceDeclined:{...(gs.romanceDeclined||{})}};const wasFriend=gs.romances[p.comp]==='Friend';ns.romances[p.comp]='Friend';if(wasFriend)ns.romanceDeclined[p.comp]=true;if(!ns.companionLog[p.comp])ns.companionLog[p.comp]=[];ns.companionLog[p.comp].push(wasFriend?'Confirmed friendship (final) \u2014 Scene '+p.sceneId:'Chose friendship \u2014 Scene '+p.sceneId);setGs(ns);setRomancePrompt(null)};
   const declineRomance=(p)=>{if(!p||!gs)return;const ns={...gs,romanceDeclined:{...(gs.romanceDeclined||{})}};ns.romanceDeclined[p.comp]=true;setGs(ns);setRomancePrompt(null)};
+  const acceptCompanionJoin=(c)=>{if(!c||!gs)return;const ns={...gs,companions:[...(gs.companions||[])],companionLog:{...(gs.companionLog||{})}};if(!ns.companions.includes(c.name)){ns.companions.push(c.name);if(!ns.companionLog[c.name])ns.companionLog[c.name]=[];ns.companionLog[c.name].push('Joined in Scene '+c.sceneId+(c.sceneTitle?' — '+c.sceneTitle:''))}setGs(ns);setPendingCompanionJoin(null)};
+  const declineCompanionJoin=(c)=>{if(!c||!gs)return;const ns={...gs,declinedCompanions:[...(gs.declinedCompanions||[])]};if(!ns.declinedCompanions.includes(c.name))ns.declinedCompanions.push(c.name);setGs(ns);setPendingCompanionJoin(null)};
   const handleBonus=(bonus)=>{if(!gs||!bonus)return;const ns={...gs,bonuses:[...(gs.bonuses||[])]};
     if(!ns.bonuses.some(b=>b.name===bonus.name)){ns.bonuses.push(bonus)}
     // Romance bonus: actually advance romance track for the named companion
@@ -14038,6 +14083,7 @@ function App(){
     e(DraggableSettings,{onOpen:()=>setShowSettingsPanel(true)}),
     e(SceneViewMemo,{scene,onChoice:handleChoice,gs,isEnding:ENDING_SCENES.includes(sceneId),onViewSheet:()=>setShowSheet(true),onViewDmSummary:ENDING_SCENES.includes(sceneId)&&DM_SUMMARY?()=>setShowDmSummary(true):null,onExport:ENDING_SCENES.includes(sceneId)?()=>setShowExportModal(true):null,onBonus:handleBonus,onStateUpdate:handleStateUpdate}),
     showSave?e(SavePicker,{onPick:handleSavePick,onCancel:()=>setShowSave(false),onMenu:()=>{setShowSave(false);handleMenu()}}):null,confirmModal?e(ConfirmModal,confirmModal):null,showExportModal&&gs?e(ExportCharacterModal,{gs:gs,moduleId:(MODULE&&MODULE.id)||'knights-oath',onExport:handleExportCharacter,onClose:()=>setShowExportModal(false)}):null,compPopup?e(CompanionInfo,{name:compPopup.name,romance:compPopup.romance,onClose:()=>setCompPopup(null)}):null,romancePrompt?e(RomancePrompt,{prompt:romancePrompt,gs:gs,onAccept:acceptRomance,onFriend:friendRomance,onDecline:declineRomance}):null,
+    pendingCompanionJoin?e(CompanionJoinModal,{companion:pendingCompanionJoin,onAccept:()=>acceptCompanionJoin(pendingCompanionJoin),onDecline:()=>declineCompanionJoin(pendingCompanionJoin)}):null,
     romanceManage&&gs?e(RomanceManage,{gs:gs,onClose:()=>setRomanceManage(false),onEnd:(name)=>{setRomanceManage(false);setBreakupTarget(name)},onFriend:manageFriend}):null,
     npcNotify?e(NpcNotification,{notif:npcNotify,onDismiss:dismissNpcNotify}):null,
     breakupTarget&&gs?e(BreakupScene,{name:breakupTarget,gs:gs,onResolve:handleBreakup}):null,

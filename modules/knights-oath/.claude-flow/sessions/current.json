@@ -4,15 +4,14 @@
   "cwd": "/home/carlo/projects/knights-oath/campaigns/knights-oath",
   "context": {
     "lastMatchedPatterns": [
-      "mem-project_task_backlog-content-design--needs-discussi",
       "mem-project_task_backlog-notes"
     ]
   },
   "metrics": {
-    "edits": 8,
+    "edits": 9,
     "commands": 0,
     "tasks": 0,
     "errors": 0
   },
-  "updatedAt": "2026-04-08T02:41:03.173Z"
+  "updatedAt": "2026-04-23T03:03:49.687Z"
 }

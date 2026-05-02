@@ -20,8 +20,8 @@
     "mem-MEMORY-references": {
       "id": "mem-MEMORY-references",
       "category": "core",
-      "confidence": 0.5,
-      "accessCount": 0,
+      "confidence": 0.56,
+      "accessCount": 2,
       "createdAt": 1775244369798
     },
     "mem-feedback_dynamic_version----": {
@@ -69,64 +69,64 @@
     "mem-project_architecture----": {
       "id": "mem-project_architecture----",
       "category": "project_architecture",
-      "confidence": 0.5,
-      "accessCount": 0,
+      "confidence": 0.53,
+      "accessCount": 1,
       "createdAt": 1775244369801
     },
     "mem-project_scene_overhaul----": {
       "id": "mem-project_scene_overhaul----",
       "category": "project_scene_overhaul",
-      "confidence": 0.5,
-      "accessCount": 0,
+      "confidence": 0.53,
+      "accessCount": 1,
       "createdAt": 1775244369802
     },
     "mem-project_task_backlog----": {
       "id": "mem-project_task_backlog----",
       "category": "project_task_backlog",
-      "confidence": 0.53,
-      "accessCount": 1,
+      "confidence": 0.56,
+      "accessCount": 2,
       "createdAt": 1775244369802
     },
     "mem-project_task_backlog-completed": {
       "id": "mem-project_task_backlog-completed",
       "category": "project_task_backlog",
-      "confidence": 0.5,
-      "accessCount": 0,
+      "confidence": 0.53,
+      "accessCount": 1,
       "createdAt": 1775244369802
     },
     "mem-project_task_backlog-large-systems": {
       "id": "mem-project_task_backlog-large-systems",
       "category": "project_task_backlog",
-      "confidence": 0.53,
-      "accessCount": 1,
+      "confidence": 0.5900000000000001,
+      "accessCount": 3,
       "createdAt": 1775244369802
     },
     "mem-project_task_backlog-content-design--needs-discussi": {
       "id": "mem-project_task_backlog-content-design--needs-discussi",
       "category": "project_task_backlog",
-      "confidence": 0.53,
-      "accessCount": 1,
+      "confidence": 0.6400000000000001,
+      "accessCount": 4,
       "createdAt": 1775244369802
     },
     "mem-project_task_backlog-notes": {
       "id": "mem-project_task_backlog-notes",
       "category": "project_task_backlog",
-      "confidence": 0.5,
-      "accessCount": 0,
+      "confidence": 0.5800000000000001,
+      "accessCount": 2,
       "createdAt": 1775244369802
     },
     "mem-project_workflow----": {
       "id": "mem-project_workflow----",
       "category": "project_workflow",
-      "confidence": 0.5,
-      "accessCount": 0,
+      "confidence": 0.53,
+      "accessCount": 1,
       "createdAt": 1775244369802
     },
     "mem-reference_qmd----": {
       "id": "mem-reference_qmd----",
       "category": "reference_qmd",
-      "confidence": 0.53,
-      "accessCount": 1,
+      "confidence": 0.56,
+      "accessCount": 2,
       "createdAt": 1775244369803
     }
   },
