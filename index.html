@@ -8975,10 +8975,6 @@ function getSellPrice(itemName){
 function ShopBox({text,gs,onStateUpdate}){
   const e=React.createElement;
   const parsed=React.useMemo(()=>parseShopBox(text),[text]);
-  // NPC attitude price modifier
-  const shopkeeperAttitude=gs.npcAttitude?.[parsed.shopName]||0;
-  const priceModifier=getAttitudePriceModifier(shopkeeperAttitude);
-  const applyMod=(price)=>Math.ceil(price*priceModifier);
   const[bought,setBought]=useState({});
   const[sold,setSold]=useState({});
   const[rareRolled,setRareRolled]=useState(false);
