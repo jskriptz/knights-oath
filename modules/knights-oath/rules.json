@@ -2195,5 +2195,9 @@
     "questionable": 5,
     "honourable": 8,
     "exemplary": 12
-  }
+  },
+  "npcAttitudeDeltas": [
+  ],
+  "factionAttitudeDeltas": [
+  ]
 }

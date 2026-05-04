@@ -3252,7 +3252,7 @@ const ST={
   async del(k){try{if(window.storage){await window.storage.delete(k);return}localStorage.removeItem(k)}catch(e){try{localStorage.removeItem(k)}catch(e2){}}}
 };
 // ── Save System: Character (persistent) + Module Progress (per-module) ──
-const CHARACTER_FIELDS=['cls','stats','style','feat','bonusFeat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','rations','torches','waterskinUses','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount','languages','exhaustion','toolProficiencies','musicianInstruments','heroicInspiration','knightingSkill','portrait','durability','titles','selectedTitle','completedModules','loveInterest','partedCompanions','lastApproval','kills','subclass','metamagic','maneuvers','superiorityDice','channelDivinityUsed','vowOfEnmityTarget','sacredWeaponActive','classLevels','secondClass','secondSubclass','inventoryMeta','originalFeats','originalSpells','originalSubclass','originalManeuvers','scaledFrom','levelSnapshots','currentCampaign','campaignProgress','sagaFlags','species','speciesTraits','learnedSpellCount','declinedCompanions'];
+const CHARACTER_FIELDS=['cls','stats','style','feat','bonusFeat','mastery','name','spells','weapon','armor','hasShield','equipment','inventory','level','hp','xp','honour','gold','bandages','potions','greaterPotions','rations','torches','waterskinUses','wounds','scars','bonuses','magicItems','skilledPicks','classSkills','humanSkill','companionGifts','mount','languages','exhaustion','toolProficiencies','musicianInstruments','heroicInspiration','knightingSkill','portrait','durability','titles','selectedTitle','completedModules','loveInterest','partedCompanions','lastApproval','kills','subclass','metamagic','maneuvers','superiorityDice','channelDivinityUsed','vowOfEnmityTarget','sacredWeaponActive','classLevels','secondClass','secondSubclass','inventoryMeta','originalFeats','originalSpells','originalSubclass','originalManeuvers','scaledFrom','levelSnapshots','currentCampaign','campaignProgress','sagaFlags','species','speciesTraits','learnedSpellCount','declinedCompanions','npcAttitude','factionAttitude','deadNPCs'];
 const MODULE_PROGRESS_FIELDS=['history','flags','awardedScenes','completedRolls','companions','romances','romanceDeclined','companionLog','deadCompanions','rose','sword','crown','orderMax','dgTrack','godSigns','hitDiceUsed','secondWindUsed','actionSurgeUsed','spellSlotsUsed','spellSlots2ndUsed','spellSlots3rdUsed','spellSlots4thUsed','spellSlots5thUsed','spellSlots6thUsed','spellSlots7thUsed','spellSlots8thUsed','spellSlots9thUsed','layOnHandsPool','miraHealedThisScene','combatCount','measureTrack','measureOrientation','approval','shortRestsToday','longRestTaken','dayNumber','campStash'];
 // Semantic groupings for targeted operations (reference only — main arrays are source of truth)
 const CHAR_FIELDS_CORE=['cls','stats','style','feat','bonusFeat','mastery','name','level','hp','xp'];
@@ -8845,6 +8845,17 @@ function getJunkSellPrice(itemName,persuasionMod=0){
   return 1;
 }
 
+// NPC attitude price modifier: hostile=+25%, unfriendly=+10%, friendly=-10%, trusted=-15%, devoted=-20%
+function getAttitudePriceModifier(attitude){
+  if(attitude===undefined||attitude===null)return 1.0;
+  if(attitude<=-4)return 1.25;// Hostile
+  if(attitude<=-1)return 1.10;// Unfriendly
+  if(attitude>=7)return 0.80;// Devoted
+  if(attitude>=4)return 0.85;// Trusted
+  if(attitude>=1)return 0.90;// Friendly
+  return 1.0;// Neutral
+}
+
 // Magic item lookup from EQUIPMENT_DATA
 function getMagicItemInfo(itemName){
   if(!EQUIPMENT_DATA)return null;
@@ -8935,6 +8946,10 @@ function getSellPrice(itemName){
 function ShopBox({text,gs,onStateUpdate}){
   const e=React.createElement;
   const parsed=React.useMemo(()=>parseShopBox(text),[text]);
+  // NPC attitude price modifier
+  const shopkeeperAttitude=gs.npcAttitude?.[parsed.shopName]||0;
+  const priceModifier=getAttitudePriceModifier(shopkeeperAttitude);
+  const applyMod=(price)=>Math.ceil(price*priceModifier);
   const[bought,setBought]=useState({});
   const[sold,setSold]=useState({});
   const[rareRolled,setRareRolled]=useState(false);
@@ -9286,6 +9301,10 @@ function parseMagicShopBox(text){
 function MagicShopBox({text,gs,onStateUpdate}){
   const e=React.createElement;
   const parsed=React.useMemo(()=>parseMagicShopBox(text),[text]);
+  // NPC attitude price modifier
+  const shopkeeperAttitude=gs.npcAttitude?.[parsed.shopName]||0;
+  const priceModifier=getAttitudePriceModifier(shopkeeperAttitude);
+  const applyMod=(price)=>Math.ceil(price*priceModifier);
   const[tab,setTab]=useState('scrolls');
   const[localGold,setLocalGold]=useState(gs.gold||0);
   const[localInv,setLocalInv]=useState(gs.inventory||[]);
@@ -9323,7 +9342,7 @@ function MagicShopBox({text,gs,onStateUpdate}){
   const knownSpells=gs.spells||[];
 
   const buyItem=(item,isScroll)=>{
-    const price=item.buyPrice;
+    const price=applyMod(item.buyPrice);
     if(localGold<price)return;
     setLocalGold(g=>g-price);
     setBought(b=>({...b,[item.name]:(b[item.name]||0)+1}));
@@ -9398,9 +9417,9 @@ function MagicShopBox({text,gs,onStateUpdate}){
             return e('tr',{key:i},
               e('td',{style:{color:getRarityColor(s.rarity)}},s.spell),
               e('td',{style:{textAlign:'center'}},s.level),
-              e('td',null,s.buyPrice+' stl'),
+              e('td',null,applyMod(s.buyPrice)+' stl'),
               e('td',{style:{fontSize:'11px',color:'var(--text-dim)'}},s.desc),
-              e('td',null,e('button',{className:'shop-buy-btn'+(qty>0?' bought':''),onClick:()=>buyItem(s,true),disabled:localGold<s.buyPrice},owned>0?'Buy ('+owned+')':'Buy')));
+              e('td',null,e('button',{className:'shop-buy-btn'+(qty>0?' bought':''),onClick:()=>buyItem(s,true),disabled:localGold<applyMod(s.buyPrice)},owned>0?'Buy ('+owned+')':'Buy')));
           })))
       ):null,
       // Trinkets tab
@@ -9413,10 +9432,10 @@ function MagicShopBox({text,gs,onStateUpdate}){
             const attText=t.attunement===true?'Yes':t.attunement===false?'No':t.attunement;
             return e('tr',{key:i},
               e('td',{style:{color:getRarityColor(t.rarity)}},t.name),
-              e('td',null,t.buyPrice+' stl'),
+              e('td',null,applyMod(t.buyPrice)+' stl'),
               e('td',{style:{fontSize:'11px',textAlign:'center'}},attText),
               e('td',{style:{fontSize:'11px',color:'var(--text-dim)'}},t.desc),
-              e('td',null,e('button',{className:'shop-buy-btn'+(qty>0?' bought':''),onClick:()=>buyItem(t,false),disabled:localGold<t.buyPrice},qty>0?'Buy ('+qty+')':'Buy')));
+              e('td',null,e('button',{className:'shop-buy-btn'+(qty>0?' bought':''),onClick:()=>buyItem(t,false),disabled:localGold<applyMod(t.buyPrice)},qty>0?'Buy ('+qty+')':'Buy')));
           })))
       ):null,
       // Learn spells tab (Wizard only)
@@ -13529,7 +13548,7 @@ function App(){
     const extraInv=[equip.weapon,equip.armor,equip.hasShield?'Shield':'',...cInv,cEquip.head,cEquip.hands,cEquip.boots].filter(Boolean);
     const startLangs=(MODULE&&MODULE.startingLanguages)||['Common'];
     const allLangs=[...startLangs];if(extraLang&&!allLangs.includes(extraLang))allLangs.push(extraLang);
-    const state={cls,stats,style,feat,mastery,name:name||(MODULE?.defaultName||'Adventurer'),spells:spells||{cantrips:[],level1:[],alwaysPrepared:[]},weapon:equip.weapon,armor:equip.armor,skilledPicks:skilledPicks||[],classSkills:classSkills||[],humanSkill:humanSkill||null,hasShield:equip.hasShield,level:1,hp:derived.maxHp,derived,xp:0,honour:cRes.honour||5,rose:0,sword:0,crown:0,companions:[],romances:{},godSigns:startGods,dgTrack:'NONE',equipment:buildEquipment(equip.weapon,equip.armor,equip.hasShield),inventory:extraInv,history:[],awardedScenes:{},companionLog:{},romanceDeclined:{},flags:{},bonuses:[],magicItems:[],measureTrack:0,measureOrientation:null,gold:cRes.gold||0,layOnHandsPool:cls==='Paladin'?derived.layOnHandsMax:0,spellSlotsUsed:0,spellSlots2ndUsed:0,spellSlots3rdUsed:0,spellSlots4thUsed:0,spellSlots5thUsed:0,spellSlots6thUsed:0,spellSlots7thUsed:0,spellSlots8thUsed:0,spellSlots9thUsed:0,secondWindUsed:0,actionSurgeUsed:false,bandages:cRes.bandages||0,potions:cRes.potions||0,greaterPotions:cRes.greaterPotions||0,rations:cRes.rations||0,torches:cRes.torches||0,waterskinUses:cRes.waterskinUses||3,miraHealedThisScene:false,completedRolls:{},deadCompanions:[],hitDiceUsed:0,wounds:[],scars:[],combatCount:0,orderMax:{rose:0,sword:0,crown:0},approval:{},kills:{player:{},companions:{}},companionGifts:[],mount:null,languages:allLangs,exhaustion:0,toolProficiencies:crafterTools||[],musicianInstruments:musicianInstruments||[],heroicInspiration:0,subclass:subclass||null,metamagic:metamagic||[],maneuvers:[],superiorityDice:0,channelDivinityUsed:0,vowOfEnmityTarget:null,sacredWeaponActive:false,durability:buildDurability(),classLevels:{[cls]:1},secondClass:null,secondSubclass:null,currentCampaign:commitCampaign?(MODULE&&MODULE.campaignId):null,campaignProgress:{modulesCompleted:[],currentModule:(MODULE&&MODULE.id)||null},sagaFlags:{},species:species||'human',speciesTraits:speciesTraits||{darkvision:0,feyAncestry:false,speed:30},bonusFeat:bonusFeat||null,learnedSpellCount:learnedSpellCount||0};setGs(state);goScene(startScene,state);setPhase('play')};
+    const state={cls,stats,style,feat,mastery,name:name||(MODULE?.defaultName||'Adventurer'),spells:spells||{cantrips:[],level1:[],alwaysPrepared:[]},weapon:equip.weapon,armor:equip.armor,skilledPicks:skilledPicks||[],classSkills:classSkills||[],humanSkill:humanSkill||null,hasShield:equip.hasShield,level:1,hp:derived.maxHp,derived,xp:0,honour:cRes.honour||5,rose:0,sword:0,crown:0,companions:[],romances:{},godSigns:startGods,dgTrack:'NONE',equipment:buildEquipment(equip.weapon,equip.armor,equip.hasShield),inventory:extraInv,history:[],awardedScenes:{},companionLog:{},romanceDeclined:{},flags:{},bonuses:[],magicItems:[],measureTrack:0,measureOrientation:null,gold:cRes.gold||0,layOnHandsPool:cls==='Paladin'?derived.layOnHandsMax:0,spellSlotsUsed:0,spellSlots2ndUsed:0,spellSlots3rdUsed:0,spellSlots4thUsed:0,spellSlots5thUsed:0,spellSlots6thUsed:0,spellSlots7thUsed:0,spellSlots8thUsed:0,spellSlots9thUsed:0,secondWindUsed:0,actionSurgeUsed:false,bandages:cRes.bandages||0,potions:cRes.potions||0,greaterPotions:cRes.greaterPotions||0,rations:cRes.rations||0,torches:cRes.torches||0,waterskinUses:cRes.waterskinUses||3,miraHealedThisScene:false,completedRolls:{},deadCompanions:[],hitDiceUsed:0,wounds:[],scars:[],combatCount:0,orderMax:{rose:0,sword:0,crown:0},approval:{},kills:{player:{},companions:{}},companionGifts:[],mount:null,languages:allLangs,exhaustion:0,toolProficiencies:crafterTools||[],musicianInstruments:musicianInstruments||[],heroicInspiration:0,subclass:subclass||null,metamagic:metamagic||[],maneuvers:[],superiorityDice:0,channelDivinityUsed:0,vowOfEnmityTarget:null,sacredWeaponActive:false,durability:buildDurability(),classLevels:{[cls]:1},secondClass:null,secondSubclass:null,currentCampaign:commitCampaign?(MODULE&&MODULE.campaignId):null,campaignProgress:{modulesCompleted:[],currentModule:(MODULE&&MODULE.id)||null},sagaFlags:{},species:species||'human',speciesTraits:speciesTraits||{darkvision:0,feyAncestry:false,speed:30},bonusFeat:bonusFeat||null,learnedSpellCount:learnedSpellCount||0,npcAttitude:{},factionAttitude:{},deadNPCs:[]};setGs(state);goScene(startScene,state);setPhase('play')};
   const loadSave=(saveData)=>{
     if(!saveData)return;
     // Handle v2 split format or auto-migrate legacy
@@ -13549,7 +13568,7 @@ function App(){
       }
     }
     // Field defaults (migration safety)
-    if(!g.inventory)g.inventory=[];if(!g.deadCompanions)g.deadCompanions=[];if(!g.completedRolls)g.completedRolls={};if(!g.awardedScenes)g.awardedScenes={};if(!g.romances)g.romances={};if(!g.flags)g.flags={};if(!g.bonuses)g.bonuses=[];if(!g.magicItems)g.magicItems=[];if(g.hitDiceUsed===undefined)g.hitDiceUsed=0;if(!g.wounds)g.wounds=[];if(!g.scars)g.scars=[];if(g.combatCount===undefined)g.combatCount=0;if(g.xp===undefined)g.xp=0;if(g.honour===undefined)g.honour=5;if(!g.approval)g.approval={};if(!g.companionGifts)g.companionGifts=[];if(!g.orderMax)g.orderMax={rose:Math.max(0,g.rose||0),sword:Math.max(0,g.sword||0),crown:Math.max(0,g.crown||0)};if(g.exhaustion===undefined)g.exhaustion=0;if(g.rations===undefined)g.rations=0;if(g.torches===undefined)g.torches=0;if(!g.toolProficiencies)g.toolProficiencies=[];if(!g.musicianInstruments)g.musicianInstruments=[];if(g.heroicInspiration===undefined)g.heroicInspiration=0;if(g.subclass===undefined)g.subclass=null;if(!g.maneuvers)g.maneuvers=[];if(g.superiorityDice===undefined)g.superiorityDice=0;if(g.channelDivinityUsed===undefined)g.channelDivinityUsed=0;if(g.vowOfEnmityTarget===undefined)g.vowOfEnmityTarget=null;if(g.sacredWeaponActive===undefined)g.sacredWeaponActive=false;if(g.spellSlots2ndUsed===undefined)g.spellSlots2ndUsed=0;if(g.spellSlots3rdUsed===undefined)g.spellSlots3rdUsed=0;if(g.spellSlots4thUsed===undefined)g.spellSlots4thUsed=0;if(g.spellSlots5thUsed===undefined)g.spellSlots5thUsed=0;if(g.spellSlots6thUsed===undefined)g.spellSlots6thUsed=0;if(g.spellSlots7thUsed===undefined)g.spellSlots7thUsed=0;if(g.spellSlots8thUsed===undefined)g.spellSlots8thUsed=0;if(g.spellSlots9thUsed===undefined)g.spellSlots9thUsed=0;if(!g.currentCampaign)g.currentCampaign=(MODULE&&MODULE.campaignId)||null;if(!g.campaignProgress)g.campaignProgress={modulesCompleted:[],currentModule:(MODULE&&MODULE.id)||null};if(!g.sagaFlags)g.sagaFlags={};if(!g.species)g.species=(MODULE&&MODULE.species)||'human';if(!g.speciesTraits)g.speciesTraits={darkvision:0,feyAncestry:false,speed:30};if(g.bonusFeat===undefined)g.bonusFeat=null;if(g.learnedSpellCount===undefined)g.learnedSpellCount=0;if(!g.declinedCompanions)g.declinedCompanions=[];
+    if(!g.inventory)g.inventory=[];if(!g.deadCompanions)g.deadCompanions=[];if(!g.completedRolls)g.completedRolls={};if(!g.awardedScenes)g.awardedScenes={};if(!g.romances)g.romances={};if(!g.flags)g.flags={};if(!g.bonuses)g.bonuses=[];if(!g.magicItems)g.magicItems=[];if(g.hitDiceUsed===undefined)g.hitDiceUsed=0;if(!g.wounds)g.wounds=[];if(!g.scars)g.scars=[];if(g.combatCount===undefined)g.combatCount=0;if(g.xp===undefined)g.xp=0;if(g.honour===undefined)g.honour=5;if(!g.approval)g.approval={};if(!g.companionGifts)g.companionGifts=[];if(!g.orderMax)g.orderMax={rose:Math.max(0,g.rose||0),sword:Math.max(0,g.sword||0),crown:Math.max(0,g.crown||0)};if(g.exhaustion===undefined)g.exhaustion=0;if(g.rations===undefined)g.rations=0;if(g.torches===undefined)g.torches=0;if(!g.toolProficiencies)g.toolProficiencies=[];if(!g.musicianInstruments)g.musicianInstruments=[];if(g.heroicInspiration===undefined)g.heroicInspiration=0;if(g.subclass===undefined)g.subclass=null;if(!g.maneuvers)g.maneuvers=[];if(g.superiorityDice===undefined)g.superiorityDice=0;if(g.channelDivinityUsed===undefined)g.channelDivinityUsed=0;if(g.vowOfEnmityTarget===undefined)g.vowOfEnmityTarget=null;if(g.sacredWeaponActive===undefined)g.sacredWeaponActive=false;if(g.spellSlots2ndUsed===undefined)g.spellSlots2ndUsed=0;if(g.spellSlots3rdUsed===undefined)g.spellSlots3rdUsed=0;if(g.spellSlots4thUsed===undefined)g.spellSlots4thUsed=0;if(g.spellSlots5thUsed===undefined)g.spellSlots5thUsed=0;if(g.spellSlots6thUsed===undefined)g.spellSlots6thUsed=0;if(g.spellSlots7thUsed===undefined)g.spellSlots7thUsed=0;if(g.spellSlots8thUsed===undefined)g.spellSlots8thUsed=0;if(g.spellSlots9thUsed===undefined)g.spellSlots9thUsed=0;if(!g.currentCampaign)g.currentCampaign=(MODULE&&MODULE.campaignId)||null;if(!g.campaignProgress)g.campaignProgress={modulesCompleted:[],currentModule:(MODULE&&MODULE.id)||null};if(!g.sagaFlags)g.sagaFlags={};if(!g.species)g.species=(MODULE&&MODULE.species)||'human';if(!g.speciesTraits)g.speciesTraits={darkvision:0,feyAncestry:false,speed:30};if(g.bonusFeat===undefined)g.bonusFeat=null;if(g.learnedSpellCount===undefined)g.learnedSpellCount=0;if(!g.declinedCompanions)g.declinedCompanions=[];if(!g.npcAttitude)g.npcAttitude={};if(!g.factionAttitude)g.factionAttitude={};if(!g.deadNPCs)g.deadNPCs=[];
     if(!g.equipment){g.equipment=buildEquipment(g.weapon,g.armor,g.hasShield);if(!g.inventory.includes('Leather Helm')){g.inventory.push('Leather Helm','Leather Gloves','Leather Boots')}}
     // Migrate companion names to canonical casing
     g.companions=(g.companions||[]).map(c=>{const canon=COMPANIONS_ALL.find(x=>x.toLowerCase()===c.toLowerCase());return canon||c});
@@ -13638,6 +13657,26 @@ function App(){
       if(cur<=-3&&prev>-3){
         if(!ns._pendingNotify)ns._pendingNotify=[];
         ns._pendingNotify.push({comp,type:'confrontation'});
+      }
+    }
+    // Process NPC attitude deltas from rules.json
+    if(!ns.npcAttitude)ns.npcAttitude={};
+    for(const rule of (MODULE_RULES?.npcAttitudeDeltas||[])){
+      const rLetters=rule.letters||(rule.letter?[rule.letter]:[]);
+      if(rule.scene===sceneId&&(rLetters.includes(c.letter)||rLetters.includes('*'))){
+        const npc=rule.npc;const delta=rule.delta||0;
+        ns.npcAttitude[npc]=(ns.npcAttitude[npc]||0)+delta;
+        ns.npcAttitude[npc]=Math.max(-10,Math.min(10,ns.npcAttitude[npc]));
+      }
+    }
+    // Process faction attitude deltas from rules.json (slower scaling)
+    if(!ns.factionAttitude)ns.factionAttitude={};
+    for(const rule of (MODULE_RULES?.factionAttitudeDeltas||[])){
+      const rLetters=rule.letters||(rule.letter?[rule.letter]:[]);
+      if(rule.scene===sceneId&&(rLetters.includes(c.letter)||rLetters.includes('*'))){
+        const faction=rule.faction;const delta=rule.delta||0;
+        ns.factionAttitude[faction]=(ns.factionAttitude[faction]||0)+delta;
+        ns.factionAttitude[faction]=Math.max(-10,Math.min(10,ns.factionAttitude[faction]));
       }
     }
     // Check NPC_BREAKUPS for this specific choice
