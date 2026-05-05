@@ -113,5 +113,64 @@
       "cantrips": ["Fire Bolt", "Light", "Mage Hand", "Prestidigitation"],
       "spells": {"level1": ["Magic Missile", "Shield"]}
     }
-  }
+  },
+  "factions": {
+    "conclave": {
+      "name": "Conclave of Wizards",
+      "members": ["Torven Ashfall", "Nasha Vren"]
+    },
+    "millhaven": {
+      "name": "Millhaven Villagers",
+      "members": ["Elara Moss"]
+    },
+    "dragon_army": {
+      "name": "Dragon Army",
+      "members": ["Commander Serath"],
+      "startingAttitude": -2
+    }
+  },
+  "companionRecruitGates": {
+    "Torven Ashfall": {
+      "minAttitude": -1,
+      "refuseText": "Torven regards you coolly. 'The Conclave has standards. Perhaps when you've proven yourself.'"
+    },
+    "Nasha Vren": {
+      "minAttitude": 0,
+      "refuseText": "Nasha flips her silver coin. 'Not everyone gets an escort. You haven't earned one yet.'"
+    },
+    "Commander Serath": {
+      "minAttitude": -3,
+      "refuseText": "Serath's hand rests on their blade. 'I don't travel with those I cannot trust. Not again.'"
+    }
+  },
+  "conditionalProse": {
+    "18": [
+      {"type": "npcAttitude", "npc": "Torven Ashfall", "min": 3, "prose": "Torven's expression softens when he sees you. 'Ah, the promising one. I've been hearing good things.'"},
+      {"type": "npcAttitude", "npc": "Torven Ashfall", "max": -2, "prose": "Torven's eyes narrow. 'You again. The Conclave is watching you — and not favorably.'"},
+      {"type": "factionAttitude", "faction": "conclave", "min": 2, "prose": "Word of your deeds has reached the Conclave. The Red Robes regard you with something approaching respect."}
+    ],
+    "22B": [
+      {"type": "npcAttitude", "npc": "Nasha Vren", "min": 2, "prose": "Nasha grins when she spots you. 'Well, well. The one who actually keeps their word. Rare, that.'"},
+      {"type": "factionAttitude", "faction": "conclave", "min": 3, "prose": "Nasha nods approvingly. 'The Conclave speaks well of you. That's not nothing.'"}
+    ],
+    "15": [
+      {"type": "npcAttitude", "npc": "Commander Serath", "min": 1, "prose": "Serath meets your eyes. There's a flicker of something — recognition, perhaps. 'You're different from what I expected.'"},
+      {"type": "npcAttitude", "npc": "Commander Serath", "max": -3, "prose": "Serath's gaze is cold. 'Another mage. Another threat. Keep your distance.'"}
+    ]
+  },
+  "npcAttitudeDeltas": [
+    {"scene": "2", "letters": ["A"], "npc": "Lyra Ashfen", "delta": 1},
+    {"scene": "3", "letters": ["C"], "npc": "Lyra Ashfen", "delta": 1},
+    {"scene": "18", "letters": ["A"], "npc": "Torven Ashfall", "delta": 1},
+    {"scene": "18", "letters": ["B"], "npc": "Torven Ashfall", "delta": -1},
+    {"scene": "22B", "letters": ["A"], "npc": "Nasha Vren", "delta": 1},
+    {"scene": "15", "letters": ["A"], "npc": "Commander Serath", "delta": 1},
+    {"scene": "15", "letters": ["B"], "npc": "Commander Serath", "delta": 2},
+    {"scene": "15", "letters": ["C"], "npc": "Commander Serath", "delta": -2}
+  ],
+  "factionAttitudeDeltas": [
+    {"scene": "24", "letters": ["A"], "faction": "conclave", "delta": 1},
+    {"scene": "28", "letters": ["A"], "faction": "conclave", "delta": 1},
+    {"scene": "34", "letters": ["A", "B"], "faction": "conclave", "delta": 2}
+  ]
 }

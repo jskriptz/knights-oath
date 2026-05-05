@@ -2206,6 +2206,27 @@ function filterProse(proseArr,cls,companions,flags){
   if(!proseArr)return[];
   return proseArr.filter(p=>!shouldHideLine(p,cls,companions,flags)).map(p=>stripCompanionLabel(p)).filter(p=>p.trim());
 }
+
+// Get conditional prose based on NPC/faction attitudes (reputation dialogue injection)
+function getConditionalProse(sceneId,gs){
+  const conditions=MODULE_RULES?.conditionalProse?.[sceneId];
+  if(!conditions||!Array.isArray(conditions))return[];
+  const result=[];
+  for(const cond of conditions){
+    if(cond.type==='npcAttitude'){
+      const att=getEffectiveAttitude(gs,cond.npc);
+      if(cond.min!==undefined&&att<cond.min)continue;
+      if(cond.max!==undefined&&att>cond.max)continue;
+      result.push(cond.prose);
+    }else if(cond.type==='factionAttitude'){
+      const att=getEffectiveFactionAttitude(gs,cond.faction);
+      if(cond.min!==undefined&&att<cond.min)continue;
+      if(cond.max!==undefined&&att>cond.max)continue;
+      result.push(cond.prose);
+    }
+  }
+  return result;
+}
 function filterBoxText(text,cls,companions,flags){
   if(!text)return text;
   const lines=text.split('\n');
@@ -8845,14 +8866,38 @@ function getJunkSellPrice(itemName,persuasionMod=0){
   return 1;
 }
 
-// Get effective NPC attitude considering timeline (ignores attitudes from "future" modules)
+// Look up which faction an NPC belongs to (from MODULE_RULES.factions)
+function getNpcFaction(npcName){
+  const factions=MODULE_RULES?.factions;
+  if(!factions)return null;
+  for(const[factionId,factionData] of Object.entries(factions)){
+    if(factionData.members?.includes(npcName))return factionId;
+  }
+  return null;
+}
+
+// Get effective NPC attitude considering timeline and faction inheritance
 function getEffectiveAttitude(gs,npcName){
-  if(!gs||!gs.npcAttitude)return 0;
-  const attitude=gs.npcAttitude[npcName];
-  if(attitude===undefined)return 0;
-  const attitudeDate=gs.npcAttitudeDate?.[npcName]||0;
+  if(!gs)return 0;
   const currentModuleDate=(typeof MODULE!=='undefined'&&MODULE&&MODULE.date)||9999;
-  return attitudeDate<=currentModuleDate?attitude:0;
+  // Check explicit NPC attitude first
+  if(gs.npcAttitude){
+    const attitude=gs.npcAttitude[npcName];
+    if(attitude!==undefined){
+      const attitudeDate=gs.npcAttitudeDate?.[npcName]||0;
+      if(attitudeDate<=currentModuleDate)return attitude;
+    }
+  }
+  // Fall back to faction attitude if NPC belongs to one
+  const faction=getNpcFaction(npcName);
+  if(faction&&gs.factionAttitude){
+    const factionAtt=gs.factionAttitude[faction];
+    if(factionAtt!==undefined){
+      const factionDate=gs.factionAttitudeDate?.[faction]||0;
+      if(factionDate<=currentModuleDate)return factionAtt;
+    }
+  }
+  return 0;
 }
 
 // Get effective faction attitude considering timeline
@@ -8863,6 +8908,19 @@ function getEffectiveFactionAttitude(gs,factionName){
   const attitudeDate=gs.factionAttitudeDate?.[factionName]||0;
   const currentModuleDate=(typeof MODULE!=='undefined'&&MODULE&&MODULE.date)||9999;
   return attitudeDate<=currentModuleDate?attitude:0;
+}
+
+// Check if companion can be recruited based on attitude gates
+function canRecruitCompanion(gs,companionName){
+  const gates=MODULE_RULES?.companionRecruitGates;
+  if(!gates||!gates[companionName])return{allowed:true};
+  const gate=gates[companionName];
+  const minAtt=gate.minAttitude??-999;
+  const attitude=getEffectiveAttitude(gs,companionName);
+  if(attitude<minAtt){
+    return{allowed:false,reason:gate.refuseText||'They do not trust you enough to join.',attitude,required:minAtt};
+  }
+  return{allowed:true,attitude};
 }
 
 // NPC attitude price modifier: hostile=+25%, unfriendly=+10%, friendly=-10%, trusted=-15%, devoted=-20%
@@ -11034,6 +11092,9 @@ function SceneView({scene,onChoice,gs,isEnding,onViewSheet,onViewDmSummary,onExp
   const knownLangs=gs.languages||['Common'];
   useEffect(()=>{if(ref.current)ref.current.scrollTop=0},[scene.id]);
   let visibleProse=filterProse(scene.prose,cls,comps,gs.flags);
+  // Add attitude-based conditional prose (reputation dialogue injection)
+  const condProse=getConditionalProse(scene.id,gs);
+  if(condProse.length)visibleProse=[...visibleProse,...condProse];
   // Parse language-gated text and collect notes
   const allLangNotes=[];
   visibleProse=visibleProse.map(p=>{const{text,languageNotes}=parseLanguageText(p,knownLangs);allLangNotes.push(...languageNotes);return text});
@@ -11959,16 +12020,20 @@ function CompanionJoinModal({companion,onAccept,onDecline}){
   const cd=findCompanion(companion.name);
   const portrait=cd?.portrait||null;
   const desc=companion.role||cd?.desc||'A potential ally.';
+  const isGated=companion.gated;
+  const gateReason=companion.gateReason||'They do not trust you enough to join.';
   return e('div',{className:'modal-overlay'},
     e('div',{className:'modal-box companion-join'},
       portrait?e('img',{className:'companion-join-portrait',src:portrait,alt:companion.name}):
         e('div',{className:'companion-join-portrait',style:{background:'var(--panel)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:32,color:'var(--gold)'}},companion.name.charAt(0)),
       e('div',{className:'companion-join-name'},companion.name),
-      e('div',{className:'companion-join-subtitle'},'wants to join your party'),
-      e('div',{className:'companion-join-desc'},'"'+desc+'"'),
+      e('div',{className:'companion-join-subtitle'},isGated?'cannot join your party':'wants to join your party'),
+      e('div',{className:'companion-join-desc'},isGated?gateReason:'"'+desc+'"'),
       e('div',{className:'companion-join-btns'},
-        e('button',{className:'ghost-btn companion-join-decline',onClick:onDecline},'Decline'),
-        e('button',{className:'gold-btn companion-join-accept',onClick:onAccept},'Accept'))));
+        isGated?e('button',{className:'ghost-btn',onClick:onDecline},'Continue'):
+        e(React.Fragment,null,
+          e('button',{className:'ghost-btn companion-join-decline',onClick:onDecline},'Decline'),
+          e('button',{className:'gold-btn companion-join-accept',onClick:onAccept},'Accept')))));
 }
 
 function RomancePrompt({prompt,gs,onAccept,onFriend,onDecline}){
@@ -13527,11 +13592,17 @@ function App(){
       // Extract role from companion box text
       const roleMatch=b.text.match(/Role:\s*(.+?)(?:\n|$)/);const role=roleMatch?roleMatch[1].trim():null;
       if(b.critical){
-        // Critical companions auto-join
+        // Critical companions auto-join (skip gate check for story-critical NPCs)
         ns.companions=[...ns.companions,nm];if(!ns.companionLog)ns.companionLog={};if(!ns.companionLog[nm])ns.companionLog[nm]=[];ns.companionLog[nm].push('Joined in Scene '+id+(s.title?' — '+s.title:''));
       }else{
-        // Non-critical: store for prompt when user makes next choice
-        setSceneCompanionPending({name:nm,role:role,sceneId:id,sceneTitle:s.title});
+        // Non-critical: check recruitment gate, then store for prompt
+        const gateCheck=canRecruitCompanion(ns,nm);
+        if(gateCheck.allowed){
+          setSceneCompanionPending({name:nm,role:role,sceneId:id,sceneTitle:s.title});
+        }else{
+          // Show gated prompt explaining why they won't join
+          setSceneCompanionPending({name:nm,role:role,sceneId:id,sceneTitle:s.title,gated:true,gateReason:gateCheck.reason});
+        }
       }
     }}});
     s.boxes.filter(b=>b.type==='levelup').forEach(b=>{
