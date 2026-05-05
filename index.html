@@ -9799,7 +9799,7 @@ function ModuleSelect({onSelect,onBack,forceSelection}){
 }
 
 // ── Cover ──────────────────────────────────────────────
-function CoverScreen({onNew,onLoad,onImport,onSwitchModule}){
+function CoverScreen({onNew,onLoad,onImport,onSwitchModule,updateAvailable,onUpdate}){
   const[slots,setSlots]=useState(Array(SAVE_SLOT_COUNT).fill(null));const[loading,setLoading]=useState(true);const[del,setDel]=useState(null);const[showSettings,setShowSettings]=useState(false);
   const[ready,setReady]=useState(!!window._scenesReady);
   const[installable,setInstallable]=useState(false);
@@ -9842,6 +9842,7 @@ function CoverScreen({onNew,onLoad,onImport,onSwitchModule}){
   const cVersion=ls.version||(MODULE&&MODULE.version&&'v'+MODULE.version)||'';
   const cClasses=(MODULE&&MODULE.classes)||['Fighter','Paladin'];
   return e('div',{className:'cover'},
+    updateAvailable?e('button',{onClick:onUpdate,title:'Update available',style:{position:'absolute',top:12,right:12,background:'transparent',border:'1px solid var(--gold-dim)',color:'var(--gold-dim)',padding:'4px 10px',fontSize:10,letterSpacing:1,cursor:'pointer',borderRadius:3,opacity:0.7,transition:'opacity 0.3s'},onMouseEnter:(ev)=>ev.target.style.opacity=1,onMouseLeave:(ev)=>ev.target.style.opacity=0.7},'↻ UPDATE'):null,
     e('h1',null,cTitle),e('div',{className:'divider'}),e('h2',null,cSub),
     e('p',{className:'dim-italic'},cTagline),
     e('div',{style:{fontSize:12,letterSpacing:3,color:'var(--gold-dim)',marginTop:4}},'CREATED BY J. CARLO'),e('div',{className:'divider'}),
@@ -14050,7 +14051,7 @@ function App(){
   const e=React.createElement;
   if(phase==='modules')return e(ModuleSelect,{onSelect:async(id)=>{
     setSwitchingModule(false);await loadModule(id).catch(()=>null);setPhase('cover')},onBack:()=>{setSwitchingModule(false);setPhase('cover')},forceSelection:switchingModule});
-  if(phase==='cover')return e(React.Fragment,null,e(CoverScreen,{onNew:()=>setPhase('intro'),onLoad:loadSave,onImport:handleImportCharacter,onSwitchModule:()=>{setSwitchingModule(true);setPhase('modules')}}),updateAvailable?e('button',{className:'update-btn',onClick:applyUpdate,title:'Update available! Click to refresh'},'↻ Update'):null);
+  if(phase==='cover')return e(CoverScreen,{onNew:()=>setPhase('intro'),onLoad:loadSave,onImport:handleImportCharacter,onSwitchModule:()=>{setSwitchingModule(true);setPhase('modules')},updateAvailable,onUpdate:applyUpdate});
   if(phase==='intro')return e(WorldIntro,{onDone:()=>setPhase('create'),onSkip:()=>setPhase('create'),onBack:()=>setPhase('cover')});
   if(phase==='create')return e(CharCreate,{onDone:startGame,onBack:()=>setPhase('intro')});
   if(!gs||!scene)return null;
