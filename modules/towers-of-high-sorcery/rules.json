@@ -1,5 +1,11 @@
 {
-  "startScene": "1",
+  "startScene": "0",
+  "randomFlags": {
+    "0": {
+      "prefix": "dream",
+      "options": ["moons", "sick", "almost", "ancestor", "ordinary"]
+    }
+  },
   "endingScenes": ["60"],
   "hubScenes": [],
   "exemptTargets": [],

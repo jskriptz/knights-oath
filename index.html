@@ -13392,6 +13392,16 @@ function App(){
     setSceneCompanionPending(null);// Clear any pending companion from previous scene
     const ns={...state,history:[...state.history,s.id+': '+s.title]};
     ns.miraHealedThisScene=false;ns.combatResolved=false;
+    // Random flags — set one random flag from options if configured for this scene
+    const randomRule=MODULE_RULES?.randomFlags?.[id];
+    if(randomRule&&randomRule.options?.length){
+      const prefix=randomRule.prefix||'random';
+      const alreadySet=randomRule.options.some(opt=>ns.flags[prefix+'_'+opt]);
+      if(!alreadySet){
+        const pick=randomRule.options[Math.floor(Math.random()*randomRule.options.length)];
+        ns.flags[prefix+'_'+pick]=true;
+      }
+    }
     // Disgrace check — only triggers if an order was earned (>0) and has since dropped to 0
     const oMax=ns.orderMax||{rose:0,sword:0,crown:0};
     if(id!=='DISGRACE'&&((oMax.rose>0&&ns.rose<=0)||(oMax.sword>0&&ns.sword<=0)||(oMax.crown>0&&ns.crown<=0))){

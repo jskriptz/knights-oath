@@ -1,4 +1,63 @@
 {
+  "0": {
+    "id": "0",
+    "title": "THE NIGHT BEFORE",
+    "location": "Your Home, Millhaven",
+    "prose": [
+      "*Your Home, Millhaven — Night*",
+      "Nine days. The pressure has been building behind your eyes for nine days now. The village healer has no explanation. Your family watches you with quiet worry. You tell them it is nothing.",
+      "Tonight, like every night this week, sleep does not come easily. You lie in your narrow bed, staring at the ceiling, waiting for something you cannot name.",
+      "Then the dream takes you.",
+      "",
+      "**IF dream_moons IS SET:** You dream of three moons hanging in a sky that is not Krynn's sky. One silver, blazing with cold light. One red, the colour of wine held up to firelight. And one that is not there — a hole in the stars, a presence defined by absence, watching you with eyes you cannot see.",
+      "**IF dream_moons IS SET:** They are pulling at something inside you. Something that has always been there, sleeping, waiting. The silver moon says *come*. The red moon says *choose*. The dark moon says nothing, but you feel it smile.",
+      "**IF dream_moons IS SET:** You wake gasping, the pressure behind your eyes worse than ever. But now you understand: it is not pain. It is *potential*.",
+      "",
+      "**IF dream_sick IS SET:** You dream of drowning in light. Silver light that pours into your lungs, fills your stomach, pushes at the seams of your skin. You are too full. You are going to burst.",
+      "**IF dream_sick IS SET:** You wake and barely make it to the basin before you vomit — but what comes up is not sick. It is light. Pale, silvery, dissipating like morning mist. For a moment your hands glow from within.",
+      "**IF dream_sick IS SET:** You are shaking. You are not ill. You are *changing*.",
+      "",
+      "**IF dream_almost IS SET:** You dream of fire. Not burning — becoming. Your hands are flame. Your thoughts are flame. The whole world is waiting to ignite and you are the spark.",
+      "**IF dream_almost IS SET:** You wake with your hand outstretched toward the cold fireplace. The coals are dark. But for just a moment — just a heartbeat — one of them glowed.",
+      "**IF dream_almost IS SET:** You pull your hand back. Not yet. You are not ready. But the magic does not care if you are ready.",
+      "",
+      "**IF dream_ancestor IS SET:** You dream of a woman you have never met. Dark hair streaked with white. Your mother's grandmother. She stands in a forest that moves, before a tower that shines like captured moonlight.",
+      "**IF dream_ancestor IS SET:** 'It skipped your mother,' she says. 'It skipped your grandmother. But it did not skip you.' She touches your forehead and you feel centuries of knowledge pressing at the edges of your mind. 'The blood remembers.'",
+      "**IF dream_ancestor IS SET:** You wake knowing things you should not know. Words in languages you have never heard. The taste of magic on your tongue.",
+      "",
+      "**IF dream_ordinary IS SET:** You do not dream. Or if you do, you do not remember. You wake to grey pre-dawn light, the smell of bread from the baker's, the distant sound of the miller's dog barking at nothing.",
+      "**IF dream_ordinary IS SET:** It is an ordinary morning. The last ordinary morning, though you do not know it yet. In an hour, the candle on your windowsill will light itself, and nothing will ever be ordinary again.",
+      "**IF dream_ordinary IS SET:** But for now: grey light. The smell of bread. A dog barking. Peace.",
+      "",
+      "The sun is rising. The day is beginning. And something inside you — something that has been sleeping your whole life — is finally waking up."
+    ],
+    "boxes": [
+      {
+        "type": "info",
+        "text": "**THE AWAKENING**\nMagic runs in your bloodline. Your mother's grandmother had the gift. It skipped two generations. Now it has found you."
+      }
+    ],
+    "choices": [
+      {
+        "letter": "A",
+        "text": "Get up. Face the day. Whatever is happening, hiding from it will not help.",
+        "target": "1",
+        "points": {"WHITE": 1}
+      },
+      {
+        "letter": "B",
+        "text": "Lie still. Try to understand what you felt. Knowledge before action.",
+        "target": "1",
+        "points": {"RED": 1}
+      },
+      {
+        "letter": "C",
+        "text": "Reach for the feeling again. The pressure behind your eyes. See if you can make it respond.",
+        "target": "1",
+        "points": {"BLACK": 1}
+      }
+    ]
+  },
   "1": {
     "id": "1",
     "title": "THE LAST NORMAL MORNING",

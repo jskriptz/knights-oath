@@ -15,8 +15,8 @@
   "speciesLocked": false,
   "startingLanguages": ["Common"],
   "defaultName": "Apprentice",
-  "version": "1.10.0",
-  "startScene": "1",
+  "version": "1.11.0",
+  "startScene": "0",
   "startingInventory": ["Spellbook", "Component Pouch", "Dagger", "Scholar's Pack", "Traveller's Clothes"],
   "startingEquipment": {
     "hands": null,

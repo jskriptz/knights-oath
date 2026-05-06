@@ -32,8 +32,8 @@
   "loadingScreen": {
     "title": "DRAGONLANCE",
     "subtitle": "THE TOWERS OF HIGH SORCERY",
-    "version": "v1.10.0",
-    "stats": "63 Scenes • 8 Companions"
+    "version": "v1.11.0",
+    "stats": "64 Scenes • 8 Companions"
   },
   "heroPortraits": [
     {"id": "mage_m1", "label": "Apprentice I", "url": "assets/images/portraits/Mage_Male_1.png"},
